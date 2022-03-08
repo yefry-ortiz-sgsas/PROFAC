@@ -1,5 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->   
+    <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -8,7 +8,7 @@
                     <a href="{{ route('dashboard') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
-                
+
                 </div>
 
                 <!-- Navigation Links -->
@@ -240,19 +240,37 @@
                         </div>
                     </li>
                     <li class="active">
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                        <a class="active" ><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                    </li>
+                    <li >
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Usuarios</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="index.html">Dashboard v.1</a></li>
-                            <li><a href="dashboard_2.html">Dashboard v.2</a></li>
-                            <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-                            <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
-                            <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+                            <li href="dashboard_2.html" ><a href="index.html">Gestiones</a></li>
+                            <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
+                    <li >
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Bodega</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li href="dashboard_2.html" ><a href="index.html">Gestiones</a></li>
+                            <li><a href="dashboard_2.html">Reportes de Bodega</a></li>
+                        </ul>
                     </li>
-                    <li>
+                    <li >
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Proveedores</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li href="dashboard_2.html" ><a href="index.html">Gestiones</a></li>
+                            <li><a href="dashboard_2.html">Reportes de Proveedores</a></li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Inventario</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li href="dashboard_2.html" ><a href="index.html">Gestiones</a></li>
+                            <li><a href="dashboard_2.html">Reportes de Inventario</a></li>
+                        </ul>
+                    </li>
+                    {{-- <li>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="graph_flot.html">Flot Charts</a></li>
@@ -447,13 +465,13 @@
                     </li>
                     <li class="special_link">
                         <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
-                    </li>
+                    </li> --}}
                 </ul>
 
             </div>
         </nav>
     </div>
 
-    
+
 
 </nav>
