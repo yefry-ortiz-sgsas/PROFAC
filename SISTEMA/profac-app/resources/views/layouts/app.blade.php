@@ -27,9 +27,9 @@
         <!-- Fonts -->
         <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
 
-      
 
-       
+
+
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -39,16 +39,16 @@
 
         <div class="">
 
-          
-        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>    
+
+        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
             @livewire('navigation-menu')
 
 
             <!-- Page Heading -->
-          
+
 
             <!-- Page Content -->
-       
+
         <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="row border-bottom">
 
@@ -59,10 +59,10 @@
 
         </div>
         </div>
-            
 
-          
-            
+
+
+
         </div>
 
         @stack('modals')
@@ -73,9 +73,9 @@
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>    
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    
+
     <!-- Flot -->
     <script src="{{ asset('js/plugins/flot/jquery.flot.js') }}"></script>
     <script src="{{ asset('js/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
