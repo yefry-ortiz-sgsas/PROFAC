@@ -1,74 +1,91 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        @livewireStyles
-          <!-- Styles -->
-          <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-        <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    @livewireStyles
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        <!-- Toastr style -->
-        <link href="{{ asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-        <!-- Gritter -->
-        <link href="{{ asset('js/plugins/gritter/jquery.gritter.css') }}" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="{{ asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="{{ asset('js/plugins/gritter/jquery.gritter.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-        <!-- Fonts -->
-        <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
-
+    @stack('styles')
 
 
+ 
+
+    
 
 
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
-    </head>
-    <body >
-        <x-jet-banner />
+    <!-- Fonts -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
 
-        <div class="">
+
+
+
+
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
+
+</head>
+
+<body>
+    <x-jet-banner />
+
+    <div id="wrapper" class="">
 
 
         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
-            @livewire('navigation-menu')
+        @livewire('navigation-menu')
 
 
-            <!-- Page Heading -->
+        <!-- Page Heading -->
 
 
-            <!-- Page Content -->
+        <!-- Page Content -->
 
-        <div id="page-wrapper" class="gray-bg dashbard-1">
-        <div class="row border-bottom">
+        <div id="page-wrapper" class="gray-bg">
+            <div class="wrapper wrapper-content animated fadeInRight">
 
-            <main >
-                {{ $slot }}
-            </main>
+                <main>
+                   
+                        {{ $slot }}
+                  
+                </main>
+
+            </div>
+           
 
 
+            
         </div>
-        </div>
 
 
 
 
-        </div>
+    </div>
 
-        @stack('modals')
+    @stack('modals')
 
-        @livewireScripts
+    @livewireScripts
 
+     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -109,5 +126,14 @@
     <!-- Toastr -->
     <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
 
-    </body>
+    
+    @stack('scripts')
+
+
+
+
+
+
+</body>
+
 </html>
