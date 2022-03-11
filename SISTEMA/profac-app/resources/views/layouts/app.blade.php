@@ -85,8 +85,9 @@
 
     @livewireScripts
 
-     <!-- Mainly scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+     <!-- Mainly scripts --> 
+     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script> version original de la plantilla --}}
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
@@ -124,7 +125,14 @@
     <script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script>
 
     <!-- Toastr -->
-    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script> 
+
+
+    <!--Data-parsley-validate-->    
+    
+    <script src="{{ asset('js/data_parsley/parsley.js') }}"></script>
+    <script src="{{ asset('js/data_parsley/i18n/es.js') }}"></script>
+
 
     
     @stack('scripts')

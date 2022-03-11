@@ -21,6 +21,8 @@
         "tailwindcss": "^3.0.0"
     },
     "dependencies": {
+        "parsleyjs": "^2.9.2",
+        "sweetalert2": "^11.4.4",
         "turbolinks": "^5.2.0"
     }
 }

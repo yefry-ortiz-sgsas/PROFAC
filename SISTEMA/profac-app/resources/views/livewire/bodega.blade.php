@@ -28,92 +28,106 @@
                             <i class="fa fa-times"></i>
                         </a>
                     </div> --}}
-                  
+
                 </div>
 
                 <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-sm-6 b-r">
-                            <h4>Información general <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </h4>
-                            <br>
+                    <form id="bodegaCreacion" data-parsley-validate>
+                        <div class="row">
 
-                          
-                            <form role="form">
+                            <div class="col-sm-6 b-r">
+                                <h4>Información general <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </h4>
+                                <br>
+
+
+
                                 <div class="form-group">
-                                    <label for="bodega">Nombre de bodega</label> 
-                                    <input id="bodega" type="text" placeholder="Nombre de bodega" class="form-control">
+                                    <label for="bodega">Nombre de bodega</label>
+                                    <input id="bodega" name="bodega" type="text" placeholder="Nombre de bodega"
+                                        class="form-control " data-parsley-required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="direccionBodega">Dirección</label> 
-                                    <input id="direccionBodega" type="text" placeholder="Direccion de bodega" class="form-control">
+                                    <label for="direccionBodega">Dirección</label>
+                                    <input id="direccionBodega" name="direccionBodega" type="text"
+                                        placeholder="Direccion de bodega" class="form-control" data-parsley-required>
                                 </div>
 
                                 <div>
                                     <label for="encargadoBodega">Encargado de bodega</label>
-                                    <select id="encargadoBodega" class="form-control m-b" name="account">
-                                        <option selected>Seleccione un encargado</option>
-                                        <option>Empleado 1</option>
-                                        <option>Empleado 2</option>
-                                        <option>Empleado 3</option>
+                                    <select id="encargadoBodega" name="encargadoBodega" class="form-control m-b"
+                                        name="account" data-parsley-required>
+                                        <option value="0" selected disabled>Seleccione un encargado</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+
                                     </select>
 
                                 </div>
 
 
-                                
-                            </form>
+
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <h4>Segmentacion de bodega <i class="fa fa-cubes" aria-hidden="true"></i></h4>
+                                <br>
+
+                                <div class="form-group">
+                                    <label for="bodegaNumEstant">Número de estantes</label>
+                                    <input id="bodegaNumEstant" name="bodegaNumEstant" type="number"
+                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
+                                        max="10" data-parsley-required>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="bodegaNumRepisa">Número de repisas por estante</label>
+                                    <input id="bodegaNumRepisa" name="bodegaNumRepisa" type="number"
+                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
+                                        max="10" data-parsley-required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="bodegaNumSec">Número de secciones por repisa</label>
+                                    <input id="bodegaNumSec" name="bodegaNumSec" type="number"
+                                        placeholder="Ingresé el número de secciones" class="form-control"
+                                        data-parsley-required max="10" min="0">
+                                </div>
+
+
+                            </div>
+
+
+
                         </div>
-                        <div class="col-sm-6">
-                            <h4>Segmentacion de bodega <i class="fa fa-cubes" aria-hidden="true"></i></h4>
-                            <br>
-
-                            <div class="form-group">
-                                <label for="bodegaNumEstant">Número de estantes</label> 
-                                <input id="bodegaNumEstant" type="number" placeholder="Ingresé el número de estantes" class="form-control" min="0" max="10">
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="bodegaNumRepisa">Número de repisas por estante</label> 
-                                <input id="bodegaNumRepisa" type="number" placeholder="Ingresé el número de estantes" class="form-control" min="0" max="10">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="bodegaNumSec">Número de secciones por repisa</label> 
-                                <input id="bodegaNumSec" type="number" placeholder="Ingresé el número de secciones" class="form-control">
-                            </div>
-
-                         
-                        </div>
-
-                        
-                    </div>
-
+                    </form>
                     <div class="row">
                         <div class="col-lg-12">
-                            <button
-                            class="btn btn-sm btn-primary float-left m-t-n-xs"
-                            type="submit"><strong>Crear Bodega</strong></button>
-                        </div> 
+                            <button class="btn btn-sm btn-primary float-left m-t-n-xs"
+                                form="bodegaCreacion"><strong>Crear
+                                    Bodega</strong></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-   
+
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox">
-                <div class="ibox-content" style="" >
+                <div class="ibox-content" style="">
                     <img src="{{ asset('img_profac/Estante de Bodega.png') }}" alt="" style="margin: 0 auto">
                 </div>
-               
+
             </div>
-           
+
         </div>
-    </div>    
+    </div>
 
     <div>
 
@@ -121,6 +135,7 @@
 
     @push('scripts')
         <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+
 
         <script>
             $(document).ready(function() {
@@ -130,6 +145,8 @@
                 });
             });
         </script>
+
+        <script src="{{ asset('js/js_proyecto/bodega.js') }}"></script>
     @endpush
 
 </div>
