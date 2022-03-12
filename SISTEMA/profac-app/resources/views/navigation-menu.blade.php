@@ -235,7 +235,7 @@
         </div>
     </div>
 
-    
+
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
@@ -283,7 +283,7 @@
                         <a href="index.html"><i class="fa fa-th-large"></i> <span
                                 class="nav-label">Proveedores</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
+                            <li ><a href="/proveedores">Gestiones</a></li>
                             <li><a href="dashboard_2.html">Reportes de Proveedores</a></li>
                         </ul>
                     </li>
@@ -495,7 +495,7 @@
 
             </div>
         </nav>
-    
+
 
 
 

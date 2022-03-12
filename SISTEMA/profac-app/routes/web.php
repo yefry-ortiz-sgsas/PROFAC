@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
+use App\Http\Livewire\Proveedores;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/bodega', Bodega::class);
+Route::get('/proveedores', Proveedores::class);
+
+
+
