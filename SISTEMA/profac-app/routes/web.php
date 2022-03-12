@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Bodega;
+use App\Http\Livewire\Bodega; 
+use App\Http\Livewire\BodegaComponent\BodegaEditar;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/bodega', Bodega::class);
+Route::get('/bodega/editar/screen', BodegaEditar::class);
+
+Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']); 

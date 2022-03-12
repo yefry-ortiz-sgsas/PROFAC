@@ -1,7 +1,8 @@
 // $('#bodegaCreacion').submit(function(e){
-//     console.log(e)
+    
 //     e.preventDefault();
-//     crearBodega();
+//     console.log('llego');
+//     //crearBodega();
 // });
 
 
@@ -21,7 +22,8 @@
 
 
 $(document).on('submit', '#bodegaCreacion', function(event){
-    event.preventDefault();
+       event.preventDefault();
+    crearBodega();
     
 });
 
@@ -38,6 +40,8 @@ function crearBodega(){
         processData:false,
         dataType:"json",
         success: function(data){
+
+            console.log(data);
             
 
         },
@@ -45,7 +49,7 @@ function crearBodega(){
             console.log( jqXHR.responseJSON.message);
             Swal.fire({
                 icon: 'warning',
-                title: 'Oops...',
+                title: 'Error...',
                 text: jqXHR.responseJSON.message
             })
         }

@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Bodega;
+use App\Models\modelBodega;
 use App\Models\Estante;
 use App\Models\Repisa;
 use App\Models\Seccion;
@@ -23,12 +23,19 @@ class Bodega extends Component
     {
         $users = User::all();
       
-        return view('livewire.bodega', compact("users"));
+        return view('livewire.bodega-component.bodega-crear', compact("users"));
+    }
+
+    public function vistaBodegaEditar()
+    {
+        
+      
+        return view('livewire.bodega-component.bodega-editar');
     }
 
     public function crearBodega(Request $request){
 
-        $validator = Validator::make($req->all(), [
+        $validator = Validator::make($request->all(), [
             'bodega' => 'required',
             'direccionBodega' => 'required',
             'encargadoBodega' => 'required',
@@ -52,27 +59,37 @@ class Bodega extends Component
         }
 
         try {
+            $array = [];
+            
             DB::beginTransaction();
 
-            $crearBodega = new Bodega;
+            $crearBodega = new modelBodega;
             $crearBodega->nombre = $request->bodega;
             $crearBodega->direccion = $request->direccionBodega;
             $crearBodega->encargado_bodega = $request->encargadoBodega;
             $crearBodega->estado_id = 1;
+            $crearBodega->save();
 
-            for ($i=1; $i <= $request['bodegaNumEstant'] ; $i++) { 
+            for ($i=1; $i <= $request['bodegaNumEstant']; $i++) { 
 
                 $crearEstante = new Estante;
                 $crearEstante->nombre = $i;
                 $crearEstante->id_bodega=  $crearBodega->id;
+                $crearEstante->save();
                 
 
-                        for ($j=1; $j <= $request['bodegaNumRepisa'] ; $j++) { 
+                        for ($j=1; $j <= $request['bodegaNumRepisa']; $j++) { 
+                            array_push( $array , [$crearEstante->id]);                            
                             $crearRepisa = new Repisa;
                             $crearRepisa->nombre = $j;
-                            $crearRepisa->estante_id = $crearEstante->id;
+                            $crearRepisa->id_estante = $crearEstante->id; 
+                            $crearRepisa->save();
 
                                     for ($z=1; $z <=$request['bodegaNumSec'] ; $z++) { 
+                                        $crearSeccion = new Seccion;
+                                        $crearSeccion->nombre =$i;
+                                        $crearSeccion->repisa_id =   $crearRepisa->id;
+                                        $crearSeccion->save();  
                                         
                                     }
 
@@ -81,24 +98,26 @@ class Bodega extends Component
                
             }
 
-            
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Creado con exito.',
+                'arreglo' => $array
+            ], 200);  
 
 
 
-
-
-
-
-
-        } catch (Throwable $th) {
+        } catch (QueryException $th) {
             DB::rollback(); 
+         
+            return response()->json([
+                'message' => 'Creado con exito.',
+                'errorTh' => $th,
+                'array' => $array
+              
+            ], 402);  
 
-        }
-        
-
-
-
-
+        }   
 
     }
 }

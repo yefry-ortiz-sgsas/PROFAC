@@ -33,6 +33,7 @@
 
                 <div class="ibox-content">
                     <form id="bodegaCreacion" data-parsley-validate>
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <div class="row">
 
                             <div class="col-sm-6 b-r">
@@ -107,7 +108,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button class="btn btn-sm btn-primary float-left m-t-n-xs"
-                                form="bodegaCreacion"><strong>Crear
+                                form="bodegaCreacion" ><strong>Crear
                                     Bodega</strong></button>
                         </div>
                     </div>

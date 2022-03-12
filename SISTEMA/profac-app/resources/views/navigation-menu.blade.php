@@ -259,9 +259,13 @@
                             IN+
                         </div>
                     </li>
-                    <li class="active">
-                        <a class="active"><i class="fa fa-th-large"></i> <span
-                                class="nav-label">Dashboard</span></a>
+                    <li>
+                        <a href="/Dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span>
+                            <span class="fa arrow"></span></a>
+                        {{-- <ul class="nav nav-second-level">
+                            <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
+                            <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
+                        </ul> --}}
                     </li>
                     <li>
                         <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Usuarios</span>
@@ -276,7 +280,7 @@
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="/bodega">Crear Bodega</a></li>
-                            <li><a href="dashboard_2.html">Reportes de Bodega</a></li>
+                            <li><a href="/bodega/editar/screen">Editar Bodega</a></li>
                         </ul>
                     </li>
                     <li>
