@@ -22,15 +22,8 @@ class Bodega extends Component
     public function render()
     {
         $users = User::all();
-      
-        return view('livewire.bodega-component.bodega-crear', compact("users"));
-    }
 
-    public function vistaBodegaEditar()
-    {
-        
-      
-        return view('livewire.bodega-component.bodega-editar');
+        return view('livewire.bodega', compact("users"));
     }
 
     public function crearBodega(Request $request){
@@ -95,7 +88,7 @@ class Bodega extends Component
 
 
                         }
-               
+
             }
 
             DB::commit();
