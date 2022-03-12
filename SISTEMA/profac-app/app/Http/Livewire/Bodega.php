@@ -23,7 +23,7 @@ class Bodega extends Component
     {
         $users = User::all();
 
-        return view('livewire.bodega', compact("users"));
+        return view('livewire.bodega-component.bodega-crear', compact("users"));
     }
 
     public function crearBodega(Request $request){
