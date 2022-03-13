@@ -24,10 +24,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+
+
+//-----------------------Bodega-----------------------//
 Route::get('/bodega', Bodega::class);
 Route::get('/bodega/editar/screen', BodegaEditar::class);
 
-Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']); 
+Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']);
+Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']); 
 
 Route::get('/proveedores', Proveedores::class);
 

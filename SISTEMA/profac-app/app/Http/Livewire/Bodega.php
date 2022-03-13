@@ -8,7 +8,6 @@ use App\Models\modelBodega;
 use App\Models\Estante;
 use App\Models\Repisa;
 use App\Models\Seccion;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
