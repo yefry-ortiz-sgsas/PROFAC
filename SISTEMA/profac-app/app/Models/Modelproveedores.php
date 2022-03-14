@@ -22,5 +22,11 @@ class Modelproveedores extends Model
         'rtn',
         'pais',
         'departamento',
-        'municipio'];
+        'municipio',
+        'registrado_por',
+        'estado_id',
+        'giro',
+        'categoria',
+        'retencion'
+    ];
 }

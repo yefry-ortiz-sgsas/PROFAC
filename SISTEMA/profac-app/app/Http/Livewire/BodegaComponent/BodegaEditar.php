@@ -53,7 +53,7 @@ class BodegaEditar extends Component
                         style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
                         <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
                                 Editar</a></li>
-                        <li><a class="dropdown-item" href="#"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                        <li><a class="dropdown-item" href="#" onclick="desactivarBodega('.$listaBodegas->codigo.')"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
                                 Desactivar </a></li>
     
                     </ul>
@@ -82,6 +82,17 @@ class BodegaEditar extends Component
             ],402);
             
         }
+    }
+
+    public function desactivarBodega(Request $request){
+        try {
+
+            
+         
+        } catch (QueryException $e) {
+           
+        }
+
     }
 
 

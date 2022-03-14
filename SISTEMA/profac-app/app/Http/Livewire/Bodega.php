@@ -103,7 +103,7 @@ class Bodega extends Component
             DB::rollback(); 
          
             return response()->json([
-                'message' => 'Creado con exito.',
+                'message' => 'Ha ocurrido un error.',
                 'errorTh' => $th,
                 'array' => $array
               

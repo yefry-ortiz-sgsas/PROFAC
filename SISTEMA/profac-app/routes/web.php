@@ -32,6 +32,7 @@ Route::get('/bodega/editar/screen', BodegaEditar::class);
 
 Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']);
 Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
+Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
 
 Route::get('/proveedores', Proveedores::class);
 Route::post('/proveedores/crear',  [Proveedores::class, 'proveerdoresModelInsert']);
