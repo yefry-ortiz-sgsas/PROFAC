@@ -5,3 +5,5 @@
 2. crear componente -> php artisan make:livewire ShowPosts 
 
 3. crear componente en sub carpeta -> php artisan make:livewire Post/Show
+
+4. composer require yajra/laravel-datatables-buttons -W

@@ -66,7 +66,7 @@ class BodegaEditar extends Component
     
                     })
            
-            ->rawColumns(['opciones','estado_bodega'])
+            ->rawColumns(['opciones','estado_bodega'])         
             ->make(true);
 
 

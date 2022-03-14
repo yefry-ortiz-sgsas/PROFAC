@@ -41,7 +41,14 @@ function crearBodega(){
         dataType:"json",
         success: function(data){
 
-            console.log(data);
+            document.getElementById("bodegaCreacion").reset();
+            Swal.fire({
+                icon: 'success',
+                title: 'Exito!',
+                text: 'Exito al crear bodega.'
+            })
+
+            //console.log(data);
             
 
         },
