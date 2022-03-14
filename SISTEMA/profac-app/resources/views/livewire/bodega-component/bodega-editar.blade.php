@@ -102,6 +102,47 @@
 
                     });
                 })
+
+
+                function desactivarBodega(){
+                    Swal.fire({
+                title: '¿Está seguro?',
+                text: "¡¿Esta seguro de desactivar esta bodega? !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, borralo!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    //    ajax para eliminar el contrato
+                    $.ajax({
+                        type: "GET",
+                        url: "/contratos/elimina/" + id,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function(data) {
+
+                            $('#tbl_contrato').DataTable().ajax.reload();
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+
+                    Swal.fire(
+                        '!Eliminado!',
+                        'El contrato ha sido eliminado.',
+                        'success'
+                    )
+
+                }
+            })
+                }
             </script>
         @endpush
 
