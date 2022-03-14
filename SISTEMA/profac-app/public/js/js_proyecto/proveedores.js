@@ -83,7 +83,5 @@ function crearProveedores(){
                 text: jqXHR.responseJSON.message
             })
         }
-    })
-
-
+    });
 }
