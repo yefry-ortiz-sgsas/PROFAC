@@ -27,7 +27,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+
                                 </tbody>
                             </table>
 
@@ -39,60 +39,69 @@
             </div>
         </div>
         {{-- Care about people's approval and you will be their prisoner. --}}
-     
+
 
         @push('scripts')
-
-    
             <script>
                 $(document).ready(function() {
-                            $('#tbl_bodegaEditar').DataTable({
-                                "language": {
-                                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                                    },
-                                pageLength: 10,
-                                responsive: true,
-                                dom: '<"html5buttons"B>lTfgitp',    
-                                buttons: [{
-                                        extend: 'copy'
-                                    },
-                                    {
-                                        extend: 'csv'
-                                    },
-                                    {
-                                        extend: 'excel',
-                                        title: 'ExampleFile'
-                                    },
-                                    {
-                                        extend: 'pdf',
-                                        title: 'ExampleFile'
-                                    },
+                    $('#tbl_bodegaEditar').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                        },
+                        pageLength: 10,
+                        responsive: true,
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [{
+                                extend: 'copy'
+                            },
+                            {
+                                extend: 'csv'
+                            },
+                            {
+                                extend: 'excel',
+                                title: 'ExampleFile'
+                            },
+                            {
+                                extend: 'pdf',
+                                title: 'ExampleFile'
+                            },
 
-                                    {
-                                        extend: 'print',
-                                        customize: function(win) {
-                                            $(win.document.body).addClass('white-bg');
-                                            $(win.document.body).css('font-size', '10px');
+                            {
+                                extend: 'print',
+                                customize: function(win) {
+                                    $(win.document.body).addClass('white-bg');
+                                    $(win.document.body).css('font-size', '10px');
 
-                                            $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
-                                        }
-                                    }
-                                ],
-                                "ajax": "/bodega/listar/bodegas",
-                                "columns": [
-                                {data:'numero_bodega'},
-                                {data:'codigo'},
-                                {data:'direccion'},
-                                {data:'encargado'},
-                                {data:'estado_bodega'},
-                                {data:'opciones'}
-                                ]
-                               
+                                    $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                                }
+                            }
+                        ],
+                        "ajax": "/bodega/listar/bodegas",
+                        "columns": [{
+                                data: 'numero_bodega'
+                            },
+                            {
+                                data: 'codigo'
+                            },
+                            {
+                                data: 'direccion'
+                            },
+                            {
+                                data: 'encargado'
+                            },
+                            {
+                                data: 'estado_bodega'
+                            },
+                            {
+                                data: 'opciones'
+                            }
+                        ]
 
-                            });
-                })    
+
+                    });
+                })
             </script>
         @endpush
 

@@ -46,14 +46,18 @@ class BodegaEditar extends Component
             return Datatables::of($listaBodegas)
             ->addColumn('opciones', function ($listaBodegas) {
                     return '
-                    <div style="position: absolute;" class="dropdown dropdown-action text-right">
-                    <a  href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Ver más</a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" data-toggle="modal" data-target="#editar_contratos"   ><i class="fa fa-pencil m-r-5 text-warning"></i> Editar</a>
+                    <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                        más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start"
+                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                        <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                                Editar</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                Desactivar </a></li>
     
-                            <a class="dropdown-item" target="_blanck" href=""><i class="fa fa-times text-danger" aria-hidden="true"></i> Desactivar</a>
-                        </div>
-                    </div>
+                    </ul>
+                </div>
                     ';
             })
             ->addColumn('estado_bodega', function ($listaBodegas) {
