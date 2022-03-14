@@ -10,7 +10,7 @@ use Validator;
 use Illuminate\Database\QueryException;
 use Throwable;
 use App\Models\User;
-use App\Models\proveedores as proveerdoresModel;
+use App\Model\Model\Modelproveedores;
 
 class Proveedores extends Component
 {
@@ -21,50 +21,61 @@ class Proveedores extends Component
     }
 
     public function proveerdoresModelInsert(Request $request){
-        dd($request);
-        $validator = Validator::make($request->all(), [
-            'codigo' => 'required',
-            'nombre' => 'required',
-            'direccion' => 'required',
-            'contacto' => 'required',
-            'telefono_1' => 'required',
-            'correo_1' => 'required',
-            'rtn' => 'required',
-            'pais' => 'required',
-            'departamento' => 'required',
-            'municipio' => 'required',
-            'giro' => 'required',
-            'categoria' => 'required',
-            'retencion' => 'required',
-        ], [
-            'codigo' => 'Este campo es obligatorio.',
-            'nombre' => 'Este campo es obligatorio.',
-            'direccion' => 'Este campo es obligatorio.',
-            'contacto' => 'Este campo es obligatorio.',
-            'telefono_1' => 'Este campo es obligatorio.',
-            'correo_1' => 'Este campo es obligatorio.',
-            'rtn' => 'Este campo es obligatorio.',
-            'pais' => 'Este campo es obligatorio.',
-            'departamento' => 'Este campo es obligatorio.',
-            'municipio' => 'Este campo es obligatorio.',
-            'giro' => 'Este campo es obligatorio.',
-            'categoria' => 'Este campo es obligatorio.',
-            'retencion' => 'Este campo es obligatorio.',
-        ]);
+        /* dd($request->telefono_prov_2); */
+            $validator = Validator::make($request->all(), [
+                'codigo_prov' => 'required',
+                'nombre_prov' => 'required',
+                'direccion_prov' => 'required',
+                'contacto_prov' => 'required',
+                'telefono_prov' => 'required',
+                'telefono_prov_2' => 'required',
+                'rtn_prov' => 'required',
+                'pais_prov' => 'required',
+                'depto_prov' => 'required',
+                'municipio_prov' => 'required',
+                'giro' => 'required',
+                'categoria' => 'required',
+                'retencion' => 'required',
+            ], [
+                'codigo_prov' => 'Fecha es requerida',
+                'nombre_prov' => 'required',
+                'direccion_prov' => 'required',
+                'contacto_prov' => 'required',
+                'telefono_prov' => 'required',
+                'telefono_prov_2' => 'required',
+                'rtn_prov' => 'required',
+                'pais_prov' => 'required',
+                'depto_prov' => 'required',
+                'municipio_prov' => 'required',
+                'giro' => 'required',
+                'categoria' => 'required',
+                'retencion' => 'required',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'mensaje' => 'Ha ocurrido un error.',
-                'errors' => $validator->errors()
-            ], 422);
-        }else{
-            $crearBodega = new proveerdoresModel;
-            $crearBodega->nombre = $request->bodega;
-            $crearBodega->direccion = $request->direccionBodega;
-            $crearBodega->encargado_bodega = $request->encargadoBodega;
-            $crearBodega->estado_id = 1;
-            $crearBodega->save();
-        }
+            if ($validator->fails()) {
+                return response()->json([
+                    'mensaje' => 'Ha ocurrido un error.',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            $crearProveedores = new Modelproveedores;
+            $crearProveedores->codigo=$request->codigo_prov;
+            $crearProveedores->nombre=$request->nombre_prov;
+            $crearProveedores->direccion=$request->direccion_prov;
+            $crearProveedores->contacto=$request->contacto_prov;
+            $crearProveedores->telefono_1=$request->telefono_prov;
+            $crearProveedores->telefono_2=$request->telefono_prov_2;
+            $crearProveedores->correo_1=$request->correo_prov;
+            $crearProveedores->correo_2=$request->correo_prov_2;
+            $crearProveedores->rtn=$request->rtn_prov;
+            $crearProveedores->pais=$request->pais_prov;
+            $crearProveedores->departamento=$request->depto_prov;
+            $crearProveedores->municipio=$request->municipio_prov;
+            $crearProveedores->giro=$request->giro_neg_prov;
+            $crearProveedores->categoria=$request->categoria_prov;
+            $crearProveedores->retencion=$request->retencion_prov;
+            $crearProveedores->save();
+
 
     }
 }

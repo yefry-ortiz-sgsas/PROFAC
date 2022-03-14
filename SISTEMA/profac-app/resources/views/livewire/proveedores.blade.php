@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Giro de Negocio</label>
-                                <select class="form-group form-control" name="giro_neg_prov" id="giro_neg_prov">
+                                <select class="form-group form-control" name="giro_neg_prov" id="giro_neg_prov" required>
                                     <option selected >Seleccione una opción</option>
                                     <option value="1">Comercial</option>
                                     <option value="2">Privado</option>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Categoría</label>
-                                <select class="form-group form-control" name="categoria_prov" id="categoria_prov">
+                                <select class="form-group form-control" name="categoria_prov" id="categoria_prov" required>
                                     <option selected >Seleccione una opción</option>
                                     <option value="1">Mayorísta</option>
                                     <option value="2">Unitario</option>
@@ -98,7 +98,7 @@
 
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Retención del 1%</label>
-                                <select class="form-group form-control" name="retencion_prov" id="retencion_prov">
+                                <select class="form-group form-control" name="retencion_prov" id="retencion_prov" required>
                                     <option selected >Seleccione una opción</option>
                                     <option value="1">opción 1</option>
                                     <option value="2">opción 2</option>
