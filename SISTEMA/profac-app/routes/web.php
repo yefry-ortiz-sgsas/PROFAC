@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Bodega; 
+use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
 use App\Http\Livewire\Proveedores;
 
@@ -31,9 +31,10 @@ Route::get('/bodega', Bodega::class);
 Route::get('/bodega/editar/screen', BodegaEditar::class);
 
 Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']);
-Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']); 
+Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
 
 Route::get('/proveedores', Proveedores::class);
+Route::post('/proveedores/crear',  [Proveedores::class, 'proveerdoresModelInsert']);
 
 
 

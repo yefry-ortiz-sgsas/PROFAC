@@ -6,49 +6,109 @@
             rel="stylesheet">
     @endpush
 
-    <div id="modal_hacer_despido" class="modal custom-modal fade" role="dialog">
+    <div id="modal_proveedores_crear" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-success">Ficha de despido</h5>
+                    <h5 class="modal-title text-success">Regitro de Proveedores</h5></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="form_despido" data-parsley-validate>
+                    <form id="proveedorCreacionForm"name="proveedorCreacionForm" data-parsley-validate>
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <div class="row" id="row_datos">
-                            <div class="col-12">
-                                <label class="col-form-label focus-label">Buscar Colaborador <span class="text-danger">*</span></label>
-                                <select class="js-data-example-ajax form-control" required style="width: 742px; height:40px;" name="empleado_id" id="empleado_id">
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Código:</label>
+                                <input class="form-control" required type="text" id="codigo_prov" name="codigo_prov" data-parsley-required>
                             </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label focus-label">Identidad</label>
-                                <input disabled class="form-control" type="text" id="identidad_empleado" name="identidad_empleado" >
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label focus-label">Código de Contrato</label>
-                                <input disabled class="form-control" type="text" id="codigo_contrato_empleado" name="codigo_contrato_empleado" >
-                                <input type="hidden" id="id_contrato" name="id_contrato" >
-                            </div>
-                            <div class="col-md-6">
-                                <label class="col-form-label focus-label">Puesto Asignado</label>
-                                <input disabled class="form-control" type="text" id="puesto_empleado" name="puesto_empleado" >
+                            <div class="col-md-8">
+                                <label class="col-form-label focus-label">Nombre del proveedor</label>
+                                <input class="form-control" required type="text" id="nombre_prov" name="nombre_prov" data-parsley-required>
                             </div>
                             <div class="col-md-12">
-                                <label class="col-form-label focus-label">Fecha de activación de despido</label>
-                                <input  class="form-control" required type="date" id="fecha_despido" name="fecha_despido" >
+                                <label class="col-form-label focus-label">Dirección</label>
+                                <textarea name="direccion_prov" required id="direccion_prov" cols="30" rows="3" class="form-group form-control" data-parsley-required>Escriba aquí...</textarea>
                             </div>
-                            <div class="col-md-12">
-                                <label class="col-form-label focus-label">Motivo del despido</label>
-                                <textarea required class="form-group form-control" name="motivo_despido" id="motivo_despido" cols="30" rows="5"></textarea>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Contácto</label>
+                                <input  class="form-control" required type="text" id="contacto_prov" name="contacto_prov" data-parsley-required>
                             </div>
-                        </div>
-                        <div class="text-center submit-section" >
-                            <button  class="btn btn-success submit-btn ">Continuar</button>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Teléfono</label>
+                                <input class="form-group form-control" required type="text" name="telefono_prov" id="telefono_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Teléfono 2</label>
+                                <input class="form-group form-control" type="text" name="telefono_prov_2" id="telefono_prov_2" >
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Correo electrónico</label>
+                                <input class="form-group form-control" type="text" name="correo_prov" id="correo_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Correo electrónico 2</label>
+                                <input class="form-group form-control" type="text" name="correo_prov_2" id="correo_prov_2" >
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">RTN</label>
+                                <input class="form-group form-control" required type="text" name="rtn_prov" id="rtn_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">País</label>
+                                <select class="form-group form-control" name="pais_prov" id="pais_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">opción 1</option>
+                                    <option value="2">opción 2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Departamento</label>
+                                <select class="form-group form-control" name="depto_prov" id="depto_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">opción 1</option>
+                                    <option value="2">opción 2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Municipio</label>
+                                <select class="form-group form-control" name="municipio_prov" id="municipio_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">opción 1</option>
+                                    <option value="2">opción 2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Giro de Negocio</label>
+                                <select class="form-group form-control" name="giro_neg_prov" id="giro_neg_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">Comercial</option>
+                                    <option value="2">Privado</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Categoría</label>
+                                <select class="form-group form-control" name="categoria_prov" id="categoria_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">Mayorísta</option>
+                                    <option value="2">Unitario</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label focus-label">Retención del 1%</label>
+                                <select class="form-group form-control" name="retencion_prov" id="retencion_prov">
+                                    <option selected >Seleccione una opción</option>
+                                    <option value="1">opción 1</option>
+                                    <option value="2">opción 2</option>
+                                </select>
+                            </div>
                         </div>
                     </form>
+                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"
+                                form="proveedorCreacionForm" ><strong>Crear
+                                    Bodega</strong></button>
                 </div>
 
             </div>
@@ -57,111 +117,53 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox ">
+            <div class="ibox ml-auto">
                 <div class="ibox-title">
                     <h2 class="font-weight-normal">Proveedores</h2>
-
                 </div>
-
-                {{-- <div class="ibox-content">
-                    <form id="bodegaCreacion" data-parsley-validate>
-                        <div class="row">
-
-                            <div class="col-sm-6 b-r">
-                                <h4>Información general <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </h4>
-                                <br>
-
-
-
-                                <div class="form-group">
-                                    <label for="bodega">Nombre de bodega</label>
-                                    <input id="bodega" name="bodega" type="text" placeholder="Nombre de bodega"
-                                        class="form-control " data-parsley-required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="direccionBodega">Dirección</label>
-                                    <input id="direccionBodega" name="direccionBodega" type="text"
-                                        placeholder="Direccion de bodega" class="form-control" data-parsley-required>
-                                </div>
-
-                                <div>
-                                    <label for="encargadoBodega">Encargado de bodega</label>
-                                    <select id="encargadoBodega" name="encargadoBodega" class="form-control m-b"
-                                        name="account" data-parsley-required>
-                                        <option value="0" selected disabled>Seleccione un encargado</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-
-                                    </select>
-
-                                </div>
-
-
-
-
-                            </div>
-
-                            <div class="col-sm-6">
-                                <h4>Segmentacion de bodega <i class="fa fa-cubes" aria-hidden="true"></i></h4>
-                                <br>
-
-                                <div class="form-group">
-                                    <label for="bodegaNumEstant">Número de estantes</label>
-                                    <input id="bodegaNumEstant" name="bodegaNumEstant" type="number"
-                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
-                                        max="10" data-parsley-required>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="bodegaNumRepisa">Número de repisas por estante</label>
-                                    <input id="bodegaNumRepisa" name="bodegaNumRepisa" type="number"
-                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
-                                        max="10" data-parsley-required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="bodegaNumSec">Número de secciones por repisa</label>
-                                    <input id="bodegaNumSec" name="bodegaNumSec" type="number"
-                                        placeholder="Ingresé el número de secciones" class="form-control"
-                                        data-parsley-required max="10" min="0">
-                                </div>
-
-
-                            </div>
-
-
-
-                        </div>
-                    </form>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="btn btn-sm btn-primary float-left m-t-n-xs"
-                                form="bodegaCreacion"><strong>Crear
-                                    Bodega</strong></button>
-                        </div>
-                    </div>
-                </div> --}}
+                <div class="ml-auto">
+                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal" data-target="#modal_proveedores_crear" ><i class="fa fa-plus"></i>Registrar Nuevo Empleado</a>
+                </div>
             </div>
         </div>
-
-
     </div>
-    {{--<div class="row">
-            <div class="col-lg-12">
-                <div class="ibox">
-                    <div class="ibox-content" style="">
-                        <img src="{{ asset('img_profac/Estante de Bodega.png') }}" alt="" style="margin: 0 auto">
-                    </div>
-
-                </div>
-
-            </div>
-        </div> --}}
 
     <div>
+
+        <br><br><br>
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+
+
 
     </div>
 
