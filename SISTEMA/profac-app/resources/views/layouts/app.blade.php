@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-  
+    <title>{{ config('app.name', 'D. VALENCIA') }}</title>
+
 
     @livewireStyles
-    @stack('styles')  
+    @stack('styles')
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
@@ -26,7 +29,7 @@
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    
+
     <!-- Fonts -->
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> -->
 
@@ -56,19 +59,21 @@
         <!-- Page Content -->
 
         <div id="page-wrapper" class="gray-bg">
+
             <div class="wrapper wrapper-content animated fadeInRight">
 
-                <main>
-                   
+
+                <main >{{--
+                    <img src="{{ asset('img/LOGO_VALENCIA.jpg') }}" alt=""> --}}
                         {{ $slot }}
-                  
+
                 </main>
 
             </div>
-           
 
 
-            
+
+
         </div>
 
 
@@ -76,9 +81,9 @@
 
     </div>
 
-   
 
-     <!-- Mainly scripts --> 
+
+     <!-- Mainly scripts -->
      <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     {{-- <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script> version original de la plantilla --}}
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -118,11 +123,11 @@
     <script src="{{ asset('js/plugins/chartJs/Chart.min.js') }}"></script>
 
     <!-- Toastr -->
-    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script> 
+    <script src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
 
 
-    <!--Data-parsley-validate-->    
-    
+    <!--Data-parsley-validate-->
+
     <script src="{{ asset('js/data_parsley/parsley.js') }}"></script>
     <script src="{{ asset('js/data_parsley/i18n/es.js') }}"></script>
 
@@ -134,16 +139,16 @@
     <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
 
 
 
-    
     @stack('scripts')
     @stack('modals')
     @livewireScripts
-    
+
 
 
 
