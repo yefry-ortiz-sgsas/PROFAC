@@ -12,7 +12,7 @@
                 </div> --}}
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" >
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Distribuciones Valencia') }}
                     </x-jet-nav-link>
@@ -243,7 +243,7 @@
                         <div class="dropdown profile-element">
                             <img alt="image" class="rounded-circle" src="{{ asset('img/profile_small.jpg') }}" />
                             <div data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold"> {{ Auth::user()->name }}</span>
+                                <span class="block m-t-xs font-bold" style="color:#00000;"><b> {{ Auth::user()->name }}</b></span>
                                 <span class="text-muted text-xs block">Desarrollador <b
                                         class="caret"></b></span>
                             </div>
@@ -260,7 +260,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/Dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span>
+                        <a href="/Dashboard"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
                             <span class="fa arrow"></span></a>
                         {{-- <ul class="nav nav-second-level">
                             <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
@@ -268,27 +268,27 @@
                         </ul> --}}
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Usuarios</span>
+                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Usuarios</span>
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
-                            <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
+                            <li  href="dashboard_2.html"><a href="index.html" style="color:#ffffff;">Gestiones</a></li>
+                            <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Bodega</span>
+                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span>
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a href="/bodega">Crear Bodega</a></li>
-                            <li><a href="/bodega/editar/screen">Editar Bodega</a></li>
+                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-th-large"></i> <span
-                                class="nav-label">Proveedores</span> <span class="fa arrow"></span></a>
+                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span
+                                class="nav-label" style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li ><a href="/proveedores">Gestiones</a></li>
-                            <li><a href="dashboard_2.html">Reportes de Proveedores</a></li>
+                            <li ><a href="/proveedores" style="color:#ffffff;">Gestiones</a></li>
+                            <li><a href="dashboard_2.html" style="color:#ffffff;">Reportes de Proveedores</a></li>
                         </ul>
                     </li>
                     {{-- <li>
