@@ -291,14 +291,14 @@
                             <li><a href="dashboard_2.html">Reportes de Proveedores</a></li>
                         </ul>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="index.html"><i class="fa fa-th-large"></i> <span
                                 class="nav-label">Inventario</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
                             <li><a href="dashboard_2.html">Reportes de Inventario</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- <li>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">

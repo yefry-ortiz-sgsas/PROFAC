@@ -1059,14 +1059,11 @@ select {
 .mb-4 {
   margin-bottom: 1rem;
 }
-.mr-auto {
-  margin-right: auto;
-}
-.ml-auto {
-  margin-left: auto;
-}
 .-mt-px {
   margin-top: -1px;
+}
+.mr-auto {
+  margin-right: auto;
 }
 .block {
   display: block;

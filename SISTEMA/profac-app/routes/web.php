@@ -36,6 +36,9 @@ Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
 
 Route::get('/proveedores', Proveedores::class);
 Route::post('/proveedores/crear',  [Proveedores::class, 'proveerdoresModelInsert']);
+Route::post('/proveedores/obeter/departamentos', [Proveedores::class, 'obtenerDepartamentos']);
+Route::post('/proveedores/obeter/municipios', [Proveedores::class, 'obtenerMunicipios']);
+
 
 
 

@@ -18,4 +18,4 @@ window.Swal = require('sweetalert2');//aqui estoy importando el archivo sweetale
 // window.parsley = require('parsleyjs');
 
 
-
+window.axios = require('axios');

@@ -10,7 +10,8 @@ class proveedores extends Model
     use HasFactory;
     protected $table = 'proveedores';
     protected $primaryKey = 'id';
-    protected $fillable = ['id',
+    protected $fillable = [
+        'id',
         'codigo',
         'nombre',
         'direccion',
@@ -19,9 +20,13 @@ class proveedores extends Model
         'telefono_2',
         'correo_1',
         'correo_2',
-        'rtn',
-        'pais',
-        'departamento',
-        'municipio','giro', 'categoria','retencion'];
+        'rtn',    
+        'municipio_id',
+        'tipo_personalidad_id', 
+        'categoria_id',
+        'registrado_por',
+        'estado_id',
+               
+    ];
 
 }

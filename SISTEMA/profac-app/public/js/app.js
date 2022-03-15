@@ -5650,6 +5650,8 @@ window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2
 //Parsley
 // window.parsley = require('parsleyjs');
 
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

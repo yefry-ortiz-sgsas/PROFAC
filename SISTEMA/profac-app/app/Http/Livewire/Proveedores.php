@@ -11,6 +11,12 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use App\Models\User;
 use App\Models\Modelproveedores;
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\TipoPersonalidad;
+use App\Models\Categoria;
+use App\Models\Retenciones;
+
 
 
 class Proveedores extends Component
@@ -18,7 +24,14 @@ class Proveedores extends Component
     public function render()
     {
         $users = User::all();
-        return view('livewire.proveedores', compact("users"));
+        $paises = Pais::all();
+        $categorias = Categoria::all();
+        $retenciones = Retenciones::all();
+        $tipoPersonalidad = TipoPersonalidad::all();
+
+
+       
+        return view('livewire.proveedores', compact("users","paises","categorias","retenciones","tipoPersonalidad"));
     }
 
     public function proveerdoresModelInsert(Request $request){
@@ -105,5 +118,55 @@ class Proveedores extends Component
             }
 
 
+    }
+
+    public function obtenerDepartamentos(Request $request){
+      
+        try {
+           
+            // $departamentos = Departamento::where('pais_id','=',$request['id'])
+            //                 ->SELECT("id","UPPER(nombre)")
+            //                 ->get();
+            $departamentos = DB::SELECT("
+            select id, CONCAT(UPPER(SUBSTRING(nombre,1,1)),LOWER(SUBSTRING(nombre,2))) as 'nombre' from departamento where pais_id=".$request['id']."
+            ");
+
+
+            return response()->json([
+                "departamentos" => $departamentos,
+            ],200);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                "message" => "Ha ocurrido un error al obtener los departamentos",
+                "error" => $e
+            ],402);
+          
+        }
+    }
+
+    public function obtenerMunicipios(Request $request){
+      
+        try {
+           
+            // $departamentos = Departamento::where('pais_id','=',$request['id'])
+            //                 ->SELECT("id","UPPER(nombre)")
+            //                 ->get();
+            $municipios = DB::SELECT("
+            select id, CONCAT(UPPER(SUBSTRING(nombre,1,1)),LOWER(SUBSTRING(nombre,2))) as 'nombre' from municipio where departamento_id=".$request['id']."
+            ");
+
+
+            return response()->json([
+                "departamentos" => $municipios,
+            ],200);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                "message" => "Ha ocurrido un error al obtener los municipios",
+                "error" => $e
+            ],402);
+          
+        }
     }
 }

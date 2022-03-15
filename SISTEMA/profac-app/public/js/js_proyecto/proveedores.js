@@ -19,7 +19,7 @@
 //     });
 //   });
 
-console.log("llega el js");
+//console.log("llega el js");
 $(document).on('submit', '#bodegaCreacion', function(event){
     event.preventDefault();
 
