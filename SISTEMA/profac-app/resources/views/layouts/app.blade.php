@@ -59,10 +59,12 @@
         <!-- Page Content -->
 
         <div id="page-wrapper" class="gray-bg">
+
             <div class="wrapper wrapper-content animated fadeInRight">
 
-                <main>
 
+                <main >{{--
+                    <img src="{{ asset('img/LOGO_VALENCIA.jpg') }}" alt=""> --}}
                         {{ $slot }}
 
                 </main>
