@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-jet-authentication-card  class="animate__animated">
+    <x-jet-authentication-card  class="animate__animated" style="border-block-color: 00000000;">
         <x-slot name="logo" >
             {{-- <x-jet-authentication-card-logo /> --}}
             <img class="rounded-full object-cover animate__animated animate__fadeInDown animate__fadeInLeft" height="300px" width="300px"
