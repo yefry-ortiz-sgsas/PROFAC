@@ -38,6 +38,9 @@ Route::get('/proveedores', Proveedores::class);
 Route::post('/proveedores/crear',  [Proveedores::class, 'proveerdoresModelInsert']);
 Route::post('/proveedores/obeter/departamentos', [Proveedores::class, 'obtenerDepartamentos']);
 Route::post('/proveedores/obeter/municipios', [Proveedores::class, 'obtenerMunicipios']);
+Route::get('/proveedores/listar/proveedores', [Proveedores::class, 'listarProveedores']);
+Route::post('/proveedores/desactivar', [Proveedores::class, 'desactivarProveedor']);
+
 
 
 

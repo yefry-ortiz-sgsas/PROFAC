@@ -136,8 +136,8 @@
                             // });
 
                             Swal.fire(
-                                '!Eliminado!',
-                                'El contrato ha sido eliminado.',
+                                'Desactivado!',
+                                'La bodega a sido desactivada con exito.',
                                 'success'
                             )
 

@@ -16,6 +16,8 @@ use App\Models\Departamento;
 use App\Models\TipoPersonalidad;
 use App\Models\Categoria;
 use App\Models\Retenciones;
+use App\Models\RetencionesProveedores;
+use DataTables;
 
 
 
@@ -41,11 +43,8 @@ class Proveedores extends Component
                 'nombre_prov' => 'required',
                 'direccion_prov' => 'required',
                 'contacto_prov' => 'required',
-                'telefono_prov' => 'required',
-                'telefono_prov_2' => 'required',
-                'rtn_prov' => 'required',
-                'pais_prov' => 'required',
-                'depto_prov' => 'required',
+                'telefono_prov' => 'required',               
+                'rtn_prov' => 'required',   
                 'municipio_prov' => 'required',
                 'giro_neg_prov' => 'required',
                 'categoria_prov' => 'required',
@@ -57,9 +56,7 @@ class Proveedores extends Component
                 'contacto_prov' => 'Contacto es requerido',
                 'telefono_prov' => 'Telefono es requerido',
                 'telefono_prov_2' => 'Telefono 2 es requerido',
-                'rtn_prov' => 'RTN es requerido',
-                'pais_prov' => 'País es requerido',
-                'depto_prov' => 'Departamento es requerido',
+                'rtn_prov' => 'RTN es requerido',     
                 'municipio_prov' => 'Municipio es requerido',
                 'giro_neg_prov' => 'Giro es requerido',
                 'categoria_prov' => 'Categoria es requerido',
@@ -88,15 +85,26 @@ class Proveedores extends Component
                 $crearProveedores->correo_1=$request->correo_prov;
                 $crearProveedores->correo_2=$request->correo_prov_2;
                 $crearProveedores->rtn=$request->rtn_prov;
-                $crearProveedores->pais=$request->pais_prov;
-                $crearProveedores->departamento=$request->depto_prov;
-                $crearProveedores->municipio=$request->municipio_prov;
-                $crearProveedores->giro=$request->giro_neg_prov;
-                $crearProveedores->categoria=$request->categoria_prov;
-                $crearProveedores->retencion=$request->retencion_prov;
-                $crearProveedores->registrado_por=Auth::user()->id;
+                $crearProveedores->registrado_por=Auth::user()->id;              
+                $crearProveedores->municipio_id=$request->municipio_prov;
+                $crearProveedores->tipo_personalidad_id=$request->giro_neg_prov;
+                $crearProveedores->categoria_id=$request->categoria_prov;  
                 $crearProveedores->estado_id=1;
                 $crearProveedores->save();
+
+                if($request->retencion_prov != 1){
+                    $retencionesProveedor = new RetencionesProveedores;
+                    $retencionesProveedor->retenciones_id = $request->retencion_prov;
+                    $retencionesProveedor->proveedores_id = $crearProveedores->id;
+                    $retencionesProveedor->save();
+                }
+
+
+                
+
+
+
+                //$crearProveedores->retencion=$request->retencion_prov;
 
                 DB::commit();
 
@@ -168,5 +176,149 @@ class Proveedores extends Component
             ],402);
           
         }
+    }
+
+    public function listarProveedores(){
+        try {
+         $listaProveedores = DB::SELECT("
+         select
+         id,
+         codigo,
+         nombre,
+         direccion,
+         contacto,
+         correo_1,
+         rtn,
+         estado_id,
+         (select retenciones_id from retenciones_has_proveedores where (retenciones_has_proveedores.proveedores_id = proveedores.id and retenciones_id = 2)  ) as 'uno_porciento'    
+     from proveedores 
+
+            ");
+
+            return Datatables::of($listaProveedores)
+            ->addColumn('opciones', function ($listaProveedores) {
+                   
+                    
+                    if($listaProveedores->estado_id === 1){
+
+                        return
+
+                        '
+                        <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start"
+                            style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                            <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                                    Editar</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="desactivarProveedor('.$listaProveedores->id.')"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                    Desactivar </a></li>
+        
+                        </ul>
+                    </div>
+                        ';
+
+
+                    }else{
+
+                        return
+
+                        
+                        '
+                        <div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start"
+                            style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                            <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                                    Editar</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="activarProveedor('.$listaProveedores->id.')"> <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                                    Activar </a></li>
+        
+                        </ul>
+                    </div>
+                        ';
+
+                    }
+            
+                    
+                    
+
+            })
+            ->addColumn('retencion', function ($listaProveedores) {
+                if ($listaProveedores->uno_porciento) {
+                    return '<td><span class="badge bg-primary">Retencion</span></td>';
+                } else {
+    
+                    return '<td><span class="badge bg-danger">Sin Retencion</span></td>';
+                }
+    
+                    })
+            ->addColumn('estado', function ($listaProveedores) {
+                if ($listaProveedores->estado_id === 1) {
+                    return '<td><span class="badge bg-primary">ACTIVO</span></td>';
+                } else {
+    
+                    return '<td><span class="badge bg-danger">INACTIVO</span></td>';
+                }
+    
+                    })    
+           
+            ->rawColumns(['opciones','retencion','estado'])         
+            ->make(true);
+
+
+        } catch (QueryException $e) {
+        
+            return response()->json([
+                'message' => 'Ha ocurrido un error, por favor intente de nuevo.',               
+                'exception' => $e,
+            ],402);
+            
+        }
+    }
+
+    public function desactivarProveedor(Request $request){
+
+        try {
+
+            $proveedorEstado = Modelproveedores::find($request['id']);
+
+            if($proveedorEstado->estado_id === 1){
+                $proveedor = Modelproveedores::find($request['id']); 
+                $proveedor->estado_id = 2;            
+                $proveedor->save();
+
+                return response()->json([
+                    "message" => "Desactivado con exito"
+                ],200);
+
+            }else{
+
+                $proveedor = Modelproveedores::find($request['id']); 
+                $proveedor->estado_id = 1;            
+                $proveedor->save();
+
+                return response()->json([
+                    "message" => "Activado con exito"
+                ],200);
+
+            }
+
+
+
+
+
+
+
+          
+        } catch (QueryException $e) {
+            return response()->json([
+                "message" => "Error al desactivar",
+                "error" => $e
+            ],402);
+            
+        }
+
     }
 }

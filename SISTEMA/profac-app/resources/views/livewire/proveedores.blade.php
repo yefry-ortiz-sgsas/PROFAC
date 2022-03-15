@@ -39,12 +39,15 @@
                             <table id="tbl_proveedoresListar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th># de Bodega</th>
                                         <th>Codigo</th>
+                                        <th>Nombre</th>
                                         <th>Dirreción</th>
-                                        <th>Encargado</th>
+                                        <th>Contacto</th>
+                                        <th>Correo</th>
+                                        <th>RTN</th>
+                                        <th>Retencion 1%</th>
                                         <th>Estado</th>
-                                        <th>Opciones</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,50 +139,50 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Departamento</label>
-                                <select class="form-group form-control" name="depto_prov" id="depto_prov" onchange="obtenerMunicipios()">
-                                    <option selected>---Seleccione una opción---</option>
-                                    <option value="1">opción 1</option>
-                                    <option value="2">opción 2</option>
+                                <select class="form-group form-control" name="depto_prov" id="depto_prov"
+                                    onchange="obtenerMunicipios()">
+                                    <option selected disabled>---Seleccione un Departamento---</option>
+
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Municipio</label>
-                                <select class="form-group form-control" name="municipio_prov" id="municipio_prov" >
-                                    <option selected>Seleccione una opción</option>
-                                    <option value="1">opción 1</option>
-                                    <option value="2">opción 2</option>
+                                <select class="form-group form-control" name="municipio_prov" id="municipio_prov"
+                                    data-parsley-required>
+                                    <option selected disabled>---Seleccione un municipio---</option>
+
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Tipo de Personalidad </label>
                                 <select class="form-group form-control" name="giro_neg_prov" id="giro_neg_prov"
-                                    required>
-                                    <option disabled selected >---Seleccione una opción---</option>
+                                    data-parsley-required>
+                                    <option disabled selected>---Seleccione una opción---</option>
                                     @foreach ($tipoPersonalidad as $user)
-                                    <option value="{{ $user->id }}">{{ $user->nombre }}</option>
-                                @endforeach
-                                   
+                                        <option value="{{ $user->id }}">{{ $user->nombre }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Categoría</label>
                                 <select class="form-group form-control" name="categoria_prov" id="categoria_prov"
-                                    required>
-                                    <option selected>---Seleccione una opción---</option>
+                                    data-parsley-required>
+                                    <option selected disabled>---Seleccione una opción---</option>
                                     @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                                @endforeach
+                                        <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="col-md-4">
                                 <label class="col-form-label focus-label">Retenciones </label>
                                 <select class="form-group form-control" name="retencion_prov" id="retencion_prov"
-                                    required>
-                                    <option selected>---Seleccione una opción---</option>
+                                    data-parsley-required>
+                                    <option selected disabled>---Seleccione una opción---</option>
                                     @foreach ($retenciones as $retencion)
-                                    <option value="{{ $retencion->id }}">{{ $retencion->nombre }}</option>
-                                @endforeach
+                                        <option value="{{ $retencion->id }}">{{ $retencion->nombre }}</option>
+                                    @endforeach
 
 
                                 </select>
@@ -222,19 +225,19 @@
 
             axios.post('/proveedores/obeter/departamentos', datos)
                 .then(function(response) {
-                   
-                   let array = response.data.departamentos;
-                   let html = "";
 
-                   array.forEach(departamento => {
+                    let array = response.data.departamentos;
+                    let html = "";
 
-                   html+=
-                   `
+                    array.forEach(departamento => {
+
+                        html +=
+                            `
                     <option value="${ departamento.id }">${departamento.nombre}</option>   
-                   `                       
-                   });
+                   `
+                    });
 
-                   document.getElementById("depto_prov").innerHTML = html;
+                    document.getElementById("depto_prov").innerHTML = html;
 
 
                 })
@@ -253,28 +256,30 @@
 
         }
 
-        function obtenerMunicipios(){
-                //municipio_prov
-                var id = document.getElementById("depto_prov").value;
+        function obtenerMunicipios() {
+            //municipio_prov
+            var id = document.getElementById("depto_prov").value;
 
-                let datos = { "id":id }
-                
+            let datos = {
+                "id": id
+            }
 
-                axios.post('/proveedores/obeter/municipios', datos)
+
+            axios.post('/proveedores/obeter/municipios', datos)
                 .then(function(response) {
-                   
-                   let array = response.data.departamentos;
-                   let html = "";
 
-                   array.forEach(municipio => {
+                    let array = response.data.departamentos;
+                    let html = "";
 
-                   html+=
-                   `
+                    array.forEach(municipio => {
+
+                        html +=
+                            `
                     <option value="${ municipio.id }">${municipio.nombre}</option>   
-                   `                       
-                   });
+                   `
+                    });
 
-                   document.getElementById("municipio_prov").innerHTML = html;
+                    document.getElementById("municipio_prov").innerHTML = html;
 
 
                 })
@@ -290,9 +295,206 @@
                 })
 
         }
-    </script>
 
-    <script src="{{ asset('js/js_proyecto/proveedores.js') }}"></script>
+        $(document).ready(function() {
+            $('#tbl_proveedoresListar').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                },
+                pageLength: 10,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [{
+                        extend: 'copy'
+                    },
+                    {
+                        extend: 'csv'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'ExampleFile'
+                    },
+                    {
+                        extend: 'pdf',
+                        title: 'ExampleFile'
+                    },
+
+                    {
+                        extend: 'print',
+                        customize: function(win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "ajax": "/proveedores/listar/proveedores",
+                "columns": [{
+                        data: 'id'
+                    },
+                    {
+                        data: 'nombre'
+                    },
+                    {
+                        data: 'direccion'
+                    },
+                    {
+                        data: 'contacto'
+                    },
+                    {
+                        data: 'correo_1'
+                    },
+                    {
+                        data: 'rtn'
+                    },
+                    {
+                        data: 'retencion'
+                    },
+                    {
+                        data: 'estado'
+                    },
+                    {
+                        data: 'opciones'
+                    },
+                ]
+
+
+            });
+        })
+
+
+        $(document).on('submit', '#bodegaCreacion', function(event) {
+            event.preventDefault();
+
+        });
+
+        $(document).on('submit', '#proveedorCreacionForm', function(event) {
+
+            event.preventDefault();
+            crearProveedores();
+
+        });
+
+
+        function crearProveedores() {
+            var data = new FormData($('#proveedorCreacionForm').get(0));
+
+            $.ajax({
+                type: "POST",
+                url: "/proveedores/crear",
+                data: data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: "json",
+                success: function(data) {
+
+
+                    document.getElementById("proveedorCreacionForm").reset();
+                    $('#modal_proveedores_crear').modal('hide');
+
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: "Proveedor creado con exito."
+                    })
+
+                    $('#tbl_proveedoresListar').DataTable().ajax.reload();
+
+
+
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR.responseJSON.message);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: jqXHR.responseJSON.message
+                    })
+                }
+            });
+        }
+
+        function desactivarProveedor(id) {
+
+
+            Swal.fire({
+                title: '¿Esta seguro de desactivar este proveedor?',
+                text: "¡Si desactiva este proveedor, ya no podrá ingresar o almacenar productos con este proveedor.!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, Desactivar proveedor!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+
+                    axios.post('/proveedores/desactivar', {
+                            "id": id
+                        })
+                        .then(function(response) {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito!',
+                                text: "Proveedor desactivado con exito."
+                            })
+
+                            $('#tbl_proveedoresListar').DataTable().ajax.reload();
+
+                        })
+                        .catch(function(error) {
+                            // handle error
+                            console.log(error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: "Ha ocurrido un error al desactivar el proveedor."
+                            })
+                        })
+
+
+
+
+
+                }
+            })
+
+
+        }
+
+        function activarProveedor(id) {
+            axios.post('/proveedores/desactivar', {
+                    "id": id
+                })
+                .then(function(response) {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: "Proveedor Activado con exito."
+                    })
+
+                    $('#tbl_proveedoresListar').DataTable().ajax.reload();
+
+                })
+                .catch(function(error) {
+                    // handle error
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: "Ha ocurrido un error al Activar el proveedor."
+                    })
+                })
+
+        }
+    </script>
 @endpush
 
 </div>
