@@ -9,7 +9,7 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <iframe frameborder=0 width="100%" height="2750" src="https://analytics.zoho.com/open-view/1750616000003430418"></iframe>
+                {{-- <iframe frameborder=0 width="100%" height="2750" src="https://analytics.zoho.com/open-view/1750616000003430418"></iframe> --}}
             </div>
         </div>
     </div>
