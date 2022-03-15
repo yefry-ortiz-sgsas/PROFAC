@@ -262,7 +262,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="/Dashboard"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
+                        <a href="{{ route('dashboard') }}"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
                             <span class="fa arrow"></span></a>
                         {{-- <ul class="nav nav-second-level">
                             <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
