@@ -34,7 +34,8 @@ class BodegaEditar extends Component
                 bodega.id as 'codigo',
                 bodega.direccion,
                 users.name as 'encargado',
-                estado.descripcion as 'estado'
+                estado.descripcion as 'estado',
+                bodega.estado_id as 'estado_id'
                 from bodega
                 inner join users
                 on users.id = bodega.encargado_bodega
@@ -45,20 +46,52 @@ class BodegaEditar extends Component
 
             return Datatables::of($listaBodegas)
             ->addColumn('opciones', function ($listaBodegas) {
+
+                if($listaBodegas->estado_id == 1){
+
                     return '
                     <div class="btn-group">
                     <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                         más</button>
                     <ul class="dropdown-menu" x-placement="bottom-start"
                         style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                        <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
-                                Editar</a></li>
+
                         <li><a class="dropdown-item" href="#" onclick="desactivarBodega('.$listaBodegas->codigo.')"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
                                 Desactivar </a></li>
+
+                        <li><a class="dropdown-item" href="#" onclick="obtenerDatosBodega('.$listaBodegas->codigo.')"> <i
+                            class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                        Editar </a></li>
+                        
+                        
     
                     </ul>
                 </div>
                     ';
+
+                }else{
+
+                    return '
+                    <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                        más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start"
+                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                        <li><a class="dropdown-item" href="#" onclick="activarBodega('.$listaBodegas->codigo.')"> <i class="fa fa-check-circle text-info" aria-hidden="true"></i>
+                                Activar </a></li>
+
+                                <li><a class="dropdown-item" href="#" onclick="obtenerDatosBodega('.$listaBodegas->codigo.')"> <i
+                                class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                            Editar </a></li>
+    
+                    </ul>
+                </div>
+                    ';
+
+                }
+                
+
             })
             ->addColumn('estado_bodega', function ($listaBodegas) {
                 if ($listaBodegas->estado === 'activo') {
@@ -87,12 +120,89 @@ class BodegaEditar extends Component
     public function desactivarBodega(Request $request){
         try {
 
-            
+            $estadoBodega = modelBodega::find($request['id']);
+
+            if($estadoBodega->estado_id == 1){
+
+                $bodega = modelBodega::find($request['id']);
+                $bodega->estado_id = 2;
+                $bodega->save();
+    
+                return response()->json([
+                    "message" => "Editado con exito"
+                ],200);
+
+            }else {
+
+                $bodega = modelBodega::find($request['id']);
+                $bodega->estado_id = 1;
+                $bodega->save();
+    
+                return response()->json([
+                    "message" => "Editado con exito"
+                ],200);
+                
+            }
+
+           
+
          
         } catch (QueryException $e) {
+
+            return response()->json([
+                "message" => "Ha ocurrido un error",
+                "error" => $e,
+            ],402);
+
            
         }
 
+    }
+
+    public function obtenerDatos(Request $request){
+        try {
+
+            $datosBodega = DB::SELECT("
+            select
+                id,
+                nombre,
+                direccion,
+                encargado_bodega
+            from bodega where id =".$request['id']."
+            ");
+
+            $secciones = DB::SELECT("
+
+            select 
+                id,
+                concat('seccion ',descripcion) as descripcion,
+                estado_id
+            from seccion
+            where id_bodega = ".$datosBodega[0]->id."
+            
+            ");
+
+            $usuarios = DB::SELECT("
+            select 
+                id,
+                name
+            from users
+            ");
+
+            return response()->json([
+            "datosBodega"=> $datosBodega[0],
+            "secciones" => $secciones,
+            "usuarios" => $usuarios,
+            ],200);
+          
+        } catch (QueryException $e) {
+
+            return response()->json([
+                "message" => "Ha ocurrido un error.",
+                "error" => $e
+            ],402);
+         
+        }
     }
 
 

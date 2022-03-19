@@ -12,14 +12,14 @@
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg') format('svg');
 }
 
-#page-wrapper img{
+/* #page-wrapper img{
     position: absolute;
     background-repeat: no-repeat;
     margin-top: 130px;
     margin-left: -10px;
     background-position: center center center center;
 
-  }
+  } */
 
 
 
@@ -885,8 +885,11 @@ h5 {
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-  background-color: #EC401B;
+ /* background-color: #EC401B;*/
   color: white;
+  font-weight: bold;
+   background: #b6b4b33f; 
+
 }
 .nav .open > a,
 .nav .open > a:hover,
@@ -1013,7 +1016,7 @@ h5 {
 /*HEADER DONDE SALE LA FOTO DE PERFIL*/
 .nav-header {
   padding: 33px 25px;
-  background-color: #EC401B;
+  /*background-color: #EC401B;*/
   /* background-image: url("patterns/header-profile.png"); */
 }
 .caret {
@@ -1033,7 +1036,7 @@ h5 {
   transition: all 0.4s;
 }
 ul.nav-second-level {
-  background: #EC5F35;
+  /* background: #b6b4b33f; */
 }
 
 /*ITEMS YA SELECCIONADOSA*/
@@ -4390,10 +4393,12 @@ samp {
 }
 body {
   font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #F15533;
+  /* background-color: #F15533; */
   font-size: 13px;
   color: #676a6c;
   overflow-x: hidden;
+  background: rgb(154,49,26);
+background: linear-gradient(90deg, rgba(154,49,26,1) 0%, rgba(241,85,51,1) 35%, rgba(255,108,75,1) 100%);
 }
 html,
 body {
@@ -9569,4 +9574,9 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
+}
+
+.fondo-menu{
+  background: rgb(154,49,26);
+background: linear-gradient(90deg, rgba(154,49,26,1) 0%, rgba(241,85,51,1) 35%, rgba(255,108,75,1) 100%);
 }

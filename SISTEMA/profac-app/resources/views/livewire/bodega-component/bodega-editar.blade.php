@@ -1,4 +1,7 @@
 <div>
+    @push('styles')
+        <link href="{{ asset('css/plugins/switchery/switchery.css') }}" rel="stylesheet">
+    @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>Lista de Bodegas</h2>
@@ -37,12 +40,83 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal para editar Bodega-->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Editar Bodega</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12 b-r">
+
+                                    <div class="form-group">
+                                        <label for="editBodegaNombre">Nombre</label>
+                                        <input id="editBodegaNombre" name="editBodegaNombre" type="text"
+                                            placeholder="Nombre de bodega" class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="editBodegaDireccion">Direccion</label>
+                                        <input id="editBodegaDireccion" name="editBodegaDireccion" type="text"
+                                            placeholder="Direccion de bodega" class="form-control">
+                                    </div>
+
+
+                                    <div>
+                                        <label for="editEncargadoBodega">Encargado de bodega</label>
+                                        <select id="editEncargadoBodega" name="editEncargadoBodega"
+                                            class="form-control m-b" data-parsley-required>
+                                            <option value="0" selected disabled>Seleccione un encargado</option>
+
+
+                                        </select>
+
+                                    </div>
+
+
+
+                                    <div id="contenedorSwich">
+                                       
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
         {{-- Care about people's approval and you will be their prisoner. --}}
 
 
         @push('scripts')
+            <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
             <script>
+            this.convertirSwitechs();    
+                function convertirSwitechs() {
+                    //     var elem = document.querySelector('.js-switch');
+                    // var switchery = new Switchery(elem, { color: '#1AB394',size: 'small' });
+
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+                    elems.forEach(function(html) {
+                        var switchery = new Switchery(html,{ color: '#1AB394',size: 'small' });
+                    });
+                }
+
                 $(document).ready(function() {
                     $('#tbl_bodegaEditar').DataTable({
                         "language": {
@@ -104,7 +178,7 @@
                 })
 
 
-                function desactivarBodega() {
+                function desactivarBodega(id) {
 
                     Swal.fire({
                         title: '¿Esta seguro de desactivar esta bodega?',
@@ -117,35 +191,156 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
 
-                            //    ajax para eliminar el contrato
-                            // $.ajax({
-                            //     type: "GET",
-                            //     url: "/contratos/elimina/" + id,
-                            //     contentType: false,
-                            //     cache: false,
-                            //     processData: false,
-                            //     dataType: "json",
-                            //     success: function(data) {
 
-                            //         $('#tbl_bodegaEditar').DataTable().ajax.reload();
+                            axios.post("/bodega/desactivar", {
+                                    "id": id
+                                })
+                                .then(response => {
 
-                            //     },
-                            //     error: function(jqXHR, textStatus, errorThrown) {
-                            //         console.log(jqXHR, textStatus, errorThrown);
-                            //     }
-                            // });
 
-                            Swal.fire(
-                                'Desactivado!',
-                                'La bodega a sido desactivada con exito.',
-                                'success'
-                            )
+                                    Swal.fire(
+                                        'Desactivado!',
+                                        'La bodega a sido desactivada con exito.',
+                                        'success'
+                                    )
+
+                                    $('#tbl_bodegaEditar').DataTable().ajax.reload();
+                                })
+                                .catch(error => {
+
+                                    Swal.fire(
+                                        'Error!',
+                                        'Ha ocurrido un error al desactivar la bodega.',
+                                        'error',
+
+                                    )
+
+                                })
+
+
+
 
                         }
                     })
 
                 }
+
+                function activarBodega(id) {
+                    axios.post("/bodega/desactivar", {
+                            "id": id
+                        })
+                        .then(response => {
+
+
+                            Swal.fire(
+                                'Activado!',
+                                'La bodega a sido activada con exito.',
+                                'success'
+                            )
+
+                            $('#tbl_bodegaEditar').DataTable().ajax.reload();
+                        })
+                        .catch(error => {
+
+                            Swal.fire(
+                                'Error!',
+                                'Ha ocurrido un error al activar la bodega.',
+                                'error',
+
+                            )
+
+                        })
+                }
+
+                function obtenerDatosBodega(id){
+                    axios.post("/bodega/datos",{"id":id})
+                    .then( response => {
+                        let datos =response.data;
+                        console.log(datos.secciones);
+                       
+
+                        document.getElementById("editBodegaNombre").value = datos.datosBodega.nombre;
+                        document.getElementById("editBodegaDireccion").value = datos.datosBodega.direccion;
+
+                        let array = datos.usuarios;
+                        let htmlSelect = "";
+
+                        array.forEach( element => {
+
+                            if(element.id == datos.datosBodega.encargado_bodega){
+                       
+                                htmlSelect +=
+                            `
+                               <option value="${element.id}" selected>${element.name}</option>                            
+                            `;
+                            }else{
+
+                                htmlSelect +=
+                            `
+                               <option value="${element.id}">${element.name}</option>                            
+                            `;
+
+                            }
+
+
+                        });
+
+                        document.getElementById("editEncargadoBodega").innerHTML = htmlSelect;
+
+
+                        let arraySecciones = datos.secciones;
+                        let htmlCheckbox ="";
+
+                        arraySecciones.forEach( element =>{
+                            if(element.estado_id == 1){
+                                htmlCheckbox +=
+                                `
+                                <div class="my-2">
+                                            
+                                        <input value ="${element.id}"  type="checkbox" class="js-switch"  checked />
+                                        <label for="" class="ml-2">${element.descripcion}</label>   
+                                </div>
+                                
+                                `
+
+
+                            }else{
+                                htmlCheckbox +=
+                                `
+                                <div class="my-2">
+                                            
+                                        <input  type="checkbox" class="js-switch"  />
+                                        <label for="" class="ml-2">Seccion 1</label>   
+                                </div>
+                                
+                                `
+                            }
+                           
+                        });
+
+
+                        document.getElementById("contenedorSwich").innerHTML = htmlCheckbox;
+                        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));                        
+                        elems.forEach(function(html) {
+                            var switchery = new Switchery(html,{ color: '#1AB394',size: 'small' });
+                        });
+
+                        $('#exampleModal').modal('show');
+                                                
+
+                 
+
+
+                        
+
+
+
+                    })
+
+
+                }
             </script>
+            <!-- Switchery -->
         @endpush
 
     </div>

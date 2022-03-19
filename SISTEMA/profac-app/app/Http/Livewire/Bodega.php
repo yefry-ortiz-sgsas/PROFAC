@@ -30,16 +30,12 @@ class Bodega extends Component
         $validator = Validator::make($request->all(), [
             'bodega' => 'required',
             'direccionBodega' => 'required',
-            'encargadoBodega' => 'required',
-            'bodegaNumEstant' => 'required',
-            'bodegaNumRepisa' => 'required',
+            'encargadoBodega' => 'required',          
             'bodegaNumSec' => 'required',
         ], [
             'bodega' => 'Fecha es requerida',
             'direccionBodega' => 'Médico es requerido',
             'encargadoBodega' => 'Clínica es requerida',
-            'bodegaNumEstant' => 'Id de paciente es requerido',
-            'bodegaNumRepisa' => 'Tipo de atención es requerido',
             'bodegaNumSec' => 'Tipo de atención es requerido',
         ]);
 
@@ -62,31 +58,16 @@ class Bodega extends Component
             $crearBodega->estado_id = 1;
             $crearBodega->save();
 
-            for ($i=1; $i <= $request['bodegaNumEstant']; $i++) { 
+            for ($i=1; $i <= $request['bodegaNumSec']; $i++) { 
 
-                $crearEstante = new Estante;
-                $crearEstante->nombre = $i;
+                $crearEstante = new Seccion;
+                $crearEstante->descripcion = $i;
+                $crearEstante->estado_id = '1';
                 $crearEstante->id_bodega=  $crearBodega->id;
                 $crearEstante->save();
                 
 
-                        for ($j=1; $j <= $request['bodegaNumRepisa']; $j++) { 
-                            array_push( $array , [$crearEstante->id]);                            
-                            $crearRepisa = new Repisa;
-                            $crearRepisa->nombre = $j;
-                            $crearRepisa->id_estante = $crearEstante->id; 
-                            $crearRepisa->save();
-
-                                    for ($z=1; $z <=$request['bodegaNumSec'] ; $z++) { 
-                                        $crearSeccion = new Seccion;
-                                        $crearSeccion->nombre =$i;
-                                        $crearSeccion->repisa_id =   $crearRepisa->id;
-                                        $crearSeccion->save();  
-                                        
-                                    }
-
-
-                        }
+                     
 
             }
 
