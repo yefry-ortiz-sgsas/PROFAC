@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-03-2022 a las 02:59:48
+-- Tiempo de generación: 19-03-2022 a las 22:33:48
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -42,11 +42,7 @@ CREATE TABLE `bodega` (
 --
 
 INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `created_at`, `updated_at`, `encargado_bodega`, `estado_id`) VALUES
-(1, 'Bodega 1', 'Tegucigalpa', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(2, 'Bodega 2', 'Tegucigalpa', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 3, 1),
-(3, 'Bodega 2', 'Tegucigalpa', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 3, 1),
-(4, 'Bodega 5', 'Tegucigalpa', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 2, 1),
-(5, 'Bodega 6', 'Tegucigalpa, col. la joya', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 2, 1);
+(3, 'Bodega 1', 'Tegucigalpa', '2022-03-19 05:57:19', '2022-03-19 21:29:13', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -57,8 +53,8 @@ INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `created_at`, `updated_at`, `
 CREATE TABLE `categoria` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -128,38 +124,6 @@ CREATE TABLE `estado` (
 INSERT INTO `estado` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES
 (1, 'activo', '2022-03-10 23:55:11', '2022-03-10 23:54:42'),
 (2, 'inactivo', '2022-03-10 23:55:11', '2022-03-10 23:54:42');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estante`
---
-
-CREATE TABLE `estante` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `id_bodega` int(11) NOT NULL,
-  `estado_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `estante`
---
-
-INSERT INTO `estante` (`id`, `nombre`, `created_at`, `updated_at`, `id_bodega`, `estado_id`) VALUES
-(1, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(2, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(3, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(4, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 2, 1),
-(5, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 2, 1),
-(6, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 3, 1),
-(7, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 3, 1),
-(8, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 4, 1),
-(9, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 5, 1),
-(10, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 5, 1),
-(11, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -590,7 +554,7 @@ CREATE TABLE `producto` (
 
 CREATE TABLE `proveedores` (
   `id` int(11) NOT NULL,
-  `codigo` varchar(45) NOT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   `nombre` varchar(45) NOT NULL,
   `direccion` varchar(45) NOT NULL,
   `contacto` varchar(45) NOT NULL,
@@ -604,69 +568,23 @@ CREATE TABLE `proveedores` (
   `municipio_id` int(11) NOT NULL,
   `tipo_personalidad_id` int(11) NOT NULL,
   `categoria_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `repisa`
---
-
-CREATE TABLE `repisa` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `id_estante` int(11) NOT NULL,
-  `estado_id` int(11) NOT NULL DEFAULT '1'
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `repisa`
+-- Volcado de datos para la tabla `proveedores`
 --
 
-INSERT INTO `repisa` (`id`, `nombre`, `created_at`, `updated_at`, `id_estante`, `estado_id`) VALUES
-(2, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(3, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(4, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(5, '4', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 1, 1),
-(6, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(7, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(8, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(9, '4', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(10, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(11, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(12, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(13, '4', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(14, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 4, 1),
-(15, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 4, 1),
-(16, '3', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 4, 1),
-(17, '4', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 4, 1),
-(18, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 5, 1),
-(19, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 5, 1),
-(20, '3', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 5, 1),
-(21, '4', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 5, 1),
-(22, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 6, 1),
-(23, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 6, 1),
-(24, '3', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 6, 1),
-(25, '4', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 6, 1),
-(26, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 7, 1),
-(27, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 7, 1),
-(28, '3', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 7, 1),
-(29, '4', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 7, 1),
-(30, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 8, 1),
-(31, '2', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 8, 1),
-(32, '3', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 8, 1),
-(33, '4', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 8, 1),
-(34, '5', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 8, 1),
-(35, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 9, 1),
-(36, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 9, 1),
-(37, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 10, 1),
-(38, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 10, 1),
-(39, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 11, 1),
-(40, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 11, 1);
+INSERT INTO `proveedores` (`id`, `codigo`, `nombre`, `direccion`, `contacto`, `telefono_1`, `telefono_2`, `correo_1`, `correo_2`, `rtn`, `registrado_por`, `estado_id`, `municipio_id`, `tipo_personalidad_id`, `categoria_id`, `created_at`, `updated_at`) VALUES
+(1, '11101', 'Proveedor 1', 'comayaguela', 'Pedro', '+50489282146', '5569874', 'luisfaviles18@gmail.com', 'luisfaviles18@gmail.com', '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:31:28', '2022-03-15 13:02:25'),
+(2, '11101', 'Proveedor 1', 'comayaguela', 'Pedro', '+50489282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:32:42', '2022-03-15 13:02:22'),
+(4, '12', 'Proveedor 1', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '89282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:53:24', '2022-03-15 09:53:24'),
+(5, '12', 'Proveedor 1', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '89282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:53:41', '2022-03-15 09:53:41'),
+(6, '66', 'Proveedor 5', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:21:54', '2022-03-15 12:21:54'),
+(7, '66', 'Proveedor 5', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:22:04', '2022-03-15 12:22:04'),
+(8, '66', 'Proveedor 5', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:22:07', '2022-03-15 12:22:07'),
+(9, '663', 'Proveedor 8', 'Tegucigalpa', 'Juan Perez', '88996655', NULL, 'proveedor@gmail.com', NULL, '08011990568971', 3, 1, 10, 1, 1, '2022-03-15 12:23:56', '2022-03-15 13:02:28');
 
 -- --------------------------------------------------------
 
@@ -678,8 +596,8 @@ CREATE TABLE `retenciones` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `valor` double DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   `tipo_retencion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -688,7 +606,8 @@ CREATE TABLE `retenciones` (
 --
 
 INSERT INTO `retenciones` (`id`, `nombre`, `valor`, `created_at`, `updated_at`, `tipo_retencion_id`) VALUES
-(1, 'Retencion del 1%', 1, '2022-03-15 00:49:57', '2022-03-15 00:49:57', 2);
+(1, 'No aplica a retencion', 0, '2022-03-15 03:22:26', '2022-03-15 03:20:28', 2),
+(2, 'Retencion del 1%', 1, '2022-03-15 03:22:21', '2022-03-15 00:49:57', 2);
 
 -- --------------------------------------------------------
 
@@ -702,6 +621,17 @@ CREATE TABLE `retenciones_has_proveedores` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `retenciones_has_proveedores`
+--
+
+INSERT INTO `retenciones_has_proveedores` (`retenciones_id`, `proveedores_id`, `created_at`, `updated_at`) VALUES
+(2, 4, '2022-03-15 09:53:24', '2022-03-15 09:53:24'),
+(2, 6, '2022-03-15 12:21:54', '2022-03-15 12:21:54'),
+(2, 7, '2022-03-15 12:22:04', '2022-03-15 12:22:04'),
+(2, 8, '2022-03-15 12:22:07', '2022-03-15 12:22:07'),
+(2, 9, '2022-03-15 12:23:56', '2022-03-15 12:23:56');
 
 -- --------------------------------------------------------
 
@@ -725,177 +655,24 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `seccion` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `numeracion` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `repisa_id` int(11) NOT NULL,
-  `estado_id` int(11) NOT NULL DEFAULT '1'
+  `id_bodega` int(11) NOT NULL,
+  `estado_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `seccion`
 --
 
-INSERT INTO `seccion` (`id`, `nombre`, `created_at`, `updated_at`, `repisa_id`, `estado_id`) VALUES
-(1, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(2, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(3, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(4, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(5, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(6, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 2, 1),
-(7, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(8, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(9, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(10, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(11, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(12, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 3, 1),
-(13, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(14, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(15, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(16, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(17, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(18, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 4, 1),
-(19, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(20, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(21, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(22, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(23, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(24, '1', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 5, 1),
-(25, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(26, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(27, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(28, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(29, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(30, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 6, 1),
-(31, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(32, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(33, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(34, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(35, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(36, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 7, 1),
-(37, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(38, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(39, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(40, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(41, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(42, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 8, 1),
-(43, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(44, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(45, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(46, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(47, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(48, '2', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 9, 1),
-(49, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(50, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(51, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(52, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(53, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(54, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 10, 1),
-(55, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(56, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(57, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(58, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(59, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(60, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 11, 1),
-(61, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(62, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(63, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(64, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(65, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(66, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 12, 1),
-(67, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(68, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(69, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(70, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(71, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(72, '3', '2022-03-13 04:30:45', '2022-03-13 04:30:45', 13, 1),
-(73, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 14, 1),
-(74, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 14, 1),
-(75, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 14, 1),
-(76, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 15, 1),
-(77, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 15, 1),
-(78, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 15, 1),
-(79, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 16, 1),
-(80, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 16, 1),
-(81, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 16, 1),
-(82, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 17, 1),
-(83, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 17, 1),
-(84, '1', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 17, 1),
-(85, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 18, 1),
-(86, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 18, 1),
-(87, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 18, 1),
-(88, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 19, 1),
-(89, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 19, 1),
-(90, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 19, 1),
-(91, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 20, 1),
-(92, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 20, 1),
-(93, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 20, 1),
-(94, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 21, 1),
-(95, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 21, 1),
-(96, '2', '2022-03-14 06:42:53', '2022-03-14 06:42:53', 21, 1),
-(97, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 22, 1),
-(98, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 22, 1),
-(99, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 22, 1),
-(100, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 23, 1),
-(101, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 23, 1),
-(102, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 23, 1),
-(103, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 24, 1),
-(104, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 24, 1),
-(105, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 24, 1),
-(106, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 25, 1),
-(107, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 25, 1),
-(108, '1', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 25, 1),
-(109, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 26, 1),
-(110, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 26, 1),
-(111, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 26, 1),
-(112, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 27, 1),
-(113, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 27, 1),
-(114, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 27, 1),
-(115, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 28, 1),
-(116, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 28, 1),
-(117, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 28, 1),
-(118, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 29, 1),
-(119, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 29, 1),
-(120, '2', '2022-03-14 06:43:04', '2022-03-14 06:43:04', 29, 1),
-(121, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 30, 1),
-(122, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 30, 1),
-(123, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 30, 1),
-(124, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 31, 1),
-(125, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 31, 1),
-(126, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 31, 1),
-(127, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 32, 1),
-(128, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 32, 1),
-(129, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 32, 1),
-(130, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 33, 1),
-(131, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 33, 1),
-(132, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 33, 1),
-(133, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 34, 1),
-(134, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 34, 1),
-(135, '1', '2022-03-14 06:46:09', '2022-03-14 06:46:09', 34, 1),
-(136, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 35, 1),
-(137, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 35, 1),
-(138, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 35, 1),
-(139, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 35, 1),
-(140, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 36, 1),
-(141, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 36, 1),
-(142, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 36, 1),
-(143, '1', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 36, 1),
-(144, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 37, 1),
-(145, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 37, 1),
-(146, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 37, 1),
-(147, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 37, 1),
-(148, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 38, 1),
-(149, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 38, 1),
-(150, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 38, 1),
-(151, '2', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 38, 1),
-(152, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 39, 1),
-(153, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 39, 1),
-(154, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 39, 1),
-(155, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 39, 1),
-(156, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 40, 1),
-(157, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 40, 1),
-(158, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 40, 1),
-(159, '3', '2022-03-15 08:22:23', '2022-03-15 08:22:23', 40, 1);
+INSERT INTO `seccion` (`id`, `descripcion`, `numeracion`, `created_at`, `updated_at`, `id_bodega`, `estado_id`) VALUES
+(1, '1', NULL, '2022-03-19 05:57:19', '2022-03-19 05:57:19', 3, 1),
+(2, '2', NULL, '2022-03-19 05:57:19', '2022-03-19 05:57:19', 3, 1),
+(3, '3', NULL, '2022-03-19 05:57:19', '2022-03-19 05:57:19', 3, 1),
+(4, '4', NULL, '2022-03-19 05:57:19', '2022-03-19 05:57:19', 3, 1),
+(5, '5', NULL, '2022-03-19 05:57:19', '2022-03-19 05:57:19', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -917,7 +694,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('errzx0uP2Nset79xKTUDPFm8lRdimthbIxxmoOrs', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiRjhxTFJXMWRkdVBla3lGUUN0ckV4UlgwdmJGUUFzeWxzU0R2NDhxSSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ib2RlZ2EvZWRpdGFyL3NjcmVlbiI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1647312617);
+('bq4AKgjT5schj0pFNoMKp6NmcMn3WlzJU6Pcndoo', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTHhrWHp6RGVWR25KSEppcGRuQkl3dkl6ek9qdDdPTXVZZ0lveFlLMiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ib2RlZ2EvZWRpdGFyL3NjcmVlbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1647729163);
 
 -- --------------------------------------------------------
 
@@ -940,7 +717,8 @@ CREATE TABLE `teams` (
 
 INSERT INTO `teams` (`id`, `user_id`, `name`, `personal_team`, `created_at`, `updated_at`) VALUES
 (1, 2, 'Yefry\'s Team', 1, '2022-03-02 09:05:40', '2022-03-02 09:05:40'),
-(2, 3, 'Luis\'s Team', 1, '2022-03-07 12:42:26', '2022-03-07 12:42:26');
+(2, 3, 'Luis\'s Team', 1, '2022-03-07 12:42:26', '2022-03-07 12:42:26'),
+(3, 4, 'Usuario\'s Team', 1, '2022-03-16 01:01:19', '2022-03-16 01:01:19');
 
 -- --------------------------------------------------------
 
@@ -981,8 +759,8 @@ CREATE TABLE `team_user` (
 CREATE TABLE `tipo_personalidad` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1002,8 +780,8 @@ INSERT INTO `tipo_personalidad` (`id`, `nombre`, `created_at`, `updated_at`) VAL
 CREATE TABLE `tipo_retencion` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1045,6 +823,14 @@ CREATE TABLE `tipo_usuario` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `tipo_usuario`
+--
+
+INSERT INTO `tipo_usuario` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 'Administrador', '2022-03-15 17:17:08', NULL),
+(2, 'Vendedor', '2022-03-15 17:17:08', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1066,7 +852,7 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `id_tipo_user` int(11) DEFAULT NULL,
-  `tipo_usuario_id` int(11) NOT NULL,
+  `tipo_usuario_id` int(11) DEFAULT '1',
   `fecha_nacimiento` date DEFAULT NULL,
   `telefono` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1076,8 +862,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `identidad`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `id_tipo_user`, `tipo_usuario_id`, `fecha_nacimiento`, `telefono`) VALUES
-(2, NULL, 'Yefry Ortiz', 'yefryyo@gmail.com', NULL, '$2y$10$YgQRCumSehYxcGqjPKYL9e6hPVN.V8NmhwbFT6CqyWoF4bHGIf8Be', NULL, NULL, NULL, 1, NULL, '2022-03-02 09:05:40', '2022-03-02 09:05:41', 1, 0, NULL, NULL),
-(3, NULL, 'Luis Aviles', 'luisfaviles18@gmail.com', NULL, '$2y$10$sLRlJh1emN08ZivLDwkGRucTtMEs8Gb3MI.lRaDVfoz.x/pqmtCBC', NULL, NULL, NULL, 2, NULL, '2022-03-07 12:42:26', '2022-03-10 12:52:37', 1, 0, NULL, NULL);
+(2, '0801199612356', 'Yefry Ortiz', 'yefryyo@gmail.com', NULL, '$2y$10$YgQRCumSehYxcGqjPKYL9e6hPVN.V8NmhwbFT6CqyWoF4bHGIf8Be', NULL, NULL, NULL, 1, NULL, '2022-03-02 09:05:40', '2022-03-02 09:05:41', 1, 1, '1996-04-01', '22336699'),
+(3, '0822199500082', 'Luis Aviles', 'luisfaviles18@gmail.com', NULL, '$2y$10$sLRlJh1emN08ZivLDwkGRucTtMEs8Gb3MI.lRaDVfoz.x/pqmtCBC', NULL, NULL, NULL, 2, 'profile-photos/09uU5A5GK92E63prf9e3m4XZvn7zN8kvtC9nAOEi.jpg', '2022-03-07 12:42:26', '2022-03-20 00:44:50', 1, 1, '1995-03-16', '89282146'),
+(4, '0801199036544', 'Usuario', 'usuario.prueba@gmail.com', NULL, '$2y$10$KQ3DjX8eDhNcDN7qXhgTDuzMcgNL5B5RzAoRKKeL58i5c4tMcJg2O', NULL, NULL, NULL, 3, NULL, '2022-03-16 01:01:19', '2022-03-16 01:01:20', 1, 1, '2022-03-15', '88996655');
 
 --
 -- Índices para tablas volcadas
@@ -1109,14 +896,6 @@ ALTER TABLE `departamento`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `estante`
---
-ALTER TABLE `estante`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_estante_bodega1_idx` (`id_bodega`),
-  ADD KEY `fk_estante_estado1_idx` (`estado_id`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -1173,14 +952,6 @@ ALTER TABLE `proveedores`
   ADD KEY `fk_proveedores_categoria1_idx` (`categoria_id`);
 
 --
--- Indices de la tabla `repisa`
---
-ALTER TABLE `repisa`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_repisa_estante1_idx` (`id_estante`),
-  ADD KEY `fk_repisa_estado1_idx` (`estado_id`);
-
---
 -- Indices de la tabla `retenciones`
 --
 ALTER TABLE `retenciones`
@@ -1206,8 +977,8 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `seccion`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_seccion_repisa1_idx` (`repisa_id`),
-  ADD KEY `fk_seccion_estado1_idx` (`estado_id`);
+  ADD KEY `fk_estante_bodega1_idx` (`id_bodega`),
+  ADD KEY `fk_estante_estado1_idx` (`estado_id`);
 
 --
 -- Indices de la tabla `sessions`
@@ -1273,7 +1044,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `bodega`
 --
 ALTER TABLE `bodega`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -1292,12 +1063,6 @@ ALTER TABLE `departamento`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `estante`
---
-ALTER TABLE `estante`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -1339,19 +1104,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `repisa`
---
-ALTER TABLE `repisa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `retenciones`
 --
 ALTER TABLE `retenciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1363,13 +1122,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `seccion`
 --
 ALTER TABLE `seccion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_personalidad`
@@ -1393,13 +1152,13 @@ ALTER TABLE `tipo_user`
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -1419,13 +1178,6 @@ ALTER TABLE `departamento`
   ADD CONSTRAINT `fk_departamento_pais1` FOREIGN KEY (`pais_id`) REFERENCES `pais` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `estante`
---
-ALTER TABLE `estante`
-  ADD CONSTRAINT `fk_estante_bodega1` FOREIGN KEY (`id_bodega`) REFERENCES `bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estante_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Filtros para la tabla `municipio`
 --
 ALTER TABLE `municipio`
@@ -1440,13 +1192,6 @@ ALTER TABLE `proveedores`
   ADD CONSTRAINT `fk_proveedores_municipio1` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_proveedores_tipo_personalidad1` FOREIGN KEY (`tipo_personalidad_id`) REFERENCES `tipo_personalidad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_proveedores_users1` FOREIGN KEY (`registrado_por`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `repisa`
---
-ALTER TABLE `repisa`
-  ADD CONSTRAINT `fk_repisa_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_repisa_estante1` FOREIGN KEY (`id_estante`) REFERENCES `estante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `retenciones`
@@ -1465,8 +1210,8 @@ ALTER TABLE `retenciones_has_proveedores`
 -- Filtros para la tabla `seccion`
 --
 ALTER TABLE `seccion`
-  ADD CONSTRAINT `fk_seccion_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_seccion_repisa1` FOREIGN KEY (`repisa_id`) REFERENCES `repisa` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_estante_bodega1` FOREIGN KEY (`id_bodega`) REFERENCES `bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_estante_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `users`
