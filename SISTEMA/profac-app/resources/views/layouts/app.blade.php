@@ -13,16 +13,13 @@
     @stack('styles')
     <!-- Styles -->
 
-      <!-- ApexChart -->
-      
-      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    
- 
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}"> 
+    <!-- ApexChart -->
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
@@ -50,34 +47,36 @@
 </head>
 
 <body>
-    <x-jet-banner />
-
-    <div id="wrapper" class="">
+    {{-- <x-jet-banner /> --}}
 
 
-        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
+
+    <!--Menu lateral-->
+    
+   
         @livewire('navigation-menu')
+  
+  
+
+    
 
 
-        <!-- Page Heading -->
 
+        <div id="wrapper" class="" >
 
-        <!-- Page Content -->
+            <!-- Page Content -->
+            <div id="page-wrapper" class="gray-bg" style="margin-top:65px">
 
-        <div id="page-wrapper" class="gray-bg">
+                <div class="wrapper wrapper-content animated fadeInRight">
 
-            <div class="wrapper wrapper-content animated fadeInRight">
-
-
-                <main >{{--
-                    <img src="{{ asset('img/LOGO_VALENCIA.jpg') }}" alt=""> --}}
+                    <main  >{{-- <img src="{{ asset('img/LOGO_VALENCIA.jpg') }}" alt=""> --}}
                         {{ $slot }}
 
-                </main>
+                    </main>
+
+                </div>
 
             </div>
-
-
 
 
         </div>
@@ -85,12 +84,8 @@
 
 
 
-    </div>
-
-
-
-     <!-- Mainly scripts -->
-     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     {{-- <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script> version original de la plantilla --}}
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

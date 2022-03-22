@@ -1,6 +1,9 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" >
+    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
+    
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class=" px-4 sm:px-6 lg:px-8 " style="width:100vw" >
+      
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -8,13 +11,13 @@
                     <a href="{{ route('dashboard') }}">
                         {{-- <x-jet-application-mark class="block h-9 w-auto" /> --}}
                         <img class="animate__animated animate__bounceIn  rounded-full object-cover " style="width:5rem"
-                                        src="{{  asset('img/LOGO_VALENCIA.jpg') }}"/>
+                            src="{{ asset('img/LOGO_VALENCIA.jpg') }}" />
                     </a>
 
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" >
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('DISTRIBUCIONES VALENCIA') }}
                     </x-jet-nav-link>
@@ -24,7 +27,7 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                
+
                     <div class="ml-3 relative">
                         <x-jet-dropdown align="right" width="60">
                             <x-slot name="trigger">
@@ -87,7 +90,7 @@
                                 <button
                                     class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                     <img class="h-8 w-8 rounded-full object-cover"
-                                        src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}"
+                                        src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
                                         alt="{{ Auth::user()->name }}" />
                                 </button>
                             @else
@@ -168,7 +171,8 @@
             <div class="flex items-center px-4">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="shrink-0 mr-3">
-                        <img class="h-10 w-10 rounded-full object-cover"  src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}"
+                        <img class="h-10 w-10 rounded-full object-cover"
+                            src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
                             alt="{{ Auth::user()->name }}" />
                     </div>
                 @endif
@@ -239,68 +243,73 @@
         </div>
     </div>
 
+    <!---menu lateral de la plantilla--->
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        {{-- <img alt="image"  class="rounded-circle" src="" h-8 w-8 rounded-full object-cover/> --}}
 
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav metismenu" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            {{-- <img alt="image"  class="rounded-circle" src="" h-8 w-8 rounded-full object-cover/> --}}
+                        <img class="rounded-circle" style="max-width: 3.5rem"
+                            src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
+                            alt="{{ Auth::user()->name }}" />
 
-                            <img class="rounded-circle" style="max-width: 3.5rem"
-                                        src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}"
-                                        alt="{{ Auth::user()->name }}" />
-
-                            <div data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold" style="color:#FFF;"><b> {{ Auth::user()->name }}</b></span>
-                                <span class="text-muted text-xs block">Desarrollador <b
-                                        class="caret"></b></span>
-                            </div>
-                            <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <div data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold" style="color:#FFF;"><b>
+                                    {{ Auth::user()->name }}</b></span>
+                            <span class="text-muted text-xs block">Desarrollador <b class="caret"></b></span>
+                        </div>
+                        <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="profile.html">Profile</a></li>
                                 <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
                                 <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="login.html">Logout</a></li>
                             </ul> -->
-                        </div>
-                        <div class="logo-element">
-                            IN+
-                        </div>
-                    </li>
-                    <li>
-                        <a href="{{ route('dashboard') }}"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
-                            <span class="fa arrow"></span></a>
-                        {{-- <ul class="nav nav-second-level">
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
+                            aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
+                        <span class="fa arrow"></span></a>
+                    {{-- <ul class="nav nav-second-level">
                             <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
                             <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                         </ul> --}}
-                    </li>
-                    <li>
-                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Usuarios</span>
-                            <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li  href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a></li>
-                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span>
-                            <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
-                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html"><i class="fa fa-th-large" style="color:#ffffff;"></i> <span
-                                class="nav-label" style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li ><a href="/proveedores" style="color:#ffffff;">Gestiones</a></li>
-                            <li><a href="dashboard_2.html" style="color:#ffffff;">Reportes de Proveedores</a></li>
-                        </ul>
-                    </li>
-                    {{-- <li>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span
+                            class="nav-label" style="color:#ffffff;">Usuarios</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a>
+                        </li>
+                        {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span
+                            class="nav-label" style="color:#ffffff;">Bodega</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                        <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span
+                            class="nav-label" style="color:#ffffff;">Proveedores</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/proveedores" style="color:#ffffff;">Gestiones</a></li>
+                        <li><a href="dashboard_2.html" style="color:#ffffff;">Reportes de Proveedores</a></li>
+                    </ul>
+                </li>
+                {{-- <li>
                         <a href="index.html"><i class="fa fa-th-large"></i> <span
                                 class="nav-label">Inventario</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">f
@@ -308,7 +317,7 @@
                             <li><a href="dashboard_2.html">Reportes de Inventario</a></li>
                         </ul>
                     </li> --}}
-                    {{-- <li>
+                {{-- <li>
                         <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="graph_flot.html">Flot Charts</a></li>
@@ -504,10 +513,10 @@
                     <li class="special_link">
                         <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
                     </li> --}}
-                </ul>
+            </ul>
 
-            </div>
-        </nav>
+        </div>
+    </nav>
 
 
 
