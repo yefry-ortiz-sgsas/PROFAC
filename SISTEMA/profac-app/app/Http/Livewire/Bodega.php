@@ -8,6 +8,7 @@ use App\Models\modelBodega;
 use App\Models\Estante;
 use App\Models\Repisa;
 use App\Models\Seccion;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -33,10 +34,10 @@ class Bodega extends Component
             'encargadoBodega' => 'required',          
             'bodegaNumSec' => 'required',
         ], [
-            'bodega' => 'Fecha es requerida',
-            'direccionBodega' => 'Médico es requerido',
-            'encargadoBodega' => 'Clínica es requerida',
-            'bodegaNumSec' => 'Tipo de atención es requerido',
+            'bodega' => 'Bodega es requerida',
+            'direccionBodega' => 'Direccion es requerido',
+            'encargadoBodega' => 'Encargado es requerido',
+            'bodegaNumSec' => 'Numero de secciones es requerido',
         ]);
 
         if ($validator->fails()) {

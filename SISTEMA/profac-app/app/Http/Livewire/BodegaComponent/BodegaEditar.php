@@ -205,5 +205,75 @@ class BodegaEditar extends Component
         }
     }
 
+    public function editarBodega(Request $request){
+            //dd($request->all());
+
+            $validator = Validator::make($request->all(), [
+                'idBodega' => 'required',
+                'editBodegaNombre' => 'required',
+                'editBodegaDireccion' => 'required',          
+                'editEncargadoBodega' => 'required',
+            ], [
+                'idBodega' => 'Id bodega requerido',
+                'editBodegaNombre' => 'Nombre es requerido',
+                'editBodegaDireccion' => 'Direccion es requerida',
+                'editEncargadoBodega' => 'Encargado de bodega es requerido',
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                        "message" => "Ha ocurrido un error",
+                        "error" => $validator->errors()
+                ],402);
+            }
+
+            try {
+                DB::beginTransaction();
+
+                $editarBodega = modelBodega::find($request['idBodega']);
+                $editarBodega->nombre = $request['editBodegaNombre'];
+                $editarBodega->direccion = $request['editBodegaDireccion'];
+                $editarBodega->encargado_bodega = $request['editEncargadoBodega'];
+                $editarBodega->save();
+
+
+                //desactivo todas las secciones
+                Seccion::where('id_bodega',"=", $request['idBodega'])               
+                ->update(['estado_id' => 2]);
+
+                $arrayCheckbox =  $request['seccion'];
+                $longitudArreglo = count($arrayCheckbox);
+
+                //dd($arrayCheckbox);
+               
+
+                for ($i=0; $i <$longitudArreglo ; $i++) { 
+                   $editarEstadoSeccion = Seccion::find( $arrayCheckbox[$i]);
+                   $editarEstadoSeccion->estado_id = 1;
+                   $editarEstadoSeccion->save();                 
+
+                }
+
+                DB::commit();
+
+                return response()->json([
+                    "message" => "Bodega editada con exito",
+
+                ],200);
+          
+            } catch (QueryException $e) {
+                DB::rollback(); 
+         
+            return response()->json([
+                'message' => 'Ha ocurrido un error al editar la bodega.',
+                'error' => $e,            
+              
+            ], 402);  
+            }
+    
+
+            return false;
+    }
+
 
 }

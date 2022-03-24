@@ -21,7 +21,7 @@
                             <table id="tbl_bodegaEditar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th># de Bodega</th>
+                                        <th>Nombre</th>
                                         <th>Codigo</th>
                                         <th>Dirreción</th>
                                         <th>Encargado</th>
@@ -54,44 +54,49 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-sm-12 b-r">
+                                <div class="col-sm-12">
+                                    <form id="editarBodega" data-parsley-validate>
+                                        <input id="idBodega" name="idBodega" type="hidden" >
 
-                                    <div class="form-group">
-                                        <label for="editBodegaNombre">Nombre</label>
-                                        <input id="editBodegaNombre" name="editBodegaNombre" type="text"
-                                            placeholder="Nombre de bodega" class="form-control">
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="editBodegaNombre">Nombre</label>
+                                            <input id="editBodegaNombre" name="editBodegaNombre" type="text"
+                                                placeholder="Nombre de bodega" class="form-control" data-parsley-required>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="editBodegaDireccion">Direccion</label>
-                                        <input id="editBodegaDireccion" name="editBodegaDireccion" type="text"
-                                            placeholder="Direccion de bodega" class="form-control">
-                                    </div>
-
-
-                                    <div>
-                                        <label for="editEncargadoBodega">Encargado de bodega</label>
-                                        <select id="editEncargadoBodega" name="editEncargadoBodega"
-                                            class="form-control m-b" data-parsley-required>
-                                            <option value="0" selected disabled>Seleccione un encargado</option>
+                                        <div class="form-group">
+                                            <label for="editBodegaDireccion">Direccion</label>
+                                            <input id="editBodegaDireccion" name="editBodegaDireccion" type="text"
+                                                placeholder="Direccion de bodega" class="form-control" data-parsley-required>
+                                        </div>
 
 
-                                        </select>
+                                        <div>
+                                            <label for="editEncargadoBodega">Encargado de bodega</label>
+                                            <select id="editEncargadoBodega" name="editEncargadoBodega"
+                                                class="form-control m-b" data-parsley-required>
+                                                <option value="0" selected disabled>Seleccione un encargado</option>
 
-                                    </div>
 
+                                            </select>
 
+                                        </div>
 
-                                    <div id="contenedorSwich">
-                                       
-                                    </div>
+                                        <h3 class="text-center mt-4">Activar / Desactivar secciones</h3>
+                                     
+                                        <hr>
+
+                                        <div id="contenedorSwich">
+
+                                        </div>
+                                        <h5 class="text-center">Nota: al desactivar una sección de bodega no podrá ingresar producto a dichas secciones de bodega</h5>
                                     </form>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                            <button type="submit" form="editarBodega" class="btn btn-primary" >Guardar Cambios</button>
                         </div>
                     </div>
                 </div>
@@ -105,7 +110,8 @@
         @push('scripts')
             <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
             <script>
-            this.convertirSwitechs();    
+                this.convertirSwitechs();
+
                 function convertirSwitechs() {
                     //     var elem = document.querySelector('.js-switch');
                     // var switchery = new Switchery(elem, { color: '#1AB394',size: 'small' });
@@ -113,7 +119,10 @@
                     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
 
                     elems.forEach(function(html) {
-                        var switchery = new Switchery(html,{ color: '#1AB394',size: 'small' });
+                        var switchery = new Switchery(html, {
+                            color: '#1AB394',
+                            size: 'small'
+                        });
                     });
                 }
 
@@ -252,91 +261,139 @@
                         })
                 }
 
-                function obtenerDatosBodega(id){
-                    axios.post("/bodega/datos",{"id":id})
-                    .then( response => {
-                        let datos =response.data;
-                        console.log(datos.secciones);
-                       
+                function obtenerDatosBodega(id) {
+                    axios.post("/bodega/datos", {
+                            "id": id
+                        })
+                        .then(response => {
+                            let datos = response.data;
+                          
 
-                        document.getElementById("editBodegaNombre").value = datos.datosBodega.nombre;
-                        document.getElementById("editBodegaDireccion").value = datos.datosBodega.direccion;
+                            document.getElementById("idBodega").value = datos.datosBodega.id;
+                            document.getElementById("editBodegaNombre").value = datos.datosBodega.nombre;
+                            document.getElementById("editBodegaDireccion").value = datos.datosBodega.direccion;
 
-                        let array = datos.usuarios;
-                        let htmlSelect = "";
+                            let array = datos.usuarios;
+                            let htmlSelect = "";
 
-                        array.forEach( element => {
+                            array.forEach(element => {
 
-                            if(element.id == datos.datosBodega.encargado_bodega){
-                       
-                                htmlSelect +=
-                            `
+                                if (element.id == datos.datosBodega.encargado_bodega) {
+
+                                    htmlSelect +=
+                                        `
                                <option value="${element.id}" selected>${element.name}</option>                            
                             `;
-                            }else{
+                                } else {
 
-                                htmlSelect +=
-                            `
+                                    htmlSelect +=
+                                        `
                                <option value="${element.id}">${element.name}</option>                            
                             `;
 
-                            }
+                                }
 
 
-                        });
+                            });
 
-                        document.getElementById("editEncargadoBodega").innerHTML = htmlSelect;
+                            document.getElementById("editEncargadoBodega").innerHTML = htmlSelect;
 
 
-                        let arraySecciones = datos.secciones;
-                        let htmlCheckbox ="";
+                            let arraySecciones = datos.secciones;
+                            let htmlCheckbox = "";
 
-                        arraySecciones.forEach( element =>{
-                            if(element.estado_id == 1){
-                                htmlCheckbox +=
-                                `
+                            arraySecciones.forEach(element => {
+                                if (element.estado_id == 1) {
+                                    htmlCheckbox +=
+                                        `
                                 <div class="my-2">
                                             
-                                        <input value ="${element.id}"  type="checkbox" class="js-switch"  checked />
+                                        <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  checked />
                                         <label for="" class="ml-2">${element.descripcion}</label>   
                                 </div>
                                 
                                 `
 
 
-                            }else{
-                                htmlCheckbox +=
-                                `
+                                } else {
+                                    htmlCheckbox +=
+                                        `
                                 <div class="my-2">
                                             
-                                        <input  type="checkbox" class="js-switch"  />
-                                        <label for="" class="ml-2">Seccion 1</label>   
+                                        <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  />
+                                        <label for="" class="ml-2">${element.descripcion}</label>   
                                 </div>
                                 
                                 `
-                            }
-                           
-                        });
+                                }
+
+                            });
 
 
-                        document.getElementById("contenedorSwich").innerHTML = htmlCheckbox;
-                        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));                        
-                        elems.forEach(function(html) {
-                            var switchery = new Switchery(html,{ color: '#1AB394',size: 'small' });
-                        });
+                            document.getElementById("contenedorSwich").innerHTML = htmlCheckbox;
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+                            elems.forEach(function(html) {
+                                var switchery = new Switchery(html, {
+                                    color: '#1AB394',
+                                    size: 'small'
+                                });
+                            });
 
-                        $('#exampleModal').modal('show');
-                                                
+                            $('#exampleModal').modal('show');
 
-                 
+                        })
 
+
+                }
+
+                // $('#editarBodega').submit(function(e){    
+                //     e.preventDefault();
+                //     guardarCambios();
+                //     //crearBodega();
+                // });
+
+                $(document).on('submit', '#editarBodega', function(event){
+                    event.preventDefault();
+                    guardarCambios();
+                    
+                });
+
+                function guardarCambios(){
+                    //console.log("llego")
+                    var data = new FormData($('#editarBodega').get(0));
+
+                    axios.post('/bodega/editar',data)
+                    .then( response =>{
+                        //console.log(response.data);
+                        $('#exampleModal').modal('hide');
+                        document.getElementById('editarBodega').reset();
+
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: 'Cambios guardados con éxito!',
+                        
+                        })
+
+
+                        $('#tbl_bodegaEditar').DataTable().ajax.reload();     
 
                         
 
+                    })
+                    .catch( err=>{
+                        //console.error(err);
+                    
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Ha ocurrido un error al editar la bodega!',
+                        
+                        })
 
 
                     })
-
+             
 
                 }
             </script>

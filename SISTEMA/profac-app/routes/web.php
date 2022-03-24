@@ -5,6 +5,7 @@ use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
 use App\Http\Livewire\Proveedores;
 use App\Http\Livewire\Usuarios\ListarUsuarios;
+use App\Http\Livewire\Inventario\Producto;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +37,8 @@ Route::get('/bodega/editar/screen', BodegaEditar::class);
 Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']);
 Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
 Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
-Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']);
-
+Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']); 
+Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']); 
 //----------------------Proveedores------------------------------------------//
 
 Route::get('/proveedores', Proveedores::class);
@@ -53,6 +54,11 @@ Route::get('/usuarios', ListarUsuarios::class);
 Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios']);
 
 
+
+
+//--------------------------------------------Inventario---------------------------------------------//
+
+Route::get('/producto/registro', Producto::class);
 
 
 
