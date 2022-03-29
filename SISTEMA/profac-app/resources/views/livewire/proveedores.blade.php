@@ -66,7 +66,7 @@
 
 
 
-
+    <!---MODAL PARA CREAR PROVEEDOR----->
     <div id="modal_proveedores_crear" class="modal custom-modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -191,12 +191,129 @@
                     </form>
                     <button class="btn btn-sm btn-primary float-left m-t-n-xs"
                         form="proveedorCreacionForm"><strong>Crear
-                            Bodega</strong></button>
+                            Proveedor</strong></button>
                 </div>
 
             </div>
         </div>
     </div>
+
+    <!------MODAL PARA EDITAR PROVEEDOR--->
+    <div id="modal_proveedores_editar" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success">Editar Datos De Proveedores</h5>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="proveedorEditarForm" name="proveedorEditarForm" data-parsley-validate>
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                        <input type="hidden" id="idProveedor" name="idProveedor" value="0" data-parsley-required>
+                        <div class="row" id="row_datos">
+                            <div class="col-md-4">
+                                <label for="editar_codigo_prov" class="col-form-label focus-label">Código:</label>
+                                <input class="form-control" required type="text" id="editar_codigo_prov" name="editar_codigo_prov"
+                                    data-parsley-required>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="editar_nombre_prov" class="col-form-label focus-label">Nombre del proveedor</label>
+                                <input class="form-control" required type="text" id="editar_nombre_prov" name="editar_nombre_prov"
+                                    data-parsley-required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="col-form-label focus-label">Dirección</label>
+                                <textarea for="editar_direccion_prov" placeholder="Escriba aquí..." required name="editar_direccion_prov" id="editar_direccion_prov" cols="30" rows="3"
+                                    class="form-group form-control" data-parsley-required></textarea>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_contacto_prov" class="col-form-label focus-label">Contácto</label>
+                                <input class="form-control" required type="text" id="editar_contacto_prov"
+                                    name="editar_contacto_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_telefono_prov" class="col-form-label focus-label">Teléfono</label>
+                                <input class="form-group form-control" required type="text" name="editar_telefono_prov"
+                                    id="editar_telefono_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_telefono_prov_2" class="col-form-label focus-label">Teléfono 2</label>
+                                <input class="form-group form-control" type="text" name="editar_telefono_prov_2"
+                                    id="editar_telefono_prov_2">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_correo_prov" class="col-form-label focus-label">Correo electrónico</label>
+                                <input class="form-group form-control" type="text" name="editar_correo_prov" id="editar_correo_prov"
+                                    data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_correo_prov_2" class="col-form-label focus-label">Correo electrónico 2</label>
+                                <input class="form-group form-control" type="text" name="editar_correo_prov_2"
+                                    id="editar_correo_prov_2">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_rtn_prov" class="col-form-label focus-label">RTN</label>
+                                <input class="form-group form-control" required type="text" name="editar_rtn_prov"
+                                    id="editar_rtn_prov" data-parsley-required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_pais_prov" class="col-form-label focus-label">País</label>
+                                <select class="form-group form-control" name="editar_pais_prov" id="editar_pais_prov"
+                                    onchange="editarObtenerDepartamentos()">
+                                    <option selected disabled>---Seleccione un país---</option>
+                                  
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_depto_prov" class="col-form-label focus-label">Departamento</label>
+                                <select class="form-group form-control" name="editar_depto_prov" id="editar_depto_prov"
+                                    onchange="editarObtenerMunicipios()">
+                                    <option selected disabled>---Seleccione un Departamento---</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editar_municipio_prov" class="col-form-label focus-label">Municipio</label>
+                                <select class="form-group form-control" name="editar_municipio_prov" id="editar_municipio_prov"
+                                    data-parsley-required>
+                                    <option selected disabled>---Seleccione un municipio---</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editar_giro_neg_prov" class="col-form-label focus-label">Tipo de Personalidad </label>
+                                <select class="form-group form-control" name="editar_giro_neg_prov" id="editar_giro_neg_prov"
+                                    data-parsley-required>
+                                    <option disabled selected>---Seleccione una opción---</option>
+                                  
+
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editar_categoria_prov" class="col-form-label focus-label">Categoría</label>
+                                <select class="form-group form-control" name="editar_categoria_prov" id="editar_categoria_prov"
+                                    data-parsley-required>
+                                    <option selected disabled>---Seleccione una opción---</option>
+                                 
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </form>
+                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"
+                        form="proveedorEditarForm"><strong>Guardar Cambios</strong></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -216,6 +333,7 @@
         });
 
         function obtenerDepartamentos() {
+            document.getElementById("depto_prov").innerHTML = "<option selected disabled>---Seleccione un Departamento---</option>"
             var id = document.getElementById("pais_prov").value;
             //console.log(id)
             ///proveedores/obeter/departamento
@@ -366,11 +484,6 @@
         })
 
 
-        $(document).on('submit', '#bodegaCreacion', function(event) {
-            event.preventDefault();
-
-        });
-
         $(document).on('submit', '#proveedorCreacionForm', function(event) {
 
             event.preventDefault();
@@ -412,8 +525,8 @@
                     console.log(jqXHR.responseJSON.message);
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Oops...',
-                        text: jqXHR.responseJSON.message
+                        title: 'Error',
+                        text: 'Ha ocurrido un error al mostrar la lista de proveedores'
                     })
                 }
             });
@@ -492,6 +605,277 @@
                         text: "Ha ocurrido un error al Activar el proveedor."
                     })
                 })
+
+        }
+
+        function mostrarModalEditar(id){
+
+            let data = {"id":id}
+
+            axios.post('/proveedores/editar',data)
+            .then( response=>{
+
+                let proveedor =  response.data.proveedor;
+
+                let paisProveedor = response.data.paisProveedor;
+                let departamentoProveedor = response.data.departamentoProveedorId;
+                let municipioProveedor = response.data.municipioProveedorId;
+                
+
+                let paises = response.data.paises;
+                let departamentos = response.data.departamentos;
+                let municipios = response.data.municipios;
+                let tipoPersonalidad = response.data.tipoPersonalidad;
+                let categorias = response.data.categoria;
+                
+
+                let htmlSelectPais ="";
+                let htmlSelectDepto = "";
+                let htmlSelectMunicipio = "";
+                let htmlPersonalidad ="";
+                let htmlCategoria ="";
+                
+
+                document.getElementById("idProveedor").value = proveedor.id;
+                document.getElementById("editar_codigo_prov").value = proveedor.codigo;
+                document.getElementById("editar_nombre_prov").value = proveedor.nombre;
+                document.getElementById("editar_direccion_prov").value = proveedor.direccion;
+                document.getElementById("editar_contacto_prov").value = proveedor.contacto;
+                document.getElementById("editar_telefono_prov").value = proveedor.telefono_1;
+                document.getElementById("editar_telefono_prov_2").value = proveedor.telefono_2;
+                document.getElementById("editar_correo_prov").value = proveedor.correo_1;
+                document.getElementById("editar_correo_prov_2").value = proveedor.correo_2;
+                document.getElementById("editar_rtn_prov").value = proveedor.rtn;
+
+                
+                paises.forEach( pais =>{
+                    if(pais.id === paisProveedor ){
+
+                        htmlSelectPais += `
+                        <option value="${ pais.id }" selected>${pais.nombre}</option>   
+                        `
+                    }else{
+                        htmlSelectPais += `
+                        <option value="${ pais.id }">${pais.nombre}</option>   
+                        `
+                    }
+                    
+                });
+
+               
+
+                departamentos.forEach( departamento =>{
+                    if(departamento.id === departamentoProveedor ){
+
+                        htmlSelectDepto += `
+                        <option value="${ departamento.id }" selected>${departamento.nombre}</option>   
+                        `
+                    }else{
+                        htmlSelectDepto += `
+                        <option value="${ departamento.id }">${departamento.nombre}</option>   
+                        `
+                    }
+                    
+                });
+
+                municipios.forEach( municipio =>{
+
+                    if(municipio.id == municipioProveedor){
+
+                        htmlSelectMunicipio += `
+                        <option value="${ municipio.id }" selected>${municipio.nombre}</option>
+                        `
+
+                    }else{
+                        
+                        htmlSelectMunicipio += `
+                        <option value="${ municipio.id }">${municipio.nombre}</option>
+                        `
+                    }
+
+                });
+
+                tipoPersonalidad.forEach( personalidad => {
+                    if(personalidad.id == proveedor.tipo_personalidad_id){
+
+                        htmlPersonalidad += `
+                        <option value="${ personalidad.id }" selected>${personalidad.nombre}</option>
+                        `
+
+                        }else{
+
+                            htmlPersonalidad += `
+                        <option value="${ personalidad.id }">${personalidad.nombre}</option>
+                        `
+                        }
+
+                })
+
+                categorias.forEach( categoria =>{
+
+                    if(categoria.id == proveedor.categoria_id){
+
+                        htmlCategoria += `
+                        <option value="${ categoria.id }" selected>${categoria.nombre}</option>
+                        `
+
+                        }else{
+
+                            htmlCategoria += `
+                        <option value="${ categoria.id }">${categoria.nombre}</option>
+                        `
+                        }
+
+                } );
+
+
+                document.getElementById("editar_pais_prov").innerHTML = htmlSelectPais;
+                document.getElementById("editar_depto_prov").innerHTML = htmlSelectDepto;
+                document.getElementById("editar_municipio_prov").innerHTML = htmlSelectMunicipio;
+                document.getElementById("editar_giro_neg_prov").innerHTML = htmlPersonalidad;
+                document.getElementById("editar_categoria_prov").innerHTML = htmlCategoria;
+
+
+
+
+
+
+
+                
+
+
+
+                $("#modal_proveedores_editar").modal("show");
+                return;
+            })
+            .catch(err=>{
+
+                console.log(err)
+
+            });
+
+           
+        }
+
+        function editarObtenerDepartamentos() {
+           
+            var id = document.getElementById("editar_pais_prov").value;
+
+            
+            //console.log(id)
+            ///proveedores/obeter/departamento
+            let datos = {
+                "id": id
+            };
+
+            axios.post('/proveedores/obeter/departamentos', datos)
+                .then(function(response) {
+
+                    let array = response.data.departamentos;
+                    let html = "";
+
+                    array.forEach(departamento => {
+
+                        html +=
+                            `
+                    <option value="${ departamento.id }">${departamento.nombre}</option>   
+                   `
+                    });
+
+                    document.getElementById("editar_depto_prov").innerHTML = html;
+
+
+                })
+                .catch(function(error) {
+                    // handle error
+                    console.log(error);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: "Ha ocurrido un error al obtener los departamentos"
+                    })
+                })
+
+
+
+        }
+
+        function editarObtenerMunicipios() {
+            //municipio_prov
+            var id = document.getElementById("editar_depto_prov").value;
+
+            let datos = {
+                "id": id
+            }
+
+
+            axios.post('/proveedores/obeter/municipios', datos)
+                .then(function(response) {
+
+                    let array = response.data.departamentos;
+                    let html = "";
+
+                    array.forEach(municipio => {
+
+                        html +=
+                            `
+                    <option value="${ municipio.id }">${municipio.nombre}</option>   
+                   `
+                    });
+
+                    document.getElementById("editar_municipio_prov").innerHTML = html;
+
+
+                })
+                .catch(function(error) {
+                    // handle error
+                    console.log(error);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error...',
+                        text: "Ha ocurrido un error al obtener los municipios"
+                    })
+                })
+
+        }
+
+        $(document).on('submit', '#proveedorEditarForm', function(event) {
+
+        event.preventDefault();
+        editarProveedor();
+
+        });
+
+        function editarProveedor(){
+            var data = new FormData($('#proveedorEditarForm').get(0));
+            axios.post("/proveedores/editar/guardar", data)
+            .then( response =>{
+                document.getElementById("proveedorEditarForm").reset();
+                    $('#modal_proveedores_editar').modal('hide');
+
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: "Proveedor editado con exito."
+                    })
+
+                    $('#tbl_proveedoresListar').DataTable().ajax.reload();
+
+
+            })
+            .catch( err =>{
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Error',
+                        text: 'Ha ocurrido un error al editar el proveedor'
+                    })
+            })
+
+
+
 
         }
     </script>

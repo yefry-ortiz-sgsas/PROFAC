@@ -9583,3 +9583,11 @@ body.md-skin {
   background: rgb(154,49,26);
 background: linear-gradient(90deg, rgba(154,49,26,1) 0%, rgba(241,85,51,1) 35%, rgba(255,108,75,1) 100%);
 }
+
+.sticky{
+  
+  position: fixed;
+  z-index: 1;
+
+ 
+}

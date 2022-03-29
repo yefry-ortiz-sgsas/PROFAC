@@ -53,15 +53,17 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_bodegaEditar" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_productosListar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
+                                        <th>Cod</th>
                                         <th>Nombre</th>
-                                        <th>Codigo</th>
-                                        <th>Dirreción</th>
-                                        <th>Encargado</th>
-                                        <th>Estado</th>
-                                        <th>Opciones</th>
+                                        <th>Descripcion</th>
+                                        <th>ISV</th>
+                                        <th>Cateogria</th>
+                                        <th>Unidad de Medida</th>
+                                        <th>Existencia</th>
+                                        <th>Disponibilidad</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,7 +91,7 @@
                         </div>
                     
                             <div class="modal-body">
-                                <form id="proveedorCreacionForm" name="proveedorCreacionForm" data-parsley-validate>
+                                <form id="crearProductoForm" name="crearProductoForm" data-parsley-validate>
                                     {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
                                     <div class="row" id="row_datos">
                                         <div class="col-md-12">
@@ -105,7 +107,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="isv_producto" class="col-form-label focus-label">ISV en %:</label>
-                                            <select class="form-group form-control" name="isv_producto" id="isv_producto">
+                                            <select class="form-group form-control" name="isv_producto" id="isv_producto" data-parsley-required>
                                               
                                                 <option value="0">Excento de impuestos</option>
                                                 <option value="15" selected>15% de ISV</option>
@@ -118,8 +120,8 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cod_barra_producto" class="col-form-label focus-label">Codigo de barra:</label>
-                                            <input class="form-group form-control" required type="number" name="cod_barra_producto"
-                                                id="cod_barra_producto" data-parsley-required min="0">
+                                            <input class="form-group form-control"  type="number" name="cod_barra_producto"
+                                                id="cod_barra_producto"  min="0">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cod_estatal_producto" class="col-form-label focus-label">Codigo Estatal:</label>
@@ -128,23 +130,23 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="precio1" class="col-form-label focus-label">Precio de venta 1:</label>
-                                            <input class="form-group form-control" min="1" type="number" name="precio1" id="precio1"
+                                            <input class="form-group form-control" min="1" type="number" name="precio[]" id="precio1"
                                                 data-parsley-required>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="col-form-label focus-label" for="precio2">Precio de venta 2:</label>
-                                            <input class="form-group form-control" min="1" type="number" name="precio2"
+                                            <input class="form-group form-control" min="1" type="number" name="precio[]"
                                                 id="precio2">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="precio3" class="col-form-label focus-label">Precio de venta 3:</label>
-                                            <input class="form-group form-control" required min="1" type="number" name="precio3"
-                                                id="precio3" data-parsley-required>
+                                            <input class="form-group form-control" required min="1" type="number" name="precio[]"
+                                                id="precio3" >
                                         </div>
                                         <div class="col-md-6">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
                                             <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
-                                                onchange="obtenerDepartamentos()">
+                                                onchange="obtenerDepartamentos()" data-parsley-required>
                                                 <option selected disabled>---Seleccione una categoria---</option>
                                                 @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
@@ -156,7 +158,7 @@
                                         <div class="col-md-6">
                                             <label for="unidad_producto" class="col-form-label focus-label">Selecciones una unidad de medida</label>
                                             <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
-                                                onchange="obtenerMunicipios()">
+                                                onchange="obtenerMunicipios()" data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
                                                 @foreach ($unidades as $unidad)
                                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
@@ -183,7 +185,7 @@
                         
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="editarBodega" class="btn btn-primary" >Guardar producto</button>
+                            <button type="submit" form="crearProductoForm" class="btn btn-primary" >Guardar producto</button>
                         </div>
                     </div>
                 </div>
@@ -201,25 +203,116 @@
             
         <script>
 
-const $foto_producto = document.querySelector("#foto_producto"),
-  $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
+        const $foto_producto = document.querySelector("#foto_producto"),
+        $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
 
-// Escuchar cuando cambie
-$foto_producto.addEventListener("change", () => {
-  // Los archivos seleccionados, pueden ser muchos o uno
-  const archivos = $foto_producto.files;
-  // Si no hay archivos salimos de la función y quitamos la imagen
-  if (!archivos || !archivos.length) {
-    $imagenPrevisualizacion.src = "";
-    return;
-  }
-  // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-  const primerArchivo = archivos[0];
-  // Lo convertimos a un objeto de tipo objectURL
-  const objectURL = URL.createObjectURL(primerArchivo);
-  // Y a la fuente de la imagen le ponemos el objectURL
-  $imagenPrevisualizacion.src = objectURL;
-});
+        // Escuchar cuando cambie
+        $foto_producto.addEventListener("change", () => {
+        // Los archivos seleccionados, pueden ser muchos o uno
+        const archivos = $foto_producto.files;
+        // Si no hay archivos salimos de la función y quitamos la imagen
+        if (!archivos || !archivos.length) {
+            $imagenPrevisualizacion.src = "";
+            return;
+        }
+        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+        const primerArchivo = archivos[0];
+        // Lo convertimos a un objeto de tipo objectURL
+        const objectURL = URL.createObjectURL(primerArchivo);
+        // Y a la fuente de la imagen le ponemos el objectURL
+        $imagenPrevisualizacion.src = objectURL;
+        });
+
+        $(document).on('submit', '#crearProductoForm', function(event) {
+
+            event.preventDefault();
+            guardarProducto();
+
+        });
+
+        function guardarProducto(){
+
+            var data = new FormData($('#crearProductoForm').get(0));
+
+            axios.post("/producto/registrar", data)
+            .then( response => {
+
+                console.log(response.data);
+
+            })
+            .catch( err =>{
+                console.error(err);
+
+            })
+
+        }
+
+        $(document).ready(function() {
+            $('#tbl_productosListar').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                },
+                pageLength: 10,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [{
+                        extend: 'copy'
+                    },
+                    {
+                        extend: 'csv'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'ExampleFile'
+                    },
+                    {
+                        extend: 'pdf',
+                        title: 'ExampleFile'
+                    },
+
+                    {
+                        extend: 'print',
+                        customize: function(win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "ajax": "/producto/listar/productos",
+                "columns": [{
+                        data: 'codigo'
+                    },
+                    {
+                        data: 'nombre'
+                    },
+                    {
+                        data: 'descripcion'
+                    },
+                    {
+                        data: 'ISV'
+                    },
+                    {
+                        data: 'categoria'
+                    },
+                    {
+                        data: 'unidad_medida'
+                    },
+                    {
+                        data: 'existencia'
+                    },
+                    {
+                        data: 'disponibilidad'
+                    }
+  
+                ]
+
+
+            });
+        })
     
         </script>
     

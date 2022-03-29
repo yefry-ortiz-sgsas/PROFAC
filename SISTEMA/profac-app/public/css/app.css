@@ -952,6 +952,10 @@ select {
 .relative {
   position: relative;
 }
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
 .inset-0 {
   top: 0px;
   right: 0px;
@@ -975,9 +979,6 @@ select {
 }
 .col-span-6 {
   grid-column: span 6 / span 6;
-}
-.float-right {
-  float: right;
 }
 .float-left {
   float: left;
@@ -2208,11 +2209,4 @@ select {
   }
 }
 
-.sticky{
-  
-  position: fixed;
-  z-index: 1;
-
- 
-}
 

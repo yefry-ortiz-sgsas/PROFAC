@@ -47,6 +47,9 @@ Route::post('/proveedores/obeter/departamentos', [Proveedores::class, 'obtenerDe
 Route::post('/proveedores/obeter/municipios', [Proveedores::class, 'obtenerMunicipios']);
 Route::get('/proveedores/listar/proveedores', [Proveedores::class, 'listarProveedores']);
 Route::post('/proveedores/desactivar', [Proveedores::class, 'desactivarProveedor']);
+Route::post('/proveedores/editar', [Proveedores::class, 'obtenerProveedor']);
+Route::post('/proveedores/editar/guardar', [Proveedores::class, 'editarProveedor']);
+ 
 
 
 //-----------------------------------------------Usuarios--------------------------------------------//
@@ -59,6 +62,8 @@ Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios'
 //--------------------------------------------Inventario---------------------------------------------//
 
 Route::get('/producto/registro', Producto::class);
+Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
+Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
 
 
 

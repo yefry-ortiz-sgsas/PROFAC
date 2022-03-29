@@ -11,12 +11,15 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use App\Models\User;
 use App\Models\Modelproveedores;
-use App\Models\Pais;
-use App\Models\Departamento;
 use App\Models\TipoPersonalidad;
 use App\Models\Categoria;
 use App\Models\Retenciones;
 use App\Models\RetencionesProveedores;
+use App\Models\Pais;
+use App\Models\Departamento;
+use App\Models\Municipio;
+
+
 use DataTables;
 
 
@@ -209,7 +212,7 @@ class Proveedores extends Component
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start"
                             style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                            <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                            <li><a class="dropdown-item" href="#" onclick="mostrarModalEditar('.$listaProveedores->id.')"> <i class="fa fa-pencil m-r-5 text-warning"></i>
                                     Editar</a></li>
                             <li><a class="dropdown-item" href="#" onclick="desactivarProveedor('.$listaProveedores->id.')"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
                                     Desactivar </a></li>
@@ -230,7 +233,7 @@ class Proveedores extends Component
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start"
                             style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                            <li><a class="dropdown-item" href="#"> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                            <li><a class="dropdown-item" href="#" onclick="mostrarModalEditar('.$listaProveedores->id.')"> <i class="fa fa-pencil m-r-5 text-warning"></i>
                                     Editar</a></li>
                             <li><a class="dropdown-item" href="#" onclick="activarProveedor('.$listaProveedores->id.')"> <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
                                     Activar </a></li>
@@ -320,5 +323,130 @@ class Proveedores extends Component
             
         }
 
+
+
+
+    }
+
+    public function obtenerProveedor(Request $request){
+        try {
+
+            $proveedor = Modelproveedores::find($request['id']);
+         
+
+            $municipioProveedor =  Municipio::find( $proveedor->municipio_id);
+            $departamentoProveedor = Departamento::find($municipioProveedor->departamento_id);
+            
+
+            $municipioProveedorId = $proveedor->municipio_id;
+            $departamentoProveedorId = $municipioProveedor->departamento_id;
+            $paisProveedor = $departamentoProveedor->pais_id;
+
+            $paises = Pais::all();
+
+            $departamentos = DB::SELECT("
+            select id, CONCAT(UPPER(SUBSTRING(nombre,1,1)),LOWER(SUBSTRING(nombre,2))) as 'nombre' from departamento ");
+
+
+            $municipios = DB::SELECT("select id, CONCAT(UPPER(SUBSTRING(nombre,1,1)),LOWER(SUBSTRING(nombre,2))) as 'nombre' from municipio ");
+            $tipoPersonalidad = TipoPersonalidad::all();
+            $categoria = Categoria::all();
+
+            return response()->json([
+                "paises" => $paises,
+                "departamentos" => $departamentos,
+                "municipios" => $municipios,
+                "municipioProveedorId" => $municipioProveedorId,
+                "departamentoProveedorId" => $departamentoProveedorId,
+                "paisProveedor" => $paisProveedor,
+                "proveedor" => $proveedor,
+                "tipoPersonalidad"=>$tipoPersonalidad,
+                "categoria"=>$categoria
+
+            ],200);
+
+            
+        } catch (QueryException $e) {
+            return response()->json([
+                "message" => "Error al obtener datos del proveedor",
+                "error" => $e
+            ],402);
+          
+        }
+
+    }
+
+    public function editarProveedor(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'idProveedor' => 'required',
+            'editar_codigo_prov' => 'required',
+            'editar_nombre_prov' => 'required',
+            'editar_direccion_prov' => 'required',
+            'editar_contacto_prov' => 'required',
+            'editar_telefono_prov' => 'required',               
+            'editar_rtn_prov' => 'required',   
+            'editar_municipio_prov' => 'required',
+            'editar_giro_neg_prov' => 'required',
+            'editar_categoria_prov' => 'required',
+            
+        ], [
+            'editar_codigo_prov' => 'Codigo es requerido',
+            'editar_nombre_prov' => 'nombre es requerido',
+            'editar_ireccion_prov' => 'Direccion es requerido',
+            'editar_contacto_prov' => 'Contacto es requerido',
+            'editar_telefono_prov' => 'Telefono es requerido',
+            'editar_telefono_prov_2' => 'Telefono 2 es requerido',
+            'editar_rtn_prov' => 'RTN es requerido',     
+            'editar_municipio_prov' => 'Municipio es requerido',
+            'editar_giro_neg_prov' => 'Giro es requerido',
+            'editar_categoria_prov' => 'Categoria es requerido',
+           
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'mensaje' => 'Ha ocurrido un error.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        try {
+
+                $crearProveedores = Modelproveedores::find($request['idProveedor']);
+                $crearProveedores->codigo=$request->editar_codigo_prov;
+                $crearProveedores->nombre=$request->editar_nombre_prov;
+                $crearProveedores->direccion=$request->editar_direccion_prov;
+                $crearProveedores->contacto=$request->editar_contacto_prov;
+                $crearProveedores->telefono_1=$request->editar_telefono_prov;
+                $crearProveedores->telefono_2=$request->editar_telefono_prov_2;
+                $crearProveedores->correo_1=$request->editar_correo_prov;
+                $crearProveedores->correo_2=$request->editar_correo_prov_2;
+                $crearProveedores->rtn=$request->editar_rtn_prov;
+                $crearProveedores->registrado_por=Auth::user()->id;              
+                $crearProveedores->municipio_id=$request->editar_municipio_prov;
+                $crearProveedores->tipo_personalidad_id=$request->editar_giro_neg_prov;
+                $crearProveedores->categoria_id=$request->editar_categoria_prov;                 
+                $crearProveedores->save();
+
+
+
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Editado con exito.',                   
+            ], 200); 
+           
+        } catch (QueryException $e) {
+            DB::rollback(); 
+         
+            return response()->json([
+                'message' => 'Ha ocurrido un error al editar el proveedor.',
+                'error' => $e,
+             
+              
+            ], 402);  
+           
+        }
     }
 }
