@@ -6,6 +6,8 @@ use App\Http\Livewire\BodegaComponent\BodegaEditar;
 use App\Http\Livewire\Proveedores;
 use App\Http\Livewire\Usuarios\ListarUsuarios;
 use App\Http\Livewire\Inventario\Producto;
+use App\Http\Livewire\Inventario\Retenciones; 
+use App\Http\Livewire\Inventario\DetalleProducto;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +21,8 @@ use App\Http\Livewire\Inventario\Producto;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-    //return redirect('/login');
+    //return view('welcome');
+    return redirect('/login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -49,6 +51,9 @@ Route::get('/proveedores/listar/proveedores', [Proveedores::class, 'listarProvee
 Route::post('/proveedores/desactivar', [Proveedores::class, 'desactivarProveedor']);
 Route::post('/proveedores/editar', [Proveedores::class, 'obtenerProveedor']);
 Route::post('/proveedores/editar/guardar', [Proveedores::class, 'editarProveedor']);
+Route::get('/inventario/retenciones', Retenciones::class);
+Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
+Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
  
 
 
@@ -64,6 +69,16 @@ Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios'
 Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
+Route::get('/producto/detalle/{id}', DetalleProducto::class);
+
+
+
+
+//------------------------------------------establecer links de storage---------------------------//
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link'); // this will do the command line job
+});
+
 
 
 

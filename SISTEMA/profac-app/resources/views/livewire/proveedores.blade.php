@@ -842,10 +842,8 @@
         }
 
         $(document).on('submit', '#proveedorEditarForm', function(event) {
-
         event.preventDefault();
         editarProveedor();
-
         });
 
         function editarProveedor(){

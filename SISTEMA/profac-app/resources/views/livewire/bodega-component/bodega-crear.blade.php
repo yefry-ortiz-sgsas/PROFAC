@@ -32,12 +32,13 @@
                 </div>
 
                 <div class="ibox-content">
-                    <form id="bodegaCreacion" data-parsley-validate>
+                    <form id="bodegaCreacion" data-parsley-validate autocomplete="off">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                        
                         <div class="row">
 
-                            <div class="col-sm-6 b-r">
-                                <h4>Información general <i class="fa fa-pencil-square-o" aria-hidden="true"></i> </h4>
+                            <div class="col-sm-12 ">
+                                <h4>Información general <i class="fa-solid fa-pen"></i> </h4>
                                 <br>
 
 
@@ -45,7 +46,7 @@
                                 <div class="form-group">
                                     <label for="bodega">Nombre de bodega</label>
                                     <input id="bodega" name="bodega" type="text" placeholder="Nombre de bodega"
-                                        class="form-control " data-parsley-required>
+                                        class="form-control" data-parsley-required required="">
                                 </div>
 
                                 <div class="form-group">
@@ -67,39 +68,95 @@
 
                                 </div>
 
+                                <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label class="col-form-label focus-label">País</label>
+                                    <select class="form-group form-control" name="pais_bodega" id="pais_bodega"
+                                        onchange="obtenerDepartamentos()">
+                                        <option selected disabled>---Seleccione un país---</option>
+                                        @foreach ($paises as $pais)
+                                            <option value="{{ $pais->id }}">{{ $pais->nombre }}</option>
+                                        @endforeach
+    
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="col-form-label focus-label">Departamento</label>
+                                    <select class="form-group form-control" name="depto_bodega" id="depto_bodega"
+                                        onchange="obtenerMunicipios()">
+                                        <option selected disabled>---Seleccione un Departamento---</option>
+    
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="col-form-label focus-label">Municipio</label>
+                                    <select class="form-group form-control" name="municipio_bodega" id="municipio_bodega"
+                                        data-parsley-required>
+                                        <option selected disabled>---Seleccione un municipio---</option>
+    
+                                    </select>
+                                </div>
+                            </div>
+
 
 
 
                             </div>
 
-                            <div class="col-sm-6">
-                                <h4>Segmentacion de bodega <i class="fa fa-cubes" aria-hidden="true"></i></h4>
-                                <br>
 
-                                {{-- <div class="form-group">
-                                    <label for="bodegaNumEstant">Número de estantes</label>
-                                    <input id="bodegaNumEstant" name="bodegaNumEstant" type="number"
-                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
-                                        max="10" data-parsley-required>
-                                </div> --}}
 
-{{-- 
-                                <div class="form-group">
-                                    <label for="bodegaNumRepisa">Número de repisas por estante</label>
-                                    <input id="bodegaNumRepisa" name="bodegaNumRepisa" type="number"
-                                        placeholder="Ingresé el número de estantes" class="form-control" min="0"
-                                        max="10" data-parsley-required>
-                                </div> --}}
+                            <div class="col-sm-12 border-top mt-2 mb-4">
+                                <div class="d-flex justify-content-between   align-items-center ">
 
-                                <div class="form-group">
-                                    <label for="bodegaNumSec">Número de secciones por bodega</label>
-                                    <input id="bodegaNumSec" name="bodegaNumSec" type="number"
-                                        placeholder="Ingresé el número de secciones" class="form-control"
-                                        data-parsley-required max="100" min="0">
+                                    <h4 class="mt-4">Segmentación de bodega <i class="fa-solid fa-crop"></i>
+                                    </h4>
+
+
+                                    <button type="button" class="btn btn-sm btn-success pt-1 pb-4 mt-3"
+                                        style="height:19.200px" onclick="agregarInputs()"><strong>Agregar Seccion <i
+                                                class="fa-solid fa-plus"></i></strong></button>
+
                                 </div>
 
 
+
+
+
+                                <div id="divSecciones" class=" mt-4">
+
+                                    <div id="0" class="row no-gutters">
+                                        <div class="form-group col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 ">
+                                            <div class="d-flex">
+                                                <button class="btn btn-danger" type="button" style="display: inline" onclick="eliminarInput(0)" >
+                                                    <i class="fa-regular fa-rectangle-xmark"></i></button>
+                                                <div style="width:100%">
+                                                    <label for="segmento0" class="sr-only">Letra de
+                                                        Seccion</label>
+                                                    <input type="text" placeholder="Letra de seccion" id="segmento0"
+                                                        name="segmento0" class="form-control" pattern="[A-Z]{1}"
+                                                        data-parsley-required data-parsley-pattern="[A-Z]{1}"
+                                                        autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                            <label for="seccion0" class="sr-only">Numero de secciones</label>
+                                            <input type="number" placeholder="Numero de secciones" id="seccion0"
+                                                name="seccion0" class="form-control" min="1" data-parsley-required
+                                                autocomplete="off">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
                             </div>
+
+
+
 
 
 
@@ -123,12 +180,12 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox">
-                
+
                 <div class="ibox-content" style="">
                     <div>
                         <img src="{{ asset('img_profac/Estante de Bodega.png') }}" alt="" style="margin: 0 auto">
                     </div>
-                 
+
                 </div>
 
             </div>

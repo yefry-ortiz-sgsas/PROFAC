@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 29-03-2022 a las 03:20:30
+-- Tiempo de generación: 07-04-2022 a las 03:46:53
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -34,15 +34,16 @@ CREATE TABLE `bodega` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `encargado_bodega` bigint(20) UNSIGNED NOT NULL,
-  `estado_id` int(11) NOT NULL
+  `estado_id` int(11) NOT NULL,
+  `municipio_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bodega`
 --
 
-INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `created_at`, `updated_at`, `encargado_bodega`, `estado_id`) VALUES
-(3, 'Bodega 1', 'Tegucigalpa', '2022-03-19 05:57:19', '2022-03-23 06:39:01', 3, 1);
+INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `created_at`, `updated_at`, `encargado_bodega`, `estado_id`, `municipio_id`) VALUES
+(1, 'Bodega 1', 'Tegucigalpa', '2022-04-03 01:21:42', '2022-04-05 22:04:40', 4, 1, 110);
 
 -- --------------------------------------------------------
 
@@ -235,7 +236,11 @@ CREATE TABLE `img_producto` (
 --
 
 INSERT INTO `img_producto` (`id`, `url_img`, `created_at`, `updated_at`, `producto_id`, `users_id`) VALUES
-(1, 'IMG_1648162024.PNG', '2022-03-25 04:47:04', '2022-03-25 04:47:04', 5, 3);
+(1, 'IMG_1649274533_0.jpg', '2022-04-07 01:48:53', NULL, 1, 3),
+(2, 'IMG_1649274533_1.jpg', '2022-04-07 01:48:53', NULL, 1, 3),
+(3, 'IMG_1649274533_2.png', '2022-04-07 01:48:53', NULL, 1, 3),
+(4, 'IMG_1649274533_3.jpg', '2022-04-07 01:48:53', NULL, 1, 3),
+(5, 'IMG_1649274533_4.jpg', '2022-04-07 01:48:53', NULL, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -682,7 +687,31 @@ INSERT INTO `precios_venta` (`id`, `precio`, `created_at`, `updated_at`, `produc
 (6, 300, '2022-03-25 04:44:01', '2022-03-25 04:44:01', 2, 3),
 (13, 100, '2022-03-25 04:47:04', '2022-03-25 04:47:04', 5, 3),
 (14, 200, '2022-03-25 04:47:04', '2022-03-25 04:47:04', 5, 3),
-(15, 300, '2022-03-25 04:47:04', '2022-03-25 04:47:04', 5, 3);
+(15, 300, '2022-03-25 04:47:04', '2022-03-25 04:47:04', 5, 3),
+(16, 1, '2022-03-30 04:38:55', '2022-03-30 04:38:55', 6, 3),
+(17, 2, '2022-03-30 04:38:55', '2022-03-30 04:38:55', 6, 3),
+(18, 3, '2022-03-30 04:38:55', '2022-03-30 04:38:55', 6, 3),
+(19, 100, '2022-04-05 23:28:30', '2022-04-05 23:28:30', 7, 3),
+(20, 200, '2022-04-05 23:28:30', '2022-04-05 23:28:30', 7, 3),
+(21, 300, '2022-04-05 23:28:30', '2022-04-05 23:28:30', 7, 3),
+(22, 100, '2022-04-05 23:31:52', '2022-04-05 23:31:52', 8, 3),
+(23, 200, '2022-04-05 23:31:52', '2022-04-05 23:31:52', 8, 3),
+(24, 300, '2022-04-05 23:31:52', '2022-04-05 23:31:52', 8, 3),
+(31, 10, '2022-04-05 23:49:44', '2022-04-05 23:49:44', 11, 3),
+(32, 20, '2022-04-05 23:49:44', '2022-04-05 23:49:44', 11, 3),
+(33, 30, '2022-04-05 23:49:44', '2022-04-05 23:49:44', 11, 3),
+(34, 100, '2022-04-05 23:50:55', '2022-04-05 23:50:55', 12, 3),
+(35, 200, '2022-04-05 23:50:55', '2022-04-05 23:50:55', 12, 3),
+(36, 300, '2022-04-05 23:50:55', '2022-04-05 23:50:55', 12, 3),
+(37, 100, '2022-04-06 00:07:35', '2022-04-06 00:07:35', 13, 3),
+(38, 4, '2022-04-06 00:07:35', '2022-04-06 00:07:35', 13, 3),
+(39, 2, '2022-04-06 00:07:35', '2022-04-06 00:07:35', 13, 3),
+(40, 100, '2022-04-06 00:09:41', '2022-04-06 00:09:41', 14, 3),
+(41, 200, '2022-04-06 00:09:41', '2022-04-06 00:09:41', 14, 3),
+(42, 300, '2022-04-06 00:09:41', '2022-04-06 00:09:41', 14, 3),
+(43, 100, '2022-04-07 01:48:53', '2022-04-07 01:48:53', 15, 3),
+(44, 200, '2022-04-07 01:48:53', '2022-04-07 01:48:53', 15, 3),
+(45, 500, '2022-04-07 01:48:53', '2022-04-07 01:48:53', 15, 3);
 
 -- --------------------------------------------------------
 
@@ -695,22 +724,32 @@ CREATE TABLE `producto` (
   `nombre` varchar(200) NOT NULL,
   `descripcion` varchar(1000) NOT NULL,
   `isv` int(11) NOT NULL,
+  `precio_base` double DEFAULT NULL,
   `codigo_barra` varchar(13) DEFAULT NULL,
   `codigo_estatal` varchar(45) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `categoria_id` int(11) NOT NULL,
-  `unidad_medida_id` int(11) NOT NULL
+  `unidad_medida_id` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `isv`, `codigo_barra`, `codigo_estatal`, `created_at`, `updated_at`, `categoria_id`, `unidad_medida_id`) VALUES
-(1, 'producto1', 'Producto', 15, '111', '111', '2022-03-25 04:42:55', '2022-03-25 04:42:55', 1, 1),
-(2, 'producto2', 'Producto', 15, '111', '111', '2022-03-27 21:38:28', '2022-03-25 04:44:01', 1, 1),
-(5, 'producto3', 'Producto', 15, '111', '111', '2022-03-27 21:38:35', '2022-03-25 04:47:04', 1, 1);
+INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `isv`, `precio_base`, `codigo_barra`, `codigo_estatal`, `created_at`, `updated_at`, `categoria_id`, `unidad_medida_id`, `users_id`) VALUES
+(1, 'producto1', 'Producto', 15, 100, '111', '111', '2022-03-25 04:42:55', '2022-03-25 04:42:55', 1, 1, 3),
+(2, 'producto2', 'Producto', 15, 100, '111', '111', '2022-03-27 21:38:28', '2022-03-25 04:44:01', 1, 1, 3),
+(5, 'producto3', 'Producto', 15, 100, '111', '111', '2022-03-27 21:38:35', '2022-03-25 04:47:04', 1, 1, 3),
+(6, 'producto 4', 'producto 4, registro de prueba', 15, 100, '111', '111', '2022-03-30 04:38:55', '2022-03-30 04:38:55', 1, 1, 3),
+(7, 'producto 7', 'Prueba con imagenes', 15, 100, '1001', '1000', '2022-04-05 23:28:30', '2022-04-05 23:28:30', 1, 1, 3),
+(8, 'producto 8', 'prueba de imagenes', 15, 100, '1004', '504', '2022-04-05 23:31:52', '2022-04-05 23:31:52', 2, 1, 3),
+(11, 'producto 10', 'imagenes', 15, 100, '100', '244', '2022-04-05 23:49:44', '2022-04-05 23:49:44', 1, 1, 3),
+(12, 'producto 12', 'imagenes', 15, 100, '2', '4', '2022-04-05 23:50:55', '2022-04-05 23:50:55', 1, 1, 3),
+(13, 'producto 4', 'vvv', 15, 100, '44', '22', '2022-04-06 00:07:35', '2022-04-06 00:07:35', 1, 1, 3),
+(14, 'producto 44', 'ddd', 15, 100, '22', '55', '2022-04-06 00:09:41', '2022-04-06 00:09:41', 1, 1, 3),
+(15, 'Imagenes', 'Imagenes', 15, NULL, '1000', '12011', '2022-04-07 01:48:53', '2022-04-07 01:48:53', 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -743,7 +782,7 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`id`, `codigo`, `nombre`, `direccion`, `contacto`, `telefono_1`, `telefono_2`, `correo_1`, `correo_2`, `rtn`, `registrado_por`, `estado_id`, `municipio_id`, `tipo_personalidad_id`, `categoria_id`, `created_at`, `updated_at`) VALUES
-(1, '11101', 'Proveedor 1', 'comayaguela', 'Pedro', '+50489282146', '5569874', 'luisfaviles18@gmail.com', 'luisfaviles18@gmail.com', '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:31:28', '2022-03-29 03:20:01'),
+(1, '11101', 'Proveedor 1', 'comayaguela', 'Pedro', '+50489282146', '5569874', 'luisfaviles18@gmail.com', 'luisfaviles18@gmail.com', '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:31:28', '2022-03-29 09:29:54'),
 (2, '11101', 'Proveedor 2', 'comayaguela', 'Pedro', '+50489282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:32:42', '2022-03-29 09:18:04'),
 (4, '12', 'Proveedor 3', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '89282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:53:24', '2022-03-29 09:18:17'),
 (5, '12', 'Proveedor 4', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '89282146', NULL, 'luisfaviles18@gmail.com', NULL, '08011990568971', 3, 1, 110, 1, 1, '2022-03-15 09:53:41', '2022-03-29 09:18:26'),
@@ -764,16 +803,18 @@ CREATE TABLE `retenciones` (
   `valor` double DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `tipo_retencion_id` int(11) NOT NULL
+  `tipo_retencion_id` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `retenciones`
 --
 
-INSERT INTO `retenciones` (`id`, `nombre`, `valor`, `created_at`, `updated_at`, `tipo_retencion_id`) VALUES
-(1, 'No aplica a retencion', 0, '2022-03-15 03:22:26', '2022-03-15 03:20:28', 2),
-(2, 'Retencion del 1%', 1, '2022-03-15 03:22:21', '2022-03-15 00:49:57', 2);
+INSERT INTO `retenciones` (`id`, `nombre`, `valor`, `created_at`, `updated_at`, `tipo_retencion_id`, `users_id`) VALUES
+(1, 'No aplica a retencion', 0, '2022-03-29 04:47:17', '2022-03-15 03:20:28', 2, 2),
+(2, 'Retencion del 1%', 1, '2022-03-29 04:47:22', '2022-03-15 00:49:57', 2, 2),
+(3, 'prueba de registro', 18, '2022-03-30 07:35:36', '2022-03-30 07:35:36', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -823,22 +864,55 @@ CREATE TABLE `seccion` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(45) NOT NULL,
   `numeracion` int(11) DEFAULT NULL,
+  `estado_id` int(11) NOT NULL,
+  `segmento_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `id_bodega` int(11) NOT NULL,
-  `estado_id` int(11) NOT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `seccion`
 --
 
-INSERT INTO `seccion` (`id`, `descripcion`, `numeracion`, `created_at`, `updated_at`, `id_bodega`, `estado_id`) VALUES
-(1, '1', NULL, '2022-03-22 22:51:07', '2022-03-24 07:53:06', 3, 1),
-(2, '2', NULL, '2022-03-19 05:57:19', '2022-03-24 07:53:06', 3, 1),
-(3, '3', NULL, '2022-03-19 05:57:19', '2022-03-24 07:53:06', 3, 1),
-(4, '4', NULL, '2022-03-19 05:57:19', '2022-03-24 07:53:06', 3, 1),
-(5, '5', NULL, '2022-03-19 05:57:19', '2022-03-24 07:53:06', 3, 1);
+INSERT INTO `seccion` (`id`, `descripcion`, `numeracion`, `estado_id`, `segmento_id`, `created_at`, `updated_at`) VALUES
+(1, 'Seccion A 1', 1, 2, 1, '2022-04-03 01:21:42', '2022-04-05 22:22:27'),
+(2, 'Seccion A 2', 2, 1, 1, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(3, 'Seccion B 1', 1, 1, 2, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(4, 'Seccion B 2', 2, 1, 2, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(5, 'Seccion B 3', 3, 1, 2, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(6, 'Seccion C 1', 1, 1, 3, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(7, 'Seccion C 2', 2, 1, 3, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(8, 'Seccion C 3', 3, 1, 3, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(9, 'Seccion C 4', 4, 1, 3, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(10, 'Seccion D 1', 1, 1, 4, '2022-04-03 01:21:42', '2022-04-05 22:22:35'),
+(11, 'Seccion D 2', 2, 1, 4, '2022-04-03 01:21:42', '2022-04-05 22:22:36'),
+(12, 'Seccion D 3', 3, 1, 4, '2022-04-03 01:21:42', '2022-04-05 22:22:36'),
+(13, 'Seccion D 4', 4, 1, 4, '2022-04-03 01:21:42', '2022-04-05 22:22:36'),
+(14, 'Seccion D 5', 5, 1, 4, '2022-04-03 01:21:42', '2022-04-05 22:22:36');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `segmento`
+--
+
+CREATE TABLE `segmento` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `bodega_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `segmento`
+--
+
+INSERT INTO `segmento` (`id`, `descripcion`, `bodega_id`, `created_at`, `updated_at`) VALUES
+(1, 'A', 1, '2022-04-03 01:21:42', '2022-04-03 01:21:42'),
+(2, 'B', 1, '2022-04-03 01:21:42', '2022-04-03 01:21:42'),
+(3, 'C', 1, '2022-04-03 01:21:42', '2022-04-03 01:21:42'),
+(4, 'D', 1, '2022-04-03 01:21:42', '2022-04-03 01:21:42');
 
 -- --------------------------------------------------------
 
@@ -860,8 +934,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('4twQPEKBLTtPJh7l8egmh1OP9J7eOcbMScuUSRIb', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiMGZ6cGFLSzlSeUs0RmRhOFRoSUZ2bkdSbG00Sk0wRVRvRHJWVUZ0biI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm92ZWVkb3JlcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1648523923),
-('V31ft6jRoltRj0rv7xxlAcfMKbaUMOVvcXwvXuL5', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiTUNucjhFUnZsZlA0SE9DSld0d2hwZ0lGRWZDOTNxa1lqcGl4SnFlTCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm92ZWVkb3JlcyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1648515951);
+('Dt67Yw5hkMomFAuJPTX4gRO0oaLP6hUsN6F6Aasm', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiZG1UZ0xlZTRMSnY0ZzZOSVN6MHJtaDNBMWFVWUdjWWFmUThlWWhYRyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9kZXRhbGxlLzEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1649292170),
+('RY1SWuEhU0resm7EVkEobFEbppo2pnycte5o3l5i', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiSG14QjIwMXRjWTluUk41NXZ4VlpXZlNrdjVpbmpDUTROSVRIeGV4dCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9kZXRhbGxlLzEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1649303135);
 
 -- --------------------------------------------------------
 
@@ -1087,7 +1161,8 @@ INSERT INTO `users` (`id`, `identidad`, `name`, `email`, `email_verified_at`, `p
 ALTER TABLE `bodega`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_bodega_users1_idx` (`encargado_bodega`),
-  ADD KEY `fk_bodega_estado1_idx` (`estado_id`);
+  ADD KEY `fk_bodega_estado1_idx` (`estado_id`),
+  ADD KEY `fk_bodega_municipio1_idx` (`municipio_id`);
 
 --
 -- Indices de la tabla `categoria`
@@ -1199,7 +1274,8 @@ ALTER TABLE `precios_venta`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_producto_categoria1_idx` (`categoria_id`),
-  ADD KEY `fk_producto_unidad_medida1_idx` (`unidad_medida_id`);
+  ADD KEY `fk_producto_unidad_medida1_idx` (`unidad_medida_id`),
+  ADD KEY `fk_producto_users1_idx` (`users_id`);
 
 --
 -- Indices de la tabla `proveedores`
@@ -1217,7 +1293,8 @@ ALTER TABLE `proveedores`
 --
 ALTER TABLE `retenciones`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_retenciones_tipo_retencion1_idx` (`tipo_retencion_id`);
+  ADD KEY `fk_retenciones_tipo_retencion1_idx` (`tipo_retencion_id`),
+  ADD KEY `fk_retenciones_users1_idx` (`users_id`);
 
 --
 -- Indices de la tabla `retenciones_has_proveedores`
@@ -1238,8 +1315,15 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `seccion`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_estante_bodega1_idx` (`id_bodega`),
-  ADD KEY `fk_estante_estado1_idx` (`estado_id`);
+  ADD KEY `fk_estante_estado1_idx` (`estado_id`),
+  ADD KEY `fk_seccion_segmento1_idx` (`segmento_id`);
+
+--
+-- Indices de la tabla `segmento`
+--
+ALTER TABLE `segmento`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_segmento_bodega1_idx` (`bodega_id`);
 
 --
 -- Indices de la tabla `sessions`
@@ -1317,7 +1401,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `bodega`
 --
 ALTER TABLE `bodega`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -1359,7 +1443,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `img_producto`
 --
 ALTER TABLE `img_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1401,13 +1485,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `precios_venta`
 --
 ALTER TABLE `precios_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -1419,7 +1503,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `retenciones`
 --
 ALTER TABLE `retenciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -1431,7 +1515,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `seccion`
 --
 ALTER TABLE `seccion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `segmento`
+--
+ALTER TABLE `segmento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `teams`
@@ -1490,6 +1580,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `bodega`
   ADD CONSTRAINT `fk_bodega_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_bodega_municipio1` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_bodega_users1` FOREIGN KEY (`encargado_bodega`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1546,7 +1637,8 @@ ALTER TABLE `precios_venta`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `fk_producto_categoria1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria_producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_producto_unidad_medida1` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_producto_unidad_medida1` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medida` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_producto_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `proveedores`
@@ -1562,7 +1654,8 @@ ALTER TABLE `proveedores`
 -- Filtros para la tabla `retenciones`
 --
 ALTER TABLE `retenciones`
-  ADD CONSTRAINT `fk_retenciones_tipo_retencion1` FOREIGN KEY (`tipo_retencion_id`) REFERENCES `tipo_retencion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_retenciones_tipo_retencion1` FOREIGN KEY (`tipo_retencion_id`) REFERENCES `tipo_retencion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_retenciones_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `retenciones_has_proveedores`
@@ -1575,8 +1668,14 @@ ALTER TABLE `retenciones_has_proveedores`
 -- Filtros para la tabla `seccion`
 --
 ALTER TABLE `seccion`
-  ADD CONSTRAINT `fk_estante_bodega1` FOREIGN KEY (`id_bodega`) REFERENCES `bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estante_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_estante_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_seccion_segmento1` FOREIGN KEY (`segmento_id`) REFERENCES `segmento` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `segmento`
+--
+ALTER TABLE `segmento`
+  ADD CONSTRAINT `fk_segmento_bodega1` FOREIGN KEY (`bodega_id`) REFERENCES `bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `users`

@@ -18,6 +18,10 @@
                 max-width: 800px;
             }
             }  
+
+            a {
+                pointer-events: none;
+            }
     </style>
 
 
@@ -146,7 +150,7 @@
                                         <div class="col-md-6">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
                                             <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
-                                                onchange="obtenerDepartamentos()" data-parsley-required>
+                                                data-parsley-required>
                                                 <option selected disabled>---Seleccione una categoria---</option>
                                                 @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
@@ -158,7 +162,7 @@
                                         <div class="col-md-6">
                                             <label for="unidad_producto" class="col-form-label focus-label">Selecciones una unidad de medida</label>
                                             <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
-                                                onchange="obtenerMunicipios()" data-parsley-required>
+                                                data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
                                                 @foreach ($unidades as $unidad)
                                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
@@ -171,7 +175,7 @@
             
                                         <div class="col-md-5">
                                             <label for="foto_producto" class="col-form-label focus-label">Fotografía: </label>                                         
-                                            <input  class="" type="file" id="foto_producto" name="foto_producto" accept="image/png, image/gif, image/jpeg">
+                                            <input  class="" type="file" id="foto_producto" name="foto_producto" accept="image/png, image/gif, image/jpeg" multiple>
                                             
                                         </div>
                                         <div class=" col-md-7">
@@ -234,10 +238,32 @@
 
             var data = new FormData($('#crearProductoForm').get(0));
 
+            var totalfiles = document.getElementById('foto_producto').files.length;
+            for (var i = 0; i < totalfiles; i++) {
+                data.append("files[]", document.getElementById('foto_producto').files[i]);
+            }
+
             axios.post("/producto/registrar", data)
             .then( response => {
 
-                console.log(response.data);
+                //console.log(response.data);
+                img = document.getElementById('imagenPrevisualizacion');
+                img.src = "";
+
+                document.getElementById("crearProductoForm").reset();
+                $('#crearProductoForm').parsley().reset();
+
+                    $('#modal_producto_crear').modal('hide');
+
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: "Producto creado con exito."
+                    })
+
+                    $('#tbl_productosListar').DataTable().ajax.reload();
+
 
             })
             .catch( err =>{
@@ -313,6 +339,10 @@
 
             });
         })
+
+        function disponibilidadProducto(id){
+            axios.post("/producto/detalle", {"id":id})
+        }
     
         </script>
     

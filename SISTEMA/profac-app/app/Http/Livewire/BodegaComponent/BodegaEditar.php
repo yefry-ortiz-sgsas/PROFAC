@@ -173,12 +173,14 @@ class BodegaEditar extends Component
 
             $secciones = DB::SELECT("
 
-            select 
-                id,
-                concat('seccion ',descripcion) as descripcion,
-                estado_id
-            from seccion
-            where id_bodega = ".$datosBodega[0]->id."
+            select
+                seccion.id,
+                seccion.descripcion,
+                seccion.estado_id 
+            from segmento 
+            inner join seccion
+            on segmento.id = seccion.segmento_id
+            where segmento.bodega_id =  ".$request['id']."
             
             ");
 
@@ -238,21 +240,34 @@ class BodegaEditar extends Component
 
 
                 //desactivo todas las secciones
-                Seccion::where('id_bodega',"=", $request['idBodega'])               
-                ->update(['estado_id' => 2]);
+                            // Seccion::where('id_bodega',"=", $request['idBodega'])               
+                            // ->update(['estado_id' => 2]);
+
+                DB::UPDATE("
+                update  segmento 
+                inner join seccion
+                on segmento.id = seccion.segmento_id
+                set seccion.estado_id = 2
+                where segmento.bodega_id = ".$request['idBodega']
+                
+                );
 
                 $arrayCheckbox =  $request['seccion'];
-                $longitudArreglo = count($arrayCheckbox);
 
-                //dd($arrayCheckbox);
-               
+                if(!empty($arrayCheckbox)){
+                    $longitudArreglo = count($arrayCheckbox);
 
-                for ($i=0; $i <$longitudArreglo ; $i++) { 
-                   $editarEstadoSeccion = Seccion::find( $arrayCheckbox[$i]);
-                   $editarEstadoSeccion->estado_id = 1;
-                   $editarEstadoSeccion->save();                 
+                //dd($arrayCheckbox);              
+
+                    for ($i=0; $i <$longitudArreglo ; $i++) { 
+                    $editarEstadoSeccion = Seccion::find( $arrayCheckbox[$i]);
+                    $editarEstadoSeccion->estado_id = 1;
+                    $editarEstadoSeccion->save();                
+
+                    }
 
                 }
+                
 
                 DB::commit();
 

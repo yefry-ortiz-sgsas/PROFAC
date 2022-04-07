@@ -368,6 +368,9 @@
                         $('#exampleModal').modal('hide');
                         document.getElementById('editarBodega').reset();
 
+                       
+                        $('#editarBodega').parsley().reset();
+
                         Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
