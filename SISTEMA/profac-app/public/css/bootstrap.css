@@ -263,7 +263,15 @@ input {
 button,
 select {
   text-transform: none;
+
+  
 }
+
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")!important;
+}
+
+
 
 button,
 html [type="button"],
@@ -1884,7 +1892,7 @@ select.form-control:not([size]):not([multiple]) {
 
 select.form-control:focus::-ms-value {
   color: #495057;
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
 }
 
 .form-control-file,

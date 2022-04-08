@@ -8,6 +8,7 @@ use App\Http\Livewire\Usuarios\ListarUsuarios;
 use App\Http\Livewire\Inventario\Producto;
 use App\Http\Livewire\Inventario\Retenciones; 
 use App\Http\Livewire\Inventario\DetalleProducto;
+use App\Http\Livewire\Inventario\CompraProducto;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,9 @@ Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
 Route::get('/producto/detalle/{id}', DetalleProducto::class);
+Route::get('/producto/compra', CompraProducto::class);
+Route::get('/producto/lista/proveedores', [CompraProducto::class,'listarProveedores']);
+Route::get('/producto/tipo/pagos', [CompraProducto::class,'listarFormasPago']);
 
 
 

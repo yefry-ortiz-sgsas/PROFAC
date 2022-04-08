@@ -1,5 +1,5 @@
 <div>
-    @push("style")
+    @push("styles")
     <style>
         @media (max-width: 600px) {
             .ancho-imagen {
@@ -19,9 +19,9 @@
             }
             }  
 
-            a {
+            /* a {
                 pointer-events: none;
-            }
+            } */
     </style>
 
 
@@ -31,10 +31,10 @@
             <h2>Productos</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Listar</a>
+                    <a >Listar</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a>Registrar</a>
+                    <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
                 </li>
 
             </ol>

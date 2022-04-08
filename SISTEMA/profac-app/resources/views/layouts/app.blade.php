@@ -8,19 +8,22 @@
 
     <title>{{ config('app.name', 'D. VALENCIA') }}</title>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @livewireStyles
     @stack('styles')
     <!-- Styles -->
 
     <!-- ApexChart -->
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+  
+
+    <!--font awesome-->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
     <!-- Toastr style -->
@@ -28,7 +31,6 @@
 
     <!-- Gritter -->
     <link href="{{ asset('js/plugins/gritter/jquery.gritter.css') }}" rel="stylesheet">
-
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
@@ -38,8 +40,12 @@
 
     <!--Data-parsley-validate-->
     <link href="{{ asset('css/plugins/parsley/parsley.css') }}" rel="stylesheet">
+    
     <!--Datatable-->
     <link href="{{ asset('css/plugins/dataTables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+    <!--select2-->
+    <link href="{{ asset('css/plugins/select2/select2.min.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -139,7 +145,11 @@
     <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
 
+    <!--select2-->
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
 
+
+    <!--ApexChart-->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 
