@@ -74,7 +74,7 @@ function crearBodega(){
 }
 
 function agregarInputs(){
-    console.log(arregloIdInputs);
+    //console.log(arregloIdInputs);
 
     numeroInputs += 1;
    
@@ -110,7 +110,7 @@ function agregarInputs(){
     arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
     document.getElementById('divSecciones').insertAdjacentHTML('beforeend', html);
 
-    console.log(arregloIdInputs);
+    //console.log(arregloIdInputs);
 
    
 }

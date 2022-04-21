@@ -9,19 +9,89 @@
 
          @media (min-width: 601px ) and (max-width:900px){
             .ancho-imagen {
-                max-width: 600px;
+                max-width: 300px;
             }
             }  
         
             @media (min-width: 901px) {
             .ancho-imagen {
-                max-width: 800px;
+                max-width: 300px;
             }
             }  
 
             /* a {
                 pointer-events: none;
             } */
+            .loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+}
+.loader {
+  color: #0dc5c1;
+  font-size: 11px;
+  text-indent: -99999em;
+  margin: 55px auto;
+  position: relative;
+  width: 10em;
+  height: 10em;
+  box-shadow: inset 0 0 0 1em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  content: '';
+}
+.loader:before {
+  width: 5.2em;
+  height: 10.2em;
+  background: #ffffff;
+  border-radius: 10.2em 0 0 10.2em;
+  top: -0.1em;
+  left: -0.1em;
+  -webkit-transform-origin: 5.1em 5.1em;
+  transform-origin: 5.1em 5.1em;
+  -webkit-animation: load2 2s infinite ease 1.5s;
+  animation: load2 2s infinite ease 1.5s;
+}
+.loader:after {
+  width: 5.2em;
+  height: 10.2em;
+  background: #ffffff;
+  border-radius: 0 10.2em 10.2em 0;
+  top: -0.1em;
+  left: 4.9em;
+  -webkit-transform-origin: 0.1em 5.1em;
+  transform-origin: 0.1em 5.1em;
+  -webkit-animation: load2 2s infinite ease;
+  animation: load2 2s infinite ease;
+}
+@-webkit-keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+
     </style>
 
 
@@ -133,8 +203,8 @@
                                                 id="cod_estatal_producto" min="0">
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="precio1" class="col-form-label focus-label">Precio de venta 1:</label>
-                                            <input class="form-group form-control" min="1" type="number" name="precio[]" id="precio1"
+                                            <label for="precio1" class="col-form-label focus-label">Precio de venta base:</label>
+                                            <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
                                                 data-parsley-required>
                                         </div>
                                         <div class="col-md-4">
@@ -197,7 +267,25 @@
 
 
         </div>
-        {{-- Care about people's approval and you will be their prisoner. --}}
+
+
+  
+  <!-- Modal -->
+  <div class="modal" id="modalSpinnerLoading" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+      <div class="modal-content" >
+
+        <div class="modal-body">
+            <h2 class="text-center">Espere un momento...</h2>
+            <div class="loader">Loading...</div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 
 
 
@@ -235,6 +323,7 @@
         });
 
         function guardarProducto(){
+            $('#modalSpinnerLoading').modal('show');
 
             var data = new FormData($('#crearProductoForm').get(0));
 
@@ -244,26 +333,29 @@
             }
 
             axios.post("/producto/registrar", data)
-            .then( response => {
+            .then( response => {              
+                $('#modalSpinnerLoading').modal('hide');
 
-                //console.log(response.data);
+
+                $('#crearProductoForm').parsley().reset();               
                 img = document.getElementById('imagenPrevisualizacion');
                 img.src = "";
-
                 document.getElementById("crearProductoForm").reset();
-                $('#crearProductoForm').parsley().reset();
+                $('#modal_producto_crear').modal('hide');
+               
+                $('#tbl_productosListar').DataTable().ajax.reload();
 
-                    $('#modal_producto_crear').modal('hide');
+           
+              
 
+                
+                    
 
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
                         text: "Producto creado con exito."
                     })
-
-                    $('#tbl_productosListar').DataTable().ajax.reload();
-
 
             })
             .catch( err =>{

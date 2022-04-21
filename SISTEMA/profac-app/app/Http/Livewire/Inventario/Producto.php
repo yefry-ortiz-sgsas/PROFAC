@@ -62,13 +62,14 @@ class Producto extends Component
             DB::beginTransaction();
             $url = "";
 
-            $producto = new ModelProducto;
+            $producto = new ModelProducto; 
             $producto->nombre = $request['nombre_producto'];
             $producto->descripcion = $request['descripcion_producto'];
             $producto->isv = $request['isv_producto'];
             $producto->codigo_barra = $request['cod_barra_producto'];
             $producto->codigo_estatal = $request['cod_estatal_producto'];
             $producto->categoria_id = $request['categoria_producto'];
+            $producto->precio_base = $request['precioBase'];
             $producto->unidad_medida_id = $request['unidad_producto'];
             $producto->users_id = Auth::user()->id;
             $producto->save();

@@ -74,6 +74,10 @@ Route::get('/producto/detalle/{id}', DetalleProducto::class);
 Route::get('/producto/compra', CompraProducto::class);
 Route::get('/producto/lista/proveedores', [CompraProducto::class,'listarProveedores']);
 Route::get('/producto/tipo/pagos', [CompraProducto::class,'listarFormasPago']);
+Route::get('/producto/listar/producto', [CompraProducto::class,'listarProductos']);
+Route::post('/producto/listar/imagenes', [CompraProducto::class,'obtenerImagenes']);
+Route::post('/prodcuto/compra/datos',[CompraProducto::class,'obtenerDatosProducto']);
+Route::post('/producto/compra/retencion', [CompraProducto::class, 'comprobarRetencion']);
 
 
 
