@@ -409,15 +409,16 @@
 
 
                             document.getElementById("nombre_producto_edit").value = datos.datosProducto.nombre;
-                            /*document.getElementById("descripcion_producto_edit").value = datos.datosProducto.descripcion;
+                            document.getElementById("descripcion_producto_edit").value = datos.datosProducto.descripcion;
                             document.getElementById("isv_producto_edit").value = datos.datosProducto.isv;
+                            document.getElementById("isv_producto_edit").innerHTML += '<option selected value="+datos.datosProducto.isv+">'+datos.datosProducto.isv+' % de ISV</option>';
                             document.getElementById("cod_barra_producto_edit").value = datos.datosProducto.codigo_barra;
                             document.getElementById("cod_estatal_producto_edit").value = datos.datosProducto.codigo_estatal;
                             document.getElementById("precioBase_edit").value = datos.datosProducto.precio_base;
                             document.getElementById("precio2_edit").value = datos.preciosProducto[1].precio;
                             document.getElementById("precio3_edit").value = datos.preciosProducto[2].precio;
                             document.getElementById("categoria_producto_edit").value = datos.datosProducto.id;
-                            document.getElementById("unidad_producto_edit").value = datos.datosProducto.id;*/
+                            document.getElementById("unidad_producto_edit").value = datos.datosProducto.id;
 
                             $('#exampleModal').modal('show');
 
