@@ -62,7 +62,7 @@ class Producto extends Component
             DB::beginTransaction();
             $url = "";
 
-            $producto = new ModelProducto; 
+            $producto = new ModelProducto;
             $producto->nombre = $request['nombre_producto'];
             $producto->descripcion = $request['descripcion_producto'];
             $producto->isv = $request['isv_producto'];
@@ -107,16 +107,16 @@ class Producto extends Component
 
              if ($request->file('files') <> null) {
 
-                $URLs = [];   
+                $URLs = [];
                 $archivos = $request->file('files');
                 $i = 0;
 
-                foreach ($archivos as $file) {   
-            
-                        $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();  
+                foreach ($archivos as $file) {
+
+                        $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();
                         $path = public_path() . '/catalogo';
-                        $url =  $name;  
-                        array_push($URLs, ['producto_id' => $producto->id, 'url_img' =>  $url, 'users_id' =>  Auth::user()->id, 'created_at' => now()]);                     
+                        $url =  $name;
+                        array_push($URLs, ['producto_id' => $producto->id, 'url_img' =>  $url, 'users_id' =>  Auth::user()->id, 'created_at' => now()]);
                         $file->move($path, $name);
                         $i++;
                 }
@@ -145,7 +145,7 @@ class Producto extends Component
     {
         try {
             $listaProductos = DB::SELECT("
-            
+
             select
             A.id as 'codigo',
             A.nombre,
@@ -154,11 +154,11 @@ class Producto extends Component
             B.descripcion as 'categoria',
             C.nombre as 'unidad_medida',
             IFNULL ((select sum(cantidad_disponible) from compra_has_producto where producto_id = A.id group by producto_id), 0)  as 'existencia'
-            
-            
+
+
             from producto A
-            inner join categoria_producto B 
-            on A.categoria_id = B.id 
+            inner join categoria_producto B
+            on A.categoria_id = B.id
             inner join unidad_medida C
             on A.unidad_medida_id = C.id
                         ");
@@ -174,7 +174,7 @@ class Producto extends Component
                     más</button>
                 <ul class="dropdown-menu" x-placement="bottom-start"
                     style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                   
+
                     <li><a class="dropdown-item" href="/producto/detalle/' . $listaProductos->codigo . '" target="_blank"  > <i class="fa-solid fa-arrows-to-eye text-info"></i>
                             Ver detalles </a></li>
 
@@ -192,6 +192,51 @@ class Producto extends Component
                 'message' => 'Ha ocurrido un error al listar los productos.',
                 'errorTh' => $e,
             ], 402);
+        }
+    }
+
+    public function listarModalProductoEdit($id){
+
+        try {
+
+            $datosProducto = DB::SELECT("
+            select
+                id,
+                nombre,
+                descripcion,
+                isv,
+                precio_base,
+                codigo_barra,
+                codigo_estatal,
+                categoria_id,
+                unidad_medida_id,
+                users_id
+            from producto where id =".$id);
+
+            $preciosProducto = DB::SELECT("
+
+            select
+                id,
+                precio,
+                producto_id,
+                users_id
+            from precios_venta
+            where producto_id = ".$id
+
+            );
+
+            return response()->json([
+            "datosProducto"=> $datosProducto[0],
+            "preciosProducto" => $preciosProducto
+            ],200);
+
+        } catch (QueryException $e) {
+
+            return response()->json([
+                "message" => "Ha ocurrido un error al traer datos de producto.",
+                "error" => $e
+            ],402);
+
         }
     }
 }
