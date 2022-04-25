@@ -4,9 +4,9 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-content">
-                      
+
                             <div id="chart"></div>
-                     
+
 
                     </div>
                 </div>
@@ -17,9 +17,9 @@
             <div class="col-md-4">
                 <div class="ibox ">
                     <div class="ibox-content d-flex align-items-center" style="height: 22.8rem !important" >
-                     
+
                             <div id="chart2" style="width:100%"></div>
-                       
+
 
                     </div>
                 </div>
@@ -28,9 +28,9 @@
             <div class="col-md-4">
                 <div class="ibox ">
                     <div class="ibox-content">
-                      
+
                             <div id="chart3"></div>
-                   
+
 
                     </div>
                 </div>
@@ -39,9 +39,9 @@
             <div class="col-md-4">
                 <div class="ibox ">
                     <div class="ibox-content">
-                      
+
                             <div id="chart4"></div>
-                      
+
 
                     </div>
                 </div>
@@ -53,9 +53,9 @@
             <div class="col-lg-6">
                 <div class="ibox ">
                     <div class="ibox-content">
-                      
+
                             <div id="chart5"></div>
-                   
+
 
                     </div>
                 </div>
@@ -64,9 +64,8 @@
             <div class="col-lg-6" >
                 <div class="ibox "  >
                     <div class="ibox-content d-flex align-items-center" style="height: 31.4rem !important" >
-                     
+
                             <div id="chart6" style="width:50rem" ></div>
-                   
 
                     </div>
                 </div>
@@ -80,7 +79,7 @@
 
 
 <script>
-   
+
 
     var options = {
         series: [{
@@ -320,7 +319,7 @@
             opacity: 0.35
           }
         },
-    
+
         dataLabels: {
           show: true,
           name: {
@@ -364,7 +363,7 @@
 </script>
 
 <script>
-    
+
     var options = {
       series: [
       {
@@ -526,7 +525,7 @@
 </script>
 
 <script>
-         
+
          var options = {
       series: [{
         name: "Cliente 1 - Numero de Empleados",

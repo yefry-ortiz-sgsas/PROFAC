@@ -3,29 +3,29 @@
         <style>
 
             .img-width {
-                    width: 20rem; 
+                    width: 20rem;
                     height: 8rem;
                     margin: 0 auto;
-                    
+
                 }
 
                 @media  (min-width: 350px) and (max-width: 768px) {
 
                     .img-width {
-                    width: 20rem; 
+                    width: 20rem;
                     height: 10rem;
                     margin: 0 auto;
-                    
+
                 }
-                    
+
                     }
 
                 @media (min-width: 769px) {
                 .img-width {
-                    width: 45rem; 
+                    width: 45rem;
                     height: 27rem;
                     margin: 0 auto;
-                    
+
                 }
 
 
@@ -48,6 +48,13 @@
 
             </ol>
         </div>
+
+        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+                <div style="margin-top: 1.5rem" mr-auto>
+                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal" data-target="#modal_producto_editar"><i
+                     class="fa fa-plus"></i>Editar Producto</a>
+                </div>
+            </div>
 
     </div>
 
@@ -117,6 +124,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 <div class="row mt-2">
@@ -255,8 +264,119 @@
 
 </div>
 
+
+<div class="modal fade" id="modal_producto_editar" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Productos</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                            <div class="modal-body">
+                                <form id="crearProductoForm" name="crearProductoForm" data-parsley-validate>
+                                    {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
+                                    <div class="row" id="row_datos">
+                                        <div class="col-md-12">
+                                            <label for="nombre_producto" class="col-form-label focus-label">Nombre del producto:</label>
+                                            <input class="form-control" required type="text" id="nombre_producto" name="nombre_producto"
+                                                data-parsley-required>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label for="descripcion_producto" class="col-form-label focus-label">Descripción  del producto</label>
+                                            <textarea  placeholder="Escriba aquí..." required id="descripcion_producto" name ="descripcion_producto" cols="30" rows="3"
+                                                class="form-group form-control" data-parsley-required></textarea>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="isv_producto" class="col-form-label focus-label">ISV en %:</label>
+                                            <select class="form-group form-control" name="isv_producto" id="isv_producto" data-parsley-required>
+
+                                                <option value="0">Excento de impuestos</option>
+                                                <option value="15" selected>15% de ISV</option>
+                                                <option value="18">18% de ISV</option>
+
+
+
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cod_barra_producto" class="col-form-label focus-label">Codigo de barra:</label>
+                                            <input class="form-group form-control"  type="number" name="cod_barra_producto"
+                                                id="cod_barra_producto"  min="0">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="cod_estatal_producto" class="col-form-label focus-label">Codigo Estatal:</label>
+                                            <input class="form-group form-control" type="number" name="cod_estatal_producto"
+                                                id="cod_estatal_producto" min="0">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="precio1" class="col-form-label focus-label">Precio de venta base:</label>
+                                            <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
+                                                data-parsley-required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="col-form-label focus-label" for="precio2">Precio de venta 2:</label>
+                                            <input class="form-group form-control" min="1" type="number" name="precio[]"
+                                                id="precio2">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="precio3" class="col-form-label focus-label">Precio de venta 3:</label>
+                                            <input class="form-group form-control" required min="1" type="number" name="precio[]"
+                                                id="precio3" >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
+                                            <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
+                                                data-parsley-required>
+                                                <option selected disabled>---Seleccione una categoria---</option>
+
+
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="unidad_producto" class="col-form-label focus-label">Selecciones una unidad de medida</label>
+                                            <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
+                                                data-parsley-required>
+                                                <option selected disabled>---Seleccione una unidad---</option>
+
+
+                                            </select>
+                                        </div>
+
+
+
+                                        <div class="col-md-5">
+                                            <label for="foto_producto" class="col-form-label focus-label">Fotografía: </label>
+                                            <input  class="" type="file" id="foto_producto" name="foto_producto" accept="image/png, image/gif, image/jpeg" multiple>
+
+                                        </div>
+                                        <div class=" col-md-7">
+                                            <img id="imagenPrevisualizacion" class="ancho-imagen">
+
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" form="crearProductoForm" class="btn btn-primary" >Guardar producto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 @push('scripts')
     <script>
+
+
         $(document).ready(function() {
             $('#tbl_lotes_listar').DataTable({
                 "language": {
@@ -273,7 +393,93 @@
 
 
             });
-        })
+        });
+
+
+        function obtenerDatosProductoEditar(id) {
+                    axios.post("/producto/datos", {
+                            "id": id
+                        })
+                        .then(response => {
+                            let datos = response.data;
+
+
+                            document.getElementById("idBodega").value = datos.datosBodega.id;
+                            document.getElementById("editBodegaNombre").value = datos.datosBodega.nombre;
+                            document.getElementById("editBodegaDireccion").value = datos.datosBodega.direccion;
+
+                           /*  let array = datos.usuarios;
+                            let htmlSelect = "";
+
+                            array.forEach(element => {
+
+                                if (element.id == datos.datosBodega.encargado_bodega) {
+
+                                    htmlSelect +=
+                                        `
+                               <option value="${element.id}" selected>${element.name}</option>
+                            `;
+                                } else {
+
+                                    htmlSelect +=
+                                        `
+                               <option value="${element.id}">${element.name}</option>
+                            `;
+
+                                }
+
+
+                            });*/
+
+                            /* document.getElementById("editEncargadoBodega").innerHTML = htmlSelect; */
+
+
+                            /* let arraySecciones = datos.secciones;
+                            let htmlCheckbox = "";
+
+                            arraySecciones.forEach(element => {
+                                if (element.estado_id == 1) {
+                                    htmlCheckbox +=
+                                        `
+                                <div class="my-2">
+
+                                        <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  checked />
+                                        <label for="" class="ml-2">${element.descripcion}</label>
+                                </div>
+
+                                `
+
+
+                                } else {
+                                    htmlCheckbox +=
+                                        `
+                                <div class="my-2">
+
+                                        <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  />
+                                        <label for="" class="ml-2">${element.descripcion}</label>
+                                </div>
+
+                                `
+                                }
+
+                            });*/
+
+
+                            /* document.getElementById("contenedorSwich").innerHTML = htmlCheckbox;
+                            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+                            elems.forEach(function(html) {
+                                var switchery = new Switchery(html, {
+                                    color: '#1AB394',
+                                    size: 'small'
+                                });
+                            }); */
+
+                            $('#exampleModal').modal('show');
+
+                        })
+
+
+        }
     </script>
 @endpush
 
