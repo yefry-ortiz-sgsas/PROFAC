@@ -94,7 +94,8 @@
 
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }}"
-                                       ><button class="btn btn-danger " style="margin:auto; "  onchange="eliminar({{ $imagen->url_img }})" type="button" >eliminar</button>
+                                       >
+                                       <div class="col-md-6"><button class="btn btn-danger "  onchange="eliminar({{ $imagen->url_img }})" type="button" >Eliminar</button></div>
                                 </div>
                             @else
                                 <div class="carousel-item ">
@@ -102,7 +103,8 @@
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }} "
                                        >
-                                       <button class="btn btn-danger" style="margin:auto; "  onchange="eliminar({{ $imagen->url_img }})" type="button" >eliminar</button>
+                                       <div class="col-md-6"><button class="btn btn-danger "  onchange="eliminar({{ $imagen->url_img }})" type="button" >Eliminar</button></div>
+
                                 </div>
                             @endif
                         @endforeach
