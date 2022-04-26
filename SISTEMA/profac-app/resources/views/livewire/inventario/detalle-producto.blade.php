@@ -90,21 +90,23 @@
 
                         @foreach ($imagenes as $imagen)
                             @if ($imagen->contador == 1)
-                                <div class="carousel-item active ">
-
+                                <div class="carousel-item active row w-100 align-items-center">
+                                    <div class="col text-center">
+                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $imagen->url_img }})" type="button" >Eliminar imagen</button>
+                                     </div><br>
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }}"
                                        >
-                                       <div class="col-md-6"><button class="btn btn-danger "  onchange="eliminar({{ $imagen->url_img }})" type="button" >Eliminar</button></div>
                                 </div>
                             @else
-                                <div class="carousel-item ">
-
+                                <div class="carousel-item row w-100 align-items-center">
+                                    <div class="col text-center">
+                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $imagen->url_img }})" type="button" >Eliminar imagen</button>
+                                      </div>
+                                      <br>
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }} "
                                        >
-                                       <div class="col-md-6"><button class="btn btn-danger "  onchange="eliminar({{ $imagen->url_img }})" type="button" >Eliminar</button></div>
-
                                 </div>
                             @endif
                         @endforeach
@@ -471,7 +473,7 @@
             }
 
             function eliminar(url){
-                console.log("Esto es una URL --->     "+ url)
+                console.log("Esto es una URL --->     ")
             }
     </script>
 @endpush
