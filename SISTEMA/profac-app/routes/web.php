@@ -69,6 +69,7 @@ Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios'
 
 Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
+Route::post('/producto/editar', [Producto::class, 'editarProducto']);
 Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
 Route::get('/producto/detalle/{id}', DetalleProducto::class);

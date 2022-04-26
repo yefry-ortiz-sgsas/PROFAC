@@ -239,4 +239,34 @@ class Producto extends Component
 
         }
     }
+
+    public function editarProducto(Request $request){
+        try {
+        DB::beginTransaction();
+
+            $producto = ModelProducto::find($request['id_producto_edit']);
+            $producto->nombre = $request['nombre_producto_edit'];
+            $producto->descripcion = $request['descripcion_producto_edit'];
+            $producto->isv = $request['isv_producto_edit'];
+            $producto->codigo_barra = $request['cod_barra_producto_edit'];
+            $producto->codigo_estatal = $request['cod_estatal_producto_edit'];
+            $producto->categoria_id = $request['categoria_producto_edit'];
+            $producto->precio_base = $request['precioBase_edit'];
+            $producto->unidad_medida_id = $request['unidad_producto_edit'];
+            $producto->users_id = Auth::user()->id;
+            $producto->save();
+
+        DB::commit();
+            return response()->json([
+                "message" => "producto editado con exito",
+            ], 200);
+        } catch (QueryException $e) {
+                DB::rollback();
+
+                return response()->json([
+                    'message' => 'Ha ocurrido un error al editar el producto.',
+                    'errorTh' => $e,
+                ], 402);
+        }
+    }
 }

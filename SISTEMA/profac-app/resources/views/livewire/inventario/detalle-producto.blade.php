@@ -29,7 +29,7 @@
                 }
 
 
-
+            }
         </style>
     @endpush
 
@@ -91,15 +91,18 @@
                         @foreach ($imagenes as $imagen)
                             @if ($imagen->contador == 1)
                                 <div class="carousel-item active ">
+
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }}"
-                                       >
+                                       ><button class="btn btn-danger " style="margin:auto; "  onchange="eliminar({{ $imagen->url_img }})" type="button" >eliminar</button>
                                 </div>
                             @else
                                 <div class="carousel-item ">
+
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }} "
                                        >
+                                       <button class="btn btn-danger" style="margin:auto; "  onchange="eliminar({{ $imagen->url_img }})" type="button" >eliminar</button>
                                 </div>
                             @endif
                         @endforeach
@@ -224,9 +227,6 @@
                                     <th>Numero</th>
                                     <th>Cantidad Disponible</th>
 
-
-
-
                                 </tr>
                             </thead>
                             @foreach ($lotes as $lote)
@@ -330,12 +330,15 @@
                                             <input class="form-group form-control" required min="1" type="number" name="precio_edit[]"
                                                 id="precio3_edit" >
                                         </div>
+
                                         <div class="col-md-6">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
                                             <select class="form-group form-control" name="categoria_producto_edit" id="categoria_producto_edit"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una categoria---</option>
-
+                                                @foreach ($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
+                                                @endforeach
 
 
                                             </select>
@@ -345,21 +348,11 @@
                                             <select class="form-group form-control" name="unidad_producto_edit" id="unidad_producto_edit"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
-
+                                                @foreach ($unidades as $unidad)
+                                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
+                                                @endforeach
 
                                             </select>
-                                        </div>
-
-
-
-                                        <div class="col-md-5">
-                                            <label for="foto_producto" class="col-form-label focus-label">Fotografía: </label>
-                                            <input  class="" type="file" id="foto_producto_edit" name="foto_producto_edit" accept="image/png, image/gif, image/jpeg" multiple>
-
-                                        </div>
-                                        <div class=" col-md-7">
-                                            <img id="imagenPrevisualizacion_edit" class="ancho-imagen">
-
                                         </div>
                                     </div>
                                 </form>
@@ -371,6 +364,21 @@
                             <button type="submit" form="editarProductoForm" class="btn btn-primary" >Guardar producto</button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal" id="modalSpinnerLoading" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true" >
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+                <div class="modal-content" >
+
+                    <div class="modal-body">
+                        <h2 class="text-center">Espere un momento...</h2>
+                        <div class="loader">Loading...</div>
+
+                    </div>
+
+                </div>
                 </div>
             </div>
 
@@ -411,14 +419,12 @@
                             document.getElementById("nombre_producto_edit").value = datos.datosProducto.nombre;
                             document.getElementById("descripcion_producto_edit").value = datos.datosProducto.descripcion;
                             document.getElementById("isv_producto_edit").value = datos.datosProducto.isv;
-                            document.getElementById("isv_producto_edit").innerHTML += '<option selected value="+datos.datosProducto.isv+">'+datos.datosProducto.isv+' % de ISV</option>';
+                            document.getElementById("isv_producto_edit").innerHTML += '<option selected value="'+datos.datosProducto.isv+'">'+datos.datosProducto.isv+' % de ISV</option>';
                             document.getElementById("cod_barra_producto_edit").value = datos.datosProducto.codigo_barra;
                             document.getElementById("cod_estatal_producto_edit").value = datos.datosProducto.codigo_estatal;
                             document.getElementById("precioBase_edit").value = datos.datosProducto.precio_base;
                             document.getElementById("precio2_edit").value = datos.preciosProducto[1].precio;
                             document.getElementById("precio3_edit").value = datos.preciosProducto[2].precio;
-                            document.getElementById("categoria_producto_edit").value = datos.datosProducto.id;
-                            document.getElementById("unidad_producto_edit").value = datos.datosProducto.id;
 
                             $('#exampleModal').modal('show');
 
@@ -426,6 +432,45 @@
 
 
         }
+
+        $(document).on('submit', '#editarProductoForm', function(event) {
+
+            event.preventDefault();
+            editarProducto();
+
+            });
+
+            function editarProducto(){
+            $('#modalSpinnerLoading').modal('show');
+
+            var data = new FormData($('#editarProductoForm').get(0));
+
+            axios.post("/producto/editar", data)
+            .then( response => {
+                $('#modalSpinnerLoading').modal('hide');
+
+
+                $('#editarProductoForm').parsley().reset();
+                document.getElementById("editarProductoForm").reset();
+                $('#modal_producto_editar').modal('hide');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: "Producto Editado con exito."
+                    })
+
+            })
+            .catch( err =>{
+                console.error(err);
+
+            })
+
+            }
+
+            function eliminar(url){
+                console.log("Esto es una URL --->     "+ url)
+            }
     </script>
 @endpush
 
