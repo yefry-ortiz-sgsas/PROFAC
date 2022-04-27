@@ -273,11 +273,12 @@ class Producto extends Component
 
     public function eliminarImagen(Request $request){
 
-        $user = ModelImagenProducto::where('url_img','=',$request->url_img);
-        $user->delete();
+
 
                 //dd($request->urlImagen);
                 try{
+                    $user = ModelImagenProducto::where('url_img','=',$request->urlImagen);
+                    $user->delete();
 
                     $carpetaPublic = public_path();
                     $path = $carpetaPublic.'/catalogo/'.$request->urlImagen;
