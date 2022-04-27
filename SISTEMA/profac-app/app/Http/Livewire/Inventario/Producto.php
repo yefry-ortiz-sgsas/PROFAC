@@ -18,6 +18,7 @@ use App\Models\ModelProducto;
 use App\Models\ModelPrecio;
 use App\Models\ModelImagenProducto;
 use DataTables;
+use Illuminate\Support\Facades\File;
 
 class Producto extends Component
 {
@@ -269,4 +270,28 @@ class Producto extends Component
                 ], 402);
         }
     }
+
+    public function eliminarImagen(Request $request){
+
+        $user = ModelImagenProducto::where('url_img','=',$request->url_img);
+        $user->delete();
+
+                //dd($request->urlImagen);
+                try{
+
+                    $carpetaPublic = public_path();
+                    $path = $carpetaPublic.'/catalogo/'.$request->urlImagen;
+
+                    File::delete($path);
+
+                return 'exito';
+                } catch (QueryException $e) {
+                    return response()->json([
+                        'message' => 'Ha ocurrido un error al eliminar la imagen.',
+                        'errorTh' => $e,
+                    ], 402);
+                }
+    }
+
+
 }

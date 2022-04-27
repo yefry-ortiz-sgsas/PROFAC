@@ -66,7 +66,8 @@ class DetalleProducto extends Component
         $imagenes = DB::SELECT("
       select
         @i := @i + 1 as contador,
-        A.url_img
+        A.url_img,
+        A.id
       from
         img_producto A
         cross join (select @i := 0) r

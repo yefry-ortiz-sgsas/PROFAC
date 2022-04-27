@@ -86,13 +86,15 @@
 
                     </ol>
                     <div class="carousel-inner ">
-
+                            @php
+                                $comillas = '"';
+                            @endphp
 
                         @foreach ($imagenes as $imagen)
                             @if ($imagen->contador == 1)
                                 <div class="carousel-item active row w-100 align-items-center">
                                     <div class="col text-center">
-                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $imagen->url_img }})" type="button" >Eliminar imagen</button>
+                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $comillas.$imagen->url_img.$comillas }})" type="button" >Eliminar imagen</button>
                                      </div><br>
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
                                         alt="imagen {{ $imagen->contador }}"
@@ -101,7 +103,7 @@
                             @else
                                 <div class="carousel-item row w-100 align-items-center">
                                     <div class="col text-center">
-                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $imagen->url_img }})" type="button" >Eliminar imagen</button>
+                                        <button class="btn btn-danger regular-button "  onclick="eliminar({{ $comillas.$imagen->url_img.$comillas }})" type="button" >Eliminar imagen</button>
                                       </div>
                                       <br>
                                     <img class="d-block img-width" src="{{ asset('catalogo/' . $imagen->url_img) }}"
@@ -464,6 +466,8 @@
                         text: "Producto Editado con exito."
                     })
 
+                    location.reload();
+
             })
             .catch( err =>{
                 console.error(err);
@@ -472,8 +476,26 @@
 
             }
 
-            function eliminar(url){
-                console.log("Esto es una URL --->     ")
+            function eliminar(urlImagen){
+                //console.log("Esto es una URL --->     "+urlImagen)
+                axios.post("/producto/eliminar", {
+                            "urlImagen": urlImagen
+                        })
+                    .then( response => {
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito!',
+                                text: "Imagen eliminada con exito."
+                            })
+                            location.reload();
+
+                    })
+                    .catch( err =>{
+                        console.error(err);
+
+                    });
+
             }
     </script>
 @endpush
