@@ -187,7 +187,7 @@ class Producto extends Component
                 ->rawColumns(['disponibilidad'])
                 ->make(true);
         } catch (QueryException $e) {
-            DB::rollback();
+         
 
             return response()->json([
                 'message' => 'Ha ocurrido un error al listar los productos.',

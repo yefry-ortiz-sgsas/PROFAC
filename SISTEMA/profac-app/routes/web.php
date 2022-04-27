@@ -9,7 +9,9 @@ use App\Http\Livewire\Inventario\Producto;
 use App\Http\Livewire\Inventario\Retenciones;
 use App\Http\Livewire\Inventario\DetalleProducto;
 use App\Http\Livewire\Inventario\CompraProducto;
-
+use App\Http\Livewire\Inventario\ListarCompras;
+use App\Http\Livewire\Inventario\DetalleCompra; 
+use App\Http\Livewire\Inventario\PagosCompra; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,6 +84,15 @@ Route::get('/producto/listar/producto', [CompraProducto::class,'listarProductos'
 Route::post('/producto/listar/imagenes', [CompraProducto::class,'obtenerImagenes']);
 Route::post('/prodcuto/compra/datos',[CompraProducto::class,'obtenerDatosProducto']);
 Route::post('/producto/compra/retencion', [CompraProducto::class, 'comprobarRetencion']);
+Route::post('/producto/compra/guardar', [CompraProducto::class, 'guardarCompra']);
+Route::get('/producto/listar/compras', ListarCompras::class);
+Route::get('/producto/compras/listar', [ListarCompras::class, 'listarCompras']);
+Route::get('/producto/compras/detalle/{id}', DetalleCompra::class);
+Route::get('/producto/compra/pagos/{id}', PagosCompra::class);
+Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarPago']);
+Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
+Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']); 
+Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
 
 
 

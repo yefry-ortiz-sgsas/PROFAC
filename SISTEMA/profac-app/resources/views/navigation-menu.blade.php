@@ -319,6 +319,8 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/producto/registro" style="color:#ffffff;">Registrar Producto</a></li>
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
+                        <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
+                      
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>
                    
