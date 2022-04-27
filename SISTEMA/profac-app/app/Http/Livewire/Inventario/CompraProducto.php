@@ -16,6 +16,8 @@ use Validator;
 use App\Models\Modelproveedores;
 use App\Models\ModelProducto;
 use App\Models\ModelTipoPago;
+use App\Models\ModelCompra;
+use App\Models\ModelCompraProducto;
 
 
 class CompraProducto extends Component
@@ -124,6 +126,7 @@ class CompraProducto extends Component
          
             $producto = DB::SELECT("
             select
+            id,
             concat(nombre,' - ',codigo_barra) as nombre,
             isv
 
@@ -184,12 +187,98 @@ class CompraProducto extends Component
     }
 
 
-    public function guardarCompra(){
+    public function guardarCompra(Request $request){
+
+        //dd($request->all());
+       $validator = Validator::make($request->all(), [
+            'numero_emision' => 'required',
+            'numero_factura' => 'required',
+            'tipoPagoCompra' => 'required', 
+            'fecha_vencimiento' => 'required',
+            'fecha_emision' => 'required',
+            'fecha_entrega' => 'required',
+            'tipoPagoCompra' => 'required', 
+            'subTotalGeneral' => 'required',
+            'isvGeneral' => 'required',
+            'totalGeneral' => 'required', 
+            'retencion' => 'required',
+            'arregloIdInputs' => 'required',
+            'numeroInputs' => 'required',
+            'seleccionarProveedorId' => 'required',
         
-        try {
 
             
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'mensaje' => 'Ha ocurrido un error al crear la compra.',
+                'errors' => $validator->errors()
+            ], 406);
+        }
+
+        try {
+
+            DB::beginTransaction();
+            $ordenNumero = DB::selectOne("select count(id) as 'numero' from compra");
+
+            $guardarCompra = new ModelCompra;
+            $guardarCompra->fecha_vencimiento = $request['fecha_vencimiento'];
+            $guardarCompra->fecha_emision = $request->fecha_emision;
+            $guardarCompra->fecha_recepcion = $request->fecha_entrega;
+            $guardarCompra->isv_compra = $request->isvGeneral;
+            $guardarCompra->sub_total =$request->subTotalGeneral ;
+            $guardarCompra->total =$request->totalGeneral;
+            $guardarCompra->debito =$request->totalGeneral;
+            $guardarCompra->proveedores_id =$request->seleccionarProveedorId ;
+            $guardarCompra->users_id = Auth::user()->id ;
+            $guardarCompra->tipo_compra_id = $request->tipoPagoCompra;
+            $guardarCompra->numero_orden = $ordenNumero->numero+1;
+            $guardarCompra->monto_retencion = $request->retencion;
+            $guardarCompra->retenciones_id = 2;
+            $guardarCompra->numero_factura = $request->numero_factura;
+            $guardarCompra->save();
+
+            $idCompra = $guardarCompra->id;
+
+            //dd( $guardarCompra);
+
+            $arrayInputs=[];
+            $arrayInputs = $request->arregloIdInputs;
+
+
+            for ($i=0; $i < count($arrayInputs) ; $i++) { 
+
+                $idProducto = 'idProducto'.$arrayInputs[$i];
+                $precio='precio'.$arrayInputs[$i];
+                $cantidad='cantidad'.$arrayInputs[$i];
+                $vencimiento='vencimiento'.$arrayInputs[$i];
+                $subTotal='subTotal'.$arrayInputs[$i];
+                $isvProducto='isvProducto'.$arrayInputs[$i];
+                $total='total'.$arrayInputs[$i];
+
+                $productoCompra = new ModelCompraProducto;
+                $productoCompra->compra_id = $idCompra;
+                $productoCompra->producto_id = $request->$idProducto;
+                $productoCompra->precio_unidad = $request->$precio;
+                $productoCompra->isv = $request->$isvProducto;
+                $productoCompra->sub_total_producto=$request->$subTotal;
+                $productoCompra->precio_total = $request->$total;
+                $productoCompra->cantidad_ingresada = $request->$cantidad;
+                $productoCompra->cantidad_disponible = $request->$cantidad;
+                $productoCompra->fecha_expiracion = $request->$vencimiento;
+                $productoCompra->estado_recibido = 3;//pediente de recibir 
+                $productoCompra->save();
+
+               
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Creado con exito.',
+                
+            ], 200);  
 
         } catch (QueryException $e) {
             return response()->json([

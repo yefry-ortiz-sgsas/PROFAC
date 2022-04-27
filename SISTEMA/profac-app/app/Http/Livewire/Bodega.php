@@ -67,6 +67,7 @@ class Bodega extends Component
             $crearBodega->municipio_id = $request->municipio_bodega;
             $crearBodega->save();
 
+   
             $numeroSegmetnos = count($request->arregloIdInputs);
 
             for ($i=0; $i < $numeroSegmetnos ; $i++) { 

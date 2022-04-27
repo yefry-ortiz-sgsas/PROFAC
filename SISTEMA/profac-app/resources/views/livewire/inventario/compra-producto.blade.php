@@ -44,17 +44,28 @@
                         <h3>Datos de compra <i class="fa-solid fa-cart-shopping"></i></h3>
                     </div>
                     <div class="ibox-content">
-                        <form id="crear_compra" name="crear_compra" data-parsley-validate>
+                        <form autocomplete="off" id="crear_compra" name="crear_compra" data-parsley-validate>
                             <div class="row">
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
-                                    <label class="col-form-label text-danger" for="totalGeneral"
+                                    <label class="col-form-label text-danger" for="numero_emision"
                                         style="font-size: 1rem; font-weight:600;">Numero de compra</label>
                                 </div>
 
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
 
-                                    <input class="form-control" type="text" id="nombre_emision" name="nombre_emision"
-                                        value="{{ $ordenNumero->numero + 1 }}" data-parsley-required disabled>
+                                    <input class="form-control" type="text" id="numero_emision" name="numero_emision"
+                                        value="{{ $ordenNumero->numero + 1 }}" data-parsley-required readonly>
+                                </div>
+
+                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                    <label class="col-form-label" for="numero_factura"
+                                        style="font-size: 1rem; font-weight:600;">Numero de factura</label>
+                                </div>
+
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+
+                                    <input class="form-control" type="text" id="numero_factura" name="numero_factura"
+                                        data-parsley-required placeholder="N° Factura">
                                 </div>
 
                             </div>
@@ -62,8 +73,8 @@
                                 <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                                     <label for="seleccionarProveedor" class="col-form-label focus-label">Seleccionar
                                         Proveedor:</label>
-                                    <select id="seleccionarProveedor" class="form-group form-control" style="" 
-                                        data-parsley-required>
+                                    <select id="seleccionarProveedor" class="form-group form-control" style=""
+                                        data-parsley-required onchange="retencionProveedor()">
                                         <option value="" selected disabled>--Seleccionar un proveedor--</option>
                                     </select>
 
@@ -94,7 +105,7 @@
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
                                             name="fecha_vencimiento" value="" data-parsley-required
-                                            min="{{ date('Y-m-d') }}" disabled>
+                                            min="{{ date('Y-m-d') }}" readonly>
 
                                     </div>
                                 </div>
@@ -189,51 +200,57 @@
 
                             <div class="hide-container">
                                 <div class="row no-gutters ">
-                                    <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <div class="d-flex">
-    
-    
-    
+
+
+
                                             <div style="width:100%">
                                                 <label class="sr-only">Nombre del
                                                     producto</label>
-                                                <input type="text" placeholder="Nombre del producto" class="form-control"
-                                                    pattern="[A-Z]{1}" data-parsley-pattern="[A-Z]{1}" autocomplete="off"
-                                                    disabled>
+                                                <input type="text" placeholder="Nombre del producto"
+                                                    class="form-control" pattern="[A-Z]{1}"
+                                                    data-parsley-pattern="[A-Z]{1}" autocomplete="off" disabled>
                                             </div>
                                         </div>
                                     </div>
-    
+
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Precio</label>
-                                        <input type="number" placeholder="Precio de unidad" class="form-control" min="1"
-                                            autocomplete="off" disabled>
+                                        <input type="number" placeholder="Precio de unidad" class="form-control"
+                                            min="1" autocomplete="off" disabled>
                                     </div>
-    
-                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                         <label class="sr-only">cantidad</label>
-                                        <input type="number" placeholder="Cantidad" class="form-control" min="1"
+                                        <input type="text" placeholder="Cantidad" class="form-control" min="1"
                                             autocomplete="off" disabled>
                                     </div>
-    
+
+                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                        <label class="sr-only">F.vencimiento</label>
+                                        <input type="text" placeholder="Fecha de expiración" class="form-control"
+                                            min="1" autocomplete="off" disabled>
+                                    </div>
+
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Sub Total</label>
                                         <input type="number" placeholder="Sub total del producto" class="form-control"
                                             min="1" autocomplete="off" disabled>
                                     </div>
-    
+
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                         <label class="sr-only">ISV</label>
                                         <input type="number" placeholder="ISV" class="form-control" min="1"
                                             autocomplete="off" disabled>
                                     </div>
-    
+
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Total</label>
-                                        <input type="number" placeholder="Total del producto" class="form-control" min="1"
-                                            disabled autocomplete="off">
+                                        <input type="number" placeholder="Total del producto" class="form-control"
+                                            min="1" disabled autocomplete="off">
                                     </div>
-    
+
                                 </div>
 
                             </div>
@@ -258,7 +275,7 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="Sub total " id="subTotalGeneral"
                                         name="subTotalGeneral" class="form-control" min="1" data-parsley-required
-                                        autocomplete="off" disabled>
+                                        autocomplete="off" readonly>
                                 </div>
                             </div>
 
@@ -271,7 +288,7 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="ISV " id="isvGeneral" name="isvGeneral"
                                         class="form-control" min="1" data-parsley-required autocomplete="off"
-                                        disabled>
+                                        readonly>
                                 </div>
                             </div>
 
@@ -284,16 +301,30 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="Total  " id="totalGeneral"
                                         name="totalGeneral" class="form-control" min="1" data-parsley-required
-                                        autocomplete="off" disabled>
+                                        autocomplete="off" readonly>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="totalGeneral">Retencion 1%</label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="number" step="any" placeholder="Retencion del 1%" id="retencion"
+                                        name="retencion" class="form-control" min="0" required data-parsley-required
+                                        autocomplete="off" readonly>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button type="submit" class="btn btn-sm btn-primary float-left m-t-n-xs" ><strong>Guardar
+                                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>Guardar
                                             compra</strong></button>
                                 </div>
                             </div>
+
 
                         </form>
                     </div>
@@ -307,6 +338,7 @@
         <script>
             var numeroInputs = 0;
             var arregloIdInputs = [];
+            var retencionEstado = false; // true no aplica retencion, false si aplica retencion;
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
@@ -318,7 +350,7 @@
 
                         let tipoDePago = response.data.tipos;
 
-                        let htmlPagos = '  <option value="" selected disabled>--Seleccione una opcion--</option>';
+                        let htmlPagos = '  <option value="" selected disabled >--Seleccione una opcion--</option>';
 
                         tipoDePago.forEach(element => {
 
@@ -463,12 +495,14 @@
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
-                                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <div class="d-flex">
 
                                                     <button class="btn btn-danger" type="button" style="display: inline" onclick="eliminarInput(${numeroInputs})"><i
                                                             class="fa-regular fa-rectangle-xmark"></i>
                                                     </button>
+
+                                                    <input id="idProducto${numeroInputs}" name="idProducto${numeroInputs}" type="hidden" value="${producto.id}">
 
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
@@ -476,7 +510,7 @@
                                                             name="nombre${numeroInputs}" class="form-control" 
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            disabled
+                                                            readonly 
                                                             value='${producto.nombre}'
                                                             >
                                                     </div>
@@ -486,31 +520,38 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio de unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control" min="1" data-parsley-required step="any"
+                                                    name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                            </div>
+
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                                <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
+                                                <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
+                                                    name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                                <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
-                                                <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
-                                                    name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                                <label for="vencimiento${numeroInputs}" class="sr-only">cantidad</label>
+                                                <input type="date" placeholder="Fecha de vencimiento" id="vencimiento${numeroInputs}"
+                                                    name="vencimiento${numeroInputs}" class="form-control" min="0" 
+                                                    autocomplete="off" >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="subTotal${numeroInputs}" class="sr-only">Sub Total</label>
-                                                <input type="number" placeholder="Sub total del producto" id="subTotal${numeroInputs}"
-                                                    name="subTotal${numeroInputs}" class="form-control" min="1" step="any"
+                                                <input type="number" placeholder="Sub total producto" id="subTotal${numeroInputs}"
+                                                    name="subTotal${numeroInputs}" class="form-control" min="0" step="any"
                                                     autocomplete="off"
-                                                    disabled>
+                                                    readonly >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="isvProducto${numeroInputs}" class="sr-only">ISV</label>
                                                 <input type="number" placeholder="ISV" id="isvProducto${numeroInputs}"
-                                                    name="isvProducto${numeroInputs}" class="form-control" min="1" step="any"
+                                                    name="isvProducto${numeroInputs}" class="form-control" min="0" step="any"
                                                     autocomplete="off"
-                                                    disabled>
+                                                    readonly >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -518,7 +559,7 @@
                                                 <input type="number" placeholder="Total del producto" id="total${numeroInputs}"
                                                     name="total${numeroInputs}" class="form-control" min="1"  step="any"
                                                     autocomplete="off"
-                                                    disabled>
+                                                    readonly >
                                             </div>
                                     
                         </div>
@@ -570,7 +611,6 @@
                     document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('isvProducto' + id).value = isv.toFixed(2);
-
                     this.totalesGenerales();
 
 
@@ -585,7 +625,11 @@
 
             function totalesGenerales() {
 
-                console.log(arregloIdInputs);
+                //console.log(arregloIdInputs);
+
+                if (numeroInputs == 0) {
+                    return;
+                }
 
 
 
@@ -605,6 +649,14 @@
                 document.getElementById('isvGeneral').value = totalISV.toFixed(2);
                 document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(2);
 
+                if (retencionEstado) {
+                    document.getElementById('retencion').value = (totalGeneralValor * 0.01).toFixed(2);
+                } else {
+                    document.getElementById('retencion').value = 0;
+                }
+
+
+
                 return 0;
 
 
@@ -617,7 +669,9 @@
                 tipoPago = document.getElementById('tipoPagoCompra').value;
 
                 if (tipoPago == 1) {
-                    document.getElementById('fecha_vencimiento').disabled = false;
+
+                    document.getElementById('fecha_vencimiento').value = "Empty";
+                    document.getElementById('fecha_vencimiento').readOnly = false;
 
 
                 } else {
@@ -630,53 +684,125 @@
 
             }
 
-            function retencionProveedor(){
+            function retencionProveedor() {
                 let idProveedor = document.getElementById('seleccionarProveedor').value;
-                axios.post('/producto/compra/retencion',{idProveedor:idProveedor})
-                .then( response=>{
-                    let data = response.data;
+                axios.post('/producto/compra/retencion', {
+                        idProveedor: idProveedor
+                    })
+                    .then(response => {
+                        let data = response.data;
 
-                 
 
-                         
-                            Swal.fire({
+
+
+                        Swal.fire({
                             title: data.title,
-                            text:data.text,
+                            text: data.text,
                             showDenyButton: true,
                             showCancelButton: true,
                             confirmButtonText: 'Aplicar',
                             denyButtonText: `No aplicar`,
                             cancelButtonText: 'Cancelar',
-                            }).then((result) => {
+                        }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
                                 Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
+                                retencionEstado = true;
+                                this.totalesGenerales();
                             } else if (result.isDenied) {
                                 Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
+                                retencionEstado = false;
+                                this.totalesGenerales();
                             }
-                            })
+                        })
 
-         
 
-                })
-                .catch( err=>{
 
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: "Ha ocurrido un error al seleccionar el proveedor."
                     })
+                    .catch(err => {
 
-                    console.error('ha ocurrido un erro', err)
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: "Ha ocurrido un error al seleccionar el proveedor."
+                        })
 
-                }) 
+                        console.error('ha ocurrido un erro', err)
+
+                    })
             }
 
-            $(document).on('submit', '#crear_compra', 
-            function(event) {
-            event.preventDefault();
-            retencionProveedor();
-            });
+            $(document).on('submit', '#crear_compra',
+                function(event) {
+                    event.preventDefault();
+                    guardarCompra();
+                });
+
+            function guardarCompra() {
+                if (!retencionEstado) {
+                    document.getElementById('retencion').value = 0;
+                }
+
+                var data = new FormData($('#crear_compra').get(0));
+
+                let longitudArreglo = arregloIdInputs.length;
+                for (var i = 0; i < longitudArreglo; i++) {
+                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+                }
+
+                data.append("numeroInputs", numeroInputs);
+
+                let seleccionarProveedorId = document.getElementById('seleccionarProveedor').value;
+                data.append("seleccionarProveedorId", seleccionarProveedorId);
+
+                axios.post('/producto/compra/guardar', data)
+                    .then(response => {
+
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Exito!',
+                            text: "Compra realizada con exito."
+                        })
+
+                        console.log(arregloIdInputs);
+
+
+
+                        // for (let i = 0; i < arregloIdInputs.length; i++) {
+                        //     const element = document.getElementById(arregloIdInputs[i]);
+                        //      element.remove();
+                         
+                        //     console.log(i,arregloIdInputs[i])
+                        // }
+
+                        document.getElementById('bloqueImagenes').innerHTML = '';
+                        document.getElementById('divProductos').innerHTML='';
+
+                        document.getElementById("crear_compra").reset();
+                        $('#crear_compra').parsley().reset();
+
+                       
+
+                        var element2 = document.getElementById('botonAdd');
+                            element2.classList.add("d-none");
+
+
+                        arregloIdInputs = [];
+                        numeroInputs = 0;
+                        retencionEstado=false;
+
+                    })
+                    .catch(err => {
+
+                        console.log(err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: "Ha ocurrido un error!."
+                        })
+                    })
+            }
         </script>
     @endpush
 </div>

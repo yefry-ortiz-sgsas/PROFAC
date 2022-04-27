@@ -18,7 +18,7 @@
                     
                 }
                     
-                    }
+                }
 
                 @media (min-width: 769px) {
                 .img-width {
@@ -27,6 +27,7 @@
                     margin: 0 auto;
                     
                 }
+            }
 
 
 
@@ -214,31 +215,25 @@
                                     <th>Seccion</th>
                                     <th>Numero</th>
                                     <th>Cantidad Disponible</th>
-
-
-
-
                                 </tr>
-                            </thead>
-                            @foreach ($lotes as $lote)
+                            </thead>   
+                            <tbody>
+                                @foreach ($lotes as $lote)
                                 <tr>
-                                    <th>{{ $lote->contador }}</th>
-                                    <th>{{ $lote->id }}</th>
-                                    <th>{{ $lote->nombre }}</th>
-                                    <th>{{ $lote->departamento }}</th>
-                                    <th>{{ $lote->municipio }}</th>
-                                    <th>{{ $lote->bodega }}</th>
-                                    <th>{{ $lote->direccion }}</th>
-                                    <th>{{ $lote->seccion }}</th>
-                                    <th>{{ $lote->numeracion }}</th>
-                                    <th>{{ $lote->cantidad_disponible }}</th>
+                                    <td>{{ $lote->contador }}</td>
+                                    <td>{{ $lote->id }}</td>
+                                    <td>{{ $lote->nombre }}</td>
+                                    <td>{{ $lote->departamento }}</td>
+                                    <td>{{ $lote->municipio }}</td>
+                                    <td>{{ $lote->bodega }}</td>
+                                    <td>{{ $lote->direccion }}</td>
+                                    <td>{{ $lote->seccion }}</td>
+                                    <td>{{ $lote->numeracion }}</td>
+                                    <td>{{ $lote->cantidad_disponible }}</td>
 
 
                                 </tr>
                             @endforeach
-
-                            <tbody>
-
                             </tbody>
                         </table>
 
