@@ -246,9 +246,9 @@
 
                 let data = response.data.compra;
 
-            document.getElementById("debitoCompra").innerHTML = data.debito+" Lps.";
-            document.getElementById("totalComra").innerHTML = data.total+" Lps.";
-            document.getElementById("retencion").innerHTML = data.monto_retencion+" Lps.";
+            document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.debito); 
+            document.getElementById("totalComra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.total);
+            document.getElementById("retencion").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.monto_retencion);
 
             })
             .catch( err=>{

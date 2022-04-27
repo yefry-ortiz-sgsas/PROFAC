@@ -106,7 +106,7 @@ class PagosCompra extends Component
     public function DatosCompra(Request $request){
        try {
 
-        $compra = DB::SELECTONE("select total, debito, monto_retencion from compra where id=".$request->idCompra);
+        $compra = DB::SELECTONE("select total, debito, if(monto_retencion is null ,0,monto_retencion) as 'monto_retencion' from compra where id=".$request->idCompra);
         
        return response()->json([
            "compra"=>$compra,

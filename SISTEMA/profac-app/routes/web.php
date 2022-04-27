@@ -12,6 +12,7 @@ use App\Http\Livewire\Inventario\CompraProducto;
 use App\Http\Livewire\Inventario\ListarCompras;
 use App\Http\Livewire\Inventario\DetalleCompra; 
 use App\Http\Livewire\Inventario\PagosCompra; 
+use App\Http\Livewire\Inventario\RecibirProducto;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,6 +94,12 @@ Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarP
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
 Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']); 
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
+Route::get('/producto/compra/recibir/{id}', RecibirProducto::class); 
+Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'listarProductos']);
+Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
+Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmentos']);
+Route::post('/producto/recibir/seccion', [RecibirProducto::class, 'listarSecciones']);
+Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']);
 
 
 

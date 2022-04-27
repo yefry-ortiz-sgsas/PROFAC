@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 21-04-2022 a las 01:52:54
+-- Tiempo de generación: 27-04-2022 a las 05:52:42
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -122,7 +122,10 @@ INSERT INTO `categoria_producto` (`id`, `descripcion`, `created_at`, `updated_at
 
 CREATE TABLE `compra` (
   `id` int(11) NOT NULL,
+  `numero_factura` varchar(90) NOT NULL,
   `fecha_vencimiento` date NOT NULL,
+  `fecha_emision` date NOT NULL DEFAULT '2022-04-21',
+  `fecha_recepcion` date NOT NULL DEFAULT '2022-04-21',
   `isv_compra` double NOT NULL,
   `sub_total` double NOT NULL,
   `total` double NOT NULL,
@@ -130,7 +133,9 @@ CREATE TABLE `compra` (
   `proveedores_id` int(11) NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `tipo_compra_id` int(11) NOT NULL,
-  `numero_cai` varchar(45) NOT NULL,
+  `numero_orden` varchar(45) NOT NULL,
+  `monto_retencion` double DEFAULT NULL,
+  `retenciones_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -139,9 +144,25 @@ CREATE TABLE `compra` (
 -- Volcado de datos para la tabla `compra`
 --
 
-INSERT INTO `compra` (`id`, `fecha_vencimiento`, `isv_compra`, `sub_total`, `total`, `debito`, `proveedores_id`, `users_id`, `tipo_compra_id`, `numero_cai`, `created_at`, `updated_at`) VALUES
-(1, '2022-04-30', 2250, 12750, 15000, 15000, 1, 3, 1, '', '2022-03-27 20:06:48', '2022-03-27 20:04:35'),
-(2, '2022-03-28', 3000, 17000, 20000, 0, 4, 3, 2, '', '2022-03-27 20:27:55', '2022-03-27 20:16:58');
+INSERT INTO `compra` (`id`, `numero_factura`, `fecha_vencimiento`, `fecha_emision`, `fecha_recepcion`, `isv_compra`, `sub_total`, `total`, `debito`, `proveedores_id`, `users_id`, `tipo_compra_id`, `numero_orden`, `monto_retencion`, `retenciones_id`, `created_at`, `updated_at`) VALUES
+(1, '20', '2022-04-30', '2022-04-21', '2022-04-21', 2250, 12750, 15000, 15000, 1, 3, 1, '21', NULL, NULL, '2022-03-27 20:06:48', '2022-03-27 20:04:35'),
+(2, '21', '2022-03-28', '2022-04-21', '2022-04-21', 3000, 17000, 20000, 0, 4, 3, 2, '22', NULL, NULL, '2022-03-27 20:27:55', '2022-03-27 20:16:58'),
+(12, '1', '2022-04-22', '2022-04-22', '2022-04-30', 1725, 11500, 13225, 13225, 1, 3, 2, '3', 132.25, 2, '2022-04-22 07:27:09', '2022-04-22 07:27:09'),
+(13, '2', '2022-04-22', '2022-04-22', '2022-04-30', 4350, 29000, 33350, 33350, 2, 3, 2, '4', 0, 2, '2022-04-22 07:29:53', '2022-04-22 07:29:53'),
+(14, '3', '2022-05-29', '2022-04-22', '2022-04-30', 7627.95, 50853, 58480.95, 0, 5, 3, 1, '5', 584.81, 2, '2022-04-22 07:45:47', '2022-04-27 11:41:46'),
+(15, '5', '2022-04-29', '2022-04-22', '2022-04-28', 16500, 110000, 126500, 126500, 1, 3, 1, '6', 1265, 2, '2022-04-22 07:52:56', '2022-04-22 07:52:56'),
+(16, '6', '2022-04-22', '2022-04-22', '2022-04-23', 5670, 37800, 43470, 43470, 7, 3, 2, '7', 434.7, 2, '2022-04-22 07:53:57', '2022-04-22 07:53:57'),
+(17, '7', '2022-05-20', '2022-04-22', '2022-04-26', 13032, 86880, 99912, 99912, 9, 3, 1, '8', 999.12, 2, '2022-04-22 08:00:26', '2022-04-22 08:00:26'),
+(18, '9', '2022-04-27', '2022-04-22', '2022-04-28', 40188, 267920, 308108, 308108, 8, 3, 1, '9', 3081.08, 2, '2022-04-22 08:02:09', '2022-04-22 08:02:09'),
+(19, '10', '2022-04-22', '2022-04-22', '2022-04-27', 11843.4, 78956, 90799.4, 90799.4, 5, 3, 2, '10', 0, 2, '2022-04-22 08:04:27', '2022-04-22 08:04:27'),
+(20, '10', '2022-04-22', '2022-04-22', '2022-04-27', 4825.2, 32168, 36993.2, 36993.2, 5, 3, 2, '11', 0, 2, '2022-04-22 08:04:40', '2022-04-22 08:04:40'),
+(21, '13', '2022-04-22', '2022-04-22', '2022-04-24', 19560.75, 130405, 149965.75, 149965.75, 1, 3, 2, '12', 0, 2, '2022-04-22 08:09:31', '2022-04-22 08:09:31'),
+(22, '13', '2022-04-22', '2022-04-22', '2022-04-23', 1233, 8220, 9453, 9453, 2, 3, 2, '13', 94.53, 2, '2022-04-22 08:12:36', '2022-04-22 08:12:36'),
+(23, '15', '2022-04-22', '2022-04-22', '2022-04-27', 1500, 10000, 11500, 11500, 8, 3, 2, '14', 115, 2, '2022-04-22 08:14:35', '2022-04-22 08:14:35'),
+(25, '16', '2022-04-22', '2022-04-22', '2022-04-23', 510, 3400, 3910, 3910, 5, 3, 2, '15', 0, 2, '2022-04-22 08:17:57', '2022-04-22 08:17:57'),
+(26, '17', '2022-04-22', '2022-04-22', '2022-04-27', 2430, 16200, 18630, 18630, 4, 3, 2, '16', 0, 2, '2022-04-22 08:20:17', '2022-04-22 08:20:17'),
+(27, '18', '2022-04-22', '2022-04-22', '2022-04-29', 2212.5, 14750, 16962.5, 16962.5, 8, 3, 2, '17', 0, 2, '2022-04-22 08:39:41', '2022-04-22 08:39:41'),
+(28, '19', '2022-04-30', '2022-04-22', '2022-04-30', 1893, 12620, 14513, 14513, 4, 3, 1, '18', 145.13, 2, '2022-04-22 08:48:50', '2022-04-22 08:48:50');
 
 -- --------------------------------------------------------
 
@@ -152,25 +173,71 @@ INSERT INTO `compra` (`id`, `fecha_vencimiento`, `isv_compra`, `sub_total`, `tot
 CREATE TABLE `compra_has_producto` (
   `compra_id` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
-  `precio_unidad_compra` double NOT NULL,
+  `precio_unidad` double NOT NULL,
+  `cantidad_ingresada` int(11) NOT NULL,
+  `sub_total_producto` double NOT NULL,
   `isv` double NOT NULL,
   `precio_total` double NOT NULL,
-  `cantidad_ingresada` int(11) NOT NULL,
   `cantidad_disponible` int(11) NOT NULL,
-  `seccion_id` int(11) NOT NULL,
-  `estado_recibido` int(11) NOT NULL,
   `fecha_recibido` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `fecha_expiracion` date DEFAULT NULL,
+  `seccion_id` int(11) DEFAULT NULL,
+  `estado_recibido` int(11) NOT NULL,
+  `recibido_por` bigint(20) UNSIGNED DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `compra_has_producto`
 --
 
-INSERT INTO `compra_has_producto` (`compra_id`, `producto_id`, `precio_unidad_compra`, `isv`, `precio_total`, `cantidad_ingresada`, `cantidad_disponible`, `seccion_id`, `estado_recibido`, `fecha_recibido`, `created_at`, `updated_at`) VALUES
-(1, 1, 125, 0, 0, 102, 102, 1, 0, NULL, '2022-03-27 20:09:07', '2022-03-27 20:07:14'),
-(2, 1, 100, 0, 0, 170, 170, 2, 0, NULL, '2022-03-27 20:24:44', '2022-03-28 20:21:41');
+INSERT INTO `compra_has_producto` (`compra_id`, `producto_id`, `precio_unidad`, `cantidad_ingresada`, `sub_total_producto`, `isv`, `precio_total`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `seccion_id`, `estado_recibido`, `recibido_por`, `updated_at`, `created_at`) VALUES
+(1, 1, 125, 102, 0, 0, 0, 102, NULL, NULL, 1, 3, NULL, '2022-03-27 20:07:14', '2022-03-27 20:09:07'),
+(2, 1, 100, 170, 0, 0, 0, 170, NULL, NULL, 1, 3, NULL, '2022-03-28 20:21:41', '2022-03-27 20:24:44'),
+(12, 1, 55, 100, 5500, 825, 6325, 100, NULL, '2022-04-30', 1, 3, NULL, '2022-04-22 07:27:09', '2022-04-22 07:27:09'),
+(12, 5, 100, 60, 6000, 900, 6900, 60, NULL, NULL, 1, 3, NULL, '2022-04-22 07:27:09', '2022-04-22 07:27:09'),
+(13, 1, 450, 20, 9000, 1350, 10350, 20, NULL, NULL, 1, 3, NULL, '2022-04-22 07:29:53', '2022-04-22 07:29:53'),
+(13, 6, 100, 50, 5000, 750, 5750, 50, NULL, NULL, 1, 3, NULL, '2022-04-22 07:29:53', '2022-04-22 07:29:53'),
+(13, 19, 250, 60, 15000, 2250, 17250, 60, NULL, '2022-07-30', 1, 3, NULL, '2022-04-22 07:29:53', '2022-04-22 07:29:53'),
+(14, 5, 300, 30, 9000, 1350, 10350, 30, NULL, NULL, 1, 3, NULL, '2022-04-22 07:45:47', '2022-04-22 07:45:47'),
+(14, 6, 150, 45, 6750, 1012.5, 7762.5, 45, NULL, NULL, 1, 3, NULL, '2022-04-22 07:45:47', '2022-04-22 07:45:47'),
+(14, 7, 189, 27, 5103, 765.45, 5868.45, 27, NULL, NULL, 1, 3, NULL, '2022-04-22 07:45:47', '2022-04-22 07:45:47'),
+(14, 8, 300, 80, 24000, 3600, 27600, 80, NULL, NULL, 1, 3, NULL, '2022-04-22 07:45:47', '2022-04-22 07:45:47'),
+(14, 19, 100, 60, 6000, 900, 6900, 60, NULL, NULL, 1, 3, NULL, '2022-04-22 07:45:47', '2022-04-22 07:45:47'),
+(15, 8, 100, 200, 20000, 3000, 23000, 200, NULL, NULL, 1, 3, NULL, '2022-04-22 07:52:56', '2022-04-22 07:52:56'),
+(15, 12, 200, 450, 90000, 13500, 103500, 450, NULL, NULL, 1, 3, NULL, '2022-04-22 07:52:56', '2022-04-22 07:52:56'),
+(16, 13, 189, 200, 37800, 5670, 43470, 200, NULL, NULL, 1, 3, NULL, '2022-04-22 07:53:57', '2022-04-22 07:53:57'),
+(17, 15, 896, 30, 26880, 4032, 30912, 30, NULL, NULL, 1, 3, NULL, '2022-04-22 08:00:26', '2022-04-22 08:00:26'),
+(17, 18, 500, 120, 60000, 9000, 69000, 120, NULL, NULL, 1, 3, NULL, '2022-04-22 08:00:26', '2022-04-22 08:00:26'),
+(18, 6, 796, 20, 15920, 2388, 18308, 20, NULL, NULL, 1, 3, NULL, '2022-04-22 08:02:09', '2022-04-22 08:02:09'),
+(18, 7, 400, 630, 252000, 37800, 289800, 630, NULL, NULL, 1, 3, NULL, '2022-04-22 08:02:09', '2022-04-22 08:02:09'),
+(19, 1, 50, 300, 15000, 2250, 17250, 300, NULL, NULL, 1, 3, NULL, '2022-04-22 08:04:27', '2022-04-22 08:04:27'),
+(19, 2, 78, 200, 15600, 2340, 17940, 200, NULL, NULL, 1, 3, NULL, '2022-04-22 08:04:27', '2022-04-22 08:04:27'),
+(19, 5, 69, 452, 31188, 4678.2, 35866.2, 452, NULL, NULL, 1, 3, NULL, '2022-04-22 08:04:27', '2022-04-22 08:04:27'),
+(19, 8, 58, 296, 17168, 2575.2, 19743.2, 296, NULL, '2022-11-30', 1, 3, NULL, '2022-04-22 08:04:27', '2022-04-22 08:04:27'),
+(20, 1, 50, 300, 15000, 2250, 17250, 300, NULL, NULL, 1, 3, NULL, '2022-04-22 08:04:40', '2022-04-22 08:04:40'),
+(20, 8, 58, 296, 17168, 2575.2, 19743.2, 296, NULL, '2022-11-30', 1, 3, NULL, '2022-04-22 08:04:40', '2022-04-22 08:04:40'),
+(21, 1, 85, 785, 66725, 10008.75, 76733.75, 785, NULL, NULL, 1, 3, NULL, '2022-04-22 08:09:31', '2022-04-22 08:09:31'),
+(21, 2, 100, 230, 23000, 3450, 26450, 230, NULL, NULL, 1, 3, NULL, '2022-04-22 08:09:31', '2022-04-22 08:09:31'),
+(21, 5, 90, 452, 40680, 6102, 46782, 452, NULL, NULL, 1, 3, NULL, '2022-04-22 08:09:31', '2022-04-22 08:09:31'),
+(22, 1, 44, 5, 220, 33, 253, 5, NULL, NULL, 1, 3, NULL, '2022-04-22 08:12:36', '2022-04-22 08:12:36'),
+(22, 6, 100, 20, 2000, 300, 2300, 20, NULL, NULL, 1, 3, NULL, '2022-04-22 08:12:36', '2022-04-22 08:12:36'),
+(22, 7, 200, 30, 6000, 900, 6900, 30, NULL, NULL, 1, 3, NULL, '2022-04-22 08:12:36', '2022-04-22 08:12:36'),
+(23, 1, 20, 50, 1000, 150, 1150, 50, NULL, NULL, 1, 3, NULL, '2022-04-22 08:14:35', '2022-04-22 08:14:35'),
+(23, 13, 30, 100, 3000, 450, 3450, 100, NULL, NULL, 1, 3, NULL, '2022-04-22 08:14:35', '2022-04-22 08:14:35'),
+(23, 17, 40, 150, 6000, 900, 6900, 150, NULL, NULL, 1, 3, NULL, '2022-04-22 08:14:35', '2022-04-22 08:14:35'),
+(25, 5, 50, 10, 500, 75, 575, 10, NULL, NULL, 1, 3, NULL, '2022-04-22 08:17:57', '2022-04-22 08:17:57'),
+(25, 12, 60, 15, 900, 135, 1035, 15, NULL, NULL, 1, 3, NULL, '2022-04-22 08:17:57', '2022-04-22 08:17:57'),
+(25, 14, 80, 25, 2000, 300, 2300, 25, NULL, NULL, 1, 3, NULL, '2022-04-22 08:17:57', '2022-04-22 08:17:57'),
+(26, 6, 150, 10, 1500, 225, 1725, 10, NULL, NULL, 1, 3, NULL, '2022-04-22 08:20:17', '2022-04-22 08:20:17'),
+(26, 11, 200, 45, 9000, 1350, 10350, 45, NULL, NULL, 1, 3, NULL, '2022-04-22 08:20:17', '2022-04-22 08:20:17'),
+(26, 15, 114, 50, 5700, 855, 6555, 50, NULL, NULL, 1, 3, NULL, '2022-04-22 08:20:17', '2022-04-22 08:20:17'),
+(27, 5, 40, 100, 4000, 600, 4600, 100, NULL, NULL, NULL, 3, NULL, '2022-04-22 08:39:41', '2022-04-22 08:39:41'),
+(27, 17, 30, 225, 6750, 1012.5, 7762.5, 225, NULL, NULL, NULL, 3, NULL, '2022-04-22 08:39:41', '2022-04-22 08:39:41'),
+(27, 18, 20, 200, 4000, 600, 4600, 200, NULL, NULL, NULL, 3, NULL, '2022-04-22 08:39:41', '2022-04-22 08:39:41'),
+(28, 14, 100, 44, 4400, 660, 5060, 44, NULL, NULL, NULL, 3, NULL, '2022-04-22 08:48:50', '2022-04-22 08:48:50'),
+(28, 19, 411, 20, 8220, 1233, 9453, 20, NULL, NULL, NULL, 3, NULL, '2022-04-22 08:48:50', '2022-04-22 08:48:50');
 
 -- --------------------------------------------------------
 
@@ -229,7 +296,9 @@ CREATE TABLE `estado` (
 
 INSERT INTO `estado` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES
 (1, 'activo', '2022-03-10 23:55:11', '2022-03-10 23:54:42'),
-(2, 'inactivo', '2022-03-10 23:55:11', '2022-03-10 23:54:42');
+(2, 'inactivo', '2022-03-10 23:55:11', '2022-03-10 23:54:42'),
+(3, 'pendiente de recibir', '2022-04-21 06:00:00', '2022-04-21 06:00:00'),
+(4, 'recibido', '2022-04-21 06:00:00', '2022-04-21 06:00:00');
 
 -- --------------------------------------------------------
 
@@ -634,17 +703,25 @@ CREATE TABLE `pago_compra` (
   `monto` double NOT NULL,
   `fecha` date NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
+  `compra_id` int(11) NOT NULL,
+  `users_id_elimina` bigint(20) UNSIGNED DEFAULT NULL,
+  `fecha_eliminado` timestamp NULL DEFAULT NULL,
+  `estado_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `compra_id` int(11) NOT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `pago_compra`
 --
 
-INSERT INTO `pago_compra` (`id`, `monto`, `fecha`, `users_id`, `created_at`, `updated_at`, `compra_id`) VALUES
-(1, 20000, '2022-03-28', 3, '2022-03-27 20:27:21', '2022-03-28 20:26:21', 2);
+INSERT INTO `pago_compra` (`id`, `monto`, `fecha`, `users_id`, `compra_id`, `users_id_elimina`, `fecha_eliminado`, `estado_id`, `created_at`, `updated_at`) VALUES
+(1, 19493.33, '2022-04-25', 3, 14, NULL, NULL, 1, '2022-04-25 17:46:28', '2022-04-25 06:00:00'),
+(2, 19493.33, '2022-04-26', 4, 14, NULL, NULL, 1, '2022-04-26 17:44:54', '2022-04-26 17:40:13'),
+(3, 19493.33, '2022-04-27', 2, 14, NULL, NULL, 1, '2022-04-27 17:45:28', '2022-04-27 17:40:13'),
+(7, 0.96, '2022-04-29', 3, 14, 3, '2022-04-27 11:36:23', 2, '2022-04-27 10:50:54', '2022-04-27 11:36:23'),
+(10, 0.96, '2022-04-29', 3, 14, 3, '2022-04-27 11:40:50', 2, '2022-04-27 11:40:41', '2022-04-27 11:40:50'),
+(11, 0.96, '2022-04-30', 3, 14, NULL, NULL, 1, '2022-04-27 11:41:46', '2022-04-27 11:41:46');
 
 -- --------------------------------------------------------
 
@@ -1051,7 +1128,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('cGqNzXsHas4cTf4yBw59DDxnxjVzVBmWODvu2kuK', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiV1FyekkySWhrTldjM1NyY3Z4QWRUUVl6SmFwTEZsTXpaZ0g2bW1qNyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9jb21wcmEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1650505701);
+('PMGL2HYWuXsLgzrzJHQqEI3lYTutDqrwmHoDpmP2', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoieFZMRGY5ZkZUREFBWWo3TU1qZ1hpVDB2bFhJV2lOYmdxbnN3cFNIVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9jb21wcmFzL2RldGFsbGUvMSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1651038727);
 
 -- --------------------------------------------------------
 
@@ -1321,7 +1398,8 @@ ALTER TABLE `compra`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_compra_proveedores1_idx` (`proveedores_id`),
   ADD KEY `fk_compra_users1_idx` (`users_id`),
-  ADD KEY `fk_compra_tipo_compra1_idx` (`tipo_compra_id`);
+  ADD KEY `fk_compra_tipo_compra1_idx` (`tipo_compra_id`),
+  ADD KEY `fk_compra_retenciones1_idx` (`retenciones_id`);
 
 --
 -- Indices de la tabla `compra_has_producto`
@@ -1331,7 +1409,8 @@ ALTER TABLE `compra_has_producto`
   ADD KEY `fk_compra_has_producto_producto1_idx` (`producto_id`),
   ADD KEY `fk_compra_has_producto_compra1_idx` (`compra_id`),
   ADD KEY `fk_compra_has_producto_seccion1_idx` (`seccion_id`),
-  ADD KEY `fk_compra_has_producto_estado1_idx` (`estado_recibido`);
+  ADD KEY `fk_compra_has_producto_estado1_idx` (`estado_recibido`),
+  ADD KEY `fk_compra_has_producto_users1_idx` (`recibido_por`);
 
 --
 -- Indices de la tabla `departamento`
@@ -1379,7 +1458,9 @@ ALTER TABLE `municipio`
 ALTER TABLE `pago_compra`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_pagos_compra_users1_idx` (`users_id`),
-  ADD KEY `fk_pagos_compra_compra1_idx` (`compra_id`);
+  ADD KEY `fk_pagos_compra_compra1_idx` (`compra_id`),
+  ADD KEY `fk_pago_compra_users1_idx` (`users_id_elimina`),
+  ADD KEY `fk_pago_compra_estado1_idx` (`estado_id`);
 
 --
 -- Indices de la tabla `pais`
@@ -1564,7 +1645,7 @@ ALTER TABLE `categoria_producto`
 -- AUTO_INCREMENT de la tabla `compra`
 --
 ALTER TABLE `compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
@@ -1576,7 +1657,7 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `estado`
 --
 ALTER TABLE `estado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -1606,7 +1687,7 @@ ALTER TABLE `municipio`
 -- AUTO_INCREMENT de la tabla `pago_compra`
 --
 ALTER TABLE `pago_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `pais`
@@ -1741,6 +1822,7 @@ ALTER TABLE `cai`
 --
 ALTER TABLE `compra`
   ADD CONSTRAINT `fk_compra_proveedores1` FOREIGN KEY (`proveedores_id`) REFERENCES `proveedores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_compra_retenciones1` FOREIGN KEY (`retenciones_id`) REFERENCES `retenciones` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_compra_tipo_compra1` FOREIGN KEY (`tipo_compra_id`) REFERENCES `tipo_compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_compra_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -1751,7 +1833,8 @@ ALTER TABLE `compra_has_producto`
   ADD CONSTRAINT `fk_compra_has_producto_compra1` FOREIGN KEY (`compra_id`) REFERENCES `compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_compra_has_producto_estado1` FOREIGN KEY (`estado_recibido`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_compra_has_producto_producto1` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_compra_has_producto_seccion1` FOREIGN KEY (`seccion_id`) REFERENCES `seccion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_compra_has_producto_seccion1` FOREIGN KEY (`seccion_id`) REFERENCES `seccion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_compra_has_producto_users1` FOREIGN KEY (`recibido_por`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `departamento`
@@ -1776,6 +1859,8 @@ ALTER TABLE `municipio`
 -- Filtros para la tabla `pago_compra`
 --
 ALTER TABLE `pago_compra`
+  ADD CONSTRAINT `fk_pago_compra_estado1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pago_compra_users1` FOREIGN KEY (`users_id_elimina`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pagos_compra_compra1` FOREIGN KEY (`compra_id`) REFERENCES `compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pagos_compra_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

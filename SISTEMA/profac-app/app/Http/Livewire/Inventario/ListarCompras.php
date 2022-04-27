@@ -61,7 +61,7 @@ class ListarCompras extends Component
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="" target="_blank"> <i class="fa-solid fa-cart-arrow-down text-warning"></i> Recepción de producto </a>
+                            <a class="dropdown-item" href="/producto/compra/recibir/'.$listarCompras->id.'" > <i class="fa-solid fa-cart-arrow-down text-warning"></i> Recepción de producto </a>
                         </li>                        
 
                     </ul>

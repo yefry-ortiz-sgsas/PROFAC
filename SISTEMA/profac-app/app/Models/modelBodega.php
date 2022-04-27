@@ -10,5 +10,5 @@ class modelBodega extends Model
     use HasFactory;
     protected $table = 'bodega';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'nombre', 'direccion','users_id','estado_id'];
+    protected $fillable = [ 'nombre', 'direccion','users_id','estado_id'];
 }
