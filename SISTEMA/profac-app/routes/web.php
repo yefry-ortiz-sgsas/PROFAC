@@ -6,7 +6,7 @@ use App\Http\Livewire\BodegaComponent\BodegaEditar;
 use App\Http\Livewire\Proveedores;
 use App\Http\Livewire\Usuarios\ListarUsuarios;
 use App\Http\Livewire\Inventario\Producto;
-use App\Http\Livewire\Inventario\Retenciones; 
+use App\Http\Livewire\Inventario\Retenciones;
 use App\Http\Livewire\Inventario\DetalleProducto;
 use App\Http\Livewire\Inventario\CompraProducto;
 use App\Http\Livewire\Inventario\ListarCompras;
@@ -42,8 +42,8 @@ Route::get('/bodega/editar/screen', BodegaEditar::class);
 Route::post('/bodega/crear',  [Bodega::class, 'crearBodega']);
 Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
 Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
-Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']); 
-Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']); 
+Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']);
+Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']);
 //----------------------Proveedores------------------------------------------//
 
 Route::get('/proveedores', Proveedores::class);
@@ -57,7 +57,7 @@ Route::post('/proveedores/editar/guardar', [Proveedores::class, 'editarProveedor
 Route::get('/inventario/retenciones', Retenciones::class);
 Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
 Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
- 
+
 
 
 //-----------------------------------------------Usuarios--------------------------------------------//
@@ -71,6 +71,10 @@ Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios'
 
 Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
+Route::post('/producto/editar', [Producto::class, 'editarProducto']);
+Route::post('/producto/eliminar', [Producto::class, 'eliminarImagen']);
+
+Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
 Route::get('/producto/detalle/{id}', DetalleProducto::class);
 Route::get('/producto/compra', CompraProducto::class);
@@ -89,6 +93,8 @@ Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarP
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
 Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']); 
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
+
+
 
 
 

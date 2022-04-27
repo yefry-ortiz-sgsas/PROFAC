@@ -18,6 +18,7 @@ use App\Models\ModelProducto;
 use App\Models\ModelPrecio;
 use App\Models\ModelImagenProducto;
 use DataTables;
+use Illuminate\Support\Facades\File;
 
 class Producto extends Component
 {
@@ -62,7 +63,7 @@ class Producto extends Component
             DB::beginTransaction();
             $url = "";
 
-            $producto = new ModelProducto; 
+            $producto = new ModelProducto;
             $producto->nombre = $request['nombre_producto'];
             $producto->descripcion = $request['descripcion_producto'];
             $producto->isv = $request['isv_producto'];
@@ -107,16 +108,16 @@ class Producto extends Component
 
              if ($request->file('files') <> null) {
 
-                $URLs = [];   
+                $URLs = [];
                 $archivos = $request->file('files');
                 $i = 0;
 
-                foreach ($archivos as $file) {   
-            
-                        $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();  
+                foreach ($archivos as $file) {
+
+                        $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();
                         $path = public_path() . '/catalogo';
-                        $url =  $name;  
-                        array_push($URLs, ['producto_id' => $producto->id, 'url_img' =>  $url, 'users_id' =>  Auth::user()->id, 'created_at' => now()]);                     
+                        $url =  $name;
+                        array_push($URLs, ['producto_id' => $producto->id, 'url_img' =>  $url, 'users_id' =>  Auth::user()->id, 'created_at' => now()]);
                         $file->move($path, $name);
                         $i++;
                 }
@@ -145,7 +146,7 @@ class Producto extends Component
     {
         try {
             $listaProductos = DB::SELECT("
-            
+
             select
             A.id as 'codigo',
             A.nombre,
@@ -154,11 +155,11 @@ class Producto extends Component
             B.descripcion as 'categoria',
             C.nombre as 'unidad_medida',
             IFNULL ((select sum(cantidad_disponible) from compra_has_producto where producto_id = A.id group by producto_id), 0)  as 'existencia'
-            
-            
+
+
             from producto A
-            inner join categoria_producto B 
-            on A.categoria_id = B.id 
+            inner join categoria_producto B
+            on A.categoria_id = B.id
             inner join unidad_medida C
             on A.unidad_medida_id = C.id
                         ");
@@ -174,7 +175,7 @@ class Producto extends Component
                     más</button>
                 <ul class="dropdown-menu" x-placement="bottom-start"
                     style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                   
+
                     <li><a class="dropdown-item" href="/producto/detalle/' . $listaProductos->codigo . '" target="_blank"  > <i class="fa-solid fa-arrows-to-eye text-info"></i>
                             Ver detalles </a></li>
 
@@ -194,4 +195,103 @@ class Producto extends Component
             ], 402);
         }
     }
+
+    public function listarModalProductoEdit($id){
+
+        try {
+
+            $datosProducto = DB::SELECT("
+            select
+                id,
+                nombre,
+                descripcion,
+                isv,
+                precio_base,
+                codigo_barra,
+                codigo_estatal,
+                categoria_id,
+                unidad_medida_id,
+                users_id
+            from producto where id =".$id);
+
+            $preciosProducto = DB::SELECT("
+
+            select
+                id,
+                precio,
+                producto_id,
+                users_id
+            from precios_venta
+            where producto_id = ".$id
+
+            );
+
+            return response()->json([
+            "datosProducto"=> $datosProducto[0],
+            "preciosProducto" => $preciosProducto
+            ],200);
+
+        } catch (QueryException $e) {
+
+            return response()->json([
+                "message" => "Ha ocurrido un error al traer datos de producto.",
+                "error" => $e
+            ],402);
+
+        }
+    }
+
+    public function editarProducto(Request $request){
+        try {
+        DB::beginTransaction();
+
+            $producto = ModelProducto::find($request['id_producto_edit']);
+            $producto->nombre = $request['nombre_producto_edit'];
+            $producto->descripcion = $request['descripcion_producto_edit'];
+            $producto->isv = $request['isv_producto_edit'];
+            $producto->codigo_barra = $request['cod_barra_producto_edit'];
+            $producto->codigo_estatal = $request['cod_estatal_producto_edit'];
+            $producto->categoria_id = $request['categoria_producto_edit'];
+            $producto->precio_base = $request['precioBase_edit'];
+            $producto->unidad_medida_id = $request['unidad_producto_edit'];
+            $producto->users_id = Auth::user()->id;
+            $producto->save();
+
+        DB::commit();
+            return response()->json([
+                "message" => "producto editado con exito",
+            ], 200);
+        } catch (QueryException $e) {
+                DB::rollback();
+
+                return response()->json([
+                    'message' => 'Ha ocurrido un error al editar el producto.',
+                    'errorTh' => $e,
+                ], 402);
+        }
+    }
+
+    public function eliminarImagen(Request $request){
+
+        $user = ModelImagenProducto::where('url_img','=',$request->url_img);
+        $user->delete();
+
+                //dd($request->urlImagen);
+                try{
+
+                    $carpetaPublic = public_path();
+                    $path = $carpetaPublic.'/catalogo/'.$request->urlImagen;
+
+                    File::delete($path);
+
+                return 'exito';
+                } catch (QueryException $e) {
+                    return response()->json([
+                        'message' => 'Ha ocurrido un error al eliminar la imagen.',
+                        'errorTh' => $e,
+                    ], 402);
+                }
+    }
+
+
 }

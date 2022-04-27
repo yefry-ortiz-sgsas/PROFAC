@@ -5,7 +5,8 @@ namespace App\Http\Livewire\Inventario;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\ModelUnidadMedida;
+use App\Models\ModelCategoriaProducto;
 class DetalleProducto extends Component
 {
 
@@ -47,8 +48,8 @@ class DetalleProducto extends Component
 
 
         $precios = DB::SELECT("
-        
-        select 
+
+        select
             @i := @i + 1 as contador,
             A.precio,
             B.name
@@ -59,18 +60,19 @@ class DetalleProducto extends Component
         cross join (select @i := 0) r
         where A.producto_id = " . $id . "
         order by A.id ASC
-        
+
         ");
 
         $imagenes = DB::SELECT("
-      select 
+      select
         @i := @i + 1 as contador,
-        A.url_img
-      from 
+        A.url_img,
+        A.id
+      from
         img_producto A
         cross join (select @i := 0) r
         where producto_id =  " . $id . "
-        
+
         ");
 
         //dd($imagenes);
@@ -107,9 +109,11 @@ class DetalleProducto extends Component
         ");
 
 
+        $categorias = ModelCategoriaProducto::all();
+        $unidades = ModelUnidadMedida::all();
 
 
 
-        return view('livewire.inventario.detalle-producto',  compact('producto', "precios", "imagenes", "lotes"));
+        return view('livewire.inventario.detalle-producto',  compact('producto', "precios", "imagenes", "lotes", "categorias", "unidades"));
     }
 }
