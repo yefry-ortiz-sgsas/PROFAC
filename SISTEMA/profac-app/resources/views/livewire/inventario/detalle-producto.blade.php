@@ -444,7 +444,7 @@
         };
 
         console.log(data);
-        axios.post('/ruta/imagen/edit', {"id":1})
+        axios.post('/ruta/imagen/edit', data)
             .then(response => {
 
 
