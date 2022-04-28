@@ -198,7 +198,7 @@ class Producto extends Component
 
     public function guardarFoto(Request $request){
 
-        dd($request->all());
+        //dd($request->all());
         $url = '';
         try{
                 if ($request->file('files') <> null) {
