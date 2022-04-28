@@ -187,13 +187,53 @@ class Producto extends Component
                 ->rawColumns(['disponibilidad'])
                 ->make(true);
         } catch (QueryException $e) {
-         
+
 
             return response()->json([
                 'message' => 'Ha ocurrido un error al listar los productos.',
                 'errorTh' => $e,
             ], 402);
         }
+    }
+
+    public function guardarFoto(Request $request){
+
+        dd($request->all());
+        $url = '';
+        try{
+                if ($request->file('files') <> null) {
+
+                    $URLs = [];
+                    $archivos = $request->file('files');
+                    $i = 0;
+
+                    foreach ($archivos as $file) {
+
+                            $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();
+                            $path = public_path() . '/catalogo';
+                            $url =  $name;
+                            array_push($URLs, ['producto_id' => $request->id_producto_edit_foto, 'url_img' =>  $url, 'users_id' =>  Auth::user()->id, 'created_at' => now()]);
+                            $file->move($path, $name);
+                            $i++;
+                    }
+                    //  $flight = URLfile::create($URLs);
+
+                    DB::table('img_producto')->insert($URLs);
+                }
+
+
+                DB::commit();
+                return response()->json([
+                    "message" => "producto guardato con exito",
+                ], 200);
+            } catch (QueryException $e) {
+                DB::rollback();
+
+                return response()->json([
+                    'message' => 'Ha ocurrido un error al crear el producto.',
+                    'errorTh' => $e,
+                ], 402);
+            }
     }
 
     public function listarModalProductoEdit($id){

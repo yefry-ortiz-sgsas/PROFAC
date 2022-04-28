@@ -10,8 +10,8 @@ use App\Http\Livewire\Inventario\Retenciones;
 use App\Http\Livewire\Inventario\DetalleProducto;
 use App\Http\Livewire\Inventario\CompraProducto;
 use App\Http\Livewire\Inventario\ListarCompras;
-use App\Http\Livewire\Inventario\DetalleCompra; 
-use App\Http\Livewire\Inventario\PagosCompra; 
+use App\Http\Livewire\Inventario\DetalleCompra;
+use App\Http\Livewire\Inventario\PagosCompra;
 use App\Http\Livewire\Inventario\RecibirProducto;
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +75,10 @@ Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
 Route::post('/producto/editar', [Producto::class, 'editarProducto']);
 Route::post('/producto/eliminar', [Producto::class, 'eliminarImagen']);
 
+
+
+
+Route::post('/ruta/imagen/edit', [Producto::class, 'guardarFoto']);
 Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
 Route::get('/producto/detalle/{id}', DetalleProducto::class);
@@ -92,9 +96,9 @@ Route::get('/producto/compras/detalle/{id}', DetalleCompra::class);
 Route::get('/producto/compra/pagos/{id}', PagosCompra::class);
 Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarPago']);
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
-Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']); 
+Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']);
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
-Route::get('/producto/compra/recibir/{id}', RecibirProducto::class); 
+Route::get('/producto/compra/recibir/{id}', RecibirProducto::class);
 Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'listarProductos']);
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
 Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmentos']);
