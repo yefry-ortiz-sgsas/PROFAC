@@ -27,7 +27,7 @@ class CompraProducto extends Component
     {
         
 
-        $ordenNumero = DB::selectOne("select count(id) as 'numero' from compra");
+        $ordenNumero = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from compra");
 
         return view('livewire.inventario.compra-producto',compact( "ordenNumero"));
     }
@@ -223,6 +223,7 @@ class CompraProducto extends Component
             $ordenNumero = DB::selectOne("select count(id) as 'numero' from compra");
 
             $guardarCompra = new ModelCompra;
+            $guardarCompra->numero_factura = $request->numero_factura;
             $guardarCompra->fecha_vencimiento = $request['fecha_vencimiento'];
             $guardarCompra->fecha_emision = $request->fecha_emision;
             $guardarCompra->fecha_recepcion = $request->fecha_entrega;
@@ -233,10 +234,10 @@ class CompraProducto extends Component
             $guardarCompra->proveedores_id =$request->seleccionarProveedorId ;
             $guardarCompra->users_id = Auth::user()->id ;
             $guardarCompra->tipo_compra_id = $request->tipoPagoCompra;
-            $guardarCompra->numero_orden = $ordenNumero->numero+1;
-            $guardarCompra->monto_retencion = $request->retencion;
+            $guardarCompra->numero_orden =date("Y")."-".$ordenNumero->numero+1;
+            $guardarCompra->monto_retencion = 0;
             $guardarCompra->retenciones_id = 2;
-            $guardarCompra->numero_factura = $request->numero_factura;
+           
             $guardarCompra->save();
 
             $idCompra = $guardarCompra->id;
@@ -261,13 +262,13 @@ class CompraProducto extends Component
                 $productoCompra->compra_id = $idCompra;
                 $productoCompra->producto_id = $request->$idProducto;
                 $productoCompra->precio_unidad = $request->$precio;
-                $productoCompra->isv = $request->$isvProducto;
-                $productoCompra->sub_total_producto=$request->$subTotal;
-                $productoCompra->precio_total = $request->$total;
                 $productoCompra->cantidad_ingresada = $request->$cantidad;
-                $productoCompra->cantidad_disponible = $request->$cantidad;
                 $productoCompra->fecha_expiracion = $request->$vencimiento;
-                $productoCompra->estado_recibido = 3;//pediente de recibir 
+                $productoCompra->sub_total_producto=$request->$subTotal;               
+                $productoCompra->isv = $request->$isvProducto;              
+                $productoCompra->precio_total = $request->$total;              
+                $productoCompra->cantidad_disponible = $request->$cantidad;             
+            
                 $productoCompra->save();
 
                

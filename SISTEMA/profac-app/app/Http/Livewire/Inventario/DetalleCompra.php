@@ -51,6 +51,8 @@ class DetalleCompra extends Component
 
         $listaCompra = DB::SELECT("
         select
+       
+        compra.numero_factura,
         A.producto_id as 'producto_id',
         producto.nombre as nombre,            
         A.precio_unidad,
@@ -59,16 +61,15 @@ class DetalleCompra extends Component
         A.isv,
         A.precio_total,
         if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
-        estado.descripcion as 'estado_recibido',
-        if(A.fecha_recibido is null ,'No recibido',A.fecha_recibido) as fecha_recibido,
-        if((select name from users where id= A.recibido_por) is null, 'No recibido',(select name from users where id= A.recibido_por) ) as 'name'           
+        if((select estado_recibido from recibido_bodega where recibido_bodega.compra_id = A.compra_id and recibido_bodega.producto_id =A.producto_id limit 1 ) is null, 'NO RECIBIDO', 'RECIBIDO') as 'estado_recibido'
+     
     from 
         compra_has_producto A
         inner join producto
-        on producto.id = A.producto_id    
-        inner join estado
-        on A.estado_recibido = estado.id
-        where A.compra_id =  ".$id."
+        on producto.id = A.producto_id 
+        inner join compra
+        on A.compra_id = compra.id       
+        where A.compra_id =   ".$id."
         ");
 
         $listaPagos = DB::SELECT("

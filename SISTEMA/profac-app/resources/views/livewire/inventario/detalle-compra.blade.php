@@ -98,7 +98,8 @@
                             <table id="tbl_productos_compra" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>ID</th>
+                                        <th>N° Compra</th>
+                                        <th>ID Producto</th>
                                         <th>Nombre</th>
                                         <th>Precio Unidad</th>
                                         <th>Cantidad</th>
@@ -106,9 +107,8 @@
                                         <th>ISV</th>
                                         <th>Total</th>
                                         <th>Fecha de vencimiento</th>
-                                        <th>Estado recibido</th>
-                                        <th>Fecha recibido</th> 
-                                        <th>Recibido por:</th> 
+                                        <th>Estado en bodega</th>
+                                        
 
                                     </tr>
                                 </thead>  
@@ -194,6 +194,7 @@
                         responsive: true,
                 "data": listaProductos,
                 "columns": [
+                    { "data": "numero_factura" },
                     { "data": "producto_id" },
                     { "data": "nombre" },
                     { "data": "precio_unidad" },
@@ -203,17 +204,20 @@
                     { "data": "precio_total" },
                     { "data": "fecha_expiracion" },
                     { "data": "estado_recibido" },
-                    { "data": "fecha_recibido" },
-                    { "data": "name" },
+
                 ]
             } );
 
             $('#tbl_pagos_lista').DataTable( {
                 "language": {
-                            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                            
+                            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
+                            "zeroRecords": "Ningun pago registrado para esta compra!",
+                            
                         },
-                        pageLength: 10,
-                        responsive: true,
+                pageLength: 10,
+                
+                responsive: false,
                 "data": listaPagos,
                 "columns": [
                     { "data": "id" },

@@ -31,7 +31,7 @@ class ListarCompras extends Component
                 fecha_emision,
                 fecha_vencimiento,
                 total,
-                IF(retenciones_id is null,'SIN RETENCION','CON RETENCION') as 'estado_retencion',
+                IF(monto_retencion = 0,'SIN RETENCION','CON RETENCION') as 'estado_retencion',
                 proveedores.nombre,
                 users.name as usuario,
                 compra.created_at as fecha_registro
@@ -40,6 +40,7 @@ class ListarCompras extends Component
             on compra.users_id = users.id
             inner join proveedores
             on compra.proveedores_id = proveedores.id
+            order by compra.id DESC 
             ");
 
             return Datatables::of($listarCompras)

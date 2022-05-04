@@ -40,6 +40,7 @@ class Producto extends Component
             'precio' => 'required',
             'categoria_producto' => 'required',
             'unidad_producto' => 'required',
+            
 
         ], [
             'nombre_producto' => 'Nombre es requerido',
@@ -48,6 +49,7 @@ class Producto extends Component
             'precio' => 'Precio 1 es requerido',
             'categoria_producto' => 'Categoria del producto es requerido',
             'unidad_producto' => 'La unidad de medida es requerida',
+            'img_pago' => 'Formato de imagen invalido'
         ]);
 
         if ($validator->fails()) {
@@ -56,6 +58,8 @@ class Producto extends Component
                 'errors' => $validator->errors()
             ], 402);
         }
+
+
 
 
         try {
@@ -162,6 +166,7 @@ class Producto extends Component
             on A.categoria_id = B.id
             inner join unidad_medida C
             on A.unidad_medida_id = C.id
+            order by A.created_at DESC
                         ");
 
             return Datatables::of($listaProductos)
@@ -198,7 +203,7 @@ class Producto extends Component
 
     public function guardarFoto(Request $request){
 
-        dd($request->all());
+        //dd($request->all());
         $url = '';
         try{
                 if ($request->file('files') <> null) {

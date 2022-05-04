@@ -54,7 +54,7 @@
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
 
                                     <input class="form-control" type="text" id="numero_emision" name="numero_emision"
-                                        value="{{ $ordenNumero->numero + 1 }}" data-parsley-required readonly>
+                                        value="{{ $ordenNumero->numero  }}" data-parsley-required readonly>
                                 </div>
 
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
@@ -74,7 +74,7 @@
                                     <label for="seleccionarProveedor" class="col-form-label focus-label">Seleccionar
                                         Proveedor:</label>
                                     <select id="seleccionarProveedor" class="form-group form-control" style=""
-                                        data-parsley-required onchange="retencionProveedor()">
+                                        data-parsley-required >
                                         <option value="" selected disabled>--Seleccionar un proveedor--</option>
                                     </select>
 
@@ -338,7 +338,7 @@
         <script>
             var numeroInputs = 0;
             var arregloIdInputs = [];
-            var retencionEstado = false; // true no aplica retencion, false si aplica retencion;
+            var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";

@@ -88,13 +88,15 @@ class DetalleProducto extends Component
             E.direccion,
             D.descripcion as 'seccion',
             C.numeracion,
-            A.cantidad_disponible,
-            A.created_at
-        from compra_has_producto A
-        inner join producto B
+            H.cantidad_disponible,
+            H.created_at
+        from compra_has_producto A      
+        inner join producto B        
         on A.producto_id = B.id
+        inner join recibido_bodega H
+        on A.compra_id = H.compra_id and A.producto_id = H.producto_id
         inner join seccion C
-        on A.seccion_id = C.id
+        on H.seccion_id = C.id
         inner join segmento D
         on C.segmento_id = D.id
         inner join bodega E
@@ -104,8 +106,8 @@ class DetalleProducto extends Component
         inner join departamento G
         on F.departamento_id = G.id
         cross join (select @i := 0) r
-        where A.producto_id = " . $id . " and A.cantidad_disponible <> 0
-        order by A.created_at ASC
+        where A.producto_id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4
+        order by H.created_at ASC
         ");
 
 

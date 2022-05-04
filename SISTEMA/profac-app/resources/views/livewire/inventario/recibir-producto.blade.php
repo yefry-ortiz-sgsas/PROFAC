@@ -1,5 +1,11 @@
 <div>
     @push('styles')
+    <style>
+    .letra-tamanio {
+        font-size: 0.8rem    
+    }
+    </style>
+
     @endpush
     {{-- The whole world belongs to you. --}}
 
@@ -20,23 +26,72 @@
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="ibox ">
+                    <div class="ibox-title">
+                            <h3>Lista de Compra</h3>
+                    </div>
                     <div class="ibox-content">
+                        <div>
+                            
+                            <p class="letra-tamanio"><strong>Numero de Factura:</strong> {{$datosCompra->numero_factura}}</p>
+                            <p class="letra-tamanio"><strong class="">Numero de compra:</strong> {{$datosCompra->numero_orden}}</p>
+                            <p class="letra-tamanio"><strong class="">Proveedor:</strong> {{$datosCompra->nombre}}</p>
+
+                        </div>
                         <div class="table-responsive">
                             <table id="tbl_recibir_compra" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>ID</th>
+                                        <th>N°</th>                                        
+                                        <th>Codigo de Producto</th>
                                         <th>Nombre</th>
-                                        <th>Precio Unidad</th>
+                                        <th>Precio</th>
                                         <th>Cantidad</th>
                                         <th>Sub Total</th>
                                         <th>ISV</th>
                                         <th>Total</th>
-                                        <th>Fecha de vencimiento</th>
-                                        <th>Estado recibido</th>
-                                        <th>Fecha recibido</th>
-                                        <th>Recibido por:</th>
+                                        <th>Fecha de Vencimiento</th>   
+                                        <th>Estado</th>                                        
                                         <th>Recibir</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                            <h3>Detalle De Recepcion En Bodega</h3>
+                    </div>
+                    <div class="ibox-content">
+ 
+                        <div class="table-responsive">
+                            <table id="tbl_producto_bodega" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>N°</th>                                        
+                                        <th>Codigo Producto</th>
+                                        <th>Nombre</th>
+                                        <th>Cantidad en compra</th>
+                                        <th>Departamento</th>
+                                        <th>Municipio</th>
+                                        <th>Direccion</th>
+                                        <th>Bodega</th>
+                                        <th>Seccion</th>   
+                                        <th>Cantidad en Bodega</th>                                        
+                                        <th>Opciones</th>
 
                                     </tr>
                                 </thead>
@@ -98,10 +153,14 @@
 
                                 <div class="form-group">
                                     <label for="comentario">Comentario</label>
-                                    <input id="comentario" name="comentario" type="text" placeholder="comentario"
-                                        class="form-control">
+                                    {{-- <input id="comentario" name="comentario" type="text" placeholder="comentario"
+                                        class="form-control" > --}}
+
+                                        <textarea name="comentario" id="comentario" cols="3" rows="3" class="form-control"></textarea>
+
                                 </div>
 
+                               
 
                             </form>
                         </div>
@@ -134,6 +193,9 @@
                     responsive: true,
                     "ajax": "/producto/compra/recibir/listar/" + idCompra,
                     "columns": [{
+                            "data": "contador"
+                        },
+                        {
                             "data": "producto_id"
                         },
                         {
@@ -143,7 +205,7 @@
                             "data": "precio_unidad"
                         },
                         {
-                            "data": "cantidad_ingresada"
+                            "data": "cantidad_comprada"
                         },
                         {
                             "data": "sub_total_producto"
@@ -161,14 +223,9 @@
                             "data": "estado_recibido"
                         },
                         {
-                            "data": "fecha_recibido"
-                        },
-                        {
-                            "data": "name"
-                        },
-                        {
                             "data": "opciones"
                         },
+                       
                     ]
                 });
 

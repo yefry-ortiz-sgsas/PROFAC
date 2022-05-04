@@ -1,6 +1,10 @@
 <div>
     @push('styles')
-        
+        <style>
+
+
+            
+        </style>
     @endpush
 
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
@@ -50,6 +54,7 @@
                                         <th>Fecha de Pago</th>
                                         <th>Registrado por:</th>
                                         <th>Registrado en sistema:</th>
+                                        <th>Evidencia</th>
                                         <th>Eliminar Pago</th>                                          
                                     </tr>
                                 </thead>
@@ -84,35 +89,43 @@
                             <div class="row" >
                                 
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label class="col-form-label focus-label">Numero de Factura:</label>
+                                    <label class="col-form-label focus-label">Numero de Factura:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text"  id="numero_factura" name="numero_factura" readonly 
                                       value="{{$datosCompra->numero_factura}}"  data-parsley-required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label class="col-form-label focus-label">Numero de Compra:</label>
+                                    <label for="numero_compra" class="col-form-label focus-label">Numero de Compra:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text"  id="numero_compra" name="numero_compra" readonly
                                         data-parsley-required value="{{$datosCompra->numero_compra}}">
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label class="col-form-label focus-label">Proveedor:</label>
+                                    <label for="proveedor" class="col-form-label focus-label">Proveedor:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text"  id="proveedor" name="proveedor" readonly
                                         data-parsley-required value="{{$datosCompra->nombre}}">
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <label class="col-form-label focus-label">Monto a pagar:</label>
+                                    <label for="monto" class="col-form-label focus-label">Monto a pagar:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="number" step="any" id="monto" name="monto" min="0"
                                         data-parsley-required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
-                                    <label class="col-form-label focus-label">Fecha que se realizo el pago:</label>
+                                    <label for="fecha_pago" class="col-form-label focus-label">Fecha que se realizo el pago:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="date" id="fecha_pago" name="fecha_pago"
+                                        data-parsley-required>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
+                                    <label for="img_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
+                                    <input class="form-control" required  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf"
                                         data-parsley-required>
                                 </div>
                             </div>
                         </form>
-                        <button class="btn btn-sm btn-primary float-left mt-4"
-                            form="form_registro_pago"><strong>Registrar Pago
-                                </strong></button>
+                        <button id="btn_registro_pago" class="btn btn-sm btn-primary float-left mt-4"
+                            form="form_registro_pago" >
+                            <strong>Registrar Pago
+                                </strong>
+                               
+                            </button>
                     </div>
     
                 </div>
@@ -124,6 +137,7 @@
     
     <script>
         var idCompra = {{$id}};
+        var retencionEstado = 0;//cero no aplica retencion , 1 aplica retencion
 
         //window.onload=datosCompra;
         
@@ -166,6 +180,9 @@
                                     data: 'created_at'
                                 },
                                 {
+                                    data:'documento'
+                                },
+                                {
                                     data: 'opciones'
                                 },
                     
@@ -181,15 +198,19 @@
 
         $(document).on('submit', '#form_registro_pago', function(event) {
         event.preventDefault();
-        registrarPago();
+        retencionComprobar();
         });
 
 
 
         function registrarPago(){
 
+            document.getElementById('btn_registro_pago').disabled = true;
+            
+
             document.getElementById("compraId").value=idCompra;
             var data = new FormData($('#form_registro_pago').get(0));
+            data.append('retencionEstado',retencionEstado);
 
             axios.post('/producto/compra/pagos/registro', data)
             .then( response =>{
@@ -222,6 +243,8 @@
                    
                    $('#form_registro_pago').parsley().reset();
                    $('#modal_registro_pagos').modal('hide')  
+                   document.getElementById('btn_registro_pago').disabled = false;
+                   return;
 
    
 
@@ -309,6 +332,52 @@
                 console.log(err);
 
             })
+
+        }
+
+        function retencionComprobar(){
+            $('#modal_registro_pagos').modal('hide');
+
+            axios.post("/producto/compra/pagos/comprobar",{idCompra:idCompra})
+            .then( response =>{
+
+                let data = response.data.numero_pagos;
+
+                
+                if(data.numero_pagos == 0){
+                    Swal.fire({
+                            title: "Retencion del 1%",
+                            text: "¿Desea aplicar retención del 1% a esta compra?",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: 'Aplicar',
+                            denyButtonText: `No aplicar`,
+                            cancelButtonText: 'Cancelar',
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
+                                retencionEstado = 1;
+                                this.registrarPago(); 
+                              
+                            } else if (result.isDenied) {
+                                Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
+                                retencionEstado = 0;
+                                this.registrarPago();                               
+                            }
+                        })
+
+                }else{
+                    this.registrarPago();
+                }
+
+            })
+            .catch( err =>{
+
+                console.log(err);
+
+            })
+
 
         }
 

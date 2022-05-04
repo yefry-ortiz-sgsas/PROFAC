@@ -187,7 +187,7 @@
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
                     :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
+                    {{ __('Perfil') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -203,12 +203,12 @@
 
                     <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Salir') }}
                     </x-jet-responsive-nav-link>
                 </form>
 
                 <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
+                {{-- @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="border-t border-gray-200"></div>
 
                     <div class="block px-4 py-2 text-xs text-gray-400">
@@ -219,9 +219,9 @@
                     <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                         :active="request()->routeIs('teams.show')">
                         {{ __('Team Settings') }}
-                    </x-jet-responsive-nav-link>
+                    </x-jet-responsive-nav-link> --}}
 
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                    {{-- @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                         <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
                             :active="request()->routeIs('teams.create')">
                             {{ __('Create New Team') }}
@@ -238,7 +238,7 @@
                     @foreach (Auth::user()->allTeams() as $team)
                         <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link" />
                     @endforeach
-                @endif
+                @endif --}}
             </div>
         </div>
     </div>

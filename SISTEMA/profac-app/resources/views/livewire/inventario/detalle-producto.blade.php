@@ -214,7 +214,7 @@
                             <thead class="">
                                 <tr>
                                     <th>#</th>
-                                    <th>Codigo</th>
+                                    <th>Codigo Producto</th>
                                     <th>Nombre de producto</th>
                                     <th>Departamento</th>
                                     <th>Municipio</th>

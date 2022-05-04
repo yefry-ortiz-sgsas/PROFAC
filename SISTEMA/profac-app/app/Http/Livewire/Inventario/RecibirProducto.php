@@ -21,13 +21,27 @@ class RecibirProducto extends Component
     {
 
         $this->idCompra = $id;
+
     }
 
     public function render()
     {
         $idCompra = $this->idCompra;
 
-        return view('livewire.inventario.recibir-producto', compact('idCompra'));
+        $datosCompra = DB::SELECTONE("
+     select
+        A.numero_factura,
+        A.numero_orden,
+        B.nombre
+      from
+      compra A
+      inner join proveedores B
+      on A.proveedores_id = B.id
+      where A.id = ".$idCompra);
+
+
+
+        return view('livewire.inventario.recibir-producto', compact('idCompra','datosCompra'));
     }
 
     public function listarProductos($id)
@@ -35,27 +49,28 @@ class RecibirProducto extends Component
         try {
 
             $listaCompra = DB::SELECT("
+
         select
-        
-        A.compra_id,
-        A.producto_id as 'producto_id',
-        producto.nombre as nombre,            
-        A.precio_unidad,
-        A.cantidad_ingresada,
-        A.sub_total_producto,
-        A.isv,
-        A.precio_total,
-        if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
-        estado.descripcion as 'estado_recibido',
-        if(A.fecha_recibido is null ,'No recibido',A.fecha_recibido) as fecha_recibido,
-        if((select name from users where id= A.recibido_por) is null, 'No recibido',(select name from users where id= A.recibido_por) ) as 'name'           
-    from 
-        compra_has_producto A
-        inner join producto
-        on producto.id = A.producto_id    
-        inner join estado
-        on A.estado_recibido = estado.id
-        where A.compra_id =  " . $id . "
+            @i := @i + 1 as 'contador',      
+            A.compra_id,            
+            A.producto_id as 'producto_id',
+            producto.nombre as nombre,            
+            A.precio_unidad,
+            A.cantidad_ingresada as cantidad_comprada,
+            A.sub_total_producto,
+            A.isv,
+            A.precio_total,
+            if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
+            (select sum(cantidad_inicial_seccion) from recibido_bodega where producto_id = A.producto_id and compra_id = A.compra_id ) as 'cantidad_ingresada_bodega'
+          
+        from 
+            compra_has_producto A
+            inner join producto
+            on producto.id = A.producto_id    
+            cross join (select @i := 0) r
+            where A.compra_id = ".$id."
+
+ 
         ");
 
             return Datatables::of($listaCompra)
@@ -69,8 +84,35 @@ class RecibirProducto extends Component
 
         ';
                 })
+                ->addColumn('estado_recibido', function ($listaCompra){
+                    if($listaCompra->cantidad_comprada == $listaCompra->cantidad_ingresada_bodega){
+                        return
+                        '
 
-                ->rawColumns(['opciones'])
+                        <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.95rem">Recibido</span></p>
+                        ';
+
+                    }else if($listaCompra->cantidad_ingresada_bodega < $listaCompra->cantidad_comprada  ){
+                        return
+                        '
+                        <p class="text-center"><span class="badge badge-danger">Incompleto</span></p>
+                        ';
+                    }else if($listaCompra->cantidad_ingresada_bodega > $listaCompra->cantidad_comprada){
+                        return
+                        '
+                        <p class="text-center"><span class="badge badge-warning">Excedente</span></p>
+                        ';
+
+                    }else if($listaCompra->cantidad_ingresada_bodega >= 0){
+                        return
+                        '
+                        <p class="text-center"><span class="badge ">No recibido</span></p>
+                        ';
+                    }
+                   
+                })
+
+                ->rawColumns(['opciones','estado_recibido'])
                 ->make(true);
         } catch (QueryException $e) {
             return response()->json([

@@ -11,5 +11,5 @@ class ModelCompraProducto extends Model
 
     // protected $primaryKey = ['compra_id','producto_id'];
 
-    protected $fillable = ['compra_id','producto_id','precio_unidad_compra', 'isv', 'precio_total', 'cantidad_ingresada','cantidad_disponible', 'fecha_recibido', 'fecha_expiracion', 'seccion_id', 'estado_recibido'];
+    protected $fillable = ['fecha_recibido','compra_id','producto_id','precio_unidad_compra', 'isv', 'precio_total', 'cantidad_ingresada','cantidad_disponible', 'fecha_expiracion', ];
 }
