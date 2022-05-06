@@ -263,6 +263,7 @@ class CompraProducto extends Component
                 $productoCompra->producto_id = $request->$idProducto;
                 $productoCompra->precio_unidad = $request->$precio;
                 $productoCompra->cantidad_ingresada = $request->$cantidad;
+                $productoCompra->cantidad_sin_asignar = $request->$cantidad;
                 $productoCompra->fecha_expiracion = $request->$vencimiento;
                 $productoCompra->sub_total_producto=$request->$subTotal;               
                 $productoCompra->isv = $request->$isvProducto;              

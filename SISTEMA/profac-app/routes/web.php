@@ -104,7 +104,9 @@ Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'lis
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
 Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmentos']);
 Route::post('/producto/recibir/seccion', [RecibirProducto::class, 'listarSecciones']);
-Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']);
+Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']); 
+Route::get('/producto/lista/bodega/{id}', [RecibirProducto::class, 'productoBodega']);
+Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']);
 
 
 

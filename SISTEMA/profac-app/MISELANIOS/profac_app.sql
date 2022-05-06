@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 04-05-2022 a las 19:16:34
+-- Tiempo de generación: 06-05-2022 a las 06:20:07
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -184,6 +184,7 @@ CREATE TABLE `compra_has_producto` (
   `producto_id` int(11) NOT NULL,
   `precio_unidad` double NOT NULL,
   `cantidad_ingresada` int(11) NOT NULL,
+  `cantidad_sin_asignar` int(11) DEFAULT NULL,
   `fecha_expiracion` date DEFAULT NULL,
   `sub_total_producto` double NOT NULL,
   `isv` double NOT NULL,
@@ -197,9 +198,9 @@ CREATE TABLE `compra_has_producto` (
 -- Volcado de datos para la tabla `compra_has_producto`
 --
 
-INSERT INTO `compra_has_producto` (`compra_id`, `producto_id`, `precio_unidad`, `cantidad_ingresada`, `fecha_expiracion`, `sub_total_producto`, `isv`, `precio_total`, `cantidad_disponible`, `updated_at`, `created_at`) VALUES
-(1, 1, 1, 100, '2022-05-31', 100, 15, 115, 100, '2022-04-30 21:00:37', '2022-04-30 21:01:55'),
-(4, 1, 500, 30, '2022-05-02', 15000, 2250, 17250, 30, '2022-05-03 03:38:44', '2022-05-03 03:38:44');
+INSERT INTO `compra_has_producto` (`compra_id`, `producto_id`, `precio_unidad`, `cantidad_ingresada`, `cantidad_sin_asignar`, `fecha_expiracion`, `sub_total_producto`, `isv`, `precio_total`, `cantidad_disponible`, `updated_at`, `created_at`) VALUES
+(1, 1, 1, 100, 0, '2022-05-31', 100, 15, 115, 100, '2022-04-30 21:00:37', '2022-04-30 21:01:55'),
+(4, 1, 500, 30, 5, '2022-05-02', 15000, 2250, 17250, 30, '2022-05-03 03:38:44', '2022-05-03 03:38:44');
 
 -- --------------------------------------------------------
 
@@ -348,6 +349,22 @@ CREATE TABLE `incidencia` (
   `descripcion` text NOT NULL,
   `url_img` varchar(250) DEFAULT NULL,
   `recibido_bodega_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `log_translado`
+--
+
+CREATE TABLE `log_translado` (
+  `id` int(11) NOT NULL,
+  `origen` int(11) NOT NULL,
+  `destino` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -952,7 +969,7 @@ CREATE TABLE `proveedores` (
   `id` int(11) NOT NULL,
   `codigo` varchar(45) DEFAULT NULL,
   `nombre` varchar(45) NOT NULL,
-  `direccion` varchar(45) NOT NULL,
+  `direccion` text NOT NULL,
   `contacto` varchar(45) NOT NULL,
   `telefono_1` varchar(45) NOT NULL,
   `telefono_2` varchar(45) DEFAULT NULL,
@@ -980,7 +997,8 @@ INSERT INTO `proveedores` (`id`, `codigo`, `nombre`, `direccion`, `contacto`, `t
 (6, '66', 'Proveedor 5', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:21:54', '2022-03-15 12:21:54'),
 (7, '66', 'Proveedor 6', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:22:04', '2022-03-29 09:18:36'),
 (8, '66', 'Proveedor 7', 'TEGUCIGALPA\r\nTEGUCIGALPA', 'Pedro', '99885522', '223355669', 'proveedor1@gmail.com', NULL, '08011990568971', 3, 1, 110, 2, 1, '2022-03-15 12:22:07', '2022-03-29 09:18:43'),
-(9, '663', 'Proveedor 8', 'Tegucigalpa', 'Juan Perez', '88996655', NULL, 'proveedor@gmail.com', NULL, '08011990568971', 3, 1, 10, 1, 1, '2022-03-15 12:23:56', '2022-03-15 13:02:28');
+(9, '663', 'Proveedor 8', 'Tegucigalpa', 'Juan Perez', '88996655', NULL, 'proveedor@gmail.com', NULL, '08011990568971', 3, 1, 10, 1, 1, '2022-03-15 12:23:56', '2022-03-15 13:02:28'),
+(10, '20', 'Proveedor 20', 'comayaguela, col Policarpo Paz García, casa 204, color amarillo', 'Pedro', '89282146', NULL, 'luisfaviles18@gmail.com', 'luisfaviles18@gmail.com', '082219950082544', 3, 1, 110, 1, 1, '2022-05-05 02:39:01', '2022-05-05 02:39:01');
 
 -- --------------------------------------------------------
 
@@ -994,12 +1012,12 @@ CREATE TABLE `recibido_bodega` (
   `producto_id` int(11) NOT NULL,
   `seccion_id` int(11) NOT NULL,
   `cantidad_compra_lote` int(11) NOT NULL,
-  `cantidad_inicial_seccion` int(11) DEFAULT NULL,
+  `cantidad_inicial_seccion` int(11) NOT NULL,
   `cantidad_disponible` int(11) NOT NULL,
   `fecha_recibido` date NOT NULL,
   `fecha_expiracion` date DEFAULT NULL,
   `estado_recibido` int(11) NOT NULL,
-  `recibido_por` bigint(20) UNSIGNED DEFAULT NULL,
+  `recibido_por` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1010,7 +1028,10 @@ CREATE TABLE `recibido_bodega` (
 
 INSERT INTO `recibido_bodega` (`id`, `compra_id`, `producto_id`, `seccion_id`, `cantidad_compra_lote`, `cantidad_inicial_seccion`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `estado_recibido`, `recibido_por`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, 100, 50, 50, '2022-04-30', '2022-05-31', 4, 3, '2022-04-30 21:04:53', '2022-04-30 21:02:27'),
-(2, 1, 1, 2, 100, 50, 50, '2022-04-30', '2022-05-31', 4, 4, '2022-04-30 21:06:42', '2022-04-30 21:02:27');
+(2, 1, 1, 2, 100, 50, 50, '2022-04-30', '2022-05-31', 4, 4, '2022-04-30 21:06:42', '2022-04-30 21:02:27'),
+(3, 4, 1, 2, 30, 10, 10, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:30:36', '2022-05-06 08:30:36'),
+(4, 4, 1, 15, 30, 10, 10, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:37:56', '2022-05-06 08:37:56'),
+(6, 4, 1, 17, 30, 5, 5, '2022-05-05', '2022-05-02', 4, 3, '2022-05-06 04:26:13', '2022-05-06 04:26:13');
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1194,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('qKS6QXa8tVFl1QLmlwKDy87YBt78FonUQxkXpHbt', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiM0tSOXFVbTdxd3dSU1o5VEpYOEk2TmRuSHlveFZxb2VpaUJvT0tKeCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9jb21wcmEvcmVjaWJpci8xIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCRzTFJsSmgxZW1OMDhaaXZMRHdrR1J1Y1R0TUVzOEdiM01JLmxSYURWZm96LngvcHFtdENCQyI7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRzTFJsSmgxZW1OMDhaaXZMRHdrR1J1Y1R0TUVzOEdiM01JLmxSYURWZm96LngvcHFtdENCQyI7fQ==', 1651627890);
+('QOengWBAzKzsB6DLv9SuT51zSs7eR0s3XNJOj3H0', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoia1RYQ3dOaVBJbk9Sb1hVOVJ2ZDVKMGVKOGVrZlJveWI4c3hRdGE5SSI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MztzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czoxMjU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0by9jb21wcmEvcmVjaWJpci8xP2JvZGVnYUV4Y2VkZW50ZT0xJmNhbnRpZGFkRXhjZWRlbnRlPTEwJnNlY2Npb25FeGNlZGVudGU9MSZzZWdtZW50b0V4Y2VkZW50ZT0xIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1651817616);
 
 -- --------------------------------------------------------
 
@@ -1525,6 +1546,15 @@ ALTER TABLE `incidencia`
   ADD KEY `fk_incidencia_recibido_bodega1_idx` (`recibido_bodega_id`);
 
 --
+-- Indices de la tabla `log_translado`
+--
+ALTER TABLE `log_translado`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_log_translado_recibido_bodega1_idx` (`origen`),
+  ADD KEY `fk_log_translado_recibido_bodega2_idx` (`destino`),
+  ADD KEY `fk_log_translado_users1_idx` (`users_id`);
+
+--
 -- Indices de la tabla `menu`
 --
 ALTER TABLE `menu`
@@ -1793,6 +1823,12 @@ ALTER TABLE `incidencia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `log_translado`
+--
+ALTER TABLE `log_translado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `menu`
 --
 ALTER TABLE `menu`
@@ -1850,13 +1886,13 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `recibido_bodega`
 --
 ALTER TABLE `recibido_bodega`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `retenciones`
@@ -2000,6 +2036,14 @@ ALTER TABLE `img_producto`
 --
 ALTER TABLE `incidencia`
   ADD CONSTRAINT `fk_incidencia_recibido_bodega1` FOREIGN KEY (`recibido_bodega_id`) REFERENCES `recibido_bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `log_translado`
+--
+ALTER TABLE `log_translado`
+  ADD CONSTRAINT `fk_log_translado_recibido_bodega1` FOREIGN KEY (`origen`) REFERENCES `recibido_bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_log_translado_recibido_bodega2` FOREIGN KEY (`destino`) REFERENCES `recibido_bodega` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_log_translado_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `menu`
