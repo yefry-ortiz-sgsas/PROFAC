@@ -77,10 +77,6 @@
                                         data-parsley-required >
                                         <option value="" selected disabled>--Seleccionar un proveedor--</option>
                                     </select>
-
-
-
-
                                 </div>
 
                                 <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
@@ -88,25 +84,18 @@
                                         pago:</label>
                                     <select class="form-group form-control " name="tipoPagoCompra" id="tipoPagoCompra"
                                         data-parsley-required onchange="validarFechaPago()">
-
                                     </select>
-
                                 </div>
 
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
-
-
-
-
                                         <label for="fecha_vencimiento"
                                             class="col-form-label focus-label text-warning">Fecha de vencimiento:
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
                                             name="fecha_vencimiento" value="" data-parsley-required
                                             min="{{ date('Y-m-d') }}" readonly>
-
                                     </div>
                                 </div>
 

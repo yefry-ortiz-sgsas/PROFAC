@@ -236,6 +236,7 @@ class CompraProducto extends Component
             $guardarCompra->tipo_compra_id = $request->tipoPagoCompra;
             $guardarCompra->numero_orden =date("Y")."-".$ordenNumero->numero+1;
             $guardarCompra->monto_retencion = 0;
+            $guardarCompra->estado_compra_id =1;
             $guardarCompra->retenciones_id = 2;
            
             $guardarCompra->save();

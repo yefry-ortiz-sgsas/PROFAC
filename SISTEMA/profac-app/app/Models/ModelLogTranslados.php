@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ModelIncidencia extends Model
+class ModelLogTranslados extends Model
 {
     use HasFactory;
+    protected $table = 'log_translado';
     protected $primaryKey = 'id';
-    protected $table = 'incidencia';
     protected $fillable = [
-        'descripcion',
-        'url_img',
-        'recibido_bodega_id'       
+        'id',
+        'origen',
+        'destino',
+        'cantidad',
+        'users_id'
+
     ];
 }

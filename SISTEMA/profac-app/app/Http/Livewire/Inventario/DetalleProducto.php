@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Inventario;
 
-use Illuminate\Http\Request;
+
 use Livewire\Component;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ModelUnidadMedida;
 use App\Models\ModelCategoriaProducto;
@@ -105,8 +106,10 @@ class DetalleProducto extends Component
         on E.municipio_id = F.id
         inner join departamento G
         on F.departamento_id = G.id
+        inner join compra
+        on A.compra_id = compra.id
         cross join (select @i := 0) r
-        where A.producto_id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4
+        where A.producto_id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4 and compra.estado_compra_id =1
         order by H.created_at ASC
         ");
 

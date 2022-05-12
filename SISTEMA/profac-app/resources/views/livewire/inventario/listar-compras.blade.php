@@ -39,7 +39,9 @@
                                         <th>Proveedor</th>
                                         <th>Registrado por</th>
                                         <th>Fecha de Registro</th>
+                                        <th>Anular</th>
                                         <th>Opciones</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,6 +101,9 @@
                         data: 'fecha_registro'
                     },
                     {
+                        data: 'anular'
+                    },
+                    {
                         data: 'opciones'
                     }
   
@@ -107,6 +112,53 @@
 
             });
         })
+
+        function anularCompra(idCompra){
+             
+            Swal.fire({
+            title: '¿Está seguro de anular esta compra?',
+            text:'Una vez que ha sido anulada la compra no se podrá recibir el producto en bodega.',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Si, Anular Compra',            
+            cancelButtonText: `Cancelar`,
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+
+                //Swal.fire('Saved!', '', 'success')
+                this.anularCompraGuardar(idCompra);
+
+            } 
+            })
+        }
+
+        function anularCompraGuardar(idCompra){
+
+            axios.post("/producto/compra/anular", {idCompra:idCompra})
+            .then( response =>{
+
+
+                let data = response.data;
+                Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        });
+                        $('#tbl_listar_compras').DataTable().ajax.reload();        
+
+            })
+            .catch( err => {
+
+                Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Ha ocurrido un error al anular la compra.',
+                        })
+
+            })
+
+        }
         </script>
     @endpush
 </div>

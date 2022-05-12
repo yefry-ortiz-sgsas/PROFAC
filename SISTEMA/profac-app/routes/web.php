@@ -13,6 +13,10 @@ use App\Http\Livewire\Inventario\ListarCompras;
 use App\Http\Livewire\Inventario\DetalleCompra;
 use App\Http\Livewire\Inventario\PagosCompra;
 use App\Http\Livewire\Inventario\RecibirProducto;
+use App\Http\Livewire\Inventario\Incidencias;
+use App\Http\Livewire\Inventario\AnularCompra; 
+use App\Http\Livewire\Inventario\Translados;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -106,7 +110,23 @@ Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmen
 Route::post('/producto/recibir/seccion', [RecibirProducto::class, 'listarSecciones']);
 Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']); 
 Route::get('/producto/lista/bodega/{id}', [RecibirProducto::class, 'productoBodega']);
-Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']);
+Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']); 
+Route::post('/producto/recibir/excedente',[RecibirProducto::class, 'guardarEnBodegaExcedente']);
+Route::post('/producto/incidencia/bodega',[RecibirProducto::class, 'incidenciaBodega']); 
+Route::post('/producto/incidencia/compra',[RecibirProducto::class, 'incidenciaCompra']);
+Route::get('/inventario/compras/incidencias/{id}', Incidencias::class); 
+Route::get('/inventario/incidencia/bodega/{id}',[Incidencias::class, 'incidenciasBodega']);
+Route::get('/inventario/incidencia/compra/{id}',[Incidencias::class, 'incidenciaCompra']); 
+Route::post('/producto/compra/anular',[AnularCompra::class, 'anularCompraRegistro']); 
+Route::get('/inventario/translado', Translados::class);   
+Route::get('/translado/lista/productos',[Translados::class, 'listarProductos']);  
+Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']); 
+Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);  
+Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);  
+Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']);
+ 
+
+
 
 
 

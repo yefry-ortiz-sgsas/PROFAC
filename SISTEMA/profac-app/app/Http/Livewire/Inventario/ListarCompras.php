@@ -34,12 +34,14 @@ class ListarCompras extends Component
                 IF(monto_retencion = 0,'SIN RETENCION','CON RETENCION') as 'estado_retencion',
                 proveedores.nombre,
                 users.name as usuario,
-                compra.created_at as fecha_registro
+                compra.created_at as fecha_registro,
+                (select count(compra_id) as contador from recibido_bodega where compra_id = compra.id  ) as 'conteo_bodega'
             from compra
             inner join users
             on compra.users_id = users.id
             inner join proveedores
             on compra.proveedores_id = proveedores.id
+            where compra.estado_compra_id = 1
             order by compra.id DESC 
             ");
 
@@ -56,19 +58,50 @@ class ListarCompras extends Component
                         <li>
                             <a class="dropdown-item" href="/producto/compras/detalle/'.$listarCompras->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de compra </a>
                         </li>
-
+                        <li>
+                            <a class="dropdown-item" href="/producto/compra/recibir/'.$listarCompras->id.'" > <i class="fa-solid fa-cart-arrow-down text-warning"></i> Recepción de producto </a>
+                        </li> 
                         <li>
                             <a class="dropdown-item" href="/producto/compra/pagos/'.$listarCompras->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                         </li>
 
+
                         <li>
-                            <a class="dropdown-item" href="/producto/compra/recibir/'.$listarCompras->id.'" > <i class="fa-solid fa-cart-arrow-down text-warning"></i> Recepción de producto </a>
+                            <a class="dropdown-item" href="/inventario/compras/incidencias/'.$listarCompras->id.'" > <i class="fa-solid fa-triangle-exclamation text-warning"></i> Lista de Incidencias </a>
                         </li>                        
 
+                        
                     </ul>
                 </div>';
             })
-            ->rawColumns(['opciones'])
+            ->addColumn('anular', function ($listarCompras) {
+
+                if($listarCompras->conteo_bodega > 0){
+
+                    return
+
+                    '<div class="text-center">
+                        <button disabled  class="btn btn-danger " onclick="anularCompra('.$listarCompras->id.')">
+                            Anular compra
+                        </button>
+                        
+                    </div>';
+
+                }else{
+                    return
+
+                    '<div class="text-center">
+                    <button  class="btn btn-danger" onclick="anularCompra('.$listarCompras->id.')">
+                        Anular compra
+                    </button>
+                    
+                </div>';
+
+                }
+
+
+            })
+            ->rawColumns(['opciones','anular'])
             ->make(true);
            
         } catch (QueryException $e) {

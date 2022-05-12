@@ -7,10 +7,13 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\ModelPagoCompra;
 use App\Models\ModelCompra;
-use App\Models\modelBodega; 
+use App\Models\ModelIncidencia; 
 use App\Models\ModelRecibirBodega; 
+use App\Models\ModelIncidenciaCompra;
 use Auth;
 use DataTables;
+use Validator;
+use Illuminate\Support\Facades\File;
 
 use Livewire\Component;
 
@@ -115,7 +118,7 @@ class RecibirProducto extends Component
                                 <a class="dropdown-item" onclick="mostrarModalExcedente(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')"> <i class="fa-solid fa-circle-plus text-info"></i> Registrar Producto Excedente </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" onclick="mostrarModalIncidencias(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia </a>
+                                <a class="dropdown-item" onclick="mostrarModalIncidenciaSinAlmacenar(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia antes de almacenar</a>
                             </li>
 
 
@@ -143,7 +146,7 @@ class RecibirProducto extends Component
                     }else if($listaCompra->cantidad_ingresada_bodega > $listaCompra->cantidad_comprada){
                         return
                         '
-                        <p class="text-center"><span class="badge badge-warning p-2" style="font-size:0.95rem">Excedente</span></p>
+                        <p class="text-center"><span class="badge badge-info p-2" style="font-size:0.95rem">Excedente</span></p>
                         ';
 
                     }else if($listaCompra->cantidad_ingresada_bodega >= 0){
@@ -277,7 +280,7 @@ class RecibirProducto extends Component
         //         'fecha_recibido' => now(),
         // ]);
 
-
+        DB::beginTransaction();
 
         $recibir = new ModelRecibirBodega();
         $recibir->compra_id = $request->idCompra;
@@ -304,13 +307,14 @@ class RecibirProducto extends Component
         ]);
 
            
-
+        DB::commit();
         return response()->json([
             "text" => "Producto registrado en bodega con éxito.",
             "icon" => "success",
             "title"=>"Exito!"
         ], 200);
         } catch (QueryException $e) {
+            DB::rollback(); 
             return response()->json([
                 'message' => 'Ha ocurrido un error',
                 'error' => $e
@@ -372,9 +376,7 @@ class RecibirProducto extends Component
                             <a class="dropdown-item" onclick="mostrarModalIncidencias('.$listaBodega->idRecibido.')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia </a>
                         </li>
 
-                        <li>
-                            <a class="dropdown-item" onclick="mostrarModalExcedente('.$listaBodega->compra_id.','.$listaBodega->producto_id.')"> <i class="fa-solid fa-circle-plus text-info"></i> Registrar Producto Excedente </a>
-                        </li>
+
                    
 
                     </ul>
@@ -422,4 +424,216 @@ class RecibirProducto extends Component
        ],402);
        }
     }
+
+    public function guardarEnBodegaExcedente(Request $request){
+        try {
+
+            $productoExistente  = DB::SELECTONE("
+                select 
+                count(id) as contador
+                from recibido_bodega 
+                where compra_id = ".$request->idCompra." and producto_id = ".$request->idProducto
+            );
+
+            if($productoExistente->contador <= 0){
+                return response()->json([
+                    "text" => "No se puede registrar producto excedente, sin antes haber ingresado el producto a bodega.",
+                    "icon" => "warning",
+                    "title"=>"Advertencia!"
+                ], 200);
+            }
+
+            $datosCompra = DB::SELECTONE("
+            select
+            cantidad_ingresada,
+            fecha_expiracion,
+            cantidad_sin_asignar
+            from compra_has_producto
+            where compra_id = ".$request->idCompra."  and producto_id=".$request->idProducto
+        );
+        
+        
+
+            
+
+        //     DB::table('compra_has_producto')
+        //     ->where('compra_id','=', $request->idCompra)
+        //     ->where('producto_id','=', $request->idProducto)
+        //     ->update([
+        //         'seccion_id' => $request->idSeccion,
+        //         'estado_recibido' => 4,
+        //         'recibido_por' => Auth::user()->id,
+        //         'fecha_recibido' => now(),
+        // ]);
+
+
+        DB::beginTransaction();
+        $recibir = new ModelRecibirBodega();
+        $recibir->compra_id = $request->idCompra;
+        $recibir->producto_id = $request->idProducto;
+        $recibir->seccion_id = $request->seccionExcedente;
+        $recibir->cantidad_compra_lote = $datosCompra->cantidad_ingresada;
+        $recibir->cantidad_inicial_seccion = $request->cantidadExcedente;
+        $recibir->cantidad_disponible = $request->cantidadExcedente;
+        $recibir->fecha_recibido = now();
+        $recibir->fecha_expiracion = $datosCompra->fecha_expiracion;
+        $recibir->estado_recibido = 4;
+        $recibir->recibido_por = Auth::user()->id;
+        $recibir->save();
+
+        $incidencia = new ModelIncidencia();
+        $incidencia->descripcion = "Excedente de producto";       
+        $incidencia->recibido_bodega_id =  $recibir->id;
+        $incidencia->save();
+           
+        DB::commit();
+        return response()->json([
+            "text" => "Excedente de producto registrado en bodega con éxito.",
+            "icon" => "success",
+            "title"=>"Exito!"
+        ], 200);
+        } catch (QueryException $e) {
+            DB::rollback(); 
+            return response()->json([
+                'message' => 'Ha ocurrido un error',
+                'error' => $e
+            ], 402);
+        }
+
+    }
+
+    public function incidenciaBodega(Request $request){
+       try {
+
+       
+
+        if($request->imagen){
+            $validator = Validator::make($request->all(), [
+           
+                'imagen' => 'mimes:png,jpeg,jpg,pdf'           
+    
+            ], [
+                
+                'imagen' => 'Formato de imagen invalido'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'tilte' => 'Ha ocurrido un error.',
+                    'text' => $validator->errors(),
+                    'icon' => 'error'
+                ], 402);
+            }
+    
+            $file = $request->file('imagen');
+            $name = 'IMG_'. time(). '.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/incidencias_bodega';   
+            $file->move($path, $name);
+
+            $incidencia = new ModelIncidencia;
+            $incidencia->descripcion = $request->comentario;
+            $incidencia->url_img = $name;
+            $incidencia->recibido_bodega_id = $request->idRecibido;
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->save();
+
+        }else{
+            $incidencia = new ModelIncidencia;
+            $incidencia->descripcion = $request->comentario;
+            $incidencia->recibido_bodega_id = $request->idRecibido;       
+            $incidencia->users_id = Auth::user()->id;   
+            $incidencia->save();
+
+        }
+
+
+
+
+
+       return response()->json([
+           "text" => "Indicencia registrada con exito.",
+           "title" => "Exito!",
+           "icon" => "success"
+       ],200);
+
+       } catch (QueryException $e) {
+        $carpetaPublic = public_path();
+        $path = $carpetaPublic.'/incidencias_bodega/'.$name;  
+        File::delete($path);
+
+       return response()->json([
+          'error' => $e,
+          "text" => "Ha ocurrido un error.",
+          "title" => "Error!",
+          "icon" => "error"
+       ],402);
+       }
+
+    }
+
+    public function incidenciaCompra(Request $request){
+
+       try {
+     
+        if($request->imagenCompra){
+            $validator = Validator::make($request->all(), [
+           
+                'imagenCompra' => 'mimes:png,jpeg,jpg,pdf'           
+    
+            ], [
+                
+                'imagenCompra' => 'Formato de imagen invalido'
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'tilte' => 'Ha ocurrido un error.',
+                    'text' => $validator->errors(),
+                    'icon' => 'error'
+                ], 402);
+            }
+    
+            $file = $request->file('imagenCompra');
+            $name = 'IMG_'. time(). '.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/incidencias_compra';   
+            $file->move($path, $name);
+
+            $incidencia = new ModelIncidenciaCompra;
+            $incidencia->descripcion = $request->comentarioCompra;
+            $incidencia->url_img = $name;
+            $incidencia->compra_id = $request->idCompra;
+            $incidencia->producto_id = $request->idProducto;
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->save();
+
+        }else{
+            $incidencia = new ModelIncidenciaCompra;
+            $incidencia->descripcion = $request->comentarioCompra;          
+            $incidencia->compra_id = $request->idCompra;
+            $incidencia->producto_id = $request->idProducto;
+            $incidencia->users_id = Auth::user()->id;
+            $incidencia->save();
+
+        }
+
+        return response()->json([
+            "text" => "Indicencia registrada con exito.",
+            "title" => "Exito!",
+            "icon" => "success"
+        ],200);
+       } catch (QueryException $e) {
+        $carpetaPublic = public_path();
+        $path = $carpetaPublic.'/incidencias_compra/'.$name;  
+        File::delete($path);
+
+       return response()->json([
+          'error' => $e,
+          "text" => "Ha ocurrido un error.",
+          "title" => "Error!",
+          "icon" => "error"
+       ],402);
+       }
+       }
+
+    
 }
