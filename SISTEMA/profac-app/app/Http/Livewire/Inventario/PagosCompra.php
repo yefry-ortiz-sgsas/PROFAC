@@ -12,6 +12,9 @@ use Auth;
 use DataTables;
 use Validator;
 use Illuminate\Support\Facades\File;
+use PDF;
+
+
 
 class PagosCompra extends Component
 {
@@ -317,6 +320,24 @@ class PagosCompra extends Component
            'error' => $e
        ]);
        }
+    }
+
+    public function retencionDocumentoPDF(){
+        $data = [
+            'titulo' => 'Styde.net'
+        ];
+
+        /*$pdf = PDF::loadView('/pdf/retencion', $data)
+        ->stream('archivo.pdf');   
+        */
+        
+        //view()->share('/pdf/retencion',$data);
+       
+        $pdf = PDF::loadView('/pdf/retencion', $data)->setPaper('letter');
+        // download PDF file with download method
+        return $pdf->stream('pdf_file.pdf');
+        
+        // return view('/pdf/retencion')->with($data);
     }
     
 }

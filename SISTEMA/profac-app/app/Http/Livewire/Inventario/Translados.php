@@ -116,7 +116,7 @@ class Translados extends Component
             on B.unidad_medida_id = C.id
             inner join compra
             on A.compra_id = compra.id
-        where compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+        where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
         );
 
         return Datatables::of($listaProductos)
@@ -132,7 +132,7 @@ class Translados extends Component
             </div>';
         })
 
-        ->rawColumns(['opciones','anular'])
+        ->rawColumns(['opciones',])
         ->make(true);
 
        } catch (QueryException $e) {
@@ -228,7 +228,7 @@ class Translados extends Component
     
     public function productoGeneralBodega($idSeccion,$idProducto){
         try {
-        
+        //dd($idSeccion,$idProducto);
             $idBodega = DB::SELECTONE("
                 select
                     bodega.id
@@ -238,6 +238,8 @@ class Translados extends Component
                     inner join bodega
                     on bodega.id = segmento.bodega_id
                     where seccion.id =".$idSeccion);
+        
+                    
  
          $listaProductos = DB::SELECT("
          select 
@@ -263,7 +265,7 @@ class Translados extends Component
              on B.unidad_medida_id = C.id
              inner join compra
              on A.compra_id = compra.id
-         where compra.estado_compra_id = 1 and bodega.id = ".$idBodega->id." and A.producto_id = ".$idProducto
+         where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega->id." and A.producto_id = ".$idProducto
          );
  
          return Datatables::of($listaProductos)

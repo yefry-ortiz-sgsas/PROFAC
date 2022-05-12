@@ -70,7 +70,7 @@
 
                         <hr>
 
-
+                            <h3  class=""><i class="fa-solid fa-warehouse  m-0 p-0" style="color: #1AA689"></i> <span id="total"></span></h3>
                         <div class="table-responsive">
                             <table id="tbl_translados" class="table table-striped table-bordered table-hover">
                                 <thead class="">
@@ -81,8 +81,9 @@
                                         <th>Cantidad Disponible</th>
                                         <th>Bodega</th>
                                         <th>Sección</th>
-                                        <th>Translado</th>
                                         <th>Fecha Ingreso</th>
+                                        <th>Translado</th>
+                                        
 
 
                                     </tr>
@@ -282,33 +283,35 @@
                             data: 'descripcion'
                         },
                         {
-                            data: 'opciones'
+                            data: 'created_at'
                         },
                         {
-                            data: 'created_at'
-                        }
+                            data: 'opciones'
+                        },
 
 
-                    ]
+
+                    ],
+                    drawCallback: function () {
+                    var sum = $('#tbl_translados').DataTable().column(3).data().sum();
+                    let html = 'Cantidad Total en Bodega: '+sum
+                    $('#total').html(html);
+                }	
+                    
 
 
                 });
 
-                /*axios.post("/translado/producto/lista", data)
-                .then( response =>{
-
-
-
-                })
-                .catch( err=>{
-
-                })*/
+                // let tabla = $('#tbl_translados').DataTable();
+                // let suma = tabla.column(4,{page:'current'}).data().sum();
+                // console.log(suma);
             }
 
             function modalTranslado(idRecibido) {
                 this.idRecibido = idRecibido
 
                 $('#modal_transladar_producto').modal('show')
+                console.log(this.idRecibido);
 
             }
 
@@ -415,13 +418,16 @@
 
             function transladoProducto(){
                 document.getElementById('btn_recibir_bodega').disabled = true;
-                let data = new FormData($('#recibirProducto').get(0));
-                data.append('idRecibido',idRecibido);
+                let idSeccion = document.getElementById('seccion').value;
+                console.log(idSeccion,'idSeccion')
+                let dataForm = new FormData($('#recibirProducto').get(0));
+                dataForm.append('idRecibido',idRecibido);
+                //console.log(dataForm);
 
                 let table = $('#tbl_translados_destino').DataTable();
                 table.destroy();
 
-                axios.post('/translado/producto/bodega',data)
+                axios.post('/translado/producto/bodega',dataForm)
                 .then( response =>{
 
                     let data = response.data;
@@ -440,16 +446,22 @@
 
 
                     $('#tbl_translados').DataTable().ajax.reload();
+                    
 
-                    listadoBodegaDestino(data.idSeccion);
+                    listadoBodegaDestino(idSeccion);
 
-                    document.getElementById('destino').class
+                    //document.getElementById('destino').class
+                    document.getElementById('destino').classList.remove('d-none');
+                    document.getElementById("recibirProducto").reset();
+                    $('#recibirProducto').parsley().reset();
+
 
                     return;
 
 
                 })
                 .catch( err =>{
+                    console.log(err)
 
                     let data = err.response.data;
                         Swal.fire({
@@ -463,7 +475,12 @@
             }
 
             function listadoBodegaDestino(idSeccion){
+              
                 let idProducto = document.getElementById('selectProducto').value;
+               
+
+                console.log(idSeccion);
+                console.log(idProducto);
                 $('#tbl_translados_destino').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"

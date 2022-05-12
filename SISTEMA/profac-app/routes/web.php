@@ -102,7 +102,8 @@ Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarP
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
 Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']);
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
-Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
+Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
+Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
 Route::get('/producto/compra/recibir/{id}', RecibirProducto::class);
 Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'listarProductos']);
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);

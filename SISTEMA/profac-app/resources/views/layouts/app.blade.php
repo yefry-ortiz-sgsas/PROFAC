@@ -144,6 +144,7 @@
 
     <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/sum.js') }}"></script>
 
     <!--select2-->
     <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
