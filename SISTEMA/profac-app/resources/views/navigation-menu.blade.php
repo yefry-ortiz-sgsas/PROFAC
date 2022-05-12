@@ -1,9 +1,9 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" >
     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
-    
+
     <!-- Primary Navigation Menu -->
     <div class=" px-4 sm:px-6 lg:px-8 " style="width:100vw" >
-      
+
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -313,7 +313,7 @@
 
                 <li>
                     <a href="index.html"><i class="fa-solid fa-cubes" style="color:#ffffff;" >
-                    </i><span  class="nav-label" style="color:#ffffff;">Inventario</span> 
+                    </i><span  class="nav-label" style="color:#ffffff;">Inventario</span>
                     <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
@@ -321,12 +321,29 @@
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
                         <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
-                      
+
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>
-                   
+
                 </li>
-           
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span
+                            class="nav-label" style="color:#ffffff;">Clientes</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/clientes" style="color:#ffffff;">Gestiones</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-file"  style="color:#ffffff;"></i> <span
+                            class="nav-label" style="color:#ffffff;">Facturación</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/facturas" style="color:#ffffff;">Gestiones</a></li>
+                    </ul>
+                </li>
+
 
             </ul>
 

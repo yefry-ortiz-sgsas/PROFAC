@@ -14,8 +14,11 @@ use App\Http\Livewire\Inventario\DetalleCompra;
 use App\Http\Livewire\Inventario\PagosCompra;
 use App\Http\Livewire\Inventario\RecibirProducto;
 use App\Http\Livewire\Inventario\Incidencias;
-use App\Http\Livewire\Inventario\AnularCompra; 
+use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
+use App\Http\Livewire\Clientes\Cliente;
+use App\Http\Livewire\Clientes\PerfilCliente;
+use App\Http\Livewire\Facturaciones\Facturacion;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +66,13 @@ Route::get('/inventario/retenciones', Retenciones::class);
 Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
 Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
 
+//-------------------------------------------------CLIENTES---------------------------------------------//
+Route::get('/clientes', Cliente::class);
+Route::get('/perfilCliente', PerfilCliente::class);
 
+
+//----------------------------------------------FACTURACIONES---------------------------------------------------//
+Route::get('/facturas', Facturacion::class);
 
 //-----------------------------------------------Usuarios--------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);
@@ -101,30 +110,30 @@ Route::get('/producto/compra/pagos/{id}', PagosCompra::class);
 Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarPago']);
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
 Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']);
-Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
+Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
 Route::get('/producto/compra/recibir/{id}', RecibirProducto::class);
 Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'listarProductos']);
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
 Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmentos']);
 Route::post('/producto/recibir/seccion', [RecibirProducto::class, 'listarSecciones']);
-Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']); 
+Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']);
 Route::get('/producto/lista/bodega/{id}', [RecibirProducto::class, 'productoBodega']);
-Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']); 
+Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']);
 Route::post('/producto/recibir/excedente',[RecibirProducto::class, 'guardarEnBodegaExcedente']);
-Route::post('/producto/incidencia/bodega',[RecibirProducto::class, 'incidenciaBodega']); 
+Route::post('/producto/incidencia/bodega',[RecibirProducto::class, 'incidenciaBodega']);
 Route::post('/producto/incidencia/compra',[RecibirProducto::class, 'incidenciaCompra']);
-Route::get('/inventario/compras/incidencias/{id}', Incidencias::class); 
+Route::get('/inventario/compras/incidencias/{id}', Incidencias::class);
 Route::get('/inventario/incidencia/bodega/{id}',[Incidencias::class, 'incidenciasBodega']);
-Route::get('/inventario/incidencia/compra/{id}',[Incidencias::class, 'incidenciaCompra']); 
-Route::post('/producto/compra/anular',[AnularCompra::class, 'anularCompraRegistro']); 
-Route::get('/inventario/translado', Translados::class);   
-Route::get('/translado/lista/productos',[Translados::class, 'listarProductos']);  
-Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']); 
-Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);  
-Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);  
+Route::get('/inventario/incidencia/compra/{id}',[Incidencias::class, 'incidenciaCompra']);
+Route::post('/producto/compra/anular',[AnularCompra::class, 'anularCompraRegistro']);
+Route::get('/inventario/translado', Translados::class);
+Route::get('/translado/lista/productos',[Translados::class, 'listarProductos']);
+Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']);
+Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);
+Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);
 Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']);
- 
+
 
 
 
