@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 12-05-2022 a las 02:17:49
+-- Tiempo de generación: 16-05-2022 a las 06:55:06
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -470,7 +470,24 @@ CREATE TABLE `log_translado` (
 --
 
 INSERT INTO `log_translado` (`id`, `origen`, `destino`, `cantidad`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 9, 10, 3, '2022-05-11 22:32:21', '2022-05-11 22:32:21');
+(1, 1, 9, 10, 3, '2022-05-11 22:32:21', '2022-05-11 22:32:21'),
+(2, 2, 10, 10, 3, '2022-05-12 12:30:40', '2022-05-12 12:30:40'),
+(3, 1, 11, 10, 3, '2022-05-12 12:31:24', '2022-05-12 12:31:24'),
+(4, 2, 12, 10, 3, '2022-05-12 12:33:54', '2022-05-12 12:33:54'),
+(5, 2, 13, 10, 3, '2022-05-12 12:37:09', '2022-05-12 12:37:09'),
+(6, 13, 14, 10, 3, '2022-05-12 12:38:52', '2022-05-12 12:38:52'),
+(7, 12, 15, 10, 3, '2022-05-12 12:42:54', '2022-05-12 12:42:54'),
+(8, 15, 16, 10, 3, '2022-05-12 12:46:06', '2022-05-12 12:46:06'),
+(9, 11, 17, 10, 3, '2022-05-12 12:48:00', '2022-05-12 12:48:00'),
+(10, 10, 18, 10, 3, '2022-05-12 12:52:10', '2022-05-12 12:52:10'),
+(11, 4, 19, 10, 3, '2022-05-12 13:00:01', '2022-05-12 13:00:01'),
+(12, 9, 20, 10, 3, '2022-05-12 13:02:47', '2022-05-12 13:02:47'),
+(13, 20, 21, 10, 3, '2022-05-12 13:06:59', '2022-05-12 13:06:59'),
+(14, 19, 22, 10, 3, '2022-05-12 13:07:53', '2022-05-12 13:07:53'),
+(15, 18, 23, 10, 3, '2022-05-12 13:11:27', '2022-05-12 13:11:27'),
+(16, 17, 24, 10, 3, '2022-05-12 13:15:54', '2022-05-12 13:15:54'),
+(17, 3, 25, 10, 3, '2022-05-12 13:17:00', '2022-05-12 13:17:00'),
+(18, 16, 26, 3, 3, '2022-05-12 13:18:18', '2022-05-12 13:18:18');
 
 -- --------------------------------------------------------
 
@@ -1131,14 +1148,31 @@ CREATE TABLE `recibido_bodega` (
 --
 
 INSERT INTO `recibido_bodega` (`id`, `compra_id`, `producto_id`, `seccion_id`, `cantidad_compra_lote`, `cantidad_inicial_seccion`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `estado_recibido`, `recibido_por`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 100, 50, 40, '2022-04-30', '2022-05-31', 4, 3, '2022-04-30 21:04:53', '2022-05-11 22:32:21'),
-(2, 1, 1, 2, 100, 50, 50, '2022-04-30', '2022-05-31', 4, 4, '2022-04-30 21:06:42', '2022-04-30 21:02:27'),
-(3, 4, 1, 2, 30, 10, 10, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:30:36', '2022-05-06 08:30:36'),
-(4, 4, 1, 15, 30, 10, 10, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:37:56', '2022-05-06 08:37:56'),
+(1, 1, 1, 1, 100, 50, 30, '2022-04-30', '2022-05-31', 4, 3, '2022-04-30 21:04:53', '2022-05-12 12:31:24'),
+(2, 1, 1, 2, 100, 50, 20, '2022-04-30', '2022-05-31', 4, 4, '2022-04-30 21:06:42', '2022-05-12 12:37:09'),
+(3, 4, 1, 2, 30, 10, 0, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:30:36', '2022-05-12 13:17:00'),
+(4, 4, 1, 15, 30, 10, 0, '2022-05-06', '2022-05-02', 4, 3, '2022-05-06 08:37:56', '2022-05-12 13:00:01'),
 (6, 4, 1, 17, 30, 5, 5, '2022-05-05', '2022-05-02', 4, 3, '2022-05-06 04:26:13', '2022-05-06 04:26:13'),
 (7, 1, 1, 16, 100, 10, 10, '2022-05-06', '2022-05-31', 4, 3, '2022-05-06 17:39:26', '2022-05-06 17:39:26'),
 (8, 4, 1, 17, 30, 5, 5, '2022-05-11', '2022-05-02', 4, 3, '2022-05-11 20:30:26', '2022-05-11 20:30:26'),
-(9, 1, 1, 17, 100, 10, 10, '2022-05-11', '2022-05-31', 4, 3, '2022-05-11 22:32:21', '2022-05-11 22:32:21');
+(9, 1, 1, 17, 100, 10, 0, '2022-05-11', '2022-05-31', 4, 3, '2022-05-11 22:32:21', '2022-05-12 13:02:47'),
+(10, 1, 1, 16, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:30:40', '2022-05-12 12:52:10'),
+(11, 1, 1, 15, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:31:24', '2022-05-12 12:48:00'),
+(12, 1, 1, 17, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:33:54', '2022-05-12 12:42:54'),
+(13, 1, 1, 17, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:37:09', '2022-05-12 12:38:52'),
+(14, 1, 1, 1, 100, 10, 10, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:38:52', '2022-05-12 12:38:52'),
+(15, 1, 1, 17, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:42:54', '2022-05-12 12:46:06'),
+(16, 1, 1, 8, 100, 10, 7, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:46:06', '2022-05-12 13:18:18'),
+(17, 1, 1, 8, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:48:00', '2022-05-12 13:15:54'),
+(18, 1, 1, 4, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 12:52:10', '2022-05-12 13:11:27'),
+(19, 4, 1, 13, 30, 10, 0, '2022-05-12', '2022-05-02', 4, 3, '2022-05-12 13:00:01', '2022-05-12 13:07:53'),
+(20, 1, 1, 4, 100, 10, 0, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 13:02:47', '2022-05-12 13:06:59'),
+(21, 1, 1, 15, 100, 10, 10, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 13:06:59', '2022-05-12 13:06:59'),
+(22, 4, 1, 16, 30, 10, 10, '2022-05-12', '2022-05-02', 4, 3, '2022-05-12 13:07:53', '2022-05-12 13:07:53'),
+(23, 1, 1, 16, 100, 10, 10, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 13:11:27', '2022-05-12 13:11:27'),
+(24, 1, 1, 15, 100, 10, 10, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 13:15:54', '2022-05-12 13:15:54'),
+(25, 4, 1, 16, 30, 10, 10, '2022-05-12', '2022-05-02', 4, 3, '2022-05-12 13:17:00', '2022-05-12 13:17:00'),
+(26, 1, 1, 17, 100, 3, 3, '2022-05-12', '2022-05-31', 4, 3, '2022-05-12 13:18:18', '2022-05-12 13:18:18');
 
 -- --------------------------------------------------------
 
@@ -1301,7 +1335,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('JFaz5SkkEVhUsZwGZyltfWccJVkGCKYRzdv1hVYn', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiMDNVVVpWSWN6WmdzdnBHUUNYaWo1ZFBjOG4xb3lKVjBuYlhSTElHYSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6ODU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9pbnZlbnRhcmlvL3RyYW5zbGFkbz9ib2RlZ2E9MiZjYW50aWRhZD0xMCZzZWNjaW9uPTE1JnNlZ21lbnRvPTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1652309181);
+('NiYJ9e47VcprGlumFyFAS5MyPaB8QdftFLxgWtEy', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNEc5dG9Ld2RrVVRRdmN0eGlkOGFvdmt3d2NjbXRtOUtyZjNQc1FZTCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jb21wcmEvcmV0ZW5jaW9uL2RvY3VtZW50byI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1652395106);
 
 -- --------------------------------------------------------
 
@@ -1991,7 +2025,7 @@ ALTER TABLE `log_estado`
 -- AUTO_INCREMENT de la tabla `log_translado`
 --
 ALTER TABLE `log_translado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -2057,7 +2091,7 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `recibido_bodega`
 --
 ALTER TABLE `recibido_bodega`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `retenciones`
