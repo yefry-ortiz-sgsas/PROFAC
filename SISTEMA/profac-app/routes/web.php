@@ -136,9 +136,7 @@ Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
 Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
-Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
-Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
-Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
+ 
 
 
 
