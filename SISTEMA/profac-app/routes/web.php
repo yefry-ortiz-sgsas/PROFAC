@@ -110,14 +110,8 @@ Route::get('/producto/compra/pagos/{id}', PagosCompra::class);
 Route::post('/producto/compra/pagos/registro', [ PagosCompra::class, 'registrarPago']);
 Route::get('/producto/compra/pagos/lista/{id}', [ PagosCompra::class, 'listarPagos']);
 Route::post('/producto/compra/pagos/datos', [PagosCompra::class,'DatosCompra']);
-<<<<<<< HEAD
-Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
-Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
-Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
-=======
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
->>>>>>> f1a7635d2f36e88ebda8ac12680b1ae91ed2978b
 Route::get('/producto/compra/recibir/{id}', RecibirProducto::class);
 Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'listarProductos']);
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
@@ -139,6 +133,12 @@ Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']);
 Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);
 Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);
 Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']);
+Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
+Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
+Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
+Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
+Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
+Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
 
 
 
