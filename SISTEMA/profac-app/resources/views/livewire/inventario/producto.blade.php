@@ -205,17 +205,17 @@
                                         <div class="col-md-4">
                                             <label for="precio1" class="col-form-label focus-label">Precio de venta base:</label>
                                             <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
-                                                data-parsley-required>
+                                                data-parsley-required step="any">
                                         </div>
                                         <div class="col-md-4">
                                             <label class="col-form-label focus-label" for="precio2">Precio de venta 2:</label>
                                             <input class="form-group form-control" min="1" type="number" name="precio[]"
-                                                id="precio2">
+                                                id="precio2" step="any">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="precio3" class="col-form-label focus-label">Precio de venta 3:</label>
                                             <input class="form-group form-control" required min="1" type="number" name="precio[]"
-                                                id="precio3" >
+                                                id="precio3" step="any">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
