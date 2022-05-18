@@ -20,6 +20,9 @@ use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Clientes\PerfilCliente;
 use App\Http\Livewire\Facturaciones\Facturacion;
 
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,6 +72,14 @@ Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarReten
 //-------------------------------------------------CLIENTES---------------------------------------------//
 Route::get('/clientes', Cliente::class);
 Route::get('/perfilCliente', PerfilCliente::class);
+Route::get('/cliente/pais', [Cliente::class, 'opbtenerPais']); 
+Route::post('/cliente/departamento', [Cliente::class, 'obtenerDepartamentos']); 
+Route::post('/cliente/municipio', [Cliente::class, 'obtenerMunicipio']);
+
+Route::get('/cliente/tipo/personalidad', [Cliente::class, 'tipoPersonalidad']);
+Route::get('/cliente/tipo/cliente', [Cliente::class, 'tipoCliente']);
+Route::get('/cliente/lista/vendedores', [Cliente::class, 'listaVendedores']);
+
 
 
 //----------------------------------------------FACTURACIONES---------------------------------------------------//

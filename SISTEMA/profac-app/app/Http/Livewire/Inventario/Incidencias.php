@@ -87,7 +87,7 @@ class Incidencias extends Component
        return response()->json([
            'message' => 'Ha ocurrido un error', 
            'error' => $e
-       ]);
+       ],402);
        }
 
     }
@@ -145,7 +145,7 @@ class Incidencias extends Component
        return response()->json([
            'message' => 'Ha ocurrido un error', 
            'error' => $e
-       ]);
+       ],402);
        }
 
     }

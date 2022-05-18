@@ -142,7 +142,7 @@
 
 
     <!-- Modal para transferir producto a otra bodega-->
-    <div class="modal fade" id="modal_transladar_producto" tabindex="-1" role="dialog"
+    <div class="modal fade" id="modal_transladar_producto" tabindex="-22" role="dialog"
         aria-labelledby="modal_transladar_productoLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -442,6 +442,7 @@
                             icon: data.icon,
                             title: data.title,
                             text: data.text,
+                           
                         })                
 
 
@@ -461,7 +462,9 @@
 
                 })
                 .catch( err =>{
-                    console.log(err)
+                    //console.log(err)
+                    $('#modal_transladar_producto').modal('hide')
+                    document.getElementById('btn_recibir_bodega').disabled = false;
 
                     let data = err.response.data;
                         Swal.fire({

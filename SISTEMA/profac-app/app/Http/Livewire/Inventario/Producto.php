@@ -77,6 +77,7 @@ class Producto extends Component
             $producto->precio_base = $request['precioBase'];
             $producto->unidad_medida_id = $request['unidad_producto'];
             $producto->users_id = Auth::user()->id;
+            $producto->estado_producto_id = 1;
             $producto->save();
 
             //------------------------guardar precios------------//
