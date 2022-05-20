@@ -214,7 +214,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="precio3" class="col-form-label focus-label">Precio de venta 3:</label>
-                                            <input class="form-group form-control" required min="1" type="number" name="precio[]"
+                                            <input class="form-group form-control"  min="1" type="number" name="precio[]"
                                                 id="precio3" step="any">
                                         </div>
                                         <div class="col-md-6">
@@ -367,6 +367,7 @@
 
         $(document).ready(function() {
             $('#tbl_productosListar').DataTable({
+                "order": [0, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },

@@ -485,6 +485,7 @@
                 console.log(idSeccion);
                 console.log(idProducto);
                 $('#tbl_translados_destino').DataTable({
+                    "order": [6, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },

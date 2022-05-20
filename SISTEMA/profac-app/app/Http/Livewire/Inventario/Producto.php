@@ -37,7 +37,7 @@ class Producto extends Component
             'nombre_producto' => 'required',
             'descripcion_producto' => 'required',
             'isv_producto' => 'required',
-            'precio' => 'required',
+           
             'categoria_producto' => 'required',
             'unidad_producto' => 'required',
             
@@ -46,7 +46,7 @@ class Producto extends Component
             'nombre_producto' => 'Nombre es requerido',
             'descripcion_producto' => 'Descripcion es requerido',
             'isv_producto' => 'ISV es requqerido',
-            'precio' => 'Precio 1 es requerido',
+            
             'categoria_producto' => 'Categoria del producto es requerido',
             'unidad_producto' => 'La unidad de medida es requerida',
             'img_pago' => 'Formato de imagen invalido'
@@ -68,13 +68,13 @@ class Producto extends Component
             $url = "";
 
             $producto = new ModelProducto;
-            $producto->nombre = $request['nombre_producto'];
-            $producto->descripcion = $request['descripcion_producto'];
+            $producto->nombre = trim($request['nombre_producto']);
+            $producto->descripcion = trim($request['descripcion_producto']);
             $producto->isv = $request['isv_producto'];
-            $producto->codigo_barra = $request['cod_barra_producto'];
-            $producto->codigo_estatal = $request['cod_estatal_producto'];
+            $producto->codigo_barra = trim($request['cod_barra_producto']);
+            $producto->codigo_estatal = trim($request['cod_estatal_producto']);
             $producto->categoria_id = $request['categoria_producto'];
-            $producto->precio_base = $request['precioBase'];
+            $producto->precio_base = trim($request['precioBase']);
             $producto->unidad_medida_id = $request['unidad_producto'];
             $producto->users_id = Auth::user()->id;
             $producto->estado_producto_id = 1;
@@ -83,13 +83,23 @@ class Producto extends Component
             //------------------------guardar precios------------//
             $arrayPrecios = $request['precio'];
 
-            for ($i = 0; $i < count($arrayPrecios); $i++) {
-                $precio = new ModelPrecio;
-                $precio->precio = $arrayPrecios[$i];
-                $precio->producto_id = $producto->id;
-                $precio->users_id = Auth::user()->id;
-                $precio->save();
-            }
+           
+
+            
+                for ($i = 0; $i < count($arrayPrecios); $i++) {
+                    if($arrayPrecios[$i] == null){
+                        continue;
+                    }
+                    $precio = new ModelPrecio;
+                    $precio->precio = trim($arrayPrecios[$i]);
+                    $precio->producto_id = $producto->id;
+                    $precio->users_id = Auth::user()->id;
+                    $precio->save();
+                }
+
+            
+
+
 
 
             //----------------------------------guardar imagen-------------------------//
@@ -289,26 +299,25 @@ class Producto extends Component
 
     public function editarProducto(Request $request){
         try {
-        DB::beginTransaction();
+       
 
             $producto = ModelProducto::find($request['id_producto_edit']);
-            $producto->nombre = $request['nombre_producto_edit'];
-            $producto->descripcion = $request['descripcion_producto_edit'];
-            $producto->isv = $request['isv_producto_edit'];
-            $producto->codigo_barra = $request['cod_barra_producto_edit'];
-            $producto->codigo_estatal = $request['cod_estatal_producto_edit'];
+            $producto->nombre = trim($request['nombre_producto_edit']);
+            $producto->descripcion = trim($request['descripcion_producto_edit']);
+            $producto->isv = trim($request['isv_producto_edit']);
+            $producto->codigo_barra = trim($request['cod_barra_producto_edit']);
+            $producto->codigo_estatal = trim($request['cod_estatal_producto_edit']);
             $producto->categoria_id = $request['categoria_producto_edit'];
-            $producto->precio_base = $request['precioBase_edit'];
+            $producto->precio_base = trim($request['precioBase_edit']);
             $producto->unidad_medida_id = $request['unidad_producto_edit'];
             $producto->users_id = Auth::user()->id;
             $producto->save();
 
-        DB::commit();
             return response()->json([
                 "message" => "producto editado con exito",
             ], 200);
         } catch (QueryException $e) {
-                DB::rollback();
+               
 
                 return response()->json([
                     'message' => 'Ha ocurrido un error al editar el producto.',

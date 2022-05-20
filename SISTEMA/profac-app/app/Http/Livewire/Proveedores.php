@@ -79,15 +79,15 @@ class Proveedores extends Component
                 DB::beginTransaction();
 
                 $crearProveedores = new Modelproveedores;
-                $crearProveedores->codigo=$request->codigo_prov;
-                $crearProveedores->nombre=$request->nombre_prov;
-                $crearProveedores->direccion=$request->direccion_prov;
-                $crearProveedores->contacto=$request->contacto_prov;
-                $crearProveedores->telefono_1=$request->telefono_prov;
-                $crearProveedores->telefono_2=$request->telefono_prov_2;
-                $crearProveedores->correo_1=$request->correo_prov;
-                $crearProveedores->correo_2=$request->correo_prov_2;
-                $crearProveedores->rtn=$request->rtn_prov;
+                $crearProveedores->codigo=trim($request->codigo_prov);
+                $crearProveedores->nombre=trim($request->nombre_prov);
+                $crearProveedores->direccion=trim($request->direccion_prov);
+                $crearProveedores->contacto=trim($request->contacto_prov);
+                $crearProveedores->telefono_1=trim($request->telefono_prov);
+                $crearProveedores->telefono_2=trim($request->telefono_prov_2);
+                $crearProveedores->correo_1=trim($request->correo_prov);
+                $crearProveedores->correo_2=trim($request->correo_prov_2);
+                $crearProveedores->rtn=trim($request->rtn_prov);
                 $crearProveedores->registrado_por=Auth::user()->id;              
                 $crearProveedores->municipio_id=$request->municipio_prov;
                 $crearProveedores->tipo_personalidad_id=$request->giro_neg_prov;
@@ -413,15 +413,15 @@ class Proveedores extends Component
         try {
 
                 $crearProveedores = Modelproveedores::find($request['idProveedor']);
-                $crearProveedores->codigo=$request->editar_codigo_prov;
-                $crearProveedores->nombre=$request->editar_nombre_prov;
-                $crearProveedores->direccion=$request->editar_direccion_prov;
-                $crearProveedores->contacto=$request->editar_contacto_prov;
-                $crearProveedores->telefono_1=$request->editar_telefono_prov;
-                $crearProveedores->telefono_2=$request->editar_telefono_prov_2;
-                $crearProveedores->correo_1=$request->editar_correo_prov;
-                $crearProveedores->correo_2=$request->editar_correo_prov_2;
-                $crearProveedores->rtn=$request->editar_rtn_prov;
+                $crearProveedores->codigo=trim($request->editar_codigo_prov);
+                $crearProveedores->nombre=trim($request->editar_nombre_prov);
+                $crearProveedores->direccion=trim($request->editar_direccion_prov);
+                $crearProveedores->contacto=trim($request->editar_contacto_prov);
+                $crearProveedores->telefono_1=trim($request->editar_telefono_prov);
+                $crearProveedores->telefono_2=trim($request->editar_telefono_prov_2);
+                $crearProveedores->correo_1=trim($request->editar_correo_prov);
+                $crearProveedores->correo_2=trim($request->editar_correo_prov_2);
+                $crearProveedores->rtn=trim($request->editar_rtn_prov);
                 $crearProveedores->registrado_por=Auth::user()->id;              
                 $crearProveedores->municipio_id=$request->editar_municipio_prov;
                 $crearProveedores->tipo_personalidad_id=$request->editar_giro_neg_prov;
@@ -430,15 +430,12 @@ class Proveedores extends Component
 
 
 
-
-            DB::commit();
-
             return response()->json([
                 'message' => 'Editado con exito.',                   
             ], 200); 
            
         } catch (QueryException $e) {
-            DB::rollback(); 
+          
          
             return response()->json([
                 'message' => 'Ha ocurrido un error al editar el proveedor.',

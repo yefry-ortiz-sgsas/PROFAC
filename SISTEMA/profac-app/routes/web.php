@@ -78,8 +78,16 @@ Route::post('/cliente/municipio', [Cliente::class, 'obtenerMunicipio']);
 
 Route::get('/cliente/tipo/personalidad', [Cliente::class, 'tipoPersonalidad']);
 Route::get('/cliente/tipo/cliente', [Cliente::class, 'tipoCliente']);
-Route::get('/cliente/lista/vendedores', [Cliente::class, 'listaVendedores']);
-
+Route::get('/cliente/lista/vendedores', [Cliente::class, 'listaVendedores']); 
+Route::post('/cliente/registrar', [Cliente::class, 'guardarCliente']); 
+Route::get('/clientes/listar', [Cliente::class, 'listarClientes']); 
+Route::post('/clientes/datos/editar', [Cliente::class, 'datosCliente']); 
+Route::post('/clientes/editar', [Cliente::class, 'editarCliente']); 
+Route::post('/clientes/imagen', [Cliente::class, 'obtenerImagen']);  
+Route::post('/clientes/imagen/editar', [Cliente::class, 'cambiarImagenCliente']); 
+Route::post('/clientes/desactivar', [Cliente::class, 'desactivarCliente']);  
+Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
+ 
 
 
 //----------------------------------------------FACTURACIONES---------------------------------------------------//
