@@ -7,11 +7,13 @@
         .color-red {
             color: red;
         }
-
+        p {
+        font-size: 12px;
+        }
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete1.jpg');
+            background-image: url('img/membrete/membrete2.jpg');
             background-repeat: no-repeat;
             background-size: 200% 200%;
             background-size: cover;
@@ -25,26 +27,19 @@
 </head>
 
 <body>
-{{--
-    <h1>{{ $titulo }}</h1>
-    <h2 class="color-red">sub carpeta</h2> --}}
-
-        <br><br><br><br><br><br><br><br><br><br><br><br>
-        <hr>
-
-
 
 
 
     <div class="pruebaFondo">
-        <div class="card" style="justify-content: center;  width:30rem;">
+        <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
-            Featured
-            </div>
+               <b>Retención No. 0000-001-05-00000657</b>
+              </div>
             <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: 0801198892837</b></p>
+                <p class="card-text" style="position:absolute;left:410px;  top:50px;"><b>CAI: 08011988937783VG35V53Y53B3588GH52837</b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: 11/03/2022</b></p>
+                <p class="card-text" style="position:absolute;left:310px;  top:65px;"><b>Rango autorizado: 08011988937783VG35V5 - 3Y53B3588GH52837</b></p>
             </div>
         </div>
     </div>
