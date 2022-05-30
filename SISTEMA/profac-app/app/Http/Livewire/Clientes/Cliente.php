@@ -291,8 +291,7 @@ class Cliente extends Component
             ->rawColumns(['opciones','estado'])
             ->make(true);
 
-       return response()->json([
-       ]);
+
        } catch (QueryException $e) {
        return response()->json([
            'message' => 'Ha ocurrido un error', 

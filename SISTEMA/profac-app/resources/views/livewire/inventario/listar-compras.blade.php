@@ -111,7 +111,7 @@
 
 
             });
-        })
+            })
 
         function anularCompra(idCompra){
              

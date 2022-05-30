@@ -113,7 +113,7 @@ class Translados extends Component
             inner join bodega
             on segmento.bodega_id = bodega.id
             inner join unidad_medida C
-            on B.unidad_medida_id = C.id
+            on B.unidad_medida_compra_id = C.id
             inner join compra
             on A.compra_id = compra.id
         where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
@@ -190,7 +190,8 @@ class Translados extends Component
             $logTranslados->origen = $productoEnBodega->id ;
             $logTranslados->destino = $transladarBodega->id;
             $logTranslados->cantidad = $request->cantidad;
-            $logTranslados->users_id= Auth::user()->id;
+            $logTranslados->users_id= Auth::user()->id; 
+            $logTranslados->descripcion="Translado de bodega";
             $logTranslados->save();
 
 
@@ -262,7 +263,7 @@ class Translados extends Component
              inner join bodega
              on segmento.bodega_id = bodega.id
              inner join unidad_medida C
-             on B.unidad_medida_id = C.id
+             on B.unidad_medida_compra_id = C.id
              inner join compra
              on A.compra_id = compra.id
          where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega->id." and A.producto_id = ".$idProducto

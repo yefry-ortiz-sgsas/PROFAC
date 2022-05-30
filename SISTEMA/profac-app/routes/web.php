@@ -18,8 +18,8 @@ use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Clientes\PerfilCliente;
-use App\Http\Livewire\Facturaciones\Facturacion;
-
+use App\Http\Livewire\Facturaciones\Facturacion; 
+use App\Http\Livewire\Ventas\FacturacionCorporativa; 
 
 
 
@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 
 
-//-----------------------Bodega-----------------------//
+//-----------------------Bodega---------------------------------------------------------------------------------------------------------------------//
 Route::get('/bodega', Bodega::class);
 Route::get('/bodega/editar/screen', BodegaEditar::class);
 
@@ -55,7 +55,7 @@ Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
 Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
 Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']);
 Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']);
-//----------------------Proveedores------------------------------------------//
+//----------------------Proveedores-----------------------------------------------------------------------------------------------------------------//
 
 Route::get('/proveedores', Proveedores::class);
 Route::post('/proveedores/crear',  [Proveedores::class, 'proveerdoresModelInsert']);
@@ -69,7 +69,7 @@ Route::get('/inventario/retenciones', Retenciones::class);
 Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
 Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
 
-//-------------------------------------------------CLIENTES---------------------------------------------//
+//-------------------------------------------------CLIENTES-----------------------------------------------------------------------------------------//
 Route::get('/clientes', Cliente::class);
 Route::get('/perfilCliente', PerfilCliente::class);
 Route::get('/cliente/pais', [Cliente::class, 'opbtenerPais']); 
@@ -90,17 +90,17 @@ Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
  
 
 
-//----------------------------------------------FACTURACIONES---------------------------------------------------//
+//----------------------------------------------FACTURACIONES---------------------------------------------------------------------------------------//
 Route::get('/facturas', Facturacion::class);
 
-//-----------------------------------------------Usuarios--------------------------------------------//
+//-----------------------------------------------Usuarios-------------------------------------------------------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);
 Route::get('/usuarios/listar/usuarios', [ListarUsuarios::class, 'listarUsuarios']);
 
 
 
 
-//--------------------------------------------Inventario---------------------------------------------//
+//--------------------------------------------Inventario--------------------------------------------------------------------------------------------//
 
 Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
@@ -113,7 +113,10 @@ Route::post('/producto/eliminar', [Producto::class, 'eliminarImagen']);
 Route::post('/ruta/imagen/edit', [Producto::class, 'guardarFoto']);
 Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
-Route::get('/producto/detalle/{id}', DetalleProducto::class);
+Route::get('/producto/detalle/{id}', DetalleProducto::class); 
+Route::get('/detalle/producto/unidad/{id}', [DetalleProducto::class,'unidadesVenta']); 
+Route::get('/detalle/unidades/venta', [DetalleProducto::class,'obtenerUnidadesMedida']); 
+Route::post('/detalle/unidades/editar', [DetalleProducto::class,'editarUnidadesVenta']);
 Route::get('/producto/compra', CompraProducto::class);
 Route::get('/producto/lista/proveedores', [CompraProducto::class,'listarProveedores']);
 Route::get('/producto/tipo/pagos', [CompraProducto::class,'listarFormasPago']);
@@ -157,9 +160,16 @@ Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRe
 Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
  
 
+//---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//
 
-
-
+Route::get('/ventas/coporativo', FacturacionCorporativa::class);  
+Route::get('/ventas/lista/clientes', [FacturacionCorporativa::class,'listarClientes']);  
+Route::post('/ventas/datos/cliente', [FacturacionCorporativa::class,'datosCliente']);
+Route::get('/ventas/tipo/pago', [FacturacionCorporativa::class,'tipoPagoVenta']);  
+Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class,'listarBodegas']); 
+Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']); 
+Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);  
+Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']); 
 
 
 

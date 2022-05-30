@@ -331,16 +331,19 @@
                             class="nav-label" style="color:#ffffff;">Clientes</span>
                         <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/clientes" style="color:#ffffff;">Gestiones</a></li>
+                        <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
                     </ul>
                 </li>
 
                 <li>
                     <a href="index.html"><i class="fa-solid fa-file"  style="color:#ffffff;"></i> <span
-                            class="nav-label" style="color:#ffffff;">Facturación</span>
+                            class="nav-label" style="color:#ffffff;">Ventas</span>
                         <span class="fa arrow"></span></a>
+
                     <ul class="nav nav-second-level">
-                        <li><a href="/facturas" style="color:#ffffff;">Gestiones</a></li>
+                        <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion Cliente Corporativo</a></li>                        
+                        <li><a href="/facturas" style="color:#ffffff;">Facturacion Cliente Estatal</a></li>        
+                        <li><a href="/facturas" style="color:#ffffff;">Vales</a></li>
                     </ul>
                 </li>
 

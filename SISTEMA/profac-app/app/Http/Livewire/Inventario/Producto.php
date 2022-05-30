@@ -17,6 +17,10 @@ use App\Models\ModelCategoriaProducto;
 use App\Models\ModelProducto;
 use App\Models\ModelPrecio;
 use App\Models\ModelImagenProducto;
+use App\Models\ModelUnidadMedidaVenta;
+use App\Models\ModelMarca;
+
+
 use DataTables;
 use Illuminate\Support\Facades\File;
 
@@ -25,9 +29,9 @@ class Producto extends Component
     public function render()
     {
         $categorias = ModelCategoriaProducto::all();
-        $unidades = ModelUnidadMedida::all();
-
-        return view('livewire.inventario.producto',  compact("categorias", "unidades"));
+        $unidades = DB::SELECT("select id,nombre,simbolo from unidad_medida order by nombre asc");
+       $marcas = DB::SELECT("select id,nombre from marca order by nombre asc"); 
+        return view('livewire.inventario.producto',  compact("categorias", "unidades","marcas"));
     }
 
     public function crearProducto(Request $request)
@@ -70,32 +74,57 @@ class Producto extends Component
             $producto = new ModelProducto;
             $producto->nombre = trim($request['nombre_producto']);
             $producto->descripcion = trim($request['descripcion_producto']);
-            $producto->isv = $request['isv_producto'];
+            $producto->isv = $request['isv_producto']; 
             $producto->codigo_barra = trim($request['cod_barra_producto']);
+            $producto->costo_promedio = trim($request['costo_promedio']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto']);
             $producto->categoria_id = $request['categoria_producto'];
-            $producto->precio_base = trim($request['precioBase']);
-            $producto->unidad_medida_id = $request['unidad_producto'];
+            $producto->precio_base = trim($request['precioBase']); 
+            $producto->marca_id = $request->marca_producto;           
             $producto->users_id = Auth::user()->id;
-            $producto->estado_producto_id = 1;
+            $producto->estado_producto_id = 1; 
+            $producto->unidad_medida_compra_id = $request->unidad_producto;
+            $producto->unidadad_compra = $request->unidades;
             $producto->save();
 
             //------------------------guardar precios------------//
-            $arrayPrecios = $request['precio'];
+            // $arrayPrecios = $request['precio'];
 
            
 
             
-                for ($i = 0; $i < count($arrayPrecios); $i++) {
-                    if($arrayPrecios[$i] == null){
-                        continue;
-                    }
-                    $precio = new ModelPrecio;
-                    $precio->precio = trim($arrayPrecios[$i]);
-                    $precio->producto_id = $producto->id;
-                    $precio->users_id = Auth::user()->id;
-                    $precio->save();
-                }
+            //     for ($i = 0; $i < count($arrayPrecios); $i++) {
+            //         if($arrayPrecios[$i] == null){
+            //             continue;
+            //         }
+            //         $precio = new ModelPrecio;
+            //         $precio->precio = trim($arrayPrecios[$i]);
+            //         $precio->producto_id = $producto->id;
+            //         $precio->users_id = Auth::user()->id;
+            //         $precio->save();
+            //     }
+
+            //---------------------------guardar unidades de medida para venta de producto-------
+            
+            $unidadVenta = new ModelUnidadMedidaVenta;
+            $unidadVenta->unidad_venta = $request->unidades_venta;
+            $unidadVenta->unidad_medida_id = $request->unidad_producto_venta;
+            $unidadVenta->producto_id = $producto->id;
+            $unidadVenta->estado_id = 1;
+            $unidadVenta->unidad_venta_defecto = 1;
+            $unidadVenta->save();
+
+            if($request->unidad_producto !== $request->unidad_producto_venta){
+                $unidadVenta2 = new ModelUnidadMedidaVenta;
+                $unidadVenta2->unidad_venta = $request->unidades;
+                $unidadVenta2->unidad_medida_id = $request->unidad_producto;
+                $unidadVenta2->estado_id = 1;
+                $unidadVenta->unidad_venta_defecto = 0;
+                $unidadVenta2->save();
+            }
+
+
+
 
             
 
@@ -103,23 +132,7 @@ class Producto extends Component
 
 
             //----------------------------------guardar imagen-------------------------//
-            // if ($request->file('foto_producto') <> null) {
-            //     $file = $request->file('foto_producto');
-            //     $name = 'IMG_' . time() . '.' . $file->getClientOriginalExtension();
-            //     $extencion = $file->getClientOriginalExtension();
-            //     $path = public_path() . '/catalogo';
-            //     $url = $name;
 
-            //     $imagen = new ModelImagenProducto;
-            //     $imagen->producto_id =  $producto->id;
-            //     $imagen->url_img = $url;
-            //     $imagen->users_id = Auth::user()->id;
-            //     $imagen->save();
-
-
-
-            //     $file->move($path, $name);
-            // }//
 
              if ($request->file('files') <> null) {
 
@@ -169,14 +182,20 @@ class Producto extends Component
             A.isv as 'ISV',
             B.descripcion as 'categoria',
             C.nombre as 'unidad_medida',
-            IFNULL ((select sum(cantidad_disponible) from compra_has_producto where producto_id = A.id group by producto_id), 0)  as 'existencia'
+            
+            IFNULL ((select
+            sum(cantidad_disponible) 
+            from recibido_bodega 
+            inner join compra
+            on recibido_bodega.compra_id = compra.id
+            where compra.estado_compra_id=1 and  producto_id = A.id), 0)  as 'existencia'
 
 
             from producto A
             inner join categoria_producto B
             on A.categoria_id = B.id
             inner join unidad_medida C
-            on A.unidad_medida_id = C.id
+            on A.unidad_medida_compra_id = C.id
             order by A.created_at DESC
                         ");
 
@@ -266,8 +285,14 @@ class Producto extends Component
                 codigo_barra,
                 codigo_estatal,
                 categoria_id,
-                unidad_medida_id,
-                users_id
+                unidad_medida_compra_id,
+                users_id,
+                costo_promedio,
+                marca_id,
+                unidad_medida_compra_id,
+                unidadad_compra
+                
+
             from producto where id =".$id);
 
             $preciosProducto = DB::SELECT("
@@ -282,9 +307,17 @@ class Producto extends Component
 
             );
 
+            $categorias = ModelCategoriaProducto::all();
+            $unidades = DB::SELECT("select id,nombre from unidad_medida order by nombre asc");
+            $marcas =  DB::SELECT("select id,nombre from marca order by nombre asc");
+
             return response()->json([
             "datosProducto"=> $datosProducto[0],
-            "preciosProducto" => $preciosProducto
+            "preciosProducto" => $preciosProducto,
+            "categorias"=>$categorias,
+            "unidades" => $unidades,
+            "marcas" => $marcas
+
             ],200);
 
         } catch (QueryException $e) {
@@ -309,10 +342,14 @@ class Producto extends Component
             $producto->codigo_estatal = trim($request['cod_estatal_producto_edit']);
             $producto->categoria_id = $request['categoria_producto_edit'];
             $producto->precio_base = trim($request['precioBase_edit']);
-            $producto->unidad_medida_id = $request['unidad_producto_edit'];
+            $producto->costo_promedio = $request['costo_promedio_editar'];
+            $producto->unidadad_compra = trim($request['unidades_editar']);
+            $producto->unidad_medida_compra_id = $request['unidad_producto_editar'];
+            $producto->marca_id= $request->marca_producto_editar;
             $producto->users_id = Auth::user()->id;
             $producto->save();
 
+       
             return response()->json([
                 "message" => "producto editado con exito",
             ], 200);

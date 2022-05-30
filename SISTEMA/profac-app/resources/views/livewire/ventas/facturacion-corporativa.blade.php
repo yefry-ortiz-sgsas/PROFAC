@@ -1,11 +1,30 @@
 <div>
     @push('styles')
         <style>
-            @media (max-width: 767.5px) {
+
+                /* Chrome, Safari, Edge, Opera */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+
+                /* Firefox */
+                input[type=number] {
+                -moz-appearance: textfield;
+                }
+
+
+
+                @media (max-width: 767.5px) {
                 .hide-container {
                     display: none;
                 }
 
+            }
+
+            .center-div{
+                text-align: center
             }
 
         </style>
@@ -13,10 +32,10 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Compras</h2>
+            <h2>Ventas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Realizar Compra</a>
+                    <a>Cliente Corporativo</a>
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -44,45 +63,57 @@
                         <h3>Datos de compra <i class="fa-solid fa-cart-shopping"></i></h3>
                     </div>
                     <div class="ibox-content">
-                        <form autocomplete="off" id="crear_compra" name="crear_compra" data-parsley-validate>
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
-                                    <label class="col-form-label text-danger" for="numero_emision"
-                                        style="font-size: 1rem; font-weight:600;">Numero de compra</label>
+                        <form autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
+
+                            
+                                <div class="row">
+                                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                        <label class="col-form-label text-danger" for="numero_venta"
+                                            style="font-size: 1.5rem; font-weight:600;">Numero de Venta</label>
+                                    </div>
+
+                                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                                        <input class="form-control" style="font-size: 1.5rem; font-weight:600; text-align:center" type="text" id="numero_venta" name="numero_venta"
+                                        value="" data-parsley-required readonly>
+                                    </div>
                                 </div>
 
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
 
-                                    <input class="form-control" type="text" id="numero_emision" name="numero_emision"
-                                        value="{{ $ordenNumero->numero  }}" data-parsley-required readonly>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
-                                    <label class="col-form-label" for="numero_factura"
-                                        style="font-size: 1rem; font-weight:600;">Numero de factura</label>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-
-                                    <input class="form-control" type="text" id="numero_factura" name="numero_factura"
-                                        data-parsley-required placeholder="N° Factura">
-                                </div>
-
-                            </div>
                             <div class="row mt-4">
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="seleccionarProveedor" class="col-form-label focus-label">Seleccionar
-                                        Proveedor:</label>
-                                    <select id="seleccionarProveedor" class="form-group form-control" style=""
-                                        data-parsley-required >
-                                        <option value="" selected disabled>--Seleccionar un proveedor--</option>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
+                                        Cliente:</label>
+                                    <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
+                                        data-parsley-required onchange="obtenerDatosCliente()">
+                                        <option value="" selected disabled>--Seleccionar un cliente--</option>
                                     </select>
                                 </div>
 
-                                <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="tipoPagoCompra" class="col-form-label focus-label">Seleccionar tipo de
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label class="col-form-label focus-label">Nombre del cliente</label>
+                                    <input class="form-control" required type="text" id="nombre_cliente_ventas" name="nombre_cliente_ventas"
+                                        data-parsley-required readonly>
+
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label class="col-form-label focus-label">RTN</label>
+                                    <input class="form-control"  type="text" id="rtn_ventas" name="rtn_ventas"
+                                         readonly>
+
+                                </div>
+
+
+
+
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:</label>
-                                    <select class="form-group form-control " name="tipoPagoCompra" id="tipoPagoCompra"
+                                    <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
                                         data-parsley-required onchange="validarFechaPago()">
                                     </select>
                                 </div>
@@ -99,11 +130,7 @@
                                     </div>
                                 </div>
 
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
 
                                         <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
@@ -113,46 +140,54 @@
 
                                     </div>
                                 </div>
-                                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="form-group">
-
-                                        <label for="fecha_entrega" class="col-form-label focus-label">Fecha de
-                                            recibido:</label>
-                                        <input class="form-control" type="date" id="fecha_entrega"
-                                            name="fecha_entrega" value="" data-parsley-required
-                                            min="{{ date('Y-m-d') }}">
-
-                                    </div>
-                                </div>
-
                             </div>
 
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-2">
 
-                                    <div class="row">
+
+
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
+                                 
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <select id="seleccionarProdcuto" class="form-group form-control" style=""
-                                                onchange="obtenerIdProducto()">
+                                            <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:</label>
+                                            <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
+                                                 onchange="obtenerImagenes()">
                                                 <option value="" selected disabled>--Seleccione un producto--</option>
                                             </select>
                                         </div>
 
-                                        <div id="botonAdd"
-                                            class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-4 text-center d-none">
-                                            <button type="button" class="btn-rounded btn btn-success p-3"
-                                                style="font-weight: 900; " onclick="agregarProductoCarrito()">Añadir
-                                                Producto a Compra <i class="fa-solid fa-cart-plus"></i> </button>
 
-                                        </div>
-
-                                    </div>
 
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
+                                        <select id="bodega" name="bodega" class="form-group form-control" style=""
+                                            onchange="prueba()"   
+                                        >
+                                            <option value="" selected disabled>--Seleccione un producto--</option>
+                                        </select>
+                                    </div>
 
-                                    <div id="carouselProducto" class="carousel slide" data-ride="carousel">
+                                </div>    
+
+
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4" >
+                                    <div class="text-center">
+                                        <a id="detalleProducto" href="" class="font-bold h3  d-none text-success" style="" target="_blank"> <i class="fa-solid fa-circle-info"></i> Ver Detalles De Producto </a>
+                                    </div>
+
+
+                                    <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
                                         {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
                 
                                                 <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
@@ -162,7 +197,7 @@
                                            
                 
                                         </ol> --}}
-                                        <div id="bloqueImagenes" class="carousel-inner ">
+                                        <div id="bloqueImagenes" class="carousel-inner " >
 
 
 
@@ -182,13 +217,28 @@
                                         </a>
                                     </div>
 
+
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 " >
+                                    <div id="botonAdd"
+                                    class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-4 text-center d-none">
+                                    <button type="button" class="btn-rounded btn btn-success p-3"
+                                        style="font-weight: 900; " onclick="agregarProductoCarrito()">Añadir
+                                        Producto a venta <i class="fa-solid fa-cart-plus"></i> </button>
+
                                 </div>
 
                             </div>
-                            <hr>
 
+                            </div>
+
+                            <hr>
+                        
                             <div class="hide-container">
+                                <p>Nota:El campo "Unidad" describe la unidad de medida para la venta del producto - seguido del numero de unidades a restar del inventario</p>
                                 <div class="row no-gutters ">
+                                  
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <div class="d-flex">
 
@@ -199,14 +249,20 @@
                                                     producto</label>
                                                 <input type="text" placeholder="Nombre del producto"
                                                     class="form-control" pattern="[A-Z]{1}"
-                                                    data-parsley-pattern="[A-Z]{1}" autocomplete="off" disabled>
+                                                   disabled>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg- col-xl-1">
+                                        <label class="sr-only">Bodega</label>
+                                        <input type="number" placeholder="Bodega" class="form-control"
+                                            autocomplete="off" disabled>
+                                    </div>
+
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg- col-xl-1">
                                         <label class="sr-only">Precio</label>
-                                        <input type="number" placeholder="Precio de unidad" class="form-control"
+                                        <input type="number" placeholder="Precio Unidad" class="form-control"
                                             min="1" autocomplete="off" disabled>
                                     </div>
 
@@ -216,11 +272,22 @@
                                             autocomplete="off" disabled>
                                     </div>
 
-                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                        <label class="sr-only">F.vencimiento</label>
-                                        <input type="text" placeholder="Fecha de expiración" class="form-control"
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 ">
+                                        
+                                        <label class="sr-only">Unidad</label>
+                                        <input type="text" placeholder="Unidad " class="form-control"
                                             min="1" autocomplete="off" disabled>
+                                           
+
+                                           
+
                                     </div>
+{{-- 
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                        <label class="sr-only">Seccion</label>
+                                        <input type="text" placeholder="Seccion" class="form-control"
+                                            min="1" autocomplete="off" disabled>
+                                    </div> --}}
 
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Sub Total</label>
@@ -228,7 +295,7 @@
                                             min="1" autocomplete="off" disabled>
                                     </div>
 
-                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">ISV</label>
                                         <input type="number" placeholder="ISV" class="form-control" min="1"
                                             autocomplete="off" disabled>
@@ -242,14 +309,43 @@
 
                                 </div>
 
+
+
                             </div>
 
-
-
-
-                            <div id="divProductos">
+                            <div id="divProductos" >
 
                             </div>
+                            {{-- <div class="table-responsive">
+                                <table id="tbl_productos_venta" class="table table-striped table-bordered table-hover">
+                                    <thead class="">
+                                        <tr>
+                                            <th><label class="sr-only">Total</label>
+                                                <input type="number" placeholder="Total del producto" class="form-control"
+                                                    min="1"  autocomplete="off" style="min-width: 100px">
+                                            </th>
+                                            <th><label class="sr-only">Total</label>
+                                                <input type="number" placeholder="Total del producto" class="form-control"
+                                                    min="1" disabled autocomplete="off" style="min-width: 100px">
+                                            </th>
+                                            <th><label class="sr-only">Total</label>
+                                                <input type="number" placeholder="Total del producto" class="form-control"
+                                                    min="1" disabled autocomplete="off" style="min-width: 100px">
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+    
+                                    </tbody>
+                                </table>
+    
+                            </div> --}}
+
+
+
+
+
 
 
 
@@ -294,23 +390,11 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-
-                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneral">Retencion 1%</label>
-                                </div>
-
-                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="number" step="any" placeholder="Retencion del 1%" id="retencion"
-                                        name="retencion" class="form-control" min="0" required data-parsley-required
-                                        autocomplete="off" readonly>
-                                </div>
-                            </div>
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>Guardar
-                                            compra</strong></button>
+                                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
+                                            Realizar Venta</strong></button>
                                 </div>
                             </div>
 
@@ -332,12 +416,83 @@
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
 
+
+
+
+            $('#seleccionarCliente').select2({
+                ajax: {
+                    url: '/ventas/lista/clientes',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+                }     
+            });
+            
+
+
+
+                $('#seleccionarProducto').select2({
+                    ajax: {
+                        url: '/ventas/listar',
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                                type: 'public',
+                                page: params.page || 1
+                            }
+
+                            // Query parameters will be ?search=[term]&type=public
+                        
+                            return query;
+                        }
+                    }         
+                });
+            
+            function prueba(){
+
+                var element = document.getElementById('botonAdd');
+                element.classList.remove("d-none");
+                
+            }    
+
+            function obtenerBodegas(id){
+                
+                document.getElementById('bodega').innerHTML="<option  selected disabled>--Seleccione una bodega--</option>";
+                let idProducto = id;
+                $('#bodega').select2({                
+                ajax: {
+                    url: '/ventas/listar/bodegas/'+idProducto,
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1,
+                            idProducto: idProducto
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+                }
+            });
+
+            }    
+
+
             function obtenerTipoPago() {
 
-                axios.get('/producto/tipo/pagos')
+                axios.get('/ventas/tipo/pago')
                     .then(response => {
 
                         let tipoDePago = response.data.tipos;
+                        let numeroVenta = response.data.numeroVenta.numero;
 
                         let htmlPagos = '  <option value="" selected disabled >--Seleccione una opcion--</option>';
 
@@ -348,11 +503,13 @@
                             `
                         });
 
-                        document.getElementById('tipoPagoCompra').innerHTML = htmlPagos;
+                        document.getElementById('tipoPagoVenta').innerHTML = htmlPagos;
+                        document.getElementById("numero_venta").value = numeroVenta;
+
 
                     })
                     .catch(err => {
-                        //console.log(err);
+                        console.log(err);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error...',
@@ -362,50 +519,14 @@
 
             }
 
-            $('#seleccionarProveedor').select2({
-                ajax: {
-                    url: '/producto/lista/proveedores',
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            type: 'public',
-                            page: params.page || 1
-                        }
+            function obtenerImagenes() {
+                let id = document.getElementById('seleccionarProducto').value;
+             
 
-                        // Query parameters will be ?search=[term]&type=public
-                        return query;
-                    }
-                }
-            });
-
-
-
-            $('#seleccionarProdcuto').select2({
-                ajax: {
-                    url: '/producto/listar/producto',
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            type: 'public',
-                            page: params.page || 1
-                        }
-
-                        // Query parameters will be ?search=[term]&type=public
-                        return query;
-                    }
-                }
-            });
-
-            function obtenerIdProducto() {
-                let id = document.getElementById('seleccionarProdcuto').value;
-
-                this.obtenerImagenes(id)
-            }
-
-            function obtenerImagenes(id) {
                 let htmlImagenes = '';
                 axios.post('/producto/listar/imagenes', {
-                        id: id
+                        id: id,
+                       
                     })
                     .then(response => {
 
@@ -413,7 +534,7 @@
 
                         if (imagenes.length == 0) {
 
-                           // console.log("entro")
+                            console.log("entro")
                             htmlImagenes += `                                                
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+'noimage.png'}" alt="noimage.png" style="width: 100%; height:20rem" >
@@ -425,39 +546,36 @@
                             element.classList.remove("d-none");
 
                         } else {
-
-
-
-
-
                             imagenes.forEach(element => {
-
-
 
                                 if (element.contador == 1) {
                                     htmlImagenes += `                                                
                             <div class="carousel-item active " >
-                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:20rem" >
+                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
                             </div>`
                                 } else {
 
                                     htmlImagenes += `                                                
                             <div class="carousel-item  " >
-                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:20rem" >
+                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
                             </div>`
 
                                 }
-
-
-
 
                             });
 
                             document.getElementById('bloqueImagenes').innerHTML = htmlImagenes;
 
-                            var element = document.getElementById('botonAdd');
-                            element.classList.remove("d-none");
+                            
                         }
+
+                        var element = document.getElementById('botonAdd');
+                        element.classList.add("d-none");
+
+                        let a = document.getElementById("detalleProducto");
+                        let url = "/producto/detalle/"+id;
+                        a.href = url;
+                        a.classList.remove("d-none");
 
                         return;
 
@@ -469,18 +587,48 @@
                         console.log(err);
 
                     })
+
+                    obtenerBodegas(id);
             }
 
             function agregarProductoCarrito() {
-                let id = document.getElementById('seleccionarProdcuto').value;
+                let idProducto = document.getElementById('seleccionarProducto').value;
 
-                axios.post('/prodcuto/compra/datos', {
-                        id: id
+                let data = $("#bodega").select2('data')[0];
+                let bodega = data.bodegaSeccion;
+                let idBodega = data.idBodega;
+                let idSeccion = data.id
+               
+
+                axios.post('/ventas/datos/producto', {
+                        idProducto : idProducto,
+                      
                     })
                     .then(response => {
                         let producto = response.data.producto;
-                        //console.log(response.data.producto);
+                   
+                        let arrayUnidades = response.data.unidades;
+                     
+                   
                         numeroInputs += 1;
+                        
+                        //     let arraySecciones  = response.data.secciones;
+                        // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
+                       
+                        // arraySecciones.forEach(seccion => {
+                        //     htmlSelectSeccion += `<option values="${seccion.id}" >${seccion.descripcion}</option>`
+                        // });
+
+                        htmlSelectUnidades = ""
+                        arrayUnidades.forEach(unidad => {
+                            if(unidad.valor_defecto == 1){
+                                htmlSelectUnidades += `<option selected value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
+                            }else{
+                                htmlSelectUnidades += `<option  value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
+                            }
+                            
+                        });
+                   
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
@@ -501,31 +649,45 @@
                                                             autocomplete="off"
                                                             readonly 
                                                             value='${producto.nombre}'
+                                                            
                                                             >
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                                <label for="" class="sr-only">cantidad</label>
+                                                <input type="text" value="${bodega}" placeholder="bodega-seccion" id=""
+                                                    name="" class="form-control" 
+                                                    autocomplete="off"  disabled >
+                                            </div>
                                     
-                                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
-                                                <input type="number" placeholder="Precio de unidad" id="precio${numeroInputs}"
+                                                <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
                                                     name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
-                                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                                <label for="vencimiento${numeroInputs}" class="sr-only">cantidad</label>
-                                                <input type="date" placeholder="Fecha de vencimiento" id="vencimiento${numeroInputs}"
-                                                    name="vencimiento${numeroInputs}" class="form-control" min="0" 
-                                                    autocomplete="off" >
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                                <label for="" class="sr-only">unidad</label>
+                                                <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}"
+                                                    data-parsley-required style="height:35.7px;" 
+                                                    onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                            ${htmlSelectUnidades} 
+                                                </select> 
+                                             
+                                                
                                             </div>
+
+
+
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="subTotal${numeroInputs}" class="sr-only">Sub Total</label>
@@ -535,7 +697,7 @@
                                                     readonly >
                                             </div>
 
-                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="isvProducto${numeroInputs}" class="sr-only">ISV</label>
                                                 <input type="number" placeholder="ISV" id="isvProducto${numeroInputs}"
                                                     name="isvProducto${numeroInputs}" class="form-control" min="0" step="any"
@@ -550,6 +712,12 @@
                                                     autocomplete="off"
                                                     readonly >
                                             </div>
+
+                                            <input id="idBodega${numeroInputs}" name="idBodega${numeroInputs}" type="hidden" value="${idBodega}">
+                                            <input id="idSeccion${numeroInputs}" name="idSeccion${numeroInputs}" type="hidden" value="${idSeccion}">
+                                            <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
+
+                                           
                                     
                         </div>
                         `;
@@ -585,21 +753,23 @@
 
             }
 
-            function calcularTotales(idPrecio, idCantidad, isvProducto, id) {
+            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad,id ,idRestaInventario) {
 
 
                 valorInputPrecio = idPrecio.value;
-                valirInputCantidad = idCantidad.value;
+                valorInputCantidad = idCantidad.value;
+                valorSelectUnidad = idUnidad.value;
 
-                if (valorInputPrecio && valirInputCantidad) {
+                if (valorInputPrecio && valorInputCantidad) {
 
-                    let subTotal = valorInputPrecio * valirInputCantidad;
+                    let subTotal = valorInputPrecio * (valorInputCantidad*valorSelectUnidad);
                     let isv = subTotal * (isvProducto / 100);
                     let total = subTotal + subTotal * (isvProducto / 100);
 
                     document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('isvProducto' + id).value = isv.toFixed(2);
+                    idRestaInventario.value = valorInputCantidad*valorSelectUnidad;
                     this.totalesGenerales();
 
 
@@ -638,11 +808,7 @@
                 document.getElementById('isvGeneral').value = totalISV.toFixed(2);
                 document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(2);
 
-                if (retencionEstado) {
-                    document.getElementById('retencion').value = (totalGeneralValor * 0.01).toFixed(2);
-                } else {
-                    document.getElementById('retencion').value = 0;
-                }
+
 
 
 
@@ -655,9 +821,9 @@
 
                 let tipoPago;
 
-                tipoPago = document.getElementById('tipoPagoCompra').value;
+                tipoPago = document.getElementById('tipoPagoVenta').value;
 
-                if (tipoPago == 1) {
+                if (tipoPago == 2) {
 
                     document.getElementById('fecha_vencimiento').value = "Empty";
                     document.getElementById('fecha_vencimiento').readOnly = false;
@@ -673,78 +839,70 @@
 
             }
 
-            function retencionProveedor() {
-                let idProveedor = document.getElementById('seleccionarProveedor').value;
-                axios.post('/producto/compra/retencion', {
-                        idProveedor: idProveedor
-                    })
-                    .then(response => {
-                        let data = response.data;
+            function obtenerDatosCliente(){
+                let idCliente = document.getElementById("seleccionarCliente").value;
+                axios.post("/ventas/datos/cliente",{id:idCliente})
+                .then(
+                    response =>{
+
+                        let data = response.data.datos;
+                       
+                        
+                        document.getElementById("nombre_cliente_ventas").value=data.nombre;
+                        document.getElementById("rtn_ventas").value=data.rtn;
 
 
+                    }
+                )
+                .catch(err=>{
 
-
-                        Swal.fire({
-                            title: data.title,
-                            text: data.text,
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            confirmButtonText: 'Aplicar',
-                            denyButtonText: `No aplicar`,
-                            cancelButtonText: 'Cancelar',
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
-                                retencionEstado = true;
-                                this.totalesGenerales();
-                            } else if (result.isDenied) {
-                                Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
-                                retencionEstado = false;
-                                this.totalesGenerales();
-                            }
-                        })
-
-
-
-                    })
-                    .catch(err => {
-
-                        Swal.fire({
+                          console.log(err);
+                            Swal.fire({
                             icon: 'error',
-                            title: 'Error!',
-                            text: "Ha ocurrido un error al seleccionar el proveedor."
+                            title: 'Error...',
+                            text: "Ha ocurrido un error al obtener los datos del cliente"
                         })
+                    
 
-                        console.error('ha ocurrido un erro', err)
+                })
 
-                    })
             }
 
-            $(document).on('submit', '#crear_compra',
+
+            $(document).on('submit', '#crear_venta',
                 function(event) {
                     event.preventDefault();
-                    guardarCompra();
+                    guardarVenta();
                 });
 
-            function guardarCompra() {
-                if (!retencionEstado) {
-                    document.getElementById('retencion').value = 0;
-                }
+            function guardarVenta(){
+              //  
+                //let e = document.getElementById('unidad1');
+               //let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
+                //console.log(idUnidadVenta);
 
-                var data = new FormData($('#crear_compra').get(0));
+                var data = new FormData($('#crear_venta').get(0));
 
                 let longitudArreglo = arregloIdInputs.length;
                 for (var i = 0; i < longitudArreglo; i++) {
+                   
+
+                    let name = "unidad"+arregloIdInputs[i];
+                    let nameForm = "idUnidadVenta"+arregloIdInputs[i];
+
+                    let e = document.getElementById(name);
+                    let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");                    
+
                     data.append("arregloIdInputs[]", arregloIdInputs[i]);
+                    data.append(nameForm,idUnidadVenta)
                 }
 
                 data.append("numeroInputs", numeroInputs);
 
-                let seleccionarProveedorId = document.getElementById('seleccionarProveedor').value;
-                data.append("seleccionarProveedorId", seleccionarProveedorId);
+                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
+                // data.append("seleccionarCliente", seleccionarCliente);
 
-                axios.post('/producto/compra/guardar', data)
+                axios.post('/ventas/corporativo/guardar', data)
                     .then(response => {
 
 
@@ -768,8 +926,8 @@
                         document.getElementById('bloqueImagenes').innerHTML = '';
                         document.getElementById('divProductos').innerHTML='';
 
-                        document.getElementById("crear_compra").reset();
-                        $('#crear_compra').parsley().reset();
+                        document.getElementById("crear_venta").reset();
+                        $('#crear_venta').parsley().reset();
 
                        
 
@@ -792,6 +950,8 @@
                         })
                     })
             }
+
+
         </script>
     @endpush
 </div>

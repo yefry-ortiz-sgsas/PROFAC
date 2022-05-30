@@ -269,7 +269,7 @@ class CompraProducto extends Component
                 $productoCompra->sub_total_producto=$request->$subTotal;               
                 $productoCompra->isv = $request->$isvProducto;              
                 $productoCompra->precio_total = $request->$total;              
-                $productoCompra->cantidad_disponible = $request->$cantidad;             
+                $productoCompra->cantidad_disponible = 0;             
             
                 $productoCompra->save();
 

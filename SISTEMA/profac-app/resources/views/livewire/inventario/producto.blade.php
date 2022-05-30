@@ -135,7 +135,7 @@
                                         <th>Descripcion</th>
                                         <th>ISV</th>
                                         <th>Cateogria</th>
-                                        <th>Unidad de Medida</th>
+                                        <th>Unidad De Medida Compra</th>
                                         <th>Existencia</th>
                                         <th>Disponibilidad</th>
                                     </tr>
@@ -152,7 +152,7 @@
                 </div>
             </div>
 
-            <!-- Modal para editar Bodega-->
+            <!-- Modal para registro de producto-->
             <div class="modal fade" id="modal_producto_crear" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -202,12 +202,18 @@
                                             <input class="form-group form-control" type="number" name="cod_estatal_producto"
                                                 id="cod_estatal_producto" min="0">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="precio1" class="col-form-label focus-label">Precio de venta base:</label>
                                             <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
                                                 data-parsley-required step="any">
                                         </div>
-                                        <div class="col-md-4">
+        
+                                        <div class="col-md-6">
+                                            <label for="precio1" class="col-form-label focus-label">Costo Promedio:</label>
+                                            <input class="form-group form-control" min="1" type="number" name="costo_promedio" id="costo_promedio"
+                                                data-parsley-required step="any">
+                                        </div>
+                                        {{-- <div class="col-md-4">
                                             <label class="col-form-label focus-label" for="precio2">Precio de venta 2:</label>
                                             <input class="form-group form-control" min="1" type="number" name="precio[]"
                                                 id="precio2" step="any">
@@ -216,7 +222,20 @@
                                             <label for="precio3" class="col-form-label focus-label">Precio de venta 3:</label>
                                             <input class="form-group form-control"  min="1" type="number" name="precio[]"
                                                 id="precio3" step="any">
+                                        </div> --}}
+                                        <div class="col-md-6">
+                                            <label for="categoria_producto" class="col-form-label focus-label">Marca de producto</label>
+                                            <select class="form-group form-control" name="marca_producto" id="marca_producto"
+                                                data-parsley-required>
+                                                <option selected disabled>---Seleccione una marca---</option>
+                                                @foreach ($marcas as $marca)
+                                                <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
+                                                @endforeach
+           
+            
+                                            </select>
                                         </div>
+
                                         <div class="col-md-6">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
                                             <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
@@ -229,8 +248,16 @@
             
                                             </select>
                                         </div>
+
+                                        
+                                        <div class="text-center col-md-12 mt-2">
+                                            <p class="font-weight-bold text-center">Unidades De Medida Para Compra y Venta</p>
+                                            <hr>
+                                        </div>
+                                        
+                                        
                                         <div class="col-md-6">
-                                            <label for="unidad_producto" class="col-form-label focus-label">Selecciones una unidad de medida</label>
+                                            <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra</label>
                                             <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
@@ -240,6 +267,49 @@
             
                                             </select>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="precio3" class="col-form-label focus-label">cantidad de "unidades" para compra:</label>
+                                            <input class="form-group form-control"  min="1" type="number" name="unidades"
+                                                id="unidades" step="any" required>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <label for="unidad_producto_venta" class="col-form-label focus-label">Seleccione la unidad de medida para venta</label>
+                                            <select class="form-group form-control" name="unidad_producto_venta" id="unidad_producto_venta"
+                                                data-parsley-required>
+                                                <option selected disabled>---Seleccione una unidad---</option>
+                                                @foreach ($unidades as $unidad)
+                                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
+                                                @endforeach
+            
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="_venta" class="col-form-label focus-label">cantidad de "unidades" para venta:</label>
+                                            <input class="form-group form-control"  min="1" type="number" name="unidades_venta"
+                                                id="unidades_venta" step="any" required>
+                                        </div>
+
+                                        {{-- <div class="col-md-6">
+                                            <label for="unidad_producto_venta" class="col-form-label focus-label">Seleccione una segunda unidad de medida para venta</label>
+                                            <select class="form-group form-control" name="unidad_producto_venta2" id="unidad_producto_venta2"
+                                                >
+                                                <option selected disabled>---Seleccione una unidad---</option>
+                                                @foreach ($unidades as $unidad)
+                                                <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
+                                                @endforeach
+            
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="_venta" class="col-form-label focus-label">cantidad de "unidades" para venta:</label>
+                                            <input class="form-group form-control"  min="1" type="number" name="unidades_venta2"
+                                                id="unidades_venta2" step="any" >
+                                        </div> --}}
+
+                                        
+
       
                                         
             

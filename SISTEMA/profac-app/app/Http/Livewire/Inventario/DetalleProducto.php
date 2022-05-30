@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\ModelUnidadMedida;
 use App\Models\ModelCategoriaProducto;
+use App\Models\ModelMarca;
+use App\Models\ModelUnidadMedidaVenta;
+
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
+use DataTables;
+use Auth;
+
 class DetalleProducto extends Component
 {
 
@@ -32,15 +40,21 @@ class DetalleProducto extends Component
                 A.codigo_barra,
                 B.descripcion as 'categoria',
                 A.precio_base,
+                A.costo_promedio,
                 A.isv,
                 concat(C.nombre,' ',C.simbolo) as 'unidad_medida',
                 A.created_at as 'fecha_registro',
-                D.name as 'registrado_por'
+                D.name as 'registrado_por',
+                A.marca_id,
+                A.categoria_id,
+                unidad_medida_compra_id,
+                unidadad_compra
+
             from  producto A
             inner join categoria_producto B
             on A.categoria_id = B.id
             inner join unidad_medida C
-            on A.unidad_medida_id = C.id
+            on A.unidad_medida_compra_id = C.id
             inner join users D
             on A.users_id = D.id
             where A.id = " . $id . "
@@ -116,9 +130,97 @@ class DetalleProducto extends Component
 
         $categorias = ModelCategoriaProducto::all();
         $unidades = ModelUnidadMedida::all();
+        $marcas = ModelMarca::all();
 
 
 
-        return view('livewire.inventario.detalle-producto',  compact('producto', "precios", "imagenes", "lotes", "categorias", "unidades"));
+        return view('livewire.inventario.detalle-producto',  compact('producto', "precios", "imagenes", "lotes", "categorias", "unidades","marcas"));
+    }
+
+    public function unidadesVenta($id){
+       try {
+
+       
+
+        $unidades = DB::SELECT("
+        select 
+        @i := @i + 1 as contador,
+        A.id,
+        B.nombre,
+        A.unidad_venta,
+        A.unidad_medida_id
+        from unidad_medida_venta A
+        inner join unidad_medida B
+        on A.unidad_medida_id = B.id
+        CROSS JOIN (select @i := 0) r
+        where A.producto_id =".$id 
+        );
+
+
+        return Datatables::of($unidades)
+        // ->addColumn('eliminar', function ($unidad) {            
+        //         return
+
+        //         '<div class="text-center">  <button class="btn btn-danger  btn-dim" type="button"><i class="fa-solid fa-trash-can"></i></button></div>';
+              
+        // })
+        ->addColumn('editar', function ($unidad) {            
+            return
+
+            '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
+          
+    })
+
+        ->rawColumns(['editar'])
+        ->make(true);
+
+
+
+       } catch (QueryException $e) {
+       return response()->json([
+           'message' => 'Ha ocurrido un error', 
+           'error' => $e
+       ],402);
+       }
+    }
+
+    public function obtenerUnidadesMedida(){
+       try {
+
+        $unidades = ModelUnidadMedida::all();
+            
+
+       return response()->json([
+           'unidades'=>$unidades,
+       ],200);
+       } catch (QueryException $e) {
+       return response()->json([
+           'message' => 'Ha ocurrido un error', 
+           'error' => $e
+       ],402);
+       }
+    }
+
+    public function editarUnidadesVenta(Request $request){
+       try {
+
+        //dd($request->idUniadVenta);
+        $unidad = ModelUnidadMedidaVenta::find($request->idUniadVenta);
+        $unidad->unidad_venta = $request->unidades_venta_editar;
+        $unidad->unidad_medida_id = $request->unidad_venta_editar;
+        $unidad->save();
+
+         
+
+       return response()->json([
+           "message" => "exito",
+       ],200);
+       } catch (QueryException $e) {
+       return response()->json([
+           'message' => 'Ha ocurrido un error', 
+           'error' => $e
+       ],402);
+       }
+
     }
 }

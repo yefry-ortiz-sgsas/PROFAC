@@ -241,7 +241,8 @@ class RecibirProducto extends Component
             select
             cantidad_ingresada,
             fecha_expiracion,
-            cantidad_sin_asignar
+            cantidad_sin_asignar,
+            cantidad_disponible
             from compra_has_producto
             where compra_id = ".$request->idCompra."  and producto_id=".$request->idProducto
         );
@@ -303,6 +304,7 @@ class RecibirProducto extends Component
             ->where('producto_id','=', $request->idProducto)
             ->update([
                 'cantidad_sin_asignar' => $restaCantidad,
+                'cantidad_disponible' => ($datosCompra->cantidad_disponible+$request->cantidad)
                 
         ]);
 
