@@ -23,7 +23,7 @@
         }
 
     </style>
-    <title>Documento de Retencion</title>
+    <title>FACTURA</title>
 </head>
 
 <body>
