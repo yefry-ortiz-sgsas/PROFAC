@@ -21,9 +21,10 @@
         "tailwindcss": "^3.0.0"
     },
     "dependencies": {
+        "@sweetalert2/theme-bulma": "^5.0.11",
         "animate.css": "^4.1.1",
         "parsleyjs": "^2.9.2",
-        "sweetalert2": "^11.4.4",
+        "sweetalert2": "^11.4.17",
         "turbolinks": "^5.2.0"
     }
 }

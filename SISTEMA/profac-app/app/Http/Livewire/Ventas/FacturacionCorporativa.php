@@ -123,7 +123,7 @@ class FacturacionCorporativa extends Component
          $listaProductos = DB::SELECT("
          select 
             B.id,
-            concat('cod ',b.id,' - ',B.nombre,' - ','cd ',sum(A.cantidad_disponible)) as text
+            concat('cod ',b.id,' - ',B.nombre,' - ','cantidad ',sum(A.cantidad_disponible)) as text
          from
             recibido_bodega A
             inner join producto B
@@ -269,6 +269,48 @@ class FacturacionCorporativa extends Component
             ], 406);
         }
 
+        //dd($request->all());
+        $arrayInputs=[];
+        $arrayInputs = $request->arregloIdInputs;
+        $arrayProductosVentas =[];
+
+        $mensaje = "";
+        $flag = false;
+
+        for ($j=0; $j <count($arrayInputs) ; $j++) { 
+
+            $keyIdSeccion = "idSeccion".$arrayInputs[$j];
+            $keyIdProducto ="idProducto".$arrayInputs[$j];
+            $keyRestaInventario = "restaInventario".$arrayInputs[$j];
+            $keyNombre = "nombre".$arrayInputs[$j];
+            $keyBodega = "bodega".$arrayInputs[$j];
+
+            $resultado = DB::selectONE("select 
+            if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
+            from recibido_bodega
+            where cantidad_disponible <> 0
+            and producto_id = ".$request->$keyIdProducto."
+            and seccion_id = ".$request->$keyIdSeccion);
+
+            if($request->$keyRestaInventario > $resultado->cantidad_disponoble){
+                $mensaje =$mensaje."Unidades insuficientes para el producto: <b>".$request->$keyNombre."</b> en la bodega con sección :<b>".$request->$keyBodega."</b><br><br>";
+                $flag = true;
+            }
+
+        }
+
+        if($flag){
+            return response()->json([
+                'icon'=>"warning",
+                'text' =>  '<p class="text-left">'.$mensaje.'</p>',
+                'title'=>'Advertencia!',
+                'idFactura'=> 0,
+                
+            ], 200);  
+        }
+
+
+
         try {
 
             //dd($request->all());
@@ -294,6 +336,8 @@ class FacturacionCorporativa extends Component
                     }
 
 
+
+
                 
 
                     $numeroSecuencia = $cai->numero_actual+1;
@@ -309,6 +353,7 @@ class FacturacionCorporativa extends Component
 
                     $montoComision = $request->totalGeneral*0.5;
 
+                    
                     $factura = new ModelFactura;    
                     $factura->numero_factura = $request->numero_venta;       
                     $factura->cai=$numeroCAI; 
@@ -318,9 +363,9 @@ class FacturacionCorporativa extends Component
                     $factura->sub_total=$request->subTotalGeneral;
                     $factura->isv=$request->isvGeneral;
                     $factura->total=$request->totalGeneral;
-                    $factura->fecha_emision=$request->fecha_emision;
-                    $factura->fecha_vencimiento=$request->fecha_vencimiento;
                     $factura->credito=$request->totalGeneral;
+                    $factura->fecha_emision=$request->fecha_emision;
+                    $factura->fecha_vencimiento=$request->fecha_vencimiento;                    
                     $factura->tipo_pago_id=$request->tipoPagoVenta;
                     $factura->cai_id=$cai->id;
                     $factura->estado_venta_id=1;
@@ -328,7 +373,7 @@ class FacturacionCorporativa extends Component
                     $factura->vendedor=Auth::user()->id;
                     $factura->monto_comision=$montoComision;
                     $factura->tipo_venta_id=1;
-                    $factura->estado_factura_id=1; // se presenta
+                    $factura->estado_factura_id=1; // se presenta                  
                     $factura->comision_estado_pagado=0;
                     $factura->save();
 
@@ -337,9 +382,7 @@ class FacturacionCorporativa extends Component
                     // //dd( $guardarCompra);
 
                  
-                    $arrayInputs=[];
-                    $arrayInputs = $request->arregloIdInputs;
-                    $arrayProductosVentas =[];
+
                     
                     for ($i=0; $i <count($arrayInputs) ; $i++) { 
 
@@ -375,11 +418,15 @@ class FacturacionCorporativa extends Component
                     //dd($arrayProductosVentas[0]);
             ModelVentaProducto::insert($arrayProductosVentas[0]);  
 
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");       
              DB::commit();
 
             return response()->json([
-                'message' => 'Creado con exito.',
+                'icon'=>"success",
+                'text' => 'Venta realizada con exito.',
+                'title'=>'Exito!',
+                'idFactura'=>$factura->id,
+                'numeroVenta'=>$numeroVenta->numero 
                 
             ], 200);  
 
@@ -387,8 +434,10 @@ class FacturacionCorporativa extends Component
             DB::rollback();
 
             return response()->json([
-                'message' => 'Ha ocurrido un error al realizar la venta.',
-                'error' => $e,
+                'icon'=>"error",
+                'text' => 'Ha ocurrido un error.',
+                'title'=>'Error!',
+                'idFactura'=>-1,
             ], 402);
         }
 
@@ -396,6 +445,8 @@ class FacturacionCorporativa extends Component
 
     public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total){
         try {
+
+
               
             $unidadesRestar = $unidadesRestarInv;
             $registroResta =0;
@@ -477,8 +528,10 @@ class FacturacionCorporativa extends Component
             DB::rollback();
 
             return response()->json([
-                'message' => 'Ha ocurrido un error al realizar la venta.',
-                'error' => $e,
+                'icon'=>"error",
+                'text' => 'Ha ocurrido un error.',
+                'title'=>'Error!',
+                'idFactura'=>-1,
             ], 402);
         }
     }

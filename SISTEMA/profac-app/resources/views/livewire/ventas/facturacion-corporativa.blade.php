@@ -167,7 +167,7 @@
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
                                         <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                            onchange="prueba()"   
+                                            onchange="prueba()"  disabled 
                                         >
                                             <option value="" selected disabled>--Seleccione un producto--</option>
                                         </select>
@@ -522,7 +522,7 @@
             function obtenerImagenes() {
                 let id = document.getElementById('seleccionarProducto').value;
              
-
+                document.getElementById("bodega").disabled = false;
                 let htmlImagenes = '';
                 axios.post('/producto/listar/imagenes', {
                         id: id,
@@ -605,6 +605,34 @@
                       
                     })
                     .then(response => {
+
+                        let flag = false;
+                        arregloIdInputs.forEach( idInpunt =>{
+                            let idProductoFila = document.getElementById("idProducto"+idInpunt).value;
+                            let idSeccionFila = document.getElementById("idSeccion"+idInpunt).value;
+
+                            if( idProducto==idProductoFila && idSeccion==idSeccionFila && !flag){
+                                flag = true;
+                            }
+
+                        })
+                    
+                        if(flag){
+                            Swal.fire({
+                           
+                            icon: 'warning',
+                            title: 'Advertencia!',
+                            html: `
+                            <p class="text-left">
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
+                            </p>`
+                        })
+
+                        return;
+                        }
+
                         let producto = response.data.producto;
                    
                         let arrayUnidades = response.data.unidades;
@@ -656,9 +684,9 @@
                                             </div>
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">cantidad</label>
-                                                <input type="text" value="${bodega}" placeholder="bodega-seccion" id=""
-                                                    name="" class="form-control" 
-                                                    autocomplete="off"  disabled >
+                                                <input type="text" value="${bodega}" placeholder="bodega-seccion" id="bodega${numeroInputs}"
+                                                    name="bodega${numeroInputs}" class="form-control" 
+                                                    autocomplete="off"  readonly  >
                                             </div>
                                     
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -904,24 +932,28 @@
 
                 axios.post('/ventas/corporativo/guardar', data)
                     .then(response => {
+                        let data = response.data;
 
+                        
+
+                        if(data.idFactura ==0 ){
+                            console.log("entro")
+                           
+                            Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            html: data.text,
+                             })
+                        return;
+
+                        }
 
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Exito!',
-                            text: "Compra realizada con exito."
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
                         })
 
-                        //console.log(arregloIdInputs);
-
-
-
-                        // for (let i = 0; i < arregloIdInputs.length; i++) {
-                        //     const element = document.getElementById(arregloIdInputs[i]);
-                        //      element.remove();
-                         
-                        //     console.log(i,arregloIdInputs[i])
-                        // }
 
                         document.getElementById('bloqueImagenes').innerHTML = '';
                         document.getElementById('divProductos').innerHTML='';
@@ -929,9 +961,19 @@
                         document.getElementById("crear_venta").reset();
                         $('#crear_venta').parsley().reset();
 
+                        var element = document.getElementById('detalleProducto');
+                            element.classList.add("d-none");
+                            element.href="";
+                        
+                        document.getElementById("seleccionarCliente").innerHTML='<option value="" selected disabled>--Seleccionar un cliente--</option>';
+                        
+                        document.getElementById('seleccionarProducto').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';    
+                        document.getElementById('bodega').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';         
+                        document.getElementById("bodega").disabled = true;
+
                        
 
-                        var element2 = document.getElementById('botonAdd');
+                        let element2 = document.getElementById('detalleProducto');
                             element2.classList.add("d-none");
 
 
@@ -939,14 +981,16 @@
                         numeroInputs = 0;
                         retencionEstado=false;
 
+                        document.getElementById('numero_venta').value=data.numeroVenta;
+
                     })
                     .catch(err => {
-
+                        let data = err.response.data;
                         console.log(err);
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: "Ha ocurrido un error!."
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
                         })
                     })
             }

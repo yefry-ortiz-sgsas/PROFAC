@@ -17,9 +17,10 @@ use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
-use App\Http\Livewire\Clientes\PerfilCliente;
-use App\Http\Livewire\Facturaciones\Facturacion; 
-use App\Http\Livewire\Ventas\FacturacionCorporativa; 
+use App\Http\Livewire\Clientes\PerfilCliente; 
+use App\Http\Livewire\ventas\ListadoFacturas;
+use App\Http\Livewire\Ventas\FacturacionCorporativa;  
+use App\Http\Livewire\Ventas\DetalleVenta; 
 
 
 
@@ -91,7 +92,9 @@ Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
 
 
 //----------------------------------------------FACTURACIONES---------------------------------------------------------------------------------------//
-Route::get('/facturas', Facturacion::class);
+
+Route::get('/facturas/corporativo', ListadoFacturas::class);
+Route::get('/lista/facturas/corporativo', [ListadoFacturas::class,'listarFacturas']);
 
 //-----------------------------------------------Usuarios-------------------------------------------------------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);
@@ -169,8 +172,8 @@ Route::get('/ventas/tipo/pago', [FacturacionCorporativa::class,'tipoPagoVenta'])
 Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class,'listarBodegas']); 
 Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']); 
 Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);  
-Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']); 
-
+Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);  
+Route::get('/detalle/venta/{id}', DetalleVenta::class);  
 
 
 
