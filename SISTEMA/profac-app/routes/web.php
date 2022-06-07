@@ -48,7 +48,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-   
+
 
 
 //-----------------------Bodega---------------------------------------------------------------------------------------------------------------------//
@@ -174,20 +174,20 @@ Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocument
 Route::get('/ventas/coporativo', FacturacionCorporativa::class);
 Route::get('/ventas/lista/clientes', [FacturacionCorporativa::class,'listarClientes']);
 Route::post('/ventas/datos/cliente', [FacturacionCorporativa::class,'datosCliente']);
-Route::get('/ventas/tipo/pago', [FacturacionCorporativa::class,'tipoPagoVenta']);  
-Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class,'listarBodegas']); 
-Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']); 
-Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);  
-Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);  
-Route::get('/detalle/venta/{id}', DetalleVenta::class);   
-Route::get('/lista/productos/factura/{id}', [DetalleVenta::class,'listarProductosFactura']); 
+Route::get('/ventas/tipo/pago', [FacturacionCorporativa::class,'tipoPagoVenta']);
+Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class,'listarBodegas']);
+Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']);
+Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);
+Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);
+Route::get('/detalle/venta/{id}', DetalleVenta::class);
+Route::get('/lista/productos/factura/{id}', [DetalleVenta::class,'listarProductosFactura']);
 Route::get('/lista/ubicacion/producto/{id}', [DetalleVenta::class,'ubicacionProductos']);
-Route::get('/lista/pagos/venta/{id}', [DetalleVenta::class,'pagosVenta']); 
-Route::get('/venta/cobro/{id}', Cobros::class);  
-Route::post('/venta/registro/cobro', [Cobros::class,'registrarPago']); 
-Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']); 
-Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']); 
-Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']); 
+Route::get('/lista/pagos/venta/{id}', [DetalleVenta::class,'pagosVenta']);
+Route::get('/venta/cobro/{id}', Cobros::class);
+Route::post('/venta/registro/cobro', [Cobros::class,'registrarPago']);
+Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']);
+Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']);
+Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']);
 
 
 
@@ -202,6 +202,3 @@ Route::get('/linkstorage', function () {
 
 return redirect('/login');
 });
-
-
-
