@@ -37,12 +37,12 @@ class ListarUsuarios extends Component
             email,
             identidad,
             fecha_nacimiento,
-            tipo_usuario.descripcion as tipo_usuario,
+            rol.nombre as tipo_usuario,
             users.created_at as fecha_registro
             
-            FROM users inner join tipo_usuario
+            FROM users inner join rol           
+            on users.rol_id = rol.id
             cross join (select @i := 0) r
-            on users.tipo_usuario_id= tipo_usuario.id
             
             
             ");
