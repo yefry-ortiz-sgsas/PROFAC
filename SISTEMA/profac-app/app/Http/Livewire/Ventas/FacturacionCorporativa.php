@@ -380,7 +380,7 @@ class FacturacionCorporativa extends Component
                     $factura->cliente_id=$request->seleccionarCliente;
                     $factura->vendedor=Auth::user()->id;
                     $factura->monto_comision=$montoComision;
-                    $factura->tipo_venta_id=1;
+                    $factura->tipo_venta_id=1;//coorporativo;
                     $factura->estado_factura_id=1; // se presenta                  
                     $factura->comision_estado_pagado=0;
                     $factura->pendiente_cobro=$request->totalGeneral;
@@ -587,5 +587,4 @@ class FacturacionCorporativa extends Component
         }
     }
 }
-
 

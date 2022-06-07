@@ -54,7 +54,7 @@ class ListadoFacturas extends Component
                 inner join users
                 on cliente.users_id = users.id
                 cross join (select @i := 0) r
-            where YEAR(factura.created_at) >= (YEAR(NOW())-2)
+            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and (factura.tipo_venta_id = 1)
             order by factura.created_at desc
             ");
 

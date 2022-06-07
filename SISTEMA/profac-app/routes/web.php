@@ -21,7 +21,9 @@ use App\Http\Livewire\ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
 use App\Http\Livewire\Ventas\DetalleVenta;
 use App\Http\Livewire\Ventas\Cobros;
-use App\Http\Livewire\Inventario\Marcas;
+use App\Http\Livewire\Inventario\Marcas; 
+use App\Http\Livewire\VentasEstatal\FacturacionEstatal; 
+use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal; 
 
 
 
@@ -42,7 +44,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-   return view('/login');
+   return view('/dashboard');
     //return redirect('/bodega');
 })->name('dashboard');
 
@@ -189,6 +191,20 @@ Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']);
 Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']);
 Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']);
 
+//---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
+
+
+Route::get('/ventas/estatal', FacturacionEstatal::class);
+Route::get('/estatal/lista/clientes', [FacturacionEstatal::class,'listarClientes']);
+Route::post('/estatal/datos/cliente', [FacturacionEstatal::class,'datosCliente']);
+Route::get('/estatal/tipo/pago', [FacturacionEstatal::class,'tipoPagoVenta']);
+Route::get('/estatal/listar/bodegas/{idProducto}', [FacturacionEstatal::class,'listarBodegas']);
+Route::post('/estatal/datos/producto', [FacturacionEstatal::class,'obtenerDatosProducto']);
+Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']); 
+
+Route::get('/facturas/estatal', ListadoFacturaEstatal::class);
+Route::get('/lista/facturas/estatal', [ListadoFacturaEstatal::class,'listarFacturas']);
+Route::post('/factura/estatal/anular', [ListadoFacturaEstatal::class,'anularVentaRegistro']);
 
 
 Route::get('/marcas', Marcas::class);

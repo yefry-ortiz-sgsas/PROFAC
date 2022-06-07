@@ -3,9 +3,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
-                    <div class="ibox-content">
-
-                        <iframe frameborder=0 width="100%" height="1500" src="https://analytics.zoho.com/open-view/2278098000000153193"></iframe>
+                    <div class="ibox-content" style="padding: 0">
+                            <div>
+                                <iframe  width="100%" height="2000px" style="padding: 0" src="https://analytics.zoho.com/open-view/2278098000000153193"></iframe>
+                            </div>
+                        
 
                     </div>
                 </div>
