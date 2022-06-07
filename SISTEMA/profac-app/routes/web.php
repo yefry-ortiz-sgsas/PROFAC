@@ -17,10 +17,10 @@ use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
-
 use App\Http\Livewire\ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
 use App\Http\Livewire\Ventas\DetalleVenta;
+use App\Http\Livewire\Ventas\Cobros;
 use App\Http\Livewire\Inventario\Marcas;
 
 
@@ -42,10 +42,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-   return view('dashboard');
+   return view('/login');
     //return redirect('/bodega');
 })->name('dashboard');
 
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+   
 
 
 //-----------------------Bodega---------------------------------------------------------------------------------------------------------------------//
@@ -73,7 +76,7 @@ Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarReten
 
 //-------------------------------------------------CLIENTES-----------------------------------------------------------------------------------------//
 Route::get('/clientes', Cliente::class);
-Route::get('/perfilCliente', PerfilCliente::class);
+
 Route::get('/cliente/pais', [Cliente::class, 'opbtenerPais']);
 Route::post('/cliente/departamento', [Cliente::class, 'obtenerDepartamentos']);
 Route::post('/cliente/municipio', [Cliente::class, 'obtenerMunicipio']);
@@ -196,6 +199,9 @@ Route::get('/linkstorage', function () {
 });
 
 
+
+return redirect('/login');
+});
 
 
 
