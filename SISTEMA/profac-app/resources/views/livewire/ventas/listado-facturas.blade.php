@@ -36,6 +36,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo de Pago</th>
                                         <th>Fecha de Vencimiento</th>
+                                        <th>Sub Total Lps.</th>
                                         <th>ISV en Lps.</th>
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
@@ -93,6 +94,9 @@
                         data: 'fecha_vencimiento'
                     },
                     {
+                        data: 'sub_total'
+                    },
+                    {
                         data: 'isv'
                     },
                     {
@@ -115,11 +119,11 @@
             });
             })
 
-        function anularCompra(idCompra){
+        function anularVentaConfirmar(idFactura){
              
             Swal.fire({
-            title: '¿Está seguro de anular esta compra?',
-            text:'Una vez que ha sido anulada la compra no se podrá recibir el producto en bodega.',
+            title: '¿Está seguro de anular esta factura?',
+            text:'Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.',
             showDenyButton: false,
             showCancelButton: true,
             confirmButtonText: 'Si, Anular Compra',            
@@ -129,15 +133,15 @@
             if (result.isConfirmed) {
 
                 //Swal.fire('Saved!', '', 'success')
-                this.anularCompraGuardar(idCompra);
+                anularVenta(idFactura);
 
             } 
             })
         }
 
-        function anularCompraGuardar(idCompra){
+        function anularVenta(idFactura){
 
-            axios.post("/producto/compra/anular", {idCompra:idCompra})
+            axios.post("/factura/corporativo/anular", {idFactura:idFactura})
             .then( response =>{
 
 
@@ -145,7 +149,7 @@
                 Swal.fire({
                             icon: data.icon,
                             title: data.title,
-                            text: data.text,
+                            html: data.text,
                         });
                         $('#tbl_listar_compras').DataTable().ajax.reload();        
 

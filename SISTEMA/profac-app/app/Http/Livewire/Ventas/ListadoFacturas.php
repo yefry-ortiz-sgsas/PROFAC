@@ -11,6 +11,13 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use DataTables;
 
+use App\Models\ModelFactura; 
+use App\Models\ModelLogEstadoFactura; 
+use App\Models\ModelRecibirBodega;
+use App\Models\ModelLogTranslados;
+
+
+
 class ListadoFacturas extends Component
 {
     public function render()
@@ -32,6 +39,7 @@ class ListadoFacturas extends Component
                 cliente.nombre,
                 tipo_pago_venta.descripcion,
                 fecha_vencimiento,
+                sub_total,
                 isv,
                 total,
                 factura.credito,
@@ -63,16 +71,14 @@ class ListadoFacturas extends Component
                         <li>
                             <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
                         </li>
+
                         <li>
-                            <a class="dropdown-item" href="/producto/compra/recibir/'.$listaFacturas->id.'" > <i class="fa-solid fa-cart-arrow-down text-warning"></i> Recepción de producto </a>
-                        </li> 
-                        <li>
-                            <a class="dropdown-item" href="/producto/compra/pagos/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
+                            <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                         </li>
 
 
                         <li>
-                            <a class="dropdown-item" href="/inventario/compras/incidencias/'.$listaFacturas->id.'" > <i class="fa-solid fa-triangle-exclamation text-warning"></i> Lista de Incidencias </a>
+                            <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
                         </li>                        
 
                         
@@ -109,4 +115,75 @@ class ListadoFacturas extends Component
         }
 
     }
+
+    public function anularVentaRegistro(Request $request){
+        $arrayLog = [];
+        try {
+        DB::beginTransaction();
+
+         
+         $numeroPagos = DB::SELECTONE("select count(id) as 'numero_pagos' from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
+
+         if($numeroPagos->numero_pagos != 0 ){
+            return response()->json([
+                "text" =>"<p  class='text-left'>Esta factura no puede ser anulada, dado que cuenta con pagos registrados, si desea anular dicha factura debe eliminar todo registro de pago.</p>",
+                "icon" => "warning",
+                "title" => "Advertencia!",
+            ],200);
+         }
+
+         $estadoVenta = DB::SELECTONE("select estado_venta_id from factura where id =".$request->idFactura );
+ 
+         $compra = ModelFactura::find($request->idFactura);
+         $compra->estado_venta_id = 2;
+         $compra->save();
+ 
+         $logEstado = new ModelLogEstadoFactura;
+         $logEstado->factura_id = $request->idFactura;
+         $logEstado->estado_venta_id_anterior = $estadoVenta->estado_venta_id;
+         $logEstado->users_id = Auth::user()->id;
+         $logEstado->motivo = "Error Involuntario";
+         $logEstado->save();
+
+         $lotes = DB::SELECT("select lote,cantidad_s from venta_has_producto where factura_id = ".$request->idFactura);
+
+         foreach ($lotes as $lote) {
+                $recibidoBodega = ModelRecibirBodega::find($lote->lote);
+                $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->cantidad_s;
+                $recibidoBodega->save();
+
+                array_push($arrayLog,[
+                    'origen'=>$lote->lote,
+                    'destino'=>$lote->lote,
+                    'factura_id'=>$request->idFactura,
+                    'cantidad'=>$lote->cantidad_s,
+                    "users_id"=> Auth::user()->id,
+                    "descripcion"=>"Factura Anulada",
+                    "created_at"=>now(),
+                    "updated_at"=>now(),  
+                ]);
+
+            };
+
+            ModelLogTranslados::insert($arrayLog);
+
+
+
+
+         DB::commit();
+        return response()->json([
+            "text" =>"Factura anulada con exito",
+            "icon" => "success",
+            "title" => "Exito",
+        ],200);
+        } catch (QueryException $e) {
+
+        DB::rollback();
+        return response()->json([
+            'message' => 'Ha ocurrido un error', 
+            'error' => $e
+        ], 402);
+        }
+ 
+     }
 }

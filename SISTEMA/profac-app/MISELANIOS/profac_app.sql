@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 01-06-2022 a las 17:38:37
+-- Tiempo de generación: 05-06-2022 a las 02:41:10
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -35,16 +35,18 @@ CREATE TABLE `bodega` (
   `municipio_id` int(11) NOT NULL,
   `encargado_bodega` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `latitud` varchar(45) DEFAULT NULL,
+  `longitud` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bodega`
 --
 
-INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `estado_id`, `municipio_id`, `encargado_bodega`, `created_at`, `updated_at`) VALUES
-(1, 'Bodega 1', 'Tegucigalpa', 1, 110, 2, '2022-04-28 04:25:49', '2022-04-05 22:04:40'),
-(2, 'Bodega 2', 'Comayagua', 1, 110, 4, '2022-04-28 04:25:55', '2022-04-08 06:10:17');
+INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `estado_id`, `municipio_id`, `encargado_bodega`, `created_at`, `updated_at`, `latitud`, `longitud`) VALUES
+(1, 'Bodega 1', 'Tegucigalpa', 1, 110, 2, '2022-04-28 04:25:49', '2022-04-05 22:04:40', NULL, NULL),
+(2, 'Bodega 2', 'Comayagua', 1, 110, 4, '2022-04-28 04:25:55', '2022-04-08 06:10:17', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -76,7 +78,7 @@ CREATE TABLE `cai` (
 --
 
 INSERT INTO `cai` (`id`, `cai`, `punto_de_emision`, `cantidad_solicitada`, `cantidad_otorgada`, `numero_actual`, `cantidad_no_utilizada`, `numero_inicial`, `numero_final`, `numero_base`, `fecha_limite_emision`, `tipo_documento_fiscal_id`, `estado_id`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, '000-001-01-00000001', 'INVERCIONES VALENCIA', 5000, 5000, 29, 4971, '000-001-01-00000001', '000-001-01-00005000', '000-001-01', '2022-09-24', 1, 1, 2, '2022-05-26 01:51:54', '2022-05-31 20:22:52');
+(1, '000-001-01-00000001', 'INVERCIONES VALENCIA', 5000, 5000, 44, 4956, '000-001-01-00000001', '000-001-01-00005000', '000-001-01', '2022-09-24', 1, 1, 2, '2022-05-26 01:51:54', '2022-06-04 07:27:15');
 
 -- --------------------------------------------------------
 
@@ -458,6 +460,7 @@ CREATE TABLE `factura` (
   `sub_total` double NOT NULL,
   `isv` double NOT NULL,
   `total` double NOT NULL,
+  `pendiente_cobro` double NOT NULL,
   `credito` double NOT NULL,
   `fecha_emision` date NOT NULL,
   `fecha_vencimiento` date NOT NULL,
@@ -478,15 +481,9 @@ CREATE TABLE `factura` (
 -- Volcado de datos para la tabla `factura`
 --
 
-INSERT INTO `factura` (`id`, `numero_factura`, `cai`, `numero_secuencia_cai`, `nombre_cliente`, `rtn`, `sub_total`, `isv`, `total`, `credito`, `fecha_emision`, `fecha_vencimiento`, `tipo_pago_id`, `cai_id`, `estado_venta_id`, `cliente_id`, `vendedor`, `monto_comision`, `tipo_venta_id`, `estado_factura_id`, `comision_estado_pagado`, `created_at`, `updated_at`) VALUES
-(1, '2022-1', '000-001-01-00000022', 22, 'Maximax', '08011990123455', 1100, 165, 1265, 1265, '2022-05-30', '2022-05-30', 1, 1, 1, 5, 3, 632.5, 1, 1, 0, '2022-05-30 06:37:27', '2022-05-30 06:37:27'),
-(2, '2022-2', '000-001-01-00000023', 23, 'Maximax', '08011990123455', 1750, 262.5, 2012.5, 2012.5, '2022-05-30', '2022-05-30', 1, 1, 1, 5, 3, 1006.25, 1, 1, 0, '2022-05-30 06:39:05', '2022-05-30 06:39:05'),
-(3, '2022-3', '000-001-01-00000024', 24, 'Maximax', '08011990123455', 220, 33, 253, 253, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 126.5, 1, 1, 0, '2022-05-31 19:08:44', '2022-05-31 19:08:44'),
-(4, '2022-4', '000-001-01-00000025', 25, 'Maximax', '08011990123455', 550, 82.5, 632.5, 632.5, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 316.25, 1, 1, 0, '2022-05-31 19:53:06', '2022-05-31 19:53:06'),
-(5, '2022-5', '000-001-01-00000026', 26, 'Maximax', '08011990123455', 550, 82.5, 632.5, 632.5, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 316.25, 1, 1, 0, '2022-05-31 19:54:02', '2022-05-31 19:54:02'),
-(6, '2022-6', '000-001-01-00000027', 27, 'Maximax', '08011990123455', 1430, 214.5, 1644.5, 1644.5, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 822.25, 1, 1, 0, '2022-05-31 19:58:29', '2022-05-31 19:58:29'),
-(7, '2022-7', '000-001-01-00000028', 28, 'Maximax', '08011990123455', 550, 82.5, 632.5, 632.5, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 316.25, 1, 1, 0, '2022-05-31 20:00:10', '2022-05-31 20:00:10'),
-(8, '2022-8', '000-001-01-00000029', 29, 'Maximax', '08011990123455', 800, 120, 920, 920, '2022-05-31', '2022-05-31', 1, 1, 1, 5, 3, 460, 1, 1, 0, '2022-05-31 20:22:52', '2022-05-31 20:22:52');
+INSERT INTO `factura` (`id`, `numero_factura`, `cai`, `numero_secuencia_cai`, `nombre_cliente`, `rtn`, `sub_total`, `isv`, `total`, `pendiente_cobro`, `credito`, `fecha_emision`, `fecha_vencimiento`, `tipo_pago_id`, `cai_id`, `estado_venta_id`, `cliente_id`, `vendedor`, `monto_comision`, `tipo_venta_id`, `estado_factura_id`, `comision_estado_pagado`, `created_at`, `updated_at`) VALUES
+(6, '2022-1', '000-001-01-00000043', 43, 'Maximax', '08011990123455', 2100, 315, 2415, 2415, 2415, '2022-06-04', '2022-06-04', 1, 1, 2, 5, 3, 1207.5, 1, 1, 0, '2022-06-04 07:18:28', '2022-06-04 18:09:55'),
+(7, '2022-2', '000-001-01-00000044', 44, 'Maximax', '08011990123455', 200, 30, 230, 130, 230, '2022-06-04', '2022-06-04', 1, 1, 1, 5, 3, 115, 1, 1, 0, '2022-06-04 07:27:15', '2022-06-04 17:30:02');
 
 -- --------------------------------------------------------
 
@@ -525,7 +522,8 @@ CREATE TABLE `img_producto` (
 
 INSERT INTO `img_producto` (`id`, `url_img`, `created_at`, `updated_at`, `producto_id`, `users_id`) VALUES
 (1, 'IMG_1653340298-0.jpg', '2022-05-23 21:11:38', NULL, 1, 3),
-(2, 'IMG_1653509418-0.jpg', '2022-05-25 20:10:18', NULL, 4, 3);
+(2, 'IMG_1653509418-0.jpg', '2022-05-25 20:10:18', NULL, 4, 3),
+(3, 'IMG_1654320735-1.jpg', '2022-06-04 05:32:15', NULL, 12, 3);
 
 -- --------------------------------------------------------
 
@@ -563,6 +561,24 @@ CREATE TABLE `incidencia_compra` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `interes`
+--
+
+CREATE TABLE `interes` (
+  `id` int(11) NOT NULL,
+  `monto` double NOT NULL,
+  `fecha` date NOT NULL,
+  `estado_venta_id` int(11) NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `fecha_anulado` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `log_estado`
 --
 
@@ -578,6 +594,29 @@ CREATE TABLE `log_estado` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `log_estado_factura`
+--
+
+CREATE TABLE `log_estado_factura` (
+  `id` int(11) NOT NULL,
+  `motivo` text NOT NULL,
+  `factura_id` int(11) NOT NULL,
+  `estado_venta_id_anterior` int(11) NOT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `log_estado_factura`
+--
+
+INSERT INTO `log_estado_factura` (`id`, `motivo`, `factura_id`, `estado_venta_id_anterior`, `users_id`, `created_at`, `updated_at`) VALUES
+(2, 'Error Involuntario', 6, 1, 3, '2022-06-04 18:09:55', '2022-06-04 18:09:55');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `log_translado`
 --
 
@@ -588,6 +627,7 @@ CREATE TABLE `log_translado` (
   `cantidad` int(11) NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `descripcion` varchar(45) NOT NULL,
+  `factura_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -596,9 +636,18 @@ CREATE TABLE `log_translado` (
 -- Volcado de datos para la tabla `log_translado`
 --
 
-INSERT INTO `log_translado` (`id`, `origen`, `destino`, `cantidad`, `users_id`, `descripcion`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 5, 3, 'Translado de bodega', '2022-05-25 00:45:42', '2022-05-25 00:45:42'),
-(2, 2, 4, 5, 3, 'Translado de bodega', '2022-05-25 19:47:13', '2022-05-25 19:47:13');
+INSERT INTO `log_translado` (`id`, `origen`, `destino`, `cantidad`, `users_id`, `descripcion`, `factura_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, 5, 3, 'Translado de bodega', NULL, '2022-05-25 00:45:42', '2022-05-25 00:45:42'),
+(2, 2, 4, 5, 3, 'Translado de bodega', NULL, '2022-05-25 19:47:13', '2022-05-25 19:47:13'),
+(3, 3, NULL, 5, 3, 'Venta de producto', 6, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(4, 4, NULL, 5, 3, 'Venta de producto', 6, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(5, 5, NULL, 100, 3, 'Venta de producto', 6, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(6, 6, NULL, 100, 3, 'Venta de producto', 6, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(7, 5, NULL, 4, 3, 'Venta de producto', 7, '2022-06-04 07:27:15', '2022-06-04 07:27:15'),
+(8, 3, 3, 5, 3, 'Factura Anulada', 6, '2022-06-04 18:09:55', '2022-06-04 18:09:55'),
+(9, 4, 4, 5, 3, 'Factura Anulada', 6, '2022-06-04 18:09:55', '2022-06-04 18:09:55'),
+(10, 5, 5, 100, 3, 'Factura Anulada', 6, '2022-06-04 18:09:55', '2022-06-04 18:09:55'),
+(11, 6, 6, 100, 3, 'Factura Anulada', 6, '2022-06-04 18:09:55', '2022-06-04 18:09:55');
 
 -- --------------------------------------------------------
 
@@ -996,7 +1045,7 @@ CREATE TABLE `pago_compra` (
 CREATE TABLE `pago_venta` (
   `id` int(11) NOT NULL,
   `monto` double NOT NULL,
-  `ulr_img` varchar(45) NOT NULL,
+  `url_img` varchar(45) NOT NULL,
   `fecha` date NOT NULL,
   `factura_id` int(11) NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
@@ -1011,8 +1060,8 @@ CREATE TABLE `pago_venta` (
 -- Volcado de datos para la tabla `pago_venta`
 --
 
-INSERT INTO `pago_venta` (`id`, `monto`, `ulr_img`, `fecha`, `factura_id`, `users_id`, `estado_venta_id`, `users_id_elimina`, `fecha_eliminado`, `created_at`, `updated_at`) VALUES
-(1, 1265, 'url', '2022-05-31', 1, 4, 1, NULL, NULL, '2022-05-31 22:01:05', '2022-05-31 21:59:50');
+INSERT INTO `pago_venta` (`id`, `monto`, `url_img`, `fecha`, `factura_id`, `users_id`, `estado_venta_id`, `users_id_elimina`, `fecha_eliminado`, `created_at`, `updated_at`) VALUES
+(1, 100, 'IMG_1654363802-.jpg', '2022-06-04', 7, 3, 1, NULL, NULL, '2022-06-04 17:30:02', '2022-06-04 17:30:02');
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1196,8 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `isv`, `precio_base`, `costo_promedio`, `codigo_barra`, `codigo_estatal`, `marca_id`, `categoria_id`, `unidad_medida_compra_id`, `unidadad_compra`, `users_id`, `estado_producto_id`, `created_at`, `updated_at`) VALUES
 (1, 'Papel bond carta blanco', 'Papel bond carta, con 500 paginas', 15, 115, 100, '111', '112', 2, 2, 11, 10, 3, 1, '2022-05-23 21:11:38', '2022-05-24 04:35:14'),
-(4, 'Lapiz Big Color negro', 'Lapiz Big color negro para oficina y escuela', 15, 5, 3, '', '', 2, 1, 1, 1, 3, 1, '2022-05-25 20:10:18', '2022-05-25 20:10:18');
+(4, 'Lapiz Big Color negro', 'Lapiz Big color negro para oficina y escuela', 15, 5, 3, '', '', 2, 1, 1, 1, 3, 1, '2022-05-25 20:10:18', '2022-05-25 20:10:18'),
+(12, 'Silicon en barra', 'Silicon en barra', 15, 5, 5, '', '', 1, 1, 11, 50, 3, 1, '2022-06-04 05:32:15', '2022-06-04 05:32:15');
 
 -- --------------------------------------------------------
 
@@ -1208,6 +1258,7 @@ CREATE TABLE `recibido_bodega` (
   `fecha_expiracion` date DEFAULT NULL,
   `estado_recibido` int(11) NOT NULL,
   `recibido_por` bigint(20) UNSIGNED NOT NULL,
+  `comentario` varchar(45) DEFAULT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1216,13 +1267,13 @@ CREATE TABLE `recibido_bodega` (
 -- Volcado de datos para la tabla `recibido_bodega`
 --
 
-INSERT INTO `recibido_bodega` (`id`, `compra_id`, `producto_id`, `seccion_id`, `cantidad_compra_lote`, `cantidad_inicial_seccion`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `estado_recibido`, `recibido_por`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 9, 50, 25, 0, '2022-05-24', NULL, 4, 3, '2022-05-25 00:42:48', '2022-05-31 19:58:29'),
-(2, 1, 1, 16, 50, 25, 10, '2022-05-24', NULL, 4, 3, '2022-05-25 00:43:06', '2022-05-31 20:22:52'),
-(3, 1, 1, 15, 50, 5, 0, '2022-05-24', NULL, 4, 3, '2022-05-25 00:45:42', '2022-05-30 06:37:27'),
-(4, 1, 1, 15, 50, 5, 0, '2022-05-25', NULL, 4, 3, '2022-05-25 19:47:13', '2022-05-30 06:37:27'),
-(5, 2, 4, 5, 1000, 500, 100, '2022-05-25', NULL, 4, 3, '2022-05-25 20:21:26', '2022-05-31 20:22:52'),
-(6, 2, 4, 15, 1000, 500, 500, '2022-05-25', NULL, 4, 3, '2022-05-25 20:22:02', '2022-05-25 20:22:02');
+INSERT INTO `recibido_bodega` (`id`, `compra_id`, `producto_id`, `seccion_id`, `cantidad_compra_lote`, `cantidad_inicial_seccion`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `estado_recibido`, `recibido_por`, `comentario`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 9, 50, 25, 25, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:42:48', '2022-06-02 00:44:16'),
+(2, 1, 1, 16, 50, 25, 25, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:43:06', '2022-06-01 18:50:42'),
+(3, 1, 1, 15, 50, 5, 5, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:45:42', '2022-06-04 18:09:55'),
+(4, 1, 1, 15, 50, 5, 5, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 19:47:13', '2022-06-04 18:09:55'),
+(5, 2, 4, 5, 1000, 500, 460, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:21:26', '2022-06-04 18:09:55'),
+(6, 2, 4, 15, 1000, 500, 500, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:22:02', '2022-06-04 18:09:55');
 
 -- --------------------------------------------------------
 
@@ -1393,7 +1444,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('PeMHEJTzxKHydpqjcpYw2L4E4UQ9HMmThTgdrl5Y', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiU2ZnbzB6a3BwNlVaeExlSHVkckdKSU11V01xelZjdDFHT0E3dkpEWSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kZXRhbGxlL3ZlbnRhLzEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1654043377);
+('WwmTreoqclw5R2LdE1il4VerzdfRhATfoqpJz92F', 3, '127.0.0.1', 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Mobile Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiVTNLTlROSFJTODdnYWNNSVl5ZmdJSkJEQjhqRTJtcXBLdzFaRlhBVCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kZXRhbGxlL3ZlbnRhLzYiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1654366201);
 
 -- --------------------------------------------------------
 
@@ -1687,7 +1738,9 @@ INSERT INTO `unidad_medida_venta` (`id`, `unidad_venta`, `unidad_medida_id`, `pr
 (1, 10, 11, 1, 1, 0, '2022-05-23 21:11:38', '2022-05-24 18:11:34'),
 (2, 1, 3, 1, 1, 1, '2022-05-23 21:11:38', '2022-05-23 21:11:38'),
 (3, 1, 1, 4, 1, 1, '2022-05-25 20:10:18', '2022-05-25 20:10:18'),
-(4, 10, 11, 4, 1, 0, '2022-05-25 06:00:00', '2022-05-25 06:00:00');
+(4, 10, 11, 4, 1, 0, '2022-05-25 06:00:00', '2022-05-25 06:00:00'),
+(12, 1, 1, 12, 1, 1, '2022-06-04 05:32:15', '2022-06-04 05:32:15'),
+(13, 50, 11, 12, 1, 0, '2022-06-04 05:32:15', '2022-06-04 05:32:15');
 
 -- --------------------------------------------------------
 
@@ -1739,11 +1792,15 @@ CREATE TABLE `venta_has_producto` (
   `resta_inventario_total` int(11) NOT NULL COMMENT 'el total de unidades que se resto al inventario',
   `unidad_medida_venta_id` int(11) NOT NULL,
   `precio_unidad` double NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `cantidad_sin_entregar` int(11) NOT NULL,
+  `cantidad` double NOT NULL,
+  `cantidad_s` double NOT NULL,
+  `cantidad_sin_entregar` double NOT NULL,
   `sub_total` double NOT NULL,
   `isv` double NOT NULL,
   `total` double NOT NULL,
+  `sub_total_s` double NOT NULL,
+  `isv_s` double NOT NULL,
+  `total_s` double NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1752,16 +1809,12 @@ CREATE TABLE `venta_has_producto` (
 -- Volcado de datos para la tabla `venta_has_producto`
 --
 
-INSERT INTO `venta_has_producto` (`factura_id`, `producto_id`, `lote`, `seccion_id`, `numero_unidades_resta_inventario`, `resta_inventario_total`, `unidad_medida_venta_id`, `precio_unidad`, `cantidad`, `cantidad_sin_entregar`, `sub_total`, `isv`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 15, 5, 10, 2, 110, 10, 10, 1100, 165, 1265, '2022-05-30 06:37:27', '2022-05-30 06:37:27'),
-(1, 1, 4, 15, 5, 10, 2, 110, 10, 10, 1100, 165, 1265, '2022-05-30 06:37:27', '2022-05-30 06:37:27'),
-(2, 4, 5, 5, 350, 350, 4, 5, 35, 35, 1750, 262.5, 2012.5, '2022-05-30 06:39:05', '2022-05-30 06:39:05'),
-(3, 1, 1, 9, 2, 2, 2, 110, 2, 2, 220, 33, 253, '2022-05-31 19:08:44', '2022-05-31 19:08:44'),
-(4, 1, 1, 9, 5, 5, 2, 110, 5, 5, 550, 82.5, 632.5, '2022-05-31 19:53:06', '2022-05-31 19:53:06'),
-(5, 1, 1, 9, 5, 5, 2, 110, 5, 5, 550, 82.5, 632.5, '2022-05-31 19:54:02', '2022-05-31 19:54:02'),
-(6, 1, 1, 9, 13, 13, 2, 110, 13, 13, 1430, 214.5, 1644.5, '2022-05-31 19:58:29', '2022-05-31 19:58:29'),
-(7, 1, 2, 16, 5, 5, 2, 110, 5, 5, 550, 82.5, 632.5, '2022-05-31 20:00:10', '2022-05-31 20:00:10'),
-(8, 1, 2, 16, 5, 5, 2, 110, 5, 5, 550, 82.5, 632.5, '2022-05-31 20:22:52', '2022-05-31 20:22:52');
+INSERT INTO `venta_has_producto` (`factura_id`, `producto_id`, `lote`, `seccion_id`, `numero_unidades_resta_inventario`, `resta_inventario_total`, `unidad_medida_venta_id`, `precio_unidad`, `cantidad`, `cantidad_s`, `cantidad_sin_entregar`, `sub_total`, `isv`, `total`, `sub_total_s`, `isv_s`, `total_s`, `created_at`, `updated_at`) VALUES
+(6, 1, 3, 15, 5, 10, 2, 110, 10, 5, 10, 1100, 165, 1265, 550, 82.5, 632.5, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(6, 1, 4, 15, 5, 10, 2, 110, 10, 5, 10, 1100, 165, 1265, 550, 82.5, 632.5, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(6, 4, 5, 5, 100, 100, 3, 5, 100, 100, 100, 500, 75, 575, 500, 75, 575, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(6, 4, 6, 15, 100, 100, 3, 5, 100, 100, 100, 500, 75, 575, 500, 75, 575, '2022-06-04 07:18:28', '2022-06-04 07:18:28'),
+(7, 4, 5, 5, 40, 40, 4, 5, 4, 4, 4, 200, 30, 230, 200, 30, 230, '2022-06-04 07:27:15', '2022-06-04 07:27:15');
 
 --
 -- Índices para tablas volcadas
@@ -1935,6 +1988,15 @@ ALTER TABLE `incidencia_compra`
   ADD KEY `fk_incidencia_compra_users1_idx` (`users_id`);
 
 --
+-- Indices de la tabla `interes`
+--
+ALTER TABLE `interes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_intereses_estado_venta1_idx` (`estado_venta_id`),
+  ADD KEY `fk_intereses_factura1_idx` (`factura_id`),
+  ADD KEY `fk_intereses_users1_idx` (`users_id`);
+
+--
 -- Indices de la tabla `log_estado`
 --
 ALTER TABLE `log_estado`
@@ -1942,6 +2004,15 @@ ALTER TABLE `log_estado`
   ADD KEY `fk_log_estado_compra1_idx` (`compra_id`),
   ADD KEY `fk_log_estado_estado_compra1_idx` (`estado_anterior_compra`),
   ADD KEY `fk_log_estado_users1_idx` (`users_id`);
+
+--
+-- Indices de la tabla `log_estado_factura`
+--
+ALTER TABLE `log_estado_factura`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_log_estado_factura_factura1_idx` (`factura_id`),
+  ADD KEY `fk_log_estado_factura_estado_venta1_idx` (`estado_venta_id_anterior`),
+  ADD KEY `fk_log_estado_factura_users1_idx` (`users_id`);
 
 --
 -- Indices de la tabla `log_translado`
@@ -2299,7 +2370,7 @@ ALTER TABLE `estado_venta`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -2311,7 +2382,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `img_producto`
 --
 ALTER TABLE `img_producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `incidencia`
@@ -2326,16 +2397,28 @@ ALTER TABLE `incidencia_compra`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `interes`
+--
+ALTER TABLE `interes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `log_estado`
 --
 ALTER TABLE `log_estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `log_estado_factura`
+--
+ALTER TABLE `log_estado_factura`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `log_translado`
 --
 ALTER TABLE `log_translado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -2401,7 +2484,7 @@ ALTER TABLE `precios_venta`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -2503,7 +2586,7 @@ ALTER TABLE `unidad_medida`
 -- AUTO_INCREMENT de la tabla `unidad_medida_venta`
 --
 ALTER TABLE `unidad_medida_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -2614,12 +2697,28 @@ ALTER TABLE `incidencia_compra`
   ADD CONSTRAINT `fk_incidencia_compra_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `interes`
+--
+ALTER TABLE `interes`
+  ADD CONSTRAINT `fk_intereses_estado_venta1` FOREIGN KEY (`estado_venta_id`) REFERENCES `estado_venta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_intereses_factura1` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_intereses_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Filtros para la tabla `log_estado`
 --
 ALTER TABLE `log_estado`
   ADD CONSTRAINT `fk_log_estado_compra1` FOREIGN KEY (`compra_id`) REFERENCES `compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_log_estado_estado_compra1` FOREIGN KEY (`estado_anterior_compra`) REFERENCES `estado_compra` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_log_estado_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `log_estado_factura`
+--
+ALTER TABLE `log_estado_factura`
+  ADD CONSTRAINT `fk_log_estado_factura_estado_venta1` FOREIGN KEY (`estado_venta_id_anterior`) REFERENCES `estado_venta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_log_estado_factura_factura1` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_log_estado_factura_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `log_translado`

@@ -99,7 +99,7 @@
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">RTN</label>
                                     <input class="form-control"  type="text" id="rtn_ventas" name="rtn_ventas"
-                                         readonly>
+                                    readonly>
 
                                 </div>
 
@@ -359,7 +359,7 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="Sub total " id="subTotalGeneral"
-                                        name="subTotalGeneral" class="form-control" min="1" data-parsley-required
+                                        name="subTotalGeneral" class="form-control" min="0" data-parsley-required
                                         autocomplete="off" readonly>
                                 </div>
                             </div>
@@ -372,7 +372,7 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="ISV " id="isvGeneral" name="isvGeneral"
-                                        class="form-control" min="1" data-parsley-required autocomplete="off"
+                                        class="form-control" min="0" data-parsley-required autocomplete="off"
                                         readonly>
                                 </div>
                             </div>
@@ -385,7 +385,7 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="Total  " id="totalGeneral"
-                                        name="totalGeneral" class="form-control" min="1" data-parsley-required
+                                        name="totalGeneral" class="form-control" min="0" data-parsley-required
                                         autocomplete="off" readonly>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
+                                    <button id="btn_venta_coorporativa" class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
                                             Realizar Venta</strong></button>
                                 </div>
                             </div>
@@ -744,6 +744,7 @@
                                             <input id="idBodega${numeroInputs}" name="idBodega${numeroInputs}" type="hidden" value="${idBodega}">
                                             <input id="idSeccion${numeroInputs}" name="idSeccion${numeroInputs}" type="hidden" value="${idSeccion}">
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
+                                            <input id="isv${numeroInputs}" name="isv${numeroInputs}" type="hidden" value="${producto.isv}">
 
                                            
                                     
@@ -875,9 +876,21 @@
 
                         let data = response.data.datos;
                        
-                        
-                        document.getElementById("nombre_cliente_ventas").value=data.nombre;
-                        document.getElementById("rtn_ventas").value=data.rtn;
+                        if(data.id==1){
+                            document.getElementById("nombre_cliente_ventas").readOnly=false;
+                            document.getElementById("rtn_ventas").readOnly=false;
+
+                            let selectBox = document.getElementById("tipoPagoVenta");
+                            selectBox.remove(2); 
+
+                        }else{
+                            document.getElementById("nombre_cliente_ventas").readOnly=true;
+                            document.getElementById("rtn_ventas").readOnly=true;
+                            document.getElementById("nombre_cliente_ventas").value=data.nombre;
+                            document.getElementById("rtn_ventas").value=data.rtn;
+                            obtenerTipoPago();
+                        }
+
 
 
                     }
@@ -904,10 +917,8 @@
                 });
 
             function guardarVenta(){
-              //  
-                //let e = document.getElementById('unidad1');
-               //let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
-                //console.log(idUnidadVenta);
+                
+                document.getElementById("btn_venta_coorporativa").disabled=true;
 
                 var data = new FormData($('#crear_venta').get(0));
 
@@ -982,9 +993,11 @@
                         retencionEstado=false;
 
                         document.getElementById('numero_venta').value=data.numeroVenta;
+                        document.getElementById("btn_venta_coorporativa").disabled=false;
 
                     })
                     .catch(err => {
+                        document.getElementById("btn_venta_coorporativa").disabled=true;
                         let data = err.response.data;
                         console.log(err);
                         Swal.fire({

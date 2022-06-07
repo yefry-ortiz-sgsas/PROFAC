@@ -114,16 +114,19 @@ class Producto extends Component
             $unidadVenta->unidad_venta_defecto = 1;
             $unidadVenta->save();
 
-            if($request->unidad_producto !== $request->unidad_producto_venta){
+
+            if($request->unidad_producto != $request->unidad_producto_venta){
+
                 $unidadVenta2 = new ModelUnidadMedidaVenta;
                 $unidadVenta2->unidad_venta = $request->unidades;
                 $unidadVenta2->unidad_medida_id = $request->unidad_producto;
+                $unidadVenta2->producto_id = $producto->id;
                 $unidadVenta2->estado_id = 1;
-                $unidadVenta->unidad_venta_defecto = 0;
+                $unidadVenta2->unidad_venta_defecto = 0;               
                 $unidadVenta2->save();
+
             }
-
-
+   
 
 
             
@@ -138,10 +141,10 @@ class Producto extends Component
 
                 $URLs = [];
                 $archivos = $request->file('files');
-                $i = 0;
+                $i = 1;
 
                 foreach ($archivos as $file) {
-
+                      
                         $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();
                         $path = public_path() . '/catalogo';
                         $url =  $name;
@@ -161,6 +164,11 @@ class Producto extends Component
             ], 200);
         } catch (QueryException $e) {
             DB::rollback();
+              
+            // $carpetaPublic = public_path();
+            // $path = $carpetaPublic.'/catalogo/'.$name;
+            
+            // File::delete($path);
 
             return response()->json([
                 'message' => 'Ha ocurrido un error al crear el producto.',

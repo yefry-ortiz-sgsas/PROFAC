@@ -17,14 +17,18 @@ use App\Models\ModelFactura;
 use App\Models\ModelCAI;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelVentaProducto;
+use App\Models\ModelLogTranslados;
 
 class FacturacionCorporativa extends Component
 {
+    public $arrayProductos = []; 
+    public $arrayLogs =[];
+
     public function render()
     {
         return view('livewire.ventas.facturacion-corporativa');
     }
-
+     
     public function listarClientes(Request $request){
         try {
  
@@ -35,7 +39,8 @@ class FacturacionCorporativa extends Component
          from cliente
              where estado_cliente_id = 1
              and tipo_cliente_id=1
-            and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
+             and vendedor =".Auth::user()->id."             
+             and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
                  ");
  
         return response()->json([
@@ -52,7 +57,7 @@ class FacturacionCorporativa extends Component
      public function datosCliente(Request $request){
         try {
 
-            $datos = DB::SELECTONE("select nombre, rtn from cliente where id = ".$request->id);
+            $datos = DB::SELECTONE("select id,nombre, rtn from cliente where id = ".$request->id);
 
         return response()->json([
             "datos" => $datos
@@ -123,7 +128,7 @@ class FacturacionCorporativa extends Component
          $listaProductos = DB::SELECT("
          select 
             B.id,
-            concat('cod ',b.id,' - ',B.nombre,' - ','cantidad ',sum(A.cantidad_disponible)) as text
+            concat('cod ',B.id,' - ',B.nombre,' - ','cantidad ',sum(A.cantidad_disponible)) as text
          from
             recibido_bodega A
             inner join producto B
@@ -261,6 +266,8 @@ class FacturacionCorporativa extends Component
 
             
         ]);
+        
+       // dd($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -268,7 +275,7 @@ class FacturacionCorporativa extends Component
                 'errors' => $validator->errors()
             ], 406);
         }
-
+       
         //dd($request->all());
         $arrayInputs=[];
         $arrayInputs = $request->arregloIdInputs;
@@ -277,7 +284,8 @@ class FacturacionCorporativa extends Component
         $mensaje = "";
         $flag = false;
 
-        for ($j=0; $j <count($arrayInputs) ; $j++) { 
+        //comprobar existencia de producto en bodega
+        for ($j=0; $j < count($arrayInputs) ; $j++) { 
 
             $keyIdSeccion = "idSeccion".$arrayInputs[$j];
             $keyIdProducto ="idProducto".$arrayInputs[$j];
@@ -313,7 +321,7 @@ class FacturacionCorporativa extends Component
 
         try {
 
-            //dd($request->all());
+          
             DB::beginTransaction();
 
                     $cai = DB::SELECTONE("select
@@ -375,6 +383,7 @@ class FacturacionCorporativa extends Component
                     $factura->tipo_venta_id=1;
                     $factura->estado_factura_id=1; // se presenta                  
                     $factura->comision_estado_pagado=0;
+                    $factura->pendiente_cobro=$request->totalGeneral;
                     $factura->save();
 
 
@@ -384,7 +393,7 @@ class FacturacionCorporativa extends Component
                  
 
                     
-                    for ($i=0; $i <count($arrayInputs) ; $i++) { 
+                    for ($i=0; $i < count($arrayInputs) ; $i++) { 
 
                             $keyRestaInventario = "restaInventario".$arrayInputs[$i];
                        
@@ -396,11 +405,15 @@ class FacturacionCorporativa extends Component
                             $keySubTotal ="subTotal".$arrayInputs[$i];
                             $keyIsv ="isvProducto".$arrayInputs[$i];
                             $keyTotal ="total".$arrayInputs[$i];
+                            $keyISV = "isv".$arrayInputs[$i];
+                            $keyunidad = 'unidad'.$arrayInputs[$i];
 
                             $restaInventario = $request->$keyRestaInventario;                         
                             $idSeccion = $request->$keyIdSeccion;
                             $idProducto = $request->$keyIdProducto;
                             $idUnidadVenta = $request->$keyIdUnidadVenta;
+                            $ivsProducto= $request->$keyISV;
+                            $unidad = $request->$keyunidad;
 
                             $precio = $request->$keyPrecio;
                             $cantidad = $request->$keyCantidad;
@@ -408,15 +421,17 @@ class FacturacionCorporativa extends Component
                             $isv = $request->$keyIsv;
                             $total = $request->$keyTotal;
 
-                            $array = $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total);
-                            array_push($arrayProductosVentas, $array);
-                            //ModelVentaProducto::created($array);  
+                            $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total,$ivsProducto, $unidad);
+                           
+                           
                             
                     
                     };
 
-                    //dd($arrayProductosVentas[0]);
-            ModelVentaProducto::insert($arrayProductosVentas[0]);  
+           // dd($this->arrayProductos);
+            ModelVentaProducto::insert($this->arrayProductos);  
+            ModelLogTranslados::insert($this->arrayLogs);
+
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");       
              DB::commit();
@@ -434,23 +449,23 @@ class FacturacionCorporativa extends Component
             DB::rollback();
 
             return response()->json([
+                'error'=>$e,
                 'icon'=>"error",
                 'text' => 'Ha ocurrido un error.',
                 'title'=>'Error!',
-                'idFactura'=>-1,
+                'idFactura'=>$factura->id,
             ], 402);
         }
 
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total){
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total,$ivsProducto, $unidad){
         try {
 
-
+            $precioUnidad = $subTotal/$unidadesRestarInv;
               
             $unidadesRestar = $unidadesRestarInv;
-            $registroResta =0;
-            $arrarVentasProducto =[];
+            $registroResta =0;       
             while (!($unidadesRestar <= 0)){
                
                         $unidadesDisponibles = DB::SELECTONE("
@@ -473,47 +488,81 @@ class FacturacionCorporativa extends Component
                             $lote->cantidad_disponible = $diferencia;
                             $lote->save();
 
-                            $registroResta=$unidadesRestar;
+                            $registroResta=$unidadesRestar;                            
                             $unidadesRestar = $diferencia;
 
+                            $subTotalSecccionado=round(($precioUnidad* $registroResta),2);
+                            $isvSecccionado = round(($subTotalSecccionado*($ivsProducto/100)),2);
+                            $totalSecccionado = round(($isvSecccionado+ $subTotalSecccionado),2);
+
+                            $cantidadSeccion = $registroResta/$unidad;
                         }else if($unidadesDisponibles->cantidad_disponible > $unidadesRestar){
 
                             $diferencia = $unidadesDisponibles->cantidad_disponible - $unidadesRestar;
+                        
+
                             $lote = ModelRecibirBodega::find($unidadesDisponibles->id);
                             $lote->cantidad_disponible = $diferencia;
                             $lote->save();
-                            $registroResta=$unidadesRestar;
+
+                            $registroResta=$unidadesRestar;                            
                             $unidadesRestar = 0;
 
+                            $subTotalSecccionado=round(($precioUnidad* $registroResta),2);
+                            $isvSecccionado = round(($subTotalSecccionado*($ivsProducto/100)),2);
+                            $totalSecccionado = round(($isvSecccionado+ $subTotalSecccionado),2);
+
+                            $cantidadSeccion = $registroResta/$unidad;
                         }else if($unidadesDisponibles->cantidad_disponible < $unidadesRestar){
 
                             $diferencia = $unidadesRestar - $unidadesDisponibles->cantidad_disponible;
                             $lote = ModelRecibirBodega::find($unidadesDisponibles->id);
                             $lote->cantidad_disponible = 0;
                             $lote->save();
+
                             $registroResta=$unidadesDisponibles->cantidad_disponible;
                             $unidadesRestar = $diferencia;
+
+                            $subTotalSecccionado=round(($precioUnidad* $registroResta),2);
+                            $isvSecccionado = round(($subTotalSecccionado*($ivsProducto/100)),2);
+                            $totalSecccionado = round(($isvSecccionado+ $subTotalSecccionado),2);
+
+                            $cantidadSeccion = $registroResta/$unidad;
                             
                         };
 
                     
-                        array_push($arrarVentasProducto,[
+                        array_push($this->arrayProductos,[
                             "factura_id"=>$idFactura,
                             "producto_id"=>$idProducto,
                             "lote"=>$unidadesDisponibles->id,
                             "seccion_id"=>$idSeccion,
                             "numero_unidades_resta_inventario"=>$registroResta,
+                            "sub_total"=>$subTotal,
+                            "isv"=>$isv,
+                            "total"=>$total,
                             "resta_inventario_total" => $unidadesRestarInv,
                             "unidad_medida_venta_id"=>$idUnidadVenta,
                             "precio_unidad"=>$precio,
                             "cantidad"=>$cantidad,
+                            "cantidad_s"=>$cantidadSeccion,
                             "cantidad_sin_entregar"=>$cantidad,
-                            "sub_total"=>$subTotal,
-                            "isv"=>$isv,
-                            "total"=>$total,
+                            "sub_total_s"=>$subTotalSecccionado,
+                            "isv_s"=>$isvSecccionado,
+                            "total_s"=>$totalSecccionado,
                             "created_at"=>now(),
                             "updated_at"=>now(),
-                        ]);                    
+                        ]);    
+                        
+                        array_push($this->arrayLogs,[
+                            "origen"=>$unidadesDisponibles->id,
+                            "factura_id"=>$idFactura,
+                            "cantidad"=>$cantidadSeccion,
+                            "users_id"=> Auth::user()->id,
+                            "descripcion"=>"Venta de producto",
+                            "created_at"=>now(),
+                            "updated_at"=>now(),                          
+                        ]);
               
             };
 
@@ -521,17 +570,19 @@ class FacturacionCorporativa extends Component
             //ModelVentaProducto::created($arrarVentasProducto);  
             //ModelVentaProducto::insert($arrarVentasProducto);  
            //DB::table('venta_has_producto')->insert($arrarVentasProducto); 
+
               
-            return $arrarVentasProducto;
+            return;
 
         } catch (QueryException $e) {
             DB::rollback();
 
             return response()->json([
+                'error'=>$e,
                 'icon'=>"error",
                 'text' => 'Ha ocurrido un error.',
                 'title'=>'Error!',
-                'idFactura'=>-1,
+                'idFactura'=>$idFactura,
             ], 402);
         }
     }

@@ -921,7 +921,7 @@
 
                     })
                     .catch(err => {
-
+                       
                             let data = err.response.data;
 
                             console.log(err)
@@ -931,7 +931,7 @@
                                 title: data.title,
                                 text: data.text,
                             })
-
+                            document.getElementById('btn_registro_incidencia_compra').disabled = false;
                             return;
 
                         }

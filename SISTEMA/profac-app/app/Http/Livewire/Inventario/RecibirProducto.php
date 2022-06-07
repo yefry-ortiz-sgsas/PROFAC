@@ -96,7 +96,7 @@ class RecibirProducto extends Component
                                     <a class="dropdown-item" onclick="mostrarModalExcedente(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')"> <i class="fa-solid fa-circle-plus text-info"></i> Registrar Producto Excedente </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" onclick="mostrarModalIncidencias(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia </a>
+                                    <a class="dropdown-item" onclick="mostrarModalIncidenciaSinAlmacenar(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia </a>
                                 </li>
 
     
@@ -574,9 +574,9 @@ class RecibirProducto extends Component
     }
 
     public function incidenciaCompra(Request $request){
-
+        
        try {
-     
+       
         if($request->imagenCompra){
             $validator = Validator::make($request->all(), [
            
@@ -590,7 +590,7 @@ class RecibirProducto extends Component
             if ($validator->fails()) {
                 return response()->json([
                     'tilte' => 'Ha ocurrido un error.',
-                    'text' => $validator->errors(),
+                    'text' => 'Formato de imagen invalido.',
                     'icon' => 'error'
                 ], 402);
             }
@@ -607,7 +607,7 @@ class RecibirProducto extends Component
             $incidencia->producto_id = $request->idProducto;
             $incidencia->users_id = Auth::user()->id;
             $incidencia->save();
-
+            
         }else{
             $incidencia = new ModelIncidenciaCompra;
             $incidencia->descripcion = $request->comentarioCompra;          

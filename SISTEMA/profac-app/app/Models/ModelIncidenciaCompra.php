@@ -12,6 +12,7 @@ class ModelIncidenciaCompra extends Model
     protected $primaryKey = 'id';
     protected $table = 'incidencia_compra';
     protected $fillable = [
+        'id',
         'descripcion',
         'url_img',
         'compra_id',

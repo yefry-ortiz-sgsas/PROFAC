@@ -18,9 +18,10 @@ use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Clientes\PerfilCliente; 
-use App\Http\Livewire\ventas\ListadoFacturas;
+use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;  
-use App\Http\Livewire\Ventas\DetalleVenta; 
+use App\Http\Livewire\Ventas\DetalleVenta;  
+use App\Http\Livewire\Ventas\Cobros;  
 
 
 
@@ -95,6 +96,8 @@ Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
 
 Route::get('/facturas/corporativo', ListadoFacturas::class);
 Route::get('/lista/facturas/corporativo', [ListadoFacturas::class,'listarFacturas']);
+Route::post('/factura/corporativo/anular', [ListadoFacturas::class,'anularVentaRegistro']);
+
 
 //-----------------------------------------------Usuarios-------------------------------------------------------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);
@@ -173,7 +176,15 @@ Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class
 Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']); 
 Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);  
 Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);  
-Route::get('/detalle/venta/{id}', DetalleVenta::class);  
+Route::get('/detalle/venta/{id}', DetalleVenta::class);   
+Route::get('/lista/productos/factura/{id}', [DetalleVenta::class,'listarProductosFactura']); 
+Route::get('/lista/ubicacion/producto/{id}', [DetalleVenta::class,'ubicacionProductos']);
+Route::get('/lista/pagos/venta/{id}', [DetalleVenta::class,'pagosVenta']); 
+Route::get('/venta/cobro/{id}', Cobros::class);  
+Route::post('/venta/registro/cobro', [Cobros::class,'registrarPago']); 
+Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']); 
+Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']); 
+Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']); 
 
 
 

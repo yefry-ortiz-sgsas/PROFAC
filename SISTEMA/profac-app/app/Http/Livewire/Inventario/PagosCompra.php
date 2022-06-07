@@ -3,17 +3,18 @@
 namespace App\Http\Livewire\Inventario;
 
 use Livewire\Component;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use App\Models\ModelPagoCompra;
-use App\Models\ModelCompra;
 use Auth;
 use DataTables;
 use Validator;
 use Illuminate\Support\Facades\File;
 use PDF;
 
+use App\Models\ModelPagoCompra;
+use App\Models\ModelCompra;
 
 
 class PagosCompra extends Component
@@ -263,7 +264,7 @@ class PagosCompra extends Component
         try {
 
 
-
+            DB::beginTransaction();
             $pago = ModelPagoCompra::find($request->idPago);
             $pago->estado_id=2;
             $pago->users_id_elimina = Auth::user()->id;
@@ -293,11 +294,12 @@ class PagosCompra extends Component
 
 
 
-
+            DB::commit();
         return response()->json([
             "message" => "Eliminado con exito!"
         ]);
         } catch (QueryException $e) {
+            DB::rollback();
         return response()->json([
             'message' => 'Ha ocurrido un error al eliminar el pago.',
             'error' => $e
