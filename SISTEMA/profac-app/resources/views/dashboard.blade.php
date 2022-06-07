@@ -5,7 +5,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
 
-                        <iframe frameborder=0 width="100%" height="600" src="https://analytics.zoho.com/open-view/2278098000000153136"></iframe>
+                        <iframe frameborder=0 width="100%" height="1500" src="https://analytics.zoho.com/open-view/2278098000000153193"></iframe>
 
                     </div>
                 </div>
