@@ -17,11 +17,11 @@ use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
-use App\Http\Livewire\Clientes\PerfilCliente; 
-use App\Http\Livewire\Ventas\ListadoFacturas;
-use App\Http\Livewire\Ventas\FacturacionCorporativa;  
-use App\Http\Livewire\Ventas\DetalleVenta;  
-use App\Http\Livewire\Ventas\Cobros;  
+
+use App\Http\Livewire\ventas\ListadoFacturas;
+use App\Http\Livewire\Ventas\FacturacionCorporativa;
+use App\Http\Livewire\Ventas\DetalleVenta;
+use App\Http\Livewire\Inventario\Marcas;
 
 
 
@@ -74,22 +74,22 @@ Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarReten
 //-------------------------------------------------CLIENTES-----------------------------------------------------------------------------------------//
 Route::get('/clientes', Cliente::class);
 Route::get('/perfilCliente', PerfilCliente::class);
-Route::get('/cliente/pais', [Cliente::class, 'opbtenerPais']); 
-Route::post('/cliente/departamento', [Cliente::class, 'obtenerDepartamentos']); 
+Route::get('/cliente/pais', [Cliente::class, 'opbtenerPais']);
+Route::post('/cliente/departamento', [Cliente::class, 'obtenerDepartamentos']);
 Route::post('/cliente/municipio', [Cliente::class, 'obtenerMunicipio']);
 
 Route::get('/cliente/tipo/personalidad', [Cliente::class, 'tipoPersonalidad']);
 Route::get('/cliente/tipo/cliente', [Cliente::class, 'tipoCliente']);
-Route::get('/cliente/lista/vendedores', [Cliente::class, 'listaVendedores']); 
-Route::post('/cliente/registrar', [Cliente::class, 'guardarCliente']); 
-Route::get('/clientes/listar', [Cliente::class, 'listarClientes']); 
-Route::post('/clientes/datos/editar', [Cliente::class, 'datosCliente']); 
-Route::post('/clientes/editar', [Cliente::class, 'editarCliente']); 
-Route::post('/clientes/imagen', [Cliente::class, 'obtenerImagen']);  
-Route::post('/clientes/imagen/editar', [Cliente::class, 'cambiarImagenCliente']); 
-Route::post('/clientes/desactivar', [Cliente::class, 'desactivarCliente']);  
+Route::get('/cliente/lista/vendedores', [Cliente::class, 'listaVendedores']);
+Route::post('/cliente/registrar', [Cliente::class, 'guardarCliente']);
+Route::get('/clientes/listar', [Cliente::class, 'listarClientes']);
+Route::post('/clientes/datos/editar', [Cliente::class, 'datosCliente']);
+Route::post('/clientes/editar', [Cliente::class, 'editarCliente']);
+Route::post('/clientes/imagen', [Cliente::class, 'obtenerImagen']);
+Route::post('/clientes/imagen/editar', [Cliente::class, 'cambiarImagenCliente']);
+Route::post('/clientes/desactivar', [Cliente::class, 'desactivarCliente']);
 Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
- 
+
 
 
 //----------------------------------------------FACTURACIONES---------------------------------------------------------------------------------------//
@@ -119,9 +119,9 @@ Route::post('/producto/eliminar', [Producto::class, 'eliminarImagen']);
 Route::post('/ruta/imagen/edit', [Producto::class, 'guardarFoto']);
 Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
-Route::get('/producto/detalle/{id}', DetalleProducto::class); 
-Route::get('/detalle/producto/unidad/{id}', [DetalleProducto::class,'unidadesVenta']); 
-Route::get('/detalle/unidades/venta', [DetalleProducto::class,'obtenerUnidadesMedida']); 
+Route::get('/producto/detalle/{id}', DetalleProducto::class);
+Route::get('/detalle/producto/unidad/{id}', [DetalleProducto::class,'unidadesVenta']);
+Route::get('/detalle/unidades/venta', [DetalleProducto::class,'obtenerUnidadesMedida']);
 Route::post('/detalle/unidades/editar', [DetalleProducto::class,'editarUnidadesVenta']);
 Route::get('/producto/compra', CompraProducto::class);
 Route::get('/producto/lista/proveedores', [CompraProducto::class,'listarProveedores']);
@@ -161,15 +161,15 @@ Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']);
 Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);
 Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);
 Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']);
-Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']); 
-Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']); 
-Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);  
- 
+Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
+Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
+Route::get('/compra/retencion/documento', [PagosCompra::class,'retencionDocumentoPDF']);
+
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//
 
-Route::get('/ventas/coporativo', FacturacionCorporativa::class);  
-Route::get('/ventas/lista/clientes', [FacturacionCorporativa::class,'listarClientes']);  
+Route::get('/ventas/coporativo', FacturacionCorporativa::class);
+Route::get('/ventas/lista/clientes', [FacturacionCorporativa::class,'listarClientes']);
 Route::post('/ventas/datos/cliente', [FacturacionCorporativa::class,'datosCliente']);
 Route::get('/ventas/tipo/pago', [FacturacionCorporativa::class,'tipoPagoVenta']);  
 Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class,'listarBodegas']); 
@@ -188,6 +188,7 @@ Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']);
 
 
 
+Route::get('/marcas', Marcas::class);
 
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {
