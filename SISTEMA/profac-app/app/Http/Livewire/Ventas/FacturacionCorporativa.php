@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 use Validator;
+use PDF;
+use Luecano\NumeroALetras\NumeroALetras;
 
 use App\Models\ModelFactura;
 use App\Models\ModelCAI;
@@ -440,7 +442,12 @@ class FacturacionCorporativa extends Component
 
             return response()->json([
                 'icon'=>"success",
-                'text' => 'Venta realizada con exito.',
+                'text' => '
+                <div class="d-flex justify-content-between">
+                    <a href="/factura/cooporativo/'.$factura->id.'" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+                    <a href="/venta/cobro/'.$factura->id.'" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                    <a href="/detalle/venta/'.$factura->id.'" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
+                </div>',
                 'title'=>'Exito!',
                 'idFactura'=>$factura->id,
                 'numeroVenta'=>$numeroVenta->numero 
@@ -587,6 +594,45 @@ class FacturacionCorporativa extends Component
                 'idFactura'=>$idFactura,
             ], 402);
         }
+    }
+
+    public function imprimirFacturaCoorporativa($idFactura){
+        $data = DB::SELECTONE("
+        select 
+        compra.numero_orden,
+        compra.cai_retencion,
+        DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
+        cai.cai as numeroCai,
+        cai.numero_inicial,
+        cai.numero_final,
+        proveedores.nombre,
+        proveedores.rtn,
+        (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
+        compra.numero_factura,
+        date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
+        FORMAT(compra.monto_retencion, 2) as monto_retencion,
+        FORMAT(compra.total, 2) as total
+        from compra
+        inner join cai 
+        ON cai.id = compra.cai_id
+        inner join proveedores
+        on compra.proveedores_id = proveedores.id
+        where compra.id = 3"
+        );
+       
+        /*$pdf = PDF::loadView('/pdf/retencion', $data)
+        ->stream('archivo.pdf');
+        */
+
+        //view()->share('/pdf/retencion',$data);
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($data->monto_retencion, 2 ,'LEMPIRAS','CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/factura', compact('data','numeroLetras'))->setPaper('letter');
+        // download PDF file with download method
+        return $pdf->stream("compra numero_".$data->numero_orden.".pdf");
+
+        // return view('/pdf/retencion')->with($data);
     }
 }
 

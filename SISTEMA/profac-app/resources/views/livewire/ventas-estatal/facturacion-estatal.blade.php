@@ -974,7 +974,7 @@
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
-                            text: data.text
+                            html: data.text
                         })
 
 
@@ -1009,7 +1009,7 @@
 
                     })
                     .catch(err => {
-                        document.getElementById("btn_venta_coorporativa").disabled=true;
+                        document.getElementById("btn_venta_coorporativa").disabled=false;
                         let data = err.response.data;
                         console.log(err);
                         Swal.fire({

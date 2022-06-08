@@ -393,7 +393,7 @@
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button id="btn_venta_coorporativa" class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
+                                    <button id="btn_venta_coorporativa" class="btn  btn-primary float-left m-t-n-xs"><strong>
                                             Realizar Venta</strong></button>
                                 </div>
                             </div>
@@ -404,6 +404,8 @@
                 </div>
             </div>
         </div>
+
+        
     </div>
 
 
@@ -961,9 +963,11 @@
                         }
 
                         Swal.fire({
+                            confirmButtonText:'Cerrar',
+                            confirmButtonColor: '#5A6268',
                             icon: data.icon,
                             title: data.title,
-                            text: data.text
+                            html: data.text
                         })
 
 
@@ -998,7 +1002,7 @@
 
                     })
                     .catch(err => {
-                        document.getElementById("btn_venta_coorporativa").disabled=true;
+                        document.getElementById("btn_venta_coorporativa").disabled=false;
                         let data = err.response.data;
                         console.log(err);
                         Swal.fire({

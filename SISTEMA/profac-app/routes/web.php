@@ -189,7 +189,8 @@ Route::get('/venta/cobro/{id}', Cobros::class);
 Route::post('/venta/registro/cobro', [Cobros::class,'registrarPago']);
 Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']);
 Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']);
-Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']);
+Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']); 
+Route::get('/factura/cooporativo/{idFactura}', [FacturacionCorporativa::class,'imprimirFacturaCoorporativa']);
 
 //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
