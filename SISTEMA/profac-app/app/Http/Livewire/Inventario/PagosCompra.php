@@ -160,16 +160,12 @@ class PagosCompra extends Component
 
                     }
 
-                    $numeroSecuencia = $cai->numero_actual+1;
+                    $numeroSecuencia = $cai->numero_actual;
                     $arrayCai = explode('-',$cai->numero_final);          
                     $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
                     $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
                     	// dd($cai->cantidad_otorgada);
 
-                    $caiUpdated =  ModelCAI::find($cai->id);
-                    $caiUpdated->numero_actual=$numeroSecuencia;
-                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
-                    $caiUpdated->save();
 
 
 
@@ -183,6 +179,11 @@ class PagosCompra extends Component
                     $compra->retenciones_id = 2;
                     $compra->cai_id =  $cai->id;
                     $compra->save();
+
+                    $caiUpdated =  ModelCAI::find($cai->id);
+                    $caiUpdated->numero_actual=$numeroSecuencia+1;
+                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
+                    $caiUpdated->save();
                 }
 
 
@@ -216,7 +217,7 @@ class PagosCompra extends Component
     public function DatosCompra(Request $request){
        try {
 
-        $compra = DB::SELECTONE("select total, debito, if(monto_retencion is null ,0,monto_retencion) as 'monto_retencion' from compra where id=".$request->idCompra);
+        $compra = DB::SELECTONE("select numero_secuencia_retencion, total, debito, if(monto_retencion is null ,0,monto_retencion) as 'monto_retencion' from compra where id=".$request->idCompra);
 
        return response()->json([
            "compra"=>$compra,
@@ -361,7 +362,7 @@ class PagosCompra extends Component
        }
     }
 
-    public function retencionDocumentoPDF($idCompra){
+    public function retencionDocumentoPDF(){
         $data = [
             'titulo' => 'Styde.net'
         ];

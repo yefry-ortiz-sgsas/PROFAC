@@ -348,16 +348,13 @@ class FacturacionCorporativa extends Component
 
                 
 
-                    $numeroSecuencia = $cai->numero_actual+1;
+                    $numeroSecuencia = $cai->numero_actual;
                     $arrayCai = explode('-',$cai->numero_final);          
                     $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
                     $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
                     	// dd($cai->cantidad_otorgada);
 
-                    $caiUpdated =  ModelCAI::find($cai->id);
-                    $caiUpdated->numero_actual=$numeroSecuencia;
-                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
-                    $caiUpdated->save();
+
 
                     $montoComision = $request->totalGeneral*0.5;
 
@@ -385,6 +382,11 @@ class FacturacionCorporativa extends Component
                     $factura->comision_estado_pagado=0;
                     $factura->pendiente_cobro=$request->totalGeneral;
                     $factura->save();
+
+                    $caiUpdated =  ModelCAI::find($cai->id);
+                    $caiUpdated->numero_actual=$numeroSecuencia+1;
+                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
+                    $caiUpdated->save();
 
 
 
