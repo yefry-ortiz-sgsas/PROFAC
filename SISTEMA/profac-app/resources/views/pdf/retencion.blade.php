@@ -33,23 +33,23 @@
     <div class="pruebaFondo">
         <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
-               <b>Retención No. 0000-001-05-00000657</b>
+               <b>Retención No. {{$data->cai_retencion}} </b>
               </div>
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: 0801198892837</b></p>
-                <p class="card-text" style="position:absolute;left:410px;  top:50px;"><b>CAI: 08011988937783VG35V53Y53B3588GH52837</b></p>
-                <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: 11/03/2022</b></p>
-                <p class="card-text" style="position:absolute;left:310px;  top:65px;"><b>Rango autorizado: 08011988937783VG35V5 - 3Y53B3588GH52837</b></p>
+                <p class="card-text" style="position:absolute;left:433px;  top:50px;"><b>CAI: {{ $data->numeroCai }}</b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: {{$data->fecha_limite}}</b></p>
+                <p class="card-text" style="position:absolute;left:350px;  top:65px;"><b>Rango autorizado: {{$data->numero_inicial}} al {{$data->numero_final}}</b></p>
             </div>
         </div>
 
         <div class="card border border-dark" style="position:absolute;left:0px;  top:300px; width:45rem; height:5.5rem;">
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Proveedor:</b> PACASA CALPULES</p>
-                <p class="card-text" style="position:absolute;left:350px;  top:10px;"><b>Fecha:</b> 11/03/2022</p>
-                <p class="card-text" style="position:absolute;left:550px;  top:10px;"><b>Porcentaje:</b> 1.00</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Proveedor:</b> {{$data->nombre}}</p>
+                <p class="card-text" style="position:absolute;left:350px;  top:10px;"><b>Fecha:</b> {{$data->fecha}}</p>
+                <p class="card-text" style="position:absolute;left:550px;  top:10px;"><b>Porcentaje:</b> 1%</p>
                 <p class="card-text" style="position:absolute;left:20px;  top:35px;"><b>CAI:</b> 08011988937783VG35V53Y53B3588GH52837</p>
-                <p class="card-text" style="position:absolute;left:550px;  top:35px;"><b>RTN:</b> 081210515818514818</p>
+                <p class="card-text" style="position:absolute;left:550px;  top:35px;"><b>RTN:</b> {{$data->rtn}}</p>
                 <p class="card-text" style="position:absolute;left:20px;  top:60px;"><b>Comentarios:</b> RETENCION DEL 1%</p>
             </div>
         </div>
@@ -61,23 +61,23 @@
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;"><b>Valor</b></p>
                 <p class="card-text" style="position:absolute;left:600px;  top:10px;"><b>Retenido</b></p>
                 <p class="card-text" style="position:absolute;left:30px;  top:30px;">1</p>
-                <p class="card-text" style="position:absolute;left:90px;  top:30px;">FACTURA N 010-001-01-00418759 / 16/12/2021</p>
-                <p class="card-text" style="position:absolute;left:455px;  top:30px;">22,412.50</p>
-                <p class="card-text" style="position:absolute;left:605px;  top:30px;">224.13</p>
+                <p class="card-text" style="position:absolute;left:90px;  top:30px;">FACTURA N° {{$data->numero_factura}} / {{$data->fecha_emision}}</p>
+                <p class="card-text" style="position:absolute;left:455px;  top:30px;">{{ $data->total }}</p>
+                <p class="card-text" style="position:absolute;left:605px;  top:30px;">{{$data->monto_retencion}}</p>
             </div>
         </div>
 
         <div class="card border border-dark" style="position:absolute;left:0px;  top:520px; width:45rem; height:3rem;">
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:50px;  top:10px;">"""doscientos veinticuatro lempiras con doce centavos"""</p>
-                <p class="card-text" style="position:absolute;left:450px;  top:10px;"><b><h5>Valor Retenido: 224.12</h5></b></p>
+                <p class="card-text" style="position:absolute;left:50px;  top:10px;">"{{$numeroLetras}}"</p>
+                <p class="card-text" style="position:absolute;left:450px;  top:10px;"><b><h5>Valor Retenido: {{$data->monto_retencion}}</h5></b></p>
             </div>
         </div>
 
         <div style="position:absolute;left:0px;  top:820px;  width:45rem;">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;">_______________________________________</p>
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;">_______________________________________</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:25px; ">FACTURA N 010-001-01-00418759 / 16/12/2021</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:25px; ">FACTURA N° {{$data->numero_factura}} / {{$data->fecha_emision}}</p>
                 <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
         </div>
     </div>

@@ -13,6 +13,8 @@ use Validator;
 use Illuminate\Support\Facades\File;
 use PDF;
 
+use Luecano\NumeroALetras\NumeroALetras;
+
 use App\Models\ModelPagoCompra;
 use App\Models\ModelCompra;
 use App\Models\ModelCAI;
@@ -362,20 +364,41 @@ class PagosCompra extends Component
        }
     }
 
-    public function retencionDocumentoPDF(){
-        $data = [
-            'titulo' => 'Styde.net'
-        ];
-
+    public function retencionDocumentoPDF($idCompra){
+        $data = DB::SELECTONE("
+        select 
+        compra.numero_orden,
+        compra.cai_retencion,
+        DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
+        cai.cai as numeroCai,
+        cai.numero_inicial,
+        cai.numero_final,
+        proveedores.nombre,
+        proveedores.rtn,
+        (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
+        compra.numero_factura,
+        date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
+        FORMAT(compra.monto_retencion, 2) as monto_retencion,
+        FORMAT(compra.total, 2) as total
+        from compra
+        inner join cai 
+        ON cai.id = compra.cai_id
+        inner join proveedores
+        on compra.proveedores_id = proveedores.id
+        where compra.id = ".$idCompra
+        );
+       
         /*$pdf = PDF::loadView('/pdf/retencion', $data)
         ->stream('archivo.pdf');
         */
 
         //view()->share('/pdf/retencion',$data);
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($data->monto_retencion, 2 ,'LEMPIRAS','CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/retencion', $data)->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/retencion', compact('data','numeroLetras'))->setPaper('letter');
         // download PDF file with download method
-        return $pdf->stream('pdf_file.pdf');
+        return $pdf->stream("compra numero_".$data->numero_orden.".pdf");
 
         // return view('/pdf/retencion')->with($data);
     }

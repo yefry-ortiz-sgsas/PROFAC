@@ -64,6 +64,7 @@
                             </table>
 
                         </div>
+                        <a id="btn_print_retencion" class="btn btn-w-m btn-success d-none" href="/compra/retencion/documento/{{$id}}" target="_blank"><i class="fa-solid fa-print "></i> Imprimir Documento De Retención</a>
                     </div>
                 </div>
             </div>
@@ -274,6 +275,11 @@
             document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.debito); 
             document.getElementById("totalComra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.total);
             document.getElementById("retencion").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.monto_retencion);
+
+            if(data.numero_secuencia_retencion){
+               let btn= document.getElementById('btn_print_retencion');
+               btn.classList.remove("d-none");
+            }
 
             })
             .catch( err=>{
