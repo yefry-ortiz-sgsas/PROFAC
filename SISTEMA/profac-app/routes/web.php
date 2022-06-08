@@ -17,7 +17,7 @@ use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Clientes\Cliente;
-use App\Http\Livewire\ventas\ListadoFacturas;
+use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
 use App\Http\Livewire\Ventas\DetalleVenta;
 use App\Http\Livewire\Ventas\Cobros;

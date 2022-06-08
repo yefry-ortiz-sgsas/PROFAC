@@ -15,6 +15,7 @@ use PDF;
 
 use App\Models\ModelPagoCompra;
 use App\Models\ModelCompra;
+use App\Models\ModelCAI;
 
 
 class PagosCompra extends Component
@@ -139,12 +140,48 @@ class PagosCompra extends Component
                     $compra->save();
 
                 }else{
+
+                    $cai = DB::SELECTONE("select
+                    id,
+                    numero_inicial,
+                    numero_final,
+                    cantidad_otorgada,
+                    numero_actual
+                    from cai 
+                    where tipo_documento_fiscal_id = 2 and estado_id = 1");
+
+                    if($cai->numero_actual == $cai->cantidad_otorgada){
+
+                        return response()->json([
+                            "title" => "Advertencia",
+                            "icon" => "warning",
+                            "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
+                        ], 200);
+
+                    }
+
+                    $numeroSecuencia = $cai->numero_actual+1;
+                    $arrayCai = explode('-',$cai->numero_final);          
+                    $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
+                    $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
+                    	// dd($cai->cantidad_otorgada);
+
+                    $caiUpdated =  ModelCAI::find($cai->id);
+                    $caiUpdated->numero_actual=$numeroSecuencia;
+                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
+                    $caiUpdated->save();
+
+
+
                     $retencionMonto = $subTotalCompra->sub_total*0.01;
 
                     $compra = ModelCompra::find($request->compraId);
+                    $compra->cai_retencion = $numeroCAI; 
+                    $compra->numero_secuencia_retencion = $numeroSecuencia; 
                     $compra->debito = round($faltantePago,2);
                     $compra->monto_retencion = round($retencionMonto,2);
                     $compra->retenciones_id = 2;
+                    $compra->cai_id =  $cai->id;
                     $compra->save();
                 }
 
@@ -324,7 +361,7 @@ class PagosCompra extends Component
        }
     }
 
-    public function retencionDocumentoPDF(){
+    public function retencionDocumentoPDF($idCompra){
         $data = [
             'titulo' => 'Styde.net'
         ];
@@ -335,7 +372,7 @@ class PagosCompra extends Component
 
         //view()->share('/pdf/retencion',$data);
 
-        $pdf = PDF::loadView('/pdf/factura', $data)->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/retencion', $data)->setPaper('letter');
         // download PDF file with download method
         return $pdf->stream('pdf_file.pdf');
 

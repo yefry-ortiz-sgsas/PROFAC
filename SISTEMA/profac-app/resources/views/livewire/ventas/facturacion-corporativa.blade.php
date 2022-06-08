@@ -955,6 +955,7 @@
                             title: data.title,
                             html: data.text,
                              })
+                             document.getElementById("btn_venta_coorporativa").disabled=false;
                         return;
 
                         }

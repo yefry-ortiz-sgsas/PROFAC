@@ -231,6 +231,7 @@
    
                    datosCompra();
                    $('#tbl_listar_pagos').DataTable().ajax.reload();  
+                   document.getElementById('btn_registro_pago').disabled = false;
                 }
 
                 Swal.fire({
@@ -250,6 +251,7 @@
 
             })
             .catch( err =>{
+                document.getElementById('btn_registro_pago').disabled = false;
                 Swal.fire({
                 icon: 'error',
                 title: 'Error!',
