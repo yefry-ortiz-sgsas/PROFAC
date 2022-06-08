@@ -149,7 +149,7 @@ class PagosCompra extends Component
                     numero_final,
                     cantidad_otorgada,
                     numero_actual
-                    from cai 
+                    from cai
                     where tipo_documento_fiscal_id = 2 and estado_id = 1");
 
                     if($cai->numero_actual == $cai->cantidad_otorgada){
@@ -163,9 +163,9 @@ class PagosCompra extends Component
                     }
 
                     $numeroSecuencia = $cai->numero_actual;
-                    $arrayCai = explode('-',$cai->numero_final);          
+                    $arrayCai = explode('-',$cai->numero_final);
                     $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
-                    $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
+                    $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
                     	// dd($cai->cantidad_otorgada);
 
 
@@ -174,8 +174,8 @@ class PagosCompra extends Component
                     $retencionMonto = $subTotalCompra->sub_total*0.01;
 
                     $compra = ModelCompra::find($request->compraId);
-                    $compra->cai_retencion = $numeroCAI; 
-                    $compra->numero_secuencia_retencion = $numeroSecuencia; 
+                    $compra->cai_retencion = $numeroCAI;
+                    $compra->numero_secuencia_retencion = $numeroSecuencia;
                     $compra->debito = round($faltantePago,2);
                     $compra->monto_retencion = round($retencionMonto,2);
                     $compra->retenciones_id = 2;
