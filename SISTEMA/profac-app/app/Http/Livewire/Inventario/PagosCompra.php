@@ -184,6 +184,7 @@ class PagosCompra extends Component
 
                     $caiUpdated =  ModelCAI::find($cai->id);
                     $caiUpdated->numero_actual=$numeroSecuencia+1;
+                    $caiUpdated->serie=$numeroSecuencia+1;
                     $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
                     $caiUpdated->save();
                 }

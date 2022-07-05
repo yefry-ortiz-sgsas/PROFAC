@@ -43,9 +43,21 @@ class FacturacionEstatal extends Component
          from cliente
              where estado_cliente_id = 1
              and tipo_cliente_id=2
-             and vendedor =".Auth::user()->id."             
+                          
              and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
                  ");
+
+                //  $listaClientes = DB::SELECT("
+                //  select 
+                //      id,
+                //      nombre as text
+                //  from cliente
+                //      where estado_cliente_id = 1
+                //      and tipo_cliente_id=2
+                //      and vendedor =".Auth::user()->id."             
+                //      and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
+                //          ");
+         
  
         return response()->json([
          "results" => $listaClientes,
@@ -337,7 +349,7 @@ class FacturacionEstatal extends Component
                     from cai 
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
-                    if($cai->numero_actual == $cai->cantidad_otorgada){
+                    if($cai->numero_actual > $cai->cantidad_otorgada){
 
                         return response()->json([
                             "title" => "Advertencia",
@@ -352,16 +364,13 @@ class FacturacionEstatal extends Component
 
                 
 
-                    $numeroSecuencia = $cai->numero_actual+1;
+                    $numeroSecuencia = $cai->numero_actual;
                     $arrayCai = explode('-',$cai->numero_final);          
                     $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
                     $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
                     	// dd($cai->cantidad_otorgada);
 
-                    $caiUpdated =  ModelCAI::find($cai->id);
-                    $caiUpdated->numero_actual=$numeroSecuencia;
-                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
-                    $caiUpdated->save();
+
 
                     $montoComision = $request->totalGeneral*0.5;
 
@@ -389,6 +398,17 @@ class FacturacionEstatal extends Component
                     $factura->comision_estado_pagado=0;
                     $factura->pendiente_cobro=$request->totalGeneral;
                     $factura->save();
+
+                    $caiUpdated =  ModelCAI::find($cai->id);
+                    $caiUpdated->numero_actual=$numeroSecuencia+1;
+                    $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
+                    $caiUpdated->save();
+
+                    DB::INSERT("INSERT INTO listado(
+                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
+                    ('".$numeroCAI."','".$numeroSecuencia."','". $cai->numero_inicial."','".$cai->numero_final."','".$cai->cantidad_otorgada."','".$cai->id."','".NOW()."','".NOW()."',0)");
+
+
 
 
 

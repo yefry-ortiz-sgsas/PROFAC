@@ -40,7 +40,7 @@ class Cliente extends Component
     public function obtenerDepartamentos(Request $request){
 
         $listaDeptos = DB::SELECT("
-        select id , nombre from departamento where pais_id =". $request['id']
+        select id , nombre from departamento where pais_id =". $request['id']." order by nombre asc "
         );
 
         return response()->json([
@@ -51,7 +51,7 @@ class Cliente extends Component
 
     public function obtenerMunicipio(Request $request){
         $listaMunicipios = DB::SELECT("
-        select * from municipio where departamento_id = ". $request['id']
+        select id, nombre from municipio where departamento_id = ". $request['id']." order by nombre asc "
         );
 
         return response()->json([

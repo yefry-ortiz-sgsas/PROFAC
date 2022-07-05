@@ -748,7 +748,7 @@ $(document).ready(function() {
                     document.getElementById("clientesCreacionForm").reset();                   
                     $('#clientesCreacionForm').parsley().reset(); 
                     $('#tbl_ClientesLista').DataTable().ajax.reload();       
-
+                    $imagenPrevisualizacion.src = '';
                     
                    
 
@@ -784,12 +784,14 @@ $(document).ready(function() {
                 document.getElementById("clientesCreacionForm").reset();                   
                 $('#clientesCreacionForm').parsley().reset(); 
                 $('#tbl_ClientesLista').DataTable().ajax.reload();   
-
+                $imagenPrevisualizacion.src='';
                 Swal.fire({
                     icon: data.icon,
                     title: data.title,
                     text: data.text,
                 })
+
+
 
             })
             .catch( err => {
@@ -1314,6 +1316,15 @@ $(document).ready(function() {
         }
 
         function activarCliente(idCliente){
+
+            axios.post('ruta',data)
+            .then( response=>{
+
+            })
+            .catch( err =>{
+                
+            })
+
             axios.post('/clientes/activar',{clienteId:idCliente})
             .then( response=>{
                 let data = response.data;

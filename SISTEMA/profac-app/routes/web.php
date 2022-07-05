@@ -21,6 +21,8 @@ use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
 use App\Http\Livewire\Ventas\DetalleVenta;
 use App\Http\Livewire\Ventas\Cobros;
+use App\Http\Livewire\Ventas\Comparacion;
+use App\Http\Livewire\Ventas\Configuracion;
 use App\Http\Livewire\Inventario\Marcas; 
 use App\Http\Livewire\VentasEstatal\FacturacionEstatal; 
 use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal; 
@@ -50,6 +52,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+//---------------------------------------configuracion-------------------------------//
+Route::get('/configuracion/datos',[Configuracion::class,'parametros']); 
+Route::get('/configuracion/datos/compra',[Configuracion::class,'datosCompra']); 
+Route::get('/datos/mes/actual',[Configuracion::class,'datosMesActual']);  
+Route::get('/datos/mes/anterior',[Configuracion::class,'datosMesAnterior']); 
+Route::get('/editar/configuracion/{estado}',[Configuracion::class,'editarEstado']); 
+Route::get('/configuracion/excel',[Configuracion::class,'exportarExcel']); 
+
+
 
 
 
@@ -191,7 +203,14 @@ Route::get('/venta/litsado/pagos/{id}', [Cobros::class,'listarPagos']);
 Route::post('/venta/datos/compra', [Cobros::class,'DatosCompra']);
 Route::post('/venta/cobro/eliminar', [Cobros::class,'eliminarPago']); 
 Route::get('/factura/cooporativo/{idFactura}', [FacturacionCorporativa::class,'imprimirFacturaCoorporativa']);
+Route::get('/ventas/Configuracion',Configuracion::class); 
 
+
+Route::get('/ventas/listado/comparacion',Comparacion::class);
+Route::post('/ventas/listado/uno', [Comparacion::class,'listadoUno']); 
+Route::post('/ventas/listado/dos', [Comparacion::class,'listadoDos']);
+Route::get('/ventas/estado/nd/{idFactura}', [Comparacion::class,'cambioEstadoND']); 
+Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC']);
 //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
 

@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ModelIncidenciaCompra extends Model
 {
-    use HasFactory;
-    use HasFactory;
+    use HasFactory;  
     protected $primaryKey = 'id';
     protected $table = 'incidencia_compra';
     protected $fillable = [

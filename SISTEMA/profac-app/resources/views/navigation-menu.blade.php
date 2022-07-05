@@ -338,12 +338,14 @@
 
                 <li>
                     <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas Coorporativo</span>
+                            class="nav-label" style="color:#ffffff;">Ventas</span>
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
+                        <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
+                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li>
                         {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
                     </ul>
                 </li>

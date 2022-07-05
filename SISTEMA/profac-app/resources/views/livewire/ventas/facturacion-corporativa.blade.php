@@ -63,7 +63,7 @@
                         <h3>Datos de compra <i class="fa-solid fa-cart-shopping"></i></h3>
                     </div>
                     <div class="ibox-content">
-                        <form autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
+                        <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
 
                             
                                 <div class="row">
@@ -411,6 +411,8 @@
 
     @push('scripts')
         <script>
+
+
             var numeroInputs = 0;
             var arregloIdInputs = [];
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
@@ -419,6 +421,7 @@
             var public_path = "{{ asset('catalogo/') }}";
 
 
+           
 
 
             $('#seleccionarCliente').select2({
@@ -695,7 +698,7 @@
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs})">
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -880,14 +883,17 @@
                        
                         if(data.id==1){
                             document.getElementById("nombre_cliente_ventas").readOnly=false;
-                            document.getElementById("rtn_ventas").readOnly=false;
+                            document.getElementById("nombre_cliente_ventas").value='';
 
+                            document.getElementById("rtn_ventas").readOnly=false;
+                            document.getElementById("rtn_ventas").value='';
                             let selectBox = document.getElementById("tipoPagoVenta");
                             selectBox.remove(2); 
 
                         }else{
                             document.getElementById("nombre_cliente_ventas").readOnly=true;
                             document.getElementById("rtn_ventas").readOnly=true;
+                            
                             document.getElementById("nombre_cliente_ventas").value=data.nombre;
                             document.getElementById("rtn_ventas").value=data.rtn;
                             obtenerTipoPago();
