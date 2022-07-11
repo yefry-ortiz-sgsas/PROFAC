@@ -46,11 +46,12 @@
                             <table id="tbl_listar_pagos" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>N° de Pago</th>
-                                        <th>Codigo</th>
-                                        <th>N° Factura</th>
+                                        <th>N° de Pago</th>                                    
+                                       
                                         <th>CAI</th>
                                         <th>Monto</th>
+                                        <th>Tipo de Pago</th>
+                                        <th>Banco</th>
                                         <th>Fecha de Pago</th>
                                         <th>Registrado por:</th>
                                         <th>Registrado en sistema:</th>
@@ -103,7 +104,30 @@
                                     <input class="form-control" required type="text"  id="cliente" name="cliente" readonly
                                         data-parsley-required value="{{$datosFactura->nombre_cliente}}">
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
+                                    <label for="metoPago" class="col-form-label focus-label">Seleccionar Metodo de Pago:<span class="text-danger">*</span></label>
+                                    <select id="metoPago" name="metoPago" class="form-group form-control" style=""
+                                        data-parsley-required onchange="bancosMostrarOcultar()">
+                                        <option value="" selected disabled>--Seleccionar un metodo--</option>
+                                        <option value="1" >Pago con efectivo</option>
+                                        <option value="2" >Transferencia bancaria</option>
+                                    </select>
+                                </div>
+                                <div id="bancoCuenta" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3 d-none">
+                                    <label for="banco" class="col-form-label focus-label">Seleccionar Banco y Cuenta:</label>
+                                    <select id="banco" name="banco" class="form-group form-control" style=""
+                                         >
+                                        <option value="" selected disabled>--Seleccionar un metodo--</option>
+                                        @foreach ($bancos as $item)
+                                        <option value="{{$item->id}}" >{{$item->nombre}}-{{$item->cuenta}}</option>
+                                        @endforeach
+                                    
+                                      
+                                     
+                                    </select>
+                                </div>
+                                
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                                     <label for="monto" class="col-form-label focus-label">Monto a pagar:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="number" step="any" id="monto" name="monto" min="0"
                                         data-parsley-required>
@@ -158,17 +182,19 @@
                                 {
                                     data: 'contador'
                                 },
-                                {
-                                    data: 'id'
-                                },
-                                {
-                                    data: 'numero_factura'
-                                },
+
+       
                                 {
                                     data: 'cai'
                                 },
                                 {
                                     data: 'monto'
+                                },
+                                {
+                                    data: 'tipo_pago'
+                                },
+                                {
+                                    data: 'banco'
                                 },
                                 {
                                     data: 'fecha'
@@ -250,6 +276,8 @@
 
             })
             .catch( err =>{
+                $('#modal_registro_pagos').modal('hide')  
+                document.getElementById('btn_registro_pago').disabled = false;
                 Swal.fire({
                 icon: 'error',
                 title: 'Error!',
@@ -334,6 +362,22 @@
             })
 
         }
+
+        function bancosMostrarOcultar(){
+            let meotodo = document.getElementById("metoPago");
+            let element = document.getElementById('bancoCuenta');
+
+            if(meotodo.value==1){
+              
+                element.classList.add("d-none");
+            }else{
+                element.classList.remove("d-none");
+            }
+        }
+                       
+
+
+
 
 
 

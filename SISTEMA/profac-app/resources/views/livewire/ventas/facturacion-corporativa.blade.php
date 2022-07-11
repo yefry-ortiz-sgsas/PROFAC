@@ -2,30 +2,41 @@
     @push('styles')
         <style>
 
-                /* Chrome, Safari, Edge, Opera */
-                input::-webkit-outer-spin-button,
-                input::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-                }
-
-                /* Firefox */
-                input[type=number] {
-                -moz-appearance: textfield;
-                }
+      /* #divProductos  input {
+        font-size: 0.8rem;
+        
+        
+      } */
 
 
+      .img-size{
+       /*width: 10rem*/
+       width: 100%; 
+       height:20rem;
+       margin: 0 auto;
+      }
 
-                @media (max-width: 767.5px) {
-                .hide-container {
-                    display: none;
-                }
+      @media (min-width: 670px) and (max-width:767px){
+        .img-size{
+       /*width: 10rem*/
+       width: 85%; 
+       height:20rem;
+       margin: 0 auto;
+      }
+    }
 
-            }
+      @media (min-width: 768px) and (max-width:960px){
+        .img-size{
+       /*width: 10rem*/
+       width: 75%; 
+       height:12rem;
+       margin: 0 auto;
+       background-color: blue
+      }
 
-            .center-div{
-                text-align: center
-            }
+      }
+
+
 
         </style>
     @endpush
@@ -542,7 +553,7 @@
                             console.log("entro")
                             htmlImagenes += `                                                
                             <div class="carousel-item active " >
-                                <img class="d-block  " src="${public_path+'/'+'noimage.png'}" alt="noimage.png" style="width: 100%; height:20rem" >
+                                <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
                             </div>`
 
                             document.getElementById('bloqueImagenes').innerHTML = htmlImagenes;
@@ -556,13 +567,13 @@
                                 if (element.contador == 1) {
                                     htmlImagenes += `                                                
                             <div class="carousel-item active " >
-                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
+                                <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
                                 } else {
 
                                     htmlImagenes += `                                                
                             <div class="carousel-item  " >
-                                <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
+                                <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
 
                                 }

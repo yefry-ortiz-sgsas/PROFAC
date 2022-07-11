@@ -95,6 +95,7 @@ class Cliente extends Component
        DB::beginTransaction(); 
 
         //dd($request->all());
+        //dd(str_replace(",","",$request->credito));
 
         if ($request->file('foto_cliente') <> null) {
             $estado_img =1;
@@ -104,7 +105,7 @@ class Cliente extends Component
             $path = public_path() . '/img_cliente';                      
             $archivo->move($path, $name);                
             
-
+           
             $cliente = new ModelCliente;
             $cliente->nombre = $request->nombre_cliente ;
             $cliente->direccion = $request->direccion_cliente ;
@@ -112,7 +113,7 @@ class Cliente extends Component
             $cliente->rtn = $request->rtn_cliente;
             $cliente->correo = $request->correo_cliente ; 
             $cliente->url_imagen = $name;
-            $cliente->credito = $request->credito; 
+            $cliente->credito = str_replace(",","",$request->credito); 
             $cliente->latitud =$request->latitud_cliente;
             $cliente->longitud =$request->longitud_cliente;
             $cliente->tipo_cliente_id = $request->categoria_cliente;
@@ -150,7 +151,7 @@ class Cliente extends Component
                 $cliente->telefono_empresa = $request->telefono_cliente ;
                 $cliente->rtn = $request->rtn_cliente;
                 $cliente->correo = $request->correo_cliente ;    
-                $cliente->credito = $request->credito;
+                $cliente->credito = str_replace(",","",$request->credito);
                 $cliente->latitud =$request->latitud_cliente;
                 $cliente->longitud =$request->longitud_cliente;
                 $cliente->tipo_cliente_id = $request->categoria_cliente;

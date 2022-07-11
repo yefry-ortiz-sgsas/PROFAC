@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 20-06-2022 a las 19:57:35
+-- Tiempo de generación: 09-07-2022 a las 06:59:57
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 8.0.16
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `profac_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `banco`
+--
+
+CREATE TABLE `banco` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `cuenta` varchar(45) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `users_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `banco`
+--
+
+INSERT INTO `banco` (`id`, `nombre`, `cuenta`, `created_at`, `updated_at`, `users_id`) VALUES
+(1, 'Banco Atlantida', '22775544', '2022-07-06 03:38:27', '2022-07-06 03:38:27', 2),
+(2, 'Banco Ficohsa', '33447788', '2022-07-06 03:38:27', '2022-07-06 03:38:27', 2);
 
 -- --------------------------------------------------------
 
@@ -45,8 +68,8 @@ CREATE TABLE `bodega` (
 --
 
 INSERT INTO `bodega` (`id`, `nombre`, `direccion`, `estado_id`, `municipio_id`, `encargado_bodega`, `created_at`, `updated_at`, `latitud`, `longitud`) VALUES
-(1, 'Bodega 1', 'Tegucigalpa', 1, 110, 2, '2022-04-28 04:25:49', '2022-04-05 22:04:40', NULL, NULL),
-(2, 'Bodega 2', 'Comayagua', 1, 110, 4, '2022-04-28 04:25:55', '2022-04-08 06:10:17', NULL, NULL);
+(1, 'Bodega 1', 'Tegucigalpa', 1, 110, 2, '2022-06-22 18:18:05', '2022-04-05 22:04:40', '14.051166', '-87.218651'),
+(2, 'Bodega 2', 'Comayagua', 1, 110, 4, '2022-06-22 18:18:40', '2022-04-08 06:10:17', '14.390777', '-87.617484');
 
 -- --------------------------------------------------------
 
@@ -79,8 +102,8 @@ CREATE TABLE `cai` (
 --
 
 INSERT INTO `cai` (`id`, `cai`, `punto_de_emision`, `cantidad_solicitada`, `cantidad_otorgada`, `numero_actual`, `serie`, `cantidad_no_utilizada`, `numero_inicial`, `numero_final`, `numero_base`, `fecha_limite_emision`, `tipo_documento_fiscal_id`, `estado_id`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, '000-001-01-00000001', 'INVERCIONES VALENCIA', 5000, 5000, 6, 2, 4995, '000-001-01-00000001', '000-001-01-00005000', '000-001-01', '2022-09-24', 1, 1, 2, '2022-05-26 01:51:54', '2022-06-20 19:55:48'),
-(2, '6ED2D4-868337-6741A2-EB18BA-A8FE57-37', 'INVERCIONES VALENCIA', 24, 24, 652, 652, 23, '000-001-05-00000651', '000-001-05-00000675', '000-001-05', '2022-09-11', 2, 1, 4, '2022-06-08 01:26:28', '2022-06-08 01:01:04');
+(1, '000-001-01-00000001', 'INVERCIONES VALENCIA', 5000, 5000, 1, 1, 4990, '000-001-01-00000001', '000-001-01-00005000', '000-001-01', '2022-09-24', 1, 1, 2, '2022-05-26 01:51:54', '2022-07-06 19:52:54'),
+(2, '6ED2D4-868337-6741A2-EB18BA-A8FE57-37', 'INVERCIONES VALENCIA', 24, 24, 1, 1, 23, '000-001-05-00000651', '000-001-05-00000675', '000-001-05', '2022-09-11', 2, 1, 4, '2022-06-08 01:26:28', '2022-07-01 23:17:53');
 
 -- --------------------------------------------------------
 
@@ -159,8 +182,12 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`id`, `nombre`, `direccion`, `telefono_empresa`, `rtn`, `correo`, `latitud`, `longitud`, `url_imagen`, `credito`, `tipo_cliente_id`, `tipo_personalidad_id`, `categoria_id`, `vendedor`, `users_id`, `estado_cliente_id`, `municipio_id`, `created_at`, `updated_at`) VALUES
 (1, 'Cliente Generico', 'Honduras', '222222', '00000000000000', 'email@email.com', NULL, NULL, NULL, 100000, 1, 1, 1, 3, 3, 1, 110, '2022-06-06 20:31:04', '2022-06-07 04:06:01'),
-(4, 'Corte suprema', 'Frente a cascadas mall, col miraflores', '22778855', '08011990123455', 'email@gmail.com', '', '', 'IMG_1652994899.jpg', 30000, 2, 2, 2, 5, 3, 1, 110, '2022-05-19 17:29:45', '2022-06-20 19:36:05'),
-(5, 'Maximax', 'comayaguela', '22445588', '08011990123455', 'maxi@email.com', NULL, NULL, 'IMG_1654574745.png', 50000, 1, 2, 1, 3, 3, 1, 110, '2022-05-24 23:14:04', '2022-06-07 04:05:45');
+(4, 'Corte suprema', 'Frente a cascadas mall, col miraflores', '22778855', '08011990123455', 'email@gmail.com', '', '', 'IMG_1652994899.jpg', 30000, 2, 2, 2, 3, 3, 1, 110, '2022-05-19 17:29:45', '2022-06-20 19:36:05'),
+(5, 'Maximax', 'comayaguela', '22445588', '08011990123455', 'maxi@email.com', NULL, NULL, 'IMG_1654574745.png', 50000, 1, 2, 1, 3, 3, 1, 110, '2022-05-24 23:14:04', '2022-06-07 04:05:45'),
+(6, 'Gobernacion', 'boulevard Juan pablo II, Tegucigalpa', '222335588', '08011969123456', 'gobernacion@email.hn', NULL, NULL, 'IMG_1656729251.png', 100000, 2, 2, 2, 3, 3, 1, 110, '2022-07-02 02:34:11', '2022-07-02 02:34:11'),
+(7, 'Secretaria de Seguridad', 'Salida a lepaterique', '22235566', '08011969123456', 'seguridad@email.hn', NULL, NULL, 'IMG_1656729847.png', 50000, 2, 2, 2, 3, 3, 1, 110, '2022-07-02 02:44:07', '2022-07-02 02:44:07'),
+(8, 'Papeleria Millenuim', 'Matro Mall, Cuarto Nivel, local 25', '22556688', '08011995884566', 'email@gmail.com', NULL, NULL, 'IMG_1656975938.jpg', 25000, 1, 1, 1, 3, 3, 1, 110, '2022-07-04 23:05:38', '2022-07-04 23:05:38'),
+(9, 'Solaris', 'Centro de tegucigalpa', '22558877', '08011990123456', 'email@gmail.com', NULL, NULL, NULL, 25000.5, 1, 1, 1, 5, 3, 1, 110, '2022-07-06 00:41:43', '2022-07-06 00:41:43');
 
 -- --------------------------------------------------------
 
@@ -266,7 +293,14 @@ INSERT INTO `contacto` (`id`, `nombre`, `telefono`, `cliente_id`, `estado_id`, `
 (12, 'Pedro Chata', '88995566', 5, 1, '2022-05-24 23:14:04', '2022-05-24 23:14:04'),
 (13, 'Julio aguilar', '88447722', 5, 1, '2022-05-24 23:14:04', '2022-05-24 23:14:04'),
 (14, 'Pedro Chata', '88557799', 4, 1, '2022-06-20 19:36:05', '2022-06-20 19:36:05'),
-(15, 'Carlos Menchaca', '97885566', 4, 1, '2022-06-20 19:36:05', '2022-06-20 19:36:05');
+(15, 'Carlos Menchaca', '97885566', 4, 1, '2022-06-20 19:36:05', '2022-06-20 19:36:05'),
+(16, 'Pedro Chata', '22558877', 6, 1, '2022-07-02 02:34:11', '2022-07-02 02:34:11'),
+(17, 'Julito aguilar', '22335577', 6, 1, '2022-07-02 02:34:11', '2022-07-02 02:34:11'),
+(18, 'Pedro Chata', '99887755', 7, 1, '2022-07-02 02:44:07', '2022-07-02 02:44:07'),
+(19, 'Julito aguilar', '88996655', 7, 1, '2022-07-02 02:44:07', '2022-07-02 02:44:07'),
+(20, 'Juan Urquia', '88774455', 8, 1, '2022-07-04 23:05:38', '2022-07-04 23:05:38'),
+(21, 'Julito aguilar', '88774455', 9, 1, '2022-07-06 00:41:43', '2022-07-06 00:41:43'),
+(22, 'Pedro Chata', '99885544', 9, 1, '2022-07-06 00:41:43', '2022-07-06 00:41:43');
 
 -- --------------------------------------------------------
 
@@ -323,6 +357,26 @@ CREATE TABLE `entrega_programada` (
   `factura_id` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
   `lote` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `enumeracion`
+--
+
+CREATE TABLE `enumeracion` (
+  `id` int(11) NOT NULL,
+  `numero` varchar(45) NOT NULL,
+  `secuencia` int(11) NOT NULL,
+  `numero_inicial` varchar(45) NOT NULL,
+  `numero_final` varchar(45) NOT NULL,
+  `cantidad_otorgada` varchar(45) NOT NULL,
+  `cai_id` int(11) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `eliminado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -487,18 +541,6 @@ CREATE TABLE `factura` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `factura`
---
-
-INSERT INTO `factura` (`id`, `numero_factura`, `cai`, `numero_secuencia_cai`, `nombre_cliente`, `rtn`, `sub_total`, `isv`, `total`, `pendiente_cobro`, `credito`, `fecha_emision`, `fecha_vencimiento`, `tipo_pago_id`, `cai_id`, `estado_venta_id`, `cliente_id`, `vendedor`, `monto_comision`, `tipo_venta_id`, `estado_factura_id`, `comision_estado_pagado`, `created_at`, `updated_at`) VALUES
-(1, '2022-1', '000-001-01-00000001', 1, 'Maximax', '08011990123455', 550, 82.5, 632.5, 632.5, 632.5, '2022-06-20', '2022-06-20', 1, 1, 1, 5, 3, 316.25, 1, 1, 0, '2022-06-20 19:45:30', '2022-06-20 19:56:24'),
-(2, '2022-2', '000-001-01-00000002', 2, 'Corte suprema', '08011990123455', 500, 75, 575, 575, 575, '2022-06-20', '2022-06-20', 1, 1, 1, 4, 3, 287.5, 2, 1, 0, '2022-06-20 19:46:40', '2022-06-20 19:46:40'),
-(3, '2022-3', '000-001-01-00000003', 3, 'Corte suprema', '08011990123455', 129.4, 19.41, 148.81, 148.81, 148.81, '2022-06-20', '2022-06-20', 1, 1, 1, 4, 3, 74.405, 2, 1, 0, '2022-06-20 19:50:58', '2022-06-20 19:50:58'),
-(4, '2022-4', '000-001-01-00000004', 4, 'Maximax', '08011990123455', 150, 22.5, 172.5, 172.5, 172.5, '2022-06-20', '2022-06-20', 1, 1, 1, 5, 3, 86.25, 1, 1, 0, '2022-06-20 19:53:23', '2022-06-20 19:53:23'),
-(5, '2022-5', '000-001-01-00000005', 5, 'Corte suprema', '08011990123455', 575, 86.25, 661.25, 661.25, 661.25, '2022-06-20', '2022-06-20', 1, 1, 1, 4, 3, 330.625, 2, 1, 0, '2022-06-20 19:54:10', '2022-06-20 19:54:10'),
-(6, '2022-6', '000-001-01-00000001', 1, 'Juan perez', NULL, 175, 26.25, 201.25, 201.25, 201.25, '2022-06-20', '2022-06-20', 1, 1, 1, 1, 3, 100.625, 1, 2, 0, '2022-06-20 19:55:48', '2022-06-20 19:56:24');
-
 -- --------------------------------------------------------
 
 --
@@ -610,6 +652,25 @@ CREATE TABLE `interes` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `listado`
+--
+
+CREATE TABLE `listado` (
+  `id` int(11) NOT NULL,
+  `numero` varchar(45) NOT NULL,
+  `secuencia` int(11) NOT NULL,
+  `numero_inicial` varchar(45) NOT NULL,
+  `numero_final` varchar(45) NOT NULL,
+  `cantidad_otorgada` varchar(45) NOT NULL,
+  `cai_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `eliminado` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `log_estado`
 --
 
@@ -688,7 +749,140 @@ INSERT INTO `log_translado` (`id`, `origen`, `destino`, `cantidad`, `users_id`, 
 (25, 7, NULL, 20, 3, 'Venta de producto', 4, '2022-06-20 19:53:23', '2022-06-20 19:53:23'),
 (26, 1, NULL, 5, 3, 'Venta de producto', 5, '2022-06-20 19:54:10', '2022-06-20 19:54:10'),
 (27, 5, NULL, 20, 3, 'Venta de producto', 6, '2022-06-20 19:55:48', '2022-06-20 19:55:48'),
-(28, 7, NULL, 10, 3, 'Venta de producto', 6, '2022-06-20 19:55:48', '2022-06-20 19:55:48');
+(28, 7, NULL, 10, 3, 'Venta de producto', 6, '2022-06-20 19:55:48', '2022-06-20 19:55:48'),
+(29, 5, NULL, 50, 3, 'Venta de producto', 7, '2022-06-22 18:19:46', '2022-06-22 18:19:46'),
+(30, 2, NULL, 10, 3, 'Venta de producto', 1, '2022-07-01 22:23:33', '2022-07-01 22:23:33'),
+(31, 5, NULL, 100, 3, 'Venta de producto', 2, '2022-07-01 22:24:31', '2022-07-01 22:24:31'),
+(32, 7, NULL, 25, 3, 'Venta de producto', 3, '2022-07-01 22:30:53', '2022-07-01 22:30:53'),
+(33, 7, NULL, 20, 3, 'Venta de producto', 5, '2022-07-01 23:17:53', '2022-07-01 23:17:53'),
+(34, 1, NULL, 10, 3, 'Venta de producto', 18, '2022-07-02 00:30:32', '2022-07-02 00:30:32'),
+(35, 5, NULL, 30, 3, 'Venta de producto', 19, '2022-07-02 02:17:13', '2022-07-02 02:17:13'),
+(36, 5, NULL, 100, 3, 'Venta de producto', 23, '2022-07-02 02:27:46', '2022-07-02 02:27:46'),
+(37, 5, NULL, 100, 3, 'Venta de producto', 24, '2022-07-02 02:29:50', '2022-07-02 02:29:50'),
+(38, 7, NULL, 30, 3, 'Venta de producto', 25, '2022-07-02 02:30:40', '2022-07-02 02:30:40'),
+(39, 3, NULL, 5, 3, 'Venta de producto', 26, '2022-07-02 02:52:52', '2022-07-02 02:52:52'),
+(40, 4, NULL, 5, 3, 'Venta de producto', 26, '2022-07-02 02:52:52', '2022-07-02 02:52:52'),
+(41, 5, NULL, 50, 3, 'Venta de producto', 29, '2022-07-02 03:02:53', '2022-07-02 03:02:53'),
+(42, 3, NULL, 5, 3, 'Venta de producto', 1, '2022-07-02 03:21:38', '2022-07-02 03:21:38'),
+(43, 4, NULL, 5, 3, 'Venta de producto', 1, '2022-07-02 03:21:38', '2022-07-02 03:21:38'),
+(44, 1, NULL, 5, 3, 'Venta de producto', 2, '2022-07-02 03:23:00', '2022-07-02 03:23:00'),
+(45, 7, NULL, 20, 3, 'Venta de producto', 3, '2022-07-02 03:24:14', '2022-07-02 03:24:14'),
+(46, 5, NULL, 50, 3, 'Venta de producto', 4, '2022-07-02 03:24:58', '2022-07-02 03:24:58'),
+(47, 1, NULL, 5, 3, 'Venta de producto', 5, '2022-07-02 03:26:48', '2022-07-02 03:26:48'),
+(48, 1, NULL, 5, 3, 'Venta de producto', 1, '2022-07-02 03:50:59', '2022-07-02 03:50:59'),
+(49, 7, NULL, 20, 3, 'Venta de producto', 2, '2022-07-02 03:51:54', '2022-07-02 03:51:54'),
+(50, 3, NULL, 5, 3, 'Venta de producto', 1, '2022-07-02 03:58:00', '2022-07-02 03:58:00'),
+(51, 4, NULL, 5, 3, 'Venta de producto', 1, '2022-07-02 03:58:00', '2022-07-02 03:58:00'),
+(52, 5, NULL, 50, 3, 'Venta de producto', 2, '2022-07-02 03:59:08', '2022-07-02 03:59:08'),
+(53, 5, NULL, 100, 3, 'Venta de producto', 3, '2022-07-02 04:06:25', '2022-07-02 04:06:25'),
+(54, 7, NULL, 25, 3, 'Venta de producto', 4, '2022-07-02 04:07:11', '2022-07-02 04:07:11'),
+(55, 1, NULL, 25, 3, 'Venta de producto', 5, '2022-07-02 04:08:22', '2022-07-02 04:08:22'),
+(56, 7, NULL, 15, 3, 'Venta de producto', 6, '2022-07-02 04:09:47', '2022-07-02 04:09:47'),
+(57, 5, NULL, 70, 3, 'Venta de producto', 7, '2022-07-03 00:34:53', '2022-07-03 00:34:53'),
+(58, 7, NULL, 25, 3, 'Venta de producto', 8, '2022-07-03 00:35:36', '2022-07-03 00:35:36'),
+(59, 2, NULL, 5, 3, 'Venta de producto', 9, '2022-07-03 00:36:18', '2022-07-03 00:36:18'),
+(60, 7, NULL, 20, 3, 'Venta de producto', 10, '2022-07-03 00:37:16', '2022-07-03 00:37:16'),
+(61, 7, NULL, 15, 3, 'Venta de producto', 11, '2022-07-03 00:38:38', '2022-07-03 00:38:38'),
+(62, 5, NULL, 80, 3, 'Venta de producto', 12, '2022-07-03 00:39:54', '2022-07-03 00:39:54'),
+(63, 1, NULL, 10, 3, 'Venta de producto', 1, '2022-07-04 20:04:32', '2022-07-04 20:04:32'),
+(64, 5, NULL, 100, 3, 'Venta de producto', 2, '2022-07-04 20:05:17', '2022-07-04 20:05:17'),
+(65, 7, NULL, 25, 3, 'Venta de producto', 3, '2022-07-04 20:06:20', '2022-07-04 20:06:20'),
+(66, 6, NULL, 25, 3, 'Venta de producto', 4, '2022-07-04 20:11:38', '2022-07-04 20:11:38'),
+(67, 5, NULL, 25, 3, 'Venta de producto', 5, '2022-07-04 22:28:47', '2022-07-04 22:28:47'),
+(68, 1, NULL, 10, 3, 'Venta de producto', 6, '2022-07-04 22:29:38', '2022-07-04 22:29:38'),
+(69, 1, NULL, 10, 3, 'Venta de producto', 1, '2022-07-04 22:36:52', '2022-07-04 22:36:52'),
+(70, 5, NULL, 25, 3, 'Venta de producto', 2, '2022-07-04 22:38:28', '2022-07-04 22:38:28'),
+(71, 3, NULL, 5, 3, 'Venta de producto', 3, '2022-07-04 22:39:41', '2022-07-04 22:39:41'),
+(72, 4, NULL, 5, 3, 'Venta de producto', 3, '2022-07-04 22:39:41', '2022-07-04 22:39:41'),
+(73, 7, NULL, 25, 3, 'Venta de producto', 4, '2022-07-04 22:40:26', '2022-07-04 22:40:26'),
+(74, 5, NULL, 25, 3, 'Venta de producto', 5, '2022-07-04 22:42:08', '2022-07-04 22:42:08'),
+(75, 7, NULL, 30, 3, 'Venta de producto', 6, '2022-07-04 22:43:10', '2022-07-04 22:43:10'),
+(76, 5, NULL, 100, 3, 'Venta de producto', 7, '2022-07-04 22:46:49', '2022-07-04 22:46:49'),
+(77, 7, NULL, 30, 3, 'Venta de producto', 8, '2022-07-04 22:50:21', '2022-07-04 22:50:21'),
+(78, 5, NULL, 50, 3, 'Venta de producto', 9, '2022-07-04 22:50:59', '2022-07-04 22:50:59'),
+(79, 1, NULL, 5, 3, 'Venta de producto', 1, '2022-07-04 23:11:16', '2022-07-04 23:11:16'),
+(80, 5, NULL, 100, 3, 'Venta de producto', 2, '2022-07-04 23:11:39', '2022-07-04 23:11:39'),
+(81, 7, NULL, 25, 3, 'Venta de producto', 3, '2022-07-04 23:12:30', '2022-07-04 23:12:30'),
+(82, 5, NULL, 53, 3, 'Venta de producto', 4, '2022-07-04 23:13:29', '2022-07-04 23:13:29'),
+(83, 7, NULL, 56, 3, 'Venta de producto', 5, '2022-07-04 23:16:32', '2022-07-04 23:16:32'),
+(84, 6, NULL, 20, 3, 'Venta de producto', 6, '2022-07-04 23:16:58', '2022-07-04 23:16:58'),
+(85, 1, NULL, 10, 3, 'Venta de producto', 1, '2022-07-04 23:24:20', '2022-07-04 23:24:20'),
+(86, 3, NULL, 5, 3, 'Venta de producto', 2, '2022-07-04 23:24:43', '2022-07-04 23:24:43'),
+(87, 4, NULL, 5, 3, 'Venta de producto', 2, '2022-07-04 23:24:43', '2022-07-04 23:24:43'),
+(88, 5, NULL, 50, 3, 'Venta de producto', 3, '2022-07-04 23:25:31', '2022-07-04 23:25:31'),
+(89, 1, NULL, 6, 3, 'Venta de producto', 1, '2022-07-04 23:45:38', '2022-07-04 23:45:38'),
+(90, 5, NULL, 10, 3, 'Venta de producto', 2, '2022-07-04 23:46:30', '2022-07-04 23:46:30'),
+(91, 7, NULL, 10, 3, 'Venta de producto', 3, '2022-07-04 23:46:48', '2022-07-04 23:46:48'),
+(92, 1, NULL, 9, 3, 'Venta de producto', 4, '2022-07-04 23:47:21', '2022-07-04 23:47:21'),
+(93, 7, NULL, 23, 3, 'Venta de producto', 5, '2022-07-04 23:48:42', '2022-07-04 23:48:42'),
+(94, 1, NULL, 10, 3, 'Venta de producto', 1, '2022-07-05 01:20:49', '2022-07-05 01:20:49'),
+(95, 1, NULL, 11, 3, 'Venta de producto', 2, '2022-07-05 01:21:53', '2022-07-05 01:21:53'),
+(96, 1, NULL, 4, 3, 'Venta de producto', 3, '2022-07-05 01:41:49', '2022-07-05 01:41:49'),
+(97, 3, NULL, 5, 3, 'Venta de producto', 4, '2022-07-05 01:45:00', '2022-07-05 01:45:00'),
+(98, 7, NULL, 15, 3, 'Venta de producto', 5, '2022-07-05 01:46:40', '2022-07-05 01:46:40'),
+(99, 5, NULL, 20, 3, 'Venta de producto', 6, '2022-07-05 01:47:23', '2022-07-05 01:47:23'),
+(100, 7, NULL, 10, 3, 'Venta de producto', 7, '2022-07-05 02:05:53', '2022-07-05 02:05:53'),
+(101, 5, NULL, 20, 3, 'Venta de producto', 1, '2022-07-05 02:08:41', '2022-07-05 02:08:41'),
+(102, 7, NULL, 22, 3, 'Venta de producto', 2, '2022-07-05 02:09:38', '2022-07-05 02:09:38'),
+(103, 1, NULL, 20, 3, 'Venta de producto', 1, '2022-07-05 02:12:53', '2022-07-05 02:12:53'),
+(104, 1, NULL, 5, 3, 'Venta de producto', 2, '2022-07-05 02:13:13', '2022-07-05 02:13:13'),
+(105, 7, NULL, 19, 3, 'Venta de producto', 3, '2022-07-05 02:14:16', '2022-07-05 02:14:16'),
+(106, 7, NULL, 13, 3, 'Venta de producto', 4, '2022-07-05 02:14:54', '2022-07-05 02:14:54'),
+(107, 6, NULL, 56, 3, 'Venta de producto', 5, '2022-07-05 02:15:39', '2022-07-05 02:15:39'),
+(108, 2, NULL, 5, 3, 'Venta de producto', 6, '2022-07-05 02:16:16', '2022-07-05 02:16:16'),
+(109, 7, NULL, 8, 3, 'Venta de producto', 7, '2022-07-05 02:17:48', '2022-07-05 02:17:48'),
+(110, 3, NULL, 5, 3, 'Venta de producto', 8, '2022-07-05 02:18:48', '2022-07-05 02:18:48'),
+(111, 7, NULL, 28, 3, 'Venta de producto', 1, '2022-07-05 02:32:56', '2022-07-05 02:32:56'),
+(112, 6, NULL, 27, 3, 'Venta de producto', 2, '2022-07-05 02:33:32', '2022-07-05 02:33:32'),
+(113, 6, NULL, 73, 3, 'Venta de producto', 3, '2022-07-05 02:34:23', '2022-07-05 02:34:23'),
+(114, 7, NULL, 23, 3, 'Venta de producto', 4, '2022-07-05 02:35:36', '2022-07-05 02:35:36'),
+(115, 7, NULL, 9, 3, 'Venta de producto', 5, '2022-07-05 02:41:15', '2022-07-05 02:41:15'),
+(116, 6, NULL, 33, 3, 'Venta de producto', 6, '2022-07-05 02:45:58', '2022-07-05 02:45:58'),
+(117, 7, NULL, 28, 3, 'Venta de producto', 7, '2022-07-05 02:56:44', '2022-07-05 02:56:44'),
+(118, 6, NULL, 7, 3, 'Venta de producto', 8, '2022-07-05 02:57:57', '2022-07-05 02:57:57'),
+(119, 6, NULL, 23, 3, 'Venta de producto', 9, '2022-07-05 03:56:45', '2022-07-05 03:56:45'),
+(120, 7, NULL, 23, 3, 'Venta de producto', 10, '2022-07-05 03:57:04', '2022-07-05 03:57:04'),
+(121, 6, NULL, 37, 3, 'Venta de producto', 11, '2022-07-05 03:57:25', '2022-07-05 03:57:25'),
+(122, 1, NULL, 15, 3, 'Venta de producto', 12, '2022-07-05 03:57:52', '2022-07-05 03:57:52'),
+(123, 7, NULL, 30, 3, 'Venta de producto', 13, '2022-07-05 03:58:16', '2022-07-05 03:58:16'),
+(124, 7, NULL, 13, 3, 'Venta de producto', 14, '2022-07-05 03:58:47', '2022-07-05 03:58:47'),
+(125, 6, NULL, 33, 3, 'Venta de producto', 15, '2022-07-05 03:59:12', '2022-07-05 03:59:12'),
+(126, 7, NULL, 18, 3, 'Venta de producto', 16, '2022-07-05 03:59:42', '2022-07-05 03:59:42'),
+(127, 6, NULL, 27, 3, 'Venta de producto', 17, '2022-07-05 04:00:21', '2022-07-05 04:00:21'),
+(128, 1, NULL, 5, 3, 'Venta de producto', 1, '2022-07-05 18:09:29', '2022-07-05 18:09:29'),
+(129, 6, NULL, 52, 3, 'Venta de producto', 2, '2022-07-05 18:09:50', '2022-07-05 18:09:50'),
+(130, 6, NULL, 48, 3, 'Venta de producto', 3, '2022-07-05 18:10:11', '2022-07-05 18:10:11'),
+(131, 6, NULL, 40, 3, 'Venta de producto', 4, '2022-07-05 18:11:32', '2022-07-05 18:11:32'),
+(132, 7, NULL, 1, 3, 'Venta de producto', 5, '2022-07-05 18:12:03', '2022-07-05 18:12:03'),
+(133, 7, NULL, 25, 3, 'Venta de producto', 6, '2022-07-05 18:12:40', '2022-07-05 18:12:40'),
+(134, 5, NULL, 5, 3, 'Venta de producto', 1, '2022-07-05 18:18:43', '2022-07-05 18:18:43'),
+(135, 1, NULL, 10, 3, 'Venta de producto', 2, '2022-07-05 18:18:59', '2022-07-05 18:18:59'),
+(136, 7, NULL, 10, 3, 'Venta de producto', 3, '2022-07-05 18:19:30', '2022-07-05 18:19:30'),
+(137, 7, NULL, 10, 3, 'Venta de producto', 4, '2022-07-05 18:57:07', '2022-07-05 18:57:07'),
+(138, 5, NULL, 95, 3, 'Venta de producto', 5, '2022-07-05 19:06:32', '2022-07-05 19:06:32'),
+(139, 1, NULL, 10, 3, 'Venta de producto', 1, '2022-07-05 19:56:03', '2022-07-05 19:56:03'),
+(140, 7, NULL, 25, 3, 'Venta de producto', 2, '2022-07-05 19:56:23', '2022-07-05 19:56:23'),
+(141, 7, NULL, 17, 3, 'Venta de producto', 3, '2022-07-05 19:58:58', '2022-07-05 19:58:58'),
+(142, 5, NULL, 15, 3, 'Venta de producto', 4, '2022-07-05 19:59:50', '2022-07-05 19:59:50'),
+(143, 7, NULL, 58, 3, 'Venta de producto', 5, '2022-07-05 20:00:38', '2022-07-05 20:00:38'),
+(144, 7, NULL, 78, 3, 'Venta de producto', 6, '2022-07-05 20:01:06', '2022-07-05 20:01:06'),
+(145, 5, NULL, 75, 3, 'Venta de producto', 7, '2022-07-05 20:04:20', '2022-07-05 20:04:20'),
+(146, 5, NULL, 45, 3, 'Venta de producto', 8, '2022-07-05 20:04:51', '2022-07-05 20:04:51'),
+(147, 7, NULL, 22, 3, 'Venta de producto', 9, '2022-07-05 20:05:15', '2022-07-05 20:05:15'),
+(148, 5, NULL, 12, 3, 'Venta de producto', 10, '2022-07-05 20:05:38', '2022-07-05 20:05:38'),
+(149, 6, NULL, 15, 3, 'Venta de producto', 11, '2022-07-05 20:06:19', '2022-07-05 20:06:19'),
+(150, 6, NULL, 18, 3, 'Venta de producto', 12, '2022-07-05 20:07:08', '2022-07-05 20:07:08'),
+(151, 6, NULL, 15, 3, 'Venta de producto', 13, '2022-07-05 20:08:17', '2022-07-05 20:08:17'),
+(152, 6, NULL, 20, 3, 'Venta de producto', 14, '2022-07-05 20:08:44', '2022-07-05 20:08:44'),
+(153, 6, NULL, 13, 3, 'Venta de producto', 15, '2022-07-05 20:10:17', '2022-07-05 20:10:17'),
+(154, 6, NULL, 19, 3, 'Venta de producto', 16, '2022-07-05 20:10:35', '2022-07-05 20:10:35'),
+(155, 3, NULL, 5, 3, 'Venta de producto', 17, '2022-07-05 20:11:33', '2022-07-05 20:11:33'),
+(156, 4, NULL, 5, 3, 'Venta de producto', 17, '2022-07-05 20:11:33', '2022-07-05 20:11:33'),
+(157, 6, NULL, 25, 3, 'Venta de producto', 18, '2022-07-05 20:12:05', '2022-07-05 20:12:05'),
+(158, 6, NULL, 15, 3, 'Venta de producto', 19, '2022-07-05 20:12:26', '2022-07-05 20:12:26'),
+(159, 6, NULL, 14, 3, 'Venta de producto', 20, '2022-07-05 20:25:46', '2022-07-05 20:25:46'),
+(160, 1, NULL, 15, 3, 'Venta de producto', 21, '2022-07-05 20:26:37', '2022-07-05 20:26:37'),
+(161, 5, NULL, 53, 3, 'Venta de producto', 22, '2022-07-06 19:52:54', '2022-07-06 19:52:54');
 
 -- --------------------------------------------------------
 
@@ -699,6 +893,7 @@ INSERT INTO `log_translado` (`id`, `origen`, `destino`, `cantidad`, `users_id`, 
 CREATE TABLE `marca` (
   `id` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
+  `url_img` varchar(45) DEFAULT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -708,9 +903,11 @@ CREATE TABLE `marca` (
 -- Volcado de datos para la tabla `marca`
 --
 
-INSERT INTO `marca` (`id`, `nombre`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 'Marca 1', 3, '2022-05-23 06:00:00', '2022-05-23 06:00:00'),
-(2, 'Marca 2', 2, '2022-05-24 06:00:00', '2022-05-24 06:00:00');
+INSERT INTO `marca` (`id`, `nombre`, `url_img`, `users_id`, `created_at`, `updated_at`) VALUES
+(1, 'Marca 1', NULL, 3, '2022-05-23 06:00:00', '2022-05-23 06:00:00'),
+(2, 'Marca 2', NULL, 2, '2022-05-24 06:00:00', '2022-05-24 06:00:00'),
+(3, 'Marca 3', 'IMG_1657324939.jpg', 3, '2022-07-09 00:02:19', '2022-07-09 00:02:19'),
+(4, 'Marca 4', 'IMG_1657346515.png', 3, '2022-07-09 00:02:35', '2022-07-09 06:02:41');
 
 -- --------------------------------------------------------
 
@@ -1100,6 +1297,8 @@ CREATE TABLE `pago_venta` (
   `estado_venta_id` int(11) NOT NULL,
   `users_id_elimina` bigint(20) UNSIGNED DEFAULT NULL,
   `fecha_eliminado` date DEFAULT NULL,
+  `banco_id` int(11) DEFAULT NULL,
+  `tipo_pago_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1135,6 +1334,7 @@ CREATE TABLE `parametro` (
   `id` int(11) NOT NULL,
   `metodo` int(11) NOT NULL,
   `estado_encendido` tinyint(4) NOT NULL,
+  `turno` int(11) NOT NULL,
   `igualdad` varchar(45) NOT NULL,
   `monto` double NOT NULL,
   `users_id` bigint(20) UNSIGNED NOT NULL,
@@ -1146,8 +1346,8 @@ CREATE TABLE `parametro` (
 -- Volcado de datos para la tabla `parametro`
 --
 
-INSERT INTO `parametro` (`id`, `metodo`, `estado_encendido`, `igualdad`, `monto`, `users_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, '>', 1000, 2, '2022-06-15 21:05:41', '2022-06-20 19:55:10');
+INSERT INTO `parametro` (`id`, `metodo`, `estado_encendido`, `turno`, `igualdad`, `monto`, `users_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 0, 1, '>', 1000, 2, '2022-06-15 21:05:41', '2022-07-06 19:52:54');
 
 -- --------------------------------------------------------
 
@@ -1311,13 +1511,13 @@ CREATE TABLE `recibido_bodega` (
 --
 
 INSERT INTO `recibido_bodega` (`id`, `compra_id`, `producto_id`, `seccion_id`, `cantidad_compra_lote`, `cantidad_inicial_seccion`, `cantidad_disponible`, `fecha_recibido`, `fecha_expiracion`, `estado_recibido`, `recibido_por`, `comentario`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 9, 50, 25, 20, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:42:48', '2022-06-20 19:54:10'),
-(2, 1, 1, 16, 50, 25, 25, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:43:06', '2022-06-05 03:19:50'),
-(3, 1, 1, 15, 50, 5, 0, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:45:42', '2022-06-20 19:45:30'),
-(4, 1, 1, 15, 50, 5, 5, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 19:47:13', '2022-06-08 14:34:47'),
-(5, 2, 4, 5, 1000, 500, 480, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:21:26', '2022-06-20 19:55:48'),
-(6, 2, 4, 15, 1000, 500, 480, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:22:02', '2022-06-20 19:50:58'),
-(7, 3, 12, 8, 500, 200, 120, '2022-06-06', NULL, 4, 3, NULL, '2022-06-06 20:24:01', '2022-06-20 19:55:48');
+(1, 1, 1, 9, 50, 25, 25, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:42:48', '2022-07-05 20:26:37'),
+(2, 1, 1, 16, 50, 25, 25, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:43:06', '2022-07-05 02:16:16'),
+(3, 1, 1, 15, 50, 5, 5, '2022-05-24', NULL, 4, 3, NULL, '2022-05-25 00:45:42', '2022-07-05 20:11:33'),
+(4, 1, 1, 15, 50, 5, 5, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 19:47:13', '2022-07-05 20:11:33'),
+(5, 2, 4, 5, 1000, 500, 500, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:21:26', '2022-07-06 19:52:54'),
+(6, 2, 4, 15, 1000, 500, 500, '2022-05-25', NULL, 4, 3, NULL, '2022-05-25 20:22:02', '2022-07-05 20:25:46'),
+(7, 3, 12, 8, 500, 200, 200, '2022-06-06', NULL, 4, 3, NULL, '2022-06-06 20:24:01', '2022-07-05 20:05:15');
 
 -- --------------------------------------------------------
 
@@ -1489,7 +1689,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('TS2qCLmaZ7n7mZoWDbEplHjvElG3xhHkrHu7s2oN', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiZDl5cHA1VEFsYzUyZmhJS1J5TW45Z25vS0IwQXRTeEtlSjFZaUZYMCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC92ZW50YXMvbGlzdGFkby9jb21wYXJhY2lvbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjM7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTAkc0xSbEpoMWVtTjA4Wml2TER3a0dSdWNUdE1FczhHYjNNSS5sUmFEVmZvei54L3BxbXRDQkMiO30=', 1655754984);
+('N1gze41NqxrDsS2GhG91Y6X6OjH5AvthzEAg260Y', 3, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSXBiVUJub2tDMlNaZDRsbTU0UmxNaDk4c01MTkFRdlRGNU5ieGg4TSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC92ZW50YXMvc2VsZWNjaW9uYXIiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJHNMUmxKaDFlbU4wOFppdkxEd2tHUnVjVHRNRXM4R2IzTUkubFJhRFZmb3oueC9wcW10Q0JDIjt9', 1657349130);
 
 -- --------------------------------------------------------
 
@@ -1529,7 +1729,10 @@ INSERT INTO `teams` (`id`, `user_id`, `name`, `personal_team`, `created_at`, `up
 (1, 2, 'Yefry\'s Team', 1, '2022-03-02 09:05:40', '2022-03-02 09:05:40'),
 (2, 3, 'Luis\'s Team', 1, '2022-03-07 12:42:26', '2022-03-07 12:42:26'),
 (3, 4, 'Usuario\'s Team', 1, '2022-03-16 01:01:19', '2022-03-16 01:01:19'),
-(4, 5, 'Selenia\'s Team', 1, '2022-05-04 02:30:19', '2022-05-04 02:30:19');
+(4, 5, 'Selenia\'s Team', 1, '2022-05-04 02:30:19', '2022-05-04 02:30:19'),
+(5, 6, 'Josseline\'s Team', 1, '2022-07-09 06:38:24', '2022-07-09 06:38:24'),
+(6, 7, 'Graylin\'s Team', 1, '2022-07-09 06:39:48', '2022-07-09 06:39:48'),
+(7, 8, 'Francis\'s Team', 1, '2022-07-09 06:41:42', '2022-07-09 06:41:42');
 
 -- --------------------------------------------------------
 
@@ -1623,6 +1826,27 @@ CREATE TABLE `tipo_documento_fiscal` (
 INSERT INTO `tipo_documento_fiscal` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES
 (1, 'FACTURACION CAI', '2022-05-26 01:40:36', '2022-05-26 01:40:16'),
 (2, 'RETENCION DEL 1%', '2022-06-07 23:54:06', '2022-06-07 23:53:46');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_pago_cobro`
+--
+
+CREATE TABLE `tipo_pago_cobro` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(45) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipo_pago_cobro`
+--
+
+INSERT INTO `tipo_pago_cobro` (`id`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 'Efectivo', '2022-07-06 03:43:57', '2022-07-06 03:43:28'),
+(2, 'Transferencia Bancaria', '2022-07-06 03:43:57', '2022-07-06 03:43:28');
 
 -- --------------------------------------------------------
 
@@ -1819,9 +2043,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `identidad`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `current_team_id`, `profile_photo_path`, `fecha_nacimiento`, `telefono`, `rol_id`, `created_at`, `updated_at`) VALUES
 (2, '0801199612356', 'Yefry Ortiz', 'yefryyo@gmail.com', NULL, '$2y$10$YgQRCumSehYxcGqjPKYL9e6hPVN.V8NmhwbFT6CqyWoF4bHGIf8Be', NULL, NULL, NULL, 1, NULL, '1996-04-01', '22336699', 1, '2022-03-02 09:05:40', '2022-03-02 09:05:41'),
-(3, '0822199500082', 'Luis Aviles', 'luisfaviles18@gmail.com', NULL, '$2y$10$sLRlJh1emN08ZivLDwkGRucTtMEs8Gb3MI.lRaDVfoz.x/pqmtCBC', NULL, NULL, 'I0rXfRiGx309ehKoJEfVrImeQ0IYhOAPzzKaeqOZ2tkpYRdv7YQp3emeRSFa', 2, 'profile-photos/oNdajTCAvTsuuRD76t4ognTdmhWLIOy9nEszULmY.jpg', '1995-03-16', '89282146', 1, '2022-03-07 12:42:26', '2022-03-24 11:52:49'),
+(3, '0822199500082', 'Luis Aviles', 'luisfaviles18@gmail.com', NULL, '$2y$10$sLRlJh1emN08ZivLDwkGRucTtMEs8Gb3MI.lRaDVfoz.x/pqmtCBC', NULL, NULL, '2XnKrDDvL1yUytfH8kZHGCcdfppwcXOoCNsjdRwJiuDl1XlroSErmKF8oL43', 2, 'profile-photos/oNdajTCAvTsuuRD76t4ognTdmhWLIOy9nEszULmY.jpg', '1995-03-16', '89282146', 1, '2022-03-07 12:42:26', '2022-03-24 11:52:49'),
 (4, '0801199036544', 'Usuario', 'usuario.prueba@distribucionesvalencia.hn', NULL, '$2y$10$KQ3DjX8eDhNcDN7qXhgTDuzMcgNL5B5RzAoRKKeL58i5c4tMcJg2O', NULL, NULL, NULL, 3, NULL, '2022-03-15', '88996655', 1, '2022-05-16 23:58:07', '2022-03-16 01:01:20'),
-(5, NULL, 'Selenia Merlo', 'selenia.merlo@distribucionesvalencia.hn', NULL, '$2y$10$3ljNTl6ifmc7vIFjp9KdC.TBek65txuJInRtUZSAL10CGHrs8MVM.', NULL, NULL, NULL, 4, 'profile-photos/PIzbMjxu7fzd1EoEV9ZKXYhlL7N4RB88Zp9OgFAK.png', NULL, NULL, 2, '2022-05-16 23:57:53', '2022-05-04 02:30:32');
+(5, NULL, 'Selenia Merlo', 'selenia.merlo@distribucionesvalencia.hn', NULL, '$2y$10$3ljNTl6ifmc7vIFjp9KdC.TBek65txuJInRtUZSAL10CGHrs8MVM.', NULL, NULL, NULL, 4, 'profile-photos/PIzbMjxu7fzd1EoEV9ZKXYhlL7N4RB88Zp9OgFAK.png', NULL, NULL, 2, '2022-05-16 23:57:53', '2022-05-04 02:30:32'),
+(6, NULL, 'Josseline Zepeda', 'josseline.zepeda@distribucionesvalencia.hn', NULL, '$2y$10$ZUjs1TkbyXbmOWBYUcAbsuyxzjck8azgVqttekHivtsf8P.SXyV5S', NULL, NULL, NULL, NULL, 'profile-photos/f8oykAbjouztucs0DfgpmIgocTJnDFUP6aEB3H1p.png', NULL, NULL, NULL, '2022-07-09 06:38:24', '2022-07-09 06:38:43'),
+(7, NULL, 'Graylin Quezada', 'graylin.quezada@distribucionesvalencia.hn', NULL, '$2y$10$Rf6umT8tvglETdiXiOWCT.aePblJscvmGXzgLhZx9oSkwngy5cRDa', NULL, NULL, NULL, NULL, 'profile-photos/YiRRR0GMWO74ay5d4z5ObruyV56zSCbUCxd1ev92.png', NULL, NULL, NULL, '2022-07-09 06:39:48', '2022-07-09 06:40:04'),
+(8, NULL, 'Francis Andino', 'francis.andino@distribucionesvalencia.hn', NULL, '$2y$10$TC699zcq/KYQ9ltaicNsgeNJ5frH7ujTmrtwsanGxhH73vPrCVpHK', NULL, NULL, NULL, NULL, 'profile-photos/78Rae3J3XnEwv8gZjaBCpegEb2yVqdDiLyzXpTPt.png', NULL, NULL, NULL, '2022-07-09 06:41:42', '2022-07-09 06:41:51');
 
 -- --------------------------------------------------------
 
@@ -1852,21 +2079,15 @@ CREATE TABLE `venta_has_producto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `venta_has_producto`
---
-
-INSERT INTO `venta_has_producto` (`factura_id`, `producto_id`, `lote`, `seccion_id`, `numero_unidades_resta_inventario`, `resta_inventario_total`, `unidad_medida_venta_id`, `precio_unidad`, `cantidad`, `cantidad_s`, `cantidad_sin_entregar`, `sub_total`, `isv`, `total`, `sub_total_s`, `isv_s`, `total_s`, `created_at`, `updated_at`) VALUES
-(1, 1, 3, 15, 5, 5, 2, 110, 5, 5, 5, 550, 82.5, 632.5, 550, 82.5, 632.5, '2022-06-20 19:45:30', '2022-06-20 19:45:30'),
-(2, 12, 7, 8, 50, 50, 12, 10, 50, 50, 50, 500, 75, 575, 500, 75, 575, '2022-06-20 19:46:40', '2022-06-20 19:46:40'),
-(3, 4, 6, 15, 20, 20, 4, 6.47, 2, 2, 2, 129.4, 19.41, 148.81, 129.4, 19.41, 148.81, '2022-06-20 19:50:58', '2022-06-20 19:50:58'),
-(4, 12, 7, 8, 20, 20, 12, 7.5, 20, 20, 20, 150, 22.5, 172.5, 150, 22.5, 172.5, '2022-06-20 19:53:23', '2022-06-20 19:53:23'),
-(5, 1, 1, 9, 5, 5, 2, 115, 5, 5, 5, 575, 86.25, 661.25, 575, 86.25, 661.25, '2022-06-20 19:54:10', '2022-06-20 19:54:10'),
-(6, 4, 5, 5, 20, 20, 3, 5, 20, 20, 20, 100, 15, 115, 100, 15, 115, '2022-06-20 19:55:48', '2022-06-20 19:55:48'),
-(6, 12, 7, 8, 10, 10, 12, 7.5, 10, 10, 10, 75, 11.25, 86.25, 75, 11.25, 86.25, '2022-06-20 19:55:48', '2022-06-20 19:55:48');
-
---
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `banco`
+--
+ALTER TABLE `banco`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_banco_users1_idx` (`users_id`);
 
 --
 -- Indices de la tabla `bodega`
@@ -1954,6 +2175,12 @@ ALTER TABLE `entrega_programada`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_entrega_programada_users1_idx` (`users_id`),
   ADD KEY `fk_entrega_programada_venta_has_producto1_idx` (`factura_id`,`producto_id`,`lote`);
+
+--
+-- Indices de la tabla `enumeracion`
+--
+ALTER TABLE `enumeracion`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `estado`
@@ -2046,6 +2273,12 @@ ALTER TABLE `interes`
   ADD KEY `fk_intereses_users1_idx` (`users_id`);
 
 --
+-- Indices de la tabla `listado`
+--
+ALTER TABLE `listado`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `log_estado`
 --
 ALTER TABLE `log_estado`
@@ -2118,7 +2351,9 @@ ALTER TABLE `pago_venta`
   ADD KEY `fk_pago_venta_factura1_idx` (`factura_id`),
   ADD KEY `fk_pago_venta_users1_idx` (`users_id`),
   ADD KEY `fk_pago_venta_estado_venta1_idx` (`estado_venta_id`),
-  ADD KEY `fk_pago_venta_users2_idx` (`users_id_elimina`);
+  ADD KEY `fk_pago_venta_users2_idx` (`users_id_elimina`),
+  ADD KEY `fk_pago_venta_banco1_idx` (`banco_id`),
+  ADD KEY `fk_pago_venta_tipo_pago1_idx` (`tipo_pago_id`);
 
 --
 -- Indices de la tabla `pais`
@@ -2278,6 +2513,12 @@ ALTER TABLE `tipo_documento_fiscal`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `tipo_pago_cobro`
+--
+ALTER TABLE `tipo_pago_cobro`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `tipo_pago_venta`
 --
 ALTER TABLE `tipo_pago_venta`
@@ -2338,6 +2579,12 @@ ALTER TABLE `venta_has_producto`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `banco`
+--
+ALTER TABLE `banco`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `bodega`
 --
 ALTER TABLE `bodega`
@@ -2359,7 +2606,7 @@ ALTER TABLE `categoria_producto`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -2371,7 +2618,7 @@ ALTER TABLE `compra`
 -- AUTO_INCREMENT de la tabla `contacto`
 --
 ALTER TABLE `contacto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `departamento`
@@ -2383,6 +2630,12 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `entrega_programada`
 --
 ALTER TABLE `entrega_programada`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `enumeracion`
+--
+ALTER TABLE `enumeracion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -2419,7 +2672,7 @@ ALTER TABLE `estado_venta`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -2452,6 +2705,12 @@ ALTER TABLE `interes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `listado`
+--
+ALTER TABLE `listado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `log_estado`
 --
 ALTER TABLE `log_estado`
@@ -2467,13 +2726,13 @@ ALTER TABLE `log_estado_factura`
 -- AUTO_INCREMENT de la tabla `log_translado`
 --
 ALTER TABLE `log_translado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
 --
 ALTER TABLE `marca`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `menu`
@@ -2587,7 +2846,7 @@ ALTER TABLE `sub_menu`
 -- AUTO_INCREMENT de la tabla `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_cliente`
@@ -2599,6 +2858,12 @@ ALTER TABLE `tipo_cliente`
 -- AUTO_INCREMENT de la tabla `tipo_compra`
 --
 ALTER TABLE `tipo_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_pago_cobro`
+--
+ALTER TABLE `tipo_pago_cobro`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -2641,11 +2906,17 @@ ALTER TABLE `unidad_medida_venta`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `banco`
+--
+ALTER TABLE `banco`
+  ADD CONSTRAINT `fk_banco_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `bodega`
@@ -2809,8 +3080,10 @@ ALTER TABLE `pago_compra`
 -- Filtros para la tabla `pago_venta`
 --
 ALTER TABLE `pago_venta`
+  ADD CONSTRAINT `fk_pago_venta_banco1` FOREIGN KEY (`banco_id`) REFERENCES `banco` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pago_venta_estado_venta1` FOREIGN KEY (`estado_venta_id`) REFERENCES `estado_venta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pago_venta_factura1` FOREIGN KEY (`factura_id`) REFERENCES `factura` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_pago_venta_tipo_pago1` FOREIGN KEY (`tipo_pago_id`) REFERENCES `tipo_pago_cobro` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pago_venta_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_pago_venta_users2` FOREIGN KEY (`users_id_elimina`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

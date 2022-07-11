@@ -61,7 +61,7 @@ class Comparacion extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
     
                             <li>
-                                <a class="dropdown-item" href="/detalle/venta/'.$elemento->id.'" target="_blank" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de compra </a>
+                                <a class="dropdown-item" href="/detalle/venta/'.$elemento->id.'" target="_blank" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de Venta </a>
                             </li>
                             <li>
                                 <a class="dropdown-item btn disabled"  > <i class="fa-solid fa-arrows-rotate text-warning " disabled></i> Registrar como N/D </a>
@@ -80,7 +80,7 @@ class Comparacion extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
     
                             <li>
-                                <a class="dropdown-item" href="/detalle/venta/'.$elemento->id.'" target="_blank" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de compra </a>
+                                <a class="dropdown-item" href="/detalle/venta/'.$elemento->id.'" target="_blank" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de Venta </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" onclick="modalTransladoND('.$elemento->id.')" > <i class="fa-solid fa-arrows-rotate text-warning"></i> Registrar como N/D </a>
@@ -137,7 +137,7 @@ class Comparacion extends Component
                     <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                         <li>
-                            <a class="dropdown-item"  > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de compra </a>
+                            <a class="dropdown-item" href="/detalle/venta/'.$elemento->id.'" target="_blank" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de Venta </a>
                         </li>
                         <li>
                             <a class="dropdown-item" onclick="modalTransladoDC('.$elemento->id.')" > <i class="fa-solid fa-arrows-rotate text-warning"></i> Registrar como D/C </a>

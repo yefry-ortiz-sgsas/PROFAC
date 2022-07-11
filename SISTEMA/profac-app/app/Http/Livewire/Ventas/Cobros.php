@@ -15,6 +15,8 @@ use PDF;
 
 use App\Models\ModelpagoVenta;
 use App\Models\ModelFactura;
+use App\Models\ModelBanco;
+use App\Models\ModelTipoPagoCobro;
 class Cobros extends Component
 {
     public $idFactura;
@@ -34,7 +36,9 @@ class Cobros extends Component
             from factura
             where id = ".$idFactura
         );
-        return view('livewire.ventas.cobros',compact('datosFactura','idFactura'));
+
+        $bancos = ModelBanco::all();
+        return view('livewire.ventas.cobros',compact('datosFactura','idFactura','bancos'));
     }
 
     public function registrarPago(Request $request){
@@ -46,7 +50,8 @@ class Cobros extends Component
                 'cliente' => 'required',
                 'monto' => 'required',
                 'fecha_pago' => 'required',
-                'img_pago' => 'required|mimes:png,jpeg,jpg,pdf'
+                'img_pago' => 'required|mimes:png,jpeg,jpg,pdf',
+                'metoPago'=>'required'
 
 
             ], [
@@ -55,14 +60,18 @@ class Cobros extends Component
                 'cliente' => 'El cliente es requerido',
                 'monto' => 'El monto es requerido',
                 'fecha_pago' => 'La fecha de pago es requerida',
-                'img_pago' => 'Formato de imagen invalido'
+                'img_pago' => 'Formato de imagen invalido',
+                'metoPago'=>'El metodo de pago es requerido'
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
+                    'icon'=>'error',
+                    'text'=>'Datos ó formato de imagen invalido.',
+                    'title'=>'Error!',
                     'mensaje' => 'Ha ocurrido un error.',
                     'errors' => $validator->errors()
-                ], 402);
+                ], 200);
             }
 
 
@@ -97,21 +106,48 @@ class Cobros extends Component
 
             }
 
+            if($request->metoPago ==2 and !($request->banco)){
+                return response()->json([
+                    "icon" => "warning",
+                    "text"=>"Por favor, seleccionar un Banco y Número de cuenta.",
+                    "title"=>"Advertencia!"
+
+                ],200);
+            }
+
             DB::beginTransaction();
 
-                $file = $request->file('img_pago');
-                $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/documentos_ventas';
-                $file->move($path, $name);
+            $file = $request->file('img_pago');
+            $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/documentos_ventas';
+            $file->move($path, $name);
 
-                $registroPago = new ModelpagoVenta;
-                $registroPago->monto = $request->monto;
-                $registroPago->fecha = $request->fecha_pago;
-                $registroPago->users_id = Auth::user()->id;
-                $registroPago->estado_venta_id =1;
-                $registroPago->factura_id = $request->idFactura;
-                $registroPago->url_img =  $name;
-                $registroPago->save();
+                if($request->metoPago ==1 ){
+                    $registroPago = new ModelpagoVenta;
+                    $registroPago->monto = $request->monto;
+                    $registroPago->fecha = $request->fecha_pago;
+                    $registroPago->users_id = Auth::user()->id;
+                    $registroPago->estado_venta_id =1;
+                    $registroPago->factura_id = $request->idFactura;
+                    $registroPago->url_img =  $name;
+                    $registroPago->tipo_pago_id = 1;
+                    $registroPago->save();
+                }else{
+                    $registroPago = new ModelpagoVenta;
+                    $registroPago->monto = $request->monto;
+                    $registroPago->fecha = $request->fecha_pago;
+                    $registroPago->users_id = Auth::user()->id;
+                    $registroPago->estado_venta_id =1;
+                    $registroPago->factura_id = $request->idFactura;
+                    $registroPago->url_img =  $name;
+                    $registroPago->tipo_pago_id = 2;
+                    $registroPago->banco_id=$request->banco;
+                    $registroPago->save();
+                }
+
+
+
+
 
                 $totalCompra = DB::SELECTONE("select total from factura where id=".$request->idFactura);
                 $totalPagos = DB::SELECTONE("select sum(monto) as monto from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
@@ -125,11 +161,6 @@ class Cobros extends Component
                     $compra = ModelFactura::find($request->idFactura);
                     $compra->pendiente_cobro = round($faltantePago,2);                   
                     $compra->save();
-
-
-
-
-
 
 
             DB::commit();
@@ -184,17 +215,22 @@ class Cobros extends Component
          B.id,
          B.url_img,
          format(B.monto,2) as monto,
+         C.descripcion as 'tipo_pago',
+         (select concat(nombre,'-',cuenta) from banco where id = B.banco_id ) as banco,
          B.fecha,
          users.name,
          B.created_at,
          A.cai,
          A.numero_factura,
          A.id as idFactura
+
         from factura A
         inner join pago_venta B
         on A.id = B.factura_id
         inner join users
         on B.users_id = users.id
+        inner join tipo_pago_cobro C
+        on C.id = B.tipo_pago_id
         CROSS JOIN (select @i := 0) compra
         where A.estado_venta_id = 1 and B.estado_venta_id= 1 and A.id = ".$id
         );

@@ -16,6 +16,7 @@ use App\Http\Livewire\Inventario\RecibirProducto;
 use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
+use App\Http\Livewire\Inventario\Marca;
 use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
@@ -23,9 +24,9 @@ use App\Http\Livewire\Ventas\DetalleVenta;
 use App\Http\Livewire\Ventas\Cobros;
 use App\Http\Livewire\Ventas\Comparacion;
 use App\Http\Livewire\Ventas\Configuracion;
-use App\Http\Livewire\Inventario\Marcas; 
 use App\Http\Livewire\VentasEstatal\FacturacionEstatal; 
 use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal; 
+use App\Http\Livewire\Ventas\SeleccionarFactura;
 
 
 
@@ -88,6 +89,7 @@ Route::get('/inventario/retenciones', Retenciones::class);
 Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
 Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
 
+
 //-------------------------------------------------CLIENTES-----------------------------------------------------------------------------------------//
 Route::get('/clientes', Cliente::class);
 
@@ -129,6 +131,10 @@ Route::get('/producto/registro', Producto::class);
 Route::post('/producto/registrar', [Producto::class, 'crearProducto']);
 Route::post('/producto/editar', [Producto::class, 'editarProducto']);
 Route::post('/producto/eliminar', [Producto::class, 'eliminarImagen']);
+Route::get('/producto/marca/listar',[Marca::class,'listarMarcas']);  
+Route::post('/producto/marca/guardar',[Marca::class,'guardarMarca']);
+Route::post('/producto/marca/datos', [Marca::class,'obtenerDatos']); 
+Route::post('/producto/marca/editar', [Marca::class,'editarMarca']);
 
 
 
@@ -224,10 +230,16 @@ Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta'
 
 Route::get('/facturas/estatal', ListadoFacturaEstatal::class);
 Route::get('/lista/facturas/estatal', [ListadoFacturaEstatal::class,'listarFacturas']);
-Route::post('/factura/estatal/anular', [ListadoFacturaEstatal::class,'anularVentaRegistro']);
+Route::post('/factura/estatal/anular', [ListadoFacturaEstatal::class,'anularVentaRegistro']); 
 
 
-Route::get('/marcas', Marcas::class);
+
+Route::get('/marca/producto', Marca::class);
+
+//-------------------------------------seleccionar declaraciones---------------------------------//
+Route::get('/ventas/seleccionar', SeleccionarFactura::class); 
+Route::get('/ventas/lista/seleccionar', [SeleccionarFactura::class,'listadoFacturas']); 
+Route::post('/ventas/cambio', [SeleccionarFactura::class,'cambioEstado']); 
 
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {

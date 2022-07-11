@@ -317,7 +317,7 @@
                     <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
-                        <li><a href="/marcas" style="color:#ffffff;">Marcas de productos</a></li>
+                        <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
                         <li><a href="/producto/registro" style="color:#ffffff;">Registrar Producto</a></li>
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
@@ -345,7 +345,10 @@
                         <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li>
+                        @if(Auth::user()->id =='2' || Auth::user()->id=='3' )  
+                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
+                        <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
+                        @endif
                         {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
                     </ul>
                 </li>
