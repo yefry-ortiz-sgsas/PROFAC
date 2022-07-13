@@ -162,6 +162,18 @@
                         <div class="col-sm-12">
                             <form id="recibirProducto" data-parsley-validate>
 
+                                <div class="form-group">
+                                    <label for="comentario">Nombre de producto</label>
+                                    <input id="nompreProducto" name="nompreProducto" type="text" class="form-control" readonly
+                                        required data-parsley-required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="comentario">Cantidad maxima a recibir</label>
+                                    <input id="cantidadMax" name="cantidadMax" type="number" class="form-control" readonly
+                                        required data-parsley-required>
+                                </div>
+
 
                                 <div class="form-group">
                                     <label for="bodega">Bodega</label>
@@ -190,10 +202,13 @@
                                     </select>
                                 </div>
 
+                                
+
+
+
+
                                 <div class="form-group">
                                     <label for="comentario">Cantidad a Recibir</label>
-
-
                                     <input id="cantidad" name="cantidad" type="number" min="1" class="form-control"
                                         required data-parsley-required>
 
@@ -525,6 +540,11 @@
 
                             let cantidadElemento = document.getElementById("cantidad");
                             cantidadElemento.setAttribute("max", data.cantidad_sin_asignar);
+
+                            document.getElementById('nompreProducto').value = data.nombre;
+                            document.getElementById('cantidadMax').value = data.cantidad_sin_asignar;
+
+
                             $('#modalRecibirProducto').modal('show');
 
                         }

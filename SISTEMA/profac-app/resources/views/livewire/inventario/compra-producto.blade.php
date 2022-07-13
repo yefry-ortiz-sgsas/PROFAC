@@ -1,6 +1,19 @@
 <div>
     @push('styles')
         <style>
+
+            /* Chrome, Safari, Edge, Opera */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+
+                /* Firefox */
+                input[type=number] {
+                -moz-appearance: textfield;
+                }
+
             @media (max-width: 767.5px) {
                 .hide-container {
                     display: none;
@@ -46,33 +59,40 @@
                     <div class="ibox-content">
                         <form autocomplete="off" id="crear_compra" name="crear_compra" data-parsley-validate>
                             <div class="row">
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <label class="col-form-label text-danger" for="numero_emision"
                                         style="font-size: 1rem; font-weight:600;">Numero de compra</label>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
-
-                                    <input class="form-control" type="text" id="numero_emision" name="numero_emision"
+                                        <input class="form-control" type="text" id="numero_emision" name="numero_emision"
                                         value="{{ $ordenNumero->numero  }}" data-parsley-required readonly>
                                 </div>
+                            </div>
 
-                                <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
+                            <div class="row mt-4">
+                                 
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <label class="col-form-label" for="numero_factura"
-                                        style="font-size: 1rem; font-weight:600;">Numero de factura</label>
-                                </div>
-
-                                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-
+                                       >Número de factura<span class="text-danger">*</span></label>
+                                        
                                     <input class="form-control" type="text" id="numero_factura" name="numero_factura"
-                                        data-parsley-required placeholder="N° Factura">
+                                    data-parsley-required placeholder="N° Factura">
+                                </div>
+                                
+
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <label class="col-form-label" for="cai"
+                                        >Codigo CAI<span class="text-danger">*</span></label>
+                                        
+                                    <input class="form-control" type="text" id="cai" name="cai"
+                                    data-parsley-required placeholder="Codigo CAI">
                                 </div>
 
                             </div>
+
                             <div class="row mt-4">
                                 <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                                     <label for="seleccionarProveedor" class="col-form-label focus-label">Seleccionar
-                                        Proveedor:</label>
+                                        Proveedor:<span class="text-danger">*</span></label>
                                     <select id="seleccionarProveedor" class="form-group form-control" style=""
                                         data-parsley-required >
                                         <option value="" selected disabled>--Seleccionar un proveedor--</option>
@@ -81,7 +101,7 @@
 
                                 <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoCompra" class="col-form-label focus-label">Seleccionar tipo de
-                                        pago:</label>
+                                        pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoCompra" id="tipoPagoCompra"
                                         data-parsley-required onchange="validarFechaPago()">
                                     </select>
@@ -91,7 +111,7 @@
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
                                         <label for="fecha_vencimiento"
-                                            class="col-form-label focus-label text-warning">Fecha de vencimiento:
+                                            class="col-form-label focus-label text-warning">Fecha de vencimiento:<span class="text-danger">*</span>
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
                                             name="fecha_vencimiento" value="" data-parsley-required
@@ -106,8 +126,7 @@
                                 <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                     <div class="form-group">
 
-                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
-                                            :</label>
+                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión:<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" id="fecha_emision"
                                             name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required>
 
@@ -117,7 +136,7 @@
                                     <div class="form-group">
 
                                         <label for="fecha_entrega" class="col-form-label focus-label">Fecha de
-                                            recibido:</label>
+                                            recibido:<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" id="fecha_entrega"
                                             name="fecha_entrega" value="" data-parsley-required
                                             min="{{ date('Y-m-d') }}">
@@ -188,6 +207,7 @@
                             <hr>
 
                             <div class="hide-container">
+                                <p>Nota: Él campo "Unidad" describe la unidad de medida para la compra del producto - seguido del número de unidades a sumar en el inventario.</p>
                                 <div class="row no-gutters ">
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <div class="d-flex">
@@ -204,15 +224,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                        <label class="sr-only">Precio</label>
-                                        <input type="number" placeholder="Precio de unidad" class="form-control"
+                                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                        <label class="sr-only">Precio Unidad</label>
+                                        <input type="text" placeholder="Precio Unidad" class="form-control"
                                             min="1" autocomplete="off" disabled>
                                     </div>
 
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                         <label class="sr-only">cantidad</label>
                                         <input type="text" placeholder="Cantidad" class="form-control" min="1"
+                                            autocomplete="off" disabled>
+                                    </div>
+
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                        <label class="sr-only">Unidad</label>
+                                        <input type="text" placeholder="Unidad" class="form-control" min="1"
                                             autocomplete="off" disabled>
                                     </div>
 
@@ -258,7 +284,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneral">Sub Total L.</label>
+                                    <label class="col-form-label" for="subTotalGeneral">Sub Total L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -271,7 +297,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneral">ISV L.</label>
+                                    <label class="col-form-label" for="isvGeneral">ISV L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -284,7 +310,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneral">Total L.</label>
+                                    <label class="col-form-label" for="totalGeneral">Total L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -296,15 +322,13 @@
 
                             <div class="row">
 
-                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneral">Retencion 1%</label>
-                                </div>
 
-                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+
+                                {{-- <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="Retencion del 1%" id="retencion"
                                         name="retencion" class="form-control" min="0" required data-parsley-required
                                         autocomplete="off" readonly>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="row">
@@ -327,7 +351,7 @@
         <script>
             var numeroInputs = 0;
             var arregloIdInputs = [];
-            var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
+            //var retencionEstado = false;  true  aplica retencion, false no aplica retencion;
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
@@ -506,18 +530,25 @@
                                                 </div>
                                             </div>
                                     
-                                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
-                                                <input type="number" placeholder="Precio de unidad" id="precio${numeroInputs}"
+                                                <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs}, ${producto.unidadad_compra})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
                                                     name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs})">
+                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},${numeroInputs}, ${producto.unidadad_compra})">
+                                            </div>
+
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                                <label for="unidad${numeroInputs}" class="sr-only">Unidad</label>
+                                                <input value="${producto.unidad}" type="text" placeholder="Unidad" id="unidad${numeroInputs}"
+                                                    name="unidad${numeroInputs}" class="form-control" data-parsley-required
+                                                    autocomplete="off" readonly>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -550,6 +581,10 @@
                                                     autocomplete="off"
                                                     readonly >
                                             </div>
+
+                                            <input id="unidadesCompra${numeroInputs}" name="unidadesCompra${numeroInputs}" type="hidden" value="${producto.unidadad_compra}"> 
+                                            <input id="medidaCompraId${numeroInputs}" name="medidaCompraId${numeroInputs}" type="hidden" value="${producto.unidad_medida_compra_id}">
+
                                     
                         </div>
                         `;
@@ -585,7 +620,7 @@
 
             }
 
-            function calcularTotales(idPrecio, idCantidad, isvProducto, id) {
+            function calcularTotales(idPrecio, idCantidad, isvProducto, id, unidadad_compra) {
 
 
                 valorInputPrecio = idPrecio.value;
@@ -593,13 +628,14 @@
 
                 if (valorInputPrecio && valirInputCantidad) {
 
-                    let subTotal = valorInputPrecio * valirInputCantidad;
+                    let subTotal = valorInputPrecio * (valirInputCantidad*unidadad_compra);
                     let isv = subTotal * (isvProducto / 100);
                     let total = subTotal + subTotal * (isvProducto / 100);
 
                     document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('isvProducto' + id).value = isv.toFixed(2);
+
                     this.totalesGenerales();
 
 
@@ -638,11 +674,7 @@
                 document.getElementById('isvGeneral').value = totalISV.toFixed(2);
                 document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(2);
 
-                if (retencionEstado) {
-                    document.getElementById('retencion').value = (totalGeneralValor * 0.01).toFixed(2);
-                } else {
-                    document.getElementById('retencion').value = 0;
-                }
+
 
 
 
@@ -673,53 +705,53 @@
 
             }
 
-            function retencionProveedor() {
-                let idProveedor = document.getElementById('seleccionarProveedor').value;
-                axios.post('/producto/compra/retencion', {
-                        idProveedor: idProveedor
-                    })
-                    .then(response => {
-                        let data = response.data;
+            // function retencionProveedor() {
+            //     let idProveedor = document.getElementById('seleccionarProveedor').value;
+            //     axios.post('/producto/compra/retencion', {
+            //             idProveedor: idProveedor
+            //         })
+            //         .then(response => {
+            //             let data = response.data;
 
 
 
 
-                        Swal.fire({
-                            title: data.title,
-                            text: data.text,
-                            showDenyButton: true,
-                            showCancelButton: true,
-                            confirmButtonText: 'Aplicar',
-                            denyButtonText: `No aplicar`,
-                            cancelButtonText: 'Cancelar',
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
-                                retencionEstado = true;
-                                this.totalesGenerales();
-                            } else if (result.isDenied) {
-                                Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
-                                retencionEstado = false;
-                                this.totalesGenerales();
-                            }
-                        })
+            //             Swal.fire({
+            //                 title: data.title,
+            //                 text: data.text,
+            //                 showDenyButton: true,
+            //                 showCancelButton: true,
+            //                 confirmButtonText: 'Aplicar',
+            //                 denyButtonText: `No aplicar`,
+            //                 cancelButtonText: 'Cancelar',
+            //             }).then((result) => {
+            //                 /* Read more about isConfirmed, isDenied below */
+            //                 if (result.isConfirmed) {
+            //                     Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
+            //                     retencionEstado = true;
+            //                     this.totalesGenerales();
+            //                 } else if (result.isDenied) {
+            //                     Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
+            //                     retencionEstado = false;
+            //                     this.totalesGenerales();
+            //                 }
+            //             })
 
 
 
-                    })
-                    .catch(err => {
+            //         })
+            //         .catch(err => {
 
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error!',
-                            text: "Ha ocurrido un error al seleccionar el proveedor."
-                        })
+            //             Swal.fire({
+            //                 icon: 'error',
+            //                 title: 'Error!',
+            //                 text: "Ha ocurrido un error al seleccionar el proveedor."
+            //             })
 
-                        console.error('ha ocurrido un erro', err)
+            //             console.error('ha ocurrido un erro', err)
 
-                    })
-            }
+            //         })
+            // }
 
             $(document).on('submit', '#crear_compra',
                 function(event) {
@@ -728,9 +760,9 @@
                 });
 
             function guardarCompra() {
-                if (!retencionEstado) {
-                    document.getElementById('retencion').value = 0;
-                }
+                // if (!retencionEstado) {
+                //     document.getElementById('retencion').value = 0;
+                // }
 
                 var data = new FormData($('#crear_compra').get(0));
 
@@ -779,7 +811,7 @@
 
                         arregloIdInputs = [];
                         numeroInputs = 0;
-                        retencionEstado=false;
+                        // retencionEstado=false;
 
                     })
                     .catch(err => {

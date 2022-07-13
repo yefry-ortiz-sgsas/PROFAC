@@ -44,19 +44,19 @@
 
 
                                 <div class="form-group">
-                                    <label for="bodega">Nombre de bodega</label>
+                                    <label for="bodega">Nombre de bodega<span class="text-danger">*</span></label>
                                     <input id="bodega" name="bodega" type="text" placeholder="Nombre de bodega"
                                         class="form-control" data-parsley-required required="">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="direccionBodega">Dirección</label>
+                                    <label for="direccionBodega">Dirección<span class="text-danger">*</span></label>
                                     <input id="direccionBodega" name="direccionBodega" type="text"
                                         placeholder="Direccion de bodega" class="form-control" data-parsley-required>
                                 </div>
 
                                 <div>
-                                    <label for="encargadoBodega">Encargado de bodega</label>
+                                    <label for="encargadoBodega">Encargado de bodega<span class="text-danger">*</span></label>
                                     <select id="encargadoBodega" name="encargadoBodega" class="form-control m-b"
                                         name="account" data-parsley-required>
                                         <option value="0" selected disabled>Seleccione un encargado</option>
@@ -70,7 +70,7 @@
 
                                 <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label class="col-form-label focus-label">País</label>
+                                    <label class="col-form-label focus-label">País<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="pais_bodega" id="pais_bodega"
                                         onchange="obtenerDepartamentos()">
                                         <option selected disabled>---Seleccione un país---</option>
@@ -81,7 +81,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label class="col-form-label focus-label">Departamento</label>
+                                    <label class="col-form-label focus-label">Departamento<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="depto_bodega" id="depto_bodega"
                                         onchange="obtenerMunicipios()">
                                         <option selected disabled>---Seleccione un Departamento---</option>
@@ -89,7 +89,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label class="col-form-label focus-label">Municipio</label>
+                                    <label class="col-form-label focus-label">Municipio<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="municipio_bodega" id="municipio_bodega"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione un municipio---</option>
@@ -108,7 +108,7 @@
                             <div class="col-sm-12 border-top mt-2 mb-4">
                                 <div class="d-flex justify-content-between   align-items-center ">
 
-                                    <h4 class="mt-4">Segmentación de bodega <i class="fa-solid fa-crop"></i>
+                                    <h4 class="mt-4"><i class="fa-solid fa-crop"></i> Segmentación de bodega<span class="text-danger">*</span> 
                                     </h4>
 
 

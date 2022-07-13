@@ -23,8 +23,15 @@ class Cliente extends Component
 {
     public function render()
     {
-        $users = User::all();
-        return view('livewire.clientes.cliente');
+        $clientes = DB::SELECT("
+        select
+        id, name
+        from users
+        where rol_id=2
+        order by name ASC
+        ");
+
+        return view('livewire.clientes.cliente',compact('clientes'));
     }
 
     public function opbtenerPais(){
@@ -114,6 +121,7 @@ class Cliente extends Component
             $cliente->correo = $request->correo_cliente ; 
             $cliente->url_imagen = $name;
             $cliente->credito = str_replace(",","",$request->credito); 
+            $cliente->dias_credito=$request->dias_credito;
             $cliente->latitud =$request->latitud_cliente;
             $cliente->longitud =$request->longitud_cliente;
             $cliente->tipo_cliente_id = $request->categoria_cliente;
@@ -152,6 +160,7 @@ class Cliente extends Component
                 $cliente->rtn = $request->rtn_cliente;
                 $cliente->correo = $request->correo_cliente ;    
                 $cliente->credito = str_replace(",","",$request->credito);
+                $cliente->dias_credito=$request->dias_credito;
                 $cliente->latitud =$request->latitud_cliente;
                 $cliente->longitud =$request->longitud_cliente;
                 $cliente->tipo_cliente_id = $request->categoria_cliente;
@@ -368,7 +377,8 @@ class Cliente extends Component
         $cliente->telefono_empresa = trim($request->telefono_cliente_editar);
         $cliente->rtn = trim($request->rtn_cliente_editar);
         $cliente->correo = trim($request->correo_cliente_editar);        ;
-        $cliente->credito = trim($request->credito_editar); 
+        $cliente->credito = trim($request->credito_editar);
+        $cliente->dias_credito = trim($request->dias_credito_editar);  
         $cliente->latitud = trim($request->latitud_cliente_editar);
         $cliente->longitud = trim($request->longitud_cliente_editar);
         $cliente->tipo_cliente_id = $request->categoria_cliente_editar;
@@ -490,6 +500,15 @@ class Cliente extends Component
 
     public function desactivarCliente(Request $request){
         try {
+
+                if($request->clienteId==1){
+                    return response()->json([
+                        "text" => "Este cliente no puede ser desactivado.",
+                        "icon" => "warning",
+                        "title"=>"Acción no permitida !"
+                    ],402);
+                }
+
                 $cliente =  ModelCliente::find($request->clienteId);                 
                 $cliente->estado_cliente_id =  2;
                 $cliente->save();

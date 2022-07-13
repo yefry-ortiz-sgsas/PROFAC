@@ -17,6 +17,7 @@ use App\Http\Livewire\Inventario\Incidencias;
 use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Inventario\Marca;
+use App\Http\Livewire\Inventario\UnidadesMedida;
 use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
@@ -142,6 +143,7 @@ Route::post('/producto/marca/editar', [Marca::class,'editarMarca']);
 Route::post('/ruta/imagen/edit', [Producto::class, 'guardarFoto']);
 Route::get('/producto/datos/{id}', [Producto::class, 'listarModalProductoEdit']);
 Route::get('/producto/listar/productos', [Producto::class, 'listarProductos']);
+Route::post('/producto/actualizar/costos', [Producto::class,'calcularCostos']);
 Route::get('/producto/detalle/{id}', DetalleProducto::class);
 Route::get('/detalle/producto/unidad/{id}', [DetalleProducto::class,'unidadesVenta']);
 Route::get('/detalle/unidades/venta', [DetalleProducto::class,'obtenerUnidadesMedida']);
@@ -187,6 +189,8 @@ Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
+
+Route::get('/inventario/unidades/medida', UnidadesMedida::class);
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//

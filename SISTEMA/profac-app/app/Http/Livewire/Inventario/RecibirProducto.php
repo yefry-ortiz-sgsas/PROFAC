@@ -65,7 +65,8 @@ class RecibirProducto extends Component
             A.isv,
             A.precio_total,
             if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
-            (select sum(cantidad_inicial_seccion) from recibido_bodega where producto_id = A.producto_id and compra_id = A.compra_id ) as 'cantidad_ingresada_bodega'
+            (select sum(cantidad_inicial_seccion) from recibido_bodega where producto_id = A.producto_id and compra_id = A.compra_id ) as 'cantidad_ingresada_bodega',
+            A.unidades_compra
           
         from 
             compra_has_producto A
@@ -131,25 +132,26 @@ class RecibirProducto extends Component
 
                 })
                 ->addColumn('estado_recibido', function ($listaCompra){
-                    if($listaCompra->cantidad_comprada == $listaCompra->cantidad_ingresada_bodega){
+                    $cantidadBodega = $listaCompra->cantidad_ingresada_bodega/$listaCompra->unidades_compra;
+                    if($listaCompra->cantidad_comprada == $cantidadBodega){
                         return
                         '
 
                         <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.95rem">Recibido</span></p>
                         ';
 
-                    }else if($listaCompra->cantidad_ingresada_bodega < $listaCompra->cantidad_comprada  ){
+                    }else if($cantidadBodega < $listaCompra->cantidad_comprada  ){
                         return
                         '
                         <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.95rem">Incompleto</span></p>
                         ';
-                    }else if($listaCompra->cantidad_ingresada_bodega > $listaCompra->cantidad_comprada){
+                    }else if($cantidadBodega > $listaCompra->cantidad_comprada){
                         return
                         '
                         <p class="text-center"><span class="badge badge-info p-2" style="font-size:0.95rem">Excedente</span></p>
                         ';
 
-                    }else if($listaCompra->cantidad_ingresada_bodega >= 0){
+                    }else if($cantidadBodega >= 0){
                         return
                         '
                         <p class="text-center"><span class="badge p-2" style="font-size:0.95rem">No recibido</span></p>
@@ -242,7 +244,9 @@ class RecibirProducto extends Component
             cantidad_ingresada,
             fecha_expiracion,
             cantidad_sin_asignar,
-            cantidad_disponible
+            cantidad_disponible,
+            unidades_compra,
+            unidad_compra_id
             from compra_has_producto
             where compra_id = ".$request->idCompra."  and producto_id=".$request->idProducto
         );
@@ -283,17 +287,22 @@ class RecibirProducto extends Component
 
         DB::beginTransaction();
 
+        $cantidadCompraLote = $datosCompra->cantidad_ingresada * $datosCompra->unidades_compra;
+        $cantidadInicial = $request->cantidad * $datosCompra->unidades_compra;
+
         $recibir = new ModelRecibirBodega();
         $recibir->compra_id = $request->idCompra;
         $recibir->producto_id = $request->idProducto;
         $recibir->seccion_id = $request->seccion;
-        $recibir->cantidad_compra_lote = $datosCompra->cantidad_ingresada;
-        $recibir->cantidad_inicial_seccion = $request->cantidad;
-        $recibir->cantidad_disponible = $request->cantidad;
+        $recibir->cantidad_compra_lote = $cantidadCompraLote;
+        $recibir->cantidad_inicial_seccion = $cantidadInicial;
+        $recibir->cantidad_disponible = $cantidadInicial;
         $recibir->fecha_recibido = now();
         $recibir->fecha_expiracion = $datosCompra->fecha_expiracion;
         $recibir->estado_recibido = 4;
         $recibir->recibido_por = Auth::user()->id;
+        $recibir->unidades_compra = $datosCompra->unidades_compra;
+        $recibir->unidad_compra_id = $datosCompra->unidad_compra_id;
         $recibir->save();
 
         
@@ -408,8 +417,14 @@ class RecibirProducto extends Component
         select
         cantidad_ingresada,
         fecha_expiracion,
-        cantidad_sin_asignar
-        from compra_has_producto
+        cantidad_sin_asignar,
+        compra_id,
+        producto_id,
+        B.nombre
+        
+        from compra_has_producto A
+        inner join producto B
+        on A.producto_id = B.id
         where compra_id = ".$request->compraId."  and producto_id=".$request->productoId
      );
 

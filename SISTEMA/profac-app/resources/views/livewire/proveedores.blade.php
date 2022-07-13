@@ -82,52 +82,52 @@
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <div class="row" id="row_datos">
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Código:</label>
+                                <label class="col-form-label focus-label">Código:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="codigo_prov" name="codigo_prov"
                                     data-parsley-required>
                             </div>
                             <div class="col-md-8">
-                                <label class="col-form-label focus-label">Nombre del proveedor</label>
+                                <label class="col-form-label focus-label">Nombre del proveedor:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="nombre_prov" name="nombre_prov"
                                     data-parsley-required>
                             </div>
                             <div class="col-md-12">
-                                <label class="col-form-label focus-label">Dirección</label>
+                                <label class="col-form-label focus-label">Dirección:<span class="text-danger">*</span></label>
                                 <textarea name="direccion_prov" placeholder="Escriba aquí..." required id="direccion_prov" cols="30" rows="3"
                                     class="form-group form-control" data-parsley-required></textarea>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Contácto</label>
+                                <label class="col-form-label focus-label">Contácto:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="contacto_prov"
                                     name="contacto_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Teléfono</label>
+                                <label class="col-form-label focus-label">Teléfono:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" required type="text" name="telefono_prov"
                                     id="telefono_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Teléfono 2</label>
+                                <label class="col-form-label focus-label">Teléfono 2:</label>
                                 <input class="form-group form-control" type="text" name="telefono_prov_2"
                                     id="telefono_prov_2">
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Correo electrónico</label>
+                                <label class="col-form-label focus-label">Correo electrónico:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" type="text" name="correo_prov" id="correo_prov"
                                     data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Correo electrónico 2</label>
+                                <label class="col-form-label focus-label">Correo electrónico 2:</label>
                                 <input class="form-group form-control" type="text" name="correo_prov_2"
                                     id="correo_prov_2">
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">RTN</label>
+                                <label class="col-form-label focus-label">RTN:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" required type="text" name="rtn_prov"
                                     id="rtn_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">País</label>
+                                <label class="col-form-label focus-label">País:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="pais_prov" id="pais_prov"
                                     onchange="obtenerDepartamentos()">
                                     <option selected disabled>---Seleccione un país---</option>
@@ -138,7 +138,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Departamento</label>
+                                <label class="col-form-label focus-label">Departamento:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="depto_prov" id="depto_prov"
                                     onchange="obtenerMunicipios()">
                                     <option selected disabled>---Seleccione un Departamento---</option>
@@ -146,7 +146,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Municipio</label>
+                                <label class="col-form-label focus-label">Municipio:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="municipio_prov" id="municipio_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione un municipio---</option>
@@ -154,7 +154,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Tipo de Personalidad </label>
+                                <label class="col-form-label focus-label">Tipo de Personalidad:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="giro_neg_prov" id="giro_neg_prov"
                                     data-parsley-required>
                                     <option disabled selected>---Seleccione una opción---</option>
@@ -165,7 +165,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Categoría</label>
+                                <label class="col-form-label focus-label">Categoría:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="categoria_prov" id="categoria_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una opción---</option>
@@ -176,7 +176,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <label class="col-form-label focus-label">Retenciones </label>
+                                <label class="col-form-label focus-label">Retenciones:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="retencion_prov" id="retencion_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una opción---</option>
@@ -215,37 +215,37 @@
                         <input type="hidden" id="idProveedor" name="idProveedor" value="0" data-parsley-required>
                         <div class="row" id="row_datos">
                             <div class="col-md-4">
-                                <label for="editar_codigo_prov" class="col-form-label focus-label">Código:</label>
+                                <label for="editar_codigo_prov" class="col-form-label focus-label">Código:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="editar_codigo_prov" name="editar_codigo_prov"
                                     data-parsley-required>
                             </div>
                             <div class="col-md-8">
-                                <label for="editar_nombre_prov" class="col-form-label focus-label">Nombre del proveedor</label>
+                                <label for="editar_nombre_prov" class="col-form-label focus-label">Nombre del proveedor:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="editar_nombre_prov" name="editar_nombre_prov"
                                     data-parsley-required>
                             </div>
                             <div class="col-md-12">
-                                <label class="col-form-label focus-label">Dirección</label>
+                                <label class="col-form-label focus-label">Dirección:<span class="text-danger">*</span></label>
                                 <textarea for="editar_direccion_prov" placeholder="Escriba aquí..." required name="editar_direccion_prov" id="editar_direccion_prov" cols="30" rows="3"
                                     class="form-group form-control" data-parsley-required></textarea>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_contacto_prov" class="col-form-label focus-label">Contácto</label>
+                                <label for="editar_contacto_prov" class="col-form-label focus-label">Contácto:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="editar_contacto_prov"
                                     name="editar_contacto_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_telefono_prov" class="col-form-label focus-label">Teléfono</label>
+                                <label for="editar_telefono_prov" class="col-form-label focus-label">Teléfono:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" required type="text" name="editar_telefono_prov"
                                     id="editar_telefono_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_telefono_prov_2" class="col-form-label focus-label">Teléfono 2</label>
+                                <label for="editar_telefono_prov_2" class="col-form-label focus-label">Teléfono 2:</label>
                                 <input class="form-group form-control" type="text" name="editar_telefono_prov_2"
                                     id="editar_telefono_prov_2">
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_correo_prov" class="col-form-label focus-label">Correo electrónico</label>
+                                <label for="editar_correo_prov" class="col-form-label focus-label">Correo electrónico:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" type="text" name="editar_correo_prov" id="editar_correo_prov"
                                     data-parsley-required>
                             </div>
@@ -255,12 +255,12 @@
                                     id="editar_correo_prov_2">
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_rtn_prov" class="col-form-label focus-label">RTN</label>
+                                <label for="editar_rtn_prov" class="col-form-label focus-label">RTN:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" required type="text" name="editar_rtn_prov"
                                     id="editar_rtn_prov" data-parsley-required>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_pais_prov" class="col-form-label focus-label">País</label>
+                                <label for="editar_pais_prov" class="col-form-label focus-label">País:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="editar_pais_prov" id="editar_pais_prov"
                                     onchange="editarObtenerDepartamentos()">
                                     <option selected disabled>---Seleccione un país---</option>
@@ -269,7 +269,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_depto_prov" class="col-form-label focus-label">Departamento</label>
+                                <label for="editar_depto_prov" class="col-form-label focus-label">Departamento:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="editar_depto_prov" id="editar_depto_prov"
                                     onchange="editarObtenerMunicipios()">
                                     <option selected disabled>---Seleccione un Departamento---</option>
@@ -277,7 +277,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <label for="editar_municipio_prov" class="col-form-label focus-label">Municipio</label>
+                                <label for="editar_municipio_prov" class="col-form-label focus-label">Municipio:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="editar_municipio_prov" id="editar_municipio_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione un municipio---</option>
@@ -285,7 +285,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="editar_giro_neg_prov" class="col-form-label focus-label">Tipo de Personalidad </label>
+                                <label for="editar_giro_neg_prov" class="col-form-label focus-label">Tipo de Personalidad:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="editar_giro_neg_prov" id="editar_giro_neg_prov"
                                     data-parsley-required>
                                     <option disabled selected>---Seleccione una opción---</option>
@@ -294,7 +294,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="editar_categoria_prov" class="col-form-label focus-label">Categoría</label>
+                                <label for="editar_categoria_prov" class="col-form-label focus-label">Categoría:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="editar_categoria_prov" id="editar_categoria_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una opción---</option>
@@ -416,6 +416,7 @@
 
         $(document).ready(function() {
             $('#tbl_proveedoresListar').DataTable({
+                "order": [0, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
@@ -515,8 +516,11 @@
                         title: 'Exito!',
                         text: "Proveedor creado con exito."
                     })
-
+                    $('#proveedorCreacionForm').parsley().reset(); 
                     $('#tbl_proveedoresListar').DataTable().ajax.reload();
+
+                    
+                  
 
 
 
@@ -861,6 +865,7 @@
                     })
 
                     $('#tbl_proveedoresListar').DataTable().ajax.reload();
+                    $('#proveedorEditarForm').parsley().reset(); 
 
 
             })

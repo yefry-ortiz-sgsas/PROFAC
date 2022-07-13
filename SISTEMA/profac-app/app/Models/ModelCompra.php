@@ -14,8 +14,18 @@ class ModelCompra extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-     'id', 'fecha_vencimiento', 'isv_compra', 'sub_total',
-     'total', 'debito', 'proveedores_id', 'users_id', 'tipo_compra_id',
-     'numero_orden', 'monto_retencion', 'retenciones_id', 'estado_compra_id'
+    'id',
+    'fecha_vencimiento',
+    'isv_compra', 'sub_total',      
+    'total',
+    'debito',
+    'proveedores_id',
+    'users_id',
+    'tipo_compra_id',
+    'numero_orden',
+    'monto_retencion', 
+    'retenciones_id', 
+    'estado_compra_id',
+    
     ];
 }

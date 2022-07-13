@@ -42,7 +42,7 @@ class DetalleProducto extends Component
                 A.precio_base,
                 A.costo_promedio,
                 A.isv,
-                concat(C.nombre,' ',C.simbolo) as 'unidad_medida',
+                C.nombre as 'unidad_medida',
                 A.created_at as 'fecha_registro',
                 D.name as 'registrado_por',
                 A.marca_id,

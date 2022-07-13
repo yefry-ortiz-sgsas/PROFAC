@@ -94,7 +94,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-success">Regitro de Clientes</h5>
+                        <h5 class="modal-title text-success">Registro de Cliente</h5>
                         </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -106,42 +106,46 @@
                             <div class="row" id="row_datos">
      
                                 <div class="col-md-12">
-                                    <label class="col-form-label focus-label">Nombre del cliente</label>
+                                    <label class="col-form-label focus-label">Nombre del cliente<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente" name="nombre_cliente"
                                         data-parsley-required>
                                 </div>
                                 <div class="col-md-12">
-                                    <label class="col-form-label focus-label">Dirección</label>
+                                    <label class="col-form-label focus-label">Dirección<span class="text-danger">*</span></label>
                                     <textarea name="direccion_cliente" placeholder="Escriba aquí..." required id="direccion_cliente" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required></textarea>
                                 </div>
-                                <div class="col-md-12">
-                                    <label class="col-form-label focus-label">Monto de credito</label>
+                                <div class="col-md-6">
+                                    <label class="col-form-label focus-label">Monto de credito<span class="text-danger">*</span></label>
                                     <input data-type="currency"  id="credito" name="credito" type="text"  step="any" class="form-group form-control" data-parsley-required>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label focus-label" for="dias_credito">Dias de credito<span class="text-danger">*</span></label>
+                                    <input   id="dias_credito" name="dias_credito" type="number"  min="0" max="120" class="form-group form-control" data-parsley-required>
+                                </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">RTN</label>
+                                    <label class="col-form-label focus-label">RTN<span class="text-danger">*</span></label>
                                     <input class="form-group form-control" required type="text" name="rtn_cliente"
                                         id="rtn_cliente" data-parsley-required pattern="[0-9]{14}">
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Correo electrónico</label>
+                                    <label class="col-form-label focus-label">Correo electrónico<span class="text-danger">*</span></label>
                                     <input class="form-group form-control" type="text" name="correo_cliente" id="correo_cliente"
                                         data-parsley-required>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Teléfono del cliente</label>
+                                    <label class="col-form-label focus-label">Teléfono del cliente<span class="text-danger">*</span></label>
                                     <input class="form-group form-control" type="text" name="telefono_cliente" id="telefono_cliente"
                                         data-parsley-required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label focus-label">Nombre de contácto 1</label>
+                                    <label class="col-form-label focus-label">Nombre de contácto 1<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="contacto[]"
                                         name="contacto[]" data-parsley-required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="col-form-label focus-label">Teléfono contacto 1</label>
+                                    <label class="col-form-label focus-label">Teléfono contacto 1<span class="text-danger">*</span></label>
                                     <input class="form-group form-control" required type="text" name="telefono[]"led 900900
                                         id="telefono[]" data-parsley-required pattern="[0-9]{8}"">
                                 </div>
@@ -169,7 +173,7 @@
                                         id="latitud_clientee" >
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Pais</label>
+                                    <label class="col-form-label focus-label">Pais<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="pais_cliente" id="pais_cliente"
                                     onchange="obtenerDepartamentos()">
                                         <option selected disabled>---Seleccione un pais---</option>
@@ -180,7 +184,7 @@
 
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Departamento</label>
+                                    <label class="col-form-label focus-label">Departamento<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="departamento_cliente" id="departamento_cliente"
                                         onchange="obtenerMunicipios()">
                                         <option selected disabled>---Seleccione un departamento---</option>
@@ -188,7 +192,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Municipio</label>
+                                    <label class="col-form-label focus-label">Municipio<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="municipio_cliente" id="municipio_cliente"
                                         data-parsley-required >
                                         <option selected disabled>---Seleccione un municipio---</option>
@@ -196,7 +200,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Tipo de Personalidad </label>
+                                    <label class="col-form-label focus-label">Tipo de Personalidad<span class="text-danger">*</span> </label>
                                     <select class="form-group form-control" name="tipo_personalidad" id="tipo_personalidad"
                                         data-parsley-required>
                                         <option disabled selected>---Seleccione una opción---</option>
@@ -205,7 +209,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Tipo de cliente</label>
+                                    <label class="col-form-label focus-label">Tipo de cliente<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="categoria_cliente" id="categoria_cliente"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione una opción---</option>
@@ -214,7 +218,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label focus-label">Vendedor</label>
+                                    <label class="col-form-label focus-label">Vendedor<span class="text-danger">*</span></label>
                                     <select class="form-group form-control" name="vendedor_cliente" id="vendedor_cliente"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione una opción---</option>
@@ -268,9 +272,13 @@
                                     <textarea name="direccion_cliente_editar" placeholder="Escriba aquí..." required id="direccion_cliente_editar" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required></textarea>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label class="col-form-label focus-label">Monto de credito</label>
                                     <input  id="credito_editar" name="credito_editar" type="number" step="any" class="form-group form-control" data-parsley-required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label focus-label" for="dias_credito_editar">Dias de credito<span class="text-danger">*</span></label>
+                                    <input   id="dias_credito_editar" name="dias_credito_editar" type="number"  min="0" max="120" class="form-group form-control" data-parsley-required>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label focus-label">RTN</label>
@@ -371,16 +379,20 @@
                                     <select class="form-group form-control" name="vendedor_cliente_editar" id="vendedor_cliente_editar"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione una opción---</option>
+                                        @foreach ($clientes as $cliente)
+                                        <option value="{{$cliente->id}}" >{{$cliente->name}}</option>
+                                        @endforeach
                             
                                     </select>
                                 </div>
 
                             </div>
                         </form>
-                        <button type="button" class="btn btn-default  mt-4" data-dismiss="modal">Cerrar</button>
+                   
                         <button id="btn_crear_cliente_editar" type="submit" class="btn btn-primary  mt-4"
                             form="clientesCreacionForm_editar"><strong>Editar
                                Cliente</strong></button>
+                               <button type="button" class="btn btn-default  mt-4" data-dismiss="modal">Cerrar</button>
                     </div>
 
                 </div>
@@ -973,6 +985,7 @@ $(document).ready(function() {
             document.getElementById('nombre_cliente_editar').value =datosCliente.nombre;
             document.getElementById('direccion_cliente_editar').value =datosCliente.direccion;
             document.getElementById('credito_editar').value = datosCliente.credito;
+            document.getElementById('dias_credito_editar').value = datosCliente.dias_credito;
             document.getElementById('rtn_cliente_editar').value = datosCliente.rtn;
             document.getElementById("correo_cliente_editar").value = datosCliente.correo;
             document.getElementById('telefono_cliente_editar').value = datosCliente.telefono_empresa;
@@ -1318,13 +1331,7 @@ $(document).ready(function() {
 
         function activarCliente(idCliente){
 
-            axios.post('ruta',data)
-            .then( response=>{
 
-            })
-            .catch( err =>{
-                
-            })
 
             axios.post('/clientes/activar',{clienteId:idCliente})
             .then( response=>{

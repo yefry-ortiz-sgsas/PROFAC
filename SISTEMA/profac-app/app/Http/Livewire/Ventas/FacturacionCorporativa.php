@@ -37,16 +37,32 @@ class FacturacionCorporativa extends Component
     {
         try {
 
-            $listaClientes = DB::SELECT("
-         select 
-             id,
-             nombre as text
-         from cliente
-             where estado_cliente_id = 1
-             and tipo_cliente_id=1
-             and vendedor =" . Auth::user()->id . "             
-             and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                 ");
+
+
+            if(Auth::user()->rol_id==1){
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and tipo_cliente_id=1                           
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+            }else{
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and tipo_cliente_id=1
+                    and vendedor =" . Auth::user()->id . "             
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+            }
+
+
 
             return response()->json([
                 "results" => $listaClientes,
@@ -63,7 +79,7 @@ class FacturacionCorporativa extends Component
     {
         try {
 
-            $datos = DB::SELECTONE("select id,nombre, rtn from cliente where id = " . $request->id);
+            $datos = DB::SELECTONE("select id,nombre, rtn, dias_credito from cliente where id = " . $request->id);
 
             return response()->json([
                 "datos" => $datos
@@ -228,18 +244,19 @@ class FacturacionCorporativa extends Component
             where A.estado_id = 1 and A.producto_id = " . $request->idProducto
             );
 
-            $producto = DB::SELECT("
+            $producto = DB::SELECTONE("
             select
             id,
             concat(nombre,' - ',codigo_barra) as nombre,
-            isv
+            isv,
+            ultimo_costo_compra
 
             from producto where id = " . $request['idProducto'] . "
             ");
 
 
             return response()->json([
-                "producto" => $producto[0],
+                "producto" => $producto,
 
                 "unidades" => $unidades
             ], 200);
@@ -342,7 +359,8 @@ class FacturacionCorporativa extends Component
             DB::beginTransaction();
 
 
-            if ($estado == 1) {
+            if ($estado == 1) 
+            {
                 //presenta
 
 
@@ -398,6 +416,12 @@ class FacturacionCorporativa extends Component
                 $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
                 // dd($cai->cantidad_otorgada);
                 $montoComision = $request->totalGeneral * 0.5;
+                if($request->tipoPagoVenta==1){
+                    $diasCredito = 0;
+                }else{
+                    $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                    $diasCredito = $dias->dias_credito;
+                }
 
                 $factura = new ModelFactura;
                 $factura->numero_factura = $request->numero_venta;
@@ -412,8 +436,9 @@ class FacturacionCorporativa extends Component
                 $factura->fecha_emision = $request->fecha_emision;
                 $factura->fecha_vencimiento = $request->fecha_vencimiento;
                 $factura->tipo_pago_id = $request->tipoPagoVenta;
+                $factura->dias_credito=$diasCredito;
                 $factura->cai_id = $cai->id;
-                $factura->estado_venta_id = 1;
+                $factura->estado_venta_id = 1;                
                 $factura->cliente_id = $request->seleccionarCliente;
                 $factura->vendedor = Auth::user()->id;
                 $factura->monto_comision = $montoComision;
@@ -618,6 +643,14 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
+            if($request->tipoPagoVenta==1){
+                $diasCredito = 0;
+            }else{
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                $diasCredito = $dias->dias_credito;
+            }
+
+
             $factura = new ModelFactura;
             $factura->numero_factura = $request->numero_venta;
             $factura->cai = $numeroCAI;
@@ -631,6 +664,7 @@ class FacturacionCorporativa extends Component
             $factura->fecha_emision = $request->fecha_emision;
             $factura->fecha_vencimiento = $request->fecha_vencimiento;
             $factura->tipo_pago_id = $request->tipoPagoVenta;
+            $factura->dias_credito = $diasCredito;
             $factura->cai_id = $cai->id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
@@ -744,6 +778,14 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
+            if($request->tipoPagoVenta==1){
+                $diasCredito = 0;
+            }else{
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                $diasCredito = $dias->dias_credito;
+            }
+
+
             $factura = new ModelFactura;
             $factura->numero_factura = $request->numero_venta;
             $factura->cai = $numeroCAI;
@@ -757,6 +799,7 @@ class FacturacionCorporativa extends Component
             $factura->fecha_emision = $request->fecha_emision;
             $factura->fecha_vencimiento = $request->fecha_vencimiento;
             $factura->tipo_pago_id = $request->tipoPagoVenta;
+            $factura->dias_credito = $diasCredito;
             $factura->cai_id = $cai->cai_id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
@@ -1030,6 +1073,13 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
+            if($request->tipoPagoVenta==1){
+                $diasCredito = 0;
+            }else{
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                $diasCredito = $dias->dias_credito;
+            }
+
             $factura = new ModelFactura;
             $factura->numero_factura = $request->numero_venta;
             $factura->cai = $numeroCAI;
@@ -1043,6 +1093,7 @@ class FacturacionCorporativa extends Component
             $factura->fecha_emision = $request->fecha_emision;
             $factura->fecha_vencimiento = $request->fecha_vencimiento;
             $factura->tipo_pago_id = $request->tipoPagoVenta;
+            $factura->dias_credito =  $diasCredito;
             $factura->cai_id = $listado->cai_id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
@@ -1108,4 +1159,6 @@ class FacturacionCorporativa extends Component
             return $numeroActual;
         }
     }
+
+
 }

@@ -305,7 +305,7 @@
                             class="nav-label" style="color:#ffffff;">Proveedores</span> <span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="/proveedores" style="color:#ffffff;">Gestiones</a></li>
+                        <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
                         <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
                     </ul>
                 </li>
@@ -318,10 +318,11 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                        <li><a href="/producto/registro" style="color:#ffffff;">Registrar Producto</a></li>
+                        <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a></li>
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
+                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li> 
+                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
 
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>

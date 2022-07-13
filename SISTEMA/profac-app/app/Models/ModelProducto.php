@@ -19,6 +19,7 @@ class ModelProducto extends Model
         'codigo_estatal',
         'categoria_id',
         'unidad_medida_compra_id',
-        'marca_id'
+        'marca_id',
+        'ultimo_costo_compra'
     ];
 }

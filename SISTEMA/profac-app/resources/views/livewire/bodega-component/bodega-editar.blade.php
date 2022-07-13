@@ -59,20 +59,20 @@
                                         <input id="idBodega" name="idBodega" type="hidden" >
 
                                         <div class="form-group">
-                                            <label for="editBodegaNombre">Nombre</label>
+                                            <label for="editBodegaNombre">Nombre<span class="text-danger">*</span></label>
                                             <input id="editBodegaNombre" name="editBodegaNombre" type="text"
                                                 placeholder="Nombre de bodega" class="form-control" data-parsley-required>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="editBodegaDireccion">Direccion</label>
+                                            <label for="editBodegaDireccion">Direccion<span class="text-danger">*</span></label>
                                             <input id="editBodegaDireccion" name="editBodegaDireccion" type="text"
                                                 placeholder="Direccion de bodega" class="form-control" data-parsley-required>
                                         </div>
 
 
                                         <div>
-                                            <label for="editEncargadoBodega">Encargado de bodega</label>
+                                            <label for="editEncargadoBodega">Encargado de bodega<span class="text-danger">*</span></label>
                                             <select id="editEncargadoBodega" name="editEncargadoBodega"
                                                 class="form-control m-b" data-parsley-required>
                                                 <option value="0" selected disabled>Seleccione un encargado</option>

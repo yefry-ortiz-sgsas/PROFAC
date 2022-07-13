@@ -73,7 +73,7 @@ class FacturacionEstatal extends Component
      public function datosCliente(Request $request){
         try {
 
-            $datos = DB::SELECTONE("select id,nombre, rtn from cliente where id = ".$request->id);
+            $datos = DB::SELECTONE("select id,nombre, rtn,dias_credito  from cliente where id = ".$request->id);
 
         return response()->json([
             "datos" => $datos
@@ -236,18 +236,19 @@ class FacturacionEstatal extends Component
             where A.estado_id = 1 and A.producto_id = ".$request->idProducto
             );
          
-            $producto = DB::SELECT("
+            $producto = DB::SELECTONE("
             select
             id,
             concat(nombre,' - ',codigo_barra) as nombre,
-            isv
+            isv,
+            ultimo_costo_compra
 
             from producto where id = ".$request['idProducto']."
             ");
 
 
             return response()->json([
-                "producto" => $producto[0],
+                "producto" => $producto,
               
                 "unidades"=>$unidades
             ], 200);

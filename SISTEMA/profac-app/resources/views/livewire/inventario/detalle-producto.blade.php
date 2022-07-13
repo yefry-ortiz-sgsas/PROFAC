@@ -312,16 +312,16 @@
                         <div class="row" id="row_datos">
                             <div class="col-md-12">
                                 <input type="hidden" id="id_producto_edit" name="id_producto_edit" value="{{ $producto->id }}">
-                                <label for="nombre_producto_edit" class="col-form-label focus-label">Nombre del producto:</label>
+                                <label for="nombre_producto_edit" class="col-form-label focus-label">Nombre del producto:<span class="text-danger">*</span></label>
                                 <input class="form-control" required type="text" id="nombre_producto_edit" name="nombre_producto_edit" data-parsley-required>
                             </div>
 
                             <div class="col-md-12">
-                                <label for="descripcion_producto" class="col-form-label focus-label">Descripción del producto</label>
+                                <label for="descripcion_producto" class="col-form-label focus-label">Descripción del producto:<span class="text-danger">*</span></label>
                                 <textarea placeholder="Escriba aquí..." required id="descripcion_producto_edit" name="descripcion_producto_edit" cols="30" rows="3" class="form-group form-control" data-parsley-required></textarea>
                             </div>
                             <div class="col-md-4">
-                                <label for="isv_producto" class="col-form-label focus-label">ISV en %:</label>
+                                <label for="isv_producto" class="col-form-label focus-label">ISV en %:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="isv_producto_edit" id="isv_producto_edit" data-parsley-required>
 
                                     <option value="0">Excento de impuestos</option>
@@ -341,17 +341,23 @@
                                 <label for="cod_estatal_producto" class="col-form-label focus-label">Codigo Estatal:</label>
                                 <input class="form-group form-control" type="number" name="cod_estatal_producto_edit" id="cod_estatal_producto_edit" min="0">
                             </div>
-                            <div class="col-md-6">
-                                <label for="precioBase_edit" class="col-form-label focus-label">Precio de venta base:</label>
+                            <div class="col-md-4">
+                                <label for="precioBase_edit" class="col-form-label focus-label">Precio de venta base:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" step="any" min="1" type="number" name="precioBase_edit" id="precioBase_edit" data-parsley-required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="costo_promedio_editar" class="col-form-label focus-label">Costo promedio:</label>
+                            <div class="col-md-4">
+                                <label for="costo_promedio_editar" class="col-form-label focus-label">Costo promedio:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" step="any" min="1" type="number" name="costo_promedio_editar" id="costo_promedio_editar" data-parsley-required>
                             </div>
 
+                            <div class="col-md-4">
+                                <label for="ultimo_costo_compra_editar" class="col-form-label focus-label">Ultimo costo de compra:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" step="any" min="1" type="number" name="ultimo_costo_compra_editar" id="ultimo_costo_compra_editar" data-parsley-required>
+                            </div>
+
+                           
                             <div class="col-md-6">
-                                <label for="categoria_producto_editar" class="col-form-label focus-label">Marca de producto</label>
+                                <label for="categoria_producto_editar" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="marca_producto_editar" id="marca_producto_editar"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una marca de producto---</option>                                
@@ -362,7 +368,7 @@
 
 
                             <div class="col-md-6">
-                                <label for="categoria_producto_editar" class="col-form-label focus-label">Categoria de producto</label>
+                                <label for="categoria_producto_editar" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="categoria_producto_edit" id="categoria_producto_edit" data-parsley-required>
                                     <option selected disabled>---Seleccione una categoria---</option>
 
@@ -381,13 +387,13 @@
                             </div> --}}
 
                             <div class="text-center col-md-12 mt-2">
-                                <p class="font-weight-bold text-center">Unidades De Medida Para Compra </p>
+                                <p class="font-weight-bold text-center">Unidades De Medida Para Compra</p>
                                 <hr>
                             </div>
                             
                             
                             <div class="col-md-6">
-                                <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra</label>
+                                <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="unidad_producto_editar" id="unidad_producto_editar"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una unidad---</option>
@@ -396,7 +402,7 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="precio3" class="col-form-label focus-label">cantidad de "unidades" para compra:</label>
+                                <label for="precio3" class="col-form-label focus-label">cantidad de "unidades" para compra:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control"  min="1" type="number" name="unidades_editar"
                                     id="unidades_editar" step="any" required>
                             </div>
@@ -409,9 +415,13 @@
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" form="editarProductoForm" class="btn btn-primary">Guardar producto</button>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" onclick="actualizarCostos({{ $producto->id}})" class="btn btn-warning">Calcular Costos</button>
+                    <div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" form="editarProductoForm" class="btn btn-primary">Guardar producto</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -659,6 +669,7 @@
                     document.getElementById("precioBase_edit").value = datos.datosProducto.precio_base;
                     document.getElementById("costo_promedio_editar").value = datos.datosProducto.costo_promedio;
                     document.getElementById("unidades_editar").value=datos.datosProducto.unidadad_compra;
+                    document.getElementById("ultimo_costo_compra_editar").value=datos.datosProducto.ultimo_costo_compra;
 
                    
 
@@ -846,6 +857,28 @@
                     })
 
             })
+        }
+
+
+        function actualizarCostos(idProducto){
+
+            axios.post('/producto/actualizar/costos', {idProducto:idProducto})
+            .then( response=>{
+                let data = response.data;
+
+                if(data.ultimoCosto!=0 && data.costoPromedio!=0){
+                    document.getElementById('ultimo_costo_compra_editar').value=data.ultimoCosto;
+                    document.getElementById('costo_promedio_editar').value=data.costoPromedio;
+                }
+                
+             
+
+
+            }).catch( err=>{
+                console.error(err);
+
+            })
+
         }
 
     </script>

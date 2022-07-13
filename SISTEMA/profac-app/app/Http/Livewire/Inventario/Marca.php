@@ -52,8 +52,7 @@ class Marca extends Component
                         </a>
                     </li>
                     <li>
-                    <a class="dropdown-item"   > <i class="fa-solid fa-arrows-to-eye text-info"></i>
-                            Eliminar </a>
+                    <a class="dropdown-item"   ><i class="fa-solid fa-xmark text-danger"></i> Desactivar </a>
                     </li>
 
                 </ul>
@@ -107,7 +106,7 @@ class Marca extends Component
             $file->move($path, $name);
 
             $marca = new ModelMarca;
-            $marca->nombre = $request['nombre_producto'];
+            $marca->nombre = trim($request['nombre_producto']);
             $marca->url_img = $url;
             $marca->users_id = Auth::user()->id;
             $marca->save();
@@ -120,7 +119,7 @@ class Marca extends Component
 
         }else{
             $marca = new ModelMarca;
-            $marca->nombre = $request()->nombre_producto;
+            $marca->nombre = trim($request->nombre_producto);
            
             $marca->users_id =Auth::user()->id;
             $marca->save();
@@ -216,7 +215,7 @@ class Marca extends Component
              }
 
 
-             $marca->nombre = $request['nombre_producto_editar'];
+             $marca->nombre = trim($request['nombre_producto_editar']);
              $marca->url_img = $url;
              $marca->users_id = Auth::user()->id;
              $marca->save();

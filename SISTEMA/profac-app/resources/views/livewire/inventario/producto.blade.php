@@ -169,18 +169,18 @@
                                     {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
                                     <div class="row" id="row_datos">
                                         <div class="col-md-12">
-                                            <label for="nombre_producto" class="col-form-label focus-label">Nombre del producto:</label>
+                                            <label for="nombre_producto" class="col-form-label focus-label">Nombre del producto:<span class="text-danger">*</span>  </label>
                                             <input class="form-control" required type="text" id="nombre_producto" name="nombre_producto"
                                                 data-parsley-required>
                                         </div>
       
                                         <div class="col-md-12">
-                                            <label for="descripcion_producto" class="col-form-label focus-label">Descripción  del producto</label>
+                                            <label for="descripcion_producto" class="col-form-label focus-label">Descripción  del producto:<span class="text-danger">*</span></label>
                                             <textarea  placeholder="Escriba aquí..." required id="descripcion_producto" name ="descripcion_producto" cols="30" rows="3"
                                                 class="form-group form-control" data-parsley-required></textarea>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="isv_producto" class="col-form-label focus-label">ISV en %:</label>
+                                            <label for="isv_producto" class="col-form-label focus-label">ISV en %:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="isv_producto" id="isv_producto" data-parsley-required>
                                               
                                                 <option value="0">Excento de impuestos</option>
@@ -202,15 +202,21 @@
                                             <input class="form-group form-control" type="number" name="cod_estatal_producto"
                                                 id="cod_estatal_producto" min="0">
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="precio1" class="col-form-label focus-label">Precio de venta base:</label>
+                                        <div class="col-md-4">
+                                            <label for="precioBase" class="col-form-label focus-label">Precio de venta base:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
                                                 data-parsley-required step="any">
                                         </div>
         
-                                        <div class="col-md-6">
-                                            <label for="precio1" class="col-form-label focus-label">Costo Promedio:</label>
+                                        <div class="col-md-4">
+                                            <label for="costo_promedio" class="col-form-label focus-label">Costo de compra promedio:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control" min="1" type="number" name="costo_promedio" id="costo_promedio"
+                                                data-parsley-required step="any">
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <label for="ultimo_costo_compra" class="col-form-label focus-label">Ultimo costo de compra:<span class="text-danger">*</span></label>
+                                            <input class="form-group form-control" min="1" type="number" name="ultimo_costo_compra" id="ultimo_costo_compra"
                                                 data-parsley-required step="any">
                                         </div>
                                         {{-- <div class="col-md-4">
@@ -224,7 +230,7 @@
                                                 id="precio3" step="any">
                                         </div> --}}
                                         <div class="col-md-6">
-                                            <label for="categoria_producto" class="col-form-label focus-label">Marca de producto</label>
+                                            <label for="categoria_producto" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="marca_producto" id="marca_producto"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una marca---</option>
@@ -237,7 +243,7 @@
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto</label>
+                                            <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una categoria---</option>
@@ -257,7 +263,7 @@
                                         
                                         
                                         <div class="col-md-6">
-                                            <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra</label>
+                                            <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
@@ -268,14 +274,14 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="precio3" class="col-form-label focus-label">cantidad de "unidades" para compra:</label>
+                                            <label for="precio3" class="col-form-label focus-label">cantidad de "unidades" para compra:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control"  min="1" type="number" name="unidades"
                                                 id="unidades" step="any" required>
                                         </div>
 
 
                                         <div class="col-md-6">
-                                            <label for="unidad_producto_venta" class="col-form-label focus-label">Seleccione la unidad de medida para venta</label>
+                                            <label for="unidad_producto_venta" class="col-form-label focus-label">Seleccione la unidad de medida para venta:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="unidad_producto_venta" id="unidad_producto_venta"
                                                 data-parsley-required>
                                                 <option selected disabled>---Seleccione una unidad---</option>
@@ -286,7 +292,7 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="_venta" class="col-form-label focus-label">cantidad de "unidades" para venta:</label>
+                                            <label for="_venta" class="col-form-label focus-label">cantidad de "unidades" para venta:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control"  min="1" type="number" name="unidades_venta"
                                                 id="unidades_venta" step="any" required>
                                         </div>

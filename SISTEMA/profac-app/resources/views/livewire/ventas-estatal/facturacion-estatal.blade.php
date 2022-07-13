@@ -128,6 +128,17 @@
                                     </select>
                                 </div>
 
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+
+                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
+                                            :</label>
+                                        <input class="form-control" type="date" id="fecha_emision" onchange="sumarDiasCredito()"
+                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required>
+
+                                    </div>
+                                </div>
+
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
@@ -140,16 +151,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <div class="form-group">
 
-                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
-                                            :</label>
-                                        <input class="form-control" type="date" id="fecha_emision"
-                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required>
-
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="row">
@@ -422,6 +424,7 @@
             var numeroInputs = 0;
             var arregloIdInputs = [];
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
+            var diasCredito=0;
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
@@ -702,7 +705,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
+                                                    name="precio${numeroInputs}" class="form-control" min="${producto.ultimo_costo_compra}" data-parsley-required step="any"
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
@@ -864,12 +867,16 @@
 
                 if (tipoPago == 2) {
 
-                    document.getElementById('fecha_vencimiento').value = "Empty";
                     document.getElementById('fecha_vencimiento').readOnly = false;
+                    this.sumarDiasCredito();
+                    
 
 
                 } else {
                     document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
+                    document.getElementById('fecha_vencimiento').value = "";
+                    document.getElementById('fecha_vencimiento').readOnly = true;
+
 
                 }
 
@@ -898,6 +905,7 @@
                             document.getElementById("rtn_ventas").readOnly=true;
                             document.getElementById("nombre_cliente_ventas").value=data.nombre;
                             document.getElementById("rtn_ventas").value=data.rtn;
+                            diasCredito = data.dias_credito;
                             obtenerTipoPago();
                         }
 
@@ -1018,6 +1026,23 @@
                             text: data.text
                         })
                     })
+            }
+
+
+            function sumarDiasCredito(){
+                tipoPago = document.getElementById('tipoPagoVenta').value;
+
+                if(tipoPago==2){
+                   
+                    let fechaEmision = document.getElementById("fecha_emision").value;
+                    let date = new Date(fechaEmision);
+                   date.setDate(date.getDate() + diasCredito);
+                   let suma=date.toISOString().split('T')[0];
+                   //console.log( diasCredito);
+
+                    document.getElementById("fecha_vencimiento").value= suma;
+
+                }
             }
 
 

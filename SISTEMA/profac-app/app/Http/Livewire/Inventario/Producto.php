@@ -44,6 +44,7 @@ class Producto extends Component
            
             'categoria_producto' => 'required',
             'unidad_producto' => 'required',
+            'ultimo_costo_compra'=>'required',
             
 
         ], [
@@ -53,7 +54,7 @@ class Producto extends Component
             
             'categoria_producto' => 'Categoria del producto es requerido',
             'unidad_producto' => 'La unidad de medida es requerida',
-            'img_pago' => 'Formato de imagen invalido'
+            'ultimo_costo_compra'=>'el ultimo costo de compra es requerido'
         ]);
 
         if ($validator->fails()) {
@@ -80,6 +81,7 @@ class Producto extends Component
             $producto->codigo_estatal = trim($request['cod_estatal_producto']);
             $producto->categoria_id = $request['categoria_producto'];
             $producto->precio_base = trim($request['precioBase']); 
+            $producto->ultimo_costo_compra = trim($request->ultimo_costo_compra);
             $producto->marca_id = $request->marca_producto;           
             $producto->users_id = Auth::user()->id;
             $producto->estado_producto_id = 1; 
@@ -298,7 +300,8 @@ class Producto extends Component
                 costo_promedio,
                 marca_id,
                 unidad_medida_compra_id,
-                unidadad_compra
+                unidadad_compra,
+                ultimo_costo_compra
                 
 
             from producto where id =".$id);
@@ -352,6 +355,7 @@ class Producto extends Component
             $producto->precio_base = trim($request['precioBase_edit']);
             $producto->costo_promedio = $request['costo_promedio_editar'];
             $producto->unidadad_compra = trim($request['unidades_editar']);
+            $producto->ultimo_costo_compra = trim($request->ultimo_costo_compra_editar);
             $producto->unidad_medida_compra_id = $request['unidad_producto_editar'];
             $producto->marca_id= $request->marca_producto_editar;
             $producto->users_id = Auth::user()->id;
@@ -392,6 +396,66 @@ class Producto extends Component
                         'errorTh' => $e,
                     ], 402);
                 }
+    }
+
+    public function calcularCostos(Request $request){
+      
+        $primeraCompra = DB::SELECTONE("
+        select
+        B.precio_unidad + (B.precio_unidad*C.isv/100) as costo
+
+        from compra A
+        inner join compra_has_producto B
+        on A.id = B.compra_id
+        inner join producto C
+        on C.id = B.producto_id
+        where YEAR(A.fecha_emision)=YEAR(NOW()) and B.producto_id = ".$request->idProducto."
+        order by A.fecha_emision ASC LIMIT 1
+        ");
+
+        $ultimaCompra = DB::SELECTONE("
+        select
+        B.precio_unidad + (B.precio_unidad*C.isv/100) as costo
+
+        from compra A
+        inner join compra_has_producto B
+        on A.id = B.compra_id
+        inner join producto C
+        on C.id = B.producto_id
+        where YEAR(A.fecha_emision)=YEAR(NOW()) and B.producto_id = ".$request->idProducto."
+        order by A.fecha_emision DESC LIMIT 1
+        ");
+      //  DD($primeraCompra->costo,$ultimaCompra->costo);
+
+
+        if(!empty($primeraCompra) and !empty($ultimaCompra)){
+            $ultimaCompra =  $ultimaCompra->costo;
+            $costoPromedio = round(($primeraCompra->costo + $ultimaCompra)/2,2);
+
+            $producto = ModelProducto::find($request->idProducto);
+            $producto->ultimo_costo_compra =  $ultimaCompra;
+            $producto->costo_promedio =  $costoPromedio;   
+            $producto->precio_base=$ultimaCompra;
+            $producto->save();
+    
+        }else{
+            $ultimaCompra=0;
+            $costoPromedio=0;
+
+        }
+
+
+
+
+        return response()->json([
+            "costoPromedio"=>$costoPromedio,
+            "ultimoCosto"=>$ultimaCompra,
+        ],200);
+
+
+
+
+
     }
 
 

@@ -36,6 +36,18 @@
 
       }
 
+                  /* Chrome, Safari, Edge, Opera */
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+
+                /* Firefox */
+                input[type=number] {
+                -moz-appearance: textfield;
+                }
+
 
 
         </style>
@@ -93,7 +105,7 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
-                                        Cliente:</label>
+                                        Cliente:<span class="text-danger">*</span> </label>
                                     <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
                                         data-parsley-required onchange="obtenerDatosCliente()">
                                         <option value="" selected disabled>--Seleccionar un cliente--</option>
@@ -101,14 +113,14 @@
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label class="col-form-label focus-label">Nombre del cliente</label>
+                                    <label class="col-form-label focus-label">Nombre del cliente:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente_ventas" name="nombre_cliente_ventas"
                                         data-parsley-required readonly>
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label class="col-form-label focus-label">RTN</label>
+                                    <label class="col-form-label focus-label">RTN:<span class="text-danger">*</span></label>
                                     <input class="form-control"  type="text" id="rtn_ventas" name="rtn_ventas"
                                     readonly>
 
@@ -123,10 +135,21 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
-                                        pago:</label>
+                                        pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
                                         data-parsley-required onchange="validarFechaPago()">
                                     </select>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+
+                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
+                                            :<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="date" id="fecha_emision" onchange="sumarDiasCredito()"
+                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required>
+
+                                    </div>
                                 </div>
 
 
@@ -141,16 +164,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <div class="form-group">
 
-                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
-                                            :</label>
-                                        <input class="form-control" type="date" id="fecha_emision"
-                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required>
-
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="row">
@@ -163,7 +177,7 @@
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                                  
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:</label>
+                                            <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                             <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
                                                  onchange="obtenerImagenes()">
                                                 <option value="" selected disabled>--Seleccione un producto--</option>
@@ -176,7 +190,7 @@
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
+                                        <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:<span class="text-danger">*</span></label>
                                         <select id="bodega" name="bodega" class="form-group form-control" style=""
                                             onchange="prueba()"  disabled 
                                         >
@@ -365,7 +379,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneral">Sub Total L.</label>
+                                    <label class="col-form-label" for="subTotalGeneral">Sub Total L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -378,7 +392,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneral">ISV L.</label>
+                                    <label class="col-form-label" for="isvGeneral">ISV L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -391,7 +405,7 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneral">Total L.</label>
+                                    <label class="col-form-label" for="totalGeneral">Total L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
@@ -430,6 +444,7 @@
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
+            var diasCredito = 0;
 
 
            
@@ -708,8 +723,8 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control" min="0" data-parsley-required step="any"
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    name="precio${numeroInputs}" class="form-control"  data-parsley-required step="any"
+                                                    autocomplete="off" min="${producto.ultimo_costo_compra}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -870,12 +885,14 @@
 
                 if (tipoPago == 2) {
 
-                    document.getElementById('fecha_vencimiento').value = "Empty";
+                   // document.getElementById('fecha_vencimiento').value = "empty";
                     document.getElementById('fecha_vencimiento').readOnly = false;
-
-
+                    this.sumarDiasCredito();
+                    
                 } else {
                     document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
+                    document.getElementById('fecha_vencimiento').value = "";
+                    document.getElementById('fecha_vencimiento').readOnly = true;
 
                 }
 
@@ -908,6 +925,7 @@
                             document.getElementById("nombre_cliente_ventas").value=data.nombre;
                             document.getElementById("rtn_ventas").value=data.rtn;
                             obtenerTipoPago();
+                            diasCredito = data.dias_credito;
                         }
 
 
@@ -1028,6 +1046,22 @@
                             text: data.text
                         })
                     })
+            }
+
+            function sumarDiasCredito(){
+                tipoPago = document.getElementById('tipoPagoVenta').value;
+
+                if(tipoPago==2){
+                   
+                    let fechaEmision = document.getElementById("fecha_emision").value;
+                    let date = new Date(fechaEmision);
+                   date.setDate(date.getDate() + diasCredito);
+                   let suma=date.toISOString().split('T')[0];
+                   //console.log( diasCredito);
+
+                    document.getElementById("fecha_vencimiento").value= suma;
+
+                }
             }
 
 

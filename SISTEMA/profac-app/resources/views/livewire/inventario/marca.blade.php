@@ -171,7 +171,7 @@
                                 <div class="row" id="row_datos">
                                     <div class="col-md-12">
                                         <label for="nombre_producto" class="col-form-label focus-label">Nombre de la
-                                            marca:</label>
+                                            marca:<span class="text-danger">*</span></label>
                                         <input class="form-control" required type="text" id="nombre_producto"
                                             name="nombre_producto" data-parsley-required>
                                     </div>
