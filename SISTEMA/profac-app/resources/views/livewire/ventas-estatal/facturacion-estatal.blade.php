@@ -64,7 +64,7 @@
                     </div>
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
-
+                            <input type="hidden" id="restriccion" name="restriccion" value="1">
                             
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
@@ -874,10 +874,10 @@
 
                 } else {
                     document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
-                    document.getElementById('fecha_vencimiento').value = "";
+                    
                     document.getElementById('fecha_vencimiento').readOnly = true;
 
-
+                    
                 }
 
                 return 0;
@@ -905,9 +905,13 @@
                             document.getElementById("rtn_ventas").readOnly=true;
                             document.getElementById("nombre_cliente_ventas").value=data.nombre;
                             document.getElementById("rtn_ventas").value=data.rtn;
+                           
                             diasCredito = data.dias_credito;
                             obtenerTipoPago();
                         }
+
+                        // document.getElementById('fecha_vencimiento').value = "";
+                        // document.getElementById('fecha_emision').value="";
 
 
 

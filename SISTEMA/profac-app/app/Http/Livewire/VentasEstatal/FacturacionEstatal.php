@@ -20,6 +20,8 @@ use App\Models\ModelCAI;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelVentaProducto;
 use App\Models\ModelLogTranslados;
+use App\Models\ModelCliente;
+use App\Models\logCredito;
 
 class FacturacionEstatal extends Component
 {
@@ -278,7 +280,8 @@ class FacturacionEstatal extends Component
             'nombre_cliente_ventas'=>'required',
             'tipoPagoVenta'=>'required',
             'bodega'=>'required',
-            'seleccionarProducto'=>'required'
+            'seleccionarProducto'=>'required',
+            'restriccion'=>'required'
         
 
             
@@ -291,6 +294,33 @@ class FacturacionEstatal extends Component
                 'mensaje' => 'Ha ocurrido un error al crear la compra.',
                 'errors' => $validator->errors()
             ], 406);
+        }
+
+        if ($request->restriccion == 1) {
+            $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
+
+            if ($facturaVencida) {
+                return response()->json([
+                    'icon' => 'warning',
+                    'title' => 'Advertencia!',
+                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con facturas vencidas. Por el momento no se puede emitir factura a este cliente.',
+
+                ], 401);
+            }
+            
+        }
+
+        if($request->tipoPagoVenta == 2){
+            $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente,$request->totalGeneral);
+
+            if ($comprobarCredito) {
+                return response()->json([
+                    'icon' => 'warning',
+                    'title' => 'Advertencia!',
+                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con crédito suficiente . Por el momento no se puede emitir factura a este cliente.',
+
+                ], 401);
+            }
         }
        
         //dd($request->all());
@@ -375,6 +405,12 @@ class FacturacionEstatal extends Component
 
                     $montoComision = $request->totalGeneral*0.5;
 
+                    if($request->tipoPagoVenta==1){
+                        $diasCredito = 0;
+                    }else{
+                        $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                        $diasCredito = $dias->dias_credito;
+                    }
                     
                     $factura = new ModelFactura;    
                     $factura->numero_factura = $request->numero_venta;       
@@ -389,13 +425,15 @@ class FacturacionEstatal extends Component
                     $factura->fecha_emision=$request->fecha_emision;
                     $factura->fecha_vencimiento=$request->fecha_vencimiento;                    
                     $factura->tipo_pago_id=$request->tipoPagoVenta;
+                    $factura->dias_credito=$diasCredito;
                     $factura->cai_id=$cai->id;
                     $factura->estado_venta_id=1;
                     $factura->cliente_id=$request->seleccionarCliente;
                     $factura->vendedor=Auth::user()->id;
                     $factura->monto_comision=$montoComision;
                     $factura->tipo_venta_id=2;// estatal
-                    $factura->estado_factura_id=1; // se presenta                  
+                    $factura->estado_factura_id=1; // se presenta     
+                    $factura->users_id = Auth::user()->id;              
                     $factura->comision_estado_pagado=0;
                     $factura->pendiente_cobro=$request->totalGeneral;
                     $factura->save();
@@ -452,6 +490,10 @@ class FacturacionEstatal extends Component
                             
                     
                     };
+           
+            if($request->tipoPagoVenta==2 ){//si el tipo de pago es credito
+                    $this->restarCreditoCliente($request->seleccionarCliente,$request->totalGeneral,$factura->id);
+            }          
 
            // dd($this->arrayProductos);
             ModelVentaProducto::insert($this->arrayProductos);  
@@ -615,6 +657,59 @@ class FacturacionEstatal extends Component
                 'idFactura'=>$idFactura,
             ], 402);
         }
+    }
+
+    public function comprobarCreditoCliente($idCliente,$totalFactura)
+    {
+
+
+
+        $credito = DB::SELECTONE(
+        "
+        select credito from cliente where  id = " . $idCliente
+        );
+
+        if ($totalFactura > $credito->credito) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function comprobarFacturaVencida($idCliente){
+        $facturasVencidas = DB::SELECT(
+            "
+        select
+        id
+        from factura 
+        where tipo_pago_id=2 and estado_venta_id=4 and fecha_vencimiento < curdate() and cliente_id =" . $idCliente
+        );
+
+        if (!empty($facturasVencidas)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    public function restarCreditoCliente($idCliente,$totalFactura, $idFactura){
+
+        $cliente = ModelCliente::find($idCliente);
+        $resta = $cliente->credito - $totalFactura;
+        $cliente->credito = $resta;
+        $cliente->save();
+
+        $logCredito = new logCredito;
+        $logCredito->descripcion = 'Reducción  de credito por factura.';
+        $logCredito->monto = $totalFactura;
+        $logCredito->factura_id=$idFactura;
+        $logCredito->cliente_id=$idCliente;
+        $logCredito->users_id = Auth::user()->id;
+        $logCredito->save();
+        
+        return true;
     }
 }
 

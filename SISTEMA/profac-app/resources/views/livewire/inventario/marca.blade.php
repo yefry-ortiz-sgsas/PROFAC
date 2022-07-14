@@ -395,7 +395,8 @@
                         }
                     ],
                     "ajax": "/producto/marca/listar",
-                    "columns": [{
+                    "columns": [
+                        {
                             data: 'id'
                         },
                         {

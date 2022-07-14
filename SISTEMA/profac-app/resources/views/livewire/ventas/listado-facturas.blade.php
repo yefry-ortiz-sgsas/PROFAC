@@ -40,7 +40,7 @@
                                         <th>ISV en Lps.</th>
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
-                                        <th>Registrado por</th>
+                                        <th>Vendedor</th>
                                         <th>Opciones</th>
                                         
                                     </tr>

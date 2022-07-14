@@ -38,7 +38,7 @@
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Proveedor: </strong>
                                 {{$detalleCompra->nombre}}</small></p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Registrado por: </strong>{{$detalleCompra->usuario}}</small></p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro en sistema: </strong>{{$detalleCompra->fecha_registro}}</small></p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro: </strong>{{$detalleCompra->fecha_registro}}</small></p>
 
                         </div>
     

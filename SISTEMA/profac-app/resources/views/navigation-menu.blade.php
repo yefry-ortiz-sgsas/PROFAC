@@ -345,6 +345,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
+                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
                         @if(Auth::user()->id =='2' || Auth::user()->id=='3' )  
                         <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
@@ -361,7 +362,8 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
+                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
                         {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
                     </ul>
                 </li>
