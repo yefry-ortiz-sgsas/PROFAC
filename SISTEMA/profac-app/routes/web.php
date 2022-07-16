@@ -190,7 +190,14 @@ Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
 
+//------------------------------------------------------------------UNIDADES DE MEDIDA------------------------------------------------------------------------//
+
 Route::get('/inventario/unidades/medida', UnidadesMedida::class);
+Route::post('/inventario/unidades/guardar', [UnidadesMedida::class, 'guardarUnidad']);
+Route::get('/inventario/unidades/listar', [UnidadesMedida::class, 'listarUnidades']);
+Route::post('/inventario/unidades/datos', [UnidadesMedida::class, 'obtenerDatos']);
+Route::post('/inventario/unidades/editar', [UnidadesMedida::class, 'editarUnidad']);
+
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//

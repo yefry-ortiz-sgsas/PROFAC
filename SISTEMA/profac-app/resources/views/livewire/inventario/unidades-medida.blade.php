@@ -117,7 +117,7 @@
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
-                    data-target="#modal_producto_crear"><i class="fa fa-plus"></i> Añadir Marca</a>
+                    data-target="#modal_producto_crear"><i class="fa fa-plus"></i> Añadir Unidad</a>
             </div>
         </div>
 
@@ -130,13 +130,12 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_marcas_listar" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_unidades_listar" class="table table-striped table-bordered table-hover col-md-10">
                                 <thead class="">
                                     <tr>
                                         <th>Cod</th>
                                         <th>Nombre</th>
-                                        <th>Registrado Por:</th>
-                                        <th>Fecha de Registro</th>
+                                        <th>Simbolo</th>                                        
                                         <th>Opciones</th>
 
                                     </tr>
@@ -153,43 +152,39 @@
                 </div>
             </div>
 
-            <!-- Modal para registro de marca-->
+            <!-- Modal para registro de Unidad-->
             <div class="modal fade" id="modal_producto_crear" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Marca</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Unidad</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="modal-body">
-                            <form id="crearProductoForm" name="crearProductoForm" data-parsley-validate>
+                            <form id="crearUnidadForm" name="crearUnidadForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
                                 <div class="row" id="row_datos">
                                     <div class="col-md-12">
                                         <label for="nombre_producto" class="col-form-label focus-label">Nombre de la
-                                            marca:<span class="text-danger">*</span></label>
+                                            Unidad:<span class="text-danger">*</span></label>
                                         <input class="form-control" required type="text" id="nombre_producto"
                                             name="nombre_producto" data-parsley-required>
                                     </div>
 
-
-
-
-                                    <div class="col-md-5">
-                                        <label for="foto_producto" class="col-form-label focus-label">Fotografía:
-                                        </label>
-                                        <input class="" type="file" id="foto_producto" name="foto_producto"
-                                            accept="image/png, image/gif, image/jpeg" multiple>
-
+                                    <div class="col-md-12">
+                                        <label for="simbolo_producto" class="col-form-label focus-label">Simbolo de la
+                                            Unidad:<span class="text-danger">*</span></label>
+                                        <input class="form-control" required type="text" id="simbolo_producto"
+                                            name="simbolo_producto" data-parsley-required>
                                     </div>
-                                    <div class=" col-md-7">
-                                        <img id="imagenPrevisualizacion" class="ancho-imagen">
 
-                                    </div>
+
+
+
                                 </div>
                             </form>
 
@@ -197,20 +192,20 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="crearProductoForm" class="btn btn-primary">Guardar
-                                Marca</button>
+                            <button type="submit" form="crearUnidadForm" class="btn btn-primary">Guardar
+                                Unidad</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-                        <!-- Modal para editar marca-->
+                        <!-- Modal para editar Unidad-->
                         <div class="modal fade" id="modal_producto_editar" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title" id="exampleModalLabel">Editar Marca</h3>
+                                    <h3 class="modal-title" id="exampleModalLabel">Editar Unidad</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -219,29 +214,25 @@
                                 <div class="modal-body">
                                     <form id="editarProductoForm" name="editarProductoForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                        <input id="idMarca" name="idMarca" type="hidden" value="">
+                                        <input id="idUnidad" name="idUnidad" type="hidden" value="">
                                         <div class="row" id="row_datos">
                                             <div class="col-md-12">
                                                 <label for="nombre_producto_editar" class="col-form-label focus-label">Nombre de la
-                                                    marca:</label>
+                                                    Unidad:</label>
                                                 <input class="form-control" required type="text" id="nombre_producto_editar"
                                                     name="nombre_producto_editar" data-parsley-required>
                                             </div>
         
-        
-        
-        
-                                            <div class="col-md-5">
-                                                <label for="foto_producto_editar" class="col-form-label focus-label">Fotografía:
-                                                </label>
-                                                <input class="" type="file" id="foto_producto_editar" name="foto_producto_editar"
-                                                    accept="image/png, image/gif, image/jpeg" multiple>
-        
+                                            <div class="col-md-12">
+                                                <label for="simbolo_producto_editar" class="col-form-label focus-label">Simbolo de la
+                                                    Unidad:</label>
+                                                <input class="form-control" required type="text" id="simbolo_producto_editar"
+                                                    name="simbolo_producto_editar" data-parsley-required>
                                             </div>
-                                            <div class=" col-md-7">
-                                                <img id="imagenPrevisualizacion_editar" class="ancho-imagen">
         
-                                            </div>
+        
+        
+                                            
                                         </div>
                                     </form>
         
@@ -249,8 +240,8 @@
         
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" form="editarProductoForm" class="btn btn-primary">Guardar
-                                        Marca</button>
+                                    <button type="submit" form="editarProductoForm" class="btn btn-primary">Editar
+                                        Unidad</button>
                                 </div>
                             </div>
                         </div>
@@ -285,55 +276,28 @@
     </div>
     @push('scripts')
         <script>
-            const $foto_producto = document.querySelector("#foto_producto"),
-                $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
+         
+         $(document).on('submit', '#crearUnidadForm', function(event) {
+            event.preventDefault();
+            guardarUnidad();
+        });
 
-            // Escuchar cuando cambie
-            $foto_producto.addEventListener("change", () => {
-                // Los archivos seleccionados, pueden ser muchos o uno
-                const archivos = $foto_producto.files;
-                // Si no hay archivos salimos de la función y quitamos la imagen
-                if (!archivos || !archivos.length) {
-                    $imagenPrevisualizacion.src = "";
-                    return;
-                }
-                // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-                const primerArchivo = archivos[0];
-                // Lo convertimos a un objeto de tipo objectURL
-                const objectURL = URL.createObjectURL(primerArchivo);
-                // Y a la fuente de la imagen le ponemos el objectURL
-                $imagenPrevisualizacion.src = objectURL;
-            });
-
-            $(document).on('submit', '#crearProductoForm', function(event) {
-
-                event.preventDefault();
-                guardarProducto();
-
-            });
-
-            function guardarProducto() {
+            function guardarUnidad() {
                 $('#modalSpinnerLoading').modal('show');
 
-                var data = new FormData($('#crearProductoForm').get(0));
+                var data = new FormData($('#crearUnidadForm').get(0));
 
-                var totalfiles = document.getElementById('foto_producto').files.length;
-                for (var i = 0; i < totalfiles; i++) {
-                    data.append("files[]", document.getElementById('foto_producto').files[i]);
-                }
-
-                axios.post("/producto/marca/guardar", data)
+                axios.post("/inventario/unidades/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
-                        $('#crearProductoForm').parsley().reset();
-                        img = document.getElementById('imagenPrevisualizacion');
-                        img.src = "";
-                        document.getElementById("crearProductoForm").reset();
+                        $('#crearUnidadForm').parsley().reset();
+                        
+                        document.getElementById("crearUnidadForm").reset();
                         $('#modal_producto_crear').modal('hide');
 
-                        $('#tbl_marcas_listar').DataTable().ajax.reload();
+                        $('#tbl_unidades_listar').DataTable().ajax.reload();
 
 
                         Swal.fire({
@@ -359,7 +323,7 @@
             }
 
             $(document).ready(function() {
-                $('#tbl_marcas_listar').DataTable({
+                $('#tbl_unidades_listar').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -394,18 +358,15 @@
                             }
                         }
                     ],
-                    "ajax": "/producto/marca/listar",
+                    "ajax": "/inventario/unidades/listar",
                     "columns": [{
                             data: 'id'
                         },
                         {
                             data: 'nombre'
-                        },
+                        },                        
                         {
-                            data: 'name'
-                        },
-                        {
-                            data: 'created_at'
+                            data: 'simbolo'
                         },
                         {
                             data: 'opciones'
@@ -416,23 +377,19 @@
 
                 });
             })
-            
 
-            function datosMarca(id){
+            function datosUnidad(id){
 
                 let data = {id:id}
-                axios.post('/producto/marca/datos',data)
+                axios.post('/inventario/unidades/datos',data)
                 .then( response =>{
                   
                     let datos = response.data.datos;
 
                     document.getElementById('nombre_producto_editar').value = datos.nombre;
-                    document.getElementById('idMarca').value = datos.id;
-                    if(datos.url_img){
-                        document.getElementById('imagenPrevisualizacion_editar').src = '/marcas/'+datos.url_img;
-                    }
-                    
-
+                    document.getElementById('simbolo_producto_editar').value = datos.simbolo;
+                    document.getElementById('idUnidad').value = datos.id;
+                                      
                     $('#modal_producto_editar').modal('show');
                 })
                 .catch( err=>{
@@ -440,62 +397,36 @@
                 })
             }
 
-            const $foto_producto_editar = document.querySelector("#foto_producto_editar"),
-            $imagenPrevisualizacion_editar = document.querySelector("#imagenPrevisualizacion_editar");
-
-            // Escuchar cuando cambie
-            $foto_producto_editar.addEventListener("change", () => {
-                // Los archivos seleccionados, pueden ser muchos o uno
-                const archivos = $foto_producto_editar.files;
-                // Si no hay archivos salimos de la función y quitamos la imagen
-                if (!archivos || !archivos.length) {
-                    $imagenPrevisualizacion_editar.src = "";
-                    return;
-                }
-                // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-                const primerArchivo = archivos[0];
-                // Lo convertimos a un objeto de tipo objectURL
-                const objectURL = URL.createObjectURL(primerArchivo);
-                // Y a la fuente de la imagen le ponemos el objectURL
-                $imagenPrevisualizacion_editar.src = objectURL;
-            });
-
             $(document).on('submit', '#modal_producto_editar', function(event) {
 
                     event.preventDefault();
-                    editarMarca();
+                    editarUnidad();
 
             });
 
-
-            function editarMarca(){
+             function editarUnidad(){
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarProductoForm').get(0));
-                var totalfiles = document.getElementById('foto_producto_editar').files.length;
-
-                for (var i = 0; i < totalfiles; i++) {
-                    data.append("files[]", document.getElementById('foto_producto_editar').files[i]);
-                }
-
-                axios.post('/producto/marca/editar',data)
+                
+            
+                axios.post('/inventario/unidades/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarProductoForm').parsley().reset();
-                    img = document.getElementById('imagenPrevisualizacion');
-                    img.src = "";
+                    
                     document.getElementById("editarProductoForm").reset();
                     $('#modal_producto_editar').modal('hide');
 
-                    $('#tbl_marcas_listar').DataTable().ajax.reload();
+                    $('#tbl_unidades_listar').DataTable().ajax.reload();
 
 
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
-                        text: "Marca editada con exito."
+                        text: "Unidad editada con exito."
                     })
 
                 })
@@ -513,7 +444,6 @@
 
                 })
             }
-
 
 
 
