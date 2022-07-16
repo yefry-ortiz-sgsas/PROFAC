@@ -402,6 +402,8 @@ class FacturacionEstatal extends Component
             $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
             // dd($cai->cantidad_otorgada);
 
+            
+
 
 
             $montoComision = $request->totalGeneral * 0.5;
