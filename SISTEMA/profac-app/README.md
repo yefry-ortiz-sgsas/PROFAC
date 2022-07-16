@@ -12,4 +12,4 @@
 
 ---Consulta para actualizar facturas vencidas---
 update factura set estado_venta_id=4
-where tipo_pago_id=2 and estado_venta_id=1 and fecha_vencimiento < curdate()
+where  estado_venta_id=1 and fecha_vencimiento < curdate() and pendiente_cobro >0

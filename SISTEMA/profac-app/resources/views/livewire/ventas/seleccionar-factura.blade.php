@@ -25,7 +25,7 @@
                     <div class="ibox-content">
                         <div>
                           
-                                <button type="button" class="btn btn-w-m btn-warning ">Monto mayor</button>                              
+                                <button type="button" onclick="obtenerArrar()" class="btn btn-w-m btn-warning ">Monto mayor</button>                              
                                 <button type="button" class="btn btn-w-m btn-success ">Monto menor</button>
                         </div>
                         <div class="table-responsive">
@@ -150,8 +150,16 @@
                    })
                 })
                 
+
                 
              }
+
+             function obtenerArrar(){
+                var table = $('#tbl_lista_ventas').DataTable();
+ 
+                var plainArray = table.column( 0 ).data().toArray();
+                console.log(plainArray);
+                }
         </script>
     @endpush
 </div>

@@ -339,7 +339,7 @@
 
                 <li>
                     <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas</span>
+                            class="nav-label" style="color:#ffffff;">Ventas Corporativas</span>
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
@@ -364,6 +364,21 @@
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                        {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
+                    </ul>
+                </li>
+
+
+
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                            class="nav-label" style="color:#ffffff;">Ventas exoneradas</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+                        <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
+                        <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
+                        
                         {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
                     </ul>
                 </li>

@@ -995,41 +995,121 @@ class FacturacionCorporativa extends Component
 
     public function imprimirFacturaCoorporativa($idFactura)
     {
-        $data = DB::SELECTONE(
-            "
+
+        $cai = DB::SELECTONE("
         select 
-        compra.numero_orden,
-        compra.cai_retencion,
-        DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
-        cai.cai as numeroCai,
-        cai.numero_inicial,
-        cai.numero_final,
-        proveedores.nombre,
-        proveedores.rtn,
-        (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
-        compra.numero_factura,
-        date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
-        FORMAT(compra.monto_retencion, 2) as monto_retencion,
-        FORMAT(compra.total, 2) as total
-        from compra
-        inner join cai 
-        ON cai.id = compra.cai_id
-        inner join proveedores
-        on compra.proveedores_id = proveedores.id
-        where compra.id = 3"
-        );
+        A.cai as numero_factura,
+        B.cai,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,       
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,        
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       where A.id = ".$idFactura);
+
+       $cliente = DB::SELECTONE("
+       select        
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+
+       $productos = DB::SELECT("
+       select 
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            B.precio_unidad as precio,
+            B.cantidad,
+            B.sub_total_s as importe
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=".$idFactura);
+
+
+
+        // $data = DB::SELECTONE(
+        //     "
+        // select 
+        // compra.numero_orden,
+        // compra.cai_retencion,
+        // DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
+        // cai.cai as numeroCai,
+        // cai.numero_inicial,
+        // cai.numero_final,
+        // proveedores.nombre,
+        // proveedores.rtn,
+        // (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
+        // compra.numero_factura,
+        // date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
+        // FORMAT(compra.monto_retencion, 2) as monto_retencion,
+        // FORMAT(compra.total, 2) as total
+        // from compra
+        // inner join cai 
+        // ON cai.id = compra.cai_id
+        // inner join proveedores
+        // on compra.proveedores_id = proveedores.id
+        // where compra.id = 3"
+        // );
 
         /*$pdf = PDF::loadView('/pdf/retencion', $data)
         ->stream('archivo.pdf');
         */
 
+
         //view()->share('/pdf/retencion',$data);
         $formatter = new NumeroALetras();
-        $numeroLetras = $formatter->toMoney($data->monto_retencion, 2, 'LEMPIRAS', 'CENTAVOS');
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura', compact('data', 'numeroLetras'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras'))->setPaper('letter');
         // download PDF file with download method
-        return $pdf->stream("compra numero_" . $data->numero_orden . ".pdf");
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
         // return view('/pdf/retencion')->with($data);
     }
@@ -1218,7 +1298,7 @@ class FacturacionCorporativa extends Component
         select
         id
         from factura 
-        where tipo_pago_id=2 and estado_venta_id=4 and fecha_vencimiento < curdate() and cliente_id =" . $idCliente
+        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {

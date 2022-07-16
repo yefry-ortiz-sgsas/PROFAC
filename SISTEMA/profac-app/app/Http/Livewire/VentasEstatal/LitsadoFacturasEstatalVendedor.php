@@ -10,4 +10,6 @@ class LitsadoFacturasEstatalVendedor extends Component
     {
         return view('livewire.ventas-estatal.litsado-facturas-estatal-vendedor');
     }
+
+    
 }

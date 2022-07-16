@@ -31,6 +31,8 @@ use App\Http\Livewire\Ventas\SeleccionarFactura;
 use App\Http\Livewire\Ventas\LitsadoFacturasVendedor; 
 use App\Http\Livewire\Ventas\DetalleVentaVendedor;
 use App\Http\Livewire\VentasEstatal\LitsadoFacturasEstatalVendedor;
+use App\Http\Livewire\VentasExoneradas\VentasExoneradas;
+use App\Http\Livewire\VentasExoneradas\ListadoFacturasExonerads;
 
 
 
@@ -248,6 +250,14 @@ Route::post('/factura/estatal/anular', [ListadoFacturaEstatal::class,'anularVent
 
 
 Route::get('/marca/producto', Marca::class);
+
+//-----------------------------------------------------------------Ventas Exoneradas----------------------------------------------------------------------------//
+Route::get('/ventas/exonerado/factura',VentasExoneradas::class);
+Route::get('/exonerado/lista/clientes', [VentasExoneradas::class,'listarClientes']);
+Route::post('/exonerado/venta/guardar', [VentasExoneradas::class,'guardarVenta']); 
+Route::get('/exonerado/ventas/lista', ListadoFacturasExonerads::class);
+Route::get('/exonerado/listas/facturas',[ListadoFacturasExonerads::class,'listarFacturas']);
+
 
 //-------------------------------------seleccionar declaraciones---------------------------------//
 Route::get('/ventas/seleccionar', SeleccionarFactura::class); 

@@ -113,6 +113,7 @@
             });
 
             function actualizarDatos(){
+                
                 this.obtenerDatosCompra();
                 this.graficoVentaMesActaul();
                 this.graficoVentaMesAnterior();
@@ -149,6 +150,7 @@
             }
 
             function obtenerDatosCompra(){
+                
                 axios.get('/configuracion/datos/compra')
                 .then( response=>{
 
@@ -191,7 +193,8 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function(val) {
-                            return val + " Lps";
+                            let valor = new Intl.NumberFormat('es-HN').format(val)
+                            return valor + " Lps";
                         },
                         offsetY: -20,
                         style: {
@@ -219,6 +222,7 @@
                         labels: {
                             show: true,
                             formatter: function(val) {
+                               
                                 return val + " Lps";
                             }
                         }
@@ -295,7 +299,8 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function(val) {
-                            return val + " Lps";
+                            let valor = new Intl.NumberFormat('es-HN').format(val)
+                            return valor + " Lps";
                         },
                         offsetY: -20,
                         style: {
@@ -394,7 +399,8 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function(val) {
-                            return val + " Lps";
+                            let valor = new Intl.NumberFormat('es-HN').format(val)
+                            return valor + " Lps";
                         },
                         offsetY: -20,
                         style: {
