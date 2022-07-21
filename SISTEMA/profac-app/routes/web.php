@@ -28,6 +28,8 @@ use App\Http\Livewire\Ventas\Configuracion;
 use App\Http\Livewire\VentasEstatal\FacturacionEstatal; 
 use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal; 
 use App\Http\Livewire\Ventas\SeleccionarFactura;
+use App\Http\Livewire\Ventas\Cai;
+use App\Http\Livewire\Bancos;
 
 
 
@@ -228,6 +230,23 @@ Route::post('/ventas/listado/uno', [Comparacion::class,'listadoUno']);
 Route::post('/ventas/listado/dos', [Comparacion::class,'listadoDos']);
 Route::get('/ventas/estado/nd/{idFactura}', [Comparacion::class,'cambioEstadoND']); 
 Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC']);
+
+//-----------------------------------------------------------------------CAI--------------------------------------------------------------------------------//
+
+Route::get('/ventas/cai',Cai::class);
+Route::get('/ventas/cai/listar', [Cai::class,'listarCAI']);
+Route::post('/ventas/cai/guardar', [Cai::class,'guardarCAI']);
+Route::post('/ventas/cai/datos', [Cai::class,'datosCAI']);
+Route::post('/ventas/cai/editar', [Cai::class,'editarCAI']);
+
+//----------------------------------------------------------------------------Bancos------------------------------------------------------------------------//
+
+Route::get('/banco/bancos', Bancos::class);
+Route::get('/banco/bancos/listar', [Bancos::class,'listarBancos']);
+Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
+Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
+Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
+
 //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
 

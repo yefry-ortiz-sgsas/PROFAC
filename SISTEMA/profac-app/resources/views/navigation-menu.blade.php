@@ -307,6 +307,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
                         <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
                     </ul>
                 </li>
 
@@ -346,6 +347,8 @@
                         <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
+                        <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
+                        
                         @if(Auth::user()->id =='2' || Auth::user()->id=='3' )  
                         <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
                         <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
