@@ -30,7 +30,7 @@ use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal;
 use App\Http\Livewire\Ventas\SeleccionarFactura;
 use App\Http\Livewire\Ventas\Cai;
 use App\Http\Livewire\Bancos;
-
+use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
 
 
 /*
@@ -247,7 +247,18 @@ Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
 Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
 Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
 
-//---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
+//------------------------------------------------------------------Numero de Orden de Compra--------------------------------------------------------------------------------//
+
+Route::get('/estatal/ordenes',NumOrdenCompra::class);
+Route::get('/estatal/ordenes/listar', [NumOrdenCompra::class,'listarNumOrdenCompra']);
+Route::get('/estatal/ordenes/listar/clientes', [NumOrdenCompra::class,'listarClientes']);
+Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class,'guardarNumOrdenCompra']);
+Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class,'obtenerNumOrdenCompra']);
+Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class,'editarNumOrdenCompra']);
+
+Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class,'desactivarNumOrdenCompra']);
+
+//-----------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
 
 Route::get('/ventas/estatal', FacturacionEstatal::class);

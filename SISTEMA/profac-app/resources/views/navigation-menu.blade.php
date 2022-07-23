@@ -365,6 +365,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero Ordenes Factura</a></li>
                         {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
                     </ul>
                 </li>

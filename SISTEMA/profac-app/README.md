@@ -18,6 +18,21 @@ Cantidad no utilizada = cantidad otorgada
 
 crear modelo para tipo_documento_fiscal
 
+////////////////////////////////////////////////////////////////////
 
 
+obs: in mysql = numero_orden_compra se llama la tabla
 
+input text
+
+clienteid selec list
+
+estado default =1 
+
+
+desactivar estado_id 1=2
+
+
+crear modelo, vista y controlador dentro de (ventasestatales)
+
+////////////////////////////////////////////////////////////////////
