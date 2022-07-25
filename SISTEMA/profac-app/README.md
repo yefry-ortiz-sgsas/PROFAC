@@ -36,3 +36,12 @@ desactivar estado_id 1=2
 crear modelo, vista y controlador dentro de (ventasestatales)
 
 ////////////////////////////////////////////////////////////////////
+
+
+
+
+inputtext 45
+
+fk cliente id
+
+estado_id = 1
