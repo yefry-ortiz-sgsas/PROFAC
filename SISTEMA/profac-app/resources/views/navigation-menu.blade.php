@@ -322,7 +322,8 @@
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
                         <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li> 
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
+                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Ajustes</a></li> 
+                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
 
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>
@@ -344,14 +345,15 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                        <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li> 
-                        <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                        @if(Auth::user()->id =='2' || Auth::user()->id=='3' )  
-                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
-                        <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
-                        @endif
-                        {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
+                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>  
+                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li> 
+
+                        
+        
+                      
                     </ul>
                 </li>
 
@@ -362,9 +364,11 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
+                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                        
                     </ul>
                 </li>
 
@@ -378,10 +382,31 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        
-                        {{-- <li><a href="/facturas" style="color:#ffffff;">Vales</a></li> --}}
+                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                    
                     </ul>
                 </li>
+                
+                @if(Auth::user()->rol_id =='1')  
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                            class="nav-label" style="color:#ffffff;">Declaraciones </span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+
+                      
+                        <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
+                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
+                        <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
+                     
+                       
+                    </ul>
+                </li>
+                @endif
+
+
+
 
 
             </ul>

@@ -251,8 +251,8 @@ class FacturacionCorporativa extends Component
             id,
             concat(nombre,' - ',codigo_barra) as nombre,
             isv,
-            ultimo_costo_compra
-
+            FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
+            FORMAT(precio_base,2) as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
@@ -276,8 +276,7 @@ class FacturacionCorporativa extends Component
 
             $validator = Validator::make($request->all(), [
 
-                'fecha_vencimiento' => 'required',
-                'numero_venta' => 'required',
+                'fecha_vencimiento' => 'required',                
                 'subTotalGeneral' => 'required',
                 'isvGeneral' => 'required',
                 'totalGeneral' => 'required',
@@ -285,16 +284,14 @@ class FacturacionCorporativa extends Component
                 'numeroInputs' => 'required',
                 'seleccionarCliente' => 'required',
                 'nombre_cliente_ventas' => 'required',
-                'tipoPagoVenta' => 'required',
-                'bodega' => 'required',
-                'seleccionarProducto' => 'required',
+                'tipoPagoVenta' => 'required',    
                 'restriccion' => 'required'
 
 
 
             ]);
 
-            // dd($request->all());
+             //dd($request->all());
 
             if ($validator->fails()) {
                 return response()->json([
@@ -414,7 +411,7 @@ class FacturacionCorporativa extends Component
                         "title" => "Advertencia",
                         "icon" => "warning",
                         "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                    ], 200);
+                    ], 401);
 
                 }
 
@@ -439,9 +436,11 @@ class FacturacionCorporativa extends Component
                     $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
                     $diasCredito = $dias->dias_credito;
                 }
+
+                $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
                 
                 $factura = new ModelFactura;    
-                $factura->numero_factura = $request->numero_venta;       
+                $factura->numero_factura = $numeroVenta->numero;       
                 $factura->cai=$numeroCAI; 
                 $factura->numero_secuencia_cai=$numeroSecuencia;
                 $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -649,7 +648,7 @@ class FacturacionCorporativa extends Component
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                ], 200);
+                ], 401);
             }
 
             // if ($numeroSecuencia > $cai->numero_actual) {
@@ -662,6 +661,8 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
+            
+
             if ($request->tipoPagoVenta == 1) {
                 $diasCredito = 0;
             } else {
@@ -669,9 +670,9 @@ class FacturacionCorporativa extends Component
                 $diasCredito = $dias->dias_credito;
             }
 
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -727,7 +728,7 @@ class FacturacionCorporativa extends Component
         } catch (QueryException $e) {
             DB::rollback();
             return response()->json([
-                'message' => 'Ha ocurrido un error',
+                'message' => 'Ha ocurrido un error, meotodo alternar',
                 'error' => $e
             ], 402);
         }
@@ -806,9 +807,9 @@ class FacturacionCorporativa extends Component
                 $diasCredito = $dias->dias_credito;
             }
 
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -861,7 +862,7 @@ class FacturacionCorporativa extends Component
             return response()->json([
                 'error' => $e,
                 'icon' => "error",
-                'text' => 'Ha ocurrido un error.',
+                'text' => 'Ha ocurrido un error. Metodo Lista',
                 'title' => 'Error!',
             ], 402);
         }
@@ -965,7 +966,7 @@ class FacturacionCorporativa extends Component
                 array_push($this->arrayLogs, [
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
-                    "cantidad" => $cantidadSeccion,
+                    "cantidad" => $registroResta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -999,6 +1000,7 @@ class FacturacionCorporativa extends Component
         $cai = DB::SELECTONE("
         select 
         A.cai as numero_factura,
+        A.estado_venta_id,
         B.cai,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
@@ -1042,6 +1044,15 @@ class FacturacionCorporativa extends Component
         sub_total
         from factura
         where id = ".$idFactura);
+   
+
+        $importesConCentavos= DB::SELECTONE("        
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total
+            from factura where factura.id = ".$idFactura);
+        
 
        $productos = DB::SELECT("
        select 
@@ -1050,9 +1061,9 @@ class FacturacionCorporativa extends Component
             UPPER(J.nombre) as medida,
             H.nombre as bodega,
             F.descripcion as seccion,
-            B.precio_unidad as precio,
-            B.cantidad,
-            B.sub_total_s as importe
+            FORMAT(B.sub_total_s/B.cantidad,2) as precio,
+            FORMAT(B.cantidad,2) as cantidad,
+            FORMAT(B.sub_total_s,2) as importe
         from factura A
         inner join venta_has_producto B
         on A.id = B.factura_id
@@ -1072,46 +1083,22 @@ class FacturacionCorporativa extends Component
         on G.bodega_id = H.id
         where A.id=".$idFactura);
 
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+          
+        }else{
+            $flagCentavos = true;
+        }
 
-
-        // $data = DB::SELECTONE(
-        //     "
-        // select 
-        // compra.numero_orden,
-        // compra.cai_retencion,
-        // DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
-        // cai.cai as numeroCai,
-        // cai.numero_inicial,
-        // cai.numero_final,
-        // proveedores.nombre,
-        // proveedores.rtn,
-        // (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
-        // compra.numero_factura,
-        // date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
-        // FORMAT(compra.monto_retencion, 2) as monto_retencion,
-        // FORMAT(compra.total, 2) as total
-        // from compra
-        // inner join cai 
-        // ON cai.id = compra.cai_id
-        // inner join proveedores
-        // on compra.proveedores_id = proveedores.id
-        // where compra.id = 3"
-        // );
-
-        /*$pdf = PDF::loadView('/pdf/retencion', $data)
-        ->stream('archivo.pdf');
-        */
-
-
-        //view()->share('/pdf/retencion',$data);
         $formatter = new NumeroALetras();
+        $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras'))->setPaper('letter');
-        // download PDF file with download method
+        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+       
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
-        // return view('/pdf/retencion')->with($data);
+       
     }
 
     public function guardarEnumeracion($numeroSecuencia, $cai, $estado)
@@ -1195,8 +1182,9 @@ class FacturacionCorporativa extends Component
                 $diasCredito = $dias->dias_credito;
             }
 
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $$numeroVenta;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $listado->secuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -1298,7 +1286,7 @@ class FacturacionCorporativa extends Component
         select
         id
         from factura 
-        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and cliente_id=" . $idCliente
+        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {

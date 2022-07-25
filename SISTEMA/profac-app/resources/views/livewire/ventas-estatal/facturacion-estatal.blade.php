@@ -705,15 +705,15 @@
                                     
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
-                                                <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control" min="${producto.ultimo_costo_compra}" data-parsley-required step="any"
+                                                <input type="number" value="${producto.precio_base}" placeholder="Precio Unidad" id="precio${numeroInputs}"
+                                                    name="precio${numeroInputs}" class="form-control" min="${producto.precio_base}" data-parsley-required step="any"
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
-                                                    name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
+                                                    name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
@@ -750,7 +750,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="total${numeroInputs}" class="sr-only">Total</label>
                                                 <input type="number" placeholder="Total del producto" id="total${numeroInputs}"
-                                                    name="total${numeroInputs}" class="form-control" min="1"  step="any"
+                                                    name="total${numeroInputs}" class="form-control" min="0"  step="any"
                                                     autocomplete="off"
                                                     readonly >
                                             </div>

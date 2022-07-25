@@ -40,7 +40,8 @@ class LitsadoFacturasVendedor extends Component
             total,
             factura.credito,
             users.name as creado_por,
-            (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado
+            (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
+            factura.estado_venta_id
         
         from factura
             inner join cliente
@@ -50,7 +51,7 @@ class LitsadoFacturasVendedor extends Component
             inner join users
             on factura.vendedor = users.id
             cross join (select @i := 0) r
-        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and (factura.tipo_venta_id = 1)
+        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
         and factura.vendedor =".Auth::user()->id."
         order by factura.created_at desc
             ");
@@ -58,33 +59,69 @@ class LitsadoFacturasVendedor extends Component
             return Datatables::of($listaFacturas)
             ->addColumn('opciones', function ($listaFacturas) {
 
-                return
+                if($listaFacturas->estado_venta_id==2){
+                    return
 
-                '<div class="btn-group">
-                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                        más</button>
-                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                    '<div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+    
+                            <li>
+                                <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                            </li>
+    
+                            <li>
+                                <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
+                            </li>
+                            
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
+                            </li>    
+    
 
-                        <li>
-                            <a class="dropdown-item" href="/detalle/venta/vendedor/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
-                        </li>
+    
+                            
+                        </ul>
+                    </div>';
+                }else{
+                    return
 
-                        <li>
-                            <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
-                        </li>
-
-
-                        <li>
+                    '<div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+    
+                            <li>
+                                <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                            </li>
+    
+                            <li>
+                                <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
+                            </li>
+                            
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
+                            </li>    
+    
+                            <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
-                        </li>                        
-
-                        
-                    </ul>
-                </div>';
+                        </li>
+    
+                            
+                        </ul>
+                    </div>';
+                }
             })
             ->addColumn('estado_cobro', function ($listaFacturas) {
+                if($listaFacturas->estado_venta_id==2){
 
-                if($listaFacturas->monto_pagado >= $listaFacturas->total){
+                    return
+                    '
+                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Anulado</span></p>
+                    ';
+
+                }elseif($listaFacturas->monto_pagado >= $listaFacturas->total){
 
                     return
                     '

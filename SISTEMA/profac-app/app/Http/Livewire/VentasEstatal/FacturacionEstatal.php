@@ -213,21 +213,6 @@ class FacturacionEstatal extends Component
 
         try {
 
-            // $secciones = DB::SELECT("
-            // select 
-            //     B.id,
-            //     B.descripcion,
-            //     D.nombre
-            // from recibido_bodega A
-            //     inner join seccion B
-            //     on A.seccion_id = B.id
-            //     inner join segmento C
-            //     on B.segmento_id = C.id
-            //     inner join bodega D
-            //     on C.bodega_id = D.id
-            // where producto_id = ".$request->idProducto." and D.id =".$request->idBodega."
-            // group by B.id
-            // ");
 
             $unidades = DB::SELECT(
                 "
@@ -247,8 +232,8 @@ class FacturacionEstatal extends Component
             id,
             concat(nombre,' - ',codigo_barra) as nombre,
             isv,
-            ultimo_costo_compra
-
+            FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
+            FORMAT(precio_base,2) as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
@@ -272,8 +257,7 @@ class FacturacionEstatal extends Component
 
         $validator = Validator::make($request->all(), [
 
-            'fecha_vencimiento' => 'required',
-            'numero_venta' => 'required',
+            'fecha_vencimiento' => 'required',            
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
@@ -282,8 +266,7 @@ class FacturacionEstatal extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',
-            'seleccionarProducto' => 'required',
+            'bodega' => 'required',            
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:2,2'
 
@@ -388,7 +371,7 @@ class FacturacionEstatal extends Component
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                ], 200);
+                ], 401);
             }
 
 
@@ -414,9 +397,9 @@ class FacturacionEstatal extends Component
                 $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                 $diasCredito = $dias->dias_credito;
             }
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -626,7 +609,7 @@ class FacturacionEstatal extends Component
                 array_push($this->arrayLogs, [
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
-                    "cantidad" => $cantidadSeccion,
+                    "cantidad" => $registroResta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -678,7 +661,7 @@ class FacturacionEstatal extends Component
         select
         id
         from factura 
-        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and cliente_id=" . $idCliente
+        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {

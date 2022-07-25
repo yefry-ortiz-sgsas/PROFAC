@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 use Validator;
+use Luecano\NumeroALetras\NumeroALetras;
+use PDF;
 
 use App\Models\ModelFactura;
 use App\Models\ModelCAI;
@@ -85,8 +87,7 @@ class VentasExoneradas extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',
-            'seleccionarProducto' => 'required',
+            'bodega' => 'required',            
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:3,3',
             'codigo_exoneracion'=>'required'
@@ -213,7 +214,7 @@ class VentasExoneradas extends Component
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                ], 200);
+                ], 401);
             }
 
 
@@ -238,8 +239,9 @@ class VentasExoneradas extends Component
                 $diasCredito = $dias->dias_credito;
             }
 
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -333,7 +335,7 @@ class VentasExoneradas extends Component
                 'icon' => "success",
                 'text' =>  '
                 <div class="d-flex justify-content-between">
-                    <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+                    <a href="/exonerado/factura/'. $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
                     <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
@@ -453,7 +455,7 @@ class VentasExoneradas extends Component
                 array_push($this->arrayLogs, [
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
-                    "cantidad" => $cantidadSeccion,
+                    "cantidad" => $registroResta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -505,7 +507,7 @@ class VentasExoneradas extends Component
         select
         id
         from factura 
-        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and cliente_id =" . $idCliente
+        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id =" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {
@@ -534,6 +536,114 @@ class VentasExoneradas extends Component
         $logCredito->save();
 
         return true;
+    }
+
+    public function imprimirFacturaExonerada($idFactura)
+    {
+
+        $cai = DB::SELECTONE("
+        select 
+        A.cai as numero_factura,
+        B.cai,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,       
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,        
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura,
+        A.codigo_exoneracion
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       where A.id = ".$idFactura);
+
+       $cliente = DB::SELECTONE("
+       select        
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+
+        $importesConCentavos= DB::SELECTONE("        
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total
+        from factura where factura.id = ".$idFactura);
+
+       $productos = DB::SELECT("
+       select 
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            FORMAT(B.sub_total_s/B.cantidad,2) as precio,
+            B.cantidad,
+            B.sub_total_s as importe
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=".$idFactura);
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+          
+        }else{
+            $flagCentavos = true;
+        }
+
+
+
+     
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/factura-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+        
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
+
+        
     }
 }
 

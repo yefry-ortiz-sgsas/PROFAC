@@ -320,7 +320,7 @@ class CompraProducto extends Component
                 $producto = ModelProducto::find($request->$idProducto);
                 $producto->ultimo_costo_compra =  $valorCostoActual;
                 $producto->costo_promedio = $costoPromedio;
-                $producto->precio_base = $valorCostoActual;
+               // $producto->precio_base = $valorCostoActual;
                 $producto->save();
 
                 

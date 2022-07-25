@@ -66,8 +66,10 @@
     <div class="pruebaFondo">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
-                <b>Factura No. {{$cai->numero_factura}}</b>
-            </div>
+                <b>Factura No. {{$cai->numero_factura}} </b>
+                <b style="position:absolute;right: 10px" >Factura de: {{$cai->descripcion}}</b>
+            </div> 
+
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
                         08011986138652</b></p>
@@ -211,9 +213,14 @@
                     <p class="card-text" style="position:absolute;left:10px;  top:205px; font-size:11px">7. las entregas y
                         creditos para cuentas con facturas vencidas serán congeladas hasta el pago de las mismas haya sido
                         efectuado en su totalidad.</p>
-    
-    
-                    <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:14px;">"""{{$numeroLetras}}"""</p>
+                       
+                    @if($flagCentavos == false)
+                    <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">"{{$numeroLetras." CON CERO CENTAVOS"}}"</p>
+                        
+                    @else
+                    <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">"{{$numeroLetras }}"</p>
+                    @endif
+                    
                 </div>
             </div>
     
@@ -245,11 +252,11 @@
                     <p class="card-text" style="position:absolute; right:10px;  top:85px; font-size:16px;">0.00</p>
     
                     <p class="card-text" style="position:absolute; left:10px;  top:105px; font-size:16px;">Sub Total:</p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:105px; font-size:16px;">{{$importes->sub_total}}</p>
+                    <p class="card-text" style="position:absolute; right:10px;  top:105px; font-size:16px;">{{$importesConCentavos->sub_total}}</p>
     
                     <p class="card-text" style="position:absolute; left:10px;  top:130px; font-size:16px;">Impuesto sobre
                         venta:</p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:16px;">{{$importes->isv}}</p>
+                    <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:16px;">{{$importesConCentavos->isv}}</p>
     
                     <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:16px;">Impuesto sobre
                         bebida:</p>
@@ -257,7 +264,7 @@
     
                     <p class="card-text" style="position:absolute; left:10px;  top:185px; font-size:18px;"><b>Total a
                             Pagar: </b></p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:185px; font-size:18px;"><b>{{$importes->total}}</b>
+                    <p class="card-text" style="position:absolute; right:10px;  top:185px; font-size:18px;"><b>{{$importesConCentavos->total}}</b>
                     </p>
                 </div>
             </div>
@@ -267,13 +274,20 @@
                     _______________________________________</p>
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;">
                     _______________________________________</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:25px; ">FACTURA N 010-001-01-00418759 /
-                    16/12/2021</p>
+                <p class="card-text" style="position:absolute;left:80px;  top:25px; ">{{ strtoupper($cliente->nombre) }}</p>
                 <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
             </div>
+
+
         </div>
 
-        
+        @if($cai->estado_venta_id==2)
+        <div>
+            <p class="" style="position:absolute; margin-top:{{$altura2 + 40}}px;  left:80px;   font-size:50px;">--FACTURA ANULADA--</p>
+        </div>
+        @endif
+
+
            
 
 

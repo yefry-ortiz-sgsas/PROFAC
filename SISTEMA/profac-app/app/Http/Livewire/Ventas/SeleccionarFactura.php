@@ -25,11 +25,11 @@ class SeleccionarFactura extends Component
         $facturas = DB::SELECT("
         select 
         cai,
-        (select  concat(nombre_cliente,' - ', total,' Lps') from factura where estado_factura_id=1 and cai=A.cai) as 'DC',
-        (select  concat(nombre_cliente,' - ', total,' Lps') from factura where estado_factura_id=2 and cai=A.cai) as 'ND'
+        (select  concat(nombre_cliente,' - ', total,' Lps') from factura where estado_factura_id=1 and estado_venta_id = 1  and cai=A.cai) as 'DC',
+        (select  concat(nombre_cliente,' - ', total,' Lps') from factura where estado_factura_id=2 and estado_venta_id = 1 and cai=A.cai) as 'ND'
 
         from factura A
-        where (estado_venta_id =1 or estado_venta_id =4) and fecha_emision  BETWEEN '2022-07-01' AND '2022-07-30'
+        where (estado_venta_id =1 ) and fecha_emision  BETWEEN '2022-07-01' AND '2022-07-30'
         group by cai, DC, ND
       
         ");

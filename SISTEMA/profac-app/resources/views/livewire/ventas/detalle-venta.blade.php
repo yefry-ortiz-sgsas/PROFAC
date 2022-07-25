@@ -186,7 +186,7 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h3 class="text-success"><i class="fa-solid fa-rectangle-list"></i> Lista de compra </h3>
+                        <h3 class="text-success"><i class="fa-solid fa-rectangle-list"></i> Lista de Productos Facturados </h3>
                     </div>
                     <div class="ibox-content">
 

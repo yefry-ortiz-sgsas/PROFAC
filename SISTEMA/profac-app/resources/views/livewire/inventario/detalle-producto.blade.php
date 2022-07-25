@@ -343,16 +343,16 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="precioBase_edit" class="col-form-label focus-label">Precio de venta base:<span class="text-danger">*</span></label>
-                                <input class="form-group form-control" step="any" min="1" type="number" name="precioBase_edit" id="precioBase_edit" data-parsley-required>
+                                <input class="form-group form-control" step="any" min="0.000001" type="number" name="precioBase_edit" id="precioBase_edit" data-parsley-required>
                             </div>
                             <div class="col-md-4">
                                 <label for="costo_promedio_editar" class="col-form-label focus-label">Costo promedio:<span class="text-danger">*</span></label>
-                                <input class="form-group form-control" step="any" min="1" type="number" name="costo_promedio_editar" id="costo_promedio_editar" data-parsley-required>
+                                <input class="form-group form-control" step="any" min="0.000001" type="number" name="costo_promedio_editar" id="costo_promedio_editar" data-parsley-required>
                             </div>
 
                             <div class="col-md-4">
                                 <label for="ultimo_costo_compra_editar" class="col-form-label focus-label">Ultimo costo de compra:<span class="text-danger">*</span></label>
-                                <input class="form-group form-control" step="any" min="1" type="number" name="ultimo_costo_compra_editar" id="ultimo_costo_compra_editar" data-parsley-required>
+                                <input class="form-group form-control" step="any" min="0.000001" type="number" name="ultimo_costo_compra_editar" id="ultimo_costo_compra_editar" data-parsley-required>
                             </div>
 
                            
