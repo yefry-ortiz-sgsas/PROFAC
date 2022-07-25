@@ -17,9 +17,9 @@
             </ol>
         </div>
     </div>
-
+    @if(Auth::user()->rol_id == 2)
     <div class="row mt-2">
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
     
     
@@ -30,7 +30,7 @@
                     <div class="ibox-content"
                         style="height: 18.5rem;  display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo: 
+                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo: 
                                 </strong> {{$detalleVenta->id}} </p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura: 
                                 </strong> {{$detalleVenta->numero_factura}}  </p>
@@ -44,7 +44,8 @@
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de vencimiento:</strong> {{$detalleVenta->fecha_vencimiento}}</p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Estado de Factura: </strong> {{$detalleVenta->estado_venta}}</p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta realizada por: </strong> {{$detalleVenta->name}}</p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro en sistema: </strong> {{$detalleVenta->created_at}}</p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta facturada por: </strong> {{$nombre->name}}</p>
+                            <p class="mt-2 "> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro : </strong> {{$detalleVenta->created_at}}</p>
                         </div>
     
                     </div>
@@ -55,10 +56,76 @@
         </div>
     
     
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
     
     
+                <div class="ibox mb-0">
+                    <div class="ibox-title">
+                        <h3 class="text-success"><i class="fa-solid fa-sack-dollar"></i> Importes</h3>
+    
+                    </div>
+                    <div class="ibox-content "
+                        style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de pago </strong> {{$detalleVenta->tipo_pago}}  </p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                       
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Comision del vendedor: </strong> {{$detalleVenta->monto_comision}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>  
+
+    
+    
+                    </div>
+                </div>
+    
+    
+            </div>
+        </div>
+    </div>
+    @else
+    <div class="row mt-2">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+            <div class="wrapper wrapper-content animated fadeInRight">
+    
+    
+                <div class="ibox mb-0">
+                    <div class="ibox-title">
+                        <h3 class="text-success"><i class="fa-solid fa-list-check "></i> Informacion de venta</h3>
+                    </div>
+                    <div class="ibox-content"
+                        style="height: 18.5rem;  display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo: 
+                                </strong> {{$detalleVenta->id}} </p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura: 
+                                </strong> {{$detalleVenta->numero_factura}}  </p>
+
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Cliente: 
+                            </strong> {{$detalleVenta->nombre_cliente}} </p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> RTN: 
+                            </strong> {{$detalleVenta->rtn}} </p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:</strong> {{$detalleVenta->fecha_emision}} 
+                                </p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de vencimiento:</strong> {{$detalleVenta->fecha_vencimiento}}</p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Estado de Factura: </strong> {{$detalleVenta->estado_venta}}</p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta realizada por: </strong> {{$detalleVenta->name}}</p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta facturada por: </strong> {{$nombre->name}}</p>
+                            <p class="mt-2 "> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro: </strong> {{$detalleVenta->created_at}}</p>
+                        </div>
+    
+                    </div>
+                </div>
+    
+    
+            </div>
+        </div>
+    
+    
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+            <div class="wrapper wrapper-content animated fadeInRight">
+    
+                
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-file-invoice"></i> Datos de Facturacion</h3>
@@ -84,7 +151,7 @@
     
             </div>
         </div>
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div class="wrapper wrapper-content animated fadeInRight">
     
     
@@ -112,12 +179,14 @@
         </div>
     </div>
 
+    @endif
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h3 class="text-success"><i class="fa-solid fa-rectangle-list"></i> Lista de compra </h3>
+                        <h3 class="text-success"><i class="fa-solid fa-rectangle-list"></i> Lista de Productos Facturados </h3>
                     </div>
                     <div class="ibox-content">
 

@@ -83,7 +83,7 @@ class Configuracion extends Component
             $comprasMesAnterior= DB::SELECTONE("
             select 
             0 as total_mes_anterior,
-            DATE_FORMAT( NOW(),'%c') as 'mes_anterior'
+            (DATE_FORMAT( NOW(),'%c')-1) as 'mes_anterior'
                 ");
         }       
 
@@ -241,6 +241,10 @@ class Configuracion extends Component
         }
 
         if($numeroMes==12){
+            return 'Diciembre';
+        }
+
+        if($numeroMes <= 0){
             return 'Diciembre';
         }
 

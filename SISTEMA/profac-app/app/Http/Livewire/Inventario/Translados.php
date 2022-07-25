@@ -183,7 +183,9 @@ class Translados extends Component
             $transladarBodega->fecha_recibido = now();
             $transladarBodega->fecha_expiracion = $productoEnBodega->fecha_expiracion;
             $transladarBodega->estado_recibido = 4;
-            $transladarBodega->recibido_por = Auth::user()->id;
+            $transladarBodega->recibido_por = Auth::user()->id; 
+            $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id; 
+            $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra; 
             $transladarBodega->save();
 
             $logTranslados = new ModelLogTranslados;

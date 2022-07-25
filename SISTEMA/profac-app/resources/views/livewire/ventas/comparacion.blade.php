@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                                 <label for="_venta" class="col-form-label focus-label">Fecha de inicio</label>
-                                <input id="fechaInicio" type="date" value="{{ date('Y-m-01') }}" class="form-group form-control">
+                                <input id="fechaInicio" type="date" value="{{ date('Y-01-01') }}" class="form-group form-control">
                             </div>
 
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -378,6 +378,8 @@
                     })
                 })
             }
+
+
         </script>
     @endpush
 </div>

@@ -59,6 +59,14 @@ class DetalleVenta extends Component
       on A.cai_id = F.id
       where A.id = ".$idFactura);
 
+      $nombre = DB::SELECTONE("select
+      name
+      from factura
+      inner join users
+      on factura.users_id
+      where factura.id=".$idFactura
+      );
+
       $montoPagado = DB::SELECTONE("
       select 
         sum(monto) as monto
@@ -68,7 +76,7 @@ class DetalleVenta extends Component
 
       $pendientePago = $detalleVenta->total -  $montoPagado->monto;
 
-        return view('livewire.ventas.detalle-venta', compact('detalleVenta','montoPagado','pendientePago'));
+        return view('livewire.ventas.detalle-venta', compact('detalleVenta','montoPagado','pendientePago','nombre'));
     }
 
     public function listarProductosFactura($id){

@@ -45,7 +45,7 @@ class Comparacion extends Component
             inner join tipo_cliente C
             on B.tipo_cliente_id = C.id
            
-            where A.estado_venta_id=1 and A.estado_factura_id=1 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
+            where (A.estado_venta_id=1 or A.estado_venta_id=4) and A.estado_factura_id=1 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
 
             ");
 
@@ -123,7 +123,7 @@ class Comparacion extends Component
             total,
             fecha_emision
             from factura A
-            where A.estado_venta_id=1 and A.estado_factura_id=2 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
+            where (A.estado_venta_id=1 or A.estado_venta_id=4) and A.estado_factura_id=2 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
         );
 
             return Datatables::of($listado)

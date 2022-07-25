@@ -43,8 +43,9 @@ class ListadoFacturas extends Component
                 isv,
                 total,
                 factura.credito,
-                concat( users.name,' ',factura.created_at) as creado_por,
-                (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado
+                users.name as creado_por,
+                (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
+                factura.estado_venta_id
             
             from factura
                 inner join cliente
@@ -52,42 +53,48 @@ class ListadoFacturas extends Component
                 inner join tipo_pago_venta
                 on factura.tipo_pago_id = tipo_pago_venta.id
                 inner join users
-                on cliente.users_id = users.id
+                on factura.vendedor = users.id
                 cross join (select @i := 0) r
-            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and (factura.tipo_venta_id = 1)
+            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
             order by factura.created_at desc
             ");
 
             return Datatables::of($listaFacturas)
             ->addColumn('opciones', function ($listaFacturas) {
 
-                return
+    
+                    return
 
-                '<div class="btn-group">
-                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                        más</button>
-                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-
-                        <li>
-                            <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
-                        </li>
-
-                        <li>
-                            <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
-                        </li>
-
-
-                        <li>
+                    '<div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+    
+                            <li>
+                                <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                            </li>
+    
+                            <li>
+                                <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
+                            </li>
+                            
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
+                            </li>    
+    
+                            <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
-                        </li>                        
-
-                        
-                    </ul>
-                </div>';
+                        </li>
+    
+                            
+                        </ul>
+                    </div>';
+                
             })
             ->addColumn('estado_cobro', function ($listaFacturas) {
+               
 
-                if($listaFacturas->monto_pagado >= $listaFacturas->total){
+                  if($listaFacturas->monto_pagado >= $listaFacturas->total){
 
                     return
                     '
@@ -132,8 +139,17 @@ class ListadoFacturas extends Component
             ],200);
          }
 
+
          $estadoVenta = DB::SELECTONE("select estado_venta_id from factura where id =".$request->idFactura );
- 
+         
+         if($estadoVenta->estado_venta_id == 2 ){
+            return response()->json([
+                "text" =>"<p  class='text-left'>Esta factura no puede ser anulada, dado que ha sido anulada anteriormente.</p>",
+                "icon" => "warning",
+                "title" => "Advertencia!",
+            ],200);
+         }
+
          $compra = ModelFactura::find($request->idFactura);
          $compra->estado_venta_id = 2;
          $compra->save();
@@ -142,21 +158,21 @@ class ListadoFacturas extends Component
          $logEstado->factura_id = $request->idFactura;
          $logEstado->estado_venta_id_anterior = $estadoVenta->estado_venta_id;
          $logEstado->users_id = Auth::user()->id;
-         $logEstado->motivo = "Error Involuntario";
+         $logEstado->motivo = $request->motivo;
          $logEstado->save();
 
-         $lotes = DB::SELECT("select lote,cantidad_s from venta_has_producto where factura_id = ".$request->idFactura);
+         $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario from venta_has_producto where factura_id = ".$request->idFactura);
 
          foreach ($lotes as $lote) {
                 $recibidoBodega = ModelRecibirBodega::find($lote->lote);
-                $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->cantidad_s;
+                $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->numero_unidades_resta_inventario;
                 $recibidoBodega->save();
 
                 array_push($arrayLog,[
                     'origen'=>$lote->lote,
                     'destino'=>$lote->lote,
                     'factura_id'=>$request->idFactura,
-                    'cantidad'=>$lote->cantidad_s,
+                    'cantidad'=>$lote->numero_unidades_resta_inventario,
                     "users_id"=> Auth::user()->id,
                     "descripcion"=>"Factura Anulada",
                     "created_at"=>now(),

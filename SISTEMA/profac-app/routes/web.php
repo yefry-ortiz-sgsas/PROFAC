@@ -18,6 +18,7 @@ use App\Http\Livewire\Inventario\AnularCompra;
 use App\Http\Livewire\Inventario\Translados;
 use App\Http\Livewire\Inventario\Marca;
 use App\Http\Livewire\Inventario\UnidadesMedida;
+use App\Http\Livewire\Inventario\Ajustes;
 use App\Http\Livewire\Clientes\Cliente;
 use App\Http\Livewire\Ventas\ListadoFacturas;
 use App\Http\Livewire\Ventas\FacturacionCorporativa;
@@ -28,9 +29,16 @@ use App\Http\Livewire\Ventas\Configuracion;
 use App\Http\Livewire\VentasEstatal\FacturacionEstatal; 
 use App\Http\Livewire\VentasEstatal\ListadoFacturaEstatal; 
 use App\Http\Livewire\Ventas\SeleccionarFactura;
-use App\Http\Livewire\Ventas\Cai;
-use App\Http\Livewire\Bancos;
-use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
+use App\Http\Livewire\Ventas\LitsadoFacturasVendedor; 
+use App\Http\Livewire\Ventas\DetalleVentaVendedor;
+use App\Http\Livewire\VentasEstatal\LitsadoFacturasEstatalVendedor;
+use App\Http\Livewire\VentasExoneradas\VentasExoneradas;
+use App\Http\Livewire\VentasExoneradas\ListadoFacturasExonerads;
+use App\Http\Livewire\Cotizaciones\Cotizacion; 
+use App\Http\Livewire\Cotizaciones\ListarCotizaciones; 
+use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
+use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
+
 
 
 /*
@@ -120,6 +128,8 @@ Route::get('/facturas/corporativo', ListadoFacturas::class);
 Route::get('/lista/facturas/corporativo', [ListadoFacturas::class,'listarFacturas']);
 Route::post('/factura/corporativo/anular', [ListadoFacturas::class,'anularVentaRegistro']);
 
+Route::get('/facturas/corporativo/vendedor', LitsadoFacturasVendedor::class);
+Route::get('/lista/facturas/corporativo/vendedor', [LitsadoFacturasVendedor::class,'listarFacturasVendedor']);
 
 //-----------------------------------------------Usuarios-------------------------------------------------------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);
@@ -192,14 +202,7 @@ Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
 
-//------------------------------------------------------------------UNIDADES DE MEDIDA------------------------------------------------------------------------//
-
 Route::get('/inventario/unidades/medida', UnidadesMedida::class);
-Route::post('/inventario/unidades/guardar', [UnidadesMedida::class, 'guardarUnidad']);
-Route::get('/inventario/unidades/listar', [UnidadesMedida::class, 'listarUnidades']);
-Route::post('/inventario/unidades/datos', [UnidadesMedida::class, 'obtenerDatos']);
-Route::post('/inventario/unidades/editar', [UnidadesMedida::class, 'editarUnidad']);
-
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//
@@ -212,7 +215,8 @@ Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class
 Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']);
 Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);
 Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);
-Route::get('/detalle/venta/{id}', DetalleVenta::class);
+Route::get('/detalle/venta/{id}', DetalleVenta::class); 
+Route::get('/detalle/venta/vendedor/{id}', DetalleVentaVendedor::class);
 Route::get('/lista/productos/factura/{id}', [DetalleVenta::class,'listarProductosFactura']);
 Route::get('/lista/ubicacion/producto/{id}', [DetalleVenta::class,'ubicacionProductos']);
 Route::get('/lista/pagos/venta/{id}', [DetalleVenta::class,'pagosVenta']);
@@ -229,39 +233,13 @@ Route::get('/ventas/listado/comparacion',Comparacion::class);
 Route::post('/ventas/listado/uno', [Comparacion::class,'listadoUno']); 
 Route::post('/ventas/listado/dos', [Comparacion::class,'listadoDos']);
 Route::get('/ventas/estado/nd/{idFactura}', [Comparacion::class,'cambioEstadoND']); 
-Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC']);
+Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC']); 
 
-//-----------------------------------------------------------------------CAI--------------------------------------------------------------------------------//
-
-Route::get('/ventas/cai',Cai::class);
-Route::get('/ventas/cai/listar', [Cai::class,'listarCAI']);
-Route::post('/ventas/cai/guardar', [Cai::class,'guardarCAI']);
-Route::post('/ventas/cai/datos', [Cai::class,'datosCAI']);
-Route::post('/ventas/cai/editar', [Cai::class,'editarCAI']);
-
-//----------------------------------------------------------------------------Bancos------------------------------------------------------------------------//
-
-Route::get('/banco/bancos', Bancos::class);
-Route::get('/banco/bancos/listar', [Bancos::class,'listarBancos']);
-Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
-Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
-Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
-
-//------------------------------------------------------------------Numero de Orden de Compra--------------------------------------------------------------------------------//
-
-Route::get('/estatal/ordenes',NumOrdenCompra::class);
-Route::get('/estatal/ordenes/listar', [NumOrdenCompra::class,'listarNumOrdenCompra']);
-Route::get('/estatal/ordenes/listar/clientes', [NumOrdenCompra::class,'listarClientes']);
-Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class,'guardarNumOrdenCompra']);
-Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class,'obtenerNumOrdenCompra']);
-Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class,'editarNumOrdenCompra']);
-
-Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class,'desactivarNumOrdenCompra']);
-
-//-----------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
+//---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
 
-Route::get('/ventas/estatal', FacturacionEstatal::class);
+Route::get('/ventas/estatal', FacturacionEstatal::class); 
+Route::get('/ventas/estatal/vendedor', LitsadoFacturasEstatalVendedor::class);
 Route::get('/estatal/lista/clientes', [FacturacionEstatal::class,'listarClientes']);
 Route::post('/estatal/datos/cliente', [FacturacionEstatal::class,'datosCliente']);
 Route::get('/estatal/tipo/pago', [FacturacionEstatal::class,'tipoPagoVenta']);
@@ -277,10 +255,48 @@ Route::post('/factura/estatal/anular', [ListadoFacturaEstatal::class,'anularVent
 
 Route::get('/marca/producto', Marca::class);
 
+//-----------------------------------------------------------------Ventas Exoneradas----------------------------------------------------------------------------//
+Route::get('/ventas/exonerado/factura',VentasExoneradas::class);
+Route::get('/exonerado/lista/clientes', [VentasExoneradas::class,'listarClientes']);
+Route::post('/exonerado/venta/guardar', [VentasExoneradas::class,'guardarVenta']); 
+Route::get('/exonerado/ventas/lista', ListadoFacturasExonerads::class);
+Route::get('/exonerado/listas/facturas',[ListadoFacturasExonerads::class,'listarFacturas']); 
+Route::get('/exonerado/factura/{id}',[VentasExoneradas::class,'imprimirFacturaExonerada']); 
+
+
 //-------------------------------------seleccionar declaraciones---------------------------------//
 Route::get('/ventas/seleccionar', SeleccionarFactura::class); 
 Route::get('/ventas/lista/seleccionar', [SeleccionarFactura::class,'listadoFacturas']); 
 Route::post('/ventas/cambio', [SeleccionarFactura::class,'cambioEstado']); 
+
+
+//---------------------------------------Proforma y Cotizaciones--------------------------------//
+Route::get('/proforma/cotizacion/{id}',Cotizacion::class);
+Route::get('/cotizacion/clientes',[Cotizacion::class,'listarClientes']);
+Route::post('/guardar/cotizacion',[Cotizacion::class,'guardarCotizacion']);
+Route::get('/cotizacion/listado/{id}', ListarCotizaciones::class);
+Route::post('/cotizacion/obtener/listado', [ListarCotizaciones::class,'listarCotizaciones']);
+Route::get('/cotizacion/imprimir/{id}',[Cotizacion::class,'imprimirCotizacion']);
+Route::get('/proforma/imprimir/{id}',[Cotizacion::class,'imprimirProforma']); 
+Route::get('/cotizacion/facturar/{id}',FacturarCotizacion::class); 
+
+
+//--------------------------------------------------------Ajustes------------------------------------------------------//
+Route::get('/inventario/ajustes', Ajustes::class);
+Route::get('/ajustes/listar/bodegas', [Ajustes::class,'listarBodegas']);
+Route::get('/ajustes/listar/productos', [Ajustes::class,'listarProductos']); 
+Route::get('/ajustes/motivos/listar', [Ajustes::class,'obtenerTiposAjuste']);  
+Route::post('/ajustes/datos/producto', [Ajustes::class,'datosProducto']); 
+Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']); 
+
+
+//------------------------------------------------------Facturas Nulas---------------------------------------------//
+
+
+Route::get('/ventas/anulado/{id}',ListadoFacturasAnuladas::class); 
+Route::post('/ventas/anulado/listado',[ListadoFacturasAnuladas::class,'listarFacturas']); 
+Route::post('/ventas/anulado/detalle',[ListadoFacturasAnuladas::class,'detalleFacturaAnulada']);
+
 
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {

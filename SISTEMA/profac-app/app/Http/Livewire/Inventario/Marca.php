@@ -59,6 +59,8 @@ class Marca extends Component
             </div>
                 ';
                 })
+
+
             
 
                 ->rawColumns(['opciones'])

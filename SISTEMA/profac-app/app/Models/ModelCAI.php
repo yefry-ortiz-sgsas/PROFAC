@@ -17,7 +17,6 @@ class ModelCAI extends Model
     'cantidad_solicitada',
     'cantidad_otorgada',
     'numero_actual',
-    'serie',
     'cantidad_no_utilizada',
     'numero_inicial',
     'numero_final',

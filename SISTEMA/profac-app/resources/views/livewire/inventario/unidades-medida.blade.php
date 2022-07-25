@@ -130,12 +130,13 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_unidades_listar" class="table table-striped table-bordered table-hover col-md-10">
+                            <table id="tbl_unidades_listar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
                                         <th>Cod</th>
                                         <th>Nombre</th>
-                                        <th>Simbolo</th>                                        
+                                        <th>Registrado Por:</th>
+                                        <th>Fecha de Registro</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -152,121 +153,14 @@
                 </div>
             </div>
 
-            <!-- Modal para registro de Unidad-->
-            <div class="modal fade" id="modal_producto_crear" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Unidad</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
 
-                        <div class="modal-body">
-                            <form id="crearUnidadForm" name="crearUnidadForm" data-parsley-validate>
-                                {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                <div class="row" id="row_datos">
-                                    <div class="col-md-12">
-                                        <label for="nombre_producto" class="col-form-label focus-label">Nombre de la
-                                            Unidad:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="nombre_producto"
-                                            name="nombre_producto" data-parsley-required>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="simbolo_producto" class="col-form-label focus-label">Simbolo de la
-                                            Unidad:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="simbolo_producto"
-                                            name="simbolo_producto" data-parsley-required>
-                                    </div>
-
-
-
-
-                                </div>
-                            </form>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="crearUnidadForm" class="btn btn-primary">Guardar
-                                Unidad</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                        <!-- Modal para editar Unidad-->
-                        <div class="modal fade" id="modal_producto_editar" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title" id="exampleModalLabel">Editar Unidad</h3>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-        
-                                <div class="modal-body">
-                                    <form id="editarProductoForm" name="editarProductoForm" data-parsley-validate>
-                                        {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                        <input id="idUnidad" name="idUnidad" type="hidden" value="">
-                                        <div class="row" id="row_datos">
-                                            <div class="col-md-12">
-                                                <label for="nombre_producto_editar" class="col-form-label focus-label">Nombre de la
-                                                    Unidad:</label>
-                                                <input class="form-control" required type="text" id="nombre_producto_editar"
-                                                    name="nombre_producto_editar" data-parsley-required>
-                                            </div>
-        
-                                            <div class="col-md-12">
-                                                <label for="simbolo_producto_editar" class="col-form-label focus-label">Simbolo de la
-                                                    Unidad:</label>
-                                                <input class="form-control" required type="text" id="simbolo_producto_editar"
-                                                    name="simbolo_producto_editar" data-parsley-required>
-                                            </div>
-        
-        
-        
-                                            
-                                        </div>
-                                    </form>
-        
-                                </div>
-        
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" form="editarProductoForm" class="btn btn-primary">Editar
-                                        Unidad</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
         </div>
 
 
 
-        <!-- Modal -->
-        <div class="modal" id="modalSpinnerLoading" data-backdrop="static" tabindex="-1" role="dialog"
-            aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
 
-                    <div class="modal-body">
-                        <h2 class="text-center">Espere un momento...</h2>
-                        <div class="loader">Loading...</div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
 
 
 
@@ -276,174 +170,8 @@
     </div>
     @push('scripts')
         <script>
-         
-         $(document).on('submit', '#crearUnidadForm', function(event) {
-            event.preventDefault();
-            guardarUnidad();
-        });
+           
 
-            function guardarUnidad() {
-                $('#modalSpinnerLoading').modal('show');
-
-                var data = new FormData($('#crearUnidadForm').get(0));
-
-                axios.post("/inventario/unidades/guardar", data)
-                    .then(response => {
-                        $('#modalSpinnerLoading').modal('hide');
-
-
-                        $('#crearUnidadForm').parsley().reset();
-                        
-                        document.getElementById("crearUnidadForm").reset();
-                        $('#modal_producto_crear').modal('hide');
-
-                        $('#tbl_unidades_listar').DataTable().ajax.reload();
-
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Exito!',
-                            text: "Marca creado con exito."
-                        })
-
-                    })
-                    .catch(err => {
-                        let data = err.response.data;
-                        $('#modalSpinnerLoading').modal('hide');
-                        $('#modal_producto_crear').modal('hide');
-                        Swal.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.text
-                        })
-                        console.error(err);
-
-                    })
-
-            }
-
-            $(document).ready(function() {
-                $('#tbl_unidades_listar').DataTable({
-                    "order": [0, 'desc'],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                    },
-                    pageLength: 10,
-                    responsive: true,
-                    dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [{
-                            extend: 'copy'
-                        },
-                        {
-                            extend: 'csv'
-                        },
-                        {
-                            extend: 'excel',
-                            title: 'ExampleFile'
-                        },
-                        {
-                            extend: 'pdf',
-                            title: 'ExampleFile'
-                        },
-
-                        {
-                            extend: 'print',
-                            customize: function(win) {
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
-
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                            }
-                        }
-                    ],
-                    "ajax": "/inventario/unidades/listar",
-                    "columns": [{
-                            data: 'id'
-                        },
-                        {
-                            data: 'nombre'
-                        },                        
-                        {
-                            data: 'simbolo'
-                        },
-                        {
-                            data: 'opciones'
-                        }
-
-                    ]
-
-
-                });
-            })
-
-            function datosUnidad(id){
-
-                let data = {id:id}
-                axios.post('/inventario/unidades/datos',data)
-                .then( response =>{
-                  
-                    let datos = response.data.datos;
-
-                    document.getElementById('nombre_producto_editar').value = datos.nombre;
-                    document.getElementById('simbolo_producto_editar').value = datos.simbolo;
-                    document.getElementById('idUnidad').value = datos.id;
-                                      
-                    $('#modal_producto_editar').modal('show');
-                })
-                .catch( err=>{
-                    console.log(err)
-                })
-            }
-
-            $(document).on('submit', '#modal_producto_editar', function(event) {
-
-                    event.preventDefault();
-                    editarUnidad();
-
-            });
-
-             function editarUnidad(){
-
-                $('#modalSpinnerLoading').modal('show');
-                var data = new FormData($('#editarProductoForm').get(0));
-                
-            
-                axios.post('/inventario/unidades/editar',data)
-                .then( response =>{
-                    $('#modalSpinnerLoading').modal('hide');
-
-
-                    $('#editarProductoForm').parsley().reset();
-                    
-                    document.getElementById("editarProductoForm").reset();
-                    $('#modal_producto_editar').modal('hide');
-
-                    $('#tbl_unidades_listar').DataTable().ajax.reload();
-
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Exito!',
-                        text: "Unidad editada con exito."
-                    })
-
-                })
-                .catch( err=>{
-                    let data = err.response.data;
-                        $('#modalSpinnerLoading').modal('hide');
-                        $('#modal_producto_editar').modal('hide');
-                        
-                        Swal.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.text
-                        })
-                        console.error(err);
-
-                })
-            }
 
 
 

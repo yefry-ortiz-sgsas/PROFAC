@@ -107,13 +107,13 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                                     <label for="metoPago" class="col-form-label focus-label">Seleccionar Metodo de Pago:<span class="text-danger">*</span></label>
                                     <select id="metoPago" name="metoPago" class="form-group form-control" style=""
-                                        data-parsley-required onchange="bancosMostrarOcultar()">
+                                        data-parsley-required onchange="">
                                         <option value="" selected disabled>--Seleccionar un metodo--</option>
                                         <option value="1" >Pago con efectivo</option>
                                         <option value="2" >Transferencia bancaria</option>
                                     </select>
                                 </div>
-                                <div id="bancoCuenta" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3 d-none">
+                                <div id="bancoCuenta" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3 ">
                                     <label for="banco" class="col-form-label focus-label">Seleccionar Banco y Cuenta:</label>
                                     <select id="banco" name="banco" class="form-group form-control" style=""
                                          >

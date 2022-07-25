@@ -40,7 +40,7 @@
                                         <th>ISV en Lps.</th>
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
-                                        <th>Registrado por</th>
+                                        <th>Vendedor</th>
                                         <th>Opciones</th>
                                         
                                     </tr>
@@ -123,25 +123,37 @@
              
             Swal.fire({
             title: '¿Está seguro de anular esta factura?',
-            text:'Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.',
+            
+         
+  // --------------^-- define html element with id
+            html: '<p>Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentario"     class="form-group form-control" data-parsley-required></textarea>',
             showDenyButton: false,
-            showCancelButton: true,
-            confirmButtonText: 'Si, Anular Compra',            
-            cancelButtonText: `Cancelar`,
+            showCancelButton: false,
+            showDenyButton:true,
+            confirmButtonText: 'Si, Anular Factura',            
+            denyButtonText: `Cancelar`,
+            confirmButtonColor:'#19A689',
+            denyButtonColor:'#676A6C',
             }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
+           
+                let motivo = document.getElementById("comentario").value
 
-                //Swal.fire('Saved!', '', 'success')
-                anularVenta(idFactura);
+            if (result.isConfirmed && motivo ) {
 
-            } 
+               
+                anularVenta(idFactura,motivo);
+
+            }else if(result.isDenied){
+                Swal.close()
+            }else{
+                Swal.close()
+            }
             })
         }
 
-        function anularVenta(idFactura){
+        function anularVenta(idFactura,motivo){
 
-            axios.post("/factura/corporativo/anular", {idFactura:idFactura})
+            axios.post("/factura/corporativo/anular", {'idFactura':idFactura,'motivo':motivo})
             .then( response =>{
 
 

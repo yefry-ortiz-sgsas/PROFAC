@@ -744,12 +744,12 @@ $(document).ready(function() {
         let telefono2 = document.getElementsByName('telefono[]');
 
         console.log(contacto2[1].value , telefono2[1].value)
-
+        document.getElementById('btn_crear_cliente').disabled=true;
         if( contacto2[1].value  && telefono2[1].value  ){
             
                 var data = new FormData($('#clientesCreacionForm').get(0));
                 
-                document.getElementById('btn_crear_cliente').disabled=true;
+                
 
                 axios.post('/cliente/registrar',data)
                 .then( response => {
@@ -770,7 +770,7 @@ $(document).ready(function() {
                         title: data.title,
                         text: data.text,
                     })
-
+                    
 
                 })
                 .catch( err => {
@@ -804,7 +804,7 @@ $(document).ready(function() {
                     text: data.text,
                 })
 
-
+                
 
             })
             .catch( err => {
@@ -829,7 +829,7 @@ $(document).ready(function() {
 
         }
 
-        
+        document.getElementById('btn_crear_cliente').disabled=false;
 
       }  
 

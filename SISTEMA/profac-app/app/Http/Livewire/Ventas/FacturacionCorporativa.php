@@ -22,6 +22,8 @@ use App\Models\ModelVentaProducto;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelParametro;
 use App\Models\ModelLista;
+use App\Models\ModelCliente;
+use App\Models\logCredito;
 
 class FacturacionCorporativa extends Component
 {
@@ -39,7 +41,7 @@ class FacturacionCorporativa extends Component
 
 
 
-            if(Auth::user()->rol_id==1){
+            if (Auth::user()->rol_id == 1) {
                 $listaClientes = DB::SELECT("
                 select 
                     id,
@@ -49,7 +51,7 @@ class FacturacionCorporativa extends Component
                     and tipo_cliente_id=1                           
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
-            }else{
+            } else {
                 $listaClientes = DB::SELECT("
                 select 
                     id,
@@ -249,8 +251,8 @@ class FacturacionCorporativa extends Component
             id,
             concat(nombre,' - ',codigo_barra) as nombre,
             isv,
-            ultimo_costo_compra
-
+            FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
+            FORMAT(precio_base,2) as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
@@ -270,152 +272,164 @@ class FacturacionCorporativa extends Component
 
     public function guardarVenta(Request $request)
     {
+        try {
 
+            $validator = Validator::make($request->all(), [
 
-        $validator = Validator::make($request->all(), [
-
-            'fecha_vencimiento' => 'required',
-            'numero_venta' => 'required',
-            'subTotalGeneral' => 'required',
-            'isvGeneral' => 'required',
-            'totalGeneral' => 'required',
-            'arregloIdInputs' => 'required',
-            'numeroInputs' => 'required',
-            'seleccionarCliente' => 'required',
-            'nombre_cliente_ventas' => 'required',
-            'tipoPagoVenta' => 'required',
-            'bodega' => 'required',
-            'seleccionarProducto' => 'required'
+                'fecha_vencimiento' => 'required',                
+                'subTotalGeneral' => 'required',
+                'isvGeneral' => 'required',
+                'totalGeneral' => 'required',
+                'arregloIdInputs' => 'required',
+                'numeroInputs' => 'required',
+                'seleccionarCliente' => 'required',
+                'nombre_cliente_ventas' => 'required',
+                'tipoPagoVenta' => 'required',    
+                'restriccion' => 'required'
 
 
 
-        ]);
+            ]);
 
-        // dd($request->all());
+             //dd($request->all());
 
-        if ($validator->fails()) {
-            return response()->json([
-                'mensaje' => 'Ha ocurrido un error al crear la compra.',
-                'errors' => $validator->errors()
-            ], 406);
-        }
+            if ($validator->fails()) {
+                return response()->json([
+                    'icon' => 'error',
+                    'title' => 'error',
+                    'text' => 'Por favor, verificar que todos los campos esten completados.',
+                    'mensaje' => 'Ha ocurrido un error al crear la compra.',
+                    'errors' => $validator->errors()
+                ], 401);
+            }
+            //
 
-        //dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;
-        $arrayProductosVentas = [];
-        $numeroSecuencia = null;
-        $mensaje = "";
-        $flag = false;
-        $turno = null;
-        $factura = null;
+            if ($request->restriccion == 1) {
+                $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
 
-        //comprobar existencia de producto en bodega
-        for ($j = 0; $j < count($arrayInputs); $j++) {
+                if ($facturaVencida) {
+                    return response()->json([
+                        'icon' => 'warning',
+                        'title' => 'Advertencia!',
+                        'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con facturas vencidas. Por el momento no se puede emitir factura a este cliente.',
 
-            $keyIdSeccion = "idSeccion" . $arrayInputs[$j];
-            $keyIdProducto = "idProducto" . $arrayInputs[$j];
-            $keyRestaInventario = "restaInventario" . $arrayInputs[$j];
-            $keyNombre = "nombre" . $arrayInputs[$j];
-            $keyBodega = "bodega" . $arrayInputs[$j];
+                    ], 401);
+                }
+                
+            }
 
-            $resultado = DB::selectONE("select 
+            if($request->tipoPagoVenta == 2){
+                $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente,$request->totalGeneral);
+
+                if ($comprobarCredito) {
+                    return response()->json([
+                        'icon' => 'warning',
+                        'title' => 'Advertencia!',
+                        'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con crédito suficiente . Por el momento no se puede emitir factura a este cliente.',
+
+                    ], 401);
+                }
+            }
+
+            //dd($request->all());
+            $arrayInputs = [];
+            $arrayInputs = $request->arregloIdInputs;
+            //$arrayProductosVentas = [];
+            $numeroSecuencia = null;
+            $mensaje = "";
+            $flag = false;
+            // $turno = null;
+            $factura = null;
+
+            //comprobar existencia de producto en bodega
+            for ($j = 0; $j < count($arrayInputs); $j++) {
+
+                $keyIdSeccion = "idSeccion" . $arrayInputs[$j];
+                $keyIdProducto = "idProducto" . $arrayInputs[$j];
+                $keyRestaInventario = "restaInventario" . $arrayInputs[$j];
+                $keyNombre = "nombre" . $arrayInputs[$j];
+                $keyBodega = "bodega" . $arrayInputs[$j];
+
+                $resultado = DB::selectONE("select 
             if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
             from recibido_bodega
             where cantidad_disponible <> 0
             and producto_id = " . $request->$keyIdProducto . "
             and seccion_id = " . $request->$keyIdSeccion);
 
-            if ($request->$keyRestaInventario > $resultado->cantidad_disponoble) {
-                $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con sección :<b>" . $request->$keyBodega . "</b><br><br>";
-                $flag = true;
+                if ($request->$keyRestaInventario > $resultado->cantidad_disponoble) {
+                    $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con sección :<b>" . $request->$keyBodega . "</b><br><br>";
+                    $flag = true;
+                }
             }
-        }
 
-        if ($flag) {
-            return response()->json([
-                'icon' => "warning",
-                'text' =>  '<p class="text-left">' . $mensaje . '</p>',
-                'title' => 'Advertencia!',
-                'idFactura' => 0,
+            if ($flag) {
+                return response()->json([
+                    'icon' => "warning",
+                    'text' =>  '<p class="text-left">' . $mensaje . '</p>',
+                    'title' => 'Advertencia!',
+                    'idFactura' => 0,
 
-            ], 200);
-        }
+                ], 200);
+            }
 
-        $flagEstado = DB::SELECTONE("select estado_encendido from parametro where id = 1");
-        $estado = 0;
-        if ($flagEstado->estado_encendido == 1) {
-            $estado = 1;
-        } else {
-            $estado = 2;
-        }
-
+            $flagEstado = DB::SELECTONE("select estado_encendido from parametro where id = 1");
+           
+            if ($flagEstado->estado_encendido == 1) {
+                $estado = 1;
+            } else {
+                $estado = 2;
+            }
 
 
 
-        try {
+
+
 
 
             DB::beginTransaction();
+
+
 
 
             if ($estado == 1) 
             {
                 //presenta
 
+                $cai = DB::SELECTONE("select
+                id,
+                numero_inicial,
+                numero_final,
+                cantidad_otorgada,
+                numero_actual
+                from cai 
+                where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
-                $cai = DB::SELECTONE("
-                                    select
-                                    id,
-                                    numero_inicial,
-                                    numero_final,
-                                    cantidad_otorgada,
-                                    numero_actual
-                                    from cai 
-                                    where tipo_documento_fiscal_id = 1 and estado_id = 1");
-
-                $numeroSecuencia = $cai->numero_actual;
-
-                $existencia = DB::SELECTONE("
-                                    select 
-                                    id 
-                                    from factura
-                                    where estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual);
-
-                if (!empty($existencia)) {
-                    $numeroSecuencia = $numeroSecuencia + 1;
-                } else {
-                    $numeroSecuencia = $numeroSecuencia;
-                }
-
-                $duplicado = DB::SELECTONE("
-                                    select 
-                                    count(A.id) as contador
-                                    from factura A                                  
-                                    where A.estado_factura_id=1 and A.estado_venta_id=1 and  A.cai_id=" . $cai->id . " and  A.numero_secuencia_cai=" . $cai->numero_actual . "
-                                    ");
-
-                if ($duplicado->contador > 0) {
-                    $numeroSecuencia = $numeroSecuencia + 1;
-                } else {
-                    $numeroSecuencia = $numeroSecuencia;
-                }
-
-                if ($cai->numero_actual > $cai->cantidad_otorgada) {
+                if($cai->numero_actual > $cai->cantidad_otorgada){
 
                     return response()->json([
                         "title" => "Advertencia",
                         "icon" => "warning",
                         "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                    ], 200);
+                    ], 401);
+
                 }
 
 
-                $arrayCai = explode('-', $cai->numero_final);
+
+
+            
+
+                $numeroSecuencia = $cai->numero_actual;
+                $arrayCai = explode('-',$cai->numero_final);          
                 $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
-                $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
-                // dd($cai->cantidad_otorgada);
-                $montoComision = $request->totalGeneral * 0.5;
+                $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
+                    // dd($cai->cantidad_otorgada);
+
+
+
+                $montoComision = $request->totalGeneral*0.5;
+
                 if($request->tipoPagoVenta==1){
                     $diasCredito = 0;
                 }else{
@@ -423,43 +437,40 @@ class FacturacionCorporativa extends Component
                     $diasCredito = $dias->dias_credito;
                 }
 
-                $factura = new ModelFactura;
-                $factura->numero_factura = $request->numero_venta;
-                $factura->cai = $numeroCAI;
-                $factura->numero_secuencia_cai = $numeroSecuencia;
+                $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+                
+                $factura = new ModelFactura;    
+                $factura->numero_factura = $numeroVenta->numero;       
+                $factura->cai=$numeroCAI; 
+                $factura->numero_secuencia_cai=$numeroSecuencia;
                 $factura->nombre_cliente = $request->nombre_cliente_ventas;
-                $factura->rtn = $request->rtn_ventas;
-                $factura->sub_total = $request->subTotalGeneral;
-                $factura->isv = $request->isvGeneral;
-                $factura->total = $request->totalGeneral;
-                $factura->credito = $request->totalGeneral;
-                $factura->fecha_emision = $request->fecha_emision;
-                $factura->fecha_vencimiento = $request->fecha_vencimiento;
-                $factura->tipo_pago_id = $request->tipoPagoVenta;
+                $factura->rtn=$request->rtn_ventas;
+                $factura->sub_total=$request->subTotalGeneral;
+                $factura->isv=$request->isvGeneral;
+                $factura->total=$request->totalGeneral;
+                $factura->credito=$request->totalGeneral;
+                $factura->fecha_emision=$request->fecha_emision;
+                $factura->fecha_vencimiento=$request->fecha_vencimiento;                    
+                $factura->tipo_pago_id=$request->tipoPagoVenta;
                 $factura->dias_credito=$diasCredito;
-                $factura->cai_id = $cai->id;
-                $factura->estado_venta_id = 1;                
-                $factura->cliente_id = $request->seleccionarCliente;
-                $factura->vendedor = Auth::user()->id;
-                $factura->monto_comision = $montoComision;
-                $factura->tipo_venta_id = 1; //coorporativo;
-                $factura->estado_factura_id = $estado; // se presenta                  
-                $factura->comision_estado_pagado = 0;
-                $factura->pendiente_cobro = $request->totalGeneral;
+                $factura->cai_id=$cai->id;
+                $factura->estado_venta_id=1;
+                $factura->cliente_id=$request->seleccionarCliente;
+                $factura->vendedor=Auth::user()->id;
+                $factura->monto_comision=$montoComision;
+                $factura->tipo_venta_id=2;// estatal
+                $factura->estado_factura_id=1; // se presenta     
+                $factura->users_id = Auth::user()->id;              
+                $factura->comision_estado_pagado=0;
+                $factura->pendiente_cobro=$request->totalGeneral;
                 $factura->save();
 
+                $caiUpdated =  ModelCAI::find($cai->id);
+                $caiUpdated->numero_actual=$numeroSecuencia+1;
+                $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
+                $caiUpdated->save();
 
-                if (!empty($existencia)) {
-                    $caiUpdated =  ModelCAI::find($cai->id);
-                    $caiUpdated->numero_actual = $numeroSecuencia;
-                    $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - 1;
-                    $caiUpdated->save();
-                } else {
-                    $caiUpdated =  ModelCAI::find($cai->id);
-                    $caiUpdated->numero_actual = $numeroSecuencia + 1;
-                    $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - 1;
-                    $caiUpdated->save();
-                }
+
             } else {
                 // alterna
                 $lista = DB::SELECT("select id, numero from listado where eliminado = 0");
@@ -476,6 +487,8 @@ class FacturacionCorporativa extends Component
                     $factura = $this->alternar($request);
                 }
             }
+
+
 
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
@@ -509,6 +522,12 @@ class FacturacionCorporativa extends Component
 
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
+
+            if($request->tipoPagoVenta==2 ){//si el tipo de pago es credito
+                $this->restarCreditoCliente($request->seleccionarCliente,$request->totalGeneral,$factura->id);
+            }
+
+            
 
             // dd($this->arrayProductos);
             ModelVentaProducto::insert($this->arrayProductos);
@@ -618,7 +637,6 @@ class FacturacionCorporativa extends Component
             if ($duplicado->contador >= 2 || !empty($existencia)) {
                 $numeroSecuencia =  $this->comprobacionRecursiva($request, $cai, $cai->numero_actual, $estado);
                 $numeroSecuenciaUpdated = $numeroSecuencia + 1;
-                
             } else {
                 $numeroSecuencia = $cai->numero_actual;
                 $numeroSecuenciaUpdated = $cai->numero_actual + 1;
@@ -630,7 +648,7 @@ class FacturacionCorporativa extends Component
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
-                ], 200);
+                ], 401);
             }
 
             // if ($numeroSecuencia > $cai->numero_actual) {
@@ -643,16 +661,18 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
-            if($request->tipoPagoVenta==1){
+            
+
+            if ($request->tipoPagoVenta == 1) {
                 $diasCredito = 0;
-            }else{
-                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+            } else {
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                 $diasCredito = $dias->dias_credito;
             }
 
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -671,7 +691,8 @@ class FacturacionCorporativa extends Component
             $factura->vendedor = Auth::user()->id;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
-            $factura->estado_factura_id = $estado; // se presenta                  
+            $factura->estado_factura_id = $estado; // se presenta    
+            $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->save();
@@ -707,7 +728,7 @@ class FacturacionCorporativa extends Component
         } catch (QueryException $e) {
             DB::rollback();
             return response()->json([
-                'message' => 'Ha ocurrido un error',
+                'message' => 'Ha ocurrido un error, meotodo alternar',
                 'error' => $e
             ], 402);
         }
@@ -723,19 +744,20 @@ class FacturacionCorporativa extends Component
             $numeroSecuencia = null;
             $cai = DB::SELECTONE("select * from listado where eliminado = 0 order by secuencia ASC limit 1");
 
-            $comprobarDuplicados = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id and cai ='" . $cai->numero . "'");
+            $comprobarDuplicados = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai ='" . $cai->numero . "'");
 
 
             if ($comprobarDuplicados->contador >= 2) {
                 // DB::delete("DELETE FROM listado WHERE id = ".$cai->id);
                 DB::update("UPDATE listado SET eliminado =  1 WHERE id = " . $cai->id);
 
+                return $this->alternar($request); 
 
-                return response()->json([
-                    "icon" => "error",
-                    "title" => "Error!",
-                    "text" => "Por favor intentar facturar a otro cliente en este momento."
-                ], 402);
+                // return response()->json([
+                //     "icon" => "error",
+                //     "title" => "Error!",
+                //     "text" => "Por favor intentar facturar a otro cliente en este momento."
+                // ], 402);
             }
 
             $existencia = DB::SELECTONE("
@@ -750,14 +772,14 @@ class FacturacionCorporativa extends Component
 
 
             if (!empty($existencia)) {
-                // $numeroSecuencia = $cai->secuencia+1;
-                // $numeroSecuenciaUpdate
+                return $this->alternar($request); 
 
-                return response()->json([
-                    "icon" => "error",
-                    "title" => "Error!",
-                    "text" => "Por favor intentar facturar a otro cliente en este momento."
-                ], 402);
+
+                // return response()->json([
+                //     "icon" => "error",
+                //     "title" => "Error!",
+                //     "text" => "Por favor intentar facturar a otro cliente en este momento."
+                // ], 402);
             } else {
                 $numeroSecuencia = $cai->secuencia;
             }
@@ -778,16 +800,16 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
-            if($request->tipoPagoVenta==1){
+            if ($request->tipoPagoVenta == 1) {
                 $diasCredito = 0;
-            }else{
-                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+            } else {
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                 $diasCredito = $dias->dias_credito;
             }
 
-
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $numeroSecuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -806,7 +828,8 @@ class FacturacionCorporativa extends Component
             $factura->vendedor = Auth::user()->id;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
-            $factura->estado_factura_id = 2; // se presenta                  
+            $factura->estado_factura_id = 2; // se presenta   
+            $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->save();
@@ -839,7 +862,7 @@ class FacturacionCorporativa extends Component
             return response()->json([
                 'error' => $e,
                 'icon' => "error",
-                'text' => 'Ha ocurrido un error.',
+                'text' => 'Ha ocurrido un error. Metodo Lista',
                 'title' => 'Error!',
             ], 402);
         }
@@ -943,7 +966,7 @@ class FacturacionCorporativa extends Component
                 array_push($this->arrayLogs, [
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
-                    "cantidad" => $cantidadSeccion,
+                    "cantidad" => $registroResta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -973,43 +996,109 @@ class FacturacionCorporativa extends Component
 
     public function imprimirFacturaCoorporativa($idFactura)
     {
-        $data = DB::SELECTONE(
-            "
+
+        $cai = DB::SELECTONE("
         select 
-        compra.numero_orden,
-        compra.cai_retencion,
-        DATE_FORMAT(cai.fecha_limite_emision, '%d/%m/%Y') as fecha_limite,
-        cai.cai as numeroCai,
-        cai.numero_inicial,
-        cai.numero_final,
-        proveedores.nombre,
-        proveedores.rtn,
-        (select date_format(fecha, '%d/%m/%Y') from pago_compra where compra_id = compra.id limit 1) as fecha,
-        compra.numero_factura,
-        date_format(compra.fecha_emision,'%d/%m/%Y') as fecha_emision,
-        FORMAT(compra.monto_retencion, 2) as monto_retencion,
-        FORMAT(compra.total, 2) as total
-        from compra
-        inner join cai 
-        ON cai.id = compra.cai_id
-        inner join proveedores
-        on compra.proveedores_id = proveedores.id
-        where compra.id = 3"
-        );
+        A.cai as numero_factura,
+        A.estado_venta_id,
+        B.cai,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,       
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,        
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       where A.id = ".$idFactura);
 
-        /*$pdf = PDF::loadView('/pdf/retencion', $data)
-        ->stream('archivo.pdf');
-        */
+       $cliente = DB::SELECTONE("
+       select        
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
 
-        //view()->share('/pdf/retencion',$data);
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+   
+
+        $importesConCentavos= DB::SELECTONE("        
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total
+            from factura where factura.id = ".$idFactura);
+        
+
+       $productos = DB::SELECT("
+       select 
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            FORMAT(B.sub_total_s/B.cantidad,2) as precio,
+            FORMAT(B.cantidad,2) as cantidad,
+            FORMAT(B.sub_total_s,2) as importe
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=".$idFactura);
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+          
+        }else{
+            $flagCentavos = true;
+        }
+
         $formatter = new NumeroALetras();
-        $numeroLetras = $formatter->toMoney($data->monto_retencion, 2, 'LEMPIRAS', 'CENTAVOS');
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura', compact('data', 'numeroLetras'))->setPaper('letter');
-        // download PDF file with download method
-        return $pdf->stream("compra numero_" . $data->numero_orden . ".pdf");
+        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+       
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
-        // return view('/pdf/retencion')->with($data);
+       
     }
 
     public function guardarEnumeracion($numeroSecuencia, $cai, $estado)
@@ -1049,21 +1138,34 @@ class FacturacionCorporativa extends Component
 
 
 
-            $duplicado = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai_id=" . $listado->cai_id . " and cai='" . $listado->numero."'");
+            //comprobar si esta dos veces
+            $duplicado = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai_id=" . $listado->cai_id . " and cai='" . $listado->numero . "'");
 
 
 
             $existencia = DB::SELECTONE(
                 "
             select 
-            id 
+            count(id) as contador
             from factura
             where estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $listado->cai_id . " and numero_secuencia_cai=" . $listado->secuencia .
                     " and UPPER(REPLACE(nombre_cliente,' ','')) = UPPER(REPLACE('" . $request->nombre_cliente_ventas . "',' ',''))"
             );
 
-            if (!empty($existencia) or $duplicado->contador >= 2) {
+
+
+            // 
+            if ( $duplicado->contador >= 2) {
                 DB::update("UPDATE enumeracion SET eliminado =  1 WHERE id = " . $listado->id);
+                return $this->alternar($request); 
+            }
+
+            if(!empty($existencia->contador >=2)){
+                DB::update("UPDATE enumeracion SET eliminado =  1 WHERE id = " . $listado->id);
+                return $this->alternar($request);
+            }
+         
+            if($existencia->contador != 0){
                 return $this->alternar($request);
             }
 
@@ -1073,15 +1175,16 @@ class FacturacionCorporativa extends Component
             // dd($cai->cantidad_otorgada);
             $montoComision = $request->totalGeneral * 0.5;
 
-            if($request->tipoPagoVenta==1){
+            if ($request->tipoPagoVenta == 1) {
                 $diasCredito = 0;
-            }else{
-                $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+            } else {
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                 $diasCredito = $dias->dias_credito;
             }
 
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $request->numero_venta;
+            $factura->numero_factura = $$numeroVenta;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $listado->secuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
@@ -1100,7 +1203,8 @@ class FacturacionCorporativa extends Component
             $factura->vendedor = Auth::user()->id;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
-            $factura->estado_factura_id = $listado->estado; // se presenta                  
+            $factura->estado_factura_id = $listado->estado; // se presenta
+            $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->save();
@@ -1144,21 +1248,72 @@ class FacturacionCorporativa extends Component
                 " and UPPER(REPLACE(nombre_cliente,' ','')) = UPPER(REPLACE('" . $request->nombre_cliente_ventas . "',' ',''))"
         );
 
-       
+
 
         if ($duplicado->contador >= 2) {
             $numeroActual = $numeroActual + 1;
             return $this->comprobacionRecursiva($request, $cai, $numeroActual, $estado);
-        } else if(!empty($existencia)) {
-            
+        } else if (!empty($existencia)) {
+
             $this->guardarEnumeracion($numeroActual, $cai, $estado);
             $numeroActual = $numeroActual + 1;
             return $this->comprobacionRecursiva($request, $cai, $numeroActual, $estado);
-           
-        }else{
+        } else {
             return $numeroActual;
         }
     }
 
+    public function comprobarCreditoCliente($idCliente,$totalFactura)
+    {
+
+
+
+        $credito = DB::SELECTONE(
+        "
+        select credito from cliente where  id = " . $idCliente
+        );
+
+        if ($totalFactura > $credito->credito) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function comprobarFacturaVencida($idCliente){
+        $facturasVencidas = DB::SELECT(
+            "
+        select
+        id
+        from factura 
+        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id=" . $idCliente
+        );
+
+        if (!empty($facturasVencidas)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    public function restarCreditoCliente($idCliente,$totalFactura, $idFactura){
+
+        $cliente = ModelCliente::find($idCliente);
+        $resta = $cliente->credito - $totalFactura;
+        $cliente->credito = $resta;
+        $cliente->save();
+
+        $logCredito = new logCredito;
+        $logCredito->descripcion = 'Reducción  de credito por factura.';
+        $logCredito->monto = $totalFactura;
+        $logCredito->factura_id=$idFactura;
+        $logCredito->cliente_id=$idCliente;
+        $logCredito->users_id = Auth::user()->id;
+        $logCredito->save();
+        
+        return true;
+    }
 
 }

@@ -88,7 +88,7 @@
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
 
-                            
+                            <input type="hidden" id="restriccion" name="restriccion" value="1">
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                         <label class="col-form-label text-danger" for="numero_venta"
@@ -642,6 +642,8 @@
                             let idProductoFila = document.getElementById("idProducto"+idInpunt).value;
                             let idSeccionFila = document.getElementById("idSeccion"+idInpunt).value;
 
+                            
+
                             if( idProducto==idProductoFila && idSeccion==idSeccionFila && !flag){
                                 flag = true;
                             }
@@ -665,7 +667,8 @@
                         }
 
                         let producto = response.data.producto;
-                   
+                        let precio_base = new Intl.NumberFormat('es-HN').format(producto.precio_base);
+                       
                         let arrayUnidades = response.data.unidades;
                      
                    
@@ -723,14 +726,14 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control"  data-parsley-required step="any"
-                                                    autocomplete="off" min="${producto.ultimo_costo_compra}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
+                                                    autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
-                                                    name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
+                                                    name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
@@ -767,7 +770,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="total${numeroInputs}" class="sr-only">Total</label>
                                                 <input type="number" placeholder="Total del producto" id="total${numeroInputs}"
-                                                    name="total${numeroInputs}" class="form-control" min="1"  step="any"
+                                                    name="total${numeroInputs}" class="form-control" min="0"  step="any"
                                                     autocomplete="off"
                                                     readonly >
                                             </div>
@@ -891,7 +894,7 @@
                     
                 } else {
                     document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
-                    document.getElementById('fecha_vencimiento').value = "";
+                    
                     document.getElementById('fecha_vencimiento').readOnly = true;
 
                 }
@@ -985,7 +988,7 @@
                         
 
                         if(data.idFactura ==0 ){
-                            console.log("entro")
+                           // console.log("entro")
                            
                             Swal.fire({
                             icon: data.icon,

@@ -25,7 +25,7 @@
                     <div class="ibox-content">
                         <div>
                           
-                                <button type="button" class="btn btn-w-m btn-warning ">Monto mayor</button>                              
+                                <button type="button" onclick="obtenerArrar()" class="btn btn-w-m btn-warning ">Monto mayor</button>                              
                                 <button type="button" class="btn btn-w-m btn-success ">Monto menor</button>
                         </div>
                         <div class="table-responsive">
@@ -50,7 +50,7 @@
                         </div>
                         <div>
                             <button type="button" class="btn btn-w-m btn-primary">Guardar</button>
-                            <p class="mt-2"><strong>Nota:</strong>Una vez se que se guarden los cambios efectuados, estos ya no se podrán modificar de ninguna forma posible.</p>
+                            <p class="mt-2"><strong>Nota:</strong>Una vez se guarden los cambios efectuados, estos ya no se podrán modificar de ninguna forma posible.</p>
                         </div>
                     </div>
                 </div>
@@ -150,8 +150,16 @@
                    })
                 })
                 
+
                 
              }
+
+             function obtenerArrar(){
+                var table = $('#tbl_lista_ventas').DataTable();
+ 
+                var plainArray = table.column( 0 ).data().toArray();
+                console.log(plainArray);
+                }
         </script>
     @endpush
 </div>
