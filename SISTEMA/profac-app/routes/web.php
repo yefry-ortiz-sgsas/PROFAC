@@ -314,6 +314,8 @@ use App\Http\Livewire\Ventas\Cai;
 use App\Http\Livewire\Bancos;
 use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
 use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
+use App\Http\Livewire\Inventario\TipoAjuste;
+
 
 
 
@@ -364,4 +366,14 @@ Route::post('/estatal/exonerado/datos', [CodigoExoneracion::class,'obtenerCodigo
 Route::post('/estatal/exonerado/editar', [CodigoExoneracion::class,'editarCodigoExoneracion']);
 
 Route::post('/estatal/exonerado/desactivar', [CodigoExoneracion::class,'desactivarCodigoExoneracion']);
+
+//------------------------------------------------------------------Tipo Ajuste--------------------------------------------------------------------------------//
+
+Route::get('/inventario/tipoajuste',TipoAjuste::class);
+Route::get('/inventario/tipoajuste/listar', [TipoAjuste::class,'listarTipoAjuste']);
+Route::post('/inventario/tipoajuste/guardar', [TipoAjuste::class,'guardarTipoAjuste']);
+Route::post('/inventario/tipoajuste/datos', [TipoAjuste::class,'obtenerTipoAjuste']);
+Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjuste']);
+
+Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
 

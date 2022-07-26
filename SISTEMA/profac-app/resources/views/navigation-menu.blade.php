@@ -324,6 +324,7 @@
                         <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li> 
                         <li><a href="/inventario/ajustes" style="color:#ffffff;">Ajustes</a></li> 
                         <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
+                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
 
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>
