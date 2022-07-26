@@ -16,6 +16,7 @@ class ModelCAI extends Model
     'punto_de_emision',
     'cantidad_solicitada',
     'cantidad_otorgada',
+    'serie',
     'numero_actual',
     'cantidad_no_utilizada',
     'numero_inicial',

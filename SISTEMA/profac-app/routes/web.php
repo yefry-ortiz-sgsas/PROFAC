@@ -307,3 +307,61 @@ Route::get('/linkstorage', function () {
 
 return redirect('/login');
 });
+
+
+
+use App\Http\Livewire\Ventas\Cai;
+use App\Http\Livewire\Bancos;
+use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
+use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
+
+
+
+//------------------------------------------------------------------UNIDADES DE MEDIDA------------------------------------------------------------------------//
+
+Route::get('/inventario/unidades/medida', UnidadesMedida::class);
+Route::post('/inventario/unidades/guardar', [UnidadesMedida::class, 'guardarUnidad']);
+Route::get('/inventario/unidades/listar', [UnidadesMedida::class, 'listarUnidades']);
+Route::post('/inventario/unidades/datos', [UnidadesMedida::class, 'obtenerDatos']);
+Route::post('/inventario/unidades/editar', [UnidadesMedida::class, 'editarUnidad']);
+
+
+//-----------------------------------------------------------------------CAI--------------------------------------------------------------------------------//
+
+Route::get('/ventas/cai',Cai::class);
+Route::get('/ventas/cai/listar', [Cai::class,'listarCAI']);
+Route::post('/ventas/cai/guardar', [Cai::class,'guardarCAI']);
+Route::post('/ventas/cai/datos', [Cai::class,'datosCAI']);
+Route::post('/ventas/cai/editar', [Cai::class,'editarCAI']);
+
+
+//----------------------------------------------------------------------------Bancos------------------------------------------------------------------------//
+
+Route::get('/banco/bancos', Bancos::class);
+Route::get('/banco/bancos/listar', [Bancos::class,'listarBancos']);
+Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
+Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
+Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
+
+//------------------------------------------------------------------Numero de Orden de Compra--------------------------------------------------------------------------------//
+
+Route::get('/estatal/ordenes',NumOrdenCompra::class);
+Route::get('/estatal/ordenes/listar', [NumOrdenCompra::class,'listarNumOrdenCompra']);
+Route::get('/estatal/ordenes/listar/clientes', [NumOrdenCompra::class,'listarClientes']);
+Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class,'guardarNumOrdenCompra']);
+Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class,'obtenerNumOrdenCompra']);
+Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class,'editarNumOrdenCompra']);
+
+Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class,'desactivarNumOrdenCompra']);
+
+//------------------------------------------------------------------Codigo Exoneracion--------------------------------------------------------------------------------//
+
+Route::get('/estatal/exonerado',CodigoExoneracion::class);
+Route::get('/estatal/exonerado/listar', [CodigoExoneracion::class,'listarCodigoExoneracion']);
+Route::get('/estatal/exonerado/listar/clientes', [CodigoExoneracion::class,'listarClientes']);
+Route::post('/estatal/exonerado/guardar', [CodigoExoneracion::class,'guardarCodigoExoneracion']);
+Route::post('/estatal/exonerado/datos', [CodigoExoneracion::class,'obtenerCodigoExoneracion']);
+Route::post('/estatal/exonerado/editar', [CodigoExoneracion::class,'editarCodigoExoneracion']);
+
+Route::post('/estatal/exonerado/desactivar', [CodigoExoneracion::class,'desactivarCodigoExoneracion']);
+

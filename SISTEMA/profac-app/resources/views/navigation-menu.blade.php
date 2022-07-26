@@ -349,7 +349,8 @@
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>  
                         <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li> 
+                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                        <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
                         
         
@@ -368,6 +369,7 @@
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
                         <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
                         
                     </ul>
                 </li>
@@ -382,10 +384,23 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
+                        <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>    
                     
                     </ul>
                 </li>
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                            class="nav-label" style="color:#ffffff;">Bancos</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+
+                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
+                    
+                    </ul>
+                </li>
+                
                 
                 @if(Auth::user()->rol_id =='1')  
                 <li>
@@ -406,7 +421,7 @@
                 @endif
 
 
-
+ 
 
 
             </ul>
