@@ -315,6 +315,7 @@ use App\Http\Livewire\Bancos;
 use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
 use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
 use App\Http\Livewire\Inventario\TipoAjuste;
+use App\Http\Livewire\Ventas\MotivoNotaCredito;
 
 
 
@@ -375,5 +376,15 @@ Route::post('/inventario/tipoajuste/guardar', [TipoAjuste::class,'guardarTipoAju
 Route::post('/inventario/tipoajuste/datos', [TipoAjuste::class,'obtenerTipoAjuste']);
 Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjuste']);
 
-Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
+//Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
+
+//------------------------------------------------------------------Motivo de nota de Credito--------------------------------------------------------------------------------//
+
+Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
+Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardarMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
+
+//Route::post('/ventas/motivo_credito/desactivar', [MotivoNotaCredito::class,'desactivarMotivoNotaCredito']);
 
