@@ -38,6 +38,7 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones; 
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
+use App\Http\Livewire\Inventario\ListadoAjustes;
 
 
 
@@ -287,8 +288,12 @@ Route::get('/ajustes/listar/bodegas', [Ajustes::class,'listarBodegas']);
 Route::get('/ajustes/listar/productos', [Ajustes::class,'listarProductos']); 
 Route::get('/ajustes/motivos/listar', [Ajustes::class,'obtenerTiposAjuste']);  
 Route::post('/ajustes/datos/producto', [Ajustes::class,'datosProducto']); 
-Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']); 
+Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']);  
+Route::post('/ajustes/guardar/ajuste', [Ajustes::class,'realizarAjuste']); 
+Route::get('/ajustes/imprimir/ajuste/{id}', [Ajustes::class,'imprimirAjuste']);  
 
+Route::get('/listado/ajustes',ListadoAjustes::class); 
+Route::post('/obtener/listado/ajustes',[ListadoAjustes::class,'listarAjustes']);
 
 //------------------------------------------------------Facturas Nulas---------------------------------------------//
 

@@ -419,7 +419,7 @@
             function transladoProducto(){
                 document.getElementById('btn_recibir_bodega').disabled = true;
                 let idSeccion = document.getElementById('seccion').value;
-                console.log(idSeccion,'idSeccion')
+               
                 let dataForm = new FormData($('#recibirProducto').get(0));
                 dataForm.append('idRecibido',idRecibido);
                 //console.log(dataForm);
