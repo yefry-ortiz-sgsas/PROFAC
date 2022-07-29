@@ -293,6 +293,8 @@ Route::get('/ajustes/listar/bodegas', [Ajustes::class,'listarBodegas']);
 Route::get('/ajustes/listar/productos', [Ajustes::class,'listarProductos']); 
 Route::get('/ajustes/motivos/listar', [Ajustes::class,'obtenerTiposAjuste']);  
 Route::post('/ajustes/datos/producto', [Ajustes::class,'datosProducto']); 
+Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']); 
+
 Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']);  
 Route::post('/ajustes/guardar/ajuste', [Ajustes::class,'realizarAjuste']); 
 Route::get('/ajustes/imprimir/ajuste/{id}', [Ajustes::class,'imprimirAjuste']);  
@@ -317,3 +319,84 @@ Route::get('/linkstorage', function () {
 
 return redirect('/login');
 });
+
+
+
+use App\Http\Livewire\Ventas\Cai;
+use App\Http\Livewire\Bancos;
+use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
+use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
+use App\Http\Livewire\Inventario\TipoAjuste;
+use App\Http\Livewire\Ventas\MotivoNotaCredito;
+
+
+
+
+//------------------------------------------------------------------UNIDADES DE MEDIDA------------------------------------------------------------------------//
+
+Route::get('/inventario/unidades/medida', UnidadesMedida::class);
+Route::post('/inventario/unidades/guardar', [UnidadesMedida::class, 'guardarUnidad']);
+Route::get('/inventario/unidades/listar', [UnidadesMedida::class, 'listarUnidades']);
+Route::post('/inventario/unidades/datos', [UnidadesMedida::class, 'obtenerDatos']);
+Route::post('/inventario/unidades/editar', [UnidadesMedida::class, 'editarUnidad']);
+
+
+//-----------------------------------------------------------------------CAI--------------------------------------------------------------------------------//
+
+Route::get('/ventas/cai',Cai::class);
+Route::get('/ventas/cai/listar', [Cai::class,'listarCAI']);
+Route::post('/ventas/cai/guardar', [Cai::class,'guardarCAI']);
+Route::post('/ventas/cai/datos', [Cai::class,'datosCAI']);
+Route::post('/ventas/cai/editar', [Cai::class,'editarCAI']);
+
+
+//----------------------------------------------------------------------------Bancos------------------------------------------------------------------------//
+
+Route::get('/banco/bancos', Bancos::class);
+Route::get('/banco/bancos/listar', [Bancos::class,'listarBancos']);
+Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
+Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
+Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
+
+//------------------------------------------------------------------Numero de Orden de Compra--------------------------------------------------------------------------------//
+
+Route::get('/estatal/ordenes',NumOrdenCompra::class);
+Route::get('/estatal/ordenes/listar', [NumOrdenCompra::class,'listarNumOrdenCompra']);
+Route::get('/estatal/ordenes/listar/clientes', [NumOrdenCompra::class,'listarClientes']);
+Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class,'guardarNumOrdenCompra']);
+Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class,'obtenerNumOrdenCompra']);
+Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class,'editarNumOrdenCompra']);
+
+Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class,'desactivarNumOrdenCompra']);
+
+//------------------------------------------------------------------Codigo Exoneracion--------------------------------------------------------------------------------//
+
+Route::get('/estatal/exonerado',CodigoExoneracion::class);
+Route::get('/estatal/exonerado/listar', [CodigoExoneracion::class,'listarCodigoExoneracion']);
+Route::get('/estatal/exonerado/listar/clientes', [CodigoExoneracion::class,'listarClientes']);
+Route::post('/estatal/exonerado/guardar', [CodigoExoneracion::class,'guardarCodigoExoneracion']);
+Route::post('/estatal/exonerado/datos', [CodigoExoneracion::class,'obtenerCodigoExoneracion']);
+Route::post('/estatal/exonerado/editar', [CodigoExoneracion::class,'editarCodigoExoneracion']);
+
+Route::post('/estatal/exonerado/desactivar', [CodigoExoneracion::class,'desactivarCodigoExoneracion']);
+
+//------------------------------------------------------------------Tipo Ajuste--------------------------------------------------------------------------------//
+
+Route::get('/inventario/tipoajuste',TipoAjuste::class);
+Route::get('/inventario/tipoajuste/listar', [TipoAjuste::class,'listarTipoAjuste']);
+Route::post('/inventario/tipoajuste/guardar', [TipoAjuste::class,'guardarTipoAjuste']);
+Route::post('/inventario/tipoajuste/datos', [TipoAjuste::class,'obtenerTipoAjuste']);
+Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjuste']);
+
+//Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
+
+//------------------------------------------------------------------Motivo de nota de Credito--------------------------------------------------------------------------------//
+
+Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
+Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardarMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
+Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
+
+//Route::post('/ventas/motivo_credito/desactivar', [MotivoNotaCredito::class,'desactivarMotivoNotaCredito']);
+

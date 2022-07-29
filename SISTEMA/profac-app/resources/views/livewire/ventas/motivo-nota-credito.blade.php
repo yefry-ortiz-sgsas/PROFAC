@@ -101,15 +101,15 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Unidades De Medida</h2>
+            <h2>Motivo Nota de Crédito</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a>Listar</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
+                    <a data-toggle="modal" data-target="#modal_motivo_credito_crear">Motivo Nota de Crédito</a>
                 </li>
-
+                
             </ol>
         </div>
 
@@ -117,8 +117,9 @@
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
-                    data-target="#modal_producto_crear"><i class="fa fa-plus"></i> Añadir Unidad</a>
+                    data-target="#modal_motivo_credito_crear"><i class="fa fa-plus"></i> Añadir Motivo Nota de Crédito</a>
             </div>
+            
         </div>
 
 
@@ -130,12 +131,12 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_unidades_listar" class="table table-striped table-bordered table-hover col-md-10">
+                            <table id="tbl_motivos_listar" class="table table-striped table-bordered table-hover col-md-10">
                                 <thead class="">
                                     <tr>
-                                        <th>Cod</th>
-                                        <th>Nombre</th>
-                                        <th>Simbolo</th>                                        
+                                        <th>Codigo</th>
+                                        <th>Motivo Nota de Crédito</th>
+                                        <th>Registrado Por</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -152,39 +153,31 @@
                 </div>
             </div>
 
-            <!-- Modal para registro de Unidad-->
-            <div class="modal fade" id="modal_producto_crear" tabindex="-1" role="dialog"
+            <!-- Modal para registro de Motivo Nota de Crédito-->
+            <div class="modal fade" id="modal_motivo_credito_crear" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Unidad</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Motivo Nota de Crédito</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="modal-body">
-                            <form id="crearUnidadForm" name="crearUnidadForm" data-parsley-validate>
+                            <form id="crearMotivoNotaCreditoForm" name="crearMotivoNotaCreditoForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
+                                
                                 <div class="row" id="row_datos">
-                                    <div class="col-md-12">
-                                        <label for="nombre_producto" class="col-form-label focus-label">Nombre de la
-                                            Unidad:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="nombre_producto"
-                                            name="nombre_producto" data-parsley-required>
-                                    </div>
 
                                     <div class="col-md-12">
-                                        <label for="simbolo_producto" class="col-form-label focus-label">Simbolo de la
-                                            Unidad:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="simbolo_producto"
-                                            name="simbolo_producto" data-parsley-required>
+                                        <label for="descripcion" class="col-form-label focus-label">Motivo Nota de Crédito:<span class="text-danger">*</span></label>
+                                        <input class="form-control" required type="text" id="descripcion"
+                                            name="descripcion" data-parsley-required>
                                     </div>
 
-
-
-
+                                    
                                 </div>
                             </form>
 
@@ -192,47 +185,37 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="crearUnidadForm" class="btn btn-primary">Guardar
-                                Unidad</button>
+                            <button type="submit" form="crearMotivoNotaCreditoForm" class="btn btn-primary">Guardar
+                                Motivo Nota de Crédito</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-                        <!-- Modal para editar Unidad-->
-                        <div class="modal fade" id="modal_producto_editar" tabindex="-1" role="dialog"
+                        <!-- Modal para editar Motivo Nota de Crédito-->
+                        <div class="modal fade" id="modal_motivo_credito_editar" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title" id="exampleModalLabel">Editar Unidad</h3>
+                                    <h3 class="modal-title" id="exampleModalLabel">Editar Motivo Nota de Crédito</h3>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
         
                                 <div class="modal-body">
-                                    <form id="editarProductoForm" name="editarProductoForm" data-parsley-validate>
+                                    <form id="editarMotivoNotaCreditoForm" name="editarMotivoNotaCreditoForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                        <input id="idUnidad" name="idUnidad" type="hidden" value="">
+                                        <input id="idMotivo" name="idMotivo" type="hidden" value="">
                                         <div class="row" id="row_datos">
+
                                             <div class="col-md-12">
-                                                <label for="nombre_producto_editar" class="col-form-label focus-label">Nombre de la
-                                                    Unidad:</label>
-                                                <input class="form-control" required type="text" id="nombre_producto_editar"
-                                                    name="nombre_producto_editar" data-parsley-required>
-                                            </div>
+                                                <label for="descripcion_editar" class="col-form-label focus-label">Motivo Nota de Crédito:<span class="text-danger">*</span></label>
+                                                <input class="form-control" required type="text" id="descripcion_editar" name="descripcion_editar" data-parsley-required>
+                                            </div> 
         
-                                            <div class="col-md-12">
-                                                <label for="simbolo_producto_editar" class="col-form-label focus-label">Simbolo de la
-                                                    Unidad:</label>
-                                                <input class="form-control" required type="text" id="simbolo_producto_editar"
-                                                    name="simbolo_producto_editar" data-parsley-required>
-                                            </div>
-        
-        
-        
-                                            
+
                                         </div>
                                     </form>
         
@@ -240,8 +223,8 @@
         
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" form="editarProductoForm" class="btn btn-primary">Editar
-                                        Unidad</button>
+                                    <button type="submit" form="editarMotivoNotaCreditoForm" class="btn btn-primary">Editar
+                                        Motivo Nota de Crédito</button>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +235,21 @@
 
 
 
+        <!-- Modal -->
+        <div class="modal" id="modalSpinnerLoading" data-backdrop="static" tabindex="-1" role="dialog"
+            aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
 
+                    <div class="modal-body">
+                        <h2 class="text-center">Espere un momento...</h2>
+                        <div class="loader">Loading...</div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
 
@@ -263,40 +260,40 @@
     @push('scripts')
         <script>
          
-         $(document).on('submit', '#crearUnidadForm', function(event) {
+         $(document).on('submit', '#crearMotivoNotaCreditoForm', function(event) {
             event.preventDefault();
-            guardarUnidad();
+            guardarMotivoNotaCredito();
         });
 
-            function guardarUnidad() {
+            function guardarMotivoNotaCredito() {
                 $('#modalSpinnerLoading').modal('show');
 
-                var data = new FormData($('#crearUnidadForm').get(0));
-
-                axios.post("/inventario/unidades/guardar", data)
+                var data = new FormData($('#crearMotivoNotaCreditoForm').get(0));
+                
+                axios.post("/ventas/motivo_credito/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
-                        $('#crearUnidadForm').parsley().reset();
+                        $('#crearMotivoNotaCreditoForm').parsley().reset();
                         
-                        document.getElementById("crearUnidadForm").reset();
-                        $('#modal_producto_crear').modal('hide');
+                        document.getElementById("crearMotivoNotaCreditoForm").reset();
+                        $('#modal_motivo_credito_crear').modal('hide');
 
-                        $('#tbl_unidades_listar').DataTable().ajax.reload();
+                        $('#tbl_motivos_listar').DataTable().ajax.reload();
 
 
                         Swal.fire({
                             icon: 'success',
                             title: 'Exito!',
-                            text: "Marca creado con exito."
+                            text: "Motivo Nota de Crédito guardado con exito."
                         })
 
                     })
                     .catch(err => {
                         let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
-                        $('#modal_producto_crear').modal('hide');
+                        $('#modal_motivo_credito_crear').modal('hide');
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -309,7 +306,7 @@
             }
 
             $(document).ready(function() {
-                $('#tbl_unidades_listar').DataTable({
+                $('#tbl_motivos_listar').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -344,16 +341,16 @@
                             }
                         }
                     ],
-                    "ajax": "/inventario/unidades/listar",
+                    "ajax": "/ventas/motivo_credito/listar",
                     "columns": [{
                             data: 'id'
                         },
                         {
-                            data: 'nombre'
-                        },                        
-                        {
-                            data: 'simbolo'
+                            data: 'descripcion'
                         },
+                        {
+                            data: 'name'
+                        },                        
                         {
                             data: 'opciones'
                         }
@@ -364,62 +361,61 @@
                 });
             })
 
-            function datosUnidad(id){
+            function datosMotivoNotaCredito(id){
 
                 let data = {id:id}
-                axios.post('/inventario/unidades/datos',data)
+                axios.post('/ventas/motivo_credito/datos',data)
                 .then( response =>{
                   
                     let datos = response.data.datos;
 
-                    document.getElementById('nombre_producto_editar').value = datos.nombre;
-                    document.getElementById('simbolo_producto_editar').value = datos.simbolo;
-                    document.getElementById('idUnidad').value = datos.id;
+                    document.getElementById('descripcion_editar').value = datos.descripcion;
+                    document.getElementById('idMotivo').value = datos.id;
                                       
-                    $('#modal_producto_editar').modal('show');
+                    $('#modal_motivo_credito_editar').modal('show');
                 })
                 .catch( err=>{
                     console.log(err)
                 })
             }
 
-            $(document).on('submit', '#modal_producto_editar', function(event) {
+            $(document).on('submit', '#modal_motivo_credito_editar', function(event) {
 
-                    event.preventDefault();
-                    editarUnidad();
+                event.preventDefault();
+                editarMotivoNotaCredito();
 
             });
 
-             function editarUnidad(){
+            function editarMotivoNotaCredito(){
 
                 $('#modalSpinnerLoading').modal('show');
-                var data = new FormData($('#editarProductoForm').get(0));
+                var data = new FormData($('#editarMotivoNotaCreditoForm').get(0));
                 
             
-                axios.post('/inventario/unidades/editar',data)
+                axios.post('/ventas/motivo_credito/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
-                    $('#editarProductoForm').parsley().reset();
+                    $('#editarMotivoNotaCreditoForm').parsley().reset();
                     
-                    document.getElementById("editarProductoForm").reset();
-                    $('#modal_producto_editar').modal('hide');
+                    document.getElementById("editarMotivoNotaCreditoForm").reset();
+                    $('#modal_motivo_credito_editar').modal('hide');
 
-                    $('#tbl_unidades_listar').DataTable().ajax.reload();
+                    $('#tbl_motivos_listar').DataTable().ajax.reload();
 
 
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
-                        text: "Unidad editada con exito."
+                        text: "Motivo Nota de Crédito editado con exito."
                     })
 
                 })
                 .catch( err=>{
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
-                        $('#modal_producto_editar').modal('hide');
+                        $('#modal_motivo_credito_editar').modal('hide');
                         
                         Swal.fire({
                             icon: data.icon,
@@ -432,7 +428,7 @@
             }
 
 
-
         </script>
     @endpush
 </div>
+

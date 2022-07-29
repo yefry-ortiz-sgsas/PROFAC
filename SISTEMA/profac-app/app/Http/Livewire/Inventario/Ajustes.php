@@ -19,7 +19,9 @@ use App\Models\ModelAjuste;
 use App\Models\ModelTipoAjuste;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelRecibirBodega;
+
 class Ajustes extends Component
+
 {
     public function render()
     {
