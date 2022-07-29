@@ -1184,7 +1184,7 @@ class FacturacionCorporativa extends Component
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
-            $factura->numero_factura = $$numeroVenta;
+            $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
             $factura->numero_secuencia_cai = $listado->secuencia;
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
