@@ -518,7 +518,7 @@ class FacturacionCorporativa extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-                //dd($factura);
+                dd($factura);
 
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
@@ -614,8 +614,7 @@ class FacturacionCorporativa extends Component
             // }
 
             $existencia = DB::SELECTONE(
-                "
-                            select 
+                "select 
                             id 
                             from factura
                             where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual .

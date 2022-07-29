@@ -110,20 +110,22 @@ class Cliente extends Component
             $archivo = $request->file('foto_cliente');  
             $name = 'IMG_'. time().".". $archivo->getClientOriginalExtension();
             $path = public_path() . '/img_cliente';                      
-            $archivo->move($path, $name);                
+            $archivo->move($path, $name);  
             
+            $nombreCliente = str_replace("'"," ",$request->nombre_cliente);
+            $nombreCliente = str_replace('"'," ",$request->nombre_cliente);
            
             $cliente = new ModelCliente;
-            $cliente->nombre = $request->nombre_cliente ;
-            $cliente->direccion = $request->direccion_cliente ;
-            $cliente->telefono_empresa = $request->telefono_cliente ;
-            $cliente->rtn = $request->rtn_cliente;
-            $cliente->correo = $request->correo_cliente ; 
+            $cliente->nombre = TRIM($nombreCliente) ;
+            $cliente->direccion = TRIM($request->direccion_cliente) ;
+            $cliente->telefono_empresa = trim($request->telefono_cliente) ;
+            $cliente->rtn = TRIM($request->rtn_cliente);
+            $cliente->correo = TRIM($request->correo_cliente) ; 
             $cliente->url_imagen = $name;
             $cliente->credito = str_replace(",","",$request->credito); 
             $cliente->dias_credito=$request->dias_credito;
-            $cliente->latitud =$request->latitud_cliente;
-            $cliente->longitud =$request->longitud_cliente;
+            $cliente->latitud =TRIM($request->latitud_cliente);
+            $cliente->longitud =TRIM($request->longitud_cliente);
             $cliente->tipo_cliente_id = $request->categoria_cliente;
             $cliente->tipo_personalidad_id = $request->tipo_personalidad ;
             $cliente->categoria_id = $request->categoria_cliente ;
@@ -153,11 +155,15 @@ class Cliente extends Component
 
         }else{
             $estado_img =2;
+
+                $nombreCliente = str_replace("'"," ",$request->nombre_cliente);
+                $nombreCliente = str_replace('"'," ",$request->nombre_cliente);
+
                 $cliente = new ModelCliente;
-                $cliente->nombre = $request->nombre_cliente ;
-                $cliente->direccion = $request->direccion_cliente ;
-                $cliente->telefono_empresa = $request->telefono_cliente ;
-                $cliente->rtn = $request->rtn_cliente;
+                $cliente->nombre = TRIM($nombreCliente);
+                $cliente->direccion = TRIM($request->direccion_cliente) ;
+                $cliente->telefono_empresa = TRIM($request->telefono_cliente) ;
+                $cliente->rtn = TRIM($request->rtn_cliente);
                 $cliente->correo = $request->correo_cliente ;    
                 $cliente->credito = str_replace(",","",$request->credito);
                 $cliente->dias_credito=$request->dias_credito;
