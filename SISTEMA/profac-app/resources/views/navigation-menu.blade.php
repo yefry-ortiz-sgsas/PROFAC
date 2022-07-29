@@ -366,22 +366,20 @@
                         <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
                         <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
                         <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-                        <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
+                        <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>             
 
-                        
-        
-                      
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
-                        </li>
-                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas
-                            </a></li>
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                Cotizaciones</a></li>
+                    </ul>
+                </li>
 
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                            class="nav-label" style="color:#ffffff;">Bancos</span>
+                        <span class="fa arrow"></span></a>
 
+                    <ul class="nav nav-second-level">
 
-
+                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
+                    
                     </ul>
                 </li>
 
@@ -396,13 +394,8 @@
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
                         <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
-                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>                                   
                         
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
-                        </li>
-
                     </ul>
                 </li>
 
@@ -421,17 +414,8 @@
                     
                     </ul>
                 </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Bancos</span>
-                        <span class="fa arrow"></span></a>
 
-                    <ul class="nav nav-second-level">
 
-                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
-                    
-                    </ul>
-                </li>
                 
                 
                 @if(Auth::user()->rol_id =='1')  
@@ -453,32 +437,8 @@
                 @endif
 
 
- 
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas
-                            </a></li>
-
-                    </ul>
-                </li>
-
-                @if (Auth::user()->rol_id == '1')
-                    <li>
-                        <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                                class="nav-label" style="color:#ffffff;">Declaraciones </span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
 
 
-                            <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                            <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de
-                                    Declaraciones</a></li>
-                            <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-                @endif
 
 
 
