@@ -305,9 +305,10 @@ class Translados extends Component
         $translado = DB::SELECTONE("
         select
         C.id,
+      
         C.nombre,
         C.descripcion,
-        H.nombre,
+        H.nombre as medida,
         CONCAT(F.nombre,' - ',D.descripcion)as origen,
         
         (select
@@ -341,7 +342,19 @@ class Translados extends Component
         on G.unidad_medida_id = H.id
         where A.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and A.id = ".$idTranslado);
 
-        $pdf = PDF::loadView('/pdf/translado')->setPaper('letter');
+        $datos = DB::SELECTONE("
+        select
+        CONCAT(A.origen,A.destino,'-' ,A.id) as codigo,
+        DATE_FORMAT(A.created_at,'%d/%m/%Y') as fecha,
+        B.name,
+        A.descripcion
+
+        from log_translado A
+        inner join users B
+        on A.users_id = B.id
+        where A.id = ".$idTranslado);
+
+        $pdf = PDF::loadView('/pdf/translado',compact('translado','datos'))->setPaper('letter');
        
         return $pdf->stream("Ajuste numero.pdf");
 

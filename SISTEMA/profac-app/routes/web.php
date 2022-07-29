@@ -209,6 +209,7 @@ Route::get('/inventario/unidades/medida', UnidadesMedida::class);
 Route::get('/translado/imprimir/{id}',[Translados::class,'imprimirTranslado']);
 
 Route::get('/translados/historial', HistorialTranslados::class);
+Route::post('/translados/obtener/listado', [HistorialTranslados::class,'historialTranslados']);
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//

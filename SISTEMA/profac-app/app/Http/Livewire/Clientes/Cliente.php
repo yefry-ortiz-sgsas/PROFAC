@@ -113,7 +113,8 @@ class Cliente extends Component
             $archivo->move($path, $name);  
             
             $nombreCliente = str_replace("'"," ",$request->nombre_cliente);
-            $nombreCliente = str_replace('"'," ",$request->nombre_cliente);
+            $nombreCliente = str_replace('"'," ",$nombreCliente);
+            $nombreCliente = str_replace('´'," ",$nombreCliente);
            
             $cliente = new ModelCliente;
             $cliente->nombre = TRIM($nombreCliente) ;
@@ -157,18 +158,19 @@ class Cliente extends Component
             $estado_img =2;
 
                 $nombreCliente = str_replace("'"," ",$request->nombre_cliente);
-                $nombreCliente = str_replace('"'," ",$request->nombre_cliente);
+                $nombreCliente = str_replace('"'," ", $nombreCliente);
+                $nombreCliente = str_replace('´'," ",$nombreCliente);
 
                 $cliente = new ModelCliente;
                 $cliente->nombre = TRIM($nombreCliente);
                 $cliente->direccion = TRIM($request->direccion_cliente) ;
                 $cliente->telefono_empresa = TRIM($request->telefono_cliente) ;
                 $cliente->rtn = TRIM($request->rtn_cliente);
-                $cliente->correo = $request->correo_cliente ;    
+                $cliente->correo = TRIM($request->correo_cliente) ;    
                 $cliente->credito = str_replace(",","",$request->credito);
-                $cliente->dias_credito=$request->dias_credito;
-                $cliente->latitud =$request->latitud_cliente;
-                $cliente->longitud =$request->longitud_cliente;
+                $cliente->dias_credito=TRIM($request->dias_credito);
+                $cliente->latitud =TRIM($request->latitud_cliente);
+                $cliente->longitud =TRIM($request->longitud_cliente);
                 $cliente->tipo_cliente_id = $request->categoria_cliente;
                 $cliente->tipo_personalidad_id = $request->tipo_personalidad ;
                 $cliente->categoria_id = $request->categoria_cliente ;
@@ -376,9 +378,13 @@ class Cliente extends Component
     public function editarCliente(Request $request){
        try {
            //dd($request->all());
+           $nombreCliente = str_replace("'"," ",$request->nombre_cliente_editar);
+           $nombreCliente = str_replace('"'," ",$nombreCliente);
+           $nombreCliente = str_replace('´'," ",$nombreCliente);
+
         DB::beginTransaction();
         $cliente =  ModelCliente::find($request->idCliente);
-        $cliente->nombre = trim($request->nombre_cliente_editar) ;
+        $cliente->nombre = trim($nombreCliente) ;
         $cliente->direccion = trim($request->direccion_cliente_editar) ;
         $cliente->telefono_empresa = trim($request->telefono_cliente_editar);
         $cliente->rtn = trim($request->rtn_cliente_editar);

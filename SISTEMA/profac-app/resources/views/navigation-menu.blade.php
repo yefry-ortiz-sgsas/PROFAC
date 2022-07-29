@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" >
     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
 
     <!-- Primary Navigation Menu -->
@@ -244,7 +244,8 @@
     </div>
 
     <!---menu lateral de la plantilla--->
-    <nav class="navbar-default navbar-static-side" role="navigation">
+
+    <nav class="navbar-default navbar-static-side" role="navigation" style="overflow-y: visible;">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
@@ -320,17 +321,17 @@
                         <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
                         <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
                         </li>
+                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li> 
-                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Ajustes</a></li> 
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
-                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
+                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>       
+                        <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>                 
+                        
+                        
+                        
+                        
 
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
-
-                        {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
+                       
                     </ul>
 
                 </li>
@@ -342,6 +343,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
                         <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
+                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                     </ul>
                 </li>
                 <li>

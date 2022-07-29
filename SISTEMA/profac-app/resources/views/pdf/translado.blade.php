@@ -68,7 +68,7 @@ $altura =20;
     <div class="pruebaFondo">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
-                <b>Registro de Translado No.  </b>
+                <b>Registro de Translado No. {{$datos->codigo}} </b>
                
             </div> 
 
@@ -78,11 +78,11 @@ $altura =20;
         <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:7rem;">
             <div class="card-body">
 
-                <p class="card-text "  style="position:absolute;left:20px;  top:10px;"><b>Fecha de translado: </b>
+                <p class="card-text "  style="position:absolute;left:20px;  top:10px;"><b>Fecha de translado: </b>{{$datos->fecha}}
                 </p>
-                <p class="card-text" style="position:absolute;left:390px;  top:10px;"><b>Realizado por: </b> </p>                
+                <p class="card-text" style="position:absolute;left:390px;  top:10px;"><b>Realizado por: </b>{{$datos->name}} </p>                
 
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b> </p>
+                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b>{{$datos->descripcion}}</p> 
                 
 
 
@@ -101,18 +101,26 @@ $altura =20;
                 <table  class="" style=" ">
                     <thead>
                     <tr>
-                      <th>Código</th>
-                      
-                      <th>Descripción</th>   
-                      <th>Unidad de Medida</th>                 
-                      <th>Bodega Origen</th>
-                      <th>Bodega Destino</th>                     
-                    
+                      <th>Código</th>                      
+                      <th>Producto</th>   
+                                   
                       <th>Cantidad</th>
+                      <th>Medida</th>                      
+                      <th>Origen</th>
+                      <th>Destino</th>
                      
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <td>{{$translado->id}}</td>
+                        <td>{{$translado->nombre}}</td>
+                      
+                        <td>{{$translado->cantidad}}</td>
+                        <td>{{$translado->medida}}</td>
+                        <td>{{strtoupper($translado->origen)}}</td>
+                        <td>{{strtoupper($translado->destino)}}</td>
+                      </tr>
                     
                
 

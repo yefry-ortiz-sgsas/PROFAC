@@ -7,7 +7,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h2>Historial de Ajustes</h2>
+                    <h2>Historial de Translados de Bodega</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a>Listado </a>
@@ -70,10 +70,8 @@
                                     <tr>
                                     
                                         <th>Codigo</th>
-                                        <th>Registro N°</th>
-                                        <th>Comentario</th>
-                                        <th>Motivo</th>
-                                        <th>Fecha</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
                                         <th>Registrado por:</th>
                                         <th>Fecha de registro</th>
                                         <th>Opciones</th>
@@ -117,14 +115,10 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
-
                     pageLength: 15,
                     responsive: true,
-
-
-
                     'ajax': {
-                        'url': "/obtener/listado/ajustes",
+                        'url': "/translados/obtener/listado",
                         'data': {
                             'fechaInicio': fechaInicio,
                             'fechaFinal': fechaFinal,
@@ -138,16 +132,10 @@
                             data: 'codigo'
                         },
                         {
-                            data: 'numero_ajuste'
+                            data: 'nombre'
                         },
                         {
-                            data: 'comentario'
-                        },
-                        {
-                            data: 'motivo'
-                        },
-                        {
-                            data: 'fecha'
+                            data: 'cantidad'
                         },
                         {
                             data: 'name'
@@ -155,7 +143,6 @@
                         {
                             data: 'created_at'
                         },
-
                         {
                             data: 'opciones'
                         },
@@ -175,8 +162,7 @@
                 let inicio = document.getElementById('fechaInicio').value;
                 let final = document.getElementById('fechaFinal').value;
 
-                console.log("entro")
-
+            
                 fechaInicio = inicio;
                 fechaFinal = final;
 
