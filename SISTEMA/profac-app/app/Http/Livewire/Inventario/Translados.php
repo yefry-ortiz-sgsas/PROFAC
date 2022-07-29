@@ -109,29 +109,31 @@ class Translados extends Component
 
         $listaProductos = DB::SELECT("
         select 
-            A.id as 'idRecibido',
-            B.id as 'idProducto',
-            B.nombre,
-            C.nombre as 'simbolo',
-            A.cantidad_disponible,
-            bodega.nombre as bodega,
-            seccion.id as 'idSeccion',
-            seccion.descripcion,
-            A.created_at
-        from recibido_bodega A
-            inner join producto B
-            on A.producto_id = B.id
-            inner join seccion
-            on A.seccion_id = seccion.id
-            inner join segmento
-            on seccion.segmento_id = segmento.id
-            inner join bodega
-            on segmento.bodega_id = bodega.id
-            inner join unidad_medida C
-            on B.unidad_medida_compra_id = C.id
-            inner join compra
-            on A.compra_id = compra.id
-        where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+        A.id as 'idRecibido',
+        B.id as 'idProducto',
+        B.nombre,
+        UPPER(D.nombre) as 'simbolo',
+        A.cantidad_disponible,
+        bodega.nombre as bodega,
+        seccion.id as 'idSeccion',
+        seccion.descripcion,
+        A.created_at
+    from recibido_bodega A
+        inner join producto B
+        on A.producto_id = B.id
+        inner join seccion
+        on A.seccion_id = seccion.id
+        inner join segmento
+        on seccion.segmento_id = segmento.id
+        inner join bodega
+        on segmento.bodega_id = bodega.id
+        inner join unidad_medida_venta C
+        on B.id = C.producto_id
+        inner join unidad_medida D
+        on C.unidad_medida_id = D.id
+        inner join compra
+        on A.compra_id = compra.id
+        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
         );
 
         return Datatables::of($listaProductos)
@@ -298,7 +300,40 @@ class Translados extends Component
         }
      }
 
-     public function imprimirTranslado($idTranslado){
+    public function imprimirTranslado($idTranslado){
+
+        $translado = DB::SELECTONE("
+        (select
+        CONCAT(E.nombre,' - ',C.descripcion) 
+        from log_translado A
+        inner join recibido_bodega B
+        on A.destino = B.id
+        inner join seccion C
+        on B.seccion_id = C.id
+        inner join segmento D
+        on D.id = C.segmento_id
+        inner join bodega E
+        on E.id = D.bodega_id
+        where A.descripcion ='Translado de bodega' and A.id = ".$idTranslado.") as destino,
+        A.cantidad
+
+        from log_translado A
+        inner join recibido_bodega B
+        on A.origen = B.id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join seccion D
+        on D.id = B.seccion_id
+        inner join segmento E
+        on E.id = D.segmento_id
+        inner join bodega F
+        on F.id = E.bodega_id
+        inner join unidad_medida_venta G
+        on C.id = G.producto_id
+        inner join unidad_medida H
+        on G.unidad_medida_id = H.id
+        where A.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and A.id = ".$idTranslado."
+        ");
 
         $pdf = PDF::loadView('/pdf/translado')->setPaper('letter');
        

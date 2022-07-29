@@ -38,7 +38,9 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones; 
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
-use App\Http\Livewire\Inventario\ListadoAjustes;
+use App\Http\Livewire\Inventario\ListadoAjustes; 
+use App\Http\Livewire\Inventario\HistorialTranslados; 
+
 
 
 
@@ -205,6 +207,8 @@ Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retenc
 
 Route::get('/inventario/unidades/medida', UnidadesMedida::class);
 Route::get('/translado/imprimir/{id}',[Translados::class,'imprimirTranslado']);
+
+Route::get('/translados/historial', HistorialTranslados::class);
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//
