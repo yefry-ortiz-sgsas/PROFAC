@@ -1,8 +1,8 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" >
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky">
     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
 
     <!-- Primary Navigation Menu -->
-    <div class=" px-4 sm:px-6 lg:px-8 " style="width:100vw" >
+    <div class=" px-4 sm:px-6 lg:px-8 " style="width:100vw">
 
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -132,7 +132,8 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
 
-                                <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <x-jet-dropdown-link href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     {{ __('Cerrar Sesion') }}
                                 </x-jet-dropdown-link>
@@ -147,11 +148,11 @@
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -159,7 +160,7 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
@@ -185,14 +186,12 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
-                    :active="request()->routeIs('profile.show')">
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Perfil') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}"
-                        :active="request()->routeIs('api-tokens.index')">
+                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}
                     </x-jet-responsive-nav-link>
                 @endif
@@ -201,7 +200,8 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <x-jet-responsive-nav-link href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
                                     this.closest('form').submit();">
                         {{ __('Salir') }}
                     </x-jet-responsive-nav-link>
@@ -221,7 +221,7 @@
                         {{ __('Team Settings') }}
                     </x-jet-responsive-nav-link> --}}
 
-                    {{-- @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+                {{-- @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                         <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
                             :active="request()->routeIs('teams.create')">
                             {{ __('Create New Team') }}
@@ -275,7 +275,7 @@
                 <li>
                     <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
                             aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
-                        </a>
+                    </a>
                     {{-- <ul class="nav nav-second-level">
                             <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
                             <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
@@ -312,23 +312,37 @@
 
 
                 <li>
-                    <a href="index.html"><i class="fa-solid fa-cubes" style="color:#ffffff;" >
-                    </i><span  class="nav-label" style="color:#ffffff;">Inventario</span>
-                    <span class="fa arrow"></span></a>
+                    <a href="index.html"><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                        <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
                         <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                        <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a></li>
+                        <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
+                        </li>
                         <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
                         <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
                         <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li> 
                         <li><a href="/inventario/ajustes" style="color:#ffffff;">Ajustes</a></li> 
                         <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
                         <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
+
+                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
 
                         {{-- <li><a href="dashboard_2.html" style="color:#ffffff;">Categorias y Unidades de Medida</a></li> --}}
                     </ul>
 
+                </li>
+
+                <li>
+                    <a href="index.html"><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
+                        <span class="nav-label" style="color:#ffffff;">Ajustes</span>
+                        <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                        <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="index.html"><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span
@@ -357,6 +371,17 @@
                         
         
                       
+                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
+                        </li>
+                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas
+                            </a></li>
+                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
+                                Cotizaciones</a></li>
+
+
+
+
                     </ul>
                 </li>
 
@@ -373,6 +398,11 @@
                         <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
                         <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
                         
+                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
+                        </li>
+
                     </ul>
                 </li>
 
@@ -424,6 +454,34 @@
 
 
  
+                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas
+                            </a></li>
+
+                    </ul>
+                </li>
+
+                @if (Auth::user()->rol_id == '1')
+                    <li>
+                        <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                                class="nav-label" style="color:#ffffff;">Declaraciones </span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+
+                            <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
+                            <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de
+                                    Declaraciones</a></li>
+                            <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                @endif
+
+
+
 
 
             </ul>

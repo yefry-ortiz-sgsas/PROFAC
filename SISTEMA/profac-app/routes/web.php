@@ -38,6 +38,9 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones; 
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
+use App\Http\Livewire\Inventario\ListadoAjustes; 
+use App\Http\Livewire\Inventario\HistorialTranslados; 
+
 
 
 
@@ -203,6 +206,9 @@ Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRe
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
 
 Route::get('/inventario/unidades/medida', UnidadesMedida::class);
+Route::get('/translado/imprimir/{id}',[Translados::class,'imprimirTranslado']);
+
+Route::get('/translados/historial', HistorialTranslados::class);
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//
@@ -289,6 +295,12 @@ Route::get('/ajustes/motivos/listar', [Ajustes::class,'obtenerTiposAjuste']);
 Route::post('/ajustes/datos/producto', [Ajustes::class,'datosProducto']); 
 Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']); 
 
+Route::post('/ajustes/listado/producto/bodega', [Ajustes::class,'listarProducto']);  
+Route::post('/ajustes/guardar/ajuste', [Ajustes::class,'realizarAjuste']); 
+Route::get('/ajustes/imprimir/ajuste/{id}', [Ajustes::class,'imprimirAjuste']);  
+
+Route::get('/listado/ajustes',ListadoAjustes::class); 
+Route::post('/obtener/listado/ajustes',[ListadoAjustes::class,'listarAjustes']);
 
 //------------------------------------------------------Facturas Nulas---------------------------------------------//
 

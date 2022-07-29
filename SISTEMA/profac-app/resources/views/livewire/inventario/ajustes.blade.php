@@ -91,48 +91,8 @@
         </div>
     </div>
 
-    <div id="destino" class="d-none">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h3>Listado De Producto En Bodega De Destino</h3>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table id="tbl_translados_destino" class="table table-striped table-bordered table-hover">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Cod Producto</th>
-                                            <th>Nombre</th>
-                                            <th>Unidad de Medida</th>
-                                            <th>Cantidad Disponible</th>
-                                            <th>Bodega</th>
-                                            <th>Sección</th>
-                                            <th>Fecha Ingreso</th>
-    
-                                            
-    
-    
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-    
-                                    </tbody>
-                                </table>
-    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>   
-    </div>
              
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_transladar_producto">
-        Launch demo modal
-      </button>
+
 
     <!-- Modal para transferir producto a otra bodega-->
     <div class="modal fade"  id="modal_transladar_producto"  role="dialog"
@@ -148,7 +108,7 @@
                 <div class="modal-body" id="modalBody">
                     <div class="row">
                         <div class="col-sm-12">
-                            <form id="recibirProducto" data-parsley-validate>
+                            <form  onkeydown="return event.key != 'Enter';" id="ajustar_producto_form" data-parsley-validate>
                                 <input type="hidden" name="idRecibido" id="idRecibido">
 
 
@@ -163,10 +123,80 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group" >
+                                    <label for="aritmetica">Método de ajuste</label>
+                                    <select class="form-control m-b" name="aritmetica" id="aritmetica"
+                                       required data-parsley-required>
+                                        <option value="" selected disabled>---Seleccione un método de ajuste ---</option>
+                                        <option value="1"  >Sumar Unidades</option>
+                                        <option value="2"  >Restar Unidades</option>
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="comentario" class="col-form-label focus-label">Comentario:<span class="text-danger">*</span></label>
-                                    <textarea  placeholder="Escriba aquí..." required id="comentario" name ="comentario" cols="30" rows="3"
+                                    <textarea spellcheck="true"  placeholder="Escriba aquí..." required id="comentario" name ="comentario" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required></textarea>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                      
+                                            <label for="idProducto">Código de producto</label>
+                                            <input type="number" name="idProducto" id="idProducto" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                        <label for="nombre_producto">Nombre de producto:</label>
+                                            <input class="form-control"
+                                            required data-parsley-required type="text" name="nombre_producto" id="nombre_producto" readonly>
+                                        </div>    
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                      
+                                            <label for="cantidad_dispo">Cantidad disponible en sección:</label>
+                                            <input type="number" name="cantidad_dispo" id="cantidad_dispo" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                            <label for="unidad">Unidad de Medida:</label>
+                                            <select onchange="calcularTotalUnidades()" class="form-control " name="unidad" id="unidad" required
+                                                data-parsley-required >
+                                                <option value="" data-id="" selected disabled>---Seleccionar una unidad de medida:---</option>
+        
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                      
+                                            <label for="precio_producto">Precio unitario de producto:</label>
+                                            <input type="number" step="any" name="precio_producto" id="precio_producto" class="form-control" required >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="form-group">
+                                        <label for="cantidad">Cantidad:</label>
+                                            <input class="form-control" autocomplete="off"
+                                            required data-parsley-required type="number" min="1" name="cantidad" id="cantidad" onchange="calcularTotalUnidades()">
+                                        </div>    
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="form-group">
+                                        <label for="total_unidades">Total de unidades para realizar ajuste:</label>
+                                            <input class="form-control" autocomplete="off"
+                                            required data-parsley-required type="number"  name="total_unidades" id="total_unidades" readonly>
+                                        </div>    
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -194,47 +224,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                      
-                                            <label for="idProducto">Código de producto</label>
-                                            <input type="text" name="idProducto" id="idProducto" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="form-group">
-                                        <label for="nombre_producto">Nombre de producto:</label>
-                                            <input class="form-control"
-                                            required data-parsley-required type="text" name="nombre_producto" id="nombre_producto" readonly>
-                                        </div>    
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group">
-                                      
-                                            <label for="cantidad_dispo">Cantidad disponible en sección:</label>
-                                            <input type="text" name="cantidad_dispo" id="cantidad_dispo" class="form-control" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group">
-                                      
-                                            <label for="precio_producto">Precio producto:</label>
-                                            <input type="text" name="precio_producto" id="precio_producto" class="form-control" >
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group">
-                                        <label for="cantidad">Cantidad:</label>
-                                            <input class="form-control" autocomplete="off"
-                                            required data-parsley-required type="text" name="cantidad" id="cantidad" >
-                                        </div>    
-                                    </div>
-                                </div>
-
  
 
   
@@ -248,7 +237,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button id="btn_recibir_bodega" type="submit" form="recibirProducto" class="btn btn-primary">Realizar Ajuste</button>
+                    <button id="btn_realizar_ajuste" type="submit" form="ajustar_producto_form" class="btn btn-primary">Realizar Ajuste</button>
                 </div>
             </div>
         </div>
@@ -379,83 +368,16 @@
                 // console.log(suma);
             }
 
-            function modalTranslado(idRecibido) {
-                this.idRecibido = idRecibido
-
-                $('#modal_transladar_producto').modal('show')
-                console.log(this.idRecibido);
-
-            }
 
 
 
-            $(document).on('submit', '#recibirProducto', function(event) {
+            $(document).on('submit', '#ajustar_producto_form', function(event) {
 
                 event.preventDefault();
-                transladoProducto();
+                realizarAjuste();
 
                 });
 
-            function transladoProducto(){
-                document.getElementById('btn_recibir_bodega').disabled = true;
-                let idSeccion = document.getElementById('seccion').value;
-                console.log(idSeccion,'idSeccion')
-                let dataForm = new FormData($('#recibirProducto').get(0));
-                dataForm.append('idRecibido',idRecibido);
-                //console.log(dataForm);
-
-                let table = $('#tbl_translados_destino').DataTable();
-                table.destroy();
-
-                axios.post('/translado/producto/bodega',dataForm)
-                .then( response =>{
-
-                    let data = response.data;
-
-                    $('#modal_transladar_producto').modal('hide')
-                    document.getElementById('btn_recibir_bodega').disabled = false;
-                    document.getElementById("recibirProducto").reset();
-                    $('#recibirProducto').parsley().reset();
-
-                    
-                        Swal.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.text,
-                           
-                        })                
-
-
-                    $('#tbl_translados').DataTable().ajax.reload();
-                    
-
-                    listadoBodegaDestino(idSeccion);
-
-                    //document.getElementById('destino').class
-                    document.getElementById('destino').classList.remove('d-none');
-                    document.getElementById("recibirProducto").reset();
-                    $('#recibirProducto').parsley().reset();
-
-
-                    return;
-
-
-                })
-                .catch( err =>{
-                    //console.log(err)
-                    $('#modal_transladar_producto').modal('hide')
-                    document.getElementById('btn_recibir_bodega').disabled = false;
-
-                    let data = err.response.data;
-                        Swal.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.text,
-                        })
-
-                })
-
-            }
 
         function obtenerMotivos(){
             axios.get("/ajustes/motivos/listar")
@@ -491,12 +413,32 @@
             .then(response=>{
 
                 let data = response.data.producto;
+                let unidades = response.data.unidadesMedida;
+
+                let precioProducto = document.getElementById('precio_producto');
+                precioProducto.value=data.precio_base;
+                precioProducto.min=data.precio_base;
+               
 
                 document.getElementById('idProducto').value=data.id;
                 document.getElementById('nombre_producto').value=data.nombre;
-                document.getElementById('precio_producto').value=data.precio_base;
+
                 document.getElementById('idRecibido').value=idRecibido
                 document.getElementById('cantidad_dispo').value=cantidadDisponible;
+
+                let htmlUnidades ='<option value="" data-id="" selected disabled>---Seleccionar una unidad de medida:---</option>';
+
+                unidades.forEach(unidad => {
+                    if(unidad.unidad_venta ==1){
+                        htmlUnidades += "<option value="+unidad.unidad_venta+" data-id="+unidad.id+"  selected>"+unidad.nombre+"</option>";
+                    }else{
+                        htmlUnidades += "<option value="+unidad.unidad_venta+" data-id="+unidad.id+"  >"+unidad.nombre+"</option>";
+                    }
+                    
+                });
+
+                document.getElementById('unidad').innerHTML=htmlUnidades;
+
                 $('#modal_transladar_producto').modal('show')
             })
             .catch( err=>{
@@ -511,6 +453,60 @@
             })
         }
 
+        function realizarAjuste(){
+            //document.getElementById('btn_realizar_ajuste').disabled = true;
+            
+                let dataForm = new FormData($('#ajustar_producto_form').get(0));
+
+                let e = document.getElementById('unidad');
+                let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
+               dataForm.append('idUnidadVenta',idUnidadVenta);
+
+                axios.post('/ajustes/guardar/ajuste',dataForm)
+                .then( response=>{
+               
+                    $('#modal_transladar_producto').modal('hide')
+                    let data = response.data;
+                    Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            html: data.text,
+                           
+                        }) 
+                   
+                    document.getElementById('btn_realizar_ajuste').disabled = false;
+                    document.getElementById("ajustar_producto_form").reset();
+                    $('#ajustar_producto_form').parsley().reset();    
+
+                    $('#tbl_translados').DataTable().ajax.reload();
+                })
+                .catch( err=>{
+                    let data = err.response.data;
+                    $('#modal_transladar_producto').modal('hide')
+                    Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                           
+                        }) 
+                    document.getElementById('btn_realizar_ajuste').disabled = false;    
+
+                })          
+        }
+
+        function calcularTotalUnidades(){
+                    //let precio = document.getElementById('').value;
+                    let unidadesMedida = document.getElementById('unidad').value;
+                    let cantidad = document.getElementById('cantidad').value;
+                    
+
+                    if(unidadesMedida && cantidad){
+                        let resultado = unidadesMedida * cantidad;
+                        document.getElementById('total_unidades').value = resultado;
+                    }
+
+                    return;
+                }
 
         </script>
     @endpush

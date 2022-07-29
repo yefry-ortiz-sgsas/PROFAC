@@ -111,6 +111,7 @@
                                         <option value="" selected disabled>--Seleccionar un metodo--</option>
                                         <option value="1" >Pago con efectivo</option>
                                         <option value="2" >Transferencia bancaria</option>
+                                        <option value="3" >Cheque</option>
                                     </select>
                                 </div>
                                 <div id="bancoCuenta" class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3 ">
