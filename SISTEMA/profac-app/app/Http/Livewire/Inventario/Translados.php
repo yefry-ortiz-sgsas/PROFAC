@@ -9,6 +9,7 @@ use Auth;
 use DataTables;
 use Validator;
 use Illuminate\Support\Facades\File;
+use PDF;
 
 use App\Models\modelBodega;
 use App\Models\ModelRecibirBodega; 
@@ -72,9 +73,23 @@ class Translados extends Component
 
     public function listarProductos(Request $request){
        try {
-
+       
         $listaProductos = DB::select("
-        select id, concat(id,' - ',nombre) as text from producto where nombre like '%".$request->search."%' or id like '%".$request->search."%' limit 15
+        select            
+            B.id ,
+            B.nombre,
+            concat(B.id,' - ',B.nombre) as text
+          
+        from recibido_bodega A
+            inner join producto B
+            on A.producto_id = B.id
+            inner join seccion
+            on A.seccion_id = seccion.id
+            inner join segmento
+            on seccion.segmento_id = segmento.id
+            inner join bodega
+            on segmento.bodega_id = bodega.id
+            where bodega.id=".$request->idBodega." and (B.nombre like '%".$request->search."%' or B.id like '%".$request->search."%') limit 15
         ");
 
        return response()->json([
@@ -125,7 +140,7 @@ class Translados extends Component
             return
 
             '<div class="text-center">
-                <button class="btn btn-warning" onclick="modalTranslado('.$producto->idRecibido.')">
+                <button class="btn btn-warning" onclick="modalTranslado('.$producto->idRecibido.','.$producto->cantidad_disponible.')">
                     Transladar
                 </button>
                
@@ -281,6 +296,14 @@ class Translados extends Component
             'error' => $e
         ]);
         }
+     }
+
+     public function imprimirTranslado($idTranslado){
+
+        $pdf = PDF::loadView('/pdf/translado')->setPaper('letter');
+       
+        return $pdf->stream("Ajuste numero.pdf");
+
      }
 }
 

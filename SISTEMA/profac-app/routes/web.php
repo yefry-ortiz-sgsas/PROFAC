@@ -204,6 +204,7 @@ Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRe
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
 
 Route::get('/inventario/unidades/medida', UnidadesMedida::class);
+Route::get('/translado/imprimir/{id}',[Translados::class,'imprimirTranslado']);
 
 
 //---------------------------------------------------------------------VENTAS--------------------------------------------------------------------------------//

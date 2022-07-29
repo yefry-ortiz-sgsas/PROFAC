@@ -35,7 +35,7 @@
                                         <label for="selectBodega" class="col-form-label focus-label">Seleccionar
                                             Bodega:</label>
                                         <select id="selectBodega" class="form-group form-control" style=""
-                                            data-parsley-required>
+                                            data-parsley-required onchange="obteneProducto()">
                                             <option value="" selected disabled>--Seleccionar una Bodega--</option>
                                         </select>
 
@@ -50,7 +50,7 @@
                                     <label for="selectProducto" class="col-form-label focus-label">Seleccionar
                                         Producto:</label>
                                     <select id="selectProducto" class="form-group form-control" style=""
-                                        data-parsley-required>
+                                        data-parsley-required disabled>
                                         <option value="" selected disabled>--Seleccionar un producto por codigo ó
                                             nombre--</option>
                                     </select>
@@ -218,21 +218,7 @@
 
             });
 
-            $('#selectProducto').select2({
-                ajax: {
-                    url: '/translado/lista/productos',
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            type: 'public',
-                            page: params.page || 1
-                        }
 
-                        // Query parameters will be ?search=[term]&type=public
-                        return query;
-                    }
-                }
-            });
 
 
             $('#selectBodega').select2({
@@ -249,13 +235,41 @@
 
             });
 
+            function obteneProducto(){
+                let idBodega = document.getElementById('selectBodega').value;
+                document.getElementById('selectProducto').disabled = false;
+                $('#selectProducto').select2({
+                ajax: {
+                    url: '/translado/lista/productos',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            idBodega: idBodega,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+                }
+            });
+            }
+
             function obtenerListaBodega() {
+
+
+
                 let idBodega = document.getElementById('selectBodega').value;
                 let idProducto = document.getElementById('selectProducto').value;
                 //let data = {'idBodega':idBodega, 'idProducto',idProducto};
 
                 let table = $('#tbl_translados').DataTable();
+                //let table2 = document.getElementById('tbl_translados_destino');
                 table.destroy();
+
+        
+                //table2.destroy();
 
                 $('#tbl_translados').DataTable({
                     "language": {
@@ -307,11 +321,12 @@
                 // console.log(suma);
             }
 
-            function modalTranslado(idRecibido) {
+            function modalTranslado(idRecibido, cantidadDisponible) {
                 this.idRecibido = idRecibido
+                document.getElementById('cantidad').max=cantidadDisponible;
 
                 $('#modal_transladar_producto').modal('show')
-                console.log(this.idRecibido);
+               // console.log(this.idRecibido);
 
             }
 

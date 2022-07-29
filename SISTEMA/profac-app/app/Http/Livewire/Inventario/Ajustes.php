@@ -347,4 +347,6 @@ class Ajustes extends Component
         return $pdf->stream("Ajuste numero ".$ajuste->numero_ajuste.".pdf");
 
      }
+
+    
 }
