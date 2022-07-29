@@ -303,6 +303,13 @@ class Translados extends Component
     public function imprimirTranslado($idTranslado){
 
         $translado = DB::SELECTONE("
+        select
+        C.id,
+        C.nombre,
+        C.descripcion,
+        H.nombre,
+        CONCAT(F.nombre,' - ',D.descripcion)as origen,
+        
         (select
         CONCAT(E.nombre,' - ',C.descripcion) 
         from log_translado A
@@ -316,7 +323,7 @@ class Translados extends Component
         on E.id = D.bodega_id
         where A.descripcion ='Translado de bodega' and A.id = ".$idTranslado.") as destino,
         A.cantidad
-
+        
         from log_translado A
         inner join recibido_bodega B
         on A.origen = B.id
@@ -332,8 +339,7 @@ class Translados extends Component
         on C.id = G.producto_id
         inner join unidad_medida H
         on G.unidad_medida_id = H.id
-        where A.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and A.id = ".$idTranslado."
-        ");
+        where A.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and A.id = ".$idTranslado);
 
         $pdf = PDF::loadView('/pdf/translado')->setPaper('letter');
        
