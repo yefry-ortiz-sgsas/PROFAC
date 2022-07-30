@@ -14,7 +14,7 @@
                         <div class="modal-body">
                             <form id="crearCAICreditoForm" name="crearCAICreditoForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                <input id="tipo_documento_fiscal_id" name="tipo_documento_fiscal_id" type="hidden" value="2">
+                                <input id="tipo_documento_fiscal_id" name="tipo_documento_fiscal_id" type="hidden" value="3">
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
