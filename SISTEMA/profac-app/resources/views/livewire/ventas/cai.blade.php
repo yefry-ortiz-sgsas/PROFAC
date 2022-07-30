@@ -2,6 +2,7 @@
 
     @include('livewire.ventas.cai-credito')
     @include('livewire.ventas.cai-debito')
+    @include('livewire.ventas.cai-devolucion')
 
     @push('styles')
         <style>
