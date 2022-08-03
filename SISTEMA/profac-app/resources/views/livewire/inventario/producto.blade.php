@@ -116,6 +116,9 @@
                     <a href="#" class="btn add-btn btn-primary" data-toggle="modal" data-target="#modal_producto_crear"><i
                             class="fa fa-plus"></i> Registrar Producto</a>
                 </div>
+                <div style="margin-top: 1.5rem">
+                    <a href="/producto/excel" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel</a>
+                </div>
             </div>
 
       

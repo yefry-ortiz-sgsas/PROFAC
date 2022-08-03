@@ -390,7 +390,7 @@ Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjust
 
 //Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
 
-//------------------------------------------------------------------Motivo de nota de Credito--------------------------------------------------------------------------------//
+//------------------------------------------------------------------Motivo de nota de Credito-------------------------------------------------------------------//
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
 Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
@@ -400,3 +400,8 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 
 //Route::post('/ventas/motivo_credito/desactivar', [MotivoNotaCredito::class,'desactivarMotivoNotaCredito']);
 
+//------------------------------------------------------------Exportar Excels-----------------------------------------------------------------------------------//
+
+Route::get('/cliente/excel', [Cliente::class, 'export']);
+Route::get('/producto/excel', [Producto::class, 'export']);
+Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);

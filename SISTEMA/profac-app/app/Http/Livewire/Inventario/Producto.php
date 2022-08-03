@@ -24,6 +24,9 @@ use App\Models\ModelMarca;
 use DataTables;
 use Illuminate\Support\Facades\File;
 
+use Maatwebsite\Excel\facades\Excel;
+use App\Exports\ProductosExport;
+
 class Producto extends Component
 {
     public function render()
@@ -458,5 +461,21 @@ class Producto extends Component
 
     }
 
+    public function export(){
+        try {
+            
+            return Excel::download(new ProductosExport, 'DatosProductos.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+             
+                'error' => $e,
+                "text" => "Ha ocurrido un error.",
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
+
+    }
 
 }

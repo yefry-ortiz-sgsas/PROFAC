@@ -12,6 +12,9 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use DataTables;
 
+use Maatwebsite\Excel\facades\Excel;
+use App\Exports\ComprasMesExport;
+
 class ListarCompras extends Component
 {
     public function render()
@@ -112,5 +115,24 @@ class ListarCompras extends Component
            
         }
 
+    }
+
+    public function export($month){
+        try {
+
+            $arrayMes = explode('-', $month);
+            $mes= $arrayMes[1];
+            
+            return Excel::download(new ComprasMesExport($mes), 'DatosComprasMes.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+             
+                'error' => $e,
+                "text" => "Ha ocurrido un error.",
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
     }
 }

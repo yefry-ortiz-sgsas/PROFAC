@@ -17,6 +17,8 @@ use App\Models\ModelCliente;
 use App\Models\ModelContacto;
 
 
+use Maatwebsite\Excel\facades\Excel;
+use App\Exports\ClientesExport;
 
 
 class Cliente extends Component
@@ -556,6 +558,23 @@ class Cliente extends Component
                 "title"=>"Error!"
             ],402);
        }
+
+    }
+
+    public function export(){
+        try {
+            
+            return Excel::download(new ClientesExport, 'DatosClientes.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+             
+                'error' => $e,
+                "text" => "Ha ocurrido un error.",
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
 
     }
 
