@@ -24,6 +24,7 @@ use App\Models\ModelParametro;
 use App\Models\ModelLista;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
+use App\Models\User;
 
 class FacturacionCorporativa extends Component
 {
@@ -285,7 +286,8 @@ class FacturacionCorporativa extends Component
                 'seleccionarCliente' => 'required',
                 'nombre_cliente_ventas' => 'required',
                 'tipoPagoVenta' => 'required',    
-                'restriccion' => 'required'
+                'restriccion' => 'required',
+                'vendedor'=>'required'
 
 
 
@@ -456,13 +458,14 @@ class FacturacionCorporativa extends Component
                 $factura->cai_id=$cai->id;
                 $factura->estado_venta_id=1;
                 $factura->cliente_id=$request->seleccionarCliente;
-                $factura->vendedor=Auth::user()->id;
+                $factura->vendedor=$request->vendedor;
                 $factura->monto_comision=$montoComision;
                 $factura->tipo_venta_id=2;// estatal
                 $factura->estado_factura_id=1; // se presenta     
                 $factura->users_id = Auth::user()->id;              
                 $factura->comision_estado_pagado=0;
                 $factura->pendiente_cobro=$request->totalGeneral;
+                $factura->estado_editar = 1;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -518,7 +521,7 @@ class FacturacionCorporativa extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-                dd($factura);
+               // dd($factura);
 
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
@@ -694,6 +697,7 @@ class FacturacionCorporativa extends Component
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
+            $factura->estado_editar = 1;
             $factura->save();
 
             if ($turno->turno == 1) {
@@ -831,6 +835,7 @@ class FacturacionCorporativa extends Component
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
+            $factura->estado_editar = 1;
             $factura->save();
 
 
@@ -1206,6 +1211,7 @@ class FacturacionCorporativa extends Component
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
+            $factura->estado_editar = 1;
             $factura->save();
 
 
@@ -1313,6 +1319,28 @@ class FacturacionCorporativa extends Component
         $logCredito->save();
         
         return true;
+    }
+
+    public function listadoVendedores(){
+        
+        $rolId = Auth::user()->rol_id;
+        $idUser = Auth::user()->id;
+
+       
+
+        if($rolId==3 or $rolId==1 ){
+            $listadoVendedores = DB::SELECT("select id, name as text from users where rol_id = 2 ");
+        }else{
+            $listadoVendedores = DB::SELECT("select id, name as text from users where id = ".$idUser);
+        }
+
+        
+       
+        return response()->json([
+            'results'=>$listadoVendedores,
+        ],200);
+        
+       
     }
 
 }

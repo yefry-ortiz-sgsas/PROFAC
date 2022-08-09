@@ -10,7 +10,7 @@
     <link rel="icon" type="image/x-icon" href="/img/valencia-fondo-transparente.png">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @livewireStyles
-    @stack('styles')
+    @stack('styles')<!--Por esta ranura se cargan los estilos de las paginas individuales-->
     <!-- Styles -->
 
     <!-- ApexChart -->

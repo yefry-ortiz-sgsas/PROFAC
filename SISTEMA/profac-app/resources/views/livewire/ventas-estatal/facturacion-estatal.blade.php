@@ -89,8 +89,18 @@
                                     </div>
                                 </div>
 
+                                <div class="row  mt-4 mb-4">
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                          <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
+                                          <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                            <option value="" selected disabled>--Seleccionar un vendedor--</option>
+                                          </select>
+                                       
+                                    </div> 
+                                </div>    
 
-                            <div class="row mt-4">
+
+                            <div class="row ">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
                                         Cliente:</label>
@@ -431,7 +441,23 @@
             var public_path = "{{ asset('catalogo/') }}";
 
 
+            $('#vendedor').select2({
+                ajax:{
+                    url:'/ventas/corporativo/vendedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
 
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
+           
 
             $('#seleccionarCliente').select2({
                 ajax: {

@@ -99,10 +99,21 @@
                                         <input class="form-control" style="font-size: 1.5rem; font-weight:600; text-align:center" type="text" id="numero_venta" name="numero_venta"
                                         value="" data-parsley-required readonly>
                                     </div>
+
+
+
                                 </div>
 
-
-                            <div class="row mt-4">
+                            <div class="row  mt-4 mb-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                      <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
+                                      <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                        <option value="" selected disabled>--Seleccionar un vendedor--</option>
+                                      </select>
+                                   
+                                </div> 
+                            </div> 
+                            <div class="row">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
                                         Cliente:<span class="text-danger">*</span> </label>
@@ -447,6 +458,23 @@
             var diasCredito = 0;
 
 
+
+            $('#vendedor').select2({
+                ajax:{
+                    url:'/ventas/corporativo/vendedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
            
 
 

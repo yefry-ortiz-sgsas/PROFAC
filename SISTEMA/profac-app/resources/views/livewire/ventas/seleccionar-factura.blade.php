@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item">
                     <a>Estatal</a>
                 </li>
-               
+
             </ol>
         </div>
     </div>
@@ -24,33 +24,38 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div>
-                          
-                                <button type="button" onclick="obtenerArrar()" class="btn btn-w-m btn-warning ">Monto mayor</button>                              
-                                <button type="button" class="btn btn-w-m btn-success ">Monto menor</button>
+
+                            <button id="btn_mayor" type="button" class="btn btn-w-m btn-warning "
+                                onclick="seleccionarMayor()">Seleccionar monto mayor</button>
+                            <button id="btn_menor" type="button" class="btn btn-w-m btn-success ml-4 "
+                                onclick="seleccionarMenor()">Seleccionar
+                                monto menor</button>
                         </div>
                         <div class="table-responsive">
                             <table id="tbl_lista_ventas" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                      
+
                                         <th>N° Factura</th>
                                         <th>D/C</th>
                                         <th>N/D</th>
                                         <th>Opciones</th>
-                                        
-                                        
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+
 
                                 </tbody>
                             </table>
 
                         </div>
                         <div>
-                            <button type="button" class="btn btn-w-m btn-primary">Guardar</button>
-                            <p class="mt-2"><strong>Nota:</strong>Una vez se guarden los cambios efectuados, estos ya no se podrán modificar de ninguna forma posible.</p>
+                            <button id="btn_guardar" type="button" onclick="confirmarGuardar()"
+                                class="btn btn-w-m btn-primary">Guardar</button>
+                            <p class="mt-2"><strong>Nota:</strong>Una vez se guarden los cambios efectuados, estos ya
+                                no se podrán modificar de ninguna forma posible.</p>
                         </div>
                     </div>
                 </div>
@@ -60,107 +65,262 @@
 
     @push('scripts')
         <script>
-             $(document).ready(function() {
-            $('#tbl_lista_ventas').DataTable({
-                "order": [0, 'asc'],
-                "paging": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                },
-                
-                pageLength: 10,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
+            $(document).ready(function() {
+                $('#tbl_lista_ventas').DataTable({
+                    "order": [0, 'asc'],
+                    "paging": false,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                    },
+
+                    pageLength: 10,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
                     buttons: [
 
-                    {
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'Listado de declaraciones '
-                    },
+                        {
+                            extend: 'copy'
+                        },
+                        {
+                            extend: 'excel',
+                            title: 'Listado de declaraciones '
+                        },
 
 
 
-                    ],          
-              
-
-                "ajax": "/ventas/lista/seleccionar",
-                "columns": [
-                    {
-                        data: 'cai'
-                    },
-                    {
-                        data: 'DC'
-                    },
-                    {
-                        data: 'ND'
-                    },
-                    {
-                        data:'opciones'
-                    }
-
-  
-                ]
+                    ],
 
 
-            });
+                    "ajax": "/ventas/lista/seleccionar",
+                    "columns": [{
+                            data: 'cai'
+                        },
+                        {
+                            data: 'DC'
+                        },
+                        {
+                            data: 'ND'
+                        },
+                        {
+                            data: 'opciones'
+                        }
+
+
+                    ]
+
+
+                });
             })
 
-            function modalTranslado(cai){
-                 
-                 Swal.fire({
-                 title: 'Está suguro(a) de realizar este cambio?',
-                
-                 showCancelButton: true,
-                 confirmButtonText: 'Confirmar', 
-                 confirmButtonColor:'#19A689',
-                 cancelButtonText: `Cancelar`,
-                 }).then((result) => {
-                 /* Read more about isConfirmed, isDenied below */
-                 if (result.isConfirmed) {
-                     actualizarEstado(cai);
-                 } 
-                 })
-             }
+            function modalTranslado(cai) {
 
-             function actualizarEstado(cai){
-                   let data = {cai:cai};
-                   axios.post('/ventas/cambio',data)
-                   .then( response =>{
-                    let data = response.data;
+                Swal.fire({
+                    title: 'Está suguro(a) de realizar este cambio?',
 
-                    Swal.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.text,
+                    showCancelButton: true,
+                    confirmButtonText: 'Confirmar',
+                    confirmButtonColor: '#19A689',
+                    cancelButtonText: `Cancelar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        actualizarEstado(cai);
+                    }
+                })
+            }
+
+            function actualizarEstado(cai) {
+                let data = {
+                    cai: cai
+                };
+                axios.post('/ventas/cambio', data)
+                    .then(response => {
+                        let data = response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+
+                        })
+
+                        $('#tbl_lista_ventas').DataTable().ajax.reload();
+                    })
+                    .catch(err => {
+
+                        let data = err.response.data;
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+                    })
+
+
+
+            }
+
+            function guardarEstado() {
+
+                document.getElementById('btn_guardar').disabled = true;
+
+                var table = $('#tbl_lista_ventas').DataTable();
+
+                var plainArray = table.column(0).data().toArray();
+
+
+                const formData = new FormData();
+
+
+                for (let i = 0; i < plainArray.length; i++) {
+
+                    formData.append('arregloCAI[]', plainArray[i]);
+                }
+
+                axios.post('/ventas/bloquear/estado', formData)
+                    .then(response => {
+                        let data = response.data;
+
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                        $('#tbl_lista_ventas').DataTable().ajax.reload();
+
+                        document.getElementById('btn_guardar').disabled = false;
+                    })
+                    .catch(err => {
+                        document.getElementById('btn_guardar').disabled = false;
+                        let data = err.response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
 
                     })
 
-                    $('#tbl_lista_ventas').DataTable().ajax.reload();      
-                   })
-                   .catch(err =>{
+            }
 
-                    let data = err.response.data;
-                    Swal.fire({
-                    icon: data.icon,
-                    title: data.title,
-                    text: data.text,
-                   })
-                })
-                
+            function seleccionarMayor() {
 
-                
-             }
+                document.getElementById('btn_mayor').disabled = false;
 
-             function obtenerArrar(){
                 var table = $('#tbl_lista_ventas').DataTable();
- 
-                var plainArray = table.column( 0 ).data().toArray();
-                console.log(plainArray);
+                var plainArray = table.column(0).data().toArray();
+
+
+                const formData = new FormData();
+
+
+                for (let i = 0; i < plainArray.length; i++) {
+                    formData.append('arregloCAI[]', plainArray[i]);
                 }
+
+                axios.post('/ventas/seleccionar/mayor', formData)
+                    .then(response => {
+
+                        let data = response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                        $('#tbl_lista_ventas').DataTable().ajax.reload();
+
+                        document.getElementById('btn_mayor').disabled = false;
+                    })
+                    .catch(err => {
+                        document.getElementById('btn_mayor').disabled = false;
+
+                        let data = err.response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                    })
+
+
+
+
+            }
+
+
+
+            function seleccionarMenor() {
+
+                document.getElementById('btn_menor').disabled = false;
+
+                var table = $('#tbl_lista_ventas').DataTable();
+                var plainArray = table.column(0).data().toArray();
+
+
+                const formData = new FormData();
+
+
+                for (let i = 0; i < plainArray.length; i++) {
+                    formData.append('arregloCAI[]', plainArray[i]);
+                }
+
+                axios.post('/ventas/seleccionar/menor', formData)
+                    .then(response => {
+
+                        let data = response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                        $('#tbl_lista_ventas').DataTable().ajax.reload();
+
+                        document.getElementById('btn_menor').disabled = false;
+                    })
+                    .catch(err => {
+                        document.getElementById('btn_menor').disabled = false;
+
+                        let data = err.response.data;
+
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                    })
+
+
+
+
+            }
+
+            function confirmarGuardar() {
+                Swal.fire({
+                    icon:'warning',
+                    title: '¿Ésta seguro de guardar los cambios?',
+                    text:'Una vez se guarden los cambios efectuados, estos ya no se podrán modificar de ninguna forma posible.',
+                    showDenyButton: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'Guardar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor:'#1AA689'
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        guardarEstado()
+                    } 
+                })
+            }
         </script>
     @endpush
 </div>
-

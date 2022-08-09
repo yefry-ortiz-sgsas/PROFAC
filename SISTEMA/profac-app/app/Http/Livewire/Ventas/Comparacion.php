@@ -21,31 +21,32 @@ class Comparacion extends Component
         return view('livewire.ventas.comparacion');
     }
 
-    public function listadoUno(Request $request){
+    public function listadoUno(Request $request)
+    {
         try {
             $fechaInicio = $request->fechaInicio;
             $fechaFinal = $request->fechaFinal;
 
             $listado=DB::SELECT("
             select 
-            A.id,
-            cai,
-            numero_secuencia_cai,
-            A.nombre_cliente,
-            A.rtn,
-            sub_total,
-            isv,
-            total,
-            fecha_emision,
-            C.descripcion,
-            C.id as idTipoCliente
+                A.id,
+                cai,
+                numero_secuencia_cai,
+                A.nombre_cliente,
+                A.rtn,
+                sub_total,
+                isv,
+                total,
+                fecha_emision,
+                C.descripcion,
+                C.id as idTipoCliente
             from factura A
             inner join cliente B
             on A.cliente_id = B.id
             inner join tipo_cliente C
             on B.tipo_cliente_id = C.id
            
-            where (A.estado_venta_id=1 or A.estado_venta_id=4) and A.estado_factura_id=1 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
+            where (A.estado_venta_id=1) and A.estado_factura_id=1 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
 
             ");
 
@@ -123,7 +124,7 @@ class Comparacion extends Component
             total,
             fecha_emision
             from factura A
-            where (A.estado_venta_id=1 or A.estado_venta_id=4) and A.estado_factura_id=2 and A.fecha_emision  BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
+            where (A.estado_venta_id=1) and A.estado_factura_id=2 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
         );
 
             return Datatables::of($listado)

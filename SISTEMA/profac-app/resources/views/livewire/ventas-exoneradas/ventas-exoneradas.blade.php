@@ -83,26 +83,41 @@
             
 
                                 </div>
-                                
-                                <div class="row mt-4">
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+                                <div class="row  mt-4 mb-4">
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
+                                            Cliente:<span class="text-danger">*</span> </label>
+                                        <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" 
+                                            data-parsley-required onchange="obtenerDatosCliente()">
+                                            <option value="" selected disabled>--Seleccionar un cliente--</option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                         <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
                                             Código de exoneracion:<span class="text-danger">*</span> </label>
-                                        <input class="form-control" required type="text" id="codigo_exoneracion" name="codigo_exoneracion" placeholder="Código de exoneracion"
-                                            data-parsley-required >
-    
+                                            <select name="codigo" id="codigo" class="form-group form-control">
+                                                <option value="" selected disabled >--Seleccione un codigo--</option>
+                                            </select>
                                     </div>
-                                </div>
+                                </div>    
+
+
+      
 
                             <div class="row mt-4">
+
+
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
-                                        Cliente:</label>
-                                    <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
-                                        data-parsley-required onchange="obtenerDatosCliente()">
-                                        <option value="" selected disabled>--Seleccionar un cliente--</option>
+                                    <label class="col-form-label focus-label" for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
+                                    <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                      <option value="" selected disabled>--Seleccionar un vendedor--</option>
                                     </select>
-                                </div>
+                                 
+                              </div> 
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">Nombre del cliente</label>
@@ -433,6 +448,24 @@
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
+
+
+            $('#vendedor').select2({
+                ajax:{
+                    url:'/ventas/corporativo/vendedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
 
 
 
@@ -913,6 +946,7 @@
                            
                             diasCredito = data.dias_credito;
                             obtenerTipoPago();
+                            obtenerCodigosExoneracion();
                         }
 
                         // document.getElementById('fecha_vencimiento').value = "";
@@ -1052,6 +1086,33 @@
                     document.getElementById("fecha_vencimiento").value= suma;
 
                 }
+            }
+
+            function obtenerCodigosExoneracion(){
+                    
+                let idCliente = document.getElementById('seleccionarCliente').value;
+
+                document.getElementById('codigo').innerHTML =  '<option value="" selected disabled >--Seleccione un codigo--</option>';
+
+            $('#codigo').select2({
+                minimumResultsForSearch: -1,
+                ajax: {
+                    url: '/exonerado/listar/codigos',
+                   
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            idCliente: idCliente,
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+                }     
+            });
+            
             }
 
 

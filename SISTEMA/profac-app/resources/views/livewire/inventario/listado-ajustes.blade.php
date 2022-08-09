@@ -101,7 +101,7 @@
 
     @push('scripts')
         <script>
-            var fechaInicio = "{{ date('Y-m-01') }}";
+            var fechaInicio = "{{ $fechaInicio }}";
             var fechaFinal = "{{ date('Y-m-t') }}";
 
             $(document).ready(function() {

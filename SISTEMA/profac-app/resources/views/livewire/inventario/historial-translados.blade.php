@@ -35,12 +35,12 @@
 
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <label for="_venta" class="col-form-label focus-label">Fecha de inicio</label>
+                                <label for="fechaInicio" class="col-form-label focus-label">Fecha de inicio</label>
                                 <input id="fechaInicio" type="date" value="{{ $fechaInicio }}" class="form-group form-control">
                             </div>
 
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <label for="_venta" class="col-form-label focus-label">Fecha Final</label>
+                                <label for="fechaFinal" class="col-form-label focus-label">Fecha Final</label>
                                 <input id="fechaFinal" type="date" value="{{ date('Y-m-t') }}" class="form-group form-control">
                             </div>
 
@@ -99,7 +99,7 @@
 
     @push('scripts')
         <script>
-            var fechaInicio = "{{ date('Y-m-01') }}";
+            var fechaInicio = "{{ $fechaInicio }}";
             var fechaFinal = "{{ date('Y-m-t') }}";
 
             $(document).ready(function() {

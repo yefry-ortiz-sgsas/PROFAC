@@ -356,6 +356,18 @@
                 </li>
 
                 <li>
+                    <a href="index.html"><i class="fa-solid fa-building-columns" style="color:#ffffff;" ></i>
+                        <span                 class="nav-label" style="color:#ffffff;">Bancos</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+
+                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
+                    
+                    </ul>
+                </li>
+
+                <li>
                     <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
                             class="nav-label" style="color:#ffffff;">Ventas Corporativas</span>
                         <span class="fa arrow"></span></a>
@@ -373,17 +385,7 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Bancos</span>
-                        <span class="fa arrow"></span></a>
 
-                    <ul class="nav nav-second-level">
-
-                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
-                    
-                    </ul>
-                </li>
 
                 <li>
                     <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span

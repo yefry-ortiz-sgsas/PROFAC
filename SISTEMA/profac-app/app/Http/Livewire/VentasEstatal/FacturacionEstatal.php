@@ -415,13 +415,14 @@ class FacturacionEstatal extends Component
             $factura->cai_id = $cai->id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 2; // estatal
             $factura->estado_factura_id = 1; // se presenta     
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
+            $factura->estado_editar = 1;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);

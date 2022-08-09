@@ -150,10 +150,11 @@
 
     @push('scripts')
         <script>
-            var fechaInicio = "{{ date('Y-m-01') }}";
-            var fechaFinal = "{{ date('Y-m-t') }}";
+                var fechaInicio = "{{ date('Y-01-01') }}";
+                var fechaFinal = "{{ date('Y-m-t') }}";
 
             $(document).ready(function() {
+
                 tablas();
             })
 

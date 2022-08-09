@@ -222,6 +222,7 @@ Route::get('/ventas/listar/bodegas/{idProducto}', [FacturacionCorporativa::class
 Route::get('/ventas/listar/', [FacturacionCorporativa::class,'productoBodega']);
 Route::post('/ventas/datos/producto', [FacturacionCorporativa::class,'obtenerDatosProducto']);
 Route::post('/ventas/corporativo/guardar', [FacturacionCorporativa::class,'guardarVenta']);
+Route::get('/ventas/corporativo/vendedores', [FacturacionCorporativa::class,'listadoVendedores']);
 Route::get('/detalle/venta/{id}', DetalleVenta::class); 
 Route::get('/detalle/venta/vendedor/{id}', DetalleVentaVendedor::class);
 Route::get('/lista/productos/factura/{id}', [DetalleVenta::class,'listarProductosFactura']);
@@ -241,6 +242,7 @@ Route::post('/ventas/listado/uno', [Comparacion::class,'listadoUno']);
 Route::post('/ventas/listado/dos', [Comparacion::class,'listadoDos']);
 Route::get('/ventas/estado/nd/{idFactura}', [Comparacion::class,'cambioEstadoND']); 
 Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC']); 
+
 
 //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
@@ -269,12 +271,16 @@ Route::post('/exonerado/venta/guardar', [VentasExoneradas::class,'guardarVenta']
 Route::get('/exonerado/ventas/lista', ListadoFacturasExonerads::class);
 Route::get('/exonerado/listas/facturas',[ListadoFacturasExonerads::class,'listarFacturas']); 
 Route::get('/exonerado/factura/{id}',[VentasExoneradas::class,'imprimirFacturaExonerada']); 
+Route::get('/exonerado/listar/codigos', [VentasExoneradas::class,'obtenerCodigoExoneracion']);
 
 
 //-------------------------------------seleccionar declaraciones---------------------------------//
 Route::get('/ventas/seleccionar', SeleccionarFactura::class); 
 Route::get('/ventas/lista/seleccionar', [SeleccionarFactura::class,'listadoFacturas']); 
 Route::post('/ventas/cambio', [SeleccionarFactura::class,'cambioEstado']); 
+Route::post('/ventas/bloquear/estado', [SeleccionarFactura::class,'guardarEstado']);
+Route::post('/ventas/seleccionar/mayor',[SeleccionarFactura::class,'seleccionarMontoMayor']); 
+Route::post('/ventas/seleccionar/menor',[SeleccionarFactura::class,'seleccionarMontoMEnor']); 
 
 
 //---------------------------------------Proforma y Cotizaciones--------------------------------//

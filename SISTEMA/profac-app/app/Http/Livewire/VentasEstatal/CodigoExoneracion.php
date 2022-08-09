@@ -26,37 +26,58 @@ class CodigoExoneracion extends Component
 
         $codigos = DB::table('codigo_exoneracion')
                                 ->join('cliente', 'codigo_exoneracion.cliente_id', '=', 'cliente.id')
-                                ->select('codigo_exoneracion.id', 'codigo_exoneracion.codigo','cliente.nombre')
-                                ->where('codigo_exoneracion.estado_id', '=', '1')
+                                ->select('codigo_exoneracion.id', 'codigo_exoneracion.codigo','cliente.nombre','estado_id')
+                               
                                 ->get();
 
         return Datatables::of($codigos)
                 ->addColumn('opciones', function ($codigo) {
 
-                    return
+                    if($codigo->estado_id==1){
+                        return
 
                         '
-                <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                    más</button>
-                <ul class="dropdown-menu" x-placement="bottom-start"
-                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                            <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                                más</button>
+                            <ul class="dropdown-menu" x-placement="bottom-start"
+                                style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
-                    <li>
-                        <a class="dropdown-item" onclick="datosCodigoExonerado('.$codigo->id.')" >
-                            <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar 
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" onclick="desactivarCodigoExonerado('.$codigo->id.')" >
-                            <i class="fa-solid fa-xmark text-danger"></i> Desactivar
-                        </a>
-                    </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="datosCodigoExonerado('.$codigo->id.')" >
+                                        <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="desactivarCodigoExonerado('.$codigo->id.')" >
+                                        <i class="fa-solid fa-xmark text-danger"></i> Desactivar
+                                    </a>
+                                </li>
 
-                </ul>
-            </div>
-                ';
-                })
+                            </ul>
+                        </div>
+                            ';
+
+                
+                    }else{
+                        return
+
+                        '
+                    <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle not-allowed" aria-expanded="false" disabled>Ver
+                        más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start"
+                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+
+
+                    </ul>
+                </div>
+                    ';
+                }
+            })            
+                
+                    
             
 
                 ->rawColumns(['opciones'])
@@ -74,7 +95,7 @@ class CodigoExoneracion extends Component
     public function listarClientes(){
         try {
  
-         $clientes = DB::SELECT("select id, nombre from cliente");
+         $clientes = DB::SELECT("select id, nombre from cliente order by nombre asc");
  
         return response()->json([
          "clientes"=>$clientes,

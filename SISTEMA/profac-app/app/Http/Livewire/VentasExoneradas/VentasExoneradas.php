@@ -20,6 +20,7 @@ use App\Models\ModelVentaProducto;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
+use App\Models\ModelCodigoExoneracion;
 
 class VentasExoneradas extends Component
 {
@@ -71,6 +72,14 @@ class VentasExoneradas extends Component
         }
     }
 
+    public function obtenerCodigoExoneracion(Request $request){
+        $codigos = DB::SELECT("select id, codigo as text from codigo_exoneracion where estado_id = 1 and cliente_id = ".$request->idCliente);
+
+        return response()->json([
+            'results'=>$codigos
+        ],200);
+    }
+
     public function guardarVenta(Request $request)
     {
 
@@ -90,7 +99,7 @@ class VentasExoneradas extends Component
             'bodega' => 'required',            
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:3,3',
-            'codigo_exoneracion'=>'required'
+            'codigo'=>'required'
 
 
 
@@ -100,6 +109,9 @@ class VentasExoneradas extends Component
 
         if ($validator->fails()) {
             return response()->json([
+                'icon'=>'error',
+                'title'=>'Error!',
+                'text'=>'Ha ingresado datos invalidos, por favor revisar que todos los campos esten correctos.',
                 'mensaje' => 'Ha ocurrido un error al crear la compra.',
                 'errors' => $validator->errors()
             ], 406);
@@ -118,27 +130,27 @@ class VentasExoneradas extends Component
             }
         }
 
-        $codigo = DB::SELECT("
-        select 
-        id 
-        from factura 
-        where tipo_venta_id = 3 and estado_venta_id = 1 and 
-        cliente_id = ".$request->seleccionarCliente." and
-        UPPER(REPLACE(codigo_exoneracion,' ','')) = UPPER(REPLACE('".$request->codigo_exoneracion."',' ',''))
-        ");
+        // $codigo = DB::SELECT("
+        // select 
+        // id 
+        // from factura 
+        // where tipo_venta_id = 3 and estado_venta_id = 1 and 
+        // cliente_id = ".$request->seleccionarCliente." and
+        // UPPER(REPLACE(codigo_exoneracion,' ','')) = UPPER(REPLACE('".$request->codigo_exoneracion."',' ',''))
+        // ");
 
-        if (!empty($codigo)) {
+        // if (!empty($codigo)) {
           
 
-            if ($facturaVencida) {
-                return response()->json([
-                    'icon' => 'warning',
-                    'title' => 'Advertencia!',
-                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con una factura con este mismo código de exoneración. No se puede emitir factura para dicho número de orden de  exoneración.',
+        //     if ($facturaVencida) {
+        //         return response()->json([
+        //             'icon' => 'warning',
+        //             'title' => 'Advertencia!',
+        //             'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con una factura con este mismo código de exoneración. No se puede emitir factura para dicho número de orden de  exoneración.',
 
-                ], 401);
-            }
-        }
+        //         ], 401);
+        //     }
+        // }
 
         if ($request->tipoPagoVenta == 2) {
             $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
@@ -257,14 +269,15 @@ class VentasExoneradas extends Component
             $factura->cai_id = $cai->id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 3; // exonerado
             $factura->estado_factura_id = 1; // se presenta     
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
-            $factura->codigo_exoneracion = trim($request->codigo_exoneracion);
+            $factura->codigo_exoneracion_id = $request->codigo;
+            $factura->estado_editar = 1;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -279,6 +292,9 @@ class VentasExoneradas extends Component
 
 
 
+            $codigoExoneracion = ModelCodigoExoneracion::find($request->codigo);    
+            $codigoExoneracion->estado_id = 2;
+            $codigoExoneracion->save();
 
             // //dd( $guardarCompra);
 
@@ -554,7 +570,7 @@ class VentasExoneradas extends Component
         DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
         name,
         D.id as factura,
-        A.codigo_exoneracion
+        E.codigo as codigo_exoneracion
        from factura A
        inner join cai B
        on A.cai_id = B.id
@@ -564,6 +580,8 @@ class VentasExoneradas extends Component
        on A.vendedor = users.id
        inner join estado_factura D
        on A.estado_factura_id = D.id
+       inner join codigo_exoneracion E
+       on A.codigo_exoneracion_id = E.id
        where A.id = ".$idFactura);
 
        $cliente = DB::SELECTONE("

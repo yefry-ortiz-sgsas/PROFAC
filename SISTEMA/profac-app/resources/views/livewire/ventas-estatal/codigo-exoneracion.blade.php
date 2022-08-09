@@ -1,25 +1,12 @@
 <div>
     @push('styles')
         <style>
-            @media (max-width: 600px) {
-                .ancho-imagen {
-                    max-width: 200px;
-                }
-            }
 
-            @media (min-width: 601px) and (max-width:900px) {
-                .ancho-imagen {
-                    max-width: 300px;
-                }
+            .not-allowed {
+                pointer-events: auto! important;
+                cursor: not-allowed! important;
             }
-
-            @media (min-width: 901px) {
-                .ancho-imagen {
-                    max-width: 12rem;
-                }
-            }
-
-            /* a {
+                    /* a {
                     pointer-events: none;
                 } */
             .loader,
@@ -131,7 +118,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_codigos_listar" class="table table-striped table-bordered table-hover col-md-10">
+                            <table id="tbl_codigos_listar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
                                         <th>ID</th>
