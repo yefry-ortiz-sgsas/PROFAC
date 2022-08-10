@@ -38,21 +38,8 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
-use App\Http\Livewire\Inventario\ListadoAjustes;
-use App\Http\Livewire\Inventario\HistorialTranslados;
-use App\Http\Livewire\Cardex\cardex;
-
-use App\Http\Livewire\Ventas\Cai;
-use App\Http\Livewire\Bancos;
-use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
-use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
-use App\Http\Livewire\Inventario\TipoAjuste;
-use App\Http\Livewire\Ventas\MotivoNotaCredito;
-
-use App\Http\Livewire\NotaCredito\CrearNotaCredito;
-
-
-
+use App\Http\Livewire\Inventario\ListadoAjustes; 
+use App\Http\Livewire\Inventario\HistorialTranslados; 
 
 
 
@@ -218,7 +205,7 @@ Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
 Route::get('/compra/retencion/documento/{idCompra}', [PagosCompra::class,'retencionDocumentoPDF']);
 
-
+Route::get('/inventario/unidades/medida', UnidadesMedida::class);
 Route::get('/translado/imprimir/{id}',[Translados::class,'imprimirTranslado']);
 
 Route::get('/translados/historial', HistorialTranslados::class);
@@ -267,12 +254,7 @@ Route::post('/estatal/datos/cliente', [FacturacionEstatal::class,'datosCliente']
 Route::get('/estatal/tipo/pago', [FacturacionEstatal::class,'tipoPagoVenta']);
 Route::get('/estatal/listar/bodegas/{idProducto}', [FacturacionEstatal::class,'listarBodegas']);
 Route::post('/estatal/datos/producto', [FacturacionEstatal::class,'obtenerDatosProducto']);
-
 Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']); 
-Route::get('/ventas/numero/orden',[FacturacionEstatal::class,'obtenerOrdenCompra']);
-
-Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']);
-
 
 Route::get('/facturas/estatal', ListadoFacturaEstatal::class);
 Route::get('/lista/facturas/estatal', [ListadoFacturaEstatal::class,'listarFacturas']);
@@ -335,6 +317,27 @@ Route::post('/ventas/anulado/listado',[ListadoFacturasAnuladas::class,'listarFac
 Route::post('/ventas/anulado/detalle',[ListadoFacturasAnuladas::class,'detalleFacturaAnulada']);
 
 
+//------------------------------------------establecer links de storage---------------------------//
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link'); // this will do the command line job
+});
+
+
+
+return redirect('/login');
+});
+
+
+
+use App\Http\Livewire\Ventas\Cai;
+use App\Http\Livewire\Bancos;
+use App\Http\Livewire\VentasEstatal\NumOrdenCompra;
+use App\Http\Livewire\VentasEstatal\CodigoExoneracion;
+use App\Http\Livewire\Inventario\TipoAjuste;
+use App\Http\Livewire\Ventas\MotivoNotaCredito;
+
+
+
 
 //------------------------------------------------------------------UNIDADES DE MEDIDA------------------------------------------------------------------------//
 
@@ -344,6 +347,7 @@ Route::get('/inventario/unidades/listar', [UnidadesMedida::class, 'listarUnidade
 Route::post('/inventario/unidades/datos', [UnidadesMedida::class, 'obtenerDatos']);
 Route::post('/inventario/unidades/editar', [UnidadesMedida::class, 'editarUnidad']);
 
+
 //-----------------------------------------------------------------------CAI--------------------------------------------------------------------------------//
 
 Route::get('/ventas/cai',Cai::class);
@@ -352,6 +356,7 @@ Route::post('/ventas/cai/guardar', [Cai::class,'guardarCAI']);
 Route::post('/ventas/cai/datos', [Cai::class,'datosCAI']);
 Route::post('/ventas/cai/editar', [Cai::class,'editarCAI']);
 
+
 //----------------------------------------------------------------------------Bancos------------------------------------------------------------------------//
 
 Route::get('/banco/bancos', Bancos::class);
@@ -359,8 +364,6 @@ Route::get('/banco/bancos/listar', [Bancos::class,'listarBancos']);
 Route::post('/banco/bancos/guardar', [Bancos::class,'guardarBanco']);
 Route::post('/banco/bancos/datos', [Bancos::class,'obtenerDatos']);
 Route::post('/banco/bancos/editar', [Bancos::class,'editarBanco']);
-
-
 
 //------------------------------------------------------------------Numero de Orden de Compra--------------------------------------------------------------------------------//
 
@@ -392,6 +395,11 @@ Route::post('/inventario/tipoajuste/guardar', [TipoAjuste::class,'guardarTipoAju
 Route::post('/inventario/tipoajuste/datos', [TipoAjuste::class,'obtenerTipoAjuste']);
 Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjuste']);
 
+//Route::post('/inventario/tipoajuste/desactivar', [TipoAjuste::class,'desactivarTipoAjuste']);
+
+
+
+
 
 //-------------------------------------------------------------------Nota de Credito-------------------------------------------------------------------------------------------//
 
@@ -404,8 +412,9 @@ Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardar
 Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
 
-//--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//
-Route::get('/cardex', Cardex::class);
+
+
+
 
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {
@@ -413,34 +422,8 @@ Route::get('/linkstorage', function () {
 });
 
 
-
 return redirect('/login');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
