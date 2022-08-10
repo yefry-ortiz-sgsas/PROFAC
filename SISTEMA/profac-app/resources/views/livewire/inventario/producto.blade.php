@@ -204,19 +204,19 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="precioBase" class="col-form-label focus-label">Precio de venta base:<span class="text-danger">*</span></label>
-                                            <input class="form-group form-control" min="1" type="number" name="precioBase" id="precioBase"
+                                            <input class="form-group form-control" min="0" type="number" name="precioBase" id="precioBase"
                                                 data-parsley-required step="any">
                                         </div>
         
                                         <div class="col-md-4">
                                             <label for="costo_promedio" class="col-form-label focus-label">Costo de compra promedio:<span class="text-danger">*</span></label>
-                                            <input class="form-group form-control" min="1" type="number" name="costo_promedio" id="costo_promedio"
+                                            <input class="form-group form-control" min="0" type="number" name="costo_promedio" id="costo_promedio"
                                                 data-parsley-required step="any">
                                         </div>
                                         
                                         <div class="col-md-4">
                                             <label for="ultimo_costo_compra" class="col-form-label focus-label">Ultimo costo de compra:<span class="text-danger">*</span></label>
-                                            <input class="form-group form-control" min="1" type="number" name="ultimo_costo_compra" id="ultimo_costo_compra"
+                                            <input class="form-group form-control" min="0" type="number" name="ultimo_costo_compra" id="ultimo_costo_compra"
                                                 data-parsley-required step="any">
                                         </div>
                                         {{-- <div class="col-md-4">

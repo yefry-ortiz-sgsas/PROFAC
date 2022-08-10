@@ -78,37 +78,40 @@
                                         value="" data-parsley-required readonly>
                                     </div>
 
-                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                        <label for="ordenCompra" class="sr-only">Seleccionar un numero como orden de compra:</label>
-                                        <select class="form-group form-control " name="ordenCompra" id="ordenCompra">
-                                            <option value="volvo">orden N° 1</option>
-                                            <option value="saab">orden N° 2</option>
-                                            <option value="opel">orden N° 3</option>
-                                            <option value="audi">orden N° 4</option>
-                                        </select>
-                                    </div>
+
                                 </div>
 
                                 <div class="row  mt-4 mb-4">
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                          <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
-                                          <select name="vendedor" id="vendedor" class="form-group form-control" required>
-                                            <option value="" selected disabled>--Seleccionar un vendedor--</option>
-                                          </select>
-                                       
-                                    </div> 
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
+                                            Cliente:<span class="text-danger">*</span> </label>
+                                        <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
+                                            data-parsley-required onchange="obtenerDatosCliente()">
+                                            <option value="" selected disabled>--Seleccionar un cliente--</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                        <label for="ordenCompra" class="col-form-label focus-label">Seleccionar un número de orden de compra:<span class="text-danger">*</span> </label>
+                                        <select class="form-group form-control " name="ordenCompra" id="ordenCompra" required>
+                                            <option value="" selected disabled>--Seleccionar un número de compra--</option>
+
+                                        </select>
+                                    </div>
+
+
                                 </div>    
 
 
                             <div class="row ">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
-                                        Cliente:</label>
-                                    <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
-                                        data-parsley-required onchange="obtenerDatosCliente()">
-                                        <option value="" selected disabled>--Seleccionar un cliente--</option>
+                                    <label for="vendedor" class="col-form-label focus-label">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
+                                    <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                      <option value="" selected disabled>--Seleccionar un vendedor--</option>
                                     </select>
-                                </div>
+                                 
+                              </div> 
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">Nombre del cliente</label>
@@ -935,6 +938,7 @@
                            
                             diasCredito = data.dias_credito;
                             obtenerTipoPago();
+                            obtenerOrdenesCompra();
                         }
 
                         // document.getElementById('fecha_vencimiento').value = "";
@@ -1074,6 +1078,29 @@
                     document.getElementById("fecha_vencimiento").value= suma;
 
                 }
+            }
+
+            function obtenerOrdenesCompra(){
+                
+                let idCliente = document.getElementById('seleccionarCliente').value;
+
+                $('#ordenCompra').select2({
+                    ajax: {
+                        url: '/ventas/numero/orden',
+                        data: function(params) {
+                            var query = {
+                                idCliente:idCliente,
+                                search: params.term,
+                                type: 'public',
+                                page: params.page || 1
+                            }
+
+                            // Query parameters will be ?search=[term]&type=public
+                        
+                            return query;
+                        }
+                    }         
+                });
             }
 
 

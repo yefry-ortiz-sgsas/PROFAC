@@ -27,36 +27,53 @@ class NumOrdenCompra extends Component
         $num_orden_compras = DB::table('numero_orden_compra')
                                 ->join('cliente', 'numero_orden_compra.cliente_id', '=', 'cliente.id')
                                 ->join('users', 'numero_orden_compra.users_id', '=', 'users.id')
-                                ->select('numero_orden_compra.id', 'numero_orden_compra.numero_orden','cliente.nombre', 'users.name')
-                                ->where('numero_orden_compra.estado_id', '=', '1')
+                                ->select('numero_orden_compra.id', 'numero_orden_compra.numero_orden','cliente.nombre', 'users.name','estado_id')
+                                ->where('numero_orden_compra.estado_id', '=', '1')                                
                                 ->get();
 
         return Datatables::of($num_orden_compras)
                 ->addColumn('opciones', function ($num_orden_compra) {
 
-                    return
+                    if($num_orden_compra->estado_id==2){
+                        return
 
-                        '
-                <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                    más</button>
-                <ul class="dropdown-menu" x-placement="bottom-start"
-                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                                    '
+                            <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle disabled" aria-expanded="false">Ver
+                                más</button>
+                            <ul class="dropdown-menu" x-placement="bottom-start"
+                                style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
-                    <li>
-                        <a class="dropdown-item" onclick="datosNumOrdenCompra('.$num_orden_compra->id.')" >
-                            <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar 
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" onclick="desactivarNumOrdenCompra('.$num_orden_compra->id.')" >
-                            <i class="fa-solid fa-xmark text-danger"></i> Desactivar
-                        </a>
-                    </li>
 
-                </ul>
-            </div>
-                ';
+                            </ul>
+                        </div>
+                            ';
+                    }{
+                        return
+
+                                    '
+                            <div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                                más</button>
+                            <ul class="dropdown-menu" x-placement="bottom-start"
+                                style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                                <li>
+                                    <a class="dropdown-item" onclick="datosNumOrdenCompra('.$num_orden_compra->id.')" >
+                                        <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="desactivarNumOrdenCompra('.$num_orden_compra->id.')" >
+                                        <i class="fa-solid fa-xmark text-danger"></i> Desactivar
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                            ';
+                    }
+
                 })
             
 
@@ -75,7 +92,7 @@ class NumOrdenCompra extends Component
     public function listarClientes(){
         try {
  
-         $clientes = DB::SELECT("select id, nombre from cliente");
+         $clientes = DB::SELECT("select id, nombre from cliente where tipo_cliente_id = 2 order by nombre asc");
  
         return response()->json([
          "clientes"=>$clientes,

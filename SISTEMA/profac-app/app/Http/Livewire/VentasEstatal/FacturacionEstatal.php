@@ -22,6 +22,7 @@ use App\Models\ModelVentaProducto;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
+use App\Models\ModelNumOrdenCompra;
 
 class FacturacionEstatal extends Component
 {
@@ -268,7 +269,8 @@ class FacturacionEstatal extends Component
             'tipoPagoVenta' => 'required',
             'bodega' => 'required',            
             'restriccion' => 'required',
-            'tipo_venta_id'=>'required|integer|between:2,2'
+            'tipo_venta_id'=>'required|integer|between:2,2',
+            'ordenCompra'=>'required'
 
 
 
@@ -423,6 +425,7 @@ class FacturacionEstatal extends Component
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
+            $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -436,6 +439,9 @@ class FacturacionEstatal extends Component
 
 
 
+            $ordeCompra = ModelNumOrdenCompra::find($request->ordenCompra);
+            $ordeCompra->estado_id =2;
+            $ordeCompra->save();
 
 
             // //dd( $guardarCompra);
@@ -691,5 +697,15 @@ class FacturacionEstatal extends Component
         $logCredito->save();
 
         return true;
+    }
+
+    public function obtenerOrdenCompra(Request $request){
+
+        $ordenes = DB::SELECT("select id, numero_orden as text  from numero_orden_compra where estado_id = 1 and cliente_id = ".$request->idCliente);
+
+        return response()->json([
+            "results" => $ordenes
+        ],200);
+
     }
 }

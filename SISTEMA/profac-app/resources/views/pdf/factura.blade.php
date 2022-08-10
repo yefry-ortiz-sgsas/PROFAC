@@ -104,7 +104,7 @@
                 <p class="card-text" style="position:absolute;left:520px;  top:25px;"><b>Hora:</b> {{$cai->hora}}</p>
                 <p class="card-text" style="position:absolute;left:520px;  top:40px;"><b>Vence:</b> {{$cai->fecha_vencimiento}}</p>
                 <p class="card-text" style="position:absolute;left:520px;  top:57px;"><b>RTN:</b> {{$cliente->rtn}}</p>
-                <p class="card-text" style="position:absolute;left:520px;  top:72px;"><b>Orden:</b> 
+                <p class="card-text" style="position:absolute;left:520px;  top:72px;"><b>Orden N°:</b> {{$ordenCompra['numero_orden']}}
                 </p>
 
 

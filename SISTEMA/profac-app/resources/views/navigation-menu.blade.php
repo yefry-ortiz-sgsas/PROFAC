@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" >
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 sticky" style=" ">
     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i></a>
 
     <!-- Primary Navigation Menu -->
@@ -243,217 +243,246 @@
         </div>
     </div>
 
-    <!---menu lateral de la plantilla--->
+            <!---menu lateral de la plantilla--->
+            <style>
+                @media screen and (min-width: 600px) {
+                    .scroll-bar-sidebar{
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    max-height: 92.7vh
+                  
+                  
+                }
+                }
 
-    <nav class="navbar-default navbar-static-side" role="navigation" style="overflow-y: visible;">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <div class="dropdown profile-element">
-                        {{-- <img alt="image"  class="rounded-circle" src="" h-8 w-8 rounded-full object-cover/> --}}
+            </style>
 
-                        <img class="rounded-circle" style="max-width: 3.5rem"
-                            src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
-                            alt="{{ Auth::user()->name }}" />
-
-                        <div data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="block m-t-xs font-bold" style="color:#FFF;"><b>
-                                    {{ Auth::user()->name }}</b></span>
-                            <span class="text-muted text-xs block">Desarrollador <b class="caret"></b></span>
-                        </div>
-                        <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                                <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
-                                <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.html">Logout</a></li>
-                            </ul> -->
-                    </div>
-                    <div class="logo-element">
-                        IN+
-                    </div>
-                </li>
-                <li>
-                    <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
-                            aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
-                    </a>
-                    {{-- <ul class="nav nav-second-level">
-                            <li href="dashboard_2.html"><a href="index.html">Gestiones</a></li>
-                            <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
-                        </ul> --}}
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span
-                            class="nav-label" style="color:#ffffff;">Usuarios</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a>
+            <nav class="navbar-default navbar-static-side " role="navigation" >
+                <div class="sidebar-collapse " >
+                    <ul class="nav metismenu scroll-bar-sidebar" id="side-menu" style="">
+                        <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                {{-- <img alt="image"  class="rounded-circle" src="" h-8 w-8 rounded-full object-cover/> --}}
+            
+                                <img class="rounded-circle" style="max-width: 3.5rem"
+                                    src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"
+                                    alt="{{ Auth::user()->name }}" />
+            
+                                <div data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="block m-t-xs font-bold" style="color:#FFF;"><b>
+                                            {{ Auth::user()->name }}</b></span>
+                                    <span class="text-muted text-xs block">Desarrollador <b class="caret"></b></span>
+                                </div>
+                                <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
+                                        <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
+                                        <li class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                                    </ul> -->
+                            </div>
+                            <div class="logo-element">
+                                IN+
+                            </div>
                         </li>
-                        {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span
-                            class="nav-label" style="color:#ffffff;">Bodega</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
-                        <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Proveedores</span> <span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
-                        <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-cubes" style="color:#ffffff;">
-                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                        <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
+                        <li>
+                            <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
+                                    aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
+                            </a>
+                            {{-- <ul class="nav nav-second-level">
+                                    <li href="dashboard_2.html"><a >Gestiones</a></li>
+                                    <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
+                                </ul> --}}
                         </li>
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
-                        <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
-                        <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>       
-                        <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>                 
+                        <li>
+                            <a ><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span
+                                    class="nav-label" style="color:#ffffff;">Usuarios</span>
+                                <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a>
+                                </li>
+                                {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                            </ul>
+                        </li>
+                        <li>
+                            <a ><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span
+                                    class="nav-label" style="color:#ffffff;">Bodega</span>
+                                <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                                <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a ><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Proveedores</span> <span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
+                                <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                            </ul>
+                        </li>
+            
+            
+                        <li>
+                            <a ><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                                </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+                                <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
+                                <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
+                                </li>
+                                <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li> 
+                                <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
+                                <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
+                                <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>       
+                                <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>                 
+                                
+                                
+                                
+                                
+            
+                               
+                            </ul>
+            
+                        </li>
+            
+                        <li>
+                            <a ><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
+                                <span class="nav-label" style="color:#ffffff;">Ajustes</span>
+                                <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                                <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
+                                <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a ><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span
+                                    class="nav-label" style="color:#ffffff;">Clientes</span>
+                                <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                            </ul>
+                        </li>
+            
+                        <li>
+                            <a ><i class="fa-solid fa-building-columns" style="color:#ffffff;" ></i>
+                                <span                 class="nav-label" style="color:#ffffff;">Bancos</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+            
+                                <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
+                            
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a ><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                                <span                 class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+            
+                                <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                            
+                            </ul>
+                        </li>
+            
+                        <li>
+                            <a ><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Ventas Corporativas</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
+                                <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>  
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                                <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
+                                <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>             
+            
+                            </ul>
+                        </li>
+            
+            
+            
+                        <li>
+                            <a ><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Ventas Gobierno</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
+                                <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                                <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
+                                <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>                                   
+                                
+                            </ul>
+                        </li>
+            
+            
+            
+                        <li>
+                            <a ><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Ventas exoneradas</span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
+                                <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
+                                <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>    
+                            
+                            </ul>
+                        </li>
+            
+            
                         
                         
-                        
-                        
-
-                       
+                        @if(Auth::user()->rol_id =='1')  
+                        <li>
+                            <a ><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Declaraciones </span>
+                                <span class="fa arrow"></span></a>
+            
+                            <ul class="nav nav-second-level">
+            
+                              
+                                <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
+                                <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
+                                <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
+                             
+                               
+                            </ul>
+                        </li>
+                        @endif
+            
+            
+            
+            
+            
+            
+            
+            
+            
                     </ul>
+            
+                </div>
+            </nav>
 
-                </li>
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
-                        <span class="nav-label" style="color:#ffffff;">Ajustes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
-                        <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
-                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span
-                            class="nav-label" style="color:#ffffff;">Clientes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-building-columns" style="color:#ffffff;" ></i>
-                        <span                 class="nav-label" style="color:#ffffff;">Bancos</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
-                    
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas Corporativas</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li> 
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>  
-                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
-                        <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-                        <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>             
-
-                    </ul>
-                </li>
-
-
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas Gobierno</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li> 
-                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>  
-                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>                                   
-                        
-                    </ul>
-                </li>
-
-
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas exoneradas</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
-                        <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>    
-                    
-                    </ul>
-                </li>
-
-
-                
-                
-                @if(Auth::user()->rol_id =='1')  
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Declaraciones </span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                      
-                        <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li> 
-                        <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
-                     
-                       
-                    </ul>
-                </li>
-                @endif
-
-
-
-
-
-
-
-
-
-            </ul>
-
-        </div>
-    </nav>
 
 
 
 
 </nav>
+
+
+
+

@@ -1015,6 +1015,7 @@ class FacturacionCorporativa extends Component
         DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
         name,
         D.id as factura
+    
        from factura A
        inner join cai B
        on A.cai_id = B.id
@@ -1087,6 +1088,21 @@ class FacturacionCorporativa extends Component
         on G.bodega_id = H.id
         where A.id=".$idFactura);
 
+        $ordenCompra = DB::SELECTONE("
+        select
+        B.numero_orden
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =".$idFactura);
+
+        if(empty($ordenCompra->numero_orden)){
+            $ordenCompra=["numero_orden"=>""];
+        }else{
+            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        }
+
+
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
           
@@ -1098,7 +1114,7 @@ class FacturacionCorporativa extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
        
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
