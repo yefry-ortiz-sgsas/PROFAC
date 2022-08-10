@@ -294,7 +294,6 @@
                                     <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                                 </ul> --}}
                         </li>
-<<<<<<< HEAD
                         <li>
                             <a ><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span
                                     class="nav-label" style="color:#ffffff;">Usuarios</span>
@@ -466,61 +465,11 @@
                         @endif
 				
 						                <li>
-=======
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
-                        <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
-                        <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
-                        <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>
-
-
-
-
-
-
-                    </ul>
-
-                </li>
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
-                        <span class="nav-label" style="color:#ffffff;">Ajustes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
-                        <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
-                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span
-                            class="nav-label" style="color:#ffffff;">Clientes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-building-columns" style="color:#ffffff;" ></i>
-                        <span                 class="nav-label" style="color:#ffffff;">Bancos</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
-
-                    </ul>
-                </li>
-
-                <li>
->>>>>>> 23661c732da1ab8e799060dbe77b94c14d86abd0
                     <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
                             class="nav-label" style="color:#ffffff;">Cardex</span>
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
-<<<<<<< HEAD
                         <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
 
                     </ul>
@@ -533,35 +482,6 @@
             
             
             
-=======
-                        <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
-                        <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-                        <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
-
-                    </ul>
-                </li>
-
-
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas Gobierno</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
-                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
->>>>>>> 23661c732da1ab8e799060dbe77b94c14d86abd0
                     </ul>
             
                 </div>
@@ -569,72 +489,6 @@
 
 
 
-<<<<<<< HEAD
-=======
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Ventas exoneradas</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
-                        <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-
-                    </ul>
-                </li>
-
-
-
-
-                @if(Auth::user()->rol_id =='1')
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Declaraciones </span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-
-                        <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                        <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li>
-                        <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
-
-
-                    </ul>
-                </li>
-                @endif
-
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Cardex</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
-
-                    </ul>
-                </li>
-
-
-
-
-            </ul>
-
-        </div>
-    </nav>
-
-
->>>>>>> 23661c732da1ab8e799060dbe77b94c14d86abd0
 
 
 </nav>
-
-
-
-
-
-
-
-
