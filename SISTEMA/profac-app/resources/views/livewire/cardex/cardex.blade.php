@@ -21,14 +21,15 @@
                     <div class="ibox-content">
                         <div class="row">
 
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <label for="bodega" class="col-form-label focus-label">Seleccionar
-                                    Bodega:</label>
-                                <select id="bodega" name="bodega" class="form-group form-control" style=""
+
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar Bodega:<span class="text-danger">*</span></label>
+                                <select id="bodega" class="form-group form-control" style=""
                                     data-parsley-required >
-                                    <option value="" selected disabled>--Seleccionar Bodega--</option>
+                                    <option value="" selected disabled>--Seleccionar una Bodega--</option>
                                 </select>
                             </div>
+
                             <div class="col-12 col-sm-12 col-md-6">
                                 <label for="producto" class="col-form-label focus-label">Seleccionar
                                     Producto:</label>
@@ -37,14 +38,14 @@
                                     <option value="" selected disabled>--Seleccionar Producto--</option>
                                 </select>
                             </div>
-                          
+
                         </div>
                         <button class="btn btn-primary"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
-            </div>            
-        </div>    
-    </div>   
+            </div>
+        </div>
+    </div>
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -66,7 +67,7 @@
                                         <th>Fecha de Nacimiento</th>
                                         <th>tipo</th>
                                         <th>Fecha Ingreso</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,6 +90,22 @@
 @push('scripts')
 
 <script>
+            $('#bodega').select2({
+                ajax: {
+                    url: '/producto/lista/proveedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+                }
+            });
+
             $(document).ready(function() {
             $('#tbl_usuariosListar').DataTable({
                 "order": [0, 'desc'],
@@ -160,6 +177,6 @@
 
             });
         })
-</script>    
+</script>
 
 @endpush
