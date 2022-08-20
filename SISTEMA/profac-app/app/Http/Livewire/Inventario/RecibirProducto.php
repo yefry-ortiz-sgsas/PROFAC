@@ -10,6 +10,7 @@ use App\Models\ModelCompra;
 use App\Models\ModelIncidencia; 
 use App\Models\ModelRecibirBodega; 
 use App\Models\ModelIncidenciaCompra;
+use App\Models\ModelLogTranslados;
 use Auth;
 use DataTables;
 use Validator;
@@ -304,6 +305,14 @@ class RecibirProducto extends Component
         $recibir->unidades_compra = $datosCompra->unidades_compra;
         $recibir->unidad_compra_id = $datosCompra->unidad_compra_id;
         $recibir->save();
+
+        $log = new ModelLogTranslados();
+        $log->compra_id = $request->idCompra;
+        $log->origen = $recibir->id;
+        $log->cantidad = $cantidadInicial;
+        $log->users_id = Auth::user()->id;
+        $log->descripcion = "Ingreso de producto por compra";
+        $log->save();
 
         
 

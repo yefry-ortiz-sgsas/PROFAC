@@ -23,7 +23,7 @@
                             <div class="col-12 col-sm-12 col-md-6">
                                 <label for="cliente" class="col-form-label focus-label">Seleccionar
                                     Cliente:</label>
-                                <select id="cliente" name="cliente" class="form-group form-control" style=""
+                                <select id="cliente" name="cliente" class="form-group form-control" style="" onchange="obtenerFacturasDeCliente()"
                                     data-parsley-required >
                                     <option value="" selected disabled>--Seleccionar Cliente--</option>
                                 </select>
@@ -38,7 +38,12 @@
                             </div>
                           
                         </div>
-                        <button class="btn btn-primary"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar Factura</button>
+                       <div class="row">
+                        <div class="col-12">
+                            <button onclick="datosFactura()" class="btn btn-primary"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar Factura</button>
+                        </div>
+                    
+                       </div>
                     </div>
                 </div>
             </div>            
@@ -251,6 +256,63 @@
 
                 }
             });
+
+            function obtenerFacturasDeCliente(){
+                document.getElementById('factura').innerHTML =' <option value="" selected disabled>--Seleccionar una factura--</option>';
+                let idCliente = document.getElementById('cliente').value
+
+                $('#factura').select2({
+                ajax:{
+                    url:'/nota/credito/facturas',
+                    data: function(params) {
+                        var query = {
+                            idCliente:idCliente,
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
+            }
+            
+            function datosFactura(){
+                let idFactura = document.getElementById('factura').value;
+
+
+                axios.post('/nota/credito/datos/factura',{idFactura:idFactura})
+                .then( response =>{
+
+                    let data = response.data.datosFactura;
+
+                    document.getElementById('codigo_factura').value = data.id;
+                    document.getElementById('fecha').value = data.fecha_emision;
+                    document.getElementById('tipo_pago').value = data.tipoPago;
+
+                    
+                    document.getElementById('tipo_venta').value = data.tipoFactura;
+                    document.getElementById('codigo_cliente').value = data.idCliente;
+                    document.getElementById('rtn').value = data.rtn;
+
+                    document.getElementById('nombre_cliente').value = data.nombreCliente;
+                    document.getElementById('vendedor').value = data.vendedor;
+                    document.getElementById('facturado').value = data.facturador;
+                    document.getElementById('fecha_registro').value = data.fechaRegistro;
+
+                    document.getElementById('subTotalGeneral').value = data.sub_total;
+                    document.getElementById('isvGeneral').value = data.isv;
+                    document.getElementById('totalGeneral').value = data.total;
+
+                    
+
+                } )
+            }
+
+
 </script>
 
 @endpush

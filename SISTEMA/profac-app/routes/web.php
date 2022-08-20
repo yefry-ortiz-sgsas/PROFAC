@@ -397,6 +397,8 @@ Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjust
 
 Route::get('/nota/credito',CrearNotaCredito::class);
 ROUTE::get('/nota/credito/clientes', [CrearNotaCredito::class, 'obtenerClientes']);
+Route::get('/nota/credito/facturas', [CrearNotaCredito::class,'obtenerFactura']);
+Route::post('/nota/credito/datos/factura',[CrearNotaCredito::class, 'obtenerDetalleFactura']);
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
 Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
