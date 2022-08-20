@@ -268,7 +268,7 @@ Route::get('/estatal/tipo/pago', [FacturacionEstatal::class,'tipoPagoVenta']);
 Route::get('/estatal/listar/bodegas/{idProducto}', [FacturacionEstatal::class,'listarBodegas']);
 Route::post('/estatal/datos/producto', [FacturacionEstatal::class,'obtenerDatosProducto']);
 
-Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']); 
+Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']);
 Route::get('/ventas/numero/orden',[FacturacionEstatal::class,'obtenerOrdenCompra']);
 
 Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class,'guardarVenta']);
@@ -406,6 +406,8 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 
 //--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//
 Route::get('/cardex', Cardex::class);
+Route::get('/cardex/listar/bodega', [Cardex::class, 'listarBodegas']);
+Route::get('/cardex/listar/productos/{id}', [Cardex::class, 'listarProductos']);
 
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {

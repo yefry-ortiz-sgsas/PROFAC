@@ -24,18 +24,17 @@
 
                             <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
                                 <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar Bodega:<span class="text-danger">*</span></label>
-                                <select id="bodega" class="form-group form-control" style=""
-                                    data-parsley-required >
+                                <select id="bodega" name="bodega" class="form-group form-control" style=""
+                                    data-parsley-required onchange="obtenerIdBodega()">
                                     <option value="" selected disabled>--Seleccionar una Bodega--</option>
                                 </select>
                             </div>
 
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <label for="producto" class="col-form-label focus-label">Seleccionar
-                                    Producto:</label>
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                 <select id="producto" name="producto" class="form-group form-control" style=""
                                     data-parsley-required >
-                                    <option value="" selected disabled>--Seleccionar Producto--</option>
+                                    <option value="" selected disabled>--Seleccionar una Producto--</option>
                                 </select>
                             </div>
 
@@ -55,19 +54,15 @@
                     <div class="ibox-content">
 
                         <div class="table-responsive">
-                            <table id="tbl_usuariosListar" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_cardex" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Codigo</th>
-                                        <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>Identidad</th>
-                                        <th>Fecha de Nacimiento</th>
-                                        <th>tipo</th>
-                                        <th>Fecha Ingreso</th>
 
+                                        <th>Fecha de gestión</th>
+                                        <th>Documento</th>
+                                        <th>Encargado de gestión</th>
+                                        <th>Cantidad</th>
+                                        <th>Usuario</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,24 +85,58 @@
 @push('scripts')
 
 <script>
-            $('#bodega').select2({
-                ajax: {
-                    url: '/producto/lista/proveedores',
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            type: 'public',
-                            page: params.page || 1
-                        }
 
-                        // Query parameters will be ?search=[term]&type=public
-                        return query;
+
+    cargarBodegas();
+
+    function cargarBodegas(){
+        $('#bodega').select2({
+            ajax: {
+                url: '/cardex/listar/bodega',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        page: params.page || 1
                     }
-                }
-            });
 
-            $(document).ready(function() {
-            $('#tbl_usuariosListar').DataTable({
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+            }
+        });
+
+
+    }
+
+    function obtenerIdBodega() {
+
+        var id = document.getElementById('bodega').value;
+        this.obtenerProductos(id)
+    }
+
+    function obtenerProductos(id){
+        $('#producto').select2({
+            ajax: {
+                url: '/cardex/listar/productos/'+id,
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+            }
+        });
+    }
+
+
+    $(document).ready(function() {
+
+            $('#tbl_cardex').DataTable({
                 "order": [0, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -142,34 +171,22 @@
                         }
                     }
                 ],
-                "ajax": "/usuarios/listar/usuarios",
+                "ajax": "/listado/cardex",
                 "columns": [
                     {
-                        data: 'contador'
+                        data: 'fecha'
                     },
                     {
-                        data: 'id'
+                        data: 'documento'
                     },
                     {
-                        data: 'nombre'
+                        data: 'encargado'
                     },
                     {
-                        data: 'telefono'
+                        data: 'cantidad'
                     },
                     {
-                        data: 'email'
-                    },
-                    {
-                        data: 'identidad'
-                    },
-                    {
-                        data: 'fecha_nacimiento'
-                    },
-                    {
-                        data: 'tipo_usuario'
-                    },
-                    {
-                        data: 'fecha_registro'
+                        data: 'usuario'
                     },
 
                 ]
