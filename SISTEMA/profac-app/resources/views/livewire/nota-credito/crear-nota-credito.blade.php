@@ -232,6 +232,27 @@
     </div>  
 
 
+@push('scripts')
 
+<script>
+                $('#cliente').select2({
+                ajax:{
+                    url:'/nota/credito/clientes',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
+</script>
+
+@endpush
 
 </div>

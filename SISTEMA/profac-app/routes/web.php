@@ -396,13 +396,14 @@ Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjust
 //-------------------------------------------------------------------Nota de Credito-------------------------------------------------------------------------------------------//
 
 Route::get('/nota/credito',CrearNotaCredito::class);
-
+ROUTE::get('/nota/credito/clientes', [CrearNotaCredito::class, 'obtenerClientes']);
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
 Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardarMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
+
 
 //--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//
 Route::get('/cardex', Cardex::class);
