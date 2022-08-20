@@ -48,8 +48,7 @@ class Cardex extends Component
                 INNER JOIN segmento on (segmento.id = seccion.segmento_id)
                 INNER JOIN bodega on (segmento.bodega_id = bodega.id)
                 WHERE
-                estado_producto_id = 1 AND
-                bodega.id =".$id);
+                estado_producto_id = 1");
 
             return response()->json([
                 "results" => $productos,
