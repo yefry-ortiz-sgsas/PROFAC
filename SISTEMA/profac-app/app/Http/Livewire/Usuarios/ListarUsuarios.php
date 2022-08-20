@@ -39,21 +39,21 @@ class ListarUsuarios extends Component
             fecha_nacimiento,
             rol.nombre as tipo_usuario,
             users.created_at as fecha_registro
-            
-            FROM users inner join rol           
+
+            FROM users inner join rol
             on users.rol_id = rol.id
             cross join (select @i := 0) r
-            
-            
+
+
             ");
 
             return Datatables::of($listaUsuarios)
 
-  
+
             ->make(true);
-            
+
         } catch (QueryException $e) {
-           
+
             return response()->json([
                 "message" => "Ha ocurrido un error al listar los usuarios.",
                 "error" => $e

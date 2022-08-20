@@ -21,30 +21,30 @@
                     <div class="ibox-content">
                         <div class="row">
 
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <label for="bodega" class="col-form-label focus-label">Seleccionar
-                                    Bodega:</label>
+
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar Bodega:<span class="text-danger">*</span></label>
                                 <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                    data-parsley-required >
-                                    <option value="" selected disabled>--Seleccionar Bodega--</option>
+                                    data-parsley-required onchange="obtenerIdBodega()">
+                                    <option value="" selected disabled>--Seleccionar una Bodega--</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <label for="producto" class="col-form-label focus-label">Seleccionar
-                                    Producto:</label>
+
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                 <select id="producto" name="producto" class="form-group form-control" style=""
                                     data-parsley-required >
-                                    <option value="" selected disabled>--Seleccionar Producto--</option>
+                                    <option value="" selected disabled>--Seleccionar una Producto--</option>
                                 </select>
                             </div>
-                          
+
                         </div>
-                        <button class="btn btn-primary"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary" onclick="cargaCardex()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
-            </div>            
-        </div>    
-    </div>   
+            </div>
+        </div>
+    </div>
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -52,21 +52,20 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-content">
-
                         <div class="table-responsive">
-                            <table id="tbl_usuariosListar" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_cardex" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Codigo</th>
-                                        <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>Identidad</th>
-                                        <th>Fecha de Nacimiento</th>
-                                        <th>tipo</th>
-                                        <th>Fecha Ingreso</th>
-                                       
+
+                                        <th>Fecha de gestión</th>
+                                        <th>Producto</th>
+                                        <th>Código de producto</th>
+                                        <th>Factura</th>
+                                        <th>Ajuste</th>
+                                        <th>Descripción</th>
+                                        <th>Sección</th>
+                                        <th>Cantidad</th>
+                                        <th>Usuario</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,77 +88,130 @@
 @push('scripts')
 
 <script>
-            $(document).ready(function() {
-            $('#tbl_usuariosListar').DataTable({
-                "order": [0, 'desc'],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                },
-                pageLength: 10,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'ExampleFile'
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
 
-                    {
-                        extend: 'print',
-                        customize: function(win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
+    cargarBodegas();
+
+    function cargarBodegas(){
+        $('#bodega').select2({
+            ajax: {
+                url: '/cardex/listar/bodega',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        page: params.page || 1
                     }
-                ],
-                "ajax": "/usuarios/listar/usuarios",
-                "columns": [
-                    {
-                        data: 'contador'
-                    },
-                    {
-                        data: 'id'
-                    },
-                    {
-                        data: 'nombre'
-                    },
-                    {
-                        data: 'telefono'
-                    },
-                    {
-                        data: 'email'
-                    },
-                    {
-                        data: 'identidad'
-                    },
-                    {
-                        data: 'fecha_nacimiento'
-                    },
-                    {
-                        data: 'tipo_usuario'
-                    },
-                    {
-                        data: 'fecha_registro'
-                    },
 
-                ]
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+            }
+        });
 
 
-            });
-        })
-</script>    
+    }
+
+    function obtenerIdBodega() {
+
+        var id = document.getElementById('bodega').value;
+        this.obtenerProductos(id)
+    }
+
+    function obtenerProductos(id){
+        $('#producto').select2({
+            ajax: {
+                url: '/cardex/listar/productos/'+id,
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+            }
+        });
+    }
+
+    function cargaCardex(){
+
+        $("#tbl_cardex").dataTable().fnDestroy();
+
+        var idBodega = document.getElementById('bodega').value;
+        var idProducto = document.getElementById('producto').value;
+
+        $('#tbl_cardex').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [{
+                    extend: 'copy'
+                },
+                {
+                    extend: 'csv'
+                },
+                {
+                    extend: 'excel',
+                    title: 'ExampleFile'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'ExampleFile'
+                },
+
+                {
+                    extend: 'print',
+                    customize: function(win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            "ajax": "/listado/cardex/"+idBodega+"/"+idProducto,
+            "columns": [
+                {
+                    data: 'fechaIngreso'
+                },
+                {
+                    data: 'producto'
+                },
+                {
+                    data: 'codigoProducto'
+                },
+                {
+                    data: 'doc_factura'
+                },
+                {
+                    data: 'doc_ajuste'
+                },
+                {
+                    data: 'descripcion'
+                },
+                {
+                    data: 'seccion'
+                },
+                {
+                    data: 'cantidad'
+                },
+                {
+                    data: 'usuario'
+                },
+            ]
+
+
+        });
+    }
+</script>
 
 @endpush
