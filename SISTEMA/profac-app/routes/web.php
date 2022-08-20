@@ -409,6 +409,9 @@ Route::get('/cardex', Cardex::class);
 Route::get('/cardex/listar/bodega', [Cardex::class, 'listarBodegas']);
 Route::get('/cardex/listar/productos/{id}', [Cardex::class, 'listarProductos']);
 
+Route::get('/listado/cardex/{idBodega}/{idProducto}', [Cardex::class, 'listarCardex']);
+
+
 //------------------------------------------establecer links de storage---------------------------//
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link'); // this will do the command line job

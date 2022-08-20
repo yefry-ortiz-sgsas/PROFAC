@@ -39,7 +39,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-primary"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary" onclick="cargaCardex()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -52,15 +52,18 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-content">
-
                         <div class="table-responsive">
                             <table id="tbl_cardex" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
 
                                         <th>Fecha de gestión</th>
-                                        <th>Documento</th>
-                                        <th>Encargado de gestión</th>
+                                        <th>Producto</th>
+                                        <th>Código de producto</th>
+                                        <th>Factura</th>
+                                        <th>Ajuste</th>
+                                        <th>Descripción</th>
+                                        <th>Sección</th>
                                         <th>Cantidad</th>
                                         <th>Usuario</th>
                                     </tr>
@@ -133,67 +136,82 @@
         });
     }
 
+    function cargaCardex(){
 
-    $(document).ready(function() {
+        $("#tbl_cardex").dataTable().fnDestroy();
 
-            $('#tbl_cardex').DataTable({
-                "order": [0, 'desc'],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+        var idBodega = document.getElementById('bodega').value;
+        var idProducto = document.getElementById('producto').value;
+
+        $('#tbl_cardex').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [{
+                    extend: 'copy'
                 },
-                pageLength: 10,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'ExampleFile'
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
+                {
+                    extend: 'csv'
+                },
+                {
+                    extend: 'excel',
+                    title: 'ExampleFile'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'ExampleFile'
+                },
 
-                    {
-                        extend: 'print',
-                        customize: function(win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
+                {
+                    extend: 'print',
+                    customize: function(win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
                     }
-                ],
-                "ajax": "/listado/cardex",
-                "columns": [
-                    {
-                        data: 'fecha'
-                    },
-                    {
-                        data: 'documento'
-                    },
-                    {
-                        data: 'encargado'
-                    },
-                    {
-                        data: 'cantidad'
-                    },
-                    {
-                        data: 'usuario'
-                    },
+                }
+            ],
+            "ajax": "/listado/cardex/"+idBodega+"/"+idProducto,
+            "columns": [
+                {
+                    data: 'fechaIngreso'
+                },
+                {
+                    data: 'producto'
+                },
+                {
+                    data: 'codigoProducto'
+                },
+                {
+                    data: 'doc_factura'
+                },
+                {
+                    data: 'doc_ajuste'
+                },
+                {
+                    data: 'descripcion'
+                },
+                {
+                    data: 'seccion'
+                },
+                {
+                    data: 'cantidad'
+                },
+                {
+                    data: 'usuario'
+                },
+            ]
 
-                ]
 
-
-            });
-        })
+        });
+    }
 </script>
 
 @endpush

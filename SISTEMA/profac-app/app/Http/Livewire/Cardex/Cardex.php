@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use Validator;
+use DataTables;
 
 class Cardex extends Component
 {
@@ -64,39 +65,46 @@ class Cardex extends Component
         }
     }
 
-    public function listarCardex(){
-
+    public function listarCardex($idBodega, $idProducto){
+        //dd($idBodega, $idProducto);
         try {
 
             $listaCardex = DB::SELECT("
 
-            SELECT
-            @i := @i + 1 as contador,
-            users.id as id,
-            name as nombre,
-            telefono,
-            email,
-            identidad,
-            fecha_nacimiento,
-            rol.nombre as tipo_usuario,
-            users.created_at as fecha_registro
+            select
+                log_translado.created_at as 'fechaIngreso',
+                producto.nombre as 'producto',
+                producto.id as 'codigoProducto',
+                log_translado.factura_id as 'factura',
+                log_translado.ajuste_id as 'ajuste' ,
+                log_translado.descripcion as 'descripcion',
+                seccion.descripcion as 'seccion',
+                log_translado.cantidad as 'cantidad',
+                users.name as  'usuario'
+            from log_translado
+                inner join recibido_bodega on (recibido_bodega.id = log_translado.origen)
+                inner join producto on (recibido_bodega.producto_id = producto.id)
+                inner join seccion on (seccion.id = recibido_bodega.seccion_id)
+                inner join segmento on (segmento.id = seccion.segmento_id)
+                inner join bodega on (bodega.id = segmento.bodega_id)
+    inner join users on (users.id = log_translado.users_id)
+    where bodega.id = ".$idBodega." and producto.id =".$idProducto
+            );
 
-            FROM users inner join rol
-            on users.rol_id = rol.id
-            cross join (select @i := 0) r
-
-
-            ");
-
-            return Datatables::of($listaUsuarios)
-
-
+            return Datatables::of($listaCardex)
+            ->addColumn('doc_factura', function($elemento){
+                return '<a href="/detalle/venta/'.$elemento->factura.'">'.$elemento->factura.'</a>';
+            })
+            ->addColumn('doc_ajuste', function($elemento){
+                return '<a href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'">'.$elemento->ajuste.'</a>';
+            })
+            ->rawColumns(['doc_factura','doc_ajuste'])
             ->make(true);
 
         } catch (QueryException $e) {
 
             return response()->json([
-                "message" => "Ha ocurrido un error al listar los usuarios.",
+                "message" => "Ha ocurrido un error al listar el cardex solicitado.",
                 "error" => $e
             ]);
         }
