@@ -40,7 +40,7 @@ use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
 use App\Http\Livewire\Inventario\ListadoAjustes;
 use App\Http\Livewire\Inventario\HistorialTranslados;
-use App\Http\Livewire\Cardex\cardex;
+use App\Http\Livewire\Cardex\Cardex;
 
 use App\Http\Livewire\Ventas\Cai;
 use App\Http\Livewire\Bancos;
@@ -399,6 +399,8 @@ Route::get('/nota/credito',CrearNotaCredito::class);
 ROUTE::get('/nota/credito/clientes', [CrearNotaCredito::class, 'obtenerClientes']);
 Route::get('/nota/credito/facturas', [CrearNotaCredito::class,'obtenerFactura']);
 Route::post('/nota/credito/datos/factura',[CrearNotaCredito::class, 'obtenerDetalleFactura']);
+Route::post('/nota/credito/obtener/productos',[CrearNotaCredito::class,'obtenerProductos']); 
+Route::post('/nota/credito/datos/producto',[CrearNotaCredito::class,'datosProducto']);
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
 Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);

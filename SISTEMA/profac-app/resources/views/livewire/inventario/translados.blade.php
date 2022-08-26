@@ -497,8 +497,8 @@
                 let idProducto = document.getElementById('selectProducto').value;
                
 
-                console.log(idSeccion);
-                console.log(idProducto);
+                // console.log(idSeccion);
+                // console.log(idProducto);
                 $('#tbl_translados_destino').DataTable({
                     "order": [6, 'desc'],
                     "language": {

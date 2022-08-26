@@ -1029,7 +1029,7 @@ class FacturacionCorporativa extends Component
 
        $cliente = DB::SELECTONE("
        select        
-        cliente.nombre,
+        factura.nombre_cliente as nombre,
         cliente.direccion,
         cliente.correo,
         factura.fecha_emision,
