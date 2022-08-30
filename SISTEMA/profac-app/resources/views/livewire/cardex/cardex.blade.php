@@ -114,14 +114,15 @@
 
     function obtenerIdBodega() {
 
-        var id = document.getElementById('bodega').value;
-        this.obtenerProductos(id)
+        var idBodega = document.getElementById('bodega').value;
+        obtenerProductos();
     }
 
-    function obtenerProductos(id){
+    function obtenerProductos(){
+        var idBodega = document.getElementById('bodega').value;
         $('#producto').select2({
             ajax: {
-                url: '/cardex/listar/productos/'+id,
+                url: '/cardex/listar/productos/'+idBodega,
                 data: function(params) {
                     var query = {
                         search: params.term,
@@ -142,7 +143,7 @@
 
         var idBodega = document.getElementById('bodega').value;
         var idProducto = document.getElementById('producto').value;
-
+        console.log(idBodega+" "+idProducto);
         $('#tbl_cardex').DataTable({
             "order": [0, 'desc'],
             "language": {

@@ -38,7 +38,7 @@ class Cardex extends Component
         }
     }
 
-    public function listarProductos($id){
+    public function listarProductos($idBodega){
         try {
 
             $productos = DB::SELECT("
@@ -48,7 +48,8 @@ class Cardex extends Component
                 INNER JOIN segmento on (segmento.id = seccion.segmento_id)
                 INNER JOIN bodega on (segmento.bodega_id = bodega.id)
                 WHERE
-                estado_producto_id = 1");
+                estado_producto_id = 1
+                and bodega.id = ".$idBodega);
 
             return response()->json([
                 "results" => $productos,
