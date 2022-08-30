@@ -73,7 +73,7 @@ class SeleccionarFactura extends Component
 
             $comprobar = DB::SELECT("
             select 
-            id
+            factura.id
             from factura
             inner join cliente
             on cliente.id = factura.cliente_id
