@@ -22,7 +22,7 @@
                         <div class="row">
 
 
-                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-6 col-sm-6 col-md-6 ">
                                 <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar Bodega:<span class="text-danger">*</span></label>
                                 <select id="bodega" name="bodega" class="form-group form-control" style=""
                                     data-parsley-required onchange="obtenerIdBodega()">
@@ -30,7 +30,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-6 col-sm-6 col-md-6">
                                 <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                 <select id="producto" name="producto" class="form-group form-control" style=""
                                     data-parsley-required >
@@ -63,7 +63,8 @@
                                         <th>Factura</th>
                                         <th>Ajuste</th>
                                         <th>Descripción</th>
-                                        <th>Sección</th>
+                                        <th>Origen</th>
+                                        <th>Destino</th>
                                         <th>Cantidad</th>
                                         <th>Usuario</th>
                                     </tr>
@@ -141,11 +142,12 @@
 
         $("#tbl_cardex").dataTable().fnDestroy();
 
-        var idBodega = document.getElementById('bodega').value;
-        var idProducto = document.getElementById('producto').value;
-        console.log(idBodega+" "+idProducto);
+        var idBodega = document.getElementById('bodega');
+        var idProducto = document.getElementById('producto');
+        console.log(idBodega.options[idBodega.selectedIndex].text, idProducto.options[idProducto.selectedIndex].text);
         $('#tbl_cardex').DataTable({
             "order": [0, 'desc'],
+            "paging": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
             },
@@ -160,15 +162,16 @@
                 },
                 {
                     extend: 'excel',
-                    title: 'ExampleFile'
+                    title: 'Cardex'
                 },
                 {
                     extend: 'pdf',
-                    title: 'ExampleFile'
+                    title: 'Cardex'
                 },
 
                 {
                     extend: 'print',
+                    title: '',
                     customize: function(win) {
                         $(win.document.body).addClass('white-bg');
                         $(win.document.body).css('font-size', '10px');
@@ -179,7 +182,7 @@
                     }
                 }
             ],
-            "ajax": "/listado/cardex/"+idBodega+"/"+idProducto,
+            "ajax": "/listado/cardex/"+idBodega.value+"/"+idProducto.value,
             "columns": [
                 {
                     data: 'fechaIngreso'
@@ -200,7 +203,10 @@
                     data: 'descripcion'
                 },
                 {
-                    data: 'seccion'
+                    data: 'origen'
+                },
+                {
+                    data: 'destino'
                 },
                 {
                     data: 'cantidad'

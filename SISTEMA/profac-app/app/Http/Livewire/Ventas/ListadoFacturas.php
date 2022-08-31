@@ -161,7 +161,7 @@ class ListadoFacturas extends Component
          $logEstado->motivo = $request->motivo;
          $logEstado->save();
 
-         $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario from venta_has_producto where factura_id = ".$request->idFactura);
+         $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario,unidad_medida_venta_id from venta_has_producto where factura_id = ".$request->idFactura);
 
          foreach ($lotes as $lote) {
                 $recibidoBodega = ModelRecibirBodega::find($lote->lote);
@@ -173,6 +173,7 @@ class ListadoFacturas extends Component
                     'destino'=>$lote->lote,
                     'factura_id'=>$request->idFactura,
                     'cantidad'=>$lote->numero_unidades_resta_inventario,
+                    "unidad_medida_venta_id"=>$lote->unidad_medida_venta_id,
                     "users_id"=> Auth::user()->id,
                     "descripcion"=>"Factura Anulada",
                     "created_at"=>now(),

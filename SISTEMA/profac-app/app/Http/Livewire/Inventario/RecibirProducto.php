@@ -309,7 +309,7 @@ class RecibirProducto extends Component
         $log = new ModelLogTranslados();
         $log->compra_id = $request->idCompra;
         $log->origen = $recibir->id;
-        $log->cantidad = $cantidadInicial;
+        $log->cantidad = $cantidadInicial;       
         $log->users_id = Auth::user()->id;
         $log->descripcion = "Ingreso de producto por compra";
         $log->save();
