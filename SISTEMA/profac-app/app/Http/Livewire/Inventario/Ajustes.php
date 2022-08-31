@@ -245,6 +245,7 @@ class Ajustes extends Component
         $logRegistro = new ModelLogTranslados;
         $logRegistro->origen=$request->idRecibido;
         $logRegistro->cantidad=$request->total_unidades;
+        $logRegistro->unidad_medida_venta_id = $request->idUnidadVenta;
         $logRegistro->users_id=Auth::user()->id;
         $logRegistro->descripcion=$ajusteTipoAritmetica;
         $logRegistro->ajuste_id=$ajuste->id;

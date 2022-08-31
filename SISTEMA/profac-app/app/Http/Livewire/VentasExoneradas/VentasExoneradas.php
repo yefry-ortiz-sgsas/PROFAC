@@ -472,6 +472,7 @@ class VentasExoneradas extends Component
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
                     "cantidad" => $registroResta,
+                    "unidad_medida_venta_id"=> $idUnidadVenta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),

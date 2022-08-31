@@ -217,7 +217,7 @@ class ListadoFacturasExonerads extends Component
          $logEstado->motivo = "Error Involuntario";
          $logEstado->save();
 
-         $lotes = DB::SELECT("select lote,cantidad_s from venta_has_producto where factura_id = ".$request->idFactura);
+         $lotes = DB::SELECT("select lote,cantidad_s,unidad_medida_venta_id from venta_has_producto where factura_id = ".$request->idFactura);
 
          foreach ($lotes as $lote) {
                 $recibidoBodega = ModelRecibirBodega::find($lote->lote);
@@ -229,6 +229,7 @@ class ListadoFacturasExonerads extends Component
                     'destino'=>$lote->lote,
                     'factura_id'=>$request->idFactura,
                     'cantidad'=>$lote->cantidad_s,
+                    'unidad_medida_venta_id'=>$lote->unidad_medida_venta_id,
                     "users_id"=> Auth::user()->id,
                     "descripcion"=>"Factura Anulada",
                     "created_at"=>now(),
