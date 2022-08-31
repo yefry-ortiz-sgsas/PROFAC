@@ -405,3 +405,32 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 Route::get('/cliente/excel', [Cliente::class, 'export']);
 Route::get('/producto/excel', [Producto::class, 'export']);
 Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
+
+
+
+//---------------------------------------------------------CRUD CATEGORIAS ---------------------------------------------------------//
+
+use App\Http\Livewire\Inventario\Categoria;
+
+Route::get('/categoria/categorias', Categoria::class);
+Route::get('/categoria/listar', [Categoria::class,'listarCategorias']);
+Route::post('/categoria/guardar', [Categoria::class,'guardarCategoria']);
+Route::post('/categoria/datos', [Categoria::class,'obtenerDatos']);
+Route::post('/categoria/editar', [Categoria::class,'editarCategoria']);
+
+//---------------------------------------------------------CRUD SUB-CATEGORIAS---------------------------------------------------------//
+
+use App\Http\Livewire\Inventario\SubCategoria;
+
+Route::get('/sub_categoria/sub_categorias', SubCategoria::class);
+Route::get('/sub_categoria/listar', [SubCategoria::class,'listarSubCategorias']);
+Route::get('/sub_categoria/listar/categorias', [SubCategoria::class,'listarCategorias']);
+Route::post('/sub_categoria/guardar', [SubCategoria::class,'guardarSubCategoria']);
+Route::post('/sub_categoria/datos', [SubCategoria::class,'obtenerDatos']);
+Route::post('/sub_categoria/editar', [SubCategoria::class,'editarSubCategoria']);
+
+
+
+
+
+Route::get('/producto/sub_categoria/listar/{id}',[Producto::class,'listarSubcategorias']); 

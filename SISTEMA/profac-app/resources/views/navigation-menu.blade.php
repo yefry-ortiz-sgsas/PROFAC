@@ -317,6 +317,8 @@
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
+                        <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
+                        <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
                         <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
                         <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
                         </li>

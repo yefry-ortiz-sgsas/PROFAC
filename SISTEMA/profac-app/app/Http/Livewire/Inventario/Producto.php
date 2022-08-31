@@ -45,7 +45,7 @@ class Producto extends Component
             'descripcion_producto' => 'required',
             'isv_producto' => 'required',
            
-            'categoria_producto' => 'required',
+            'sub_categoria_producto' => 'required',
             'unidad_producto' => 'required',
             'ultimo_costo_compra'=>'required',
             
@@ -55,7 +55,7 @@ class Producto extends Component
             'descripcion_producto' => 'Descripcion es requerido',
             'isv_producto' => 'ISV es requqerido',
             
-            'categoria_producto' => 'Categoria del producto es requerido',
+            'sub_categoria_producto' => 'Categoria del producto es requerido',
             'unidad_producto' => 'La unidad de medida es requerida',
             'ultimo_costo_compra'=>'el ultimo costo de compra es requerido'
         ]);
@@ -82,7 +82,7 @@ class Producto extends Component
             $producto->codigo_barra = trim($request['cod_barra_producto']);
             $producto->costo_promedio = trim($request['costo_promedio']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto']);
-            $producto->categoria_id = $request['categoria_producto'];
+            $producto->sub_categoria_id = $request['sub_categoria_producto'];
             $producto->precio_base = trim($request['precioBase']); 
             $producto->ultimo_costo_compra = trim($request->ultimo_costo_compra);
             $producto->marca_id = $request->marca_producto;           
@@ -206,7 +206,7 @@ class Producto extends Component
 
             from producto A
             inner join categoria_producto B
-            on A.categoria_id = B.id
+            on A.sub_categoria_id = B.id
             inner join unidad_medida C
             on A.unidad_medida_compra_id = C.id
             order by A.created_at DESC
@@ -297,7 +297,7 @@ class Producto extends Component
                 precio_base,
                 codigo_barra,
                 codigo_estatal,
-                categoria_id,
+                sub_categoria_id,
                 unidad_medida_compra_id,
                 users_id,
                 costo_promedio,
@@ -354,7 +354,7 @@ class Producto extends Component
             $producto->isv = trim($request['isv_producto_edit']);
             $producto->codigo_barra = trim($request['cod_barra_producto_edit']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto_edit']);
-            $producto->categoria_id = $request['categoria_producto_edit'];
+            $producto->sub_categoria_id = $request['categoria_producto_edit'];
             $producto->precio_base = trim($request['precioBase_edit']);
             $producto->costo_promedio = $request['costo_promedio_editar'];
             $producto->unidadad_compra = trim($request['unidades_editar']);
@@ -476,6 +476,27 @@ class Producto extends Component
             ],402);
         }
 
+    }
+
+
+    public function listarSubcategorias($id){
+        try {
+ 
+            $sub_categorias = DB::table('sub_categoria')
+            //->join('categoria_producto', 'sub_categoria.categoria_producto_id', '=', 'categoria_producto.id')
+            ->select('sub_categoria.id', 'sub_categoria.descripcion')
+            ->where('sub_categoria.categoria_producto_id', '=', $id)
+            ->get();
+ 
+        return response()->json([
+         "sub_categorias"=>$sub_categorias,
+        ],200);
+        } catch (QueryException $e) {
+        return response()->json([
+         'message' => 'Ha ocurrido un error', 
+         'error' => $e
+        ],402);
+        }
     }
 
 }

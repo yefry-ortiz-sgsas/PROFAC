@@ -232,7 +232,7 @@
                                             <input class="form-group form-control"  min="1" type="number" name="precio[]"
                                                 id="precio3" step="any">
                                         </div> --}}
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label for="categoria_producto" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="marca_producto" id="marca_producto"
                                                 data-parsley-required>
@@ -245,16 +245,26 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
-                                                data-parsley-required>
+                                                data-parsley-required onchange="listarSubCategorias()">
                                                 <option selected disabled>---Seleccione una categoria---</option>
                                                 @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
                                                 @endforeach
            
             
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="sub_categoria_producto" class="col-form-label focus-label">Subcategoria :<span class="text-danger">*</span></label>
+                                            <select class="form-group form-control" name="sub_categoria_producto" id="sub_categoria_producto" data-parsley-required>
+                                                <option selected disabled>---Seleccione una Subcategoria---</option>
+
+
+
                                             </select>
                                         </div>
 
@@ -515,6 +525,33 @@
         function disponibilidadProducto(id){
             axios.post("/producto/detalle", {"id":id})
         }
+
+        ///////////////////////////////////////////////////////////////////
+        function listarSubCategorias(){
+
+            var categoria_produ = document.getElementById('categoria_producto').value;
+              axios.get("/producto/sub_categoria/listar/"+categoria_produ)
+              .then( response=>{
+                  let data = response.data.sub_categorias;
+  
+                  let htmlSelect = '<option disabled selected>--Seleccione una Subcategoria--</option>'
+  
+                  data.forEach(element => {
+                      htmlSelect += `<option value="${element.id}">${element.descripcion}</option>`
+                  });
+  
+                  document.getElementById('sub_categoria_producto').innerHTML = htmlSelect;
+              })
+              .catch(err=>{
+                  console.log(err.response.data)
+                  Swal.fire({
+                  icon: 'error',
+                  title: 'Error!',
+                  text: 'Ha ocurrido un error',                
+                  })
+              })
+          }
+        ///////////////////////////////////////////////////////////////////
     
         </script>
     
