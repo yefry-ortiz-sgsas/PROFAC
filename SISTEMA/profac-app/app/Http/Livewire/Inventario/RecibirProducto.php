@@ -7,8 +7,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\ModelPagoCompra;
 use App\Models\ModelCompra;
-use App\Models\ModelIncidencia; 
-use App\Models\ModelRecibirBodega; 
+use App\Models\ModelIncidencia;
+use App\Models\ModelRecibirBodega;
 use App\Models\ModelIncidenciaCompra;
 use App\Models\ModelLogTranslados;
 use Auth;
@@ -55,10 +55,10 @@ class RecibirProducto extends Component
             $listaCompra = DB::SELECT("
 
         select
-            @i := @i + 1 as 'contador',      
-            A.compra_id,            
+            @i := @i + 1 as 'contador',
+            A.compra_id,
             A.producto_id as 'producto_id',
-            producto.nombre as nombre,            
+            producto.nombre as nombre,
             A.precio_unidad,
             A.cantidad_ingresada as cantidad_comprada,
             A.cantidad_sin_asignar,
@@ -68,22 +68,22 @@ class RecibirProducto extends Component
             if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
             (select sum(cantidad_inicial_seccion) from recibido_bodega where producto_id = A.producto_id and compra_id = A.compra_id ) as 'cantidad_ingresada_bodega',
             A.unidades_compra
-          
-        from 
+
+        from
             compra_has_producto A
             inner join producto
-            on producto.id = A.producto_id    
+            on producto.id = A.producto_id
             cross join (select @i := 0) r
             where A.compra_id = ".$id."
 
- 
+
         ");
 
             return Datatables::of($listaCompra)
                 ->addColumn('opciones', function ($listaCompra) {
 
                     if($listaCompra->cantidad_sin_asignar > 0){
-                       
+
                         return
                         '<div class="btn-group">
                             <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
@@ -101,9 +101,9 @@ class RecibirProducto extends Component
                                     <a class="dropdown-item" onclick="mostrarModalIncidenciaSinAlmacenar(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')" > <i class="fa-solid fa-circle-exclamation text-warning"></i> Registrar Incidencia </a>
                                 </li>
 
-    
-                           
-        
+
+
+
                             </ul>
                         </div>';
 
@@ -114,7 +114,7 @@ class RecibirProducto extends Component
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
-                            
+
 
                             <li>
                                 <a class="dropdown-item" onclick="mostrarModalExcedente(' . $listaCompra->compra_id . ',' . $listaCompra->producto_id . ')"> <i class="fa-solid fa-circle-plus text-info"></i> Registrar Producto Excedente </a>
@@ -124,8 +124,8 @@ class RecibirProducto extends Component
                             </li>
 
 
-                       
-    
+
+
                         </ul>
                     </div>';
                     }
@@ -158,7 +158,7 @@ class RecibirProducto extends Component
                         <p class="text-center"><span class="badge p-2" style="font-size:0.95rem">No recibido</span></p>
                         ';
                     }
-                   
+
                 })
 
                 ->rawColumns(['opciones','estado_recibido'])
@@ -173,15 +173,15 @@ class RecibirProducto extends Component
 
     public function bodegasLista()
     {
-        
+
 
         try {
 
             $listaBodegasRecibir = DB::SELECT("
-            select 
+            select
             id,
-                nombre 
-            From 
+                nombre
+            From
                 bodega
             ");
 
@@ -235,7 +235,33 @@ class RecibirProducto extends Component
             ],402);
         }
     }
+    public function listarUmedidas(Request $request)
+    {
+        try {
 
+            $listaUmedidas = DB::select("
+                select
+                unidad_medida_venta.id as id,
+                concat(unidad_medida.nombre,' ',unidad_medida_venta.unidad_venta) as unidad,
+                unidad_medida_venta.unidad_venta_defecto
+                from producto
+                inner join unidad_medida_venta
+                on producto.id = unidad_medida_venta.producto_id
+                inner join unidad_medida
+                on unidad_medida_venta.unidad_medida_id = unidad_medida.id
+                where producto.id = 1
+            " );
+
+            return response()->json([
+                "listaUmedidas" => $listaUmedidas
+            ],200);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error',
+                'error' => $e
+            ],402);
+        }
+    }
     public function guardarEnBodega(Request $request){
         try {
 
@@ -268,13 +294,13 @@ class RecibirProducto extends Component
                 "icon" => "warning",
                 "title"=>"Advertencia!"
             ], 402);
-            
+
         }
 
-        
-        
 
-            
+
+
+
 
         //     DB::table('compra_has_producto')
         //     ->where('compra_id','=', $request->idCompra)
@@ -314,7 +340,7 @@ class RecibirProducto extends Component
         $log->descripcion = "Ingreso de producto por compra";
         $log->save();
 
-        
+
 
 
             DB::table('compra_has_producto')
@@ -323,10 +349,10 @@ class RecibirProducto extends Component
             ->update([
                 'cantidad_sin_asignar' => $restaCantidad,
                 'cantidad_disponible' => ($datosCompra->cantidad_disponible+$request->cantidad)
-                
+
         ]);
 
-           
+
         DB::commit();
         return response()->json([
             "text" => "Producto registrado en bodega con éxito.",
@@ -334,7 +360,7 @@ class RecibirProducto extends Component
             "title"=>"Exito!"
         ], 200);
         } catch (QueryException $e) {
-            DB::rollback(); 
+            DB::rollback();
             return response()->json([
                 'message' => 'Ha ocurrido un error',
                 'error' => $e
@@ -348,7 +374,7 @@ class RecibirProducto extends Component
 
             $listaBodega =     DB::SELECT("
             select
-            
+
             B.id,
             B.nombre as 'producto',
             A.cantidad_compra_lote,
@@ -385,7 +411,7 @@ class RecibirProducto extends Component
         return Datatables::of($listaBodega)
         ->addColumn('opciones', function ($listaBodega) {
 
-         
+
                 return
                 '<div class="btn-group">
                     <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
@@ -397,12 +423,12 @@ class RecibirProducto extends Component
                         </li>
 
 
-                   
+
 
                     </ul>
                 </div>';
 
-            
+
 
 
         })
@@ -413,7 +439,7 @@ class RecibirProducto extends Component
 
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ], 402);
        }
@@ -430,7 +456,7 @@ class RecibirProducto extends Component
         compra_id,
         producto_id,
         B.nombre
-        
+
         from compra_has_producto A
         inner join producto B
         on A.producto_id = B.id
@@ -445,7 +471,7 @@ class RecibirProducto extends Component
 
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -455,9 +481,9 @@ class RecibirProducto extends Component
         try {
 
             $productoExistente  = DB::SELECTONE("
-                select 
+                select
                 count(id) as contador
-                from recibido_bodega 
+                from recibido_bodega
                 where compra_id = ".$request->idCompra." and producto_id = ".$request->idProducto
             );
 
@@ -477,10 +503,10 @@ class RecibirProducto extends Component
             from compra_has_producto
             where compra_id = ".$request->idCompra."  and producto_id=".$request->idProducto
         );
-        
-        
 
-            
+
+
+
 
         //     DB::table('compra_has_producto')
         //     ->where('compra_id','=', $request->idCompra)
@@ -508,10 +534,10 @@ class RecibirProducto extends Component
         $recibir->save();
 
         $incidencia = new ModelIncidencia();
-        $incidencia->descripcion = "Excedente de producto";       
+        $incidencia->descripcion = "Excedente de producto";
         $incidencia->recibido_bodega_id =  $recibir->id;
         $incidencia->save();
-           
+
         DB::commit();
         return response()->json([
             "text" => "Excedente de producto registrado en bodega con éxito.",
@@ -519,7 +545,7 @@ class RecibirProducto extends Component
             "title"=>"Exito!"
         ], 200);
         } catch (QueryException $e) {
-            DB::rollback(); 
+            DB::rollback();
             return response()->json([
                 'message' => 'Ha ocurrido un error',
                 'error' => $e
@@ -531,18 +557,18 @@ class RecibirProducto extends Component
     public function incidenciaBodega(Request $request){
        try {
 
-       
+
 
         if($request->imagen){
             $validator = Validator::make($request->all(), [
-           
-                'imagen' => 'mimes:png,jpeg,jpg,pdf'           
-    
+
+                'imagen' => 'mimes:png,jpeg,jpg,pdf'
+
             ], [
-                
+
                 'imagen' => 'Formato de imagen invalido'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json([
                     'tilte' => 'Ha ocurrido un error.',
@@ -550,10 +576,10 @@ class RecibirProducto extends Component
                     'icon' => 'error'
                 ], 402);
             }
-    
+
             $file = $request->file('imagen');
             $name = 'IMG_'. time(). '.' . $file->getClientOriginalExtension();
-            $path = public_path() . '/incidencias_bodega';   
+            $path = public_path() . '/incidencias_bodega';
             $file->move($path, $name);
 
             $incidencia = new ModelIncidencia;
@@ -566,8 +592,8 @@ class RecibirProducto extends Component
         }else{
             $incidencia = new ModelIncidencia;
             $incidencia->descripcion = $request->comentario;
-            $incidencia->recibido_bodega_id = $request->idRecibido;       
-            $incidencia->users_id = Auth::user()->id;   
+            $incidencia->recibido_bodega_id = $request->idRecibido;
+            $incidencia->users_id = Auth::user()->id;
             $incidencia->save();
 
         }
@@ -584,7 +610,7 @@ class RecibirProducto extends Component
 
        } catch (QueryException $e) {
         $carpetaPublic = public_path();
-        $path = $carpetaPublic.'/incidencias_bodega/'.$name;  
+        $path = $carpetaPublic.'/incidencias_bodega/'.$name;
         File::delete($path);
 
        return response()->json([
@@ -598,19 +624,19 @@ class RecibirProducto extends Component
     }
 
     public function incidenciaCompra(Request $request){
-        
+
        try {
-       
+
         if($request->imagenCompra){
             $validator = Validator::make($request->all(), [
-           
-                'imagenCompra' => 'mimes:png,jpeg,jpg,pdf'           
-    
+
+                'imagenCompra' => 'mimes:png,jpeg,jpg,pdf'
+
             ], [
-                
+
                 'imagenCompra' => 'Formato de imagen invalido'
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json([
                     'tilte' => 'Ha ocurrido un error.',
@@ -618,10 +644,10 @@ class RecibirProducto extends Component
                     'icon' => 'error'
                 ], 402);
             }
-    
+
             $file = $request->file('imagenCompra');
             $name = 'IMG_'. time(). '.' . $file->getClientOriginalExtension();
-            $path = public_path() . '/incidencias_compra';   
+            $path = public_path() . '/incidencias_compra';
             $file->move($path, $name);
 
             $incidencia = new ModelIncidenciaCompra;
@@ -631,10 +657,10 @@ class RecibirProducto extends Component
             $incidencia->producto_id = $request->idProducto;
             $incidencia->users_id = Auth::user()->id;
             $incidencia->save();
-            
+
         }else{
             $incidencia = new ModelIncidenciaCompra;
-            $incidencia->descripcion = $request->comentarioCompra;          
+            $incidencia->descripcion = $request->comentarioCompra;
             $incidencia->compra_id = $request->idCompra;
             $incidencia->producto_id = $request->idProducto;
             $incidencia->users_id = Auth::user()->id;
@@ -649,7 +675,7 @@ class RecibirProducto extends Component
         ],200);
        } catch (QueryException $e) {
         $carpetaPublic = public_path();
-        $path = $carpetaPublic.'/incidencias_compra/'.$name;  
+        $path = $carpetaPublic.'/incidencias_compra/'.$name;
         File::delete($path);
 
        return response()->json([
@@ -661,5 +687,5 @@ class RecibirProducto extends Component
        }
        }
 
-    
+
 }

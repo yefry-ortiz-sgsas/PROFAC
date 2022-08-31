@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\File;
 use PDF;
 
 use App\Models\modelBodega;
-use App\Models\ModelRecibirBodega; 
+use App\Models\ModelRecibirBodega;
 use App\Models\ModelLogTranslados;
 
 use Livewire\Component;
@@ -39,7 +39,7 @@ class Translados extends Component
        ],200);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -63,23 +63,23 @@ class Translados extends Component
        ]);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ]);
        }
     }
 
- 
+
 
     public function listarProductos(Request $request){
        try {
-       
+
         $listaProductos = DB::select("
-        select            
+        select
             B.id ,
             B.nombre,
             concat(B.id,' - ',B.nombre) as text
-          
+
         from recibido_bodega A
             inner join producto B
             on A.producto_id = B.id
@@ -97,7 +97,7 @@ class Translados extends Component
        ]);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ]);
        }
@@ -108,7 +108,7 @@ class Translados extends Component
            //dd($idBodega,$idProducto);
 
         $listaProductos = DB::SELECT("
-        select 
+        select
         A.id as 'idRecibido',
         B.id as 'idProducto',
         B.nombre,
@@ -145,7 +145,7 @@ class Translados extends Component
                 <button class="btn btn-warning" onclick="modalTranslado('.$producto->idRecibido.','.$producto->cantidad_disponible.')">
                     Transladar
                 </button>
-               
+
             </div>';
         })
 
@@ -154,7 +154,7 @@ class Translados extends Component
 
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ]);
        }
@@ -162,13 +162,17 @@ class Translados extends Component
 
     public function ejectarTranslado(Request $request){
        try {
+        $unidadesVenta = DB::SELECTONE("select id, unidad_venta from unidad_medida_venta where id =".$request->Umedida);
+
+        $unidadesTraslado = $request->cantidad * $unidadesVenta->unidad_venta;
+
         $validator = Validator::make($request->all(), [
-           
+
             'idRecibido' => 'required',
-            'cantidad' => 'required'              
+            'cantidad' => 'required'
 
         ], [
-            
+
             'idRecibido' => 'codigo de recibido es necesario.',
             'cantidad' => 'la cantidad de producto a transladar es requerida'
         ]);
@@ -181,12 +185,12 @@ class Translados extends Component
             ], 402);
         }
 
-        
-        $productoEnBodega = ModelRecibirBodega::find($request['idRecibido']);
-      
 
-        if($productoEnBodega->cantidad_disponible >= $request->cantidad ){
-            
+        $productoEnBodega = ModelRecibirBodega::find($request['idRecibido']);
+
+
+        if($productoEnBodega->cantidad_disponible >= $unidadesTraslado ){
+
 
         DB::beginTransaction();
 
@@ -195,26 +199,28 @@ class Translados extends Component
             $transladarBodega->producto_id = $productoEnBodega->producto_id;
             $transladarBodega->seccion_id = $request->seccion;
             $transladarBodega->cantidad_compra_lote = $productoEnBodega->cantidad_compra_lote;
-            $transladarBodega->cantidad_inicial_seccion = $request->cantidad;
-            $transladarBodega->cantidad_disponible = $request->cantidad;
+            $transladarBodega->cantidad_inicial_seccion = $unidadesTraslado;
+            $transladarBodega->cantidad_disponible = $unidadesTraslado;
             $transladarBodega->fecha_recibido = now();
             $transladarBodega->fecha_expiracion = $productoEnBodega->fecha_expiracion;
             $transladarBodega->estado_recibido = 4;
-            $transladarBodega->recibido_por = Auth::user()->id; 
-            $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id; 
-            $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra; 
+            $transladarBodega->recibido_por = Auth::user()->id;
+            $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id;
+            $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;
+
             $transladarBodega->save();
 
             $logTranslados = new ModelLogTranslados;
             $logTranslados->origen = $productoEnBodega->id ;
             $logTranslados->destino = $transladarBodega->id;
-            $logTranslados->cantidad = $request->cantidad;
-            $logTranslados->users_id= Auth::user()->id; 
+            $logTranslados->cantidad = $unidadesTraslado;
+            $logTranslados->unidad_medida_venta_id = $request->Umedida;
+            $logTranslados->users_id= Auth::user()->id;
             $logTranslados->descripcion="Translado de bodega";
             $logTranslados->save();
 
 
-            $productoEnBodega->cantidad_disponible = $productoEnBodega->cantidad_disponible - $request->cantidad;
+            $productoEnBodega->cantidad_disponible = $productoEnBodega->cantidad_disponible - $unidadesTraslado;
             $productoEnBodega->save();
 
             DB::commit();
@@ -231,12 +237,12 @@ class Translados extends Component
                 "icon" => "warning",
                 "title"=>"Advertencia!"
             ], 402);
-            
 
-        }        
+
+        }
 
        } catch (QueryException $e) {
-        DB::rollback(); 
+        DB::rollback();
         return response()->json([
             "text" => "Ha ocurrido un error, al intentar transladar el producto",
             "icon" => "error",
@@ -245,24 +251,24 @@ class Translados extends Component
         ], 402);
        }
     }
-    
+
     public function productoGeneralBodega($idSeccion,$idProducto){
         try {
         //dd($idSeccion,$idProducto);
             $idBodega = DB::SELECTONE("
                 select
                     bodega.id
-                from seccion 
+                from seccion
                     inner join segmento
                     on seccion.segmento_id = segmento.id
                     inner join bodega
                     on bodega.id = segmento.bodega_id
                     where seccion.id =".$idSeccion);
-        
-                    
- 
+
+
+
          $listaProductos = DB::SELECT("
-         select 
+         select
              A.id as 'idRecibido',
              B.id as 'idProducto',
              B.nombre,
@@ -287,14 +293,14 @@ class Translados extends Component
              on A.compra_id = compra.id
          where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega->id." and A.producto_id = ".$idProducto
          );
- 
+
          return Datatables::of($listaProductos)
-        
+
          ->make(true);
- 
+
         } catch (QueryException $e) {
         return response()->json([
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e
         ]);
         }
@@ -305,14 +311,14 @@ class Translados extends Component
         $translado = DB::SELECTONE("
         select
         C.id,
-      
+
         C.nombre,
         C.descripcion,
         H.nombre as medida,
         CONCAT(F.nombre,' - ',D.descripcion)as origen,
-        
+
         (select
-        CONCAT(E.nombre,' - ',C.descripcion) 
+        CONCAT(E.nombre,' - ',C.descripcion)
         from log_translado A
         inner join recibido_bodega B
         on A.destino = B.id
@@ -324,7 +330,7 @@ class Translados extends Component
         on E.id = D.bodega_id
         where A.descripcion ='Translado de bodega' and A.id = ".$idTranslado.") as destino,
         A.cantidad
-        
+
         from log_translado A
         inner join recibido_bodega B
         on A.origen = B.id
@@ -355,7 +361,7 @@ class Translados extends Component
         where A.id = ".$idTranslado);
 
         $pdf = PDF::loadView('/pdf/translado',compact('translado','datos'))->setPaper('letter');
-       
+
         return $pdf->stream("Ajuste numero.pdf");
 
      }

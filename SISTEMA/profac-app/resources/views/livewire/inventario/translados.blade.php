@@ -83,7 +83,7 @@
                                         <th>Sección</th>
                                         <th>Fecha Ingreso</th>
                                         <th>Translado</th>
-                                        
+
 
 
                                     </tr>
@@ -120,25 +120,25 @@
                                             <th>Bodega</th>
                                             <th>Sección</th>
                                             <th>Fecha Ingreso</th>
-    
-                                            
-    
-    
+
+
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
-    
+
                                     </tbody>
                                 </table>
-    
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
     </div>
-             
+
 
 
     <!-- Modal para transferir producto a otra bodega-->
@@ -147,7 +147,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="modal_transladar_productoLabel"> Transladar a otra bodega </h3>
+                    <h3 class="modal-title" id="modal_transladar_productoLabel"> Transladar a otra bodega 5</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -176,6 +176,8 @@
                                     </select>
                                 </div>
 
+
+
                                 <div class="form-group">
                                     <label for="seccion">Seccion</label>
                                     <select class="form-control m-b" name="seccion" id="seccion" required
@@ -194,7 +196,14 @@
 
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="seccion">Unidad de medida</label>
+                                    <select class="form-control m-b" name="Umedida" id="Umedida" required
+                                        data-parsley-required="">
+                                        <option value="" selected disabled>---Seleccione una Unidad de medida---</option>
 
+                                    </select>
+                                </div>
 
 
                             </form>
@@ -215,6 +224,7 @@
             $(document).ready(function() {
 
                 listarBodegas();
+                listarUmedidas();
 
             });
 
@@ -268,7 +278,7 @@
                 //let table2 = document.getElementById('tbl_translados_destino');
                 table.destroy();
 
-        
+
                 //table2.destroy();
 
                 $('#tbl_translados').DataTable({
@@ -310,8 +320,8 @@
                     var sum = $('#tbl_translados').DataTable().column(3).data().sum();
                     let html = 'Cantidad Total en Bodega: '+sum
                     $('#total').html(html);
-                }	
-                    
+                }
+
 
 
                 });
@@ -408,9 +418,7 @@
                         let array = response.data.listaSecciones;
                         let htmlSeccion = '  <option value="" selected disabled>---Seleccione una sección---</option>';
                         array.forEach(element => {
-                            htmlSeccion += `
-                <option value="${element.id}">${element.descripcion}</option>
-`
+                            htmlSeccion += `<option value="${element.id}">${element.descripcion}</option>`
 
                         })
 
@@ -424,6 +432,28 @@
                     })
             }
 
+            function listarUmedidas() {
+                axios.get('/producto/recibir/Umedidas')
+                    .then(response => {
+
+                        let array = response.data.listaUmedidas;
+                        let htmlSeccion = '  <option value="" selected disabled>---Seleccione una sección---</option>';
+                        array.forEach(element => {
+                            htmlSeccion += `<option value="${element.id}">${element.unidad}</option>`
+                        })
+
+                        document.getElementById('Umedida').innerHTML = htmlSeccion;
+
+                    })
+                    .catch(err => {
+
+                        console.log(err);
+
+                    })
+            }
+
+
+
             $(document).on('submit', '#recibirProducto', function(event) {
 
                 event.preventDefault();
@@ -434,7 +464,7 @@
             function transladoProducto(){
                 document.getElementById('btn_recibir_bodega').disabled = true;
                 let idSeccion = document.getElementById('seccion').value;
-               
+
                 let dataForm = new FormData($('#recibirProducto').get(0));
                 dataForm.append('idRecibido',idRecibido);
                 //console.log(dataForm);
@@ -452,17 +482,17 @@
                     document.getElementById("recibirProducto").reset();
                     $('#recibirProducto').parsley().reset();
 
-                    
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
                             text: data.text,
-                           
-                        })                
+
+                        })
 
 
                     $('#tbl_translados').DataTable().ajax.reload();
-                    
+
 
                     listadoBodegaDestino(idSeccion);
 
@@ -493,9 +523,9 @@
             }
 
             function listadoBodegaDestino(idSeccion){
-              
+
                 let idProducto = document.getElementById('selectProducto').value;
-               
+
 
                 // console.log(idSeccion);
                 // console.log(idProducto);
@@ -524,7 +554,7 @@
                         },
                         {
                             data: 'descripcion'
-                        },                
+                        },
                         {
                             data: 'created_at'
                         }
