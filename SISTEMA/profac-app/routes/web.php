@@ -399,7 +399,7 @@ Route::get('/nota/credito',CrearNotaCredito::class);
 ROUTE::get('/nota/credito/clientes', [CrearNotaCredito::class, 'obtenerClientes']);
 Route::get('/nota/credito/facturas', [CrearNotaCredito::class,'obtenerFactura']);
 Route::post('/nota/credito/datos/factura',[CrearNotaCredito::class, 'obtenerDetalleFactura']);
-Route::post('/nota/credito/obtener/productos',[CrearNotaCredito::class,'obtenerProductos']); 
+Route::post('/nota/credito/obtener/productos',[CrearNotaCredito::class,'obtenerProductos']);
 Route::post('/nota/credito/datos/producto',[CrearNotaCredito::class,'datosProducto']);
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
@@ -412,7 +412,7 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 //--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//
 Route::get('/cardex', Cardex::class);
 Route::get('/cardex/listar/bodega', [Cardex::class, 'listarBodegas']);
-Route::get('/cardex/listar/productos/{id}', [Cardex::class, 'listarProductos']);
+Route::get('/cardex/listar/productos/{idBodega}', [Cardex::class, 'listarProductos']);
 
 Route::get('/listado/cardex/{idBodega}/{idProducto}', [Cardex::class, 'listarCardex']);
 
