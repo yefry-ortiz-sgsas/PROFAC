@@ -17,7 +17,7 @@ use App\Models\ModelCliente;
 use App\Models\ModelContacto;
 
 
-use Maatwebsite\Excel\facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ClientesExport;
 
 

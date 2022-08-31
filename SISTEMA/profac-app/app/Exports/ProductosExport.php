@@ -16,7 +16,7 @@ class ProductosExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         //return ModelProducto::all();
-        return ModelProducto::select("id","nombre","descripcion","isv","precio_base","ultimo_costo_compra","costo_promedio","codigo_barra","codigo_estatal","unidadad_compra")->get();
+        return ModelProducto::select("id","nombre","descripcion","isv","precio_base","ultimo_costo_compra","costo_promedio","codigo_barra","codigo_estatal","unidadad_compra","users_id","sub_categoria_id")->get();
     }
 
     public function headings(): array
@@ -24,14 +24,16 @@ class ProductosExport implements FromCollection, WithHeadings, ShouldAutoSize
         return [
             '#',
             'Nombre',
-            'Descripción',
+            'Descripcion',
             'ISV',
             'Precio Base',
-            'Último Costo de Compra',
+            'Ultimo Costo de Compra',
             'Costo Promedio',
-            'Código de Barra',
-            'Código Estatal',
+            'Codigo de Barra',
+            'Codigo Estatal',
             'Unidad de Compra',
+            'ID Usuario',
+            'Sub Categoria',
         ];
     }
 }
