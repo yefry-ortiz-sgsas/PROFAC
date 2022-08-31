@@ -205,7 +205,7 @@ class Producto extends Component
 
 
             from producto A
-            inner join categoria_producto B
+            inner join sub_categoria B
             on A.sub_categoria_id = B.id
             inner join unidad_medida C
             on A.unidad_medida_compra_id = C.id

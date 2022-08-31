@@ -407,7 +407,7 @@
                             
                             
                             <div class="col-md-6">
-                                <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
+                                <label for="unidad_producto_editar" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="unidad_producto_editar" id="unidad_producto_editar"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una unidad---</option>
@@ -736,7 +736,7 @@
 
 
                    document.getElementById('marca_producto_editar').innerHTML=htmlMarca;
-                   document.getElementById('categoria_producto_edit').innerHTML=htmlCategorias;
+                  // document.getElementById('categoria_producto_edit').innerHTML=htmlCategorias;
                    document.getElementById('unidad_producto_editar').innerHTML=htmlUnidades;
        
 
