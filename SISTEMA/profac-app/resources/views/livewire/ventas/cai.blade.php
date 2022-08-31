@@ -2,6 +2,7 @@
 
     @include('livewire.ventas.cai-credito')
     @include('livewire.ventas.cai-debito')
+    @include('livewire.ventas.cai-devolucion')
 
     @push('styles')
         <style>
@@ -119,6 +120,9 @@
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_cai_crear_debito">Débito</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a data-toggle="modal" data-target="#modal_cai_crear_devolucion">Crédito</a>
+                </li>
 
             </ol>
         </div>
@@ -136,6 +140,10 @@
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_cai_crear_debito"><i class="fa fa-plus"></i> Añadir CAI Nota Débito</a>
+            </div>
+            <div style="margin-top: 1.5rem">
+                <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
+                    data-target="#modal_cai_crear_devolucion"><i class="fa fa-plus"></i> Añadir CAI Devolución Crédito</a>
             </div>
         </div>
 

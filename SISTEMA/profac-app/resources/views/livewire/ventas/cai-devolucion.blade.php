@@ -1,20 +1,20 @@
 
-            <!-- Modal para registro de CAI Nota Débito-->
-            <div class="modal fade" id="modal_cai_crear_debito" tabindex="-1" role="dialog"
+            <!-- Modal para registro de CAI Devolución de Crédito-->
+            <div class="modal fade" id="modal_cai_crear_devolucion" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de CAI Nota Débito</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de CAI Nota Crétido</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
 
                         <div class="modal-body">
-                            <form id="crearCAIDebitoForm" name="crearCAIDebitoForm" data-parsley-validate>
+                            <form id="crearCAIDevolucionForm" name="crearCAIDevolucionForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                <input id="tipo_documento_fiscal_id" name="tipo_documento_fiscal_id" type="hidden" value="4">
+                                <input id="tipo_documento_fiscal_id" name="tipo_documento_fiscal_id" type="hidden" value="5">
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -66,8 +66,8 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="crearCAIDebitoForm" class="btn btn-primary">Guardar
-                                CAI Débito</button>
+                            <button type="submit" form="crearCAIDevolucionForm" class="btn btn-primary">Guardar
+                                CAI Devolución de Crédito</button>
                         </div>
                     </div>
                 </div>
@@ -80,25 +80,25 @@
     @push('scripts')
         <script>
          
-         $(document).on('submit', '#crearCAIDebitoForm', function(event) {
+         $(document).on('submit', '#crearCAIDevolucionForm', function(event) {
             event.preventDefault();
-            guardarCaiDebito();
+            guardarCaiDevolucion();
         });
 
-        function guardarCaiDebito() {
+        function guardarCaiDevolucion() {
             $('#modalSpinnerLoading').modal('show');
 
-            var data = new FormData($('#crearCAIDebitoForm').get(0));
+            var data = new FormData($('#crearCAIDevolucionForm').get(0));
                 
             axios.post("/ventas/cai/guardar", data)
                 .then(response => {
                     $('#modalSpinnerLoading').modal('hide');
 
 
-                    $('#crearCAIDebitoForm').parsley().reset();
+                    $('#crearCAIDevolucionForm').parsley().reset();
                         
-                    document.getElementById("crearCAIDebitoForm").reset();
-                    $('#modal_cai_crear_debito').modal('hide');
+                    document.getElementById("crearCAIDevolucionForm").reset();
+                    $('#modal_cai_crear_devolucion').modal('hide');
 
                     $('#tbl_cai_listar').DataTable().ajax.reload();
 
@@ -113,7 +113,7 @@
                 .catch(err => {
                     let data = err.response.data;
                     $('#modalSpinnerLoading').modal('hide');
-                    $('#modal_cai_crear_debito').modal('hide');
+                    $('#modal_cai_crear_devolucion').modal('hide');
                     Swal.fire({
                         icon: data.icon,
                         title: data.title,
