@@ -153,6 +153,8 @@
                                     Barra:</strong> {{ $producto->codigo_barra }}</small></p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Categoría :</strong>
                                 {{ $producto->categoria }}</small></p>
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Sub Categoría :</strong>
+                                    {{ $producto->sub_categoria }}</small></p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Unidad de
                                     medida:</strong> {{ $producto->unidad_medida }}</small></p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de
@@ -300,7 +302,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Editar inromación del producto</h3>
+                    <h3 class="modal-title" id="exampleModalLabel">Editar información del producto</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -356,7 +358,7 @@
                             </div>
 
                            
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="categoria_producto_editar" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="marca_producto_editar" id="marca_producto_editar"
                                     data-parsley-required>
@@ -367,16 +369,28 @@
                             </div>
 
 
-                            <div class="col-md-6">
-                                <label for="categoria_producto_editar" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
-                                <select class="form-group form-control" name="categoria_producto_edit" id="categoria_producto_edit" data-parsley-required>
+                            <div class="col-md-4">
+                                <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
+                                <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
+                                    data-parsley-required onchange="listarSubCategorias()">
                                     <option selected disabled>---Seleccione una categoria---</option>
-
+                                    @foreach ($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
+                                    @endforeach
 
 
                                 </select>
                             </div>
 
+                            <div class="col-md-4">
+                                <label for="sub_categoria_producto" class="col-form-label focus-label">Subcategoria :<span class="text-danger">*</span></label>
+                                <select class="form-group form-control" name="sub_categoria_producto" id="sub_categoria_producto" data-parsley-required>
+                                    <option selected disabled>---Seleccione una Subcategoria---</option>
+
+
+
+                                </select>
+                            </div>
                             {{-- <div class="col-md-4">
                                 <label class="col-form-label focus-label" for="precio2">Precio de venta 2:</label>
                                 <input class="form-group form-control" min="1" type="number" name="precio_edit[]" id="precio2_edit">
@@ -880,6 +894,34 @@
             })
 
         }
+
+        
+        ///////////////////////////////////////////////////////////////////
+        function listarSubCategorias(){
+
+var categoria_produ = document.getElementById('categoria_producto').value;
+  axios.get("/producto/sub_categoria/listar/"+categoria_produ)
+  .then( response=>{
+      let data = response.data.sub_categorias;
+
+      let htmlSelect = '<option disabled selected>--Seleccione una Subcategoria--</option>'
+
+      data.forEach(element => {
+          htmlSelect += `<option value="${element.id}">${element.descripcion}</option>`
+      });
+
+      document.getElementById('sub_categoria_producto').innerHTML = htmlSelect;
+  })
+  .catch(err=>{
+      console.log(err.response.data)
+      Swal.fire({
+      icon: 'error',
+      title: 'Error!',
+      text: 'Ha ocurrido un error',                
+      })
+  })
+}
+///////////////////////////////////////////////////////////////////
 
     </script>
     @endpush

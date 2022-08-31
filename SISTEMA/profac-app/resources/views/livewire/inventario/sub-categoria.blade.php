@@ -131,7 +131,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_sub_categorias_listar" class="table table-striped table-bordered table-hover col-md-10">
+                            <table id="tbl_sub_categorias_listar" class="table table-striped table-bordered table-hover ">
                                 <thead class="">
                                     <tr>
 

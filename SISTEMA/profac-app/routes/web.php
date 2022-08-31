@@ -50,7 +50,8 @@ use App\Http\Livewire\Inventario\TipoAjuste;
 use App\Http\Livewire\Ventas\MotivoNotaCredito;
 
 use App\Http\Livewire\NotaCredito\CrearNotaCredito;
-
+use App\Http\Livewire\Inventario\Categoria;
+use App\Http\Livewire\Inventario\SubCategoria;
 
 
 
@@ -422,6 +423,25 @@ Route::get('/linkstorage', function () {
     Artisan::call('storage:link'); // this will do the command line job
 });
 
+
+//---------------------------------------------------------CRUD CATEGORIAS ---------------------------------------------------------//
+
+
+
+Route::get('/categoria/categorias', Categoria::class);
+Route::get('/categoria/listar', [Categoria::class,'listarCategorias']);
+Route::post('/categoria/guardar', [Categoria::class,'guardarCategoria']);
+Route::post('/categoria/datos', [Categoria::class,'obtenerDatos']);
+Route::post('/categoria/editar', [Categoria::class,'editarCategoria']);
+
+
+Route::get('/sub_categoria/sub_categorias', SubCategoria::class);
+Route::get('/sub_categoria/listar', [SubCategoria::class,'listarSubCategorias']);
+Route::get('/sub_categoria/listar/categorias', [SubCategoria::class,'listarCategorias']);
+Route::get('/producto/sub_categoria/listar/{id}',[Producto::class,'listarSubcategorias']);
+Route::post('/sub_categoria/guardar', [SubCategoria::class,'guardarSubCategoria']);
+Route::post('/sub_categoria/datos', [SubCategoria::class,'obtenerDatos']);
+Route::post('/sub_categoria/editar', [SubCategoria::class,'editarSubCategoria']);
 
 
 return redirect('/login');

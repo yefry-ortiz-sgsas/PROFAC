@@ -354,7 +354,7 @@ class Producto extends Component
             $producto->isv = trim($request['isv_producto_edit']);
             $producto->codigo_barra = trim($request['cod_barra_producto_edit']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto_edit']);
-            $producto->sub_categoria_id = $request['categoria_producto_edit'];
+            $producto->sub_categoria_id = $request['sub_categoria_producto'];
             $producto->precio_base = trim($request['precioBase_edit']);
             $producto->costo_promedio = $request['costo_promedio_editar'];
             $producto->unidadad_compra = trim($request['unidades_editar']);

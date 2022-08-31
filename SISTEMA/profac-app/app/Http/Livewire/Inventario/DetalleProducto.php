@@ -32,32 +32,35 @@ class DetalleProducto extends Component
         $id = $this->idProducto;
 
         $producto = DB::SELECTONE("
-            select
-                A.id,
-                A.nombre,
-                A.descripcion,
-                A.codigo_estatal,
-                A.codigo_barra,
-                B.descripcion as 'categoria',
-                A.precio_base,
-                A.costo_promedio,
-                A.isv,
-                C.nombre as 'unidad_medida',
-                A.created_at as 'fecha_registro',
-                D.name as 'registrado_por',
-                A.marca_id,
-                A.categoria_id,
-                unidad_medida_compra_id,
-                unidadad_compra
+        select
+            A.id,
+            A.nombre,
+            A.descripcion,
+            A.codigo_estatal,
+            A.codigo_barra,
+            B.descripcion as 'sub_categoria',
+            E.descripcion as 'categoria',
+            A.precio_base,
+            A.costo_promedio,
+            A.isv,
+            C.nombre as 'unidad_medida',
+            A.created_at as 'fecha_registro',
+            D.name as 'registrado_por',
+            A.marca_id,
+            A.sub_categoria_id,
+            unidad_medida_compra_id,
+            unidadad_compra
 
-            from  producto A
-            inner join categoria_producto B
-            on A.categoria_id = B.id
-            inner join unidad_medida C
-            on A.unidad_medida_compra_id = C.id
-            inner join users D
-            on A.users_id = D.id
-            where A.id = " . $id . "
+        from  producto A
+        inner join sub_categoria B
+        on A.sub_categoria_id = B.id
+        inner join categoria_producto E
+        on E.id = B.categoria_producto_id
+        inner join unidad_medida C
+        on A.unidad_medida_compra_id = C.id
+        inner join users D
+        on A.users_id = D.id
+        where A.id = " . $id . "
         ");
 
 
