@@ -103,6 +103,11 @@ Route::get('/bodega/listar/bodegas', [BodegaEditar::class, 'listarBodegas']);
 Route::post('/bodega/desactivar', [BodegaEditar::class, 'desactivarBodega']);
 Route::post('/bodega/datos', [BodegaEditar::class, 'obtenerDatos']);
 Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']);
+
+Route::get('/bodega/segmentos/listar/{idBodega}', [BodegaEditar::class, 'obtenerSegmentoDeBodega']);
+Route::post('/guardar/seccion', [BodegaEditar::class, 'guardarSeccion']);
+
+
 //----------------------Proveedores-----------------------------------------------------------------------------------------------------------------//
 
 Route::get('/proveedores', Proveedores::class);

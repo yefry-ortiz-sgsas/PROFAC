@@ -25,6 +25,27 @@ class BodegaEditar extends Component
         return view('livewire.bodega-component.bodega-editar');
     }
 
+    public function guardarSeccion(Request $request){
+        DB::beginTransaction();
+                $idBodega = $request['idBodega'];
+                $idSegmento = $request['selectSegmento'];
+                $numeracion = DB::selectOne("select numeracion from seccion where segmento_id = ".$idSegmento." order by numeracion desc");
+                $letraSegmento = DB::selectOne("select descripcion from segmento where id = ".$idSegmento);
+
+
+                $seccion = new Seccion;
+                $seccion->descripcion = "Seccion ".$letraSegmento->descripcion.$numeracion->numeracion+1;
+                $seccion->numeracion = $numeracion->numeracion+1;
+                $seccion->estado_id = 1;
+                $seccion->segmento_id = $idSegmento;
+                $seccion->save();
+        DB::commit();
+
+        return response()->json([
+            "message" => "Sección agregada con exito",
+
+                ],200);
+    }
 
     public function listarBodegas(){
         try {
@@ -62,9 +83,11 @@ class BodegaEditar extends Component
                         <li><a class="dropdown-item" href="#" onclick="obtenerDatosBodega('.$listaBodegas->codigo.')"> <i
                             class="fa fa-pencil text-warning" aria-hidden="true"></i>
                         Editar </a></li>
-                        
-                        
-    
+
+                        <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i
+                            class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                        Añadir Sección </a></li>
+
                     </ul>
                 </div>
                     ';
@@ -84,36 +107,40 @@ class BodegaEditar extends Component
                                 <li><a class="dropdown-item" href="#" onclick="obtenerDatosBodega('.$listaBodegas->codigo.')"> <i
                                 class="fa fa-pencil text-warning" aria-hidden="true"></i>
                             Editar </a></li>
-    
+
+                            <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i
+                            class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                        Añadir Sección </a></li>
+
                     </ul>
                 </div>
                     ';
 
                 }
-                
+
 
             })
             ->addColumn('estado_bodega', function ($listaBodegas) {
                 if ($listaBodegas->estado === 'activo') {
                     return '<td><span class="badge bg-primary">ACTIVO</span></td>';
                 } else {
-    
+
                     return '<td><span class="badge bg-danger">INACTIVO</span></td>';
                 }
-    
+
                     })
-           
-            ->rawColumns(['opciones','estado_bodega'])         
+
+            ->rawColumns(['opciones','estado_bodega'])
             ->make(true);
 
 
         } catch (QueryException $e) {
-        
+
             return response()->json([
-                'message' => 'Ha ocurrido un error, por favor intente de nuevo.',               
+                'message' => 'Ha ocurrido un error, por favor intente de nuevo.',
                 'exception' => $e,
             ],402);
-            
+
         }
     }
 
@@ -127,7 +154,7 @@ class BodegaEditar extends Component
                 $bodega = modelBodega::find($request['id']);
                 $bodega->estado_id = 2;
                 $bodega->save();
-    
+
                 return response()->json([
                     "message" => "Editado con exito"
                 ],200);
@@ -137,16 +164,16 @@ class BodegaEditar extends Component
                 $bodega = modelBodega::find($request['id']);
                 $bodega->estado_id = 1;
                 $bodega->save();
-    
+
                 return response()->json([
                     "message" => "Editado con exito"
                 ],200);
-                
+
             }
 
-           
 
-         
+
+
         } catch (QueryException $e) {
 
             return response()->json([
@@ -154,7 +181,7 @@ class BodegaEditar extends Component
                 "error" => $e,
             ],402);
 
-           
+
         }
 
     }
@@ -176,16 +203,16 @@ class BodegaEditar extends Component
             select
                 seccion.id,
                 seccion.descripcion,
-                seccion.estado_id 
-            from segmento 
+                seccion.estado_id
+            from segmento
             inner join seccion
             on segmento.id = seccion.segmento_id
             where segmento.bodega_id =  ".$request['id']."
-            
+
             ");
 
             $usuarios = DB::SELECT("
-            select 
+            select
                 id,
                 name
             from users
@@ -196,14 +223,14 @@ class BodegaEditar extends Component
             "secciones" => $secciones,
             "usuarios" => $usuarios,
             ],200);
-          
+
         } catch (QueryException $e) {
 
             return response()->json([
                 "message" => "Ha ocurrido un error.",
                 "error" => $e
             ],402);
-         
+
         }
     }
 
@@ -213,7 +240,7 @@ class BodegaEditar extends Component
             $validator = Validator::make($request->all(), [
                 'idBodega' => 'required',
                 'editBodegaNombre' => 'required',
-                'editBodegaDireccion' => 'required',          
+                'editBodegaDireccion' => 'required',
                 'editEncargadoBodega' => 'required',
             ], [
                 'idBodega' => 'Id bodega requerido',
@@ -240,16 +267,16 @@ class BodegaEditar extends Component
 
 
                 //desactivo todas las secciones
-                            // Seccion::where('id_bodega',"=", $request['idBodega'])               
+                            // Seccion::where('id_bodega',"=", $request['idBodega'])
                             // ->update(['estado_id' => 2]);
 
                 DB::UPDATE("
-                update  segmento 
+                update  segmento
                 inner join seccion
                 on segmento.id = seccion.segmento_id
                 set seccion.estado_id = 2
                 where segmento.bodega_id = ".$request['idBodega']
-                
+
                 );
 
                 $arrayCheckbox =  $request['seccion'];
@@ -257,17 +284,17 @@ class BodegaEditar extends Component
                 if(!empty($arrayCheckbox)){
                     $longitudArreglo = count($arrayCheckbox);
 
-                //dd($arrayCheckbox);              
+                //dd($arrayCheckbox);
 
-                    for ($i=0; $i <$longitudArreglo ; $i++) { 
+                    for ($i=0; $i <$longitudArreglo ; $i++) {
                     $editarEstadoSeccion = Seccion::find( $arrayCheckbox[$i]);
                     $editarEstadoSeccion->estado_id = 1;
-                    $editarEstadoSeccion->save();                
+                    $editarEstadoSeccion->save();
 
                     }
 
                 }
-                
+
 
                 DB::commit();
 
@@ -275,20 +302,40 @@ class BodegaEditar extends Component
                     "message" => "Bodega editada con exito",
 
                 ],200);
-          
+
             } catch (QueryException $e) {
-                DB::rollback(); 
-         
+                DB::rollback();
+
             return response()->json([
                 'message' => 'Ha ocurrido un error al editar la bodega.',
-                'error' => $e,            
-              
-            ], 402);  
+                'error' => $e,
+
+            ], 402);
             }
-    
+
 
             return false;
     }
 
+    public function obtenerSegmentoDeBodega($idBodega){
+        try{
+
+            $segmentosPorBodega = DB::SELECT("
+            SELECT * FROM segmento
+            WHERE segmento.bodega_id =
+                ".$idBodega);
+                return response()->json(["segmentosPorBodega" => $segmentosPorBodega], 200);
+
+
+        } catch (QueryException $e) {
+            DB::rollback();
+
+            return response()->json([
+                'message' => 'Ha ocurrido un error al Mostrar segmento.',
+                'error' => $e,
+
+            ], 402);
+        }
+    }
 
 }
