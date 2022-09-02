@@ -83,7 +83,7 @@
                                         </div>
 
                                         <h3 class="text-center mt-4">Activar / Desactivar secciones</h3>
-                                     
+
                                         <hr>
 
                                         <div id="contenedorSwich">
@@ -103,6 +103,41 @@
             </div>
 
 
+            <div class="modal fade" id="modalSecciones" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Agregar Sección</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form id="addSeccion" data-parsley-validate>
+                                        <input id="idBodega" name="idBodega" type="hidden" >
+
+                                        <div>
+                                            <label for="">Seleccione el segmendo dónde quiere añadir nueva sección<span class="text-danger">*</span></label>
+                                            <select id="selectSegmento" name="selectSegmento"
+                                                class="form-control m-b" data-parsley-required>
+                                                <option selected disabled>-------SELECCIONE SEGMENTO-----------</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" form="addSeccion" class="btn btn-primary" onclick="guardarSeccion()">Guardar Sección</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         {{-- Care about people's approval and you will be their prisoner. --}}
 
@@ -111,6 +146,71 @@
             <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
             <script>
                 this.convertirSwitechs();
+
+                function addSeccionJS(idBodega){
+                    document.getElementById("idBodega").value = idBodega;
+
+
+                    axios.get("/bodega/segmentos/listar/"+idBodega)
+                                .then(response => {
+
+                                    console.log(response.data.segmentosPorBodega);
+                                    let datos = response.data.segmentosPorBodega;
+                                    let array = datos;
+                                    let htmlSelect = "";
+
+                                    array.forEach(element => {
+
+                                        htmlSelect += `<option value="${element.id}" selected>${element.descripcion}</option>`;
+
+                                    });
+
+                                    document.getElementById("selectSegmento").innerHTML += htmlSelect;
+                                    $("#modalSecciones").modal("show");
+                                })
+                                .catch(error => {
+
+                                    Swal.fire(
+                                        'Error!',
+                                        'Ha ocurrido un error al mostrar lista de segmentos.',
+                                        'error',
+
+                                    )
+
+                                });
+                }
+
+                function guardarSeccion(){
+                    var data = new FormData($('#addSeccion').get(0));
+
+                    axios.post('/guardar/seccion',data)
+                    .then( response =>{
+                        //console.log(response.data);
+                        //location.reload();
+                        $('#modalSecciones').modal('hide');
+
+
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: 'Guardados con éxito!',
+
+                        })
+
+
+                    })
+                    .catch( err=>{
+
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Ha ocurrido un error al Guardar!',
+
+                        })
+
+
+                    });
+                }
 
                 function convertirSwitechs() {
                     //     var elem = document.querySelector('.js-switch');
@@ -267,7 +367,7 @@
                         })
                         .then(response => {
                             let datos = response.data;
-                          
+
 
                             document.getElementById("idBodega").value = datos.datosBodega.id;
                             document.getElementById("editBodegaNombre").value = datos.datosBodega.nombre;
@@ -282,13 +382,13 @@
 
                                     htmlSelect +=
                                         `
-                               <option value="${element.id}" selected>${element.name}</option>                            
+                               <option value="${element.id}" selected>${element.name}</option>
                             `;
                                 } else {
 
                                     htmlSelect +=
                                         `
-                               <option value="${element.id}">${element.name}</option>                            
+                               <option value="${element.id}">${element.name}</option>
                             `;
 
                                 }
@@ -307,11 +407,11 @@
                                     htmlCheckbox +=
                                         `
                                 <div class="my-2">
-                                            
+
                                         <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  checked />
-                                        <label for="" class="ml-2">${element.descripcion}</label>   
+                                        <label for="" class="ml-2">${element.descripcion}</label>
                                 </div>
-                                
+
                                 `
 
 
@@ -319,11 +419,11 @@
                                     htmlCheckbox +=
                                         `
                                 <div class="my-2">
-                                            
+
                                         <input id="${element.id}" name="seccion[]" value ="${element.id}"  type="checkbox" class="js-switch"  />
-                                        <label for="" class="ml-2">${element.descripcion}</label>   
+                                        <label for="" class="ml-2">${element.descripcion}</label>
                                 </div>
-                                
+
                                 `
                                 }
 
@@ -346,7 +446,7 @@
 
                 }
 
-                // $('#editarBodega').submit(function(e){    
+                // $('#editarBodega').submit(function(e){
                 //     e.preventDefault();
                 //     guardarCambios();
                 //     //crearBodega();
@@ -355,7 +455,7 @@
                 $(document).on('submit', '#editarBodega', function(event){
                     event.preventDefault();
                     guardarCambios();
-                    
+
                 });
 
                 function guardarCambios(){
@@ -368,35 +468,35 @@
                         $('#exampleModal').modal('hide');
                         document.getElementById('editarBodega').reset();
 
-                       
+
                         $('#editarBodega').parsley().reset();
 
                         Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
                         text: 'Cambios guardados con éxito!',
-                        
+
                         })
 
 
-                        $('#tbl_bodegaEditar').DataTable().ajax.reload();     
+                        $('#tbl_bodegaEditar').DataTable().ajax.reload();
 
-                        
+
 
                     })
                     .catch( err=>{
                         //console.error(err);
-                    
+
                         Swal.fire({
                         icon: 'error',
                         title: 'Error!',
                         text: 'Ha ocurrido un error al editar la bodega!',
-                        
+
                         })
 
 
                     })
-             
+
 
                 }
             </script>
