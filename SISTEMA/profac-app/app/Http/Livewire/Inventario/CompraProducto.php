@@ -128,7 +128,7 @@ class CompraProducto extends Component
             $producto = DB::SELECT("
             select 
             A.id,
-            concat(A.nombre,' - ',A.codigo_barra) as nombre,
+            concat(A.id,' - ',A.nombre) as nombre,
             A.isv,
             concat(B.nombre,' - ',A.unidadad_compra) as unidad,
             A.unidadad_compra,

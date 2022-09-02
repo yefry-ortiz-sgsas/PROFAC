@@ -351,6 +351,7 @@
         <script>
             var numeroInputs = 0;
             var arregloIdInputs = [];
+            var idProductoArray = [];
             //var retencionEstado = false;  true  aplica retencion, false no aplica retencion;
 
             window.onload = obtenerTipoPago;
@@ -496,7 +497,21 @@
             }
 
             function agregarProductoCarrito() {
+              
+               
                 let id = document.getElementById('seleccionarProdcuto').value;
+
+                let idBuscarProducto = idProductoArray.find(element => element == id);
+                
+                if(idBuscarProducto){
+                    Swal.fire({
+                            icon: 'warning',
+                            title: 'Advertencia!',
+                            text: "Este producto ya ha sido agregado al carrito de compra. No se permite duplicidad de producto."
+                        })
+
+                        return;
+                }
 
                 axios.post('/prodcuto/compra/datos', {
                         id: id
@@ -511,7 +526,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <div class="d-flex">
 
-                                                    <button class="btn btn-danger" type="button" style="display: inline" onclick="eliminarInput(${numeroInputs})"><i
+                                                    <button class="btn btn-danger" type="button" style="display: inline" onclick="eliminarInput(${numeroInputs},${id})"><i
                                                             class="fa-regular fa-rectangle-xmark"></i>
                                                     </button>
 
@@ -590,8 +605,12 @@
                         `;
 
                         arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
-                        document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
+                        idProductoArray .splice(producto.id,0,producto.id);
 
+                        document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
+                        
+                                
+                        
                         return;
 
                     })
@@ -607,16 +626,25 @@
                     })
             }
 
-            function eliminarInput(id) {
+            function eliminarInput(id,idProducto) {
                 const element = document.getElementById(id);
                 element.remove();
 
-
+                console.log(idProductoArray);
                 var myIndex = arregloIdInputs.indexOf(id);
                 if (myIndex !== -1) {
                     arregloIdInputs.splice(myIndex, 1);
                     this.totalesGenerales();
                 }
+
+                var myIndex2 = idProductoArray.indexOf(idProducto);
+                if (myIndex2 !== -1) {
+                    idProductoArray.splice(myIndex2, 1);
+                  
+                }
+
+                console.log(idProductoArray);
+
 
             }
 
