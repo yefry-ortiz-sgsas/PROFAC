@@ -84,8 +84,7 @@ class BodegaEditar extends Component
                             class="fa fa-pencil text-warning" aria-hidden="true"></i>
                         Editar </a></li>
 
-                        <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i
-                            class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                        <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
                         Añadir Sección </a></li>
 
                     </ul>
@@ -108,8 +107,7 @@ class BodegaEditar extends Component
                                 class="fa fa-pencil text-warning" aria-hidden="true"></i>
                             Editar </a></li>
 
-                            <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i
-                            class="fa fa-pencil text-warning" aria-hidden="true"></i>
+                            <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
                         Añadir Sección </a></li>
 
                     </ul>
