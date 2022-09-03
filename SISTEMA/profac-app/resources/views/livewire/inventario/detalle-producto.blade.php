@@ -29,7 +29,7 @@
         }
 
 
-        
+
 
     </style>
     @endpush
@@ -267,16 +267,16 @@
                         <h3>Unidades de medida para venta de producto <i class="fa-solid fa-scale-unbalanced"></i> </h3>
                     </div>
                     <div class="ibox-content">
-                    
+
                         <div class="table-responsive">
                             <table id="tbl_unidades_listar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
                                         <th>#</th>
                                         <th>Unidad de medicion</th>
-                                        <th>Cantidad de unidades</th>                                     
+                                        <th>Cantidad de unidades</th>
                                         <th>Editar</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -357,12 +357,12 @@
                                 <input class="form-group form-control" step="any" min="0.000001" type="number" name="ultimo_costo_compra_editar" id="ultimo_costo_compra_editar" data-parsley-required>
                             </div>
 
-                           
+
                             <div class="col-md-4">
-                                <label for="categoria_producto_editar" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
+                                <label for="marca_producto_editar" class="col-form-label focus-label">Marca de producto:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="marca_producto_editar" id="marca_producto_editar"
                                     data-parsley-required>
-                                    <option selected disabled>---Seleccione una marca de producto---</option>                                
+                                    <option selected disabled>---Seleccione una marca de producto---</option>
 
 
                                 </select>
@@ -370,22 +370,21 @@
 
 
                             <div class="col-md-4">
-                                <label for="categoria_producto" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
-                                <select class="form-group form-control" name="categoria_producto" id="categoria_producto"
+                                <label for="categoria_producto_edit" class="col-form-label focus-label">Categoria de producto:<span class="text-danger">*</span></label>
+                                <select class="form-group form-control" name="categoria_producto_edit" id="categoria_producto_edit"
                                     data-parsley-required onchange="listarSubCategorias()">
-                                    <option selected disabled>---Seleccione una categoria---</option>
-                                    @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
-                                    @endforeach
+
+
+
 
 
                                 </select>
                             </div>
 
                             <div class="col-md-4">
-                                <label for="sub_categoria_producto" class="col-form-label focus-label">Subcategoria :<span class="text-danger">*</span></label>
-                                <select class="form-group form-control" name="sub_categoria_producto" id="sub_categoria_producto" data-parsley-required>
-                                    <option selected disabled>---Seleccione una Subcategoria---</option>
+                                <label for="sub_categoria_producto_edit" class="col-form-label focus-label">Subcategoria :<span class="text-danger">*</span></label>
+                                <select class="form-group form-control" name="sub_categoria_producto_edit" id="sub_categoria_producto_edit" data-parsley-required >
+
 
 
 
@@ -404,8 +403,8 @@
                                 <p class="font-weight-bold text-center">Unidades De Medida Para Compra</p>
                                 <hr>
                             </div>
-                            
-                            
+
+
                             <div class="col-md-6">
                                 <label for="unidad_producto_editar" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
                                 <select class="form-group form-control" name="unidad_producto_editar" id="unidad_producto_editar"
@@ -422,8 +421,8 @@
                             </div>
 
 
-                        
-                            
+
+
                         </div>
                     </form>
 
@@ -535,7 +534,7 @@
         </div>
     </div>
 
-    
+
 
     @push('scripts')
     <script>
@@ -629,14 +628,14 @@
                         var sum = $('#tbl_lotes_listar').DataTable().column(9).data().sum();
                         let html = 'Cantidad Total en Bodega: '+sum
                         $('#total_lotes').html(html);
-                    }	
+                    }
 
 
 
             });
 
             $('#tbl_unidades_listar').DataTable({
-                
+
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
@@ -655,15 +654,15 @@
                         },
                         // {
                         //     data: 'eliminar'
-                        // },   
+                        // },
                         {
                             data: 'editar'
-                        },   
+                        },
                     ]
 
 
                 });
-                
+
         });
 
 
@@ -685,17 +684,17 @@
                     document.getElementById("unidades_editar").value=datos.datosProducto.unidadad_compra;
                     document.getElementById("ultimo_costo_compra_editar").value=datos.datosProducto.ultimo_costo_compra;
 
-                   
+
 
                     if(datos.preciosProducto.length != 0){
                         document.getElementById("precio2_edit").value = datos.preciosProducto[1].precio;
                         document.getElementById("precio3_edit").value = datos.preciosProducto[2].precio;
                     }
 
-                    
 
-                    
-                    
+
+
+
                     let arrayMarcas = datos.marcas;
                     let htmlMarca = "<option selected disabled>---Seleccione una marca de producto---</option>  ";
 
@@ -712,7 +711,7 @@
                     let htmlCategorias = "<option selected disabled>---Seleccione una categoria---</option>"
 
                     arrayCategorias.forEach(categoria => {
-                        if(categoria.id == datos.datosProducto.categoria_id){
+                        if(categoria.id == datos.categoria.id){
                             htmlCategorias += `<option selected value="${categoria.id}">${categoria.descripcion}</option>`;
                         }else{
                             htmlCategorias += `<option  value="${categoria.id}">${categoria.descripcion}</option>`;
@@ -735,10 +734,34 @@
 
 
 
+                    let arraySubcategorias = datos.subCategorias;
+
+                    let htmlSubCategorias = "<option selected disabled>---Seleccione una sub categoria---</option>"
+
+                    arraySubcategorias.forEach(unidad => {
+                        if(unidad.id == datos.subCategoria.id){
+                            htmlSubCategorias += `<option selected value="${unidad.id}">${unidad.descripcion}</option>`;
+                        }else{
+                            htmlSubCategorias += `<option  value="${unidad.id}">${unidad.descripcion}</option>`;
+                        }
+
+                    });
+
+
+
+
+
+
+
+
+
                    document.getElementById('marca_producto_editar').innerHTML=htmlMarca;
-                  // document.getElementById('categoria_producto_edit').innerHTML=htmlCategorias;
+                  document.getElementById('categoria_producto_edit').innerHTML=htmlCategorias;
                    document.getElementById('unidad_producto_editar').innerHTML=htmlUnidades;
-       
+                   document.getElementById('sub_categoria_producto_edit').innerHTML=htmlSubCategorias;
+
+
+
 
                     $('#exampleModal').modal('show');
 
@@ -849,7 +872,7 @@
 
         function editarUnidadesVenta(){
             var data = new FormData($('#form_editar_unidades').get(0));
-            
+
             axios.post("/detalle/unidades/editar",data)
             .then( response=>{
                 $("#modal_editar_unidades").modal("hide");
@@ -884,8 +907,8 @@
                     document.getElementById('ultimo_costo_compra_editar').value=data.ultimoCosto;
                     document.getElementById('costo_promedio_editar').value=data.costoPromedio;
                 }
-                
-             
+
+
 
 
             }).catch( err=>{
@@ -895,11 +918,9 @@
 
         }
 
-        
-        ///////////////////////////////////////////////////////////////////
         function listarSubCategorias(){
 
-var categoria_produ = document.getElementById('categoria_producto').value;
+var categoria_produ = document.getElementById('categoria_producto_edit').value;
   axios.get("/producto/sub_categoria/listar/"+categoria_produ)
   .then( response=>{
       let data = response.data.sub_categorias;
@@ -910,17 +931,21 @@ var categoria_produ = document.getElementById('categoria_producto').value;
           htmlSelect += `<option value="${element.id}">${element.descripcion}</option>`
       });
 
-      document.getElementById('sub_categoria_producto').innerHTML = htmlSelect;
+      document.getElementById('sub_categoria_producto_edit').innerHTML = htmlSelect;
   })
   .catch(err=>{
       console.log(err.response.data)
       Swal.fire({
       icon: 'error',
       title: 'Error!',
-      text: 'Ha ocurrido un error',                
+      text: 'Ha ocurrido un error',
       })
   })
 }
+
+        ///////////////////////////////////////////////////////////////////
+
+
 ///////////////////////////////////////////////////////////////////
 
     </script>

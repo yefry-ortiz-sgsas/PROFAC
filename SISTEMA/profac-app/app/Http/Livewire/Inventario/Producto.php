@@ -33,7 +33,7 @@ class Producto extends Component
     {
         $categorias = ModelCategoriaProducto::all();
         $unidades = DB::SELECT("select id,nombre,simbolo from unidad_medida order by nombre asc");
-       $marcas = DB::SELECT("select id,nombre from marca order by nombre asc"); 
+       $marcas = DB::SELECT("select id,nombre from marca order by nombre asc");
         return view('livewire.inventario.producto',  compact("categorias", "unidades","marcas"));
     }
 
@@ -44,17 +44,17 @@ class Producto extends Component
             'nombre_producto' => 'required',
             'descripcion_producto' => 'required',
             'isv_producto' => 'required',
-           
+
             'sub_categoria_producto' => 'required',
             'unidad_producto' => 'required',
             'ultimo_costo_compra'=>'required',
-            
+
 
         ], [
             'nombre_producto' => 'Nombre es requerido',
             'descripcion_producto' => 'Descripcion es requerido',
             'isv_producto' => 'ISV es requqerido',
-            
+
             'sub_categoria_producto' => 'Categoria del producto es requerido',
             'unidad_producto' => 'La unidad de medida es requerida',
             'ultimo_costo_compra'=>'el ultimo costo de compra es requerido'
@@ -78,16 +78,16 @@ class Producto extends Component
             $producto = new ModelProducto;
             $producto->nombre = trim($request['nombre_producto']);
             $producto->descripcion = trim($request['descripcion_producto']);
-            $producto->isv = $request['isv_producto']; 
+            $producto->isv = $request['isv_producto'];
             $producto->codigo_barra = trim($request['cod_barra_producto']);
             $producto->costo_promedio = trim($request['costo_promedio']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto']);
             $producto->sub_categoria_id = $request['sub_categoria_producto'];
-            $producto->precio_base = trim($request['precioBase']); 
+            $producto->precio_base = trim($request['precioBase']);
             $producto->ultimo_costo_compra = trim($request->ultimo_costo_compra);
-            $producto->marca_id = $request->marca_producto;           
+            $producto->marca_id = $request->marca_producto;
             $producto->users_id = Auth::user()->id;
-            $producto->estado_producto_id = 1; 
+            $producto->estado_producto_id = 1;
             $producto->unidad_medida_compra_id = $request->unidad_producto;
             $producto->unidadad_compra = $request->unidades;
             $producto->save();
@@ -95,9 +95,9 @@ class Producto extends Component
             //------------------------guardar precios------------//
             // $arrayPrecios = $request['precio'];
 
-           
 
-            
+
+
             //     for ($i = 0; $i < count($arrayPrecios); $i++) {
             //         if($arrayPrecios[$i] == null){
             //             continue;
@@ -110,7 +110,7 @@ class Producto extends Component
             //     }
 
             //---------------------------guardar unidades de medida para venta de producto-------
-            
+
             $unidadVenta = new ModelUnidadMedidaVenta;
             $unidadVenta->unidad_venta = $request->unidades_venta;
             $unidadVenta->unidad_medida_id = $request->unidad_producto_venta;
@@ -127,14 +127,14 @@ class Producto extends Component
                 $unidadVenta2->unidad_medida_id = $request->unidad_producto;
                 $unidadVenta2->producto_id = $producto->id;
                 $unidadVenta2->estado_id = 1;
-                $unidadVenta2->unidad_venta_defecto = 0;               
+                $unidadVenta2->unidad_venta_defecto = 0;
                 $unidadVenta2->save();
 
             }
-   
 
 
-            
+
+
 
 
 
@@ -149,7 +149,7 @@ class Producto extends Component
                 $i = 1;
 
                 foreach ($archivos as $file) {
-                      
+
                         $name = 'IMG_'. time()."-".$i. '.' . $file->getClientOriginalExtension();
                         $path = public_path() . '/catalogo';
                         $url =  $name;
@@ -169,10 +169,10 @@ class Producto extends Component
             ], 200);
         } catch (QueryException $e) {
             DB::rollback();
-              
+
             // $carpetaPublic = public_path();
             // $path = $carpetaPublic.'/catalogo/'.$name;
-            
+
             // File::delete($path);
 
             return response()->json([
@@ -195,10 +195,10 @@ class Producto extends Component
             A.isv as 'ISV',
             B.descripcion as 'categoria',
             C.nombre as 'unidad_medida',
-            
+
             IFNULL ((select
-            sum(cantidad_disponible) 
-            from recibido_bodega 
+            sum(cantidad_disponible)
+            from recibido_bodega
             inner join compra
             on recibido_bodega.compra_id = compra.id
             where compra.estado_compra_id=1 and  producto_id = A.id), 0)  as 'existencia'
@@ -305,7 +305,7 @@ class Producto extends Component
                 unidad_medida_compra_id,
                 unidadad_compra,
                 ultimo_costo_compra
-                
+
 
             from producto where id =".$id);
 
@@ -321,16 +321,33 @@ class Producto extends Component
 
             );
 
-            $categorias = ModelCategoriaProducto::all();
+            $subCategoria = DB::selectOne("SELECT B.id, B.descripcion FROM producto as A
+            INNER JOIN sub_categoria B ON (A.sub_categoria_id = B.id)
+            where A.id =". $id);
+
+            $categoria = DB::SELECTONE("SELECT C.id, C.descripcion FROM producto as A
+            INNER JOIN sub_categoria B ON (A.sub_categoria_id = B.id)
+            inner join categoria_producto C ON (B.categoria_producto_id = C.id )
+            where A.id = " .$id);
+
+
+            $categorias = DB::SELECT("select id, descripcion from categoria_producto");
+            $subCategorias = DB::SELECT("select id, descripcion from sub_categoria where categoria_producto_id =".$categoria->id);
+
             $unidades = DB::SELECT("select id,nombre from unidad_medida order by nombre asc");
             $marcas =  DB::SELECT("select id,nombre from marca order by nombre asc");
+
 
             return response()->json([
             "datosProducto"=> $datosProducto[0],
             "preciosProducto" => $preciosProducto,
             "categorias"=>$categorias,
             "unidades" => $unidades,
-            "marcas" => $marcas
+            "marcas" => $marcas,
+            "subCategoria"=>$subCategoria,
+            "categoria"=>$categoria,
+            "subCategorias"=>$subCategorias,
+
 
             ],200);
 
@@ -346,7 +363,7 @@ class Producto extends Component
 
     public function editarProducto(Request $request){
         try {
-       
+
 
             $producto = ModelProducto::find($request['id_producto_edit']);
             $producto->nombre = trim($request['nombre_producto_edit']);
@@ -364,12 +381,12 @@ class Producto extends Component
             $producto->users_id = Auth::user()->id;
             $producto->save();
 
-       
+
             return response()->json([
                 "message" => "producto editado con exito",
             ], 200);
         } catch (QueryException $e) {
-               
+
 
                 return response()->json([
                     'message' => 'Ha ocurrido un error al editar el producto.',
@@ -402,7 +419,7 @@ class Producto extends Component
     }
 
     public function calcularCostos(Request $request){
-      
+
         $primeraCompra = DB::SELECTONE("
         select
         B.precio_unidad + (B.precio_unidad*C.isv/100) as costo
@@ -437,10 +454,10 @@ class Producto extends Component
 
             $producto = ModelProducto::find($request->idProducto);
             $producto->ultimo_costo_compra =  $ultimaCompra;
-            $producto->costo_promedio =  $costoPromedio;   
+            $producto->costo_promedio =  $costoPromedio;
             $producto->precio_base=$ultimaCompra;
             $producto->save();
-    
+
         }else{
             $ultimaCompra=0;
             $costoPromedio=0;
@@ -463,12 +480,12 @@ class Producto extends Component
 
     public function export(){
         try {
-            
+
             return Excel::download(new ProductosExport, 'DatosProductos.xlsx');
 
         } catch (QueryException $e) {
             return response()->json([
-             
+
                 'error' => $e,
                 "text" => "Ha ocurrido un error.",
                 "icon" => "error",
@@ -481,22 +498,24 @@ class Producto extends Component
 
     public function listarSubcategorias($id){
         try {
- 
+
             $sub_categorias = DB::table('sub_categoria')
             //->join('categoria_producto', 'sub_categoria.categoria_producto_id', '=', 'categoria_producto.id')
             ->select('sub_categoria.id', 'sub_categoria.descripcion')
             ->where('sub_categoria.categoria_producto_id', '=', $id)
             ->get();
- 
+
         return response()->json([
          "sub_categorias"=>$sub_categorias,
         ],200);
         } catch (QueryException $e) {
         return response()->json([
-         'message' => 'Ha ocurrido un error', 
+         'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);
         }
     }
+
+
 
 }

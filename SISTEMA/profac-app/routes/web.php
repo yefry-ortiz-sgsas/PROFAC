@@ -106,6 +106,7 @@ Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']);
 
 Route::get('/bodega/segmentos/listar/{idBodega}', [BodegaEditar::class, 'obtenerSegmentoDeBodega']);
 Route::post('/guardar/seccion', [BodegaEditar::class, 'guardarSeccion']);
+Route::post('/guardar/segmento', [BodegaEditar::class, 'guardarSegmento']);
 
 
 //----------------------Proveedores-----------------------------------------------------------------------------------------------------------------//

@@ -10,6 +10,7 @@ use App\Models\modelBodega;
 use App\Models\Estante;
 use App\Models\Repisa;
 use App\Models\Seccion;
+use App\Models\Segmento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -43,6 +44,26 @@ class BodegaEditar extends Component
 
         return response()->json([
             "message" => "Sección agregada con exito",
+
+                ],200);
+    }
+
+
+
+    public function guardarSegmento(Request $request){
+        DB::beginTransaction();
+                $idBodega = $request['idBodegaS'];
+                $LetraSegmento = $request['segmentoAdd'];
+
+
+                $segmento = new Segmento;
+                $segmento->descripcion = $LetraSegmento;
+                $segmento->bodega_id = $idBodega;
+                $segmento->save();
+        DB::commit();
+
+        return response()->json([
+            "message" => "Segmento agregado con exito",
 
                 ],200);
     }
@@ -87,12 +108,14 @@ class BodegaEditar extends Component
                         <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
                         Añadir Sección </a></li>
 
+                        <li><a class="dropdown-item" href="#" onclick="addSegmentoJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
+                        Añadir Segmento </a></li>
+
                     </ul>
                 </div>
                     ';
 
                 }else{
-
                     return '
                     <div class="btn-group">
                     <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
@@ -109,6 +132,9 @@ class BodegaEditar extends Component
 
                             <li><a class="dropdown-item" href="#" onclick="addSeccionJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
                         Añadir Sección </a></li>
+
+                        <li><a class="dropdown-item" href="#" onclick="addSegmentoJS('.$listaBodegas->codigo.')"> <i class="fa-solid fa-circle-plus text-success"></i>
+                        Añadir Segmento </a></li>
 
                     </ul>
                 </div>
