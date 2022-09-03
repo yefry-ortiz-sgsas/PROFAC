@@ -10,7 +10,7 @@ use App\Models\modelBodega;
 use App\Models\Estante;
 use App\Models\Repisa;
 use App\Models\Seccion;
-use App\Models\Segmento;
+use App\Models\segmento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
@@ -33,10 +33,16 @@ class BodegaEditar extends Component
                 $numeracion = DB::selectOne("select numeracion from seccion where segmento_id = ".$idSegmento." order by numeracion desc");
                 $letraSegmento = DB::selectOne("select descripcion from segmento where id = ".$idSegmento);
 
+                if(empty($numeracion)){
+                    $numero=0;
+                }else{
+                    $numero = $numeracion->numeracion;
+                }
+
 
                 $seccion = new Seccion;
-                $seccion->descripcion = "Seccion ".$letraSegmento->descripcion.$numeracion->numeracion+1;
-                $seccion->numeracion = $numeracion->numeracion+1;
+                $seccion->descripcion = "Seccion ".$letraSegmento->descripcion.$numero+1;
+                $seccion->numeracion = $numero+1;
                 $seccion->estado_id = 1;
                 $seccion->segmento_id = $idSegmento;
                 $seccion->save();
@@ -56,7 +62,7 @@ class BodegaEditar extends Component
                 $LetraSegmento = $request['segmentoAdd'];
 
 
-                $segmento = new Segmento;
+                $segmento = new segmento;
                 $segmento->descripcion = $LetraSegmento;
                 $segmento->bodega_id = $idBodega;
                 $segmento->save();
@@ -232,7 +238,7 @@ class BodegaEditar extends Component
             inner join seccion
             on segmento.id = seccion.segmento_id
             where segmento.bodega_id =  ".$request['id']."
-
+            order by segmento.descripcion ASC
             ");
 
             $usuarios = DB::SELECT("
@@ -347,7 +353,7 @@ class BodegaEditar extends Component
             $segmentosPorBodega = DB::SELECT("
             SELECT * FROM segmento
             WHERE segmento.bodega_id =
-                ".$idBodega);
+                ".$idBodega." ORDER BY descripcion asc");
                 return response()->json(["segmentosPorBodega" => $segmentosPorBodega], 200);
 
 
