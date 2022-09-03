@@ -142,7 +142,7 @@ class Translados extends Component
             return
 
             '<div class="text-center">
-                <button class="btn btn-warning" onclick="modalTranslado('.$producto->idRecibido.','.$producto->cantidad_disponible.')">
+                <button class="btn btn-warning" onclick="modalTranslado('.$producto->idRecibido.','.$producto->cantidad_disponible.','.$producto->idProducto.')">
                     Transladar
                 </button>
 
@@ -188,8 +188,13 @@ class Translados extends Component
 
         $productoEnBodega = ModelRecibirBodega::find($request['idRecibido']);
 
+        //$unidadVenta = DB::SELECT("select id, unidad_venta, unidad_medida_id from unidad_medida_venta where producto_id = ".$productoEnBodega->producto_id." and id = ".$request->Umedida);
+
+
 
         if($productoEnBodega->cantidad_disponible >= $unidadesTraslado ){
+
+
 
 
         DB::beginTransaction();
@@ -199,8 +204,10 @@ class Translados extends Component
             $transladarBodega->producto_id = $productoEnBodega->producto_id;
             $transladarBodega->seccion_id = $request->seccion;
             $transladarBodega->cantidad_compra_lote = $productoEnBodega->cantidad_compra_lote;
+
             $transladarBodega->cantidad_inicial_seccion = $unidadesTraslado;
             $transladarBodega->cantidad_disponible = $unidadesTraslado;
+
             $transladarBodega->fecha_recibido = now();
             $transladarBodega->fecha_expiracion = $productoEnBodega->fecha_expiracion;
             $transladarBodega->estado_recibido = 4;
@@ -213,8 +220,10 @@ class Translados extends Component
             $logTranslados = new ModelLogTranslados;
             $logTranslados->origen = $productoEnBodega->id ;
             $logTranslados->destino = $transladarBodega->id;
+
             $logTranslados->cantidad = $unidadesTraslado;
             $logTranslados->unidad_medida_venta_id = $request->Umedida;
+
             $logTranslados->users_id= Auth::user()->id;
             $logTranslados->descripcion="Translado de bodega";
             $logTranslados->save();

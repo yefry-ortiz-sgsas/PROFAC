@@ -235,7 +235,7 @@ class RecibirProducto extends Component
             ],402);
         }
     }
-    public function listarUmedidas(Request $request)
+    public function listarUmedidas($idProducto)
     {
         try {
 
@@ -249,7 +249,7 @@ class RecibirProducto extends Component
                 on producto.id = unidad_medida_venta.producto_id
                 inner join unidad_medida
                 on unidad_medida_venta.unidad_medida_id = unidad_medida.id
-                where producto.id = 1
+                where producto.id = ".$idProducto."
             " );
 
             return response()->json([
@@ -335,7 +335,7 @@ class RecibirProducto extends Component
         $log = new ModelLogTranslados();
         $log->compra_id = $request->idCompra;
         $log->origen = $recibir->id;
-        $log->cantidad = $cantidadInicial;       
+        $log->cantidad = $cantidadInicial;
         $log->users_id = Auth::user()->id;
         $log->descripcion = "Ingreso de producto por compra";
         $log->save();
