@@ -16,7 +16,7 @@ class ClientesExport implements FromCollection, WithHeadings, ShouldAutoSize
     public function collection()
     {
         //return ModelCliente::all();
-        return ModelCliente::select("id","nombre","direccion","telefono_empresa","rtn","correo","credito","dias_credito")->get();
+        return ModelCliente::select("id","nombre","direccion","telefono_empresa","rtn","correo","credito","dias_credito","users_id")->get();
     }
 
     public function headings(): array
@@ -30,6 +30,7 @@ class ClientesExport implements FromCollection, WithHeadings, ShouldAutoSize
             'Correo',
             'Crédito',
             'Dias de Crédito',
+            'ID Usuario',
         ];
     }
 }

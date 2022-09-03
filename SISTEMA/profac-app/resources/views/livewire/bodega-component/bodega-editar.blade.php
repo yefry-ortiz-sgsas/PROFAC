@@ -7,9 +7,15 @@
             <h2>Lista de Bodegas</h2>
             <h4>Editar bodega</h4>
         </div>
-        <div class="col-lg-2">
+        
+        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+                
+            <div style="margin-top: 1.5rem">
+                <a href="/bodega/excel" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel</a>
+            </div>
 
         </div>
+        
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">

@@ -400,14 +400,6 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 
 //Route::post('/ventas/motivo_credito/desactivar', [MotivoNotaCredito::class,'desactivarMotivoNotaCredito']);
 
-//------------------------------------------------------------Exportar Excels-----------------------------------------------------------------------------------//
-
-Route::get('/cliente/excel', [Cliente::class, 'export']);
-Route::get('/producto/excel', [Producto::class, 'export']);
-Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
-
-
-
 //---------------------------------------------------------CRUD CATEGORIAS ---------------------------------------------------------//
 
 use App\Http\Livewire\Inventario\Categoria;
@@ -434,3 +426,13 @@ Route::post('/sub_categoria/editar', [SubCategoria::class,'editarSubCategoria'])
 
 
 Route::get('/producto/sub_categoria/listar/{id}',[Producto::class,'listarSubcategorias']); 
+
+
+//------------------------------------------------------------Exportar Excels-----------------------------------------------------------------------------------//
+
+
+Route::get('/cliente/excel', [Cliente::class, 'export']);
+Route::get('/producto/excel', [Producto::class, 'export']);
+Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
+
+Route::get('/bodega/excel', [Bodega::class, 'export']);

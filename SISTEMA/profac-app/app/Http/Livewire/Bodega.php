@@ -19,6 +19,8 @@ use Validator;
 use Illuminate\Database\QueryException;
 use Throwable;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BodegaExport;
 
 class Bodega extends Component
 {
@@ -124,6 +126,24 @@ class Bodega extends Component
             ], 402);  
 
         }   
+
+    }
+
+    public function export(){
+        try {
+            
+            return Excel::download(new BodegaExport, 'DatosBodega.xlsx');
+            //return (new InvoicesExport)->download('invoices.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+             
+                'error' => $e,
+                "text" => "Ha ocurrido un error.",
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
 
     }
 
