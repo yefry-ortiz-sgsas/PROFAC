@@ -224,7 +224,7 @@
             $(document).ready(function() {
 
                 listarBodegas();
-                listarUmedidas();
+
 
             });
 
@@ -331,9 +331,12 @@
                 // console.log(suma);
             }
 
-            function modalTranslado(idRecibido, cantidadDisponible) {
+            function modalTranslado(idRecibido, cantidadDisponible, idProducto) {
                 this.idRecibido = idRecibido
                 document.getElementById('cantidad').max=cantidadDisponible;
+
+                //console.log(idProducto);
+                this.listarUmedidas(idProducto);
 
                 $('#modal_transladar_producto').modal('show')
                // console.log(this.idRecibido);
@@ -432,8 +435,8 @@
                     })
             }
 
-            function listarUmedidas() {
-                axios.get('/producto/recibir/Umedidas')
+            function listarUmedidas(idProducto) {
+                axios.get('/producto/recibir/Umedidas/'+idProducto)
                     .then(response => {
 
                         let array = response.data.listaUmedidas;

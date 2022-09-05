@@ -108,8 +108,8 @@ class DetalleProducto extends Component
             C.numeracion,
             H.cantidad_disponible,
             H.created_at
-        from compra_has_producto A      
-        inner join producto B        
+        from compra_has_producto A
+        inner join producto B
         on A.producto_id = B.id
         inner join recibido_bodega H
         on A.compra_id = H.compra_id and A.producto_id = H.producto_id
@@ -137,16 +137,18 @@ class DetalleProducto extends Component
 
 
 
+
+
         return view('livewire.inventario.detalle-producto',  compact('producto', "precios", "imagenes", "lotes", "categorias", "unidades","marcas"));
     }
 
     public function unidadesVenta($id){
        try {
 
-       
+
 
         $unidades = DB::SELECT("
-        select 
+        select
         @i := @i + 1 as contador,
         A.id,
         B.nombre,
@@ -156,22 +158,22 @@ class DetalleProducto extends Component
         inner join unidad_medida B
         on A.unidad_medida_id = B.id
         CROSS JOIN (select @i := 0) r
-        where A.producto_id =".$id 
+        where A.producto_id =".$id
         );
 
 
         return Datatables::of($unidades)
-        // ->addColumn('eliminar', function ($unidad) {            
+        // ->addColumn('eliminar', function ($unidad) {
         //         return
 
         //         '<div class="text-center">  <button class="btn btn-danger  btn-dim" type="button"><i class="fa-solid fa-trash-can"></i></button></div>';
-              
+
         // })
-        ->addColumn('editar', function ($unidad) {            
+        ->addColumn('editar', function ($unidad) {
             return
 
             '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
-          
+
     })
 
         ->rawColumns(['editar'])
@@ -181,7 +183,7 @@ class DetalleProducto extends Component
 
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -191,14 +193,14 @@ class DetalleProducto extends Component
        try {
 
         $unidades = ModelUnidadMedida::all();
-            
+
 
        return response()->json([
            'unidades'=>$unidades,
        ],200);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -213,14 +215,14 @@ class DetalleProducto extends Component
         $unidad->unidad_medida_id = $request->unidad_venta_editar;
         $unidad->save();
 
-         
+
 
        return response()->json([
            "message" => "exito",
        ],200);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }

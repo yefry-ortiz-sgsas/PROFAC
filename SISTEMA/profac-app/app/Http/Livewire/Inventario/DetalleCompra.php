@@ -28,7 +28,7 @@ class DetalleCompra extends Component
             fecha_vencimiento,
             fecha_recepcion,
             total,
-            debito,  
+            debito,
             tipo_compra.descripcion,
             monto_retencion,
             IF(retenciones_id is null,'SIN RETENCION','CON RETENCION') as 'estado_retencion',
@@ -51,10 +51,10 @@ class DetalleCompra extends Component
 
         $listaCompra = DB::SELECT("
         select
-       
+
         compra.numero_factura,
         A.producto_id as 'producto_id',
-        producto.nombre as nombre,            
+        producto.nombre as nombre,
         A.precio_unidad,
         A.cantidad_ingresada,
         A.sub_total_producto,
@@ -62,13 +62,13 @@ class DetalleCompra extends Component
         A.precio_total,
         if(A.fecha_expiracion is null, 'No definido',A.fecha_expiracion) as fecha_expiracion,
         if((select estado_recibido from recibido_bodega where recibido_bodega.compra_id = A.compra_id and recibido_bodega.producto_id =A.producto_id limit 1 ) is null, 'NO RECIBIDO', 'RECIBIDO') as 'estado_recibido'
-     
-    from 
+
+    from
         compra_has_producto A
         inner join producto
-        on producto.id = A.producto_id 
+        on producto.id = A.producto_id
         inner join compra
-        on A.compra_id = compra.id       
+        on A.compra_id = compra.id
         where A.compra_id =   ".$id."
         ");
 
@@ -89,15 +89,17 @@ class DetalleCompra extends Component
         on pago_compra.users_id = users.id
         where pago_compra.estado_id = 1 and compra.id = ".$id."
         ");
-        
+
 
         $sumaPagos = DB::SELECTONE("select sum(monto) as monto from pago_compra where pago_compra.estado_id = 1 and compra_id = ".$id);
         $deudaRestante = round($detalleCompra->total, 2) -  round($sumaPagos->monto,2);
 
-        
-        
-        
+
+
+
         //dd($jsonListaCompra);
+
+
 
         return view('livewire.inventario.detalle-compra', compact('detalleCompra','listaCompra','listaPagos', 'deudaRestante', 'sumaPagos'));
     }

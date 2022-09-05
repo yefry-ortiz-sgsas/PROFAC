@@ -138,6 +138,45 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="modalSegmentos" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Agregar Segmento</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form id="addSegmentoForm" data-parsley-validate>
+                                        <input id="idBodegaS" name="idBodegaS" type="hidden" >
+
+                                        <div>
+                                            <label for="">Lista de segmentos existentes en la bodega Actuál<span class="text-danger">*</span></label>
+                                            <div class="list-group" id="ListaSegmentos">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Letra Segmento">Indique la letra del nuevo Segmento<span class="text-danger">*</span></label>
+                                            <input id="segmentoAdd" name="segmentoAdd" type="text" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                                placeholder="Letra de Segmento" class="form-control" data-parsley-required>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" form="addSeccion" class="btn btn-primary" onclick="guardarSegmento()">Guardar Segmento</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         {{-- Care about people's approval and you will be their prisoner. --}}
 
@@ -153,6 +192,8 @@
 
                     axios.get("/bodega/segmentos/listar/"+idBodega)
                                 .then(response => {
+
+                                    document.getElementById("selectSegmento").innerHTML = "";
 
                                     console.log(response.data.segmentosPorBodega);
                                     let datos = response.data.segmentosPorBodega;
@@ -180,14 +221,79 @@
                                 });
                 }
 
+                function addSegmentoJS(idBodega){
+                    document.getElementById("idBodegaS").value = idBodega;
+
+                    axios.get("/bodega/segmentos/listar/"+idBodega)
+                                .then(response => {
+                                    document.getElementById("ListaSegmentos").innerHTML = "";
+                                    console.log(response.data.segmentosPorBodega);
+                                    let datos = response.data.segmentosPorBodega;
+                                    let array = datos;
+                                    let htmlSelect = "";
+
+                                    array.forEach(element => {
+
+
+                                        htmlSelect += `<a href="#" class="list-group-item list-group-item-action">${element.descripcion}</a>`;
+
+                                    });
+
+                                    document.getElementById("ListaSegmentos").innerHTML += htmlSelect;
+                                    $("#modalSegmentos").modal("show");
+                                })
+                                .catch(error => {
+
+                                    Swal.fire(
+                                        'Error!',
+                                        'Ha ocurrido un error al mostrar lista de segmentos.',
+                                        'error',
+
+                                    )
+
+                                });
+                }
+
                 function guardarSeccion(){
                     var data = new FormData($('#addSeccion').get(0));
-
+                    location.reload();
                     axios.post('/guardar/seccion',data)
                     .then( response =>{
                         //console.log(response.data);
                         //location.reload();
                         $('#modalSecciones').modal('hide');
+
+
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Exito!',
+                        text: 'Guardados con éxito!',
+
+                        })
+
+
+                    })
+                    .catch( err=>{
+
+                        Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Ha ocurrido un error al Guardar!',
+
+                        })
+
+
+                    });
+                }
+
+                function guardarSegmento(){
+                    var data = new FormData($('#addSegmentoForm').get(0));
+
+                    axios.post('/guardar/segmento',data)
+                    .then( response =>{
+                        //console.log(response.data);
+                        location.reload();
+                        $('#modalSegmentos').modal('hide');
 
 
                         Swal.fire({

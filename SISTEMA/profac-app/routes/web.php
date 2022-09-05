@@ -107,6 +107,7 @@ Route::post('/bodega/editar', [BodegaEditar::class, 'editarBodega']);
 
 Route::get('/bodega/segmentos/listar/{idBodega}', [BodegaEditar::class, 'obtenerSegmentoDeBodega']);
 Route::post('/guardar/seccion', [BodegaEditar::class, 'guardarSeccion']);
+Route::post('/guardar/segmento', [BodegaEditar::class, 'guardarSegmento']);
 
 
 //----------------------Proveedores-----------------------------------------------------------------------------------------------------------------//
@@ -205,7 +206,7 @@ Route::get('/producto/compra/recibir/listar/{id}', [RecibirProducto::class, 'lis
 Route::get('/producto/recibir/bodega', [RecibirProducto::class, 'bodegasLista']);
 Route::post('/producto/recibir/segmento', [RecibirProducto::class, 'listarSegmentos']);
 Route::post('/producto/recibir/seccion', [RecibirProducto::class, 'listarSecciones']);
-Route::get('/producto/recibir/Umedidas', [RecibirProducto::class, 'listarUmedidas']);
+Route::get('/producto/recibir/Umedidas/{idProducto}', [RecibirProducto::class, 'listarUmedidas']);
 Route::post('/producto/recibir/guardar', [RecibirProducto::class, 'guardarEnBodega']);
 Route::get('/producto/lista/bodega/{id}', [RecibirProducto::class, 'productoBodega']);
 Route::post('/producto/recibir/datos',[RecibirProducto::class, 'datosGeneralesCompra']);
