@@ -148,8 +148,9 @@
                                         <th>Descripción </th>
                                         <th>Unidad</th>
                                         <th>Cantidad</th>
-                                        <th>Bodega</th>
                                         <th>Dirección</th>
+                                        <th>Bodega</th>
+                                       
                                         <th>Sección</th>
                                         
                                         
@@ -284,11 +285,11 @@
                     },
                     {
                         extend: 'excel',
-                        title: 'Ubicacion Y Listado '
+                        title: 'Orden de Salida'
                     },
                     {
                         extend: 'pdf',
-                        title: 'Ubicacion Y Listado'
+                        title: 'Orden de Salida'
                     },
 
                     {
@@ -328,11 +329,12 @@
                             data: 'cantidad_venta'
                         },
                         {
-                            data: 'bodega'
-                        },
-                        {
                             data: 'direccion'
                         },
+                        {
+                            data: 'bodega'
+                        },
+
     
                         {
                             data: 'seccion'

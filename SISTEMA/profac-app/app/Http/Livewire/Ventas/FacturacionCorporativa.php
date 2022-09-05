@@ -465,7 +465,8 @@ class FacturacionCorporativa extends Component
                 $factura->users_id = Auth::user()->id;              
                 $factura->comision_estado_pagado=0;
                 $factura->pendiente_cobro=$request->totalGeneral;
-                $factura->estado_editar = 1;
+                $factura->estado_editar = 1;              
+                $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -521,7 +522,7 @@ class FacturacionCorporativa extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-               // dd($factura);
+                //dd($factura);
 
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
@@ -698,6 +699,7 @@ class FacturacionCorporativa extends Component
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
+            $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->save();
 
             if ($turno->turno == 1) {
@@ -836,6 +838,7 @@ class FacturacionCorporativa extends Component
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
+            $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->save();
 
 
@@ -1229,6 +1232,7 @@ class FacturacionCorporativa extends Component
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
+            $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->save();
 
 

@@ -53,6 +53,7 @@ use App\Http\Livewire\NotaCredito\CrearNotaCredito;
 use App\Http\Livewire\Inventario\Categoria;
 use App\Http\Livewire\Inventario\SubCategoria;
 
+use App\Http\Livewire\Ventas\SinRestriccionPrecio;
 
 
 
@@ -419,7 +420,7 @@ Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMo
 //--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//
 Route::get('/cardex', Cardex::class);
 Route::get('/cardex/listar/bodega', [Cardex::class, 'listarBodegas']);
-Route::get('/cardex/listar/productos/{idBodega}', [Cardex::class, 'listarProductos']);
+Route::get('/cardex/listar/productos', [Cardex::class, 'listarProductos']);
 
 Route::get('/listado/cardex/{idBodega}/{idProducto}', [Cardex::class, 'listarCardex']);
 
@@ -448,6 +449,13 @@ Route::get('/producto/sub_categoria/listar/{id}',[Producto::class,'listarSubcate
 Route::post('/sub_categoria/guardar', [SubCategoria::class,'guardarSubCategoria']);
 Route::post('/sub_categoria/datos', [SubCategoria::class,'obtenerDatos']);
 Route::post('/sub_categoria/editar', [SubCategoria::class,'editarSubCategoria']);
+
+//---------------------------------------------------------SinRestriccionPrecio-------------------------------------------------------//
+
+Route::get('/ventas/sin/restriccion/precio', SinRestriccionPrecio::class);
+Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class,'enviarCodigo']);
+Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class,'verificarCodigo']);
+Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desactivarCodigo']);
 
 
 return redirect('/login');

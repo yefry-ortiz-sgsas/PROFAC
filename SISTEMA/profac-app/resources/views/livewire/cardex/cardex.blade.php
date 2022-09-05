@@ -123,10 +123,11 @@
         var idBodega = document.getElementById('bodega').value;
         $('#producto').select2({
             ajax: {
-                url: '/cardex/listar/productos/'+idBodega,
+                url: '/cardex/listar/productos',
                 data: function(params) {
                     var query = {
                         search: params.term,
+                        idBodega:idBodega,
                         type: 'public',
                         page: params.page || 1
                     }
