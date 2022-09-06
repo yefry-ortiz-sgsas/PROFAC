@@ -61,8 +61,8 @@
                                         <th>Producto</th>
                                         <th>Código de producto</th>
                                         <th>Factura</th>
-                                        <th>Código de factura</th>
                                         <th>Ajuste</th>
+                                        <th>Compra</th>
                                         <th>Descripción</th>
                                         <th>Origen</th>
                                         <th>Destino</th>
@@ -199,10 +199,10 @@
                     data: 'doc_factura'
                 },
                 {
-                    data: 'factura_cod'
+                    data: 'doc_ajuste'
                 },
                 {
-                    data: 'doc_ajuste'
+                    data: 'detalleCompra'
                 },
                 {
                     data: 'descripcion'

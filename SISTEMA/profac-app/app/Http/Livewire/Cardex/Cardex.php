@@ -79,6 +79,7 @@ class Cardex extends Component
             log_translado.factura_id as 'factura',
             (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
             log_translado.ajuste_id as 'ajuste' ,
+            (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
             log_translado.descripcion as 'descripcion',
             concat (bodega.nombre,' ',seccion2.descripcion) as origen,
               concat(
@@ -120,12 +121,27 @@ class Cardex extends Component
 
             return Datatables::of($listaCardex)
             ->addColumn('doc_factura', function($elemento){
-                return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i class="fas fa-receipt"></i></a>';
+                if($elemento->factura != null){
+                    return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i class="fas fa-receipt"></i> FACTURA # '.$elemento->factura_cod.'</a>';
+                }else{
+                    return '<a ><i class="fas fa-receipt"></i> N/A FACTURA</a>';
+                }
             })
             ->addColumn('doc_ajuste', function($elemento){
-                return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i></a>';
+                if($elemento->ajuste != null){
+                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE</a>';
+                }else{
+                    return '<a><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                }
             })
-            ->rawColumns(['doc_factura','doc_ajuste'])
+            ->addColumn('detalleCompra', function($elemento){
+                if($elemento->detalleCompra != null){
+                    return '<a target="_blank" href="/producto/compras/detalle/'.$elemento->detalleCompra.'"><i class="fas fa-receipt"></i> DETALLE DE COMPRA </a>';
+                }else{
+                    return '<a ><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                }
+            })
+            ->rawColumns(['doc_factura','doc_ajuste', 'detalleCompra'])
             ->make(true);
 
         } catch (QueryException $e) {
