@@ -61,6 +61,7 @@
                                         <th>Producto</th>
                                         <th>Código de producto</th>
                                         <th>Factura</th>
+                                        <th>Código de factura</th>
                                         <th>Ajuste</th>
                                         <th>Descripción</th>
                                         <th>Origen</th>
@@ -196,6 +197,9 @@
                 },
                 {
                     data: 'doc_factura'
+                },
+                {
+                    data: 'factura_cod'
                 },
                 {
                     data: 'doc_ajuste'
