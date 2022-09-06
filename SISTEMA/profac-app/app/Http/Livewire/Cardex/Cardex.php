@@ -120,10 +120,10 @@ class Cardex extends Component
 
             return Datatables::of($listaCardex)
             ->addColumn('doc_factura', function($elemento){
-                return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i width="5rem" class="fas fa-receipt"></i></a>';
+                return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i class="fas fa-receipt"></i></a>';
             })
             ->addColumn('doc_ajuste', function($elemento){
-                return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'">'.$elemento->ajuste.'</a>';
+                return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i></a>';
             })
             ->rawColumns(['doc_factura','doc_ajuste'])
             ->make(true);
