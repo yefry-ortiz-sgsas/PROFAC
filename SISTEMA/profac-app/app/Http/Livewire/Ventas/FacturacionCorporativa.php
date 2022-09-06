@@ -840,7 +840,7 @@ class FacturacionCorporativa extends Component
             $factura->cai_id = $cai->cai_id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
             $factura->estado_factura_id = 2; // se presenta   

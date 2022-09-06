@@ -462,3 +462,10 @@ Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desa
 return redirect('/login');
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Route::get('/cliente/excel', [Cliente::class, 'export']);
+Route::get('/producto/excel', [Producto::class, 'export']);
+Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
+
+Route::get('/bodega/excel', [Bodega::class, 'export']);

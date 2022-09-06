@@ -24,7 +24,7 @@ use App\Models\ModelMarca;
 use DataTables;
 use Illuminate\Support\Facades\File;
 
-use Maatwebsite\Excel\facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProductosExport;
 
 class Producto extends Component
