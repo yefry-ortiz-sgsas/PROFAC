@@ -80,7 +80,8 @@
                             <table id="tbl_listar_ventas_uno" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                    
+                                        <th>Cod CAI</th>
+                                        <th>CAI</th>
                                         <th>N° Factura</th>
                                         <th>Correlativo</th>
                                         <th>Cliente</th>
@@ -119,7 +120,8 @@
                             <table id="tbl_listar_ventas_dos" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                       
+                                        <th>Cod CAI</th>
+                                        <th>CAI</th>
                                         <th>N° Factura</th>
                                         <th>Correlativo</th>
                                         <th>Cliente</th>
@@ -183,9 +185,15 @@
                         'type': 'post'
                     },
                     "columns": [
-
+                        {
+                            data: 'cod_cai'
+                        },
                         {
                             data: 'cai'
+                        },
+
+                        {
+                            data: 'correlativo'
                         },
                         {
                             data: 'numero_secuencia_cai'
@@ -238,9 +246,16 @@
                         'type': 'post'
                     },
                     "columns": [
+                        {
+                            data: 'cod_cai'
+                        },
 
                         {
                             data: 'cai'
+                        },
+
+                        {
+                            data: 'correlativo'
                         },
                         {
                             data: 'numero_secuencia_cai'

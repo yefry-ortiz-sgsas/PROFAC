@@ -30,7 +30,9 @@ class Comparacion extends Component
             $listado=DB::SELECT("
             select 
                 A.id,
-                cai,
+                D.id as cod_cai,
+                D.cai as cai, 
+                A.cai as correlativo,
                 numero_secuencia_cai,
                 A.nombre_cliente,
                 A.rtn,
@@ -45,8 +47,9 @@ class Comparacion extends Component
             on A.cliente_id = B.id
             inner join tipo_cliente C
             on B.tipo_cliente_id = C.id
-           
-            where (A.estado_venta_id=1) and A.estado_factura_id=1 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
+            inner join cai D
+            on A.cai_id = D.id           
+            where (A.estado_venta_id=1) and estado_editar = 1 and A.estado_factura_id=1 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."';
 
             ");
 
@@ -114,17 +117,27 @@ class Comparacion extends Component
 
             $listado=DB::SELECT("
             select 
-            id,
-            cai,
-            numero_secuencia_cai,
-            nombre_cliente,
-            rtn,
-            sub_total,
-            isv,
-            total,
-            fecha_emision
+                A.id,
+                D.id as cod_cai,
+                D.cai as cai, 
+                A.cai as correlativo,
+                numero_secuencia_cai,
+                A.nombre_cliente,
+                A.rtn,
+                sub_total,
+                isv,
+                total,
+                fecha_emision,
+                C.descripcion,
+                C.id as idTipoCliente
             from factura A
-            where (A.estado_venta_id=1) and A.estado_factura_id=2 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
+            inner join cliente B
+            on A.cliente_id = B.id
+            inner join tipo_cliente C
+            on B.tipo_cliente_id = C.id
+            inner join cai D
+            on A.cai_id = D.id
+            where (A.estado_venta_id=1) and estado_editar = 1 and  A.estado_factura_id=2 and A.fecha_emision   BETWEEN '". $fechaInicio."' AND '".$fechaFinal."'"
         );
 
             return Datatables::of($listado)
@@ -164,10 +177,10 @@ class Comparacion extends Component
     public function cambioEstadoND($idFactura){
        try {
 
-        $cai = DB::SELECTONE("select cai from factura where  estado_factura_id = 1  and id = ".$idFactura);
+        $cai = DB::SELECTONE("select cai, cai_id from factura where  estado_factura_id = 1  and id = ".$idFactura);
 
         if(!empty($cai->cai)){
-            $idFacturaND = DB::SELECTONE("select id from factura where  estado_factura_id=2 and  cai='".$cai->cai."'"); 
+            $idFacturaND = DB::SELECTONE("select id from factura where  estado_factura_id=2 and  cai='".$cai->cai."' and cai_id = ".$cai->cai_id); 
                 if(!empty($idFacturaND->id)){
                     $Product_Update = ModelFactura::where("id", "=",$idFacturaND->id)->update(["estado_factura_id" => '1']);
                 }
@@ -196,7 +209,7 @@ class Comparacion extends Component
     public function cambioEstadoDC($idFactura){
         try {
 
-        $caiverificar = DB::SELECTONE("select cai from factura where estado_factura_id = 2 and id = ".$idFactura); 
+        $caiverificar = DB::SELECTONE("select cai, cai_id from factura where estado_factura_id = 2 and id = ".$idFactura); 
         
         $contraParte = DB::select("
         select 
@@ -204,7 +217,7 @@ class Comparacion extends Component
         from factura A
         inner join cliente B
         on A.cliente_id = B.id
-        where A.estado_factura_id = 1 and A.estado_venta_id=1 and B.tipo_cliente_id=2 and A.cai ='".$caiverificar->cai."'"
+        where A.estado_factura_id = 1 and A.estado_venta_id=1 and B.tipo_cliente_id=2 and A.cai ='".$caiverificar->cai."' and cai_id =".$caiverificar->cai_id
         );
 
         if(!empty($contraParte)){        
@@ -218,12 +231,12 @@ class Comparacion extends Component
 
 
          
-        $cai = DB::SELECTONE("select cai from factura where  estado_factura_id = 2  and id = ".$idFactura);
+        $cai = DB::SELECTONE("select cai, cai_id from factura where  estado_factura_id = 2  and id = ".$idFactura);
 
 
 
         if(!empty($cai->cai)){
-            $idFacturaDC = DB::SELECTONE("select id from factura where  estado_factura_id=1 and  cai='".$cai->cai."'"); 
+            $idFacturaDC = DB::SELECTONE("select id from factura where  estado_factura_id=1 and  cai='".$cai->cai."' and cai_id = ".$cai->cai_id); 
                 if(!empty($idFacturaDC->id)){
                     $Product_Update = ModelFactura::where("id", "=",$idFacturaDC->id)->update(["estado_factura_id" => '2']);
                 }

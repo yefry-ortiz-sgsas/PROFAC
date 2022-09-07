@@ -35,7 +35,8 @@
                             <table id="tbl_lista_ventas" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-
+                                        <th>Cod CAI</th>
+                                        <th>CAI</th>
                                         <th>N° Factura</th>
                                         <th>D/C</th>
                                         <th>N/D</th>
@@ -92,8 +93,15 @@
 
 
                     "ajax": "/ventas/lista/seleccionar",
-                    "columns": [{
+                    "columns": [
+                        {
+                            data: 'cod_cai'
+                        },
+                        {
                             data: 'cai'
+                        },
+                        {
+                            data: 'correlativo'
                         },
                         {
                             data: 'DC'
@@ -112,7 +120,7 @@
                 });
             })
 
-            function modalTranslado(cai) {
+            function modalTranslado(cai, caidID) {
 
                 Swal.fire({
                     title: 'Está suguro(a) de realizar este cambio?',
@@ -124,14 +132,15 @@
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-                        actualizarEstado(cai);
+                        actualizarEstado(cai,caidID);
                     }
                 })
             }
 
-            function actualizarEstado(cai) {
+            function actualizarEstado(cai, caidID) {
                 let data = {
-                    cai: cai
+                    cai: cai,
+                    caidID: caidID
                 };
                 axios.post('/ventas/cambio', data)
                     .then(response => {
@@ -166,8 +175,9 @@
 
                 var table = $('#tbl_lista_ventas').DataTable();
 
-                var plainArray = table.column(0).data().toArray();
-
+                var plainArray = table.column(2).data().toArray();
+                var plainArray2 = table.column(0).data().toArray();
+                
 
                 const formData = new FormData();
 
@@ -175,6 +185,7 @@
                 for (let i = 0; i < plainArray.length; i++) {
 
                     formData.append('arregloCAI[]', plainArray[i]);
+                    formData.append('arregloCAI_ID[]', plainArray2[i]);
                 }
 
                 axios.post('/ventas/bloquear/estado', formData)
@@ -211,7 +222,8 @@
                 document.getElementById('btn_mayor').disabled = false;
 
                 var table = $('#tbl_lista_ventas').DataTable();
-                var plainArray = table.column(0).data().toArray();
+                var plainArray = table.column(2).data().toArray();
+                var plainArray2 = table.column(0).data().toArray();
 
 
                 const formData = new FormData();
@@ -219,6 +231,7 @@
 
                 for (let i = 0; i < plainArray.length; i++) {
                     formData.append('arregloCAI[]', plainArray[i]);
+                    formData.append('arregloCAIID[]', plainArray2[i]);
                 }
 
                 axios.post('/ventas/seleccionar/mayor', formData)
@@ -261,14 +274,16 @@
                 document.getElementById('btn_menor').disabled = false;
 
                 var table = $('#tbl_lista_ventas').DataTable();
-                var plainArray = table.column(0).data().toArray();
+                var plainArray = table.column(2).data().toArray();
+                var plainArray2 = table.column(0).data().toArray();
 
 
                 const formData = new FormData();
 
 
                 for (let i = 0; i < plainArray.length; i++) {
-                    formData.append('arregloCAI[]', plainArray[i]);
+                    formData.append('arregloCAI[]', plainArray[i]); 
+                    formData.append('arregloCAIID[]', plainArray2[i]);
                 }
 
                 axios.post('/ventas/seleccionar/menor', formData)
