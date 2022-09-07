@@ -401,9 +401,18 @@
                         <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                         <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
                             Cotizaciones</a></li>
+
+                        @if(Auth::user()->rol_id == '2'  )
+                        
+                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas </a>
+
+                        @else
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas vendedor</a>
+                        @endif    
+                       
+                        
                         </li>
+
                         <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas
                             </a></li>
 
@@ -423,8 +432,14 @@
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                        
+                       
+                        @if(Auth::user()->rol_id == '2'  )
+                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                        @else
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas vendedor</a></li>
+                        @endif
+                        
                         <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
                         </li>
                         <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
