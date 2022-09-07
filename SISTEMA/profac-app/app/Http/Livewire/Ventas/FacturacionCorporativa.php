@@ -41,6 +41,16 @@ class FacturacionCorporativa extends Component
         try {
 
 
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and tipo_cliente_id=1                           
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+/*
 
             if (Auth::user()->rol_id == 1) {
                 $listaClientes = DB::SELECT("
@@ -65,7 +75,7 @@ class FacturacionCorporativa extends Component
                         ");
             }
 
-
+*/
 
             return response()->json([
                 "results" => $listaClientes,
@@ -830,7 +840,7 @@ class FacturacionCorporativa extends Component
             $factura->cai_id = $cai->cai_id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
             $factura->estado_factura_id = 2; // se presenta   
@@ -1224,7 +1234,7 @@ class FacturacionCorporativa extends Component
             $factura->cai_id = $listado->cai_id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
             $factura->estado_factura_id = $listado->estado; // se presenta
@@ -1344,18 +1354,20 @@ class FacturacionCorporativa extends Component
 
     public function listadoVendedores(){
         
-        $rolId = Auth::user()->rol_id;
-        $idUser = Auth::user()->id;
+        //$rolId = Auth::user()->rol_id;
+        //$idUser = Auth::user()->id;
 
+
+        $listadoVendedores = DB::SELECT("select id, name as text from users where rol_id = 2  ");
        
-
+        /*
         if($rolId==3 or $rolId==1 ){
             $listadoVendedores = DB::SELECT("select id, name as text from users where rol_id = 2 ");
         }else{
             $listadoVendedores = DB::SELECT("select id, name as text from users where id = ".$idUser);
         }
 
-        
+        */
        
         return response()->json([
             'results'=>$listadoVendedores,

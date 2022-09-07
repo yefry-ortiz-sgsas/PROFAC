@@ -85,7 +85,7 @@
         <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$cliente->nombre}}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;;"><b>Dirección:</b> {{$cliente->direccion}}</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 9px;"><b>Dirección:</b> {{$cliente->direccion}}</p>
                 
                 <p class="card-text" style="position:absolute;left:20px;  top:47px;"><b>Correo:</b> {{$cliente->correo}}
                 </p>
@@ -186,9 +186,9 @@
                         NULL</p> --}}
 
                         @if($cai->factura == 1)
-                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:20px;">C</p>
+                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">1</p>
                         @else
-                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:20px;">G</p>
+                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">2</p>
                         @endif    
 
                        

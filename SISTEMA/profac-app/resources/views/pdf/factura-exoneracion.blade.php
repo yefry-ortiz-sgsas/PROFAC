@@ -188,9 +188,9 @@
                         NULL</p> --}}
 
                         @if($cai->factura == 1)
-                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:20px;">C</p>
+                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">1</p>
                         @else
-                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:20px;">G</p>
+                        <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">2</p>
                         @endif    
 
                        
