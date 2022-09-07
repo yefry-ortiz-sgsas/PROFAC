@@ -147,7 +147,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="modal_transladar_productoLabel"> Transladar a otra bodega 5</h3>
+                    <h3 class="modal-title" id="modal_transladar_productoLabel"> Transladar a otra bodega </h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
