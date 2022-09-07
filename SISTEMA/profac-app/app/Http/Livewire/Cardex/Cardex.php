@@ -77,16 +77,18 @@ class Cardex extends Component
             producto.nombre as 'producto',
             producto.id as 'codigoProducto',
             log_translado.factura_id as 'factura',
+            (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
             log_translado.ajuste_id as 'ajuste' ,
+            (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
             log_translado.descripcion as 'descripcion',
-            concat (bodega.nombre,' ',seccion2.descripcion) as origen, 
-              concat(                 
+            concat (bodega.nombre,' ',seccion2.descripcion) as origen,
+              concat(
               (select
               bodega.nombre
-              from seccion 
-              inner join segmento 
+              from seccion
+              inner join segmento
               on segmento.id = seccion.segmento_id
-              inner join bodega 
+              inner join bodega
               ON bodega.id = segmento.bodega_id
               where seccion.id = log_translado.destino
               ),
@@ -95,20 +97,20 @@ class Cardex extends Component
               (
               select
               seccion.descripcion
-              from seccion 
-              inner join segmento 
+              from seccion
+              inner join segmento
               on segmento.id = seccion.segmento_id
-              inner join bodega 
+              inner join bodega
               ON bodega.id = segmento.bodega_id
               where seccion.id = log_translado.destino
               )
               ) as destino,
-              
+
             log_translado.cantidad as 'cantidad',
             users.name as  'usuario'
         from log_translado
             inner join recibido_bodega on (recibido_bodega.id = log_translado.origen)
-    
+
             inner join producto on (recibido_bodega.producto_id = producto.id)
             inner join seccion as seccion2 on (seccion2.id = recibido_bodega.seccion_id)
             inner join segmento on (segmento.id = seccion2.segmento_id)
@@ -119,12 +121,27 @@ class Cardex extends Component
 
             return Datatables::of($listaCardex)
             ->addColumn('doc_factura', function($elemento){
-                return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'">'.$elemento->factura.'</a>';
+                if($elemento->factura != null){
+                    return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i class="fas fa-receipt"></i> FACTURA # '.$elemento->factura_cod.'</a>';
+                }else{
+                    return '<a ><i class="fas fa-receipt"></i> N/A FACTURA</a>';
+                }
             })
             ->addColumn('doc_ajuste', function($elemento){
-                return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'">'.$elemento->ajuste.'</a>';
+                if($elemento->ajuste != null){
+                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE</a>';
+                }else{
+                    return '<a><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                }
             })
-            ->rawColumns(['doc_factura','doc_ajuste'])
+            ->addColumn('detalleCompra', function($elemento){
+                if($elemento->detalleCompra != null){
+                    return '<a target="_blank" href="/producto/compras/detalle/'.$elemento->detalleCompra.'"><i class="fas fa-receipt"></i> DETALLE DE COMPRA </a>';
+                }else{
+                    return '<a ><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                }
+            })
+            ->rawColumns(['doc_factura','doc_ajuste', 'detalleCompra'])
             ->make(true);
 
         } catch (QueryException $e) {

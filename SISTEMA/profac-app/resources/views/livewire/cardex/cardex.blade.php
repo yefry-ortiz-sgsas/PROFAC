@@ -62,6 +62,7 @@
                                         <th>Código de producto</th>
                                         <th>Factura</th>
                                         <th>Ajuste</th>
+                                        <th>Compra</th>
                                         <th>Descripción</th>
                                         <th>Origen</th>
                                         <th>Destino</th>
@@ -199,6 +200,9 @@
                 },
                 {
                     data: 'doc_ajuste'
+                },
+                {
+                    data: 'detalleCompra'
                 },
                 {
                     data: 'descripcion'
