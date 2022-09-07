@@ -256,7 +256,7 @@
 
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                         <label class="sr-only">ISV</label>
-                                        <input type="number" placeholder="ISV" class="form-control" min="1"
+                                        <input type="number" placeholder="ISV" class="form-control" min="0"
                                             autocomplete="off" disabled>
                                     </div>
 
@@ -302,7 +302,7 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="number" step="any" placeholder="ISV " id="isvGeneral" name="isvGeneral"
-                                        class="form-control" min="1" data-parsley-required autocomplete="off"
+                                        class="form-control" min="0" data-parsley-required autocomplete="off"
                                         readonly>
                                 </div>
                             </div>

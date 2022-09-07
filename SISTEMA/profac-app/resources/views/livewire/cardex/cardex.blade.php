@@ -56,14 +56,13 @@
                             <table id="tbl_cardex" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-
-                                        <th>Fecha de gestión</th>
+                                        <th>Fecha de gesti��n</th>
                                         <th>Producto</th>
-                                        <th>Código de producto</th>
+                                        <th>C��digo de producto</th>
                                         <th>Factura</th>
                                         <th>Ajuste</th>
                                         <th>Compra</th>
-                                        <th>Descripción</th>
+                                        <th>Descripci��n</th>
                                         <th>Origen</th>
                                         <th>Destino</th>
                                         <th>Cantidad</th>

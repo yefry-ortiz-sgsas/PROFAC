@@ -12,7 +12,7 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use DataTables;
 
-use Maatwebsite\Excel\facades\Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ComprasMesExport;
 
 class ListarCompras extends Component

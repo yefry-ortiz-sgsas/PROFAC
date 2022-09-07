@@ -457,8 +457,23 @@ Route::get('/ventas/sin/restriccion/precio', SinRestriccionPrecio::class);
 Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class,'enviarCodigo']);
 Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class,'verificarCodigo']);
 Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desactivarCodigo']);
+//---------------------------------------------------------SinRestriccionPrecio-------------------------------------------------------//
+
+Route::get('/ventas/sin/restriccion/precio', SinRestriccionPrecio::class);
+Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class,'enviarCodigo']);
+Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class,'verificarCodigo']);
+Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desactivarCodigo']);
 
 
 return redirect('/login');
 });
 
+return redirect('/login');
+});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Route::get('/cliente/excel', [Cliente::class, 'export']);
+Route::get('/producto/excel', [Producto::class, 'export']);
+Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
+
+Route::get('/bodega/excel', [Bodega::class, 'export']);

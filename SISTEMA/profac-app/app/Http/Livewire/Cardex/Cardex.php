@@ -129,16 +129,16 @@ class Cardex extends Component
             })
             ->addColumn('doc_ajuste', function($elemento){
                 if($elemento->ajuste != null){
-                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE</a>';
+                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE #'.$elemento->ajuste.'</a>';
                 }else{
-                    return '<a><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                    return '<a ><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
                 }
             })
             ->addColumn('detalleCompra', function($elemento){
                 if($elemento->detalleCompra != null){
                     return '<a target="_blank" href="/producto/compras/detalle/'.$elemento->detalleCompra.'"><i class="fas fa-receipt"></i> DETALLE DE COMPRA </a>';
                 }else{
-                    return '<a ><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                    return '<a ><i class="fas fa-receipt"></i> N/A DETALLE DE COMPRA</a>';
                 }
             })
             ->rawColumns(['doc_factura','doc_ajuste', 'detalleCompra'])

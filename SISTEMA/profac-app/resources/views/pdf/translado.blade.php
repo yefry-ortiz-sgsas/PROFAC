@@ -52,7 +52,7 @@
 
         }
     </style>
-    <title>AJUSTE</title>
+    <title>TRASLADO</title>
 </head>
 
 <body>
