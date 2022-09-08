@@ -80,7 +80,7 @@ class Cardex extends Component
             (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
             log_translado.ajuste_id as 'ajuste' ,
             (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
-            log_translado.descripcion as 'descripcion',
+            concat(log_translado.descripcion,' (+)') as 'descripcion',
             concat (bodega.nombre,' ',seccion2.descripcion) as origen,
               concat(
               (select
@@ -128,7 +128,7 @@ union
             (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
             log_translado.ajuste_id as 'ajuste' ,
             (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
-            log_translado.descripcion as 'descripcion',
+            log_translado.descripcion  as 'descripcion',
             concat (bodega.nombre,' ',seccion2.descripcion) as origen,
               concat(
               (select
