@@ -40,7 +40,7 @@ class Cardex extends Component
 
     public function listarProductos(Request $request){
         try {
-
+          
             $productos = DB::SELECT("
                 SELECT producto.id as id, concat(producto.id,' - ',producto.nombre) as text FROM producto
                 INNER JOIN recibido_bodega on (producto.id = recibido_bodega.producto_id)
@@ -49,7 +49,7 @@ class Cardex extends Component
                 INNER JOIN bodega on (segmento.bodega_id = bodega.id)
                 WHERE
                 estado_producto_id = 1
-                and  producto.nombre like  '%".$request->search."%'
+                and (  producto.nombre like  '%".$request->search."%' or  producto.id like  '%".$request->search."%')
                 and bodega.id = ".$request->idBodega);
 
             return response()->json([
@@ -109,6 +109,54 @@ class Cardex extends Component
             log_translado.cantidad as 'cantidad',
             users.name as  'usuario'
         from log_translado
+            inner join recibido_bodega on (recibido_bodega.id = log_translado.destino)
+
+            inner join producto on (recibido_bodega.producto_id = producto.id)
+            inner join seccion as seccion2 on (seccion2.id = recibido_bodega.seccion_id)
+            inner join segmento on (segmento.id = seccion2.segmento_id)
+            inner join bodega on (bodega.id = segmento.bodega_id)
+            inner join users on (users.id = log_translado.users_id)
+    where log_translado.descripcion='Translado de bodega' and bodega.id = ".$idBodega." and producto.id =".$idProducto."
+    
+union     
+
+            select
+            log_translado.created_at as 'fechaIngreso',
+            producto.nombre as 'producto',
+            producto.id as 'codigoProducto',
+            log_translado.factura_id as 'factura',
+            (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
+            log_translado.ajuste_id as 'ajuste' ,
+            (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
+            log_translado.descripcion as 'descripcion',
+            concat (bodega.nombre,' ',seccion2.descripcion) as origen,
+              concat(
+              (select
+              bodega.nombre
+              from seccion
+              inner join segmento
+              on segmento.id = seccion.segmento_id
+              inner join bodega
+              ON bodega.id = segmento.bodega_id
+              where seccion.id = log_translado.destino
+              ),
+              ' '
+              ,
+              (
+              select
+              seccion.descripcion
+              from seccion
+              inner join segmento
+              on segmento.id = seccion.segmento_id
+              inner join bodega
+              ON bodega.id = segmento.bodega_id
+              where seccion.id = log_translado.destino
+              )
+              ) as destino,
+
+            log_translado.cantidad as 'cantidad',
+            users.name as  'usuario'
+        from log_translado
             inner join recibido_bodega on (recibido_bodega.id = log_translado.origen)
 
             inner join producto on (recibido_bodega.producto_id = producto.id)
@@ -117,6 +165,8 @@ class Cardex extends Component
             inner join bodega on (bodega.id = segmento.bodega_id)
             inner join users on (users.id = log_translado.users_id)
     where bodega.id = ".$idBodega." and producto.id =".$idProducto
+
+            
             );
 
             return Datatables::of($listaCardex)

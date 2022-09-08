@@ -56,13 +56,13 @@
                             <table id="tbl_cardex" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Fecha de gesti��n</th>
+                                        <th>Fecha de gestion</th>
                                         <th>Producto</th>
-                                        <th>C��digo de producto</th>
+                                        <th>Codigo de producto</th>
                                         <th>Factura</th>
                                         <th>Ajuste</th>
                                         <th>Compra</th>
-                                        <th>Descripci��n</th>
+                                        <th>Descripcion</th>
                                         <th>Origen</th>
                                         <th>Destino</th>
                                         <th>Cantidad</th>
@@ -147,7 +147,7 @@
         var idProducto = document.getElementById('producto');
         console.log(idBodega.options[idBodega.selectedIndex].text, idProducto.options[idProducto.selectedIndex].text);
         $('#tbl_cardex').DataTable({
-            "order": [0, 'desc'],
+            "order": [0, 'asc'],
             "paging": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
