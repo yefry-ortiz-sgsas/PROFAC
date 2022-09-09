@@ -485,7 +485,7 @@
 
                 @if (Auth::user()->rol_id == '1')
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                        <a><i class="fa-solid fa-clipboard-check"  style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Declaraciones </span>
                             <span class="fa arrow"></span></a>
 
@@ -504,7 +504,7 @@
                 @endif
 
                 <li>
-                    <a href="index.html"><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span
+                    <a ><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span
                             class="nav-label" style="color:#ffffff;">Cardex</span>
                         <span class="fa arrow"></span></a>
 
