@@ -390,6 +390,18 @@
                 </li>
 
                 <li>
+                    <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"
+                            style="color:#ffffff;">Cuentas Por Cobrar</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+                        <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a></li>
+                        
+
+                    </ul>
+                </li>
+
+                <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                             style="color:#ffffff;">Ventas Corporativas</span>
                         <span class="fa arrow"></span></a>
@@ -420,8 +432,8 @@
 
                         <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
                         <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
-                        <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
-                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
+                        {{-- <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
+                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li> --}}
 
                     </ul>
                 </li>

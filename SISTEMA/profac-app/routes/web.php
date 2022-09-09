@@ -60,6 +60,7 @@ use App\Http\Livewire\Ventas\ListadoFacturasND;
 
 use App\Http\Livewire\Ventas\CuentasPorCobrar;
 use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
+use App\Http\Livewire\CuentasPorCobrar\ListadoFacturas as listadoCuentasCobrar;
 
 
 
@@ -470,7 +471,8 @@ Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desa
 //////////////////////////////////////////CUENTAS POR COBRAR///////////////////////////////////////////
 
 
-
+Route::get('/cuentas/por/cobrar/listado',listadoCuentasCobrar::class);
+Route::get('/cuentas/cobrar/lista',[listadoCuentasCobrar::class,'listarFacturasCobrar']);
 Route::get('/ventas/cuentas_por_cobrar', CuentasPorCobrar::class);
 Route::get('/ventas/cuentas_por_cobrar/clientes', [CuentasPorCobrar::class,'listarClientes']);
 //Route::get('/ventas/cuentas_por_cobrar/productos', [CuentasPorCobrar::class,'listarProductos']);
