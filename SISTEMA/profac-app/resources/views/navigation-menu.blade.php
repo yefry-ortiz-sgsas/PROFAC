@@ -408,6 +408,8 @@
 
                         @else
                         <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                        <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li>
+                        
                         @endif    
                        
                         

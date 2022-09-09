@@ -29,8 +29,9 @@
                             <table id="tbl_listar_compras" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Codigo Interno</th>
+                                        
                                         <th>N° Factura</th>
+                                        <th>Correlativo</th>
                                         <th>CAI</th>
                                         <th>Fecha de Emision</th>
                                         <th>Cliente</th>
@@ -61,11 +62,11 @@
         <script>
             $(document).ready(function() {
             $('#tbl_listar_compras').DataTable({
-                "order": [0, 'desc'],
+                "order": [3, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                
+                "order": [3, 'desc'],
                 pageLength: 10,
                 responsive: true,
               
@@ -73,10 +74,10 @@
                 "ajax": "/lista/facturas/corporativo",
                 "columns": [
                     {
-                        data: 'id'
+                        data: 'numero_factura'
                     },
                     {
-                        data: 'numero_factura'
+                        data: 'correlativo'
                     },
                     {
                         data: 'cai'

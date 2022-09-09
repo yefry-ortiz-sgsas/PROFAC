@@ -81,6 +81,7 @@ class Cai extends Component
     public function guardarCAI(Request $request){
       
         try {
+            
             $validator = Validator::make($request->all(), [
                 'tipo_documento_fiscal_id' => 'required',
                 'cai' => 'required',
@@ -123,7 +124,7 @@ class Cai extends Component
             where estado_id = 1 and tipo_documento_fiscal_id=".$request->tipo_documento_fiscal_id);
 
             if ( empty($getCai->id) ) {
-                
+                                
             } else {
 
                 $setCai = ModelCAI::find($getCai->id);

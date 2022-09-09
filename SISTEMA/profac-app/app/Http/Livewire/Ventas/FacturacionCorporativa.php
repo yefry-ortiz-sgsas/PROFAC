@@ -701,7 +701,7 @@ class FacturacionCorporativa extends Component
             $factura->cai_id = $cai->id;
             $factura->estado_venta_id = 1;
             $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = Auth::user()->id;
+            $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
             $factura->estado_factura_id = $estado; // se presenta    
@@ -1080,9 +1080,10 @@ class FacturacionCorporativa extends Component
             UPPER(J.nombre) as medida,
             H.nombre as bodega,
             F.descripcion as seccion,
-            FORMAT(B.sub_total_s/B.cantidad,2) as precio,
-            FORMAT(B.cantidad,2) as cantidad,
-            FORMAT(B.sub_total_s,2) as importe
+            FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(sum(B.cantidad_s),2) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe
+
         from factura A
         inner join venta_has_producto B
         on A.id = B.factura_id
@@ -1100,7 +1101,8 @@ class FacturacionCorporativa extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=".$idFactura);
+        where A.id=".$idFactura."
+        group by codigo, descripcion, medida, bodega, seccion, precio");
 
         $ordenCompra = DB::SELECTONE("
         select

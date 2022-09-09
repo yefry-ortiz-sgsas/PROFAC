@@ -29,7 +29,7 @@
                             <table id="tbl_listar_compras" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Codigo Interno</th>
+                                       
                                         <th>N° Factura</th>
                                         <th>CAI</th>
                                         <th>Fecha de Emision</th>
@@ -72,9 +72,7 @@
 
                 "ajax": "/exonerado/listas/facturas",
                 "columns": [
-                    {
-                        data: 'id'
-                    },
+
                     {
                         data: 'numero_factura'
                     },

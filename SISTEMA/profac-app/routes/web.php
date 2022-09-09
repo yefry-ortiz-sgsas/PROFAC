@@ -55,6 +55,8 @@ use App\Http\Livewire\Inventario\SubCategoria;
 
 use App\Http\Livewire\Ventas\SinRestriccionPrecio;
 
+use App\Http\Livewire\Ventas\ListadoFacturasND;
+
 
 
 
@@ -154,6 +156,9 @@ Route::post('/factura/corporativo/anular', [ListadoFacturas::class,'anularVentaR
 
 Route::get('/facturas/corporativo/vendedor', LitsadoFacturasVendedor::class);
 Route::get('/lista/facturas/corporativo/vendedor', [LitsadoFacturasVendedor::class,'listarFacturasVendedor']);
+
+Route::get('/facturas/corporativo/lista', ListadoFacturasND::class); 
+Route::get('/facturas/corporativo/lista/nd', [ListadoFacturasND::class,'listarFacturas']);
 
 //-----------------------------------------------Usuarios-------------------------------------------------------------------------------------------//
 Route::get('/usuarios', ListarUsuarios::class);

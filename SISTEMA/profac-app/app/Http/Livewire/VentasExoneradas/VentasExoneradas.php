@@ -622,9 +622,10 @@ class VentasExoneradas extends Component
             UPPER(J.nombre) as medida,
             H.nombre as bodega,
             F.descripcion as seccion,
-            FORMAT(B.sub_total_s/B.cantidad,2) as precio,
-            B.cantidad,
-            B.sub_total_s as importe
+            FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(sum(B.cantidad_s),2) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe
+
         from factura A
         inner join venta_has_producto B
         on A.id = B.factura_id
@@ -642,7 +643,8 @@ class VentasExoneradas extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=".$idFactura);
+        where A.id=".$idFactura."
+        group by codigo, descripcion, medida, bodega, seccion, precio");
 
 
         if( fmod($importes->total, 1) == 0.0 ){
