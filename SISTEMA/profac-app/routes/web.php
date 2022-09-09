@@ -61,8 +61,6 @@ use App\Http\Livewire\Ventas\ListadoFacturasND;
 use App\Http\Livewire\Ventas\CuentasPorCobrar;
 use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
 
-use App\Http\Livewire\Ventas\CuentasPorCobrar;
-use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
 
 
 
