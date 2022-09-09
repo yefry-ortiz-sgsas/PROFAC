@@ -85,7 +85,7 @@
         <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$cliente->nombre}}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;;"><b>Dirección:</b> {{$cliente->direccion}}</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:29px; font-size: 9 px; max-width:500px"><b>Dirección:</b> {{$cliente->direccion}}</p>
                 
                 <p class="card-text" style="position:absolute;left:20px;  top:47px;"><b>Correo:</b> {{$cliente->correo}}
                 </p>
@@ -187,11 +187,13 @@
                     {{-- <p class="card-text" style="position:absolute;left:10px;  top:18px; font-size:14px"><b>Repartidor: </b>
                         NULL</p> --}}
 
+                        <!--
+
                         @if($cai->factura == 1)
                         <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">1</p>
                         @else
                         <p class="letra" style="position:absolute; right:10px;  top:2px; font-size:10px;">2</p>
-                        @endif    
+                        @endif   --> 
 
                        
                         
@@ -214,15 +216,21 @@
                         legales y somete a la jurisdicción de tegucigalpa municipio del distrito central.</p>
                     <p class="card-text" style="position:absolute;left:10px;  top:205px; font-size:11px">7. las entregas y
                         creditos para cuentas con facturas vencidas serán congeladas hasta el pago de las mismas haya sido
-                        efectuado en su totalidad.</p>
-    
-    
-                        @if($flagCentavos == false)
-                        <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">"{{$numeroLetras." CON CERO CENTAVOS"}}"</p>
-                            
+                        efectuado en su totalidad.
+                        
+                        @if($cai->estado_factura==1)
+                        <span style = "font-size: 10px">N{{$cai->numero}}-CF11</span></p>
                         @else
-                        <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:14px;">"{{$numeroLetras }}"</p>
+                        <span style = "font-size: 10px">N{{$cai->numero}}-CF12</span></p>
                         @endif
+
+
+                    @if($flagCentavos == false)
+                    <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">"{{$numeroLetras." CON CERO CENTAVOS"}}"</p>
+                        
+                    @else
+                    <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:14px;">"{{$numeroLetras }}"</p>
+                    @endif
                 </div>
             </div>
     

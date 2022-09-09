@@ -367,7 +367,10 @@ class FacturacionEstatal extends Component
                     from cai 
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
-            if ($cai->numero_actual > $cai->cantidad_otorgada) {
+            $arrayNumeroFinal = explode('-', $cai->numero_final);
+            $numero_final= (string)((int)($arrayNumeroFinal[3]));
+
+            if ($cai->numero_actual > $numero_final) {
 
                 return response()->json([
                     "title" => "Advertencia",
