@@ -356,7 +356,17 @@
          
          $(document).on('submit', '#crearCAIFacturacionForm', function(event) {
             event.preventDefault();
-            guardarCaiFacturacion();
+            if (verificacionCAI()) {
+                guardarCaiFacturacion();
+            }else{
+
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Accion no permitida!',
+                        text: "Aun existen facturas pendientes de cierre."
+                    })
+            }
+            $('#modal_cai_crear_facturacion').modal('hide');
         });
 
             function guardarCaiFacturacion() {
@@ -528,6 +538,33 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_cai_editar').modal('hide');
+                        
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
+                        })
+                        console.error(err);
+
+                })
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////
+             function verificacionCAI(){
+               
+            
+                axios.get('/cai/verificacion')
+                .then( response =>{
+
+                    
+                    
+                    return response;
+
+                   
+
+                })
+                .catch( err=>{
+                    let data = err.response.data;
                         
                         Swal.fire({
                             icon: data.icon,

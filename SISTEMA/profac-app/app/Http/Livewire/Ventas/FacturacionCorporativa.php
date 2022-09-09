@@ -422,7 +422,7 @@ class FacturacionCorporativa extends Component
                     return response()->json([
                         "title" => "Advertencia",
                         "icon" => "warning",
-                        "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
+                        "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 1.",
                     ], 401);
 
                 }
@@ -655,12 +655,15 @@ class FacturacionCorporativa extends Component
                 $numeroSecuenciaUpdated = $cai->numero_actual + 1;
             }
 
-            if ($numeroSecuencia > $cai->cantidad_otorgada) {
+            $arrayNumeroFinal = explode('-', $cai->numero_final);
+            $numero_final= (string)((int)($arrayNumeroFinal[3]));
+            
+            if ($numeroSecuencia > $numero_final) {
 
                 return response()->json([
                     "title" => "Advertencia",
                     "icon" => "warning",
-                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
+                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 2.",
                 ], 401);
             }
 
@@ -804,7 +807,7 @@ class FacturacionCorporativa extends Component
                 return response()->json([
                     "title" => "Advertencia",
                     "icon" => "warning",
-                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
+                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 3.",
                 ], 402);
             }
 
@@ -1018,6 +1021,8 @@ class FacturacionCorporativa extends Component
         $cai = DB::SELECTONE("
         select 
         A.cai as numero_factura,
+        A.numero_factura as numero,
+        A.estado_factura_id as estado_factura,
         A.estado_venta_id,
         B.cai,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,

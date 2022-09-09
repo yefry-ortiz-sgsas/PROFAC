@@ -220,7 +220,10 @@ class VentasExoneradas extends Component
                     from cai 
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
-            if ($cai->numero_actual > $cai->cantidad_otorgada) {
+            $arrayNumeroFinal = explode('-', $cai->numero_final);
+            $numero_final= (string)((int)($arrayNumeroFinal[3]));
+
+            if ($cai->numero_actual > $numero_final) {
 
                 return response()->json([
                     "title" => "Advertencia",
@@ -561,6 +564,8 @@ class VentasExoneradas extends Component
         $cai = DB::SELECTONE("
         select 
         A.cai as numero_factura,
+        A.numero_factura as numero,
+        A.estado_factura_id as estado_factura,
         B.cai,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,

@@ -131,11 +131,26 @@ class Cai extends Component
 
                 $setCai->update();
             }
+
+            ////////////////////////////Explode NumeroInicial Seteo/////////////////
+            $arrayNumeroInicial = explode('-', $request->numero_inicial);
+            $numero_inicial_set= $arrayNumeroInicial[3];
+
+            ///////////////////////////Explode NumeroFinal Seteo////////////////////
+            $arrayNumeroFinal = explode('-', $request->numero_final);
+            $numero_final_set= $arrayNumeroFinal[3];
+            ////////////////////////////////////////////////////////////////////////
            
             ////////////////////////////Explode NumeroBase//////////////////////////
             $arrayCai = explode('-', $request->numero_final);
             $numero_base= $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2];
             ////////////////////////////////////////////////////////////////////////
+            //Resta de rangos = cantidad no utilizada
+
+            $cantidad_no_utilizada_set = (string)((int)($numero_final_set)) - (string)((int)($numero_inicial_set));
+
+            ////////////////////////////////////////////////////////////////////////
+
 
             $cai = new ModelCAI;
                 
@@ -143,9 +158,9 @@ class Cai extends Component
             $cai->punto_de_emision = $request->punto_emision;
             $cai->cantidad_solicitada = $request->cantidad_solicitada;
             $cai->cantidad_otorgada = $request->cantidad_otorgada;
-            $cai->numero_actual = 1;
-            $cai->serie =1;
-            $cai->cantidad_no_utilizada = $request->cantidad_otorgada;
+            $cai->numero_actual = (string)((int)($numero_inicial_set)); //ltrim($request->numero_inicial, '0');
+            $cai->serie = (string)((int)($numero_inicial_set)); //ltrim($request->numero_inicial, '0');
+            $cai->cantidad_no_utilizada = $cantidad_no_utilizada_set;
             $cai->numero_inicial = $request->numero_inicial;
             $cai->numero_final = $request->numero_final;
             ////////////////////////Numero Base//////////////////////////////////////////
@@ -231,6 +246,21 @@ class Cai extends Component
                 ], 402);
             }
 
+            ///////////////////////////Explode NumeroFinal Seteo
+            $arrayNumeroFinal_update = explode('-', $request->numero_final_editar);
+            $numero_final_set= $arrayNumeroFinal_update[3];
+
+            ////////////////////////////Explode NumeroInicial Seteo//////////////////////////
+            $arrayNumeroInicial_update = explode('-', $request->numero_inicial_editar);
+            $numero_inicial_set= $arrayNumeroInicial_update[3];
+            ////////////////////////////////////////////////////////////////////////
+
+            ////////////////////////////////////////////////////////////////////////
+            //Resta de rangos = cantidad no utilizada
+
+            $cantidad_no_utilizada_set_update = (string)((int)($numero_final_set)) - (string)((int)($numero_inicial_set));
+
+            ////////////////////////////////////////////////////////////////////////
         
             $cai_update =  ModelCAI::find($request->idCAI);
                        
@@ -238,9 +268,11 @@ class Cai extends Component
             $cai_update->punto_de_emision = $request->punto_emision_editar;
             $cai_update->cantidad_solicitada = $request->cantidad_solicitada_editar;
             $cai_update->cantidad_otorgada = $request->cantidad_otorgada_editar;
-            $cai_update->cantidad_no_utilizada = $request->cantidad_otorgada_editar;
+            $cai_update->cantidad_no_utilizada = $cantidad_no_utilizada_set_update;
             $cai_update->numero_inicial = $request->numero_inicial_editar;
             $cai_update->numero_final = $request->numero_final_editar;
+            $cai_update->numero_actual = (string)((int)($numero_inicial_set));// ltrim($numero_inicial_set, '0');
+            $cai_update->serie = (string)((int)($numero_inicial_set)); //ltrim($numero_inicial_set, '0');
             /////////////////////////////////Numero Base/////////////////////////////            
             $arrayCai = explode('-', $request->numero_final_editar);
             $numero_base= $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2];
@@ -271,6 +303,34 @@ class Cai extends Component
         }
  
     }
-    
+
+    public function verificacionEstadosCai( Request $request){
+        try {
+            
+            $verifica = DB::table('factura')            
+                            ->select('factura.cai', )  
+                            ->where('factura.estado_venta_id', '=', 1)
+                            ->where('factura.estado_editar', '=', 1)
+                            ->get();
+                            
+            if (empty($verifica)) {
+                $permiso = true;
+            } else {
+                $permiso = false;
+            }
+           
+
+         //$verificacion = DB::SELECTONE("select id, cai, fecha_limite_emision, cantidad_otorgada, cantidad_solicitada, numero_inicial, numero_final, punto_de_emision from cai where id=".$request->id);
+ 
+        return response()->json([
+         "permiso"=>$permiso,
+        ],200);
+        } catch (QueryException $e) {
+        return response()->json([
+         'message' => 'Ha ocurrido un error', 
+         'error' => $e
+        ],402);
+        }
+     }    
 
 }

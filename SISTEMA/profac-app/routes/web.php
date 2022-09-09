@@ -56,6 +56,8 @@ use App\Http\Livewire\Inventario\SubCategoria;
 use App\Http\Livewire\Ventas\SinRestriccionPrecio;
 
 
+use App\Http\Livewire\Ventas\CuentasPorCobrar;
+use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
 
 
 
@@ -458,14 +460,41 @@ Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class,'enviarCodig
 Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class,'verificarCodigo']);
 Route::post('/ventas/autorizacion/desactivar',[SinRestriccionPrecio::class,'desactivarCodigo']);
 
+//////////////////////////////////////////CUENTAS POR COBRAR///////////////////////////////////////////
+
+
+
+Route::get('/ventas/cuentas_por_cobrar', CuentasPorCobrar::class);
+Route::get('/ventas/cuentas_por_cobrar/clientes', [CuentasPorCobrar::class,'listarClientes']);
+//Route::get('/ventas/cuentas_por_cobrar/productos', [CuentasPorCobrar::class,'listarProductos']);
+
+Route::get('/ventas/cuentas_por_cobrar/listar', [CuentasPorCobrar::class,'listarCuentasPorCobrar']);
+//Route::get('/ventas/cuentas_por_cobrar/listar_intereses', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
+
+//Route::get('/ventas/cuentas_por_cobrar/excel_cuentas', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
+//Route::get('/ventas/cuentas_por_cobrar/excel_intereses', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
+
+/////////////////////////////////////////HISTORICO DE PRECIOS//////////////////////////////////////////
+
+
+Route::get('/ventas/historico_precios_cliente', HistoricoPreciosCliente::class);
+
+//Route::get('/ventas/historico_precios_cliente', [HistoricoPreciosCliente::class,'listarClientes']);
+//Route::get('/ventas/historico_precios_cliente', [HistoricoPreciosCliente::class,'listarHistoricoPrecios']);
+
+//Route::get('/ventas/historico_precios_cliente/excel', [HistoricoPreciosCliente::class,'exportHistorico']);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 return redirect('/login');
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////REPORTES EXCEL////////////////////////////////////////////////////////
 
 Route::get('/cliente/excel', [Cliente::class, 'export']);
 Route::get('/producto/excel', [Producto::class, 'export']);
 Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
 
 Route::get('/bodega/excel', [Bodega::class, 'export']);
+
+Route::get('/cai/verificacion', [Cai::class, 'verificacionEstadosCai']);

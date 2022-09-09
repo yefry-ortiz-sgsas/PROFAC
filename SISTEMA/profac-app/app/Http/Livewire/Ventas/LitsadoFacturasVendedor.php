@@ -52,7 +52,7 @@ class LitsadoFacturasVendedor extends Component
             on factura.vendedor = users.id
             cross join (select @i := 0) r
         where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
-        and factura.vendedor =".Auth::user()->id."
+        
         order by factura.created_at desc
             ");
 
