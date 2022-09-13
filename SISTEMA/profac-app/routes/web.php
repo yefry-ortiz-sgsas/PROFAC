@@ -477,23 +477,22 @@ Route::get('/cuentas/por/cobrar/listado',listadoCuentasCobrar::class);
 Route::get('/cuentas/cobrar/lista',[listadoCuentasCobrar::class,'listarFacturasCobrar']);
 Route::get('/ventas/cuentas_por_cobrar', CuentasPorCobrar::class);
 Route::get('/ventas/cuentas_por_cobrar/clientes', [CuentasPorCobrar::class,'listarClientes']);
-//Route::get('/ventas/cuentas_por_cobrar/productos', [CuentasPorCobrar::class,'listarProductos']);
 
-Route::get('/ventas/cuentas_por_cobrar/listar', [CuentasPorCobrar::class,'listarCuentasPorCobrar']);
-//Route::get('/ventas/cuentas_por_cobrar/listar_intereses', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
+Route::get('/ventas/cuentas_por_cobrar/listar/{id}', [CuentasPorCobrar::class,'listarCuentasPorCobrar']);
+Route::get('/ventas/cuentas_por_cobrar/listar_intereses/{id}', [CuentasPorCobrar::class,'listarCuentasPorCobrarInteres']);
 
-//Route::get('/ventas/cuentas_por_cobrar/excel_cuentas', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
-//Route::get('/ventas/cuentas_por_cobrar/excel_intereses', [CuentasPorCobrar::class,'listarCuentasPorCobrarIntereses']);
+Route::get('/ventas/cuentas_por_cobrar/excel_cuentas/{cliente}', [CuentasPorCobrar::class,'exportCuentasPorCobrar']);
+Route::get('/ventas/cuentas_por_cobrar/excel_intereses/{cliente}', [CuentasPorCobrar::class,'exportCuentasPorCobrarInteres']);
 
 /////////////////////////////////////////HISTORICO DE PRECIOS//////////////////////////////////////////
 
 
 Route::get('/ventas/historico_precios_cliente', HistoricoPreciosCliente::class);
 
-//Route::get('/ventas/historico_precios_cliente', [HistoricoPreciosCliente::class,'listarClientes']);
-//Route::get('/ventas/historico_precios_cliente', [HistoricoPreciosCliente::class,'listarHistoricoPrecios']);
+Route::get('/ventas/historico_precios/clientes', [HistoricoPreciosCliente::class,'listarClientes']);
+Route::get('/ventas/historico_precios/productos', [HistoricoPreciosCliente::class,'listarProductos']);
+Route::get('/ventas/historico_precios_cliente/{idCliente}/{idProducto}', [HistoricoPreciosCliente::class,'listarHistoricoPrecios']);
 
-//Route::get('/ventas/historico_precios_cliente/excel', [HistoricoPreciosCliente::class,'exportHistorico']);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('/ventas/sin/restriccion/precio', SinRestriccionPrecio::class);

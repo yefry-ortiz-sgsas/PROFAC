@@ -3,14 +3,49 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class CuentasPorCobrarExport implements FromCollection
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+
+
+class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
     */
+
+    public function __construct($cliente)
+    {
+        $this->cliente = $cliente;
+    }
+
     public function collection()
     {
-        //
+       return DB::table('factura')
+                ->join('cliente', 'factura.cliente_id', '=', 'cliente.id')            
+                ->select('factura.id as numero_factura', 'factura.cliente_id','factura.nombre_cliente','factura.numero_factura as documento', 'factura.fecha_emision','factura.fecha_vencimiento', 'factura.total', DB::raw('factura.total-factura.pendiente_cobro'), 'factura.pendiente_cobro')  
+                ->where('factura.pendiente_cobro', '<>', 0)
+                ->where('factura.cliente_id', '=', $this->cliente)
+                ->get();
     }
+
+    public function headings(): array
+    {
+        return [
+            'Numero Factura',
+            'ID Cliente',
+            'Cliente',
+            'Documento',
+            'Fecha Emision',
+            'Fecha Vencimiento',
+            'Cargo',
+            'Credito',
+            'Saldo',
+            
+        ];
+    }
+
+
 }
