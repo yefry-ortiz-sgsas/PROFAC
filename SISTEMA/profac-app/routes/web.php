@@ -491,7 +491,7 @@ Route::get('/ventas/historico_precios_cliente', HistoricoPreciosCliente::class);
 
 Route::get('/ventas/historico_precios/clientes', [HistoricoPreciosCliente::class,'listarClientes']);
 Route::get('/ventas/historico_precios/productos', [HistoricoPreciosCliente::class,'listarProductos']);
-Route::get('/ventas/historico_precios_cliente/{idCliente}/{idProducto}', [HistoricoPreciosCliente::class,'listarHistoricoPrecios']);
+Route::post('/ventas/historico/precios', [HistoricoPreciosCliente::class,'listarHistoricoPrecios']);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

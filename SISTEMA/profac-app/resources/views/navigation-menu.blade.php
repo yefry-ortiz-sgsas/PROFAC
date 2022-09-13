@@ -432,8 +432,8 @@
 
                         <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
                         <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
-                        {{-- <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
-                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li> --}}
+                        <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
+                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
 
                     </ul>
                 </li>

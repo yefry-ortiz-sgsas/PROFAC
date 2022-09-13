@@ -23,7 +23,7 @@ class HistoricoPreciosCliente extends Component
         try {
  
          //$clientes = DB::SELECT("select id, nombre as text from cliente where estado_cliente_id = 1");//Clientes Activos
-         $clientes = DB::SELECT("select id, nombre as text from cliente where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%')");//Todos los Clientes
+         $clientes = DB::SELECT("select id, concat(id,' - ',nombre) as text from cliente where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15");//Todos los Clientes
 
         return response()->json([
             'results'=>$clientes,
@@ -40,7 +40,7 @@ class HistoricoPreciosCliente extends Component
     public function listarProductos(Request $request){
         try {
  
-         $productos = DB::SELECT("select id, nombre as text from producto where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%')");//Todos los productos
+         $productos = DB::SELECT("select id, concat(id,' - ',nombre) as text from producto where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15");//Todos los productos
 
         return response()->json([
             'results'=>$productos,
@@ -54,10 +54,12 @@ class HistoricoPreciosCliente extends Component
         }
     }
 
-    public function listarHistoricoPrecios($cliente, $producto){
+    public function listarHistoricoPrecios(Request $request){
         try{
+            
 
             $historicos = DB::SELECT("select
+            A.id,
             A.numero_factura,
             A.cai,
             A.fecha_emision,
@@ -79,7 +81,7 @@ class HistoricoPreciosCliente extends Component
             on B.unidad_medida_venta_id = D.id
             inner join unidad_medida E
             on D.unidad_medida_id = E.id
-            where A.cliente_id = '". $cliente."' and B.producto_id = '". $producto."'");
+            where A.cliente_id = '". $request->idCliente."' and B.producto_id = '". $request->idProducto."'");
 
         return Datatables::of($historicos)
                 ->addColumn('opciones', function ($historico) {
@@ -87,19 +89,9 @@ class HistoricoPreciosCliente extends Component
                     return
 
                         '
-                <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                    más</button>
-                <ul class="dropdown-menu" x-placement="bottom-start"
-                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-
-                    
-                    <li>
-                    <a class="dropdown-item"   ><i class="fa-solid fa-xmark text-danger"></i> Desactivar </a>
-                    </li>
-
-                </ul>
-            </div>
+                    <div class="text-center">
+                    <a href="/detalle/venta/'.$historico->id.'" target="_blank" class="btn btn-warning">Ver Detalle</a>
+                    </div>
                 ';
                 })
             

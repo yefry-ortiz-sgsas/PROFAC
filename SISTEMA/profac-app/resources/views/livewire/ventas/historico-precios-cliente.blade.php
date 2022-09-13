@@ -39,7 +39,7 @@
 
 
                         </div>
-                        <button class="btn btn-primary" onclick="listarHistorico()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary mt-2" onclick="listarHistorico()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
 
          $('#producto').select2({
             ajax: {
-                url: '/ventas/historico_precios_cliente/productos',
+                url: '/ventas/historico_precios/productos',
                 data: function(params) {
                     var query = {
                         search: params.term,
@@ -148,8 +148,11 @@
 
     function listarHistorico() {
 
-        var idCliente = document.getElementById('cliente').value;
-        var idProducto = document.getElementById('producto').value;
+        let idCliente = document.getElementById('cliente').value;
+        let idProducto = document.getElementById('producto').value;
+
+        let data = {'idCliente':idCliente, 'idProducto':idProducto}
+        $("#tbl_historico_precios").dataTable().fnDestroy();
 
         $('#tbl_historico_precios').DataTable({
                     "order": [0, 'desc'],
@@ -186,8 +189,16 @@
                             }
                         }
                     ],
-                    "ajax": "/ventas/historico_precios_cliente/"+idCliente"/"+idProducto,
-                    "columns": [{
+                    'ajax': {
+                        'data': data,
+                        'url': '/ventas/historico/precios',
+                        'type': 'POST',
+                        'headers': {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    },
+                    "columns": [
+                        {
                             data: 'numero_factura'
                         },
                         {

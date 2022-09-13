@@ -27,7 +27,7 @@ class CuentasPorCobrar extends Component
         try {
  
          //$clientes = DB::SELECT("select id, nombre as text from cliente where estado_cliente_id = 1");//Clientes Activos
-         $clientes = DB::SELECT("select id, nombre as text from cliente where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%')");//Todos los Clientes
+         $clientes = DB::SELECT("select id, concat(id,' - ',nombre) as text from cliente where (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15");//Todos los Clientes
 
         return response()->json([
             'results'=>$clientes,
@@ -46,7 +46,7 @@ class CuentasPorCobrar extends Component
         try{
 
             $cuentas = DB::SELECT("select 
-            factura.id as numero_factura,
+            factura.numero_factura as numero_factura,
             cliente_id as id_cliente,
             factura.nombre_cliente as 'cliente', 
             factura.numero_factura as 'documento', 
@@ -98,7 +98,7 @@ class CuentasPorCobrar extends Component
         try{
 
             $interes_cuentas = DB::SELECT("select 
-            factura.id as numero_factura,
+            factura.numero_factura as numero_factura,
             cliente_id as id_cliente,
             factura.nombre_cliente as 'cliente', 
             factura.numero_factura as 'documento', 

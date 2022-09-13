@@ -32,7 +32,7 @@
 
 
                         </div>
-                        <button class="btn btn-primary" onclick=" listarCuentasPorCobrar(), listarCuentasPorCobrarInteres(), mostrarExports()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary mt-2" onclick=" llamarTablas(), mostrarExports()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -41,6 +41,9 @@
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="mb-2"  id="cuentas_excel">
+            <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -75,12 +78,13 @@
         </div>
     </div>
 
-        <div style="margin-top: 1.5rem; margin: 0 40%; width: 20%" id="cuentas_excel">
-            <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
-        </div>
+
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="mb-2" id="cuentas_excel_intereses">
+            <!-- <a href="/ventas/cuentas_por_cobrar/excel_intereses" class="btn-seconary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> -->
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -117,9 +121,7 @@
         </div>
     </div>
 
-        <div style="margin-top: 1.5rem; margin: 0 40%; width: 20%" id="cuentas_excel_intereses">
-            <!-- <a href="/ventas/cuentas_por_cobrar/excel_intereses" class="btn-seconary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> -->
-        </div>
+
 
 
 </div>
@@ -143,6 +145,16 @@
                 }
             }
         });
+
+    function llamarTablas(){
+
+        $("#tbl_cuentas_por_cobrar").dataTable().fnDestroy();
+        $("#tbl_cuentas_por_cobrar_intereses").dataTable().fnDestroy();
+
+        this.listarCuentasPorCobrar();
+        this.listarCuentasPorCobrarInteres();
+
+    }    
     
 
     function listarCuentasPorCobrar() {
@@ -317,7 +329,7 @@
                 let htmlSelect1 = ''
                 
                 htmlSelect1 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> 
+                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> 
                         
                                 `
 
@@ -327,7 +339,7 @@
                 let htmlSelect2 = ''
                 
                 htmlSelect2 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn-seconary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> 
+                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> 
                         
                                 `
 
