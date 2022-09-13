@@ -62,6 +62,8 @@ use App\Http\Livewire\Ventas\CuentasPorCobrar;
 use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
 use App\Http\Livewire\CuentasPorCobrar\ListadoFacturas as listadoCuentasCobrar;
 
+use App\Http\Livewire\ComprovanteEntrega\CrearComprovante;
+
 
 
 
@@ -508,6 +510,12 @@ Route::get('/compras/excel_mes/{mes}', [ListarCompras::class, 'export']);
 Route::get('/bodega/excel', [Bodega::class, 'export']);
 
 Route::get('/cai/verificacion', [Cai::class, 'verificacionEstadosCai']);
+
+//---------------------------------------------------Comprovante de entrega-------------------------------------------------//
+
+Route::get('/comprovante/entrega', CrearComprovante::class); 
+Route::get('/comprovante/clientes/lista', [CrearComprovante::class,'clientesObtener']); 
+Route::post('/comprovante/guardar/orden', [CrearComprovante::class,'guardarComprovante']);
 
 return redirect('/login');
 });

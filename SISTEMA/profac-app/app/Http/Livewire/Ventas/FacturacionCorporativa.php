@@ -260,7 +260,7 @@ class FacturacionCorporativa extends Component
             $producto = DB::SELECTONE("
             select
             id,
-            concat(nombre,' - ',codigo_barra) as nombre,
+            concat(id,' - ',nombre) as nombre,
             isv,
             FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
             FORMAT(precio_base,2) as precio_base

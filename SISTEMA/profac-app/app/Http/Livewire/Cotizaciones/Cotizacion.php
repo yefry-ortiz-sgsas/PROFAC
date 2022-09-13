@@ -61,7 +61,7 @@ class Cotizacion extends Component
         }
     }
 
-    public function clientesCorporativo($request)
+    public function clientesCorporativo(Request $request)
     {
 
         if (Auth::user()->rol_id == 1) {
@@ -91,7 +91,7 @@ class Cotizacion extends Component
     }
 
 
-    public function clientesEstatal($request)
+    public function clientesEstatal(Request $request)
     {
 
         if (Auth::user()->rol_id == 1) {
@@ -120,7 +120,7 @@ class Cotizacion extends Component
         return $listaClientes;
     }
 
-    public function clientesExonerados($request)
+    public function clientesExonerados(Request $request)
     {
 
 
