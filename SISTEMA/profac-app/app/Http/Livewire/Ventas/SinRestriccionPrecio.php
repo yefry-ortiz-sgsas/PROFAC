@@ -35,6 +35,31 @@ class SinRestriccionPrecio extends Component
         return view('livewire.ventas.sin-restriccion-precio');
     }
 
+    public function listarClientes(Request $request)
+    {
+        try {
+
+
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1                                        
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+
+            return response()->json([
+                "results" => $listaClientes,
+            ], 200);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error',
+                'error' => $e
+            ], 402);
+        }
+    }
+
     public function enviarCodigo(){
 
 
