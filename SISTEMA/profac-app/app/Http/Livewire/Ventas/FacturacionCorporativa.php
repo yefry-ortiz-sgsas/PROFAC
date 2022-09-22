@@ -802,7 +802,7 @@ class FacturacionCorporativa extends Component
                 $numeroSecuencia = $cai->secuencia;
             }
 
-            if ($numeroSecuencia > $cai->cantidad_otorgada) {
+            if ($numeroSecuencia < $cai->cantidad_otorgada) {//$cai->numero_actual > $cai->cantidad_otorgada//$numeroSecuencia > $cai->cantidad_otorgada
 
                 return response()->json([
                     "title" => "Advertencia",

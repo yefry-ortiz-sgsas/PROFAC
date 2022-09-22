@@ -64,7 +64,7 @@ use App\Http\Livewire\CuentasPorCobrar\ListadoFacturas as listadoCuentasCobrar;
 
 use App\Http\Livewire\ComprovanteEntrega\CrearComprovante;
 
-
+use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
 /*
@@ -520,4 +520,4 @@ return redirect('/login');
 });
 
 
-
+Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);

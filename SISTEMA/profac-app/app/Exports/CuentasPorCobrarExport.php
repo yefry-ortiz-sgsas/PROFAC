@@ -39,7 +39,7 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
     {
        return DB::table('factura')
                 ->join('cliente', 'factura.cliente_id', '=', 'cliente.id')            
-                ->select('factura.numero_factura as numero_factura', 'factura.cliente_id','factura.nombre_cliente','factura.numero_factura as documento', 'factura.fecha_emision','factura.fecha_vencimiento', 'factura.total', DB::raw('factura.total-factura.pendiente_cobro'), 'factura.pendiente_cobro')  
+                ->select('factura.numero_factura as numero_factura', 'factura.cliente_id','factura.nombre_cliente', 'factura.fecha_emision','factura.fecha_vencimiento', 'factura.total', DB::raw('factura.total-factura.pendiente_cobro'), 'factura.pendiente_cobro')  
                 ->where('factura.pendiente_cobro', '<>', 0)
                 ->where('factura.cliente_id', '=', $this->cliente)
                 ->get();
@@ -51,7 +51,7 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
             'Numero Factura',
             'ID Cliente',
             'Cliente',
-            'Documento',
+            
             'Fecha Emision',
             'Fecha Vencimiento',
             'Cargo',
