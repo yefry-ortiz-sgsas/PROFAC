@@ -391,6 +391,21 @@
                 </li>
 
                 <li>
+                    <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i><span class="nav-label"
+                            style="color:#ffffff;">Comprobante De Entrega</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+                        <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprovante</a></li>
+                        <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprovantes</a></li>
+                        <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
+                       
+                        
+
+                    </ul>
+                </li>
+
+                <li>
                     <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"
                             style="color:#ffffff;">Cuentas Por Cobrar</span>
                         <span class="fa arrow"></span></a>
@@ -439,6 +454,9 @@
                     </ul>
                 </li>
 
+                
+
+
 
 
                 <li>
@@ -448,15 +466,15 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                        
+                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li> 
+                       
                        
                         @if(Auth::user()->rol_id == '2'  )
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
                         @else
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
                         @endif
-                        
+                        <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
                         <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
                         </li>
                         <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>

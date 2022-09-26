@@ -34,9 +34,10 @@ use App\Http\Livewire\Ventas\DetalleVentaVendedor;
 use App\Http\Livewire\VentasEstatal\LitsadoFacturasEstatalVendedor;
 use App\Http\Livewire\VentasExoneradas\VentasExoneradas;
 use App\Http\Livewire\VentasExoneradas\ListadoFacturasExonerads;
-use App\Http\Livewire\Cotizaciones\Cotizacion;
+use App\Http\Livewire\Cotizaciones\Cotizacion; 
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones;
-use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
+use App\Http\Livewire\Cotizaciones\FacturarCotizacion; 
+use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobierno;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
 use App\Http\Livewire\Inventario\ListadoAjustes;
 use App\Http\Livewire\Inventario\HistorialTranslados;
@@ -63,6 +64,10 @@ use App\Http\Livewire\Ventas\HistoricoPreciosCliente;
 use App\Http\Livewire\CuentasPorCobrar\ListadoFacturas as listadoCuentasCobrar;
 
 use App\Http\Livewire\ComprovanteEntrega\CrearComprovante;
+use App\Http\Livewire\ComprovanteEntrega\ListarComprovantes; 
+use App\Http\Livewire\ComprovanteEntrega\ListarComprovantesAnulados;
+use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
+
 
 
 
@@ -325,11 +330,12 @@ Route::post('/ventas/seleccionar/menor',[SeleccionarFactura::class,'seleccionarM
 Route::get('/proforma/cotizacion/{id}',Cotizacion::class);
 Route::get('/cotizacion/clientes',[Cotizacion::class,'listarClientes']);
 Route::post('/guardar/cotizacion',[Cotizacion::class,'guardarCotizacion']);
-Route::get('/cotizacion/listado/{id}', ListarCotizaciones::class);
+Route::get('/cotizacion/listado/{id}', ListarCotizaciones::class); 
 Route::post('/cotizacion/obtener/listado', [ListarCotizaciones::class,'listarCotizaciones']);
 Route::get('/cotizacion/imprimir/{id}',[Cotizacion::class,'imprimirCotizacion']);
 Route::get('/proforma/imprimir/{id}',[Cotizacion::class,'imprimirProforma']);
-Route::get('/cotizacion/facturar/{id}',FacturarCotizacion::class);
+Route::get('/cotizacion/facturar/{id}',FacturarCotizacion::class); 
+Route::get('/cotizacion/facturar/gobierno/{id}',FacturarCotizacionGobierno::class);
 
 
 //--------------------------------------------------------Ajustes------------------------------------------------------//
@@ -512,9 +518,15 @@ Route::get('/cai/verificacion', [Cai::class, 'verificacionEstadosCai']);
 
 //---------------------------------------------------Comprovante de entrega-------------------------------------------------//
 
-Route::get('/comprovante/entrega', CrearComprovante::class); 
+Route::get('/comprobante/entrega', CrearComprovante::class); 
 Route::get('/comprovante/clientes/lista', [CrearComprovante::class,'clientesObtener']); 
 Route::post('/comprovante/guardar/orden', [CrearComprovante::class,'guardarComprovante']);
+Route::get('/comprovante/entrega/listado', ListarComprovantes::class); 
+Route::get('/comprovante/entrega/listado/activos', [ListarComprovantes::class, 'listarComprovantesActivos']); 
+Route::get('/comprovante/entrega/anulados', ListarComprovantesAnulados::class); 
+Route::get('/comprovante/entrega/listado/anulados', [ListarComprovantesAnulados::class,'listarComprovantesAnulados']);
+Route::get('/orden/entrega/facturar/{id}', FacturarComprobante::class);
+
 
 return redirect('/login');
 });

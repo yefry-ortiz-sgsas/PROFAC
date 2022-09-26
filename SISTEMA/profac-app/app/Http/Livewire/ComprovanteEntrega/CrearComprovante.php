@@ -131,21 +131,28 @@ class CrearComprovante extends Component
 
 
 
+            // $numeroComprovante= DB::SELECTONE("
+            // select 
+            // @contador:=count(id), 
+            // if(@contador = 0, 1 , @contador) as contador,
+            // YEAR(NOW()) as anio
+
+            // from comprovante_entrega
+            // ");
             $numeroComprovante= DB::SELECTONE("
             select 
-            @contador:=count(id), 
-            if(@contador = 0, 1 , @contador) as contador,
+            id,
             YEAR(NOW()) as anio
 
             from comprovante_entrega
             ");
-            $suma= $numeroComprovante->contador+1;
+            $suma= $numeroComprovante->id+1;
             $numeroOrden = $numeroComprovante->anio."-".$suma;
 
 
             DB::beginTransaction();
 
-            $comprovante = NEW ModelComprovanteEntrega;
+            $comprovante = new ModelComprovanteEntrega;
             $comprovante->numero_comprovante =  $numeroOrden;
             $comprovante->nombre_cliente =  $request->nombre_cliente_ventas;
             $comprovante->RTN =  $request->rtn_ventas;
@@ -194,7 +201,7 @@ class CrearComprovante extends Component
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $comprovante->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
 
-            ModelVentaProducto::insert($this->arrayProductos);
+            ModelComprovanteHasProducto::insert($this->arrayProductos);
             ModelLogTranslados::insert($this->arrayLogs);
 
 
@@ -203,12 +210,12 @@ class CrearComprovante extends Component
                 'icon' => "success",
                 'text' =>  '
                 <div class="d-flex justify-content-between">
-                    <a href="/factura/cooporativo/' . $comprovante->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $comprovante->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
-                    <a href="/detalle/venta/' . $comprovante->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
+                   
+                <a class="dropdown-item" target="_blank"  href="/orden/entrega/facturar/' . $comprovante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante </a>
+                   
                 </div>',
                 'title' => 'Exito!',
-                'idFactura' => $comprovante->id,
+                'idComprobante' => $comprovante->id,
                 
 
             ], 200);
@@ -299,9 +306,9 @@ class CrearComprovante extends Component
 
 
                 array_push($this->arrayProductos, [
-                    "factura_id" => $idOrdenEntrega,
+                    "comprovante_id" => $idOrdenEntrega,
                     "producto_id" => $idProducto,
-                    "lote" => $unidadesDisponibles->id,
+                    "lote_id" => $unidadesDisponibles->id,
                     "seccion_id" => $idSeccion,
                     "numero_unidades_resta_inventario" => $registroResta,
                     "sub_total" => $subTotal,

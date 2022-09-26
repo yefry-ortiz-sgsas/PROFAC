@@ -99,7 +99,7 @@
                             <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="{{$cotizacion->tipo_venta_id}}">
                             <input type="hidden" id="restriccion" name="restriccion" value="1">
                            
-
+        
 
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">

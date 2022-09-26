@@ -4,35 +4,16 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Listado De Cotizaciones</h2>
+            <h2> Comprobantes De Entrega </h2>
             <ol class="breadcrumb">
-
-                @switch(  $idTipoVenta )
-                @case(1)
-                    <li class="breadcrumb-item active">
-                        <a>Coorporativo</a>
-                    </li>
-                    @break
-                @case(2)
-                    <li class="breadcrumb-item active">
-                        <a>Gobierno</a>
-                    </li>
-                    @break   
-                @case(3)
-                    <li class="breadcrumb-item active">
-                        <a>Exonerado</a>
-                    </li>
-                    @break        
-                @endswitch
-
-
-
-                <li class="breadcrumb-item">
-                    <a>Imprimir Cotización</a>
+                <li class="breadcrumb-item active">
+                    <a>Anulados</a>
                 </li>
-                <li class="breadcrumb-item">
-                    <a>Imprimir Factura</a>
+                <li class="breadcrumb-item active">
+                    <a>Listado</a>
                 </li>
+
+               
             </ol>
         </div>
     </div>
@@ -42,21 +23,22 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-content">
-                      
                         <div class="table-responsive">
-                            <table id="tbl_listar_cotizaciones" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_listar_compras" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Codigo</th>
+                                        
+                                        <th>N° Comprobante</th>
                                         <th>Cliente</th>
                                         <th>RTN</th>
-                                        <th>Sub Total</th>
-                                        <th>ISV</th>
-                                        <th>Total</th>
-                                        <th>Registrado por:</th>
-                                        <th>Fecha de registro:</th>
+                                        <th>Fecha de Emision</th>
+                                        <th>Sub Total Lps.</th>
+                                        <th>ISV en Lps.</th>
+                                        <th>Total en Lps.</th>
+                                        <th>Estado</th>
+                                        <th>Registrado Por:</th>
+                                        <th>Fecha de registro</th>
                                         <th>Opciones</th>
- 
                                         
                                     </tr>
                                 </thead>
@@ -74,40 +56,30 @@
 
     @push('scripts')
         <script>
-              //var varToken = {{ csrf_token() }};
-              var idTipoVenta = {{$idTipoVenta}};
-
-            $(document).ready(function() {             
-            $('#tbl_listar_cotizaciones').DataTable({
-                "order": [0, 'desc'],
+            $(document).ready(function() {
+            $('#tbl_listar_compras').DataTable({
+                "order": [3, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                
+                "order": [3, 'desc'],
                 pageLength: 10,
                 responsive: true,
               
 
-                "ajax":{ 
-                    'url':"/cotizacion/obtener/listado",
-                    'data' : {'id' : idTipoVenta },
-                    'type' : 'post',
-                    'headers': {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                }
-
-
-                     },
+                "ajax": "/comprovante/entrega/listado/anulados",
                 "columns": [
-       
                     {
-                        data: 'codigo'
+                        data: 'numero_comprovante'
                     },
                     {
                         data: 'nombre_cliente'
                     },
                     {
                         data: 'RTN'
+                    },
+                    {
+                        data: 'fecha_emision'
                     },
                     {
                         data: 'sub_total'
@@ -119,16 +91,18 @@
                         data: 'total'
                     },
                     {
+                        data:'estado'
+                    },
+                    {
                         data: 'name'
                     },
                     {
-                        data: 'created_at'
+                        data:'fecha_creacion'
                     },
+   
                     {
                         data: 'opciones'
-                    },
-                  
-                  
+                    }
   
                 ]
 
@@ -140,25 +114,37 @@
              
             Swal.fire({
             title: '¿Está seguro de anular esta factura?',
-            text:'Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.',
+            
+         
+  // --------------^-- define html element with id
+            html: '<p>Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentario"     class="form-group form-control" data-parsley-required></textarea>',
             showDenyButton: false,
-            showCancelButton: true,
-            confirmButtonText: 'Si, Anular Compra',            
-            cancelButtonText: `Cancelar`,
+            showCancelButton: false,
+            showDenyButton:true,
+            confirmButtonText: 'Si, Anular Factura',            
+            denyButtonText: `Cancelar`,
+            confirmButtonColor:'#19A689',
+            denyButtonColor:'#676A6C',
             }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
+           
+                let motivo = document.getElementById("comentario").value
 
-                //Swal.fire('Saved!', '', 'success')
-                anularVenta(idFactura);
+            if (result.isConfirmed && motivo ) {
 
-            } 
+               
+                anularVenta(idFactura,motivo);
+
+            }else if(result.isDenied){
+                Swal.close()
+            }else{
+                Swal.close()
+            }
             })
         }
 
-        function anularVenta(idFactura){
+        function anularVenta(idFactura,motivo){
 
-            axios.post("/factura/corporativo/anular", {idFactura:idFactura})
+            axios.post("/factura/corporativo/anular", {'idFactura':idFactura,'motivo':motivo})
             .then( response =>{
 
 
