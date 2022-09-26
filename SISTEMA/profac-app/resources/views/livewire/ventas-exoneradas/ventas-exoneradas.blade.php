@@ -859,14 +859,14 @@ if (valorInputPrecio && valorInputCantidad) {
     let isv = subTotal * (isvProducto / 100);
     let total = subTotal + subTotal * (isvProducto / 100);
 
-    document.getElementById('total' + id).value = total.toFixed(2);
+    document.getElementById('total' + id).value = total.toFixed(3);
     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(total)
 
-    document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
+    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
     document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotal)
     
    
-    document.getElementById('isvProducto' + id).value = isv.toFixed(2);
+    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
     document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isv)
 
     
@@ -905,13 +905,13 @@ for (let i = 0; i < arregloIdInputs.length; i++) {
 
 }
 
-document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(2);
+document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotalGeneralValor)
 
-document.getElementById('isvGeneral').value = totalISV.toFixed(2); 
+document.getElementById('isvGeneral').value = totalISV.toFixed(3); 
 document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalISV)
 
-document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(2);
+document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
 document.getElementById('totalGeneralMostrar').value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalGeneralValor)
 
 

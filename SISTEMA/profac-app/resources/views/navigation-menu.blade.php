@@ -466,8 +466,9 @@
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li> 
-                       
+                        <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Gobierno</a></li>
+                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                        
                        
                         @if(Auth::user()->rol_id == '2'  )
                         <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>

@@ -69,7 +69,7 @@ use App\Http\Livewire\ComprovanteEntrega\ListarComprovantesAnulados;
 use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 
 
-
+use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
 /*
@@ -532,4 +532,4 @@ return redirect('/login');
 });
 
 
-
+Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
