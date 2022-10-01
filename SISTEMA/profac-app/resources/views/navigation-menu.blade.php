@@ -26,61 +26,6 @@
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
-                {{-- @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-
-                    <div class="ml-3 relative">
-                        <x-jet-dropdown align="right" width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button"
-                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
-                                        {{ Auth::user()->currentTeam->name }}
-
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Team Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
-                                    </div>
-
-                                    <!-- Team Settings -->
-                                    <x-jet-dropdown-link
-                                        href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
-                                    </x-jet-dropdown-link>
-
-                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
-                                        </x-jet-dropdown-link>
-                                    @endcan
-
-                                    <div class="border-t border-gray-100"></div>
-
-                                    <!-- Team Switcher -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Switch Teams') }}
-                                    </div>
-
-                                    @foreach (Auth::user()->allTeams() as $team)
-                                        <x-jet-switchable-team :team="$team" />
-                                    @endforeach
-                                </div>
-                            </x-slot>
-                        </x-jet-dropdown>
-                    </div>
-
-                @endif --}}
 
                 <!-- Settings Dropdown -->
                 <div class="ml-3 relative">
@@ -291,219 +236,118 @@
                                     <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                                 </ul> --}}
                 </li>
-                <li>
-                    <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                            style="color:#ffffff;">Usuarios</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a>
-                        </li>
-                        {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                    </ul>
-                </li>
-                <li>
-                    <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
-                            style="color:#ffffff;">Bodega</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
-                        <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
-                        <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
-                    </ul>
-                </li>
+                @if(Auth::user()->rol_id == '1'  )
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Usuarios</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li href="dashboard_2.html"><a href="/usuarios" style="color:#ffffff;">Lista de Usuarios</a>
+                            </li>
+                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                        </ul>
+                    </li>
+                @endif
 
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'  )                <li>
+                        <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Bodega</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                        </ul>
+                    </li>
 
-                <li>
-                    <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
-                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
-                        <span class="fa arrow"></span></a>
+                    <li>
+                        <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
+                            <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                        </ul>
+                    </li>
 
-                    <ul class="nav nav-second-level">
-                        <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                        <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
-                        </li>
-                        <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
-                        <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
-                        <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                        <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
-                        <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>
-                        <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
-                        <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                            <span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
+                            <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
+                            <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
+                            </li>
+                            <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
+                            <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
+                            <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
+                            <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
+                            <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>
+                            <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
+                            <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Clientes</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                        </ul>
+                    </li>
 
+                    <li>
+                        <a><i class="fa-solid fa-building-columns" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Bancos</span>
+                            <span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
 
+                            <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
 
+                        </ul>
+                    </li>
+                @endif
 
-                    </ul>
-
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
-                        <span class="nav-label" style="color:#ffffff;">Ajustes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
-                        <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
-                        <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
-                            style="color:#ffffff;">Clientes</span>
-                        <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-building-columns" style="color:#ffffff;"></i>
-                        <span class="nav-label" style="color:#ffffff;">Bancos</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                        <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
-
-                    </ul>
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                        <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                        <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                        <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
-
-                    </ul>
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i><span class="nav-label"
-                            style="color:#ffffff;">Comprobante De Entrega</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprovante</a></li>
-                        <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprovantes</a></li>
-                        <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
-                       
-                        
-
-                    </ul>
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Cuentas Por Cobrar</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
-                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
-
-                    </ul>
-                </li>
-
-                <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas Corporativas</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
-
-                        <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                            Cotizaciones</a></li>
-
-                        @if(Auth::user()->rol_id == '2'  )
-                        
-                        <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas </a>
-
-                        @else
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li>
-                        
-                        @endif    
-                       
-                        
-                        </li>
-
-                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas
-                            </a></li>
-
-                        <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-                      
-
-
-                    </ul>
-                </li>
-
-                
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '4'  )
+                    <li>
+                        <a><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ajustes</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                            <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
+                            <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                        </ul>
+                    </li>
+                @endif
 
 
 
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '4'  )
+                    <li>
+                        <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                            <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                            <span class="fa arrow"></span></a>
 
-                <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas Gobierno</span>
-                        <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
 
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Gobierno</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                        
-                       
-                        @if(Auth::user()->rol_id == '2'  )
-                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
-                        @else
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                        @endif
-                        <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
-                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
-                        </li>
-                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+                            <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                            <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a></li>
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Cuentas Por Cobrar</span>
+                            <span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a></li>
+                            <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
+                            <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
 
-
-                <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas exoneradas</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas
-                            </a></li>
-                        <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-
-                    </ul>
-                </li>
-
-
-
-
-                @if (Auth::user()->rol_id == '1')
+                        </ul>
+                    </li>
                     <li>
                         <a><i class="fa-solid fa-clipboard-check"  style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Declaraciones </span>
@@ -523,16 +367,132 @@
                     </li>
                 @endif
 
-                <li>
-                    <a ><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span
-                            class="nav-label" style="color:#ffffff;">Cardex</span>
-                        <span class="fa arrow"></span></a>
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5' || Auth::user()->rol_id == '2'  )
+                    <li>
+                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i><span class="nav-label"
+                                style="color:#ffffff;">Comprobante De Entrega</span>
+                            <span class="fa arrow"></span></a>
 
-                    <ul class="nav nav-second-level">
-                        <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprovante</a></li>
+                            <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprovantes</a></li>
+                            <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
 
-                    </ul>
-                </li>
+
+
+                        </ul>
+                    </li>
+                @endif
+
+
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5' || Auth::user()->rol_id == '3'  )
+                    {{--  VENTAS COORPORATIVO  --}}
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Ventas Corporativas</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3'  )
+                                <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
+                            @endif
+                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'  )
+
+                                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3'  )
+                                    <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                                    <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li>
+                                @endif
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                                <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
+
+                            @endif
+                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '2'  )
+                                <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas </a>
+                            @endif
+
+
+                            </li>
+
+                        </ul>
+                    </li>
+
+                            {{--  VENTAS GOBIERNO  --}}
+
+                            <li>
+                                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                                    style="color:#ffffff;">Ventas Gobierno</span>
+                                                <span class="fa arrow"></span></a>
+
+                                <ul class="nav nav-second-level">
+                                    @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3'  )
+                                        <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                                        <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Gobierno</a></li>
+                                    @endif
+                                    @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'  )
+                                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                                        <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
+
+                                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a></li>
+                                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+                                        @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3'  )
+                                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
+                                        @endif
+                                    @endif
+                                    @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '2'  )
+                                        <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                                    @endif
+
+
+
+                                </ul>
+                            </li>
+                                    {{--   vENTAS EXONERADAS  --}}
+                                    <li>
+                                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                                style="color:#ffffff;">Ventas exoneradas</span>
+                                            <span class="fa arrow"></span></a>
+
+                                        <ul class="nav nav-second-level">
+                                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3'  )
+                                                <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
+                                            @endif
+                                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '3' || Auth::user()->rol_id == '5' )
+                                                <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
+                                            @endif
+                                            @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5' )
+                                                <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                                                <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
+                                            @endif
+
+                                        </ul>
+                                    </li>
+                @endif
+
+
+
+
+
+
+
+
+
+
+
+                @if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'  )
+                    <li>
+                        <a ><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span
+                                class="nav-label" style="color:#ffffff;">Cardex</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+
+                        </ul>
+                    </li>
+                @endif
 
             </ul>
 
