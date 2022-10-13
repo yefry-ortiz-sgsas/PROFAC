@@ -11,6 +11,7 @@ use Auth;
 use Validator;
 use Illuminate\Database\QueryException;
 use Throwable;
+use App\Models\usuario;
 
 use DataTables;
 
@@ -60,5 +61,63 @@ class ListarUsuarios extends Component
             ]);
         }
 
+    }
+
+    public function guardarUsuarios(Request $request){
+        try {
+            $validator = Validator::make($request->all(), [
+                'identidad_user' => 'required',
+                'nombre_usuario' => 'required',
+                'email_user' => 'required',
+                'pass_user' => 'required',
+                'rol_user' => 'required',
+            ], [
+                'identidad_user' => 'La identidad es requerida',
+                'nombre_usuario' => 'El nombre es requerido',
+                'email_user' => 'Correo requerido',
+                'pass_user' => 'contraseña requerida',
+                'rol_user' => 'Rol de acceso requerido',
+
+            ]);
+
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'icon'=>'error',
+                    'title'=>'Error',
+                    'text'=>'Ha ocurrido un error, todos los campos son obligatorios.',
+                    'errors' => $validator->errors()
+                ], 402);
+            }
+
+
+
+            $usuario = new usuario;
+            $usuario->identidad = $request->identidad_user;
+            $usuario->name = $request->nombre_usuario;
+            $usuario->email = $request->email_user;
+            $usuario->password = $request->pass_user;
+            $usuario->rol_id = $request->rol_user;
+            $usuario->save();
+
+
+
+
+            return response()->json([
+                 'icon'=>'success',
+                 'title'=>'Exito!',
+                 'text'=>'Usuario creado con exito.'
+            ],200);
+
+        } catch (QueryException $e) {
+
+        return response()->json([
+         'icon'=>'error',
+         'title'=>'Error!',
+         'text'=>'Ha ocurrido un error, intente de nuevo.',
+         'message' => 'Ha ocurrido un error',
+         'error' => $e
+        ],402);
+        }
     }
 }

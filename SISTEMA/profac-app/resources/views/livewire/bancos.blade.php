@@ -109,7 +109,7 @@
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_banco_crear">Banco</a>
                 </li>
-                
+
             </ol>
         </div>
 
@@ -119,7 +119,7 @@
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_banco_crear"><i class="fa fa-plus"></i> Añadir Banco</a>
             </div>
-            
+
         </div>
 
 
@@ -137,7 +137,7 @@
                                         <th>Cod</th>
                                         <th>Banco</th>
                                         <th>Cuenta</th>
-                                        <th>Registrado Por</th>                                                                                
+                                        <th>Registrado Por</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -169,7 +169,7 @@
                         <div class="modal-body">
                             <form id="crearBancoForm" name="crearBancoForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                
+
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -184,7 +184,7 @@
                                             name="cuenta" data-parsley-required>
                                     </div>
 
-                                    
+
                                 </div>
                             </form>
 
@@ -210,7 +210,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarBancoForm" name="editarBancoForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -225,14 +225,14 @@
                                             <div class="col-md-12">
                                                 <label for="cuenta_editar" class="col-form-label focus-label">Cuenta :<span class="text-danger">*</span></label>
                                                 <input class="form-control" required type="text" id="cuenta_editar" name="cuenta_editar" data-parsley-required>
-                                            </div>  
-        
+                                            </div>
+
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarBancoForm" class="btn btn-primary">Editar
@@ -271,7 +271,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearBancoForm', function(event) {
             event.preventDefault();
             guardarBanco();
@@ -281,14 +281,14 @@
                 $('#modalSpinnerLoading').modal('show');
 
                 var data = new FormData($('#crearBancoForm').get(0));
-                
+
                 axios.post("/banco/bancos/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearBancoForm').parsley().reset();
-                        
+
                         document.getElementById("crearBancoForm").reset();
                         $('#modal_banco_crear').modal('hide');
 
@@ -362,7 +362,7 @@
                         },
                         {
                             data: 'cuenta'
-                        },                        
+                        },
                         {
                             data: 'name'
                         },
@@ -381,13 +381,13 @@
                 let data = {id:id}
                 axios.post('/banco/bancos/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('nombre_banco_editar').value = datos.nombre;
-                    document.getElementById('cuenta_editar').value = datos.cuenta;                    
+                    document.getElementById('cuenta_editar').value = datos.cuenta;
                     document.getElementById('idBanco').value = datos.id;
-                                      
+
                     $('#modal_banco_editar').modal('show');
                 })
                 .catch( err=>{
@@ -406,15 +406,15 @@
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarBancoForm').get(0));
-                
-            
+
+
                 axios.post('/banco/bancos/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarBancoForm').parsley().reset();
-                    
+
                     document.getElementById("editarBancoForm").reset();
                     $('#modal_banco_editar').modal('hide');
 
@@ -432,7 +432,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_banco_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
