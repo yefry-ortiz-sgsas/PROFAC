@@ -97,15 +97,15 @@ class FacturarCotizacionGobierno extends Component
 
             $unidadesVenta = DB::SELECT(
                 "
-        select 
-        A.unidad_venta as unidades,
-        A.id as idUnidadVenta,
-        B.nombre
-        from unidad_medida_venta A 
-        inner join unidad_medida B
-        on A.unidad_medida_id = B.id
-        where A.producto_id = " . $producto->producto_id
-            );
+                select 
+                A.unidad_venta as unidades,
+                A.id as idUnidadVenta,
+                B.nombre
+                from unidad_medida_venta A 
+                inner join unidad_medida B
+                on A.unidad_medida_id = B.id
+                where A.producto_id = " . $producto->producto_id
+                    );
 
             foreach ($unidadesVenta as $unidad) {
 

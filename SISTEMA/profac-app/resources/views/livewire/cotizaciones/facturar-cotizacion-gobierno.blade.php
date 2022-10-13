@@ -65,6 +65,7 @@
                             name="crear_venta" data-parsley-validate>
                             <input type="hidden" id="restriccion" name="restriccion" value="1">
                             <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="2">
+                            <input name="idComprobante" id="idComprobante" type="hidden" value="null">
 
                             <div class="row">
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">

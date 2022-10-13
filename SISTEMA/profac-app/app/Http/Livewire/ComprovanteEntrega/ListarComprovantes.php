@@ -13,6 +13,9 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use DataTables;
 
+use App\Models\ModelRecibirBodega;
+use App\Models\ModelComprovanteEntrega;
+use App\Models\ModelLogTranslados;
 class ListarComprovantes extends Component
 {
     public function render()
@@ -60,8 +63,8 @@ class ListarComprovantes extends Component
                     </li>  
                     
                     <li>
-                    <a class="dropdown-item" href="/orden/entrega/facturar/' . $comprobante->id . '"> <i class="fa-solid fa-ban text-danger"></i> Anular Comprobante </a>
-                </li>
+                    <a class="dropdown-item" href="#" onclick="anularComprobante('.$comprobante->id.')"> <i class="fa-solid fa-ban text-danger"></i> Anular Comprobante </a>
+                    </li>
 
 
 
@@ -86,5 +89,66 @@ class ListarComprovantes extends Component
                 'error' => $e,
             ], 402);
         }
+    }
+
+    public function anularComprobante($idComprobante){
+           try {
+            DB::beginTransaction();
+            $arrayLogs=[];
+
+            $listaProductos = DB::SELECT("
+            select 
+            B.lote_id,
+            B.numero_unidades_resta_inventario,
+            B.producto_id,
+            B.unidad_medida_venta_id
+            from comprovante_entrega A
+            inner join comprovante_has_producto B 
+            on A.id = B.comprovante_id
+            where A.estado_id = 1 and A.id = ".$idComprobante
+            );
+
+            foreach ($listaProductos as $producto){
+                $lote = ModelRecibirBodega::find($producto->lote_id);
+                $lote->cantidad_disponible = $lote->cantidad_disponible + $producto->numero_unidades_resta_inventario;
+                $lote->save();   
+                
+                array_push($arrayLogs, [
+                    "origen" => $producto->lote_id,
+                    "destino" => $producto->lote_id,
+                    "comprovante_entrega_id" => $idComprobante,
+                    "cantidad" => $producto->numero_unidades_resta_inventario,
+                    "unidad_medida_venta_id" => $producto->unidad_medida_venta_id,
+                    "users_id" => Auth::user()->id,
+                    "descripcion" => "Orden de Entrega - Anulado",
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ]);
+                
+            }
+
+            ModelLogTranslados::insert($arrayLogs);
+
+            $comprobante = ModelComprovanteEntrega::find($idComprobante);
+            $comprobante->estado_id = 2;
+            $comprobante->save();
+
+
+            DB::commit();
+           return response()->json([
+            'icon' => 'success',
+            'text' => 'Comprobante anulado con éxito!',
+            'title' => 'Exito',
+           ],200);
+           } catch (QueryException $e) {
+            DB::rollback();
+           return response()->json([
+            'icon' => 'error',
+            'text' => 'Ha ocurrido un error al anular el comprobante',
+            'title' => 'Error',
+            'message' => 'Ha ocurrido un error', 
+            'error' => $e,
+           ],402);
+           }
     }
 }

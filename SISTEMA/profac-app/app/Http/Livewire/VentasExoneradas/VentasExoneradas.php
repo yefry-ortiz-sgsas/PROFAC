@@ -367,11 +367,12 @@ class VentasExoneradas extends Component
             DB::rollback();
 
             return response()->json([
-                'error' => $e,
+                'error' => 'Ha ocurrido un error al realizar la factura.',
                 'icon' => "error",
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
                 'idFactura' => $factura->id,
+                'mensajeError'=>$e
             ], 402);
         }
     }

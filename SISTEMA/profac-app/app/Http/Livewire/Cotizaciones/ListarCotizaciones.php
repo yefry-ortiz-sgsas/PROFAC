@@ -57,9 +57,9 @@ class ListarCotizaciones extends Component
         concat(YEAR(now()),'-',A.id)  as codigo,
         A.nombre_cliente,
         A.RTN,
-        A.sub_total,
-        A.isv,
-        A.total,
+        FORMAT(A.sub_total,2) as sub_total,
+        FORMAT(A.isv,2) as isv,
+        FORMAT(A.total,2) as total,
         B.name,
         A.created_at,
         A.tipo_venta_id

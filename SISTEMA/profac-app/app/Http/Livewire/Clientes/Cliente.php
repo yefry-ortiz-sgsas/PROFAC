@@ -125,6 +125,7 @@ class Cliente extends Component
             $cliente->rtn = TRIM($request->rtn_cliente);
             $cliente->correo = TRIM($request->correo_cliente) ; 
             $cliente->url_imagen = $name;
+            $cliente->credito_inicial = str_replace(",","",$request->credito);
             $cliente->credito = str_replace(",","",$request->credito); 
             $cliente->dias_credito=$request->dias_credito;
             $cliente->latitud =TRIM($request->latitud_cliente);
@@ -168,7 +169,8 @@ class Cliente extends Component
                 $cliente->direccion = TRIM($request->direccion_cliente) ;
                 $cliente->telefono_empresa = TRIM($request->telefono_cliente) ;
                 $cliente->rtn = TRIM($request->rtn_cliente);
-                $cliente->correo = TRIM($request->correo_cliente) ;    
+                $cliente->correo = TRIM($request->correo_cliente) ;  
+                $cliente->credito_inicial = str_replace(",","",$request->credito);  
                 $cliente->credito = str_replace(",","",$request->credito);
                 $cliente->dias_credito=TRIM($request->dias_credito);
                 $cliente->latitud =TRIM($request->latitud_cliente);
@@ -390,7 +392,8 @@ class Cliente extends Component
         $cliente->direccion = trim($request->direccion_cliente_editar) ;
         $cliente->telefono_empresa = trim($request->telefono_cliente_editar);
         $cliente->rtn = trim($request->rtn_cliente_editar);
-        $cliente->correo = trim($request->correo_cliente_editar);        ;
+        $cliente->correo = trim($request->correo_cliente_editar);
+        $cliente->credito_inicial = trim($request->credito_inicial_editar);        
         $cliente->credito = trim($request->credito_editar);
         $cliente->dias_credito = trim($request->dias_credito_editar);  
         $cliente->latitud = trim($request->latitud_cliente_editar);

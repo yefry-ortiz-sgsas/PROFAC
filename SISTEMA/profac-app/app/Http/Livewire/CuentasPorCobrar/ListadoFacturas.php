@@ -39,9 +39,9 @@ class ListadoFacturas extends Component
             cliente.nombre,
             tipo_pago_venta.descripcion,
             fecha_vencimiento,
-            sub_total,
-            isv,
-            total,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(isv,2) as isv,
+            FORMAT(total,2) as total,
             factura.credito,
             users.name as creado_por,
             (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
@@ -57,8 +57,8 @@ class ListadoFacturas extends Component
             inner join cai A
             on factura.cai_id= A.id
             cross join (select @i := 0) r
-        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
-        order by factura.created_at desc
+        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 
+        order by factura.id desc
             ");
 
             return Datatables::of($listaFacturas)
@@ -96,7 +96,7 @@ class ListadoFacturas extends Component
             ->addColumn('estado_cobro', function ($listaFacturas) {
                
 
-                  if($listaFacturas->monto_pagado >= $listaFacturas->total){
+                  if(round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total)){
 
                     return
                     '

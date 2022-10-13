@@ -121,7 +121,7 @@ class LitsadoFacturasVendedor extends Component
                     <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Anulado</span></p>
                     ';
 
-                }elseif($listaFacturas->monto_pagado >= $listaFacturas->total){
+                }elseif(round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total)){
 
                     return
                     '

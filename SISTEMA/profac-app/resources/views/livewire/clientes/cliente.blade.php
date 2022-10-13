@@ -117,9 +117,9 @@
                                     <label class="col-form-label focus-label">Dirección<span class="text-danger">*</span></label>
                                     <textarea name="direccion_cliente" placeholder="Escriba aquí..." required id="direccion_cliente" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required></textarea>
-                                </div>
+                                </div>                                
                                 <div class="col-md-6">
-                                    <label class="col-form-label focus-label">Monto de credito<span class="text-danger">*</span></label>
+                                    <label class="col-form-label focus-label">Credito Disponible<span class="text-danger">*</span></label>
                                     <input data-type="currency"  id="credito" name="credito" type="text"  step="any" class="form-group form-control" data-parsley-required>
                                 </div>
                                 <div class="col-md-6">
@@ -274,12 +274,16 @@
                                     <label class="col-form-label focus-label">Dirección</label>
                                     <textarea name="direccion_cliente_editar" placeholder="Escriba aquí..." required id="direccion_cliente_editar" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required></textarea>
+                                </div>                                
+                                <div class="col-md-4">
+                                    <label class="col-form-label focus-label">Credito Inicial</label>
+                                    <input  id="credito_inicial_editar" name="credito_inicial_editar" type="number" step="any" class="form-group form-control" data-parsley-required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="col-form-label focus-label">Monto de credito</label>
+                                <div class="col-md-4">
+                                    <label class="col-form-label focus-label">Credito Disponible</label>
                                     <input  id="credito_editar" name="credito_editar" type="number" step="any" class="form-group form-control" data-parsley-required>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="col-form-label focus-label" for="dias_credito_editar">Dias de credito<span class="text-danger">*</span></label>
                                     <input   id="dias_credito_editar" name="dias_credito_editar" type="number"  min="0" max="120" class="form-group form-control" data-parsley-required>
                                 </div>
@@ -987,6 +991,7 @@ $(document).ready(function() {
 
             document.getElementById('nombre_cliente_editar').value =datosCliente.nombre;
             document.getElementById('direccion_cliente_editar').value =datosCliente.direccion;
+            document.getElementById('credito_inicial_editar').value = datosCliente.credito_inicial;
             document.getElementById('credito_editar').value = datosCliente.credito;
             document.getElementById('dias_credito_editar').value = datosCliente.dias_credito;
             document.getElementById('rtn_cliente_editar').value = datosCliente.rtn;
@@ -1014,6 +1019,8 @@ $(document).ready(function() {
             document.getElementById("tipo_personalidad_editar").innerHTML=htmlSelectTipoPersonalidad;
             document.getElementById("categoria_cliente_editar").innerHTML=htmlSelectTipoCliente;
             document.getElementById("vendedor_cliente_editar").innerHTML=htmlSelectVendedor;
+
+            
 
             
             $('#modal_clientes_editar').modal('show');

@@ -40,9 +40,9 @@ class ListadoFacturas extends Component
             cliente.nombre,
             tipo_pago_venta.descripcion,
             fecha_vencimiento,
-            sub_total,
-            isv,
-            total,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(isv,2) as isv,
+            FORMAT(total,2) as total,
             factura.credito,
             users.name as creado_por,
             (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
@@ -61,6 +61,8 @@ class ListadoFacturas extends Component
         where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
         order by factura.created_at desc
             ");
+
+
 
             return Datatables::of($listaFacturas)
             ->addColumn('opciones', function ($listaFacturas) {
@@ -88,6 +90,10 @@ class ListadoFacturas extends Component
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
                         </li>
+
+                        <li>
+                        <a class="dropdown-item"   > <i class="fa-solid fa-ban text-danger"></i> Crear Vale </a>
+                    </li>
     
                             
                         </ul>
@@ -97,7 +103,7 @@ class ListadoFacturas extends Component
             ->addColumn('estado_cobro', function ($listaFacturas) {
                
 
-                  if($listaFacturas->monto_pagado >= $listaFacturas->total){
+                  if( round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total) ){
 
                     return
                     '

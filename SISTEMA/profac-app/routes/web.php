@@ -525,8 +525,10 @@ Route::get('/comprovante/entrega/listado', ListarComprovantes::class);
 Route::get('/comprovante/entrega/listado/activos', [ListarComprovantes::class, 'listarComprovantesActivos']); 
 Route::get('/comprovante/entrega/anulados', ListarComprovantesAnulados::class); 
 Route::get('/comprovante/entrega/listado/anulados', [ListarComprovantesAnulados::class,'listarComprovantesAnulados']);
-Route::get('/orden/entrega/facturar/{id}', FacturarComprobante::class);
-
+Route::get('/orden/entrega/facturar/{id}', FacturarComprobante::class); 
+Route::post('/orden/entrega/guardar/factura', [FacturarComprobante::class,'facturarComprobanteCoorporativo']); 
+Route::post('/orden/entrega/estatal/factura', [FacturarComprobante::class,'facturarComprobanteEstatal']); 
+Route::get('/comprobante/entrega/anular/{idComprobante}',[ListarComprovantes::class,'anularComprobante']);
 
 return redirect('/login');
 });

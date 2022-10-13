@@ -89,6 +89,7 @@
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
 
                             <input type="hidden" id="restriccion" name="restriccion" value="1">
+                            <input name="idComprobante" id="idComprobante" type="hidden" value="">
                             <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value="">
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
@@ -188,27 +189,27 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                                  
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                  
                                             <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                             <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
                                                  onchange="obtenerImagenes()">
                                                 <option value="" selected disabled>--Seleccione un producto--</option>
                                             </select>
-                                        </div>
+                                     
 
 
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                   
                                         <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:<span class="text-danger">*</span></label>
                                         <select id="bodega" name="bodega" class="form-group form-control" style=""
                                             onchange="prueba()"  disabled 
                                         >
                                             <option value="" selected disabled>--Seleccione un producto--</option>
                                         </select>
-                                    </div>
+                                 
 
                                 </div>    
 
@@ -856,6 +857,7 @@
                     this.totalesGenerales();
                 }
 
+                
             }
 
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad,id ,idRestaInventario) {

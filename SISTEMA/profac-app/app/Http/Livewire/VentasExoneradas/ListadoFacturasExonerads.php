@@ -41,9 +41,9 @@ class ListadoFacturasExonerads extends Component
                     cliente.nombre,
                     tipo_pago_venta.descripcion,
                     fecha_vencimiento,
-                    sub_total,
-                    isv,
-                    total,
+                    format(sub_total,2) as sub_total,
+                    format(isv,2) as isv,
+                    format(total,2) as total,
                     factura.credito,
                     users.name as creado_por,
                     (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
@@ -72,9 +72,9 @@ class ListadoFacturasExonerads extends Component
                     cliente.nombre,
                     tipo_pago_venta.descripcion,
                     fecha_vencimiento,
-                    sub_total,
-                    isv,
-                    total,
+                    FORMAT(sub_total,2) as sub_total,
+                    FORMAT(isv,2) as isv,
+                    FORMAT(total,2) as total,
                     factura.credito,
                     users.name as creado_por,
                     (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
@@ -160,7 +160,7 @@ class ListadoFacturasExonerads extends Component
                     <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Anulado</span></p>
                     ';
 
-                }elseif($listaFacturas->monto_pagado >= $listaFacturas->total){
+                }elseif(round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total)){
 
                     return
                     '

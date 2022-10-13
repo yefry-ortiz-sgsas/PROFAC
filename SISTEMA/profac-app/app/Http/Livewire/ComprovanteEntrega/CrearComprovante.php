@@ -145,9 +145,16 @@ class CrearComprovante extends Component
             YEAR(NOW()) as anio
 
             from comprovante_entrega
+            order by id desc
             ");
-            $suma= $numeroComprovante->id+1;
-            $numeroOrden = $numeroComprovante->anio."-".$suma;
+            if(empty($numeroComprovante->id)){
+                $suma= 1;             
+                $numeroOrden = date('Y')."-".$suma;            
+            }else{
+                $suma= $numeroComprovante->id+1;     
+                $numeroOrden = $numeroComprovante->anio."-".$suma;        
+            }          
+           
 
 
             DB::beginTransaction();
@@ -319,7 +326,7 @@ class CrearComprovante extends Component
                     "precio_unidad" => $precio,
                     "cantidad" => $cantidad,
                     "cantidad_s" => $cantidadSeccion,
-                    "cantidad_sin_entregar" => $cantidad,
+                    "cantidad_sin_entregar" => $cantidadSeccion,
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,

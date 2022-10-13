@@ -145,18 +145,12 @@ class Cobros extends Component
                     $registroPago->save();
                 }
 
-
-
-
+                
 
                 $totalCompra = DB::SELECTONE("select total from factura where id=".$request->idFactura);
                 $totalPagos = DB::SELECTONE("select sum(monto) as monto from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
 
-                $faltantePago = round($totalCompra->total,2) - round($totalPagos->monto,2);
-
-
-
-   
+                $faltantePago = round($totalCompra->total,2) - round($totalPagos->monto,2);   
 
                     $compra = ModelFactura::find($request->idFactura);
                     $compra->pendiente_cobro = round($faltantePago,2);                   

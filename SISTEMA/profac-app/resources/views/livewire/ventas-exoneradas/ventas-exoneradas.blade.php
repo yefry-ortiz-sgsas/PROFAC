@@ -65,6 +65,7 @@
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
                             <input type="hidden" id="restriccion" name="restriccion" value="1">
+                            <input name="idComprobante" id="idComprobante" type="hidden" value="">
                             <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="3">
                             
                                 <div class="row">

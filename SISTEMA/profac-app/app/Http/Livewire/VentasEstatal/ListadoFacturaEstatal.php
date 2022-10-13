@@ -42,14 +42,13 @@ class ListadoFacturaEstatal extends Component
                     cliente.nombre,
                     tipo_pago_venta.descripcion,
                     fecha_vencimiento,
-                    sub_total,
-                    isv,
-                    total,
+                    FORMAT(sub_total,2) as sub_total,
+                    FORMAT(isv,2) as isv,
+                    FORMAT(total,2) as total,
                     factura.credito,
                     users.name as creado_por,
                     (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
-                    factura.estado_venta_id
-                
+                    factura.estado_venta_id                
                 from factura
                     inner join cliente
                     on factura.cliente_id = cliente.id
@@ -74,14 +73,13 @@ class ListadoFacturaEstatal extends Component
                     cliente.nombre,
                     tipo_pago_venta.descripcion,
                     fecha_vencimiento,
-                    sub_total,
-                    isv,
-                    total,
+                    FORMAT(sub_total,2) as sub_total,
+                    FORMAT(isv,2) as isv,
+                    FORMAT(total,2) as total,
                     factura.credito,
                     users.name as creado_por,
                     (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
-                    factura.estado_venta_id
-                
+                    factura.estado_venta_id                
                 from factura
                     inner join cliente
                     on factura.cliente_id = cliente.id
@@ -90,8 +88,7 @@ class ListadoFacturaEstatal extends Component
                     inner join users
                     on factura.vendedor = users.id
                     cross join (select @i := 0) r
-                where YEAR(factura.created_at) >= (YEAR(NOW())-2) and factura.estado_venta_id<>2 and factura.tipo_venta_id = 2
-                
+                where YEAR(factura.created_at) >= (YEAR(NOW())-2) and factura.estado_venta_id<>2 and factura.tipo_venta_id = 2                
                 order by factura.created_at desc
                 ");
             }
@@ -163,7 +160,7 @@ class ListadoFacturaEstatal extends Component
                     <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Anulado</span></p>
                     ';
 
-                }elseif($listaFacturas->monto_pagado >= $listaFacturas->total){
+                }elseif(round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total)){
 
                     return
                     '

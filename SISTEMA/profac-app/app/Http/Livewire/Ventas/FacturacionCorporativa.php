@@ -384,7 +384,8 @@ class FacturacionCorporativa extends Component
 
                 ], 200);
             }
-
+            //comprobar existencia de producto en bodega
+            
             $flagEstado = DB::SELECTONE("select estado_encendido from parametro where id = 1");
            
             if ($flagEstado->estado_encendido == 1) {
@@ -477,6 +478,7 @@ class FacturacionCorporativa extends Component
                 $factura->pendiente_cobro=$request->totalGeneral;
                 $factura->estado_editar = 1;              
                 $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+                $factura->comprovante_entrega_id = $request->idComprobante;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -568,11 +570,12 @@ class FacturacionCorporativa extends Component
             DB::rollback();
 
             return response()->json([
-                'error' => $e,
+                'error' => 'Ha ocurrido un error al realizar la factura.',
                 'icon' => "error",
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
                 'idFactura' => $factura->id,
+                'mensajeError'=>$e
             ], 402);
         }
     }
@@ -713,6 +716,7 @@ class FacturacionCorporativa extends Component
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+            $factura->comprovante_entrega_id = $request->idComprobante;
             $factura->save();
 
             if ($turno->turno == 1) {
@@ -852,6 +856,7 @@ class FacturacionCorporativa extends Component
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+            $factura->comprovante_entrega_id = $request->idComprobante;
             $factura->save();
 
 
@@ -1250,6 +1255,7 @@ class FacturacionCorporativa extends Component
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+            $factura->comprovante_entrega_id = $request->idComprobante;          
             $factura->save();
 
 
