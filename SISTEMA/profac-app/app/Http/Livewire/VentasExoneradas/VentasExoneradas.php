@@ -37,28 +37,33 @@ class VentasExoneradas extends Component
     public function listarClientes(Request $request)
     {
         try {
+            if (Auth::user()->rol_id == 1 or Auth::user()->rol_id == 3) {
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and id<>1                                 
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+       
+            }else{
+                $listaClientes = DB::SELECT("
+                select 
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and id<>1     
+                    and vendedor =" . Auth::user()->id . "                            
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
 
-            $listaClientes = DB::SELECT("
-         select 
-             id,
-             nombre as text
-         from cliente
-             where estado_cliente_id = 1
-             and id<>1
-                          
-             and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                 ");
+            }
+                
 
-            //  $listaClientes = DB::SELECT("
-            //  select 
-            //      id,
-            //      nombre as text
-            //  from cliente
-            //      where estado_cliente_id = 1
-            //      and tipo_cliente_id=2
-            //      and vendedor =".Auth::user()->id."             
-            //      and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
-            //          ");
+
 
 
             return response()->json([

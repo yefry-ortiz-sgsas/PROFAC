@@ -30,7 +30,7 @@ class ListadoFacturasExonerads extends Component
 
         try {
 
-            if(Auth::user()->rol_id == 1){
+            if((Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3 || Auth::user()->rol_id == 5)){
                 $listaFacturas = DB::SELECT("
                 select 
                     factura.id as id,

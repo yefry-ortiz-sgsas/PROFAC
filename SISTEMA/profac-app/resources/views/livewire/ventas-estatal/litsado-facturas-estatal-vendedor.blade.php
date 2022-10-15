@@ -7,7 +7,7 @@
             <h2>Listado De Facturas </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">
-                    <a>Estatal</a>
+                    <a>Coorporativo</a>
                 </li>
 
                 <li class="breadcrumb-item">
@@ -30,8 +30,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>Codigo Interno</th>
-                                        <th>N° Factura</th>
-                                       
+                                        <th>N° Factura</th>                                     
                                         <th>Fecha de Emision</th>
                                         <th>Cliente</th>
                                         <th>Tipo de Pago</th>
@@ -70,7 +69,7 @@
                 responsive: true,
               
 
-                "ajax": "/lista/facturas/estatal",
+                "ajax": "/listado/ventas/estatal/vendedor",
                 "columns": [
                     {
                         data: 'id'
@@ -78,7 +77,7 @@
                     {
                         data: 'numero_factura'
                     },
-                    
+
                     {
                         data: 'fecha_emision'
                     },

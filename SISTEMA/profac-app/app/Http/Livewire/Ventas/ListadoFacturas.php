@@ -26,9 +26,10 @@ class ListadoFacturas extends Component
     }
 
     public function listarFacturas(){
-
+       
         try {
-
+            if(Auth::user()->rol_id  == '1' || Auth::user()->rol_id  == '5' || Auth::user()->rol_id == '3' ){
+             
             $listaFacturas = DB::SELECT("
             select 
             factura.id as id,
@@ -61,6 +62,41 @@ class ListadoFacturas extends Component
         where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1)
         order by factura.created_at desc
             ");
+
+            }else{
+                
+                $listaFacturas = DB::SELECT("
+                select 
+                factura.id as id,
+                @i := @i + 1 as contador,
+                numero_factura,
+                factura.cai as correlativo,
+                A.cai as cai,
+                fecha_emision,
+                cliente.nombre,
+                tipo_pago_venta.descripcion,
+                fecha_vencimiento,
+                FORMAT(sub_total,2) as sub_total,
+                FORMAT(isv,2) as isv,
+                FORMAT(total,2) as total,
+                factura.credito,
+                users.name as creado_por,
+                (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
+                factura.estado_venta_id
+            
+            from factura
+                inner join cliente
+                on factura.cliente_id = cliente.id
+                inner join tipo_pago_venta
+                on factura.tipo_pago_id = tipo_pago_venta.id
+                inner join users
+                on factura.vendedor = users.id
+                inner join cai A
+                on factura.cai_id= A.id
+                cross join (select @i := 0) r
+            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 and (factura.tipo_venta_id = 1) and   factura.vendedor = ".Auth::user()->id." order by factura.created_at desc");
+            }
+            
 
 
 

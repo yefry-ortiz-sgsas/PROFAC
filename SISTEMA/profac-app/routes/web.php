@@ -290,6 +290,7 @@ Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class,'cambioEstadoDC'
 
 Route::get('/ventas/estatal', FacturacionEstatal::class);
 Route::get('/ventas/estatal/vendedor', LitsadoFacturasEstatalVendedor::class);
+Route::get('/listado/ventas/estatal/vendedor', [LitsadoFacturasEstatalVendedor::class,'listarFacturasEstatalVendedor']);
 Route::get('/estatal/lista/clientes', [FacturacionEstatal::class,'listarClientes']);
 Route::post('/estatal/datos/cliente', [FacturacionEstatal::class,'datosCliente']);
 Route::get('/estatal/tipo/pago', [FacturacionEstatal::class,'tipoPagoVenta']);

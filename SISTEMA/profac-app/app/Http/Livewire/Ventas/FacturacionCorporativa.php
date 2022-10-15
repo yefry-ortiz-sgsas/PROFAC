@@ -41,7 +41,7 @@ class FacturacionCorporativa extends Component
         try {
 
 
-                $listaClientes = DB::SELECT("
+               /* $listaClientes = DB::SELECT("
                 select 
                     id,
                     nombre as text
@@ -49,10 +49,10 @@ class FacturacionCorporativa extends Component
                     where estado_cliente_id = 1
                     and tipo_cliente_id=1                           
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                        ");
-/*
+                        ");*/
 
-            if (Auth::user()->rol_id == 1) {
+
+            if (Auth::user()->rol_id == 1 or Auth::user()->rol_id == 3) {
                 $listaClientes = DB::SELECT("
                 select 
                     id,
@@ -75,7 +75,7 @@ class FacturacionCorporativa extends Component
                         ");
             }
 
-*/
+
 
             return response()->json([
                 "results" => $listaClientes,
