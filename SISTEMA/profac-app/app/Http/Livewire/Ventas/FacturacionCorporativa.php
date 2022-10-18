@@ -846,7 +846,7 @@ class FacturacionCorporativa extends Component
             $factura->dias_credito = $diasCredito;
             $factura->cai_id = $cai->cai_id;
             $factura->estado_venta_id = 1;
-            $factura->cliente_id = $request->seleccionarCliente;
+            $factura->cliente_id = $request->seleccionarCliente;          
             $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
@@ -1332,10 +1332,14 @@ class FacturacionCorporativa extends Component
     public function comprobarFacturaVencida($idCliente){
         $facturasVencidas = DB::SELECT(
             "
-        select
-        id
-        from factura 
-        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id=" . $idCliente
+            select
+            id       
+            from factura 
+            where   
+            pendiente_cobro > 0 
+            and fecha_vencimiento < curdate() 
+            and estado_venta_id = 1
+            and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {
