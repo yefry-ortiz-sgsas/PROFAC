@@ -682,10 +682,14 @@ class FacturacionEstatal extends Component
     {
         $facturasVencidas = DB::SELECT(
             "
-        select
-        id
-        from factura 
-        where   pendiente_cobro >0 and fecha_vencimiento < curdate() and tipo_pago_id = 2 and cliente_id=" . $idCliente
+            select
+            id       
+            from factura 
+            where   
+            pendiente_cobro > 0 
+            and fecha_vencimiento < curdate() 
+            and estado_venta_id = 1
+            and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {
