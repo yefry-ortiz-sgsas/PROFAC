@@ -160,7 +160,13 @@
                             </div>
 
                             <div class="row">
-
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="comentario">Comentario:<span class="text-danger">*</span></label>
+                                            <textarea class="form-control" id="comentario" name="comentario" rows="5" data-parsley-required></textarea>
+                                          </div>
+                                     
+                                    </div>
 
 
                             </div>

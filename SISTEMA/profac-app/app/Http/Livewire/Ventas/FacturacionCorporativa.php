@@ -318,7 +318,7 @@ class FacturacionCorporativa extends Component
 
             if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
-
+               // DD($facturaVencida);
                 if ($facturaVencida) {
                     return response()->json([
                         'icon' => 'warning',

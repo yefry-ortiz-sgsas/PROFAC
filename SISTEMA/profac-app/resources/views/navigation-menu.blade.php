@@ -374,9 +374,9 @@
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprovante</a></li>
+                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprobante</a></li>
                             <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de
-                                    Comprovantes</a></li>
+                                    Comprobantes</a></li>
                             <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de
                                     Anulados</a></li>
 

@@ -66,7 +66,8 @@ class CrearComprovante extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',            
+            'bodega' => 'required',  
+            'comentario'=>'required'          
       
             
        
@@ -172,6 +173,7 @@ class CrearComprovante extends Component
             $comprovante->tipo_venta_id =  $tipoVenta->tipo_cliente_id;
             $comprovante->arregloIdInputs =  json_encode($request->arregloIdInputs);
             // $comprovante->vendedor =  $numeroOrden;
+            $comprovante->comentario = $request->comentario;
             $comprovante->users_id =  Auth::user()->id;
             $comprovante->numeroInputs =  $request->numeroInputs;
             $comprovante->estado_id =  1;

@@ -59,11 +59,12 @@ class DetalleVenta extends Component
       on A.cai_id = F.id
       where A.id = ".$idFactura);
 
-      $nombre = DB::SELECTONE("select
+      $nombre = DB::SELECTONE("
+      select
       name
       from factura
       inner join users
-      on factura.users_id
+      on factura.users_id = users.id
       where factura.id=".$idFactura
       );
 

@@ -445,12 +445,19 @@
                   <button class="btn btn-primary  btn-large-dim" type="button" onclick="solicitarCodigo()"><i class="fa-solid fa-paper-plane"></i></button>
               </div>
 
+              <div id="div_imprimir" class="text-center mt-2 d-none"  >
+                <a id="btn_imprimir" target="_blank" class="btn add-btn btn-success text-white" ><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+
+              </div>
+
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
                
             </div>
+
+
         </div>
     </div>
 </div>
@@ -503,6 +510,7 @@
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
             var idAutorizacion=0;
+            var idFactura = 0;
 
             
             
@@ -1134,7 +1142,9 @@ return 0;
                     .then(response => {
                         let data = response.data;
                         idAutorizacion = document.getElementById('codigo_autorizacion').value;
+                        idFactura = data.idFactura
 
+                        document.getElementById('btn_imprimir').href="/factura/cooporativo/"+idFactura 
 
 
                         if (data.idFactura == 0) {
@@ -1207,9 +1217,12 @@ return 0;
             }
 
             function desactivarCodigo(){
-                console.log(idAutorizacion);
+                //console.log(idAutorizacion);
                 axios.post('/ventas/autorizacion/desactivar',{'idAutorizacion':idAutorizacion})
                 .then( response=>{
+
+                    let element = document.getElementById("div_imprimir");
+                     element.classList.remove("d-none");
 
                     $("#modal_solicitar_codigo").modal("show").addClass("fade");
                     return;

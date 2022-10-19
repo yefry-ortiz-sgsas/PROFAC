@@ -66,6 +66,7 @@
                             <input type="hidden" id="restriccion" name="restriccion" value="2">
                             <input name="idComprobante" id="idComprobante" type="hidden" value="">
                             <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="2">
+                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value="" required>
 
                             <div class="row">
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
@@ -393,44 +394,49 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="Sub total " id="subTotalGeneralMostrar"
-                                        name="subTotalGeneralMostrar" class="form-control"  data-parsley-required
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
+                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
                                         autocomplete="off" readonly>
 
-                                        <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value="" required>   
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
+                                        required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="ISV " id="isvGeneralMostrar" name="isvGeneralMostrar"
-                                        class="form-control" data-parsley-required autocomplete="off"
-                                        readonly>
-                                        <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>       
+                                    <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                        name="isvGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="Total  " id="totalGeneralMostrar"
+                                    <input type="text" placeholder="Total  " id="totalGeneralMostrar"
                                         name="totalGeneralMostrar" class="form-control" data-parsley-required
                                         autocomplete="off" readonly>
 
-                                        <input id="totalGeneral" name="totalGeneral" type="hidden" value="" required>            
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
+                                        required>
                                 </div>
                             </div>
 
@@ -455,61 +461,69 @@
     <!-- Modal Solictar codigo -->
 
     <div class="modal fade" id="modal_solicitar_codigo" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Solicitar código</h3>
-                
-            </div>
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Solicitar código</h3>
 
-            <div class="modal-body">
-              <div class="text-center">
-                  <button class="btn btn-primary  btn-large-dim" type="button" onclick="solicitarCodigo()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="text-center">
+                        <button class="btn btn-primary  btn-large-dim" type="button" onclick="solicitarCodigo()"><i
+                                class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+
+                    
+              <div id="div_imprimir" class="text-center mt-2 d-none"  >
+                <a id="btn_imprimir" target="_blank" class="btn add-btn btn-success text-white" ><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+
               </div>
 
-            </div>
+                </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
-               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<!-- Modal Ingresar codigo -->
-<div class="modal fade" id="modalPermiso" data-backdrop="static" tabindex="1" role="dialog" aria-labelledby="modalPermisoTitle" >
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="1">Ingresar código</h3>
+    <!-- Modal Ingresar codigo -->
+    <div class="modal fade" id="modalPermiso" data-backdrop="static" tabindex="1" role="dialog"
+        aria-labelledby="modalPermisoTitle">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="1">Ingresar código</h3>
 
-      </div>
-      <div class="modal-body">
-          <form id="verificarCodigoForm" autocomplete="off" data-parsley-validate>
-             
-                      <label for="codigo" class="col-form-label focus-label">Código de autorización:<span class="text-danger">*</span></label>
-                      <input class="form-control" required type="text" id="codigo"
-                          name="codigo" data-parsley-required>
-                 
-          </form>
-          <span id="mensajeCodigo" class="text-danger d-none">Código incorrecto</span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
-        <button type="submit" form="verificarCodigoForm" class="btn btn-primary">Verificar</button>
-      </div>
+                </div>
+                <div class="modal-body">
+                    <form id="verificarCodigoForm" autocomplete="off" data-parsley-validate>
+
+                        <label for="codigo" class="col-form-label focus-label">Código de autorización:<span
+                                class="text-danger">*</span></label>
+                        <input class="form-control" required type="text" id="codigo" name="codigo"
+                            data-parsley-required>
+
+                    </form>
+                    <span id="mensajeCodigo" class="text-danger d-none">Código incorrecto</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+                    <button type="submit" form="verificarCodigoForm" class="btn btn-primary">Verificar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     @push('scripts')
         <script>
-
-            $( document ).ready(function() {
+            $(document).ready(function() {
                 $('#modal_solicitar_codigo').modal('show')
             });
 
@@ -1125,10 +1139,15 @@
                     .then(response => {
                         let data = response.data;
 
+                        idAutorizacion = document.getElementById('codigo_autorizacion').value;
+                        idFactura = data.idFactura
+
+                        document.getElementById('btn_imprimir').href="/factura/cooporativo/"+idFactura 
+
 
 
                         if (data.idFactura == 0) {
-                            console.log("entro")
+                            //console.log("entro")
 
                             Swal.fire({
                                 icon: data.icon,
@@ -1179,9 +1198,11 @@
 
                         document.getElementById('numero_venta').value = data.numeroVenta;
                         document.getElementById("btn_venta_coorporativa").disabled = false;
+                        desactivarCodigo()
 
                     })
                     .catch(err => {
+                        console.log(err)
                         document.getElementById("btn_venta_coorporativa").disabled = false;
                         let data = err.response.data;
                         console.log(err);
@@ -1193,6 +1214,77 @@
                     })
             }
 
+            function solicitarCodigo() {
+                axios.get('/ventas/solicitud/codigo')
+                    .then(response => {
+
+
+                        $("#modal_solicitar_codigo").removeClass("fade").modal("hide");
+                        $("#modalPermiso").modal("show").addClass("fade");
+
+
+
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+
+
+            $(document).on('submit', '#verificarCodigoForm', function(event) {
+
+                event.preventDefault();
+                ocultarModalVerificar();
+
+            });
+
+            function ocultarModalVerificar() {
+                let codigo = document.getElementById('codigo').value;
+
+                axios.post('/ventas/verificar/codigo', {
+                        codigo: codigo
+                    })
+                    .then(response => {
+
+                        let data = response.data;
+                        if (data.estado == 1) {
+                            $("#modalPermiso").removeClass("fade").modal("hide");
+                            document.getElementById('mensajeCodigo').classList.add('d-none')
+                            document.getElementById('codigo_autorizacion').value = data.idAutorizacion;
+                        } else {
+                            document.getElementById('mensajeCodigo').classList.remove('d-none')
+                            document.getElementById('codigo_autorizacion').value = '';
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+
+            function desactivarCodigo() {
+                //console.log(idAutorizacion);
+                axios.post('/ventas/autorizacion/desactivar', {
+                        'idAutorizacion': idAutorizacion
+                    })
+                    .then(response => {
+
+                        let element = document.getElementById("div_imprimir");
+                        element.classList.remove("d-none");
+
+                        $("#modal_solicitar_codigo").modal("show").addClass("fade");
+                        return;
+                    })
+                    .catch(err => {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Ha ocurrido un error al desactivar el codigo de autorizacion'
+                        })
+                    })
+
+            }
 
             function sumarDiasCredito() {
                 tipoPago = document.getElementById('tipoPagoVenta').value;

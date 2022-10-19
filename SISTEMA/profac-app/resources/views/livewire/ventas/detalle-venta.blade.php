@@ -16,6 +16,12 @@
                 </li>
             </ol>
         </div>
+        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">          
+            <div style="margin-top: 2rem">
+                <a href="/factura/cooporativo/{{ $detalleVenta->id }}" target="_blank" class="btn add-btn btn-success" ><i
+                        class="fa fa-plus"></i> Imprimir Factura</a>
+            </div>
+        </div>
     </div>
     @if(Auth::user()->rol_id == 2)
     <div class="row mt-2">
