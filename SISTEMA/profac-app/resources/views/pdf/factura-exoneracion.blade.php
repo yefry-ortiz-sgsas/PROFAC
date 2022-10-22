@@ -240,7 +240,7 @@
                     <div>
                         <p class="card-text " style="position:absolute; left:10px;  top:10px; font-size:16px;">Importe
                             exonerado:</p>
-                        <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:16px;">{{$importesConCentavos->isv}}</p>
+                        <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:16px;">{{$importesConCentavos->sub_total}}</p>
                     </div> 
                     <div>
                         <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe Gravado: </p>
@@ -262,7 +262,7 @@
                     <p class="card-text" style="position:absolute; right:10px;  top:85px; font-size:16px;">0.00</p>
     
                     <p class="card-text" style="position:absolute; left:10px;  top:105px; font-size:16px;">Sub Total:</p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:105px; font-size:16px;">{{$importesConCentavos->sub_total}}</p>
+                    <p class="card-text" style="position:absolute; right:10px;  top:105px; font-size:16px;">0.00</p>
     
                     <p class="card-text" style="position:absolute; left:10px;  top:130px; font-size:16px;">Impuesto sobre
                         venta:</p>
@@ -274,7 +274,7 @@
     
                     <p class="card-text" style="position:absolute; left:10px;  top:185px; font-size:18px;"><b>Total a
                             Pagar: </b></p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:185px; font-size:18px;"><b>{{$importesConCentavos->total}}</b>
+                    <p class="card-text" style="position:absolute; right:10px;  top:185px; font-size:18px;"><b>{{$importesConCentavos->sub_total}}</b>
                     </p>
                 </div>
             </div>
