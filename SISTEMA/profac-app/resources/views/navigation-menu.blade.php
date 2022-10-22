@@ -213,11 +213,14 @@
                         <div data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="block m-t-xs font-bold" style="color:#FFF;"><b>
                                     {{ Auth::user()->name }}</b></span>
-                            <span class="text-muted text-xs block">Desarrollador <b class="caret"></b></span>
+                            @php
+                                $rol = DB::SELECTONE("select nombre from rol where id = ". Auth::user()->rol_id);
+                            @endphp        
+                            <span class="text-muted text-xs block">{{  $rol->nombre  }} <b class="caret"></b></span>
                         </div>
                         <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                         <li><a class="dropdown-item" href="profile.html">Profile</a></li>
-                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>
+                                        <li><a class="dropdown-item" href="contacts.html">Contacts</a></li>s
                                         <li><a class="dropdown-item" href="mailbox.html">Mailbox</a></li>
                                         <li class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="login.html">Logout</a></li>
@@ -708,6 +711,14 @@
             </li>
               {{-- Rol Axuliar Contable --}}
             @elseif (Auth::user()->rol_id == '6')
+            <li>
+                <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
+                        style="color:#ffffff;">Clientes</span>
+                    <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                </ul>
+            </li>
             <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
