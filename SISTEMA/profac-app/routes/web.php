@@ -69,7 +69,10 @@ use App\Http\Livewire\ComprovanteEntrega\ListarComprovantesAnulados;
 use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 
 
-use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
+use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno; 
+
+
+use App\Http\Livewire\Ventas\CrearVale;
 
 
 /*
@@ -533,3 +536,11 @@ return redirect('/login');
 
 
 Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
+
+
+
+////////////////////////////////////////////////////////////////////////////
+
+Route::get('/crear/vale/{id}', CrearVale::class );
+Route::post('/crear/vale/datos', [CrearVale::class ,'datosFactura']);
+//Route::get('/listar/vale', [CrearVale::class,'listarVales']);
