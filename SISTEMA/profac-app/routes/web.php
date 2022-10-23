@@ -72,7 +72,9 @@ use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno; 
 
 
-use App\Http\Livewire\Ventas\CrearVale;
+use App\Http\Livewire\Vale\CrearVale;
+use App\Http\Livewire\Vale\ListarVales; 
+use App\Http\Livewire\Vale\FacturarVale;
 
 
 /*
@@ -548,5 +550,11 @@ Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
 ////////////////////////////////////////////////////////////////////////////
 
 Route::get('/crear/vale/{id}', CrearVale::class );
-Route::post('/crear/vale/datos', [CrearVale::class ,'datosFactura']);
+Route::post('/guardar/vale', [CrearVale::class ,'crearVale']);
+Route::get("/listar/vale/entrega",ListarVales::class);
+Route::get('/vale/listado/general',[ListarVales::class,'MostrarlistarVales']);
+Route::get('/vale/crear/factura/{id}', FacturarVale::class); 
+Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']); 
+Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
+
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);

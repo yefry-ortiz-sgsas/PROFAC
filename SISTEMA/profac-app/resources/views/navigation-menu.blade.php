@@ -371,8 +371,23 @@
 
                         </ul>
                     </li>
+                    
                     <li>
-                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i><span class="nav-label"
+                        <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
+                                style="color:#ffffff;">Vales</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">                            
+                            <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
+                                    Vales</a></li>
+                          
+
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span class="nav-label"
                                 style="color:#ffffff;">Comprobante De Entrega</span>
                             <span class="fa arrow"></span></a>
 

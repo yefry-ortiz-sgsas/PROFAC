@@ -55,25 +55,14 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Ventas</h2>
+            <h2>Crear Vale</h2>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a>Cliente Corporativo</a>
-                </li>
-                {{-- <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
-                </li> --}}
+
 
             </ol>
         </div>
 
 
-        {{-- <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
-                <div style="margin-top: 1.5rem">
-                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal" data-target="#modal_producto_crear"><i
-                            class="fa fa-plus"></i> Registrar Producto</a>
-                </div>
-            </div> --}}
 
 
     </div>
@@ -88,9 +77,10 @@
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
 
-                            <input type="hidden" id="restriccion" name="restriccion" value="1">
-                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value="">
-                            <!-- <input type="hidden" id="id_factura_vale" name="id_factura_vale" value=""> -->
+                            {{-- <input type="hidden" id="restriccion" name="restriccion" value="1">
+                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value=""> --}}
+                            <input type="hidden" id="idFactura" name="idFactura" value="{{$idFactura}}">
+                        
                                 <div class="row">
                                     <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                         <label class="col-form-label text-danger" for="numero_venta"
@@ -99,57 +89,34 @@
 
                                     <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                         <input class="form-control" style="font-size: 1.5rem; font-weight:600; text-align:center" type="text" id="numero_venta" name="numero_venta"
-                                        value="" data-parsley-required readonly>
+                                        value="{{$detalleVenta->numero_factura}}" data-parsley-required readonly>
                                     </div>
 
 
 
                                 </div>
 
-                            <!-- <div class="row  mt-4 mb-4">
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                      <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
-                                      <select name="vendedor" id="vendedor" class="form-group form-control" required>
-                                        <option value="" selected disabled>--Seleccionar un vendedor--</option>
-                                      </select>
-                                   
-                                </div> 
-                            </div>  -->
 
                             <div class="row">
-                                <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
-                                        Cliente:<span class="text-danger">*</span> </label>
-                                    <select id="seleccionarCliente" name="seleccionarCliente" class="form-group form-control" style=""
-                                        data-parsley-required onchange="obtenerDatosCliente()">
-                                        <option value="" selected disabled>--Seleccionar un cliente--</option>
-                                    </select>
-                                </div> -->
 
-                                <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label class="col-form-label focus-label">Nombre del Vendedor:<span class="text-danger">*</span></label>
-                                    <input class="form-control" required type="text" id="nombre_vendedor_ventas" name="nombre_vendedor_ventas"
-                                        data-parsley-required readonly value="{{$idFactura}}">
-
-                                </div> -->
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                       <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
-                                      <select name="vendedor" id="vendedor" class="form-group form-control" required>
-                                            <option value="{{$idFactura}}" readonly >Camila Campos</option>
+                                      <select name="vendedor" id="vendedor" class="form-group form-control" required readonly>
+                                            <option value="{{$detalleVenta->vendedor}}"  >{{ $detalleVenta->name }}</option>
                                       </select>
                                    
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">Nombre del cliente:<span class="text-danger">*</span></label>
-                                    <input class="form-control" required type="text" id="nombre_cliente_ventas" name="nombre_cliente_ventas"
+                                    <input class="form-control"  required type="text" value="{{ $detalleVenta->nombre_cliente }}" id="nombre_cliente_ventas" name="nombre_cliente_ventas"
                                         data-parsley-required readonly>
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">RTN:<span class="text-danger">*</span></label>
-                                    <input class="form-control"  type="text" id="rtn_ventas" name="rtn_ventas"
+                                    <input class="form-control"  type="text" value="{{$detalleVenta->rtn}}" id="rtn_ventas" name="rtn_ventas"
                                     readonly>
 
                                 </div>
@@ -161,38 +128,25 @@
                             </div>
 
                             <div class="row mt-4">
-                                <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
-                                        pago:<span class="text-danger">*</span></label>
-                                    <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
-                                        data-parsley-required onchange="validarFechaPago()">
-                                    </select>
-                                </div> -->
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
                                         data-parsley-required readonly>
+                                        <option value="{{$detalleVenta->tipo_pago_id}}">{{$detalleVenta->tipo_pago}}</option>
                                     </select>
                                 </div>
 
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <!-- <div class="form-group">
-
-                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
-                                            :<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="date" id="fecha_emision" onchange="sumarDiasCredito()"
-                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required >
-
-                                    </div> -->
+       
                                     <div class="form-group">
 
                                         <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
                                             :<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" id="fecha_emision" 
-                                            name="fecha_emision" value="{{ date('Y-m-d') }}" data-parsley-required readonly>
+                                            name="fecha_emision" value="{{ $detalleVenta->fecha_emision }}" data-parsley-required readonly>
 
                                     </div>
                                 </div>
@@ -204,13 +158,25 @@
                                             class="col-form-label focus-label text-warning">Fecha de vencimiento:
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
-                                            name="fecha_vencimiento" value="" data-parsley-required
-                                            min="{{ date('Y-m-d') }}" readonly>
+                                            name="fecha_vencimiento"  data-parsley-required
+                                            value="{{ $detalleVenta->fecha_vencimiento }}" readonly>
                                     </div>
                                 </div>
 
 
                             </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="comentario">Comentario:<span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="comentario" name="comentario" rows="5" data-parsley-required></textarea>
+                                      </div>
+                                 
+                                </div>
+
+
+                        </div>
 
                             <div class="row">
 
@@ -226,29 +192,16 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                             <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
-                                                 onchange=" prueba()"  >
+                                                 onchange="obtenerImagenes()"  >
                                                 <option value="" selected disabled>--Seleccione un producto--</option>
                                             </select>
                                         </div>
 
 
 
-                                </div>
+                                </div>       
 
-                                <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:<span class="text-danger">*</span></label>
-                                        <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                            onchange="prueba()"  disabled 
-                                        >
-                                            <option value="" selected disabled>--Seleccione un producto--</option>
-                                        </select>
-                                    </div>
-
-                                </div>     -->
-
-                                <div id="botonAdd"
-                                        class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-4 text-center d-none">
+                                <div id="botonAdd"   class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6  my-4 text-center d-none">
                                         <button type="button" class="btn-rounded btn btn-success p-3"
                                             style="font-weight: 900; " onclick="agregarProductoCarrito()">Añadir
                                             Producto a venta <i class="fa-solid fa-cart-plus"></i> 
@@ -263,10 +216,8 @@
                             <div class="row">
 
 
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4" >
-                                    <div class="text-center">
-                                        <a id="detalleProducto" href="" class="font-bold h3  d-none text-success" style="" target="_blank"> <i class="fa-solid fa-circle-info"></i> Ver Detalles De Producto </a>
-                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4" >
+
 
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
@@ -281,11 +232,6 @@
                                         </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner " >
 
-
-
-
-
-
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselProducto" role="button"
                                             data-slide="prev">
@@ -298,6 +244,10 @@
                                             <span class="sr-only">Next</span>
                                         </a>
                                     </div>
+
+                                    <div class="text-center">
+                                        <a id="detalleProducto" href="" class="font-bold h3  d-none text-success" style="" target="_blank"> <i class="fa-solid fa-circle-info"></i> Ver Detalles De Producto </a>
+                                        </div>
 
 
                                 </div>
@@ -336,15 +286,11 @@
                                         </div>
                                     </div>
 
-                                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-                                    <!-- <div class="form-group col-12 col-sm-12 col-md-1 col-lg- col-xl-1">
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg- col-xl-1">
                                         <label class="sr-only">Bodega</label>
                                         <input type="number" placeholder="Bodega" class="form-control"
                                             autocomplete="off" disabled>
-                                    </div> -->
-
-                                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                                    </div>
 
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg- col-xl-1">
                                         <label class="sr-only">Precio</label>
@@ -369,15 +315,6 @@
 
                                     </div>
 
-                                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-{{-- 
-                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
-                                        <label class="sr-only">Seccion</label>
-                                        <input type="text" placeholder="Seccion" class="form-control"
-                                            min="1" autocomplete="off" disabled>
-                                    </div> --}}
-
-                                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Sub Total</label>
@@ -489,7 +426,7 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <button id="btn_venta_coorporativa" class="btn  btn-primary float-left m-t-n-xs"><strong>
-                                            Realizar Venta</strong></button>
+                                            Realizar Vale</strong></button>
                                 </div>
                             </div>
 
@@ -510,89 +447,26 @@
                                 
             var idFacturaVale = {{$idFactura}};
 
-            $( document ).ready(function() {
+            var idFactura = {{$idFactura}};
 
-                datosFactura(idFacturaVale);
-
-            });
-
-            ///////////////////////////// DATOS FACTURA /////////////////////////////
-
-            function datosFactura(idFacturaVale){
-
-                let data = {idFacturaVale:idFacturaVale}
-                axios.post('/crear/vale/datos',data)
-                .then( response =>{
-                  
-                    let datos = response.data.datos;
-
-                    document.getElementById('nombre_cliente_ventas').value = datos.nombre;
-                    document.getElementById('rtn_ventas').value = datos.rtn; 
-
-                    //document.getElementById('nombre_banco_editar').value = datos.nombre;
-                                      
-                    
-                })
-                .catch( err=>{
-                    console.log(err)
-                })
-            }
-            ///////////////////////////////////////////////////////////////////////////////////////
 
             var numeroInputs = 0;
             var arregloIdInputs = [];
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
 
-            window.onload = obtenerTipoPago;
+            
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
 
 
 
-            // $('#vendedor').select2({
-            //     ajax:{
-            //         url:'/ventas/corporativo/vendedores',
-            //         data: function(params) {
-            //             var query = {
-            //                 search: params.term,
-            //                 type: 'public',
-            //                 page: params.page || 1
-            //             }
-
-            //             // Query parameters will be ?search=[term]&type=public
-            //             return query;
-            //         }
-
-            //     }
-            // });
-           
-
-
-            // $('#seleccionarCliente').select2({
-            //     ajax: {
-            //         url: '/ventas/lista/clientes',
-            //         data: function(params) {
-            //             var query = {
-            //                 search: params.term,
-            //                 type: 'public',
-            //                 page: params.page || 1
-            //             }
-
-            //             // Query parameters will be ?search=[term]&type=public
-            //             return query;
-            //         }
-            //     }     
-            // });
-            
-
-
-
                 $('#seleccionarProducto').select2({
                     ajax: {
-                        url: '/ventas/listar',
+                        url: '/lista/producto/vale',
                         data: function(params) {
                             var query = {
                                 search: params.term,
+                                idFactura : idFactura,
                                 type: 'public',
                                 page: params.page || 1
                             }
@@ -635,43 +509,12 @@
             }    
 
 
-            function obtenerTipoPago() {
 
-                axios.get('/ventas/tipo/pago')
-                    .then(response => {
-
-                        let tipoDePago = response.data.tipos;
-                        let numeroVenta = response.data.numeroVenta.numero;
-
-                        let htmlPagos = '  <option value="" selected disabled >--Seleccione una opcion--</option>';
-
-                        tipoDePago.forEach(element => {
-
-                            htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
-                            `
-                        });
-
-                        document.getElementById('tipoPagoVenta').innerHTML = htmlPagos;
-                        document.getElementById("numero_venta").value = numeroVenta;
-
-
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error...',
-                            text: "Ha ocurrido un error al obtener los tipos de pago"
-                        })
-                    })
-
-            }
 
             function obtenerImagenes() {
                 let id = document.getElementById('seleccionarProducto').value;
              
-                document.getElementById("bodega").disabled = false;
+             
                 let htmlImagenes = '';
                 axios.post('/producto/listar/imagenes', {
                         id: id,
@@ -683,7 +526,7 @@
 
                         if (imagenes.length == 0) {
 
-                            console.log("entro")
+                           
                             htmlImagenes += `                                                
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
@@ -719,7 +562,9 @@
                         }
 
                         var element = document.getElementById('botonAdd');
-                        element.classList.add("d-none");
+                        element.classList.remove("d-none");
+
+  
 
                         let a = document.getElementById("detalleProducto");
                         let url = "/producto/detalle/"+id;
@@ -737,52 +582,51 @@
 
                     })
 
-                    obtenerBodegas(id);
+                   
             }
 
             function agregarProductoCarrito() {
                 let idProducto = document.getElementById('seleccionarProducto').value;
 
-                // let data = $("#bodega").select2('data')[0];
-                // let bodega = data.bodegaSeccion;
-                // let idBodega = data.idBodega;
-                // let idSeccion = data.id
                
 
-                axios.post('/ventas/datos/producto', {
-                        idProducto : idProducto,
+                axios.post('/datos/producto/vale', {
+                        idProducto:idProducto,
+                        idFactura:idFactura,
                       
                     })
                     .then(response => {
 
-                        // let flag = false;
-                        // arregloIdInputs.forEach( idInpunt =>{
-                        //     let idProductoFila = document.getElementById("idProducto"+idInpunt).value;
-                        //     let idSeccionFila = document.getElementById("idSeccion"+idInpunt).value;
+                        bodega = response.data.bodega;
+
+                        let flag = false;
+                        arregloIdInputs.forEach( idInpunt =>{
+                            let idProductoFila = document.getElementById("idProducto"+idInpunt).value;
+                            let idSeccionFila = document.getElementById("idSeccion"+idInpunt).value;
 
                             
 
-                        //     if( idProducto==idProductoFila && idSeccion==idSeccionFila && !flag){
-                        //         flag = true;
-                        //     }
+                            if( idProducto==idProductoFila  && !flag){
+                                flag = true;
+                            }
 
-                        // })
+                        })
                     
-                        // if(flag){
-                        //     Swal.fire({
+                        if(flag){
+                            Swal.fire({
                            
-                        //     icon: 'warning',
-                        //     title: 'Advertencia!',
-                        //     html: `
-                        //     <p class="text-left">
-                        //         La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
-                        //         Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
-                        //         De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
-                        //     </p>`
-                        // })
+                            icon: 'warning',
+                            title: 'Advertencia!',
+                            html: `
+                            <p class="text-left">
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
+                            </p>`
+                        })
 
-                        // return;
-                        // }
+                        return;
+                        }
 
                         let producto = response.data.producto;
                         let precio_base = new Intl.NumberFormat('es-HN').format(producto.precio_base);
@@ -834,7 +678,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+                                            <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                                <label for="" class="sr-only">cantidad</label>
+                                                <input type="text" value="${bodega.bodega}" placeholder="bodega-seccion" id="bodega${numeroInputs}"
+                                                    name="bodega${numeroInputs}" class="form-control" 
+                                                    autocomplete="off"  readonly  >
+                                            </div>
                                     
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
@@ -896,7 +745,10 @@
 
                                             </div>
 
-                                            
+                                            <input id="idBodega${numeroInputs}" name="idBodega${numeroInputs}" type="hidden" value="${bodega.idBodega}">
+                                            <input id="idSeccion${numeroInputs}" name="idSeccion${numeroInputs}" type="hidden" value="${bodega.idSeccion}">  
+                                        
+
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
                                             <input id="isv${numeroInputs}" name="isv${numeroInputs}" type="hidden" value="${producto.isv}">
 
@@ -913,7 +765,7 @@
                     })
                     .catch(err => {
 
-                        console.error(err);
+                        console.log(err);
 
                         Swal.fire({
                             icon: 'error',
@@ -1086,10 +938,10 @@
             $(document).on('submit', '#crear_venta',
                 function(event) {
                     event.preventDefault();
-                    guardarVenta();
+                    guardarVale();
                 });
 
-            function guardarVenta(){
+            function guardarVale(){
                 
                 document.getElementById("btn_venta_coorporativa").disabled=true;
 
@@ -1114,7 +966,7 @@
                 // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
                 // data.append("seleccionarCliente", seleccionarCliente);
 
-                axios.post('/ventas/corporativo/guardar', data)
+                axios.post('/guardar/vale', data)
                     .then(response => {
                         let data = response.data;
 
@@ -1173,6 +1025,7 @@
 
                     })
                     .catch(err => {
+                       
                         document.getElementById("btn_venta_coorporativa").disabled=false;
                         let data = err.response.data;
                         console.log(err);

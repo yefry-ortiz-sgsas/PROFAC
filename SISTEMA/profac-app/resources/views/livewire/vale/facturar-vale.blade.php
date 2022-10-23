@@ -55,10 +55,10 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Ventas</h2>
+            <h2>Facturar Vale</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Cliente Corporativo</a>
+                    {{-- <a></a> --}}
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -320,7 +320,12 @@
                                            
 
                                     </div>
-
+{{-- 
+                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
+                                        <label class="sr-only">Seccion</label>
+                                        <input type="text" placeholder="Seccion" class="form-control"
+                                            min="1" autocomplete="off" disabled>
+                                    </div> --}}
 
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <label class="sr-only">Sub Total</label>

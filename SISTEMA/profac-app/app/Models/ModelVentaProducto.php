@@ -17,7 +17,7 @@ class ModelVentaProducto extends Model
         'unidad_medida_venta_id',
         'precio_unidad',
         'cantidad',
-        'cantidad_sin_entregar',
+        'cantidad_para_entrega',
         'sub_total',
         'isv',
         'total',
