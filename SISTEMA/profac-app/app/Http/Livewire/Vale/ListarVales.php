@@ -68,9 +68,7 @@ class ListarVales extends Component
                     <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                         más</button>
                     <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-                        <li>
-                            <a class="dropdown-item" href="#" ><i class="fa-solid fa-print text-success"></i> Imprimir Vale </a>
-                        </li>
+
 
                         <li>
                         <a class="dropdown-item" onclick="anularValeMensaje('.$vale->id.')"> <i class="fa-solid fa-ban text-warning"></i> Anular Vale </a>

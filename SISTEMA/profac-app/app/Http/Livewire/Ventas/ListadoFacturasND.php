@@ -85,7 +85,12 @@ class ListadoFacturasND extends Component
     
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
-                        </li>
+
+                            </li>
+
+                            <li>
+                            <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-calendar-days text-success"></i> Agendar Entrega </a>
+                            </li>
     
                             
                         </ul>

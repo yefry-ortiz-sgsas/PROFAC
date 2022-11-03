@@ -128,7 +128,7 @@ class ListadoFacturas extends Component
                             </li>
 
                             <li>
-                                <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Agregar Vale </a>
+                                <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-calendar-days text-success"></i> Agendar Entrega </a>
                             </li>
     
                             

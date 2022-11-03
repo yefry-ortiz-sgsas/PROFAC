@@ -730,17 +730,26 @@ class CrearVale extends Component
         where id =".$idEntrega 
     );
 
+    $importesSinCentavos = DB::SELECTONE("
+    select
+        sub_total as sub_total,
+        isv as isv,
+        total as total
+    from vale
+    where id =".$idEntrega 
+);
 
-        if( fmod($importes->total, 1) == 0.0 ){
-            $flagCentavos = false;
-          
+
+
+        if( fmod($importesSinCentavos->total, 1) == 0.0 ){
+            $flagCentavos = false;          
         }else{
             $flagCentavos = true;
         }
 
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
-        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+        $numeroLetras = $formatter->toMoney($importesSinCentavos->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/entrega-programada',compact('datosEntrega','productos','importes','flagCentavos','numeroLetras'))->setPaper('letter');
        

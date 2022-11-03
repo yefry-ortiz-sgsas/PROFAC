@@ -374,12 +374,12 @@
                     
                     <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                                style="color:#ffffff;">Vales</span>
+                                style="color:#ffffff;">Comprobante De Entrega</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">                            
                             <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
-                                    Vales</a></li>
+                                    Entregas</a></li>
                           
 
 
@@ -622,6 +622,21 @@
                             Comprovantes</a></li>
                     <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de
                             Anulados</a></li>
+
+
+
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
+                        style="color:#ffffff;">Entregas Pendientes</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">                            
+                    <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
+                            Entregas</a></li>
+                  
 
 
 

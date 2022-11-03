@@ -55,7 +55,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Crear Vale</h2>
+            <h2>Crear Entrega Pendiente</h2>
             <ol class="breadcrumb">
 
 
@@ -203,8 +203,8 @@
 
                                 <div id="botonAdd"   class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6  my-4 text-center d-none">
                                         <button type="button" class="btn-rounded btn btn-success p-3"
-                                            style="font-weight: 900; " onclick="agregarProductoCarrito()">Añadir
-                                            Producto a venta <i class="fa-solid fa-cart-plus"></i> 
+                                            style="font-weight: 900; " onclick="agregarProductoCarrito()">Agregar
+                                            Producto <i class="fa-solid fa-cart-plus"></i> 
                                         </button>
                                     </div>
 
