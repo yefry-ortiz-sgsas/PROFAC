@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\ComprovanteEntrega;
 
+use App\Http\Livewire\Inventario\Producto;
 use Livewire\Component;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\File;
@@ -356,5 +357,94 @@ class CrearComprovante extends Component
 
             return;
         
+    }
+
+    
+    public function imprimirComprobanteEntrega($idComprobante)
+    {
+
+        $datos = DB::SELECTONE("
+        select 
+        A.numero_comprovante,
+        A.nombre_cliente,
+        B.direccion,
+        B.telefono_empresa,
+        B.correo,
+        A.RTN,
+        DATE(A.created_at) as fecha,
+        time(A.created_at) as hora,
+        C.numero_factura,
+        C.cai,
+        C.estado_factura_id,
+        D.name as registrado_por
+        from comprovante_entrega A
+        inner join cliente B
+        on A.cliente_id = B.id
+        inner join users D
+        on A.users_id = D.id
+        left join factura C
+        on A.id = C.comprovante_entrega_id
+        where A.id=".$idComprobante
+        );
+
+        $productos = DB::SELECT("
+
+        select
+        A.producto_id,
+        B.nombre,
+        D.nombre as unidad,
+        A.cantidad,
+        (A.sub_total/A.cantidad) as precio,
+        A.sub_total
+
+
+        from comprovante_has_producto A 
+        inner join producto B
+        on A.producto_id = B.id
+        inner join unidad_medida_venta C
+        on A.unidad_medida_venta_id = C.id
+        inner join unidad_medida D
+        on C.unidad_medida_id = D.id
+        where A.comprovante_id = ".$idComprobante."
+        group by A.producto_id, B.nombre, D.nombre, A.cantidad, A.sub_total
+        ");
+
+        $importes = DB::SELECTONE("
+        select  
+            format(A.sub_total,2) as sub_total,
+            format(A.isv,2) as isv,
+            format(A.total,2) as total
+        from comprovante_entrega A
+            where id =".$idComprobante
+        );
+
+        $importesSinCentavos = DB::SELECTONE("
+        select  
+            A.sub_total,
+            A.isv,
+            A.total
+        from comprovante_entrega A
+            where id = ".$idComprobante
+        
+        );
+       
+
+
+        if( fmod($importesSinCentavos->total, 1) == 0.0 ){
+            $flagCentavos = false;
+          
+        }else{
+            $flagCentavos = true;
+        }
+
+        $formatter = new NumeroALetras();
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($importesSinCentavos->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/orden-entrega',compact('datos','productos','flagCentavos','importes','numeroLetras'))->setPaper('letter');
+       
+        return $pdf->stream("comprobante_numero " . $datos->numero_comprovante.".pdf");
+
+       
     }
 }

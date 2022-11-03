@@ -59,7 +59,7 @@ class ListarComprovantes extends Component
                     </li>  
                     
                     <li>
-                    <a class="dropdown-item" target="_blank"  href="/orden/entrega/facturar/' . $comprobante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante </a>
+                    <a class="dropdown-item" target="_blank"  href="/comprobante/imprimir/' . $comprobante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante </a>
                     </li>  
                     
                     <li>
