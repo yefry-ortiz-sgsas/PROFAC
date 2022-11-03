@@ -23,31 +23,45 @@ class ListarVales extends Component
 
         $listaVales = DB::SELECT("
         select
-         @i := @i + 1 as contador,
-          vale.id,
-          vale.numero_vale,
-          factura.nombre_cliente,
-          factura.rtn,
-          factura.numero_factura,
-          format(vale.sub_total,2) as sub_total,
-          format(vale.isv,2) as isv,
-          format(vale.total,2) as total,
-          (select sum(numero_unidades_pendientes)  from vale_has_producto where vale_id = vale.id) as pendiente_entrega,
-          name,
-          vale.created_at              
-        from vale
-        inner join factura
-        on vale.factura_id = factura.id
-        inner join users
-        on vale.users_id = users.id   
-        cross join (select @i := 0) r
-        where vale.estado_id=1 and   YEAR(vale.created_at) = YEAR(NOW())
+        @i := @i + 1 as contador,
+         vale.id,
+         vale.numero_vale,
+         factura.nombre_cliente,
+         factura.rtn,
+         factura.numero_factura,
+         format(vale.sub_total,2) as sub_total,
+         format(vale.isv,2) as isv,
+         format(vale.total,2) as total,
+         vale.estado_id,
+         name,
+         vale.created_at              
+       from vale
+       inner join factura
+       on vale.factura_id = factura.id
+       inner join users
+       on vale.users_id = users.id   
+       cross join (select @i := 0) r
+       where  YEAR(vale.created_at) = YEAR(NOW())
         ");
 
         return Datatables::of($listaVales)
         ->addColumn('opciones', function ($vale) {
 
+            if($vale->estado_id <> 1){
+                return
 
+                '<div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                        más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                    <li>
+                    <a class="dropdown-item" href="/imprimir/entrega/'.$vale->id.'"> <i class="fa-solid  fa-print text-success"></i> Imprimir Entrega</a>
+                </li>
+                       
+
+                    </ul>
+                </div>';
+            }else{
                 return
 
                 '<div class="btn-group">
@@ -55,31 +69,46 @@ class ListarVales extends Component
                         más</button>
                     <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
                         <li>
-                            <a class="dropdown-item" href="#" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Imprimir Vale </a>
+                            <a class="dropdown-item" href="#" ><i class="fa-solid fa-print text-success"></i> Imprimir Vale </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="/vale/crear/factura/'.$vale->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Facturar Vale </a>
+                        <a class="dropdown-item" onclick="anularValeMensaje('.$vale->id.')"> <i class="fa-solid fa-ban text-warning"></i> Anular Vale </a>
                         </li>
+
+                        <li>
+                        <a class="dropdown-item" onclick="eliminarValeMensaje('.$vale->id.')"> <i class="fa-solid fa-trash-can text-danger"></i> Eliminar Vale </a>
+                        </li>
+
+                        <li>
+                             <a class="dropdown-item" href="/imprimir/entrega/'.$vale->id.'"> <i class="fa-solid  fa-print text-success"></i> Imprimir Entrega</a>
+                         </li>
                     </ul>
                 </div>';
+            }
+
             
         })
         ->addColumn('estado_entrega', function ($vale) {
            
 
-              if($vale->pendiente_entrega == 0){
+            if($vale->estado_id == 1){
 
                 return
                 '
-
-                <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Completo</span></p>
+                <p class="text-center"><span class="badge badge-warning p-2" style="font-size:0.75rem">Pendiente</span></p>
+               
                 ';
 
+            }else if($vale->estado_id == 2){
+                return
+                '
+                <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Anulado</span></p>
+                ';
             }else{
                 return
                 '
-                <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Pendiente</span></p>
+                <p class="text-center" ><span class="badge badge-danger p-2" style="font-size:0.75rem">Eliminado</span></p>
                 ';
             }
 

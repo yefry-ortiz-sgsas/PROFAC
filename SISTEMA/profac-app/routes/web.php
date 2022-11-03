@@ -551,10 +551,13 @@ Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
 
 Route::get('/crear/vale/{id}', CrearVale::class );
 Route::post('/guardar/vale', [CrearVale::class ,'crearVale']);
+Route::post('/anular/vale',[CrearVale::class,'anularVale']); 
+Route::post('/eliminar/vale',[CrearVale::class,'eliminarVale']);
 Route::get("/listar/vale/entrega",ListarVales::class);
 Route::get('/vale/listado/general',[ListarVales::class,'MostrarlistarVales']);
 Route::get('/vale/crear/factura/{id}', FacturarVale::class); 
 Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']); 
 Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
+Route::get('/imprimir/entrega/{idEntrega}',[CrearVale::class,'imprimirEntregaProgramada']);
 
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);

@@ -469,7 +469,7 @@ class VentasExoneradas extends Component
                     "precio_unidad" => $precio,
                     "cantidad" => $cantidad,
                     "cantidad_s" => $cantidadSeccion,
-                    "cantidad_para_entrega" => $cantidadSeccion,
+                    "cantidad_para_entregar" => $registroResta,
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,

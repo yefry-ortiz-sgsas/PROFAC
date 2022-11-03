@@ -471,7 +471,7 @@ class FacturacionCorporativa extends Component
                 $factura->cliente_id=$request->seleccionarCliente;
                 $factura->vendedor=$request->vendedor;
                 $factura->monto_comision=$montoComision;
-                $factura->tipo_venta_id=2;// estatal
+                $factura->tipo_venta_id=1;// corporativa
                 $factura->estado_factura_id=1; // se presenta     
                 $factura->users_id = Auth::user()->id;              
                 $factura->comision_estado_pagado=0;
@@ -899,7 +899,7 @@ class FacturacionCorporativa extends Component
 
             $precioUnidad = $subTotal / $unidadesRestarInv;
 
-            $unidadesRestar = $unidadesRestarInv;
+            $unidadesRestar = $unidadesRestarInv;//es la cantidad ingresada por el usuario multiplicado por unidades de venta del producto
             $registroResta = 0;
             while (!($unidadesRestar <= 0)) {
 
@@ -971,16 +971,16 @@ class FacturacionCorporativa extends Component
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
                     "seccion_id" => $idSeccion,
-                    "numero_unidades_resta_inventario" => $registroResta,
+                    "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base 
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
-                    "resta_inventario_total" => $unidadesRestarInv,
-                    "unidad_medida_venta_id" => $idUnidadVenta,
-                    "precio_unidad" => $precio,
-                    "cantidad" => $cantidad,
-                    "cantidad_s" => $cantidadSeccion,
-                    "cantidad_para_entrega" => $cantidadSeccion,
+                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad que ingresa el usuario para la venta 
+                    "unidad_medida_venta_id" => $idUnidadVenta, //la unidad de medida que selecciono el usuario para la venta
+                    "precio_unidad" => $precio, // precio de venta ingresado por el usuario
+                    "cantidad" => $cantidad, //cantidad ingresada por el usuario 
+                    "cantidad_s" => $cantidadSeccion, //la unidad que se resta del inventario  pero convertida a la unidad de venta seleccionada por el usuario
+                    "cantidad_para_entregar" => $registroResta, //las unidades basica 1 disponible para vale
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,

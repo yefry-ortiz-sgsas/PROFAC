@@ -586,14 +586,20 @@
             }
 
             function agregarProductoCarrito() {
-                let idProducto = document.getElementById('seleccionarProducto').value;
 
+                let ids = document.getElementById('seleccionarProducto').value;    
+                let arraryIds = ids.split("-");
+                let idProducto = arraryIds[0];
+                let idSeccion   =     arraryIds[1];    
+
+                
+                //console.log(idProducto);
                
 
                 axios.post('/datos/producto/vale', {
                         idProducto:idProducto,
-                        idFactura:idFactura,
-                      
+                        idFactura:idFactura,   
+                        idSeccion:idSeccion                   
                     })
                     .then(response => {
 
@@ -603,10 +609,11 @@
                         arregloIdInputs.forEach( idInpunt =>{
                             let idProductoFila = document.getElementById("idProducto"+idInpunt).value;
                             let idSeccionFila = document.getElementById("idSeccion"+idInpunt).value;
+                           
 
                             
 
-                            if( idProducto==idProductoFila  && !flag){
+                            if( idProducto==idProductoFila  && idSeccion==idSeccionFila &&!flag){
                                 flag = true;
                             }
 
@@ -619,7 +626,7 @@
                             title: 'Advertencia!',
                             html: `
                             <p class="text-left">
-                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br>
                                 Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
                             </p>`
@@ -629,6 +636,7 @@
                         }
 
                         let producto = response.data.producto;
+                        let cantidad = response.data.cantidad;
                         let precio_base = new Intl.NumberFormat('es-HN').format(producto.precio_base);
                        
                         let arrayUnidades = response.data.unidades;
@@ -646,9 +654,9 @@
                         htmlSelectUnidades = ""
                         arrayUnidades.forEach(unidad => {
                             if(unidad.valor_defecto == 1){
-                                htmlSelectUnidades += `<option selected value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
-                            }else{
                                 htmlSelectUnidades += `<option  value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
+                            }else{
+                                htmlSelectUnidades += `<option  selected value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
                             }
                             
                         });
@@ -663,7 +671,8 @@
                                                             class="fa-regular fa-rectangle-xmark"></i>
                                                     </button>
 
-                                                    <input id="idProducto${numeroInputs}" name="idProducto${numeroInputs}" type="hidden" value="${producto.id}">
+                                                   
+                                                   
 
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
@@ -688,20 +697,20 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
+                                                    name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control" readonly  data-parsley-required step="any"
                                                     autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
-                                                    name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
+                                                    name="cantidad${numeroInputs}" class="form-control" min="1" max="${cantidad.cantidad}" data-parsley-required
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">unidad</label>
-                                                <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}"
+                                                <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}" readonly
                                                     data-parsley-required style="height:35.7px;" 
                                                     onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                                             ${htmlSelectUnidades} 
@@ -746,7 +755,10 @@
                                             </div>
 
                                             <input id="idBodega${numeroInputs}" name="idBodega${numeroInputs}" type="hidden" value="${bodega.idBodega}">
-                                            <input id="idSeccion${numeroInputs}" name="idSeccion${numeroInputs}" type="hidden" value="${bodega.idSeccion}">  
+
+                                            <input id="idProducto${numeroInputs}" name="idProducto${numeroInputs}" type="hidden" value="${producto.id}">
+                                            <input id="idSeccion${numeroInputs}" name="idSeccion${numeroInputs}" type="hidden" value="${bodega.idSeccion}"> 
+                                       
                                         
 
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
@@ -987,7 +999,7 @@
 
                         Swal.fire({
                             confirmButtonText:'Cerrar',
-                            confirmButtonColor: '#5A6268',
+                            confirmButtonColor: 'success',
                             icon: data.icon,
                             title: data.title,
                             html: data.text
