@@ -18,6 +18,7 @@ use App\Models\ModelComprovanteEntrega;
 use App\Models\ModelLogTranslados;
 class ListarComprovantes extends Component
 {
+    
     public function render()
     {
         return view('livewire.comprovante-entrega.listar-comprovantes');

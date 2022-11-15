@@ -75,6 +75,7 @@ use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 use App\Http\Livewire\Vale\CrearVale;
 use App\Http\Livewire\Vale\ListarVales; 
 use App\Http\Livewire\Vale\FacturarVale;
+use App\Http\Livewire\Vale\ValeListaEspera;
 
 
 /*
@@ -560,5 +561,9 @@ Route::get('/vale/crear/factura/{id}', FacturarVale::class);
 Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']); 
 Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
 Route::get('/imprimir/entrega/{idEntrega}',[CrearVale::class,'imprimirEntregaProgramada']);
+
+Route::get('/crear/vale/lista/espera/corporativo',ValeListaEspera::class); 
+Route::get('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);  
+Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVale']);
 
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);
