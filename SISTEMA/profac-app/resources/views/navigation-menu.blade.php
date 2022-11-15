@@ -215,7 +215,7 @@
                                     {{ Auth::user()->name }}</b></span>
                             @php
                                 $rol = DB::SELECTONE("select nombre from rol where id = ". Auth::user()->rol_id);
-                            @endphp        
+                            @endphp
                             <span class="text-muted text-xs block">{{  $rol->nombre  }} <b class="caret"></b></span>
                         </div>
                         <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -232,8 +232,8 @@
                 </li>
 
                 <!---------------------------------------------------MENU DE NAVEGACION----------------------------------------------------------------------------------->
-             
-              
+
+
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
                                 aria-hidden="true"></i> <span class="nav-label"
@@ -243,7 +243,21 @@
                                     <li href="dashboard_2.html"><a >Gestiones</a></li>
                                     <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                                 </ul> --}}
-                    </li>
+                        </li>
+                                            <li>
+                            <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
+                                    class="nav-label" style="color:#ffffff;">Comisiones</span>
+                                <span class="fa arrow"></span></a>
+
+                            <ul class="nav nav-second-level">
+                                <li><a href="/comisiones/gestion" style="color:#ffffff;">Gestion inicial</a>
+                                </li>
+                                <li><a href="/comisiones" style="color:#ffffff;">Gestión de comisiones</a>
+                                </li>
+                                <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a>
+                                </li>
+                            </ul>
+                        </li>
                        <!-----------------------------------Administrador------------------------------->
                     @if (Auth::user()->rol_id == '1')
                     <li>
@@ -371,16 +385,16 @@
 
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
                                 style="color:#ffffff;">Comprobante De Entrega</span>
                             <span class="fa arrow"></span></a>
 
-                        <ul class="nav nav-second-level">                            
+                        <ul class="nav nav-second-level">
                             <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
                                     Entregas</a></li>
-                          
+
 
 
 
@@ -633,10 +647,10 @@
                         style="color:#ffffff;">Entregas Pendientes</span>
                     <span class="fa arrow"></span></a>
 
-                <ul class="nav nav-second-level">                            
+                <ul class="nav nav-second-level">
                     <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
                             Entregas</a></li>
-                  
+
 
 
 
@@ -797,9 +811,9 @@
                         <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                         <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
                                 Cotizaciones</a></li>
-                      
 
-          
+
+
 
 
                         </li>
