@@ -94,15 +94,27 @@
 
                             <div class="col-6 col-sm-6 col-md-6 ">
                                 <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar mes para revisión de facturas:<span class="text-danger">*</span></label>
-                                <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                    data-parsley-required onchange="obtenerIdBodega()">
+                                <select id="mes" name="mes" class="form-group form-control" style=""
+                                    data-parsley-required >
                                     <option value="" selected disabled>--Seleccione--</option>
+                                        <option value="01">ENERO</option>
+                                        <option value="02">FEBRERO</option>
+                                        <option value="03">MARZO</option>
+                                        <option value="04">ABRIL</option>
+                                        <option value="05">MAYO</option>
+                                        <option value="06">JUNIO</option>
+                                        <option value="07">JULIO</option>
+                                        <option value="08">AGOSTO</option>
+                                        <option value="09">SEPTIEMBRE</option>
+                                        <option value="10">OCTUBRE</option>
+                                        <option value="11">NOVIEMBRE</option>
+                                        <option value="12">DICIEMBRE</option>
                                 </select>
                             </div>
 
                             <div class="col-6 col-sm-6 col-md-6">
                                 <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Vendedor a comisionar:<span class="text-danger">*</span></label>
-                                <select id="producto" name="producto" class="form-group form-control" style=""
+                                <select id="vendedorSelect" name="vendedorSelect" class="form-group form-control" style=""
                                     data-parsley-required >
                                     <option value="" selected disabled>--Seleccione--</option>
                                 </select>
@@ -189,6 +201,31 @@
 @push('scripts')
 
 <script>
+
+    obtenerVendedor();
+
+    function obtenerVendedor(){
+        $('#vendedorSelect').select2({
+            ajax:{
+                url:'/ventas/corporativo/vendedores',
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        type: 'public',
+                        page: params.page || 1
+                    }
+
+                    // Query parameters will be ?search=[term]&type=public
+                    return query;
+                }
+
+            }
+        });
+    }
+
+
+
+
     $(document).on('submit', '#userAddForm', function(event) {
         event.preventDefault();
         guardarUsuario();
@@ -234,77 +271,77 @@
 
 
 
-            $(document).ready(function() {
-            $('#tbl_usuariosListar').DataTable({
-                "order": [0, 'desc'],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                },
-                pageLength: 10,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
+    $(document).ready(function() {
+                $('#tbl_usuariosListar').DataTable({
+                    "order": [0, 'desc'],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
-                    {
-                        extend: 'csv'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'ExampleFile'
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
+                    pageLength: 10,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [{
+                            extend: 'copy'
+                        },
+                        {
+                            extend: 'csv'
+                        },
+                        {
+                            extend: 'excel',
+                            title: 'ExampleFile'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'ExampleFile'
+                        },
 
-                    {
-                        extend: 'print',
-                        customize: function(win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
+                        {
+                            extend: 'print',
+                            customize: function(win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
                         }
-                    }
-                ],
-                "ajax": "/usuarios/listar/usuarios",
-                "columns": [
-                    {
-                        data: 'contador'
-                    },
-                    {
-                        data: 'id'
-                    },
-                    {
-                        data: 'nombre'
-                    },
-                    {
-                        data: 'telefono'
-                    },
-                    {
-                        data: 'email'
-                    },
-                    {
-                        data: 'identidad'
-                    },
-                    {
-                        data: 'fecha_nacimiento'
-                    },
-                    {
-                        data: 'tipo_usuario'
-                    },
-                    {
-                        data: 'fecha_registro'
-                    },
+                    ],
+                    "ajax": "/usuarios/listar/usuarios",
+                    "columns": [
+                        {
+                            data: 'contador'
+                        },
+                        {
+                            data: 'id'
+                        },
+                        {
+                            data: 'nombre'
+                        },
+                        {
+                            data: 'telefono'
+                        },
+                        {
+                            data: 'email'
+                        },
+                        {
+                            data: 'identidad'
+                        },
+                        {
+                            data: 'fecha_nacimiento'
+                        },
+                        {
+                            data: 'tipo_usuario'
+                        },
+                        {
+                            data: 'fecha_registro'
+                        },
 
-                ]
+                    ]
 
 
-            });
-        })
+                });
+    })
 </script>
 
 @endpush
