@@ -19,68 +19,6 @@
             </div>
         </div>  --}}
 
-        <!-- Modal para registro de Banco-->
-            <div class="modal fade" id="modal_usuario_crear" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Usuarios</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <form id="userAddForm" name="userAddForm" data-parsley-validate>
-                                <div class="row" id="row_datos">
-
-                                    <div class="col-md-12">
-                                        <label for="identidad_user" class="col-form-label focus-label">Número de Identidad:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="identidad_user" name="identidad_user" data-parsley-required>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="nombre_usuario" class="col-form-label focus-label">Nombre de Usuario:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="nombre_usuario" name="nombre_usuario" data-parsley-required>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="email_user" class="col-form-label focus-label">Correo Institucional:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="mail" id="email_user" name="email_user" data-parsley-required>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <label for="pass_user" class="col-form-label focus-label">Contraseña:<span class="text-danger">*</span></label>
-                                        <input class="form-control" required type="text" id="pass_user" name="pass_user" data-parsley-required>
-                                    </div>
-
-
-
-                                    <div class="col-md-12">
-                                        <label for="rol_user" class="col-form-label focus-label">Seleccionar Rol de acceso:<span class="text-danger">*</span></label>
-                                        <select class="form-select form-control" name="rol_user" id="rol_user" required data-parsley-required>
-                                            <option value="1">Administrador</option>
-                                            <option value="5">Auxiliar Administrativo</option>
-                                            <option value="2">Vendedor</option>
-                                            <option value="3">Facturador</option>
-                                            <option value="4">Auxiliar de Contabilidad</option>
-                                        </select>
-                                    </div>
-
-
-                                </div>
-                            </form>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" form="userAddForm" class="btn btn-primary">Guardar Usuario</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
     </div>
 
@@ -121,7 +59,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-primary btn-block" onclick="console.log('Probando boton');"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary btn-block" onclick="buscarFacturas();"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -138,6 +76,8 @@
                             <table id="tbl_facturasVendedor_cerradas" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
+
+                                        <th>Código Factura</th>
                                         <th>Nº Factura</th>
                                         <th>Fecha de emisión</th>
                                         <th>Fecha de vencimiento</th>
@@ -171,6 +111,8 @@
                             <table id="tbl_facturasVendedor_sinCerrar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
+
+                                        <th>Código Factura</th>
                                         <th>Nº Factura</th>
                                         <th>Fecha de emisión</th>
                                         <th>Fecha de vencimiento</th>
@@ -178,7 +120,6 @@
                                         <th>Total </th>
                                         <th>Estado de pago</th>
                                         <th>Acciones</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -227,7 +168,7 @@
         var mes = document.getElementById('mes').value;
         var idVendedor = document.getElementById('vendedorSelect').value;
 
-        axios.post("/facturas/buscar/"+mes+"/"+idVendedor, data)
+        axios.get("/facturas/buscar/"+mes+"/"+idVendedor)
                 .then(response => {
 
 
@@ -239,13 +180,7 @@
 
                 })
                 .catch(err => {
-                    let data = err.response.data;
-                    $('#modal_usuario_crear').modal('hide');
-                    Swal.fire({
-                        icon: data.icon,
-                        title: data.title,
-                        text: data.text
-                    })
+
                     console.error(err);
 
                 })
