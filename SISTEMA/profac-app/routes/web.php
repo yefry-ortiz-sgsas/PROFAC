@@ -582,8 +582,14 @@ Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVale'])
 
 
 Route::get('/comisiones', ComisionesPrincipal::class);
+Route::get('/comisiones/facturas/buscar/{mes}/{idVendedor}', [ComisionesPrincipal::class, 'obtenerFacturas']);
+
+
 Route::get('/comisiones/gestion', ComisionesGestiones::class);
 Route::get('/comisiones/vendedor', ComisionesVendedor::class);
 Route::get('/comisiones/comisionar', ComisionesComisionar::class);
 Route::get('/comisiones/historico', ComisionesHistorico::class);
+
+
+
 

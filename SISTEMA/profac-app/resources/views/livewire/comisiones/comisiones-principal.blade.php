@@ -93,7 +93,7 @@
 
 
                             <div class="col-6 col-sm-6 col-md-6 ">
-                                <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar mes para revisión de facturas:<span class="text-danger">*</span></label>
+                                <label for="seleccionar" class="col-form-label focus-label">Seleccionar mes para revisión de facturas:<span class="text-danger">*</span></label>
                                 <select id="mes" name="mes" class="form-group form-control" style=""
                                     data-parsley-required >
                                     <option value="" selected disabled>--Seleccione--</option>
@@ -113,7 +113,7 @@
                             </div>
 
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Vendedor a comisionar:<span class="text-danger">*</span></label>
+                                <label for="seleccionar" class="col-form-label focus-label">Seleccionar Vendedor a comisionar:<span class="text-danger">*</span></label>
                                 <select id="vendedorSelect" name="vendedorSelect" class="form-group form-control" style=""
                                     data-parsley-required >
                                     <option value="" selected disabled>--Seleccione--</option>
@@ -215,7 +215,6 @@
                         page: params.page || 1
                     }
 
-                    // Query parameters will be ?search=[term]&type=public
                     return query;
                 }
 
@@ -224,7 +223,34 @@
     }
 
 
+    function buscarFacturas(){
+        var mes = document.getElementById('mes').value;
+        var idVendedor = document.getElementById('vendedorSelect').value;
 
+        axios.post("/facturas/buscar/"+mes+"/"+idVendedor, data)
+                .then(response => {
+
+
+                    $('#tbl_facturasVendedor_cerradas').DataTable().ajax.reload();
+
+                    $('#tbl_facturasVendedor_sinCerrar').DataTable().ajax.reload();
+
+
+
+                })
+                .catch(err => {
+                    let data = err.response.data;
+                    $('#modal_usuario_crear').modal('hide');
+                    Swal.fire({
+                        icon: data.icon,
+                        title: data.title,
+                        text: data.text
+                    })
+                    console.error(err);
+
+                })
+
+    }
 
     $(document).on('submit', '#userAddForm', function(event) {
         event.preventDefault();
