@@ -59,7 +59,7 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-primary btn-block" onclick="buscarFacturas();"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary btn-block" onclick="buscarFacturas()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -77,14 +77,7 @@
                                 <thead class="">
                                     <tr>
 
-                                        <th>Código Factura</th>
-                                        <th>Nº Factura</th>
-                                        <th>Fecha de emisión</th>
-                                        <th>Fecha de vencimiento</th>
-                                        <th>Cliente</th>
-                                        <th>Total </th>
-                                        <th>Estado de pago</th>
-                                        <th>Acciones</th>
+
 
                                     </tr>
                                 </thead>
@@ -167,74 +160,9 @@
     function buscarFacturas(){
         var mes = document.getElementById('mes').value;
         var idVendedor = document.getElementById('vendedorSelect').value;
-
-        axios.get("/facturas/buscar/"+mes+"/"+idVendedor)
-                .then(response => {
-
-
-                    $('#tbl_facturasVendedor_cerradas').DataTable().ajax.reload();
-
-                    $('#tbl_facturasVendedor_sinCerrar').DataTable().ajax.reload();
-
-
-
-                })
-                .catch(err => {
-
-                    console.error(err);
-
-                })
-
-    }
-
-    $(document).on('submit', '#userAddForm', function(event) {
-        event.preventDefault();
-        guardarUsuario();
-    });
-
-        function guardarUsuario() {
-            $('#modalSpinnerLoading').modal('show');
-
-            var data = new FormData($('#userAddForm').get(0));
-
-            axios.post("/usuario/guardar", data)
-                .then(response => {
-
-
-                    $('#userAddForm').parsley().reset();
-
-                    document.getElementById("userAddForm").reset();
-                    $('#modal_usuario_crear').modal('hide');
-
-                    $('#tbl_usuariosListar').DataTable().ajax.reload();
-
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Exito!',
-                        text: "Usuario Creado con exito."
-                    })
-
-                })
-                .catch(err => {
-                    let data = err.response.data;
-                    $('#modal_usuario_crear').modal('hide');
-                    Swal.fire({
-                        icon: data.icon,
-                        title: data.title,
-                        text: data.text
-                    })
-                    console.error(err);
-
-                })
-
-        }
-
-
-
-    $(document).ready(function() {
-                $('#tbl_usuariosListar').DataTable({
-                    "order": [0, 'desc'],
+        $("#tbl_facturasVendedor_cerradas").dataTable().fnDestroy();
+                $('#tbl_facturasVendedor_cerradas').DataTable({
+                    "order": [1, 'asc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
@@ -268,41 +196,43 @@
                             }
                         }
                     ],
-                    "ajax": "/usuarios/listar/usuarios",
+                    "ajax": "/facturas/buscar/"+mes+"/"+idVendedor,
                     "columns": [
                         {
-                            data: 'contador'
+                            data: 'id'
                         },
                         {
-                            data: 'id'
+                            data: 'numero_factura'
+                        },
+                        {
+                            data: 'fecha_emision'
+                        },
+                        {
+                            data: 'fecha_vencimiento'
                         },
                         {
                             data: 'nombre'
                         },
                         {
-                            data: 'telefono'
+                            data: 'total'
                         },
                         {
-                            data: 'email'
+                            data: 'estadoPago'
                         },
                         {
-                            data: 'identidad'
-                        },
-                        {
-                            data: 'fecha_nacimiento'
-                        },
-                        {
-                            data: 'tipo_usuario'
-                        },
-                        {
-                            data: 'fecha_registro'
-                        },
+                            data: 'acciones'
+                        }
 
                     ]
 
 
                 });
-    })
+
+
+
+    }
+
+
 </script>
 
 @endpush

@@ -22,6 +22,7 @@ class ComisionesPrincipal extends Component
     }
 
     public function obtenerFacturas($mes,$idVendedor){
+        //dd($idBodega, $idProducto);
             try {
                 $listaFacturas = DB::SELECT("
                 select
@@ -48,7 +49,7 @@ class ComisionesPrincipal extends Component
                 and factura.vendedor = ".$idVendedor."
                 order by factura.created_at desc;
                 ");
-                dd($listaFacturas);
+                //dd($listaFacturas);
                 return Datatables::of($listaFacturas)
                 ->addColumn('acciones', function ($listaFacturas) {
 
@@ -97,7 +98,7 @@ class ComisionesPrincipal extends Component
                         </div>';
                     }
                 })
-                ->rawColumns(['opciones'])
+                ->rawColumns(['acciones'])
                 ->make(true);
 
             } catch (QueryException $e) {
