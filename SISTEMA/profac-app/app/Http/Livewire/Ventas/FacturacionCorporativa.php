@@ -362,7 +362,8 @@ class FacturacionCorporativa extends Component
                 $keyNombre = "nombre" . $arrayInputs[$j];
                 $keyBodega = "bodega" . $arrayInputs[$j];
 
-                $resultado = DB::selectONE("select 
+                $resultado = DB::selectONE("
+            select 
             if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
             from recibido_bodega
             where cantidad_disponible <> 0

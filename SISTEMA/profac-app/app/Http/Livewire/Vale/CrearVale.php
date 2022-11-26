@@ -219,12 +219,57 @@ class CrearVale extends Component
                 'errors' => $validator->errors()
             ], 401);
         }
-        //
 
-        //  dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;
+           //dd($request->all());
+           $arrayInputs = [];
+           $arrayInputs = $request->arregloIdInputs;
+           //$arrayProductosVentas = [];
+           $numeroSecuencia = null;
+           $mensaje = "";
+           $flag = false;
+           // $turno = null;
+           $factura = null;
 
+           //comprobar existencia de producto en bodega
+           for ($j = 0; $j < count($arrayInputs); $j++) {
+
+               $keyIdSeccion = "idSeccion" . $arrayInputs[$j];
+               $keyIdProducto = "idProducto" . $arrayInputs[$j];
+               $keyRestaInventario = "restaInventario" . $arrayInputs[$j];
+               $keyNombre = "nombre" . $arrayInputs[$j];
+               $keyBodega = "bodega" . $arrayInputs[$j];
+
+               $resultado = DB::selectONE("select 
+           if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
+           from recibido_bodega
+           where cantidad_disponible <> 0
+           and producto_id = " . $request->$keyIdProducto . "
+           and seccion_id = " . $request->$keyIdSeccion);
+
+               if ($request->$keyRestaInventario > $resultado->cantidad_disponoble) {
+                   $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con sección :<b>" . $request->$keyBodega . "</b><br><br>";
+                   $flag = true;
+               }
+           }
+
+           if ($flag) {
+               return response()->json([
+                   'icon' => "warning",
+                   'text' =>  '<p class="text-left">' . $mensaje . '</p>',
+                   'title' => 'Advertencia!',
+                   'idFactura' => 0,
+
+               ], 200);
+           }
+           //comprobar existencia de producto en bodega
+           
+           $flagEstado = DB::SELECTONE("select estado_encendido from parametro where id = 1");
+          
+           if ($flagEstado->estado_encendido == 1) {
+               $estado = 1;
+           } else {
+               $estado = 2;
+           }
 
 
 

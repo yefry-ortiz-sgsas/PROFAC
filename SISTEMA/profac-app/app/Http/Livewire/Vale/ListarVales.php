@@ -21,7 +21,7 @@ class ListarVales extends Component
     public function MostrarlistarVales(){
        try {
 
-        $listaVales = DB::SELECT("
+        $listaVales = DB::SELECT("        
         select
         @i := @i + 1 as contador,
          vale.id,
@@ -39,7 +39,9 @@ class ListarVales extends Component
        inner join factura
        on vale.factura_id = factura.id
        inner join users
-       on vale.users_id = users.id   
+       on vale.users_id = users.id  
+       inner join vale_has_producto 
+       on vale.id = vale_has_producto.vale_id
        cross join (select @i := 0) r
        where  YEAR(vale.created_at) = YEAR(NOW())
         ");

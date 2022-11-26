@@ -374,7 +374,7 @@
                     
                     <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                                style="color:#ffffff;">Comprobante De Entrega</span>
+                                style="color:#ffffff;">Entregas Pendientes</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">                            
@@ -402,6 +402,26 @@
 
                         </ul>
                     </li>
+
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Vale</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+
+                            <li><a href="/crear/vale/lista/espera/corporativo" style="color:#ffffff;">Vale Corporativo</a>
+                            </li>
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+
+                    
+
                     {{--  VENTAS COORPORATIVO  --}}
                     <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
@@ -422,12 +442,12 @@
                                     Cotizaciones</a></li>
                             <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas
-                                </a>
-
-
+                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
                             </li>
 
+                            <li><a href="/crear/vale/lista/espera/corporativo" style="color:#ffffff;">Vale Corporativo</a>
+                            </li>
+                            
                         </ul>
                     </li>
 

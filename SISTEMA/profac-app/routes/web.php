@@ -77,6 +77,8 @@ use App\Http\Livewire\Vale\ListarVales;
 use App\Http\Livewire\Vale\FacturarVale;
 use App\Http\Livewire\Vale\ValeListaEspera;
 
+use App\Http\Livewire\Vale\RestarVale;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -555,6 +557,7 @@ Route::get('/crear/vale/{id}', CrearVale::class );
 Route::post('/guardar/vale', [CrearVale::class ,'crearVale']);
 Route::post('/anular/vale',[CrearVale::class,'anularVale']); 
 Route::post('/eliminar/vale',[CrearVale::class,'eliminarVale']);
+
 Route::get("/listar/vale/entrega",ListarVales::class);
 Route::get('/vale/listado/general',[ListarVales::class,'MostrarlistarVales']);
 Route::get('/vale/crear/factura/{id}', FacturarVale::class); 
@@ -562,8 +565,13 @@ Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']);
 Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
 Route::get('/imprimir/entrega/{idEntrega}',[CrearVale::class,'imprimirEntregaProgramada']);
 
-Route::get('/crear/vale/lista/espera/corporativo',ValeListaEspera::class); 
-Route::get('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);  
-Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVale']);
+Route::get('/crear/vale/lista/espera/{id}',ValeListaEspera::class); 
+Route::post('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);  
+Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVentaVale']);
+
+Route::get('/vale/restar/inventario', RestarVale::class);
+Route::get('/vale/restar/lista', [RestarVale::class,'listarVales']); 
+Route::post('/vale/restar/lista/anular', [RestarVale::class,'anularVale']); 
+Route::post('/vale/restar/lista/eliminar', [RestarVale::class,'eliminarVale']); 
 
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);

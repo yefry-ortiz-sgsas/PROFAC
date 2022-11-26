@@ -287,7 +287,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error!',
-                            text: 'Ha ocurrido un error al anular la compra.',
+                            text: 'Ha ocurrido un error al eliminar el vale.',
                         })
 
                     })
