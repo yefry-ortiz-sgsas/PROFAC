@@ -78,7 +78,14 @@
                                     <tr>
 
 
-
+                                        <th>Código Factura</th>
+                                        <th>Nº Factura</th>
+                                        <th>Fecha de emisión</th>
+                                        <th>Fecha de vencimiento</th>
+                                        <th>Cliente</th>
+                                        <th>Total </th>
+                                        <th>Estado de pago</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,7 +167,9 @@
     function buscarFacturas(){
         var mes = document.getElementById('mes').value;
         var idVendedor = document.getElementById('vendedorSelect').value;
-        $("#tbl_facturasVendedor_cerradas").dataTable().fnDestroy();
+                $("#tbl_facturasVendedor_cerradas").dataTable().fnDestroy();
+                $("#tbl_facturasVendedor_sinCerrar").dataTable().fnDestroy();
+
                 $('#tbl_facturasVendedor_cerradas').DataTable({
                     "order": [1, 'asc'],
                     "language": {
@@ -196,8 +205,78 @@
                             }
                         }
                     ],
-                    "ajax": "/facturas/buscar/"+mes+"/"+idVendedor,
+                    "ajax": "/comisiones/facturas/buscar/"+mes+"/"+idVendedor,
                     "columns": [
+
+
+                        {
+                            data: 'id'
+                        },
+                        {
+                            data: 'numero_factura'
+                        },
+                        {
+                            data: 'fecha_emision'
+                        },
+                        {
+                            data: 'fecha_vencimiento'
+                        },
+                        {
+                            data: 'nombre'
+                        },
+                        {
+                            data: 'total'
+                        },
+                        {
+                            data: 'estadoPago'
+                        },
+                        {
+                            data: 'acciones'
+                        }
+
+                    ]
+
+
+                });
+                $('#tbl_facturasVendedor_sinCerrar').DataTable({
+                    "order": [1, 'asc'],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                    },
+                    pageLength: 10,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [{
+                            extend: 'copy'
+                        },
+                        {
+                            extend: 'csv'
+                        },
+                        {
+                            extend: 'excel',
+                            title: 'ExampleFile'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'ExampleFile'
+                        },
+
+                        {
+                            extend: 'print',
+                            customize: function(win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
+
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }
+                    ],
+                    "ajax": "/comisiones/facturas/buscar2/"+mes+"/"+idVendedor,
+                    "columns": [
+
+
                         {
                             data: 'id'
                         },

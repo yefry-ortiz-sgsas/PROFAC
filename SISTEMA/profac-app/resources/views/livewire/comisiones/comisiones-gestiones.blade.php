@@ -18,14 +18,14 @@
                     data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Asignar techo de comisión</a>
             </div>
         </div>
-        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+{{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Otro boton</a>
             </div>
-        </div>
+        </div>  --}}
 
-        <!-- Modal para registro de Banco-->
+        <!-- Modal para registro de techo-->
             <div class="modal fade" id="modal_techo_crear" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -39,6 +39,7 @@
 
                         <div class="modal-body">
                             <form id="techoAddForm" name="techoAddForm" data-parsley-validate>
+                                <Label>Nota: Al insertar un techo de comisión en ésta ventana, usted está asignando un techo general a <b>Todos</b> los colaboradores con rol de Vendedor. </Label>
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -108,7 +109,7 @@
 
             var data = new FormData($('#techoAddForm').get(0));
 
-            axios.post("/usuario/guardar", data)
+            axios.post("/techo/guardar", data)
                 .then(response => {
 
 
