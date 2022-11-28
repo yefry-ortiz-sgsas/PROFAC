@@ -7,8 +7,6 @@
                 <li class="breadcrumb-item">
                     <a href="index.html">Gestiones generales</a>
                 </li>
-
-
             </ol>
         </div>
 
@@ -36,15 +34,49 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        <div class="modal" id="modalSpinnerLoading" data-backdrop="static" tabindex="-1" role="dialog"
+                            aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
 
+                                    <div class="modal-body">
+                                        <h2 class="text-center">Espere un momento...</h2>
+                                        <div class="loader">Loading...</div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-body">
                             <form id="techoAddForm" name="techoAddForm" data-parsley-validate>
-                                <Label>Nota: Al insertar un techo de comisión en ésta ventana, usted está asignando un techo general a <b>Todos</b> los colaboradores con rol de Vendedor. </Label>
+                                <Label>Nota: Al insertar un techo de comisión en ésta ventana, usted está asignando un techo general a <b>Todos</b> los colaboradores con rol de Vendedor. <br> A su vez, si se registra un nuevo vendedor, deberá volver a asignar el techo general, para que éste sea aplicado a los vendedores nuevos.</Label>
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
-                                        <label for="identidad_user" class="col-form-label focus-label">Ingrese un techo General de comisiones (ejemplo: 15000):<span class="text-danger">*</span></label>
+                                        <label  class="col-form-label focus-label">Ingrese un techo General de comisiones (ejemplo: 15000):<span class="text-danger">*</span></label>
                                         <input class="form-control" required type="number" min="0" id="techo" name="techo" data-parsley-required>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="seleccionar" class="col-form-label focus-label">Seleccionar mes para revisión de facturas:<span class="text-danger">*</span></label>
+                                        <select id="mes" name="mes" class="form-group form-control" style=""
+                                            data-parsley-required >
+                                            <option value="" selected disabled>--Seleccione--</option>
+                                                <option value="1">ENERO</option>
+                                                <option value="2">FEBRERO</option>
+                                                <option value="3">MARZO</option>
+                                                <option value="4">ABRIL</option>
+                                                <option value="5">MAYO</option>
+                                                <option value="6">JUNIO</option>
+                                                <option value="7">JULIO</option>
+                                                <option value="8">AGOSTO</option>
+                                                <option value="9">SEPTIEMBRE</option>
+                                                <option value="10">OCTUBRE</option>
+                                                <option value="11">NOVIEMBRE</option>
+                                                <option value="12">DICIEMBRE</option>
+                                        </select>
+
                                     </div>
 
                                 </div>
@@ -72,13 +104,16 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_techos_guardados" class="table table-striped table-bordered table-hover">
+                            <table name="tbl_techos_guardados" id="tbl_techos_guardados" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Mes de asignación</th>
-                                        <th>Monto de techo</th>
-                                        <th>Fecha registro</th>
-                                        <th>User Registro</th>
+                                        <th>Código Vendedor</th>
+                                        <th>Mes Correspondiente</th>
+                                        <th>Vendedor</th>
+                                        <th>Techo Asignado</th>
+                                        <th>Fecha de Registro</th>
+                                        <th>User de Registro</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -95,127 +130,129 @@
     </div>
 
 
+    @push('scripts')
 
-</div>
-@push('scripts')
-
-<script>
-    $(document).on('submit', '#techoAddForm', function(event) {
-        event.preventDefault();
-        guardarUsuario();
-    });
-
-        function guardarUsuario() {
-
-            var data = new FormData($('#techoAddForm').get(0));
-
-            axios.post("/techo/guardar", data)
-                .then(response => {
+    <script>
 
 
-                    $('#techoAddForm').parsley().reset();
-
-                    document.getElementById("techoAddForm").reset();
-                    $('#modal_techo_crear').modal('hide');
-
-                    $('#tbl_techos_guardados').DataTable().ajax.reload();
-
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Exito!',
-                        text: "Techo agregado con Éxito."
-                    })
-
-                })
-                .catch(err => {
-                    let data = err.response.data;
-                    $('#modal_usuario_crear').modal('hide');
-                    Swal.fire({
-                        icon: data.icon,
-                        title: data.title,
-                        text: data.text
-                    })
-                    console.error(err);
-
-                })
-
-        }
-
-
-
-            $(document).ready(function() {
-            $('#tbl_techos_guardados').DataTable({
-                "order": [0, 'desc'],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+        $('#tbl_techos_guardados').DataTable({
+            "order": [0, 'desc'],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [{
+                    extend: 'copy'
                 },
-                pageLength: 10,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'ExampleFile'
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
+                {
+                    extend: 'csv'
+                },
+                {
+                    extend: 'excel',
+                    title: 'ExampleFile'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'ExampleFile'
+                },
 
-                    {
-                        extend: 'print',
-                        customize: function(win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
+                {
+                    extend: 'print',
+                    customize: function(win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
                     }
-                ],
-                "ajax": "/usuarios/listar/usuarios",
-                "columns": [
-                    {
-                        data: 'contador'
-                    },
-                    {
-                        data: 'id'
-                    },
-                    {
-                        data: 'nombre'
-                    },
-                    {
-                        data: 'telefono'
-                    },
-                    {
-                        data: 'email'
-                    },
-                    {
-                        data: 'identidad'
-                    },
-                    {
-                        data: 'fecha_nacimiento'
-                    },
-                    {
-                        data: 'tipo_usuario'
-                    },
-                    {
-                        data: 'fecha_registro'
-                    },
+                }
+            ],
+            "ajax": "/listar/techos",
+            "columns": [
+                {
+                    data: 'id'
+                },
+                {
+                    data: 'mes'
+                },
+                {
+                    data: 'vendedor'
+                },
+                {
+                    data: 'techo'
+                },
+                {
+                    data: 'fechaRegistro'
+                },
+                {
+                    data: 'userRegistro'
+                },
+                {
+                    data: 'acciones'
+                }
 
-                ]
+            ]
 
 
-            });
-        })
-</script>
+        });
+        function ir(idVendedor){}
 
-@endpush
+
+        $(document).on('submit', '#techoAddForm', function(event) {
+            event.preventDefault();
+            guardarTecho();
+        });
+
+            function guardarTecho() {
+
+                $('#modal_techo_crear').modal('hide');
+                $('#modalSpinnerLoading').modal('show');
+
+                var data = new FormData($('#techoAddForm').get(0));
+
+                axios.post("/techo/guardar", data)
+                    .then(response => {
+
+
+
+                        document.getElementById("techoAddForm").reset();
+                        $('#tbl_techos_guardados').DataTable().ajax.reload();
+
+                       // $('#tbl_techos_guardados').DataTable().ajax.reload();
+
+                       $('#modalSpinnerLoading').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Exito!',
+                            text: "Techo agregado con Éxito."
+                        })
+
+                    })
+                    .catch(err => {
+                        let data = err.response.data;
+                        $('#modalSpinnerLoading').modal('hide');
+
+                        document.getElementById("techoAddForm").reset();
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
+                        })
+                        console.error(err);
+
+                    });
+
+
+
+            }
+
+
+    </script>
+
+    @endpush
+</div>
+
 

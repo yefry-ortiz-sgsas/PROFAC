@@ -586,6 +586,11 @@ Route::get('/comisiones/facturas/buscar/{mes}/{idVendedor}', [ComisionesPrincipa
 Route::get('/comisiones/facturas/buscar2/{mes}/{idVendedor}', [ComisionesPrincipal::class, 'obtenerFacturasSinCerrar']);
 
 
+Route::post('/techo/guardar', [ComisionesGestiones::class, 'guardarTechoMasivo']);
+Route::get('/listar/techos', [ComisionesGestiones::class, 'obtenerVendedores']);
+
+
+
 Route::get('/comisiones/gestion', ComisionesGestiones::class);
 Route::get('/comisiones/vendedor', ComisionesVendedor::class);
 Route::get('/comisiones/comisionar', ComisionesComisionar::class);

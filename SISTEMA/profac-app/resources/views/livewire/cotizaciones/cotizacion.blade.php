@@ -4,14 +4,14 @@
 
       /* #divProductos  input {
         font-size: 0.8rem;
-        
-        
+
+
       } */
 
 
       .img-size{
        /*width: 10rem*/
-       width: 100%; 
+       width: 100%;
        height:20rem;
        margin: 0 auto;
       }
@@ -19,7 +19,7 @@
       @media (min-width: 670px) and (max-width:767px){
         .img-size{
        /*width: 10rem*/
-       width: 85%; 
+       width: 85%;
        height:20rem;
        margin: 0 auto;
       }
@@ -28,7 +28,7 @@
       @media (min-width: 768px) and (max-width:960px){
         .img-size{
        /*width: 10rem*/
-       width: 75%; 
+       width: 75%;
        height:12rem;
        margin: 0 auto;
        background-color: blue
@@ -58,7 +58,7 @@
             <h2>Cotización</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  
+
                     @if($tipoCotizacion==1)
                     <a>Cliente Corporativo</a>
                     @elseif($tipoCotizacion==2)
@@ -95,9 +95,9 @@
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta" data-parsley-validate>
 
-                           
+
                             <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="{{$tipoCotizacion}}">
-                            
+
 
 
                             <div class="row mt-4">
@@ -173,7 +173,7 @@
 
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                 
+
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                             <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
@@ -190,13 +190,13 @@
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:<span class="text-danger">*</span></label>
                                         <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                            onchange="prueba()"  disabled 
+                                            onchange="prueba()"  disabled
                                         >
                                             <option value="" selected disabled>--Seleccione un producto--</option>
                                         </select>
                                     </div>
 
-                                </div>    
+                                </div>
 
 
                             </div>
@@ -212,13 +212,13 @@
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
                                         {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
-                
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
-                                           
+
+                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
+
                                                 <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-                                                  
-                                           
-                
+
+
+
                                         </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner " >
 
@@ -257,11 +257,11 @@
                             </div>
 
                             <hr>
-                        
+
                             <div class="hide-container">
                                 <p>Nota:El campo "Unidad" describe la unidad de medida para la venta del producto - seguido del numero de unidades a restar del inventario</p>
                                 <div class="row no-gutters ">
-                                  
+
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                         <div class="d-flex">
 
@@ -296,16 +296,16 @@
                                     </div>
 
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 ">
-                                        
+
                                         <label class="sr-only">Unidad</label>
                                         <input type="text" placeholder="Unidad " class="form-control"
                                             min="1" autocomplete="off" disabled>
-                                           
 
-                                           
+
+
 
                                     </div>
-{{-- 
+                                        {{--
                                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                         <label class="sr-only">Seccion</label>
                                         <input type="text" placeholder="Seccion" class="form-control"
@@ -355,14 +355,14 @@
                                                 <input type="number" placeholder="Total del producto" class="form-control"
                                                     min="1" disabled autocomplete="off" style="min-width: 100px">
                                             </th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
-    
+
                                     </tbody>
                                 </table>
-    
+
                             </div> --}}
 
 
@@ -436,7 +436,7 @@
             </div>
         </div>
 
-        
+
     </div>
 
 
@@ -453,7 +453,7 @@
             var diasCredito = 0;
 
 
-           
+
 
 
             $('#seleccionarCliente').select2({
@@ -470,9 +470,9 @@
                         // Query parameters will be ?search=[term]&type=public
                         return query;
                     }
-                }     
+                }
             });
-            
+
 
 
 
@@ -487,24 +487,24 @@
                             }
 
                             // Query parameters will be ?search=[term]&type=public
-                        
+
                             return query;
                         }
-                    }         
+                    }
                 });
-            
+
             function prueba(){
 
                 var element = document.getElementById('botonAdd');
                 element.classList.remove("d-none");
-                
-            }    
+
+            }
 
             function obtenerBodegas(id){
-                
+
                 document.getElementById('bodega').innerHTML="<option  selected disabled>--Seleccione una bodega--</option>";
                 let idProducto = id;
-                $('#bodega').select2({                
+                $('#bodega').select2({
                 ajax: {
                     url: '/ventas/listar/bodegas/'+idProducto,
                     data: function(params) {
@@ -521,7 +521,7 @@
                 }
             });
 
-            }    
+            }
 
 
             function obtenerTipoPago() {
@@ -537,12 +537,12 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
+                            <option value="${element.id}" >${element.descripcion}</option>
                             `
                         });
 
                         document.getElementById('tipoPagoVenta').innerHTML = htmlPagos;
-       
+
 
 
                     })
@@ -559,12 +559,12 @@
 
             function obtenerImagenes() {
                 let id = document.getElementById('seleccionarProducto').value;
-             
+
                 document.getElementById("bodega").disabled = false;
                 let htmlImagenes = '';
                 axios.post('/producto/listar/imagenes', {
                         id: id,
-                       
+
                     })
                     .then(response => {
 
@@ -573,7 +573,7 @@
                         if (imagenes.length == 0) {
 
                             console.log("entro")
-                            htmlImagenes += `                                                
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
                             </div>`
@@ -587,13 +587,13 @@
                             imagenes.forEach(element => {
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
@@ -604,7 +604,7 @@
 
                             document.getElementById('bloqueImagenes').innerHTML = htmlImagenes;
 
-                            
+
                         }
 
                         var element = document.getElementById('botonAdd');
@@ -636,11 +636,11 @@
                 let bodega = data.bodegaSeccion;
                 let idBodega = data.idBodega;
                 let idSeccion = data.id
-               
+
 
                 axios.post('/ventas/datos/producto', {
                         idProducto : idProducto,
-                      
+
                     })
                     .then(response => {
 
@@ -654,16 +654,16 @@
                             }
 
                         })
-                    
+
                         if(flag){
                             Swal.fire({
-                           
+
                             icon: 'warning',
                             title: 'Advertencia!',
                             html: `
                             <p class="text-left">
-                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
-                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br>
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br>
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
                             </p>`
                         })
@@ -672,15 +672,15 @@
                         }
 
                         let producto = response.data.producto;
-                   
+
                         let arrayUnidades = response.data.unidades;
-                     
-                   
+
+
                         numeroInputs += 1;
-                        
+
                         //     let arraySecciones  = response.data.secciones;
                         // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
-                       
+
                         // arraySecciones.forEach(seccion => {
                         //     htmlSelectSeccion += `<option values="${seccion.id}" >${seccion.descripcion}</option>`
                         // });
@@ -692,9 +692,9 @@
                             }else{
                                 htmlSelectUnidades += `<option  value="${unidad.id}" data-id="${unidad.idUnidadVenta}">${unidad.nombre}</option>`;
                             }
-                            
+
                         });
-                   
+
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
@@ -710,12 +710,12 @@
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
                                                         <input type="text" placeholder="Nombre del producto" id="nombre${numeroInputs}"
-                                                            name="nombre${numeroInputs}" class="form-control" 
+                                                            name="nombre${numeroInputs}" class="form-control"
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            readonly 
+                                                            readonly
                                                             value='${producto.nombre}'
-                                                            
+
                                                             >
                                                     </div>
                                                 </div>
@@ -723,10 +723,10 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">cantidad</label>
                                                 <input type="text" value="${bodega}" placeholder="bodega-seccion" id="bodega${numeroInputs}"
-                                                    name="bodega${numeroInputs}" class="form-control" 
+                                                    name="bodega${numeroInputs}" class="form-control"
                                                     autocomplete="off"  readonly  >
                                             </div>
-                                    
+
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
@@ -744,12 +744,12 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">unidad</label>
                                                 <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}"
-                                                    data-parsley-required style="height:35.7px;" 
+                                                    data-parsley-required style="height:35.7px;"
                                                     onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
-                                                            ${htmlSelectUnidades} 
-                                                </select> 
-                                             
-                                                
+                                                            ${htmlSelectUnidades}
+                                                </select>
+
+
                                             </div>
 
 
@@ -784,8 +784,8 @@
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
                                             <input id="isv${numeroInputs}" name="isv${numeroInputs}" type="hidden" value="${producto.isv}">
 
-                                           
-                                    
+
+
                         </div>
                         `;
 
@@ -896,10 +896,10 @@
                    // document.getElementById('fecha_vencimiento').value = "empty";
                     document.getElementById('fecha_vencimiento').readOnly = false;
                     this.sumarDiasCredito();
-                    
+
                 } else {
                     document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
-                    
+
                     document.getElementById('fecha_vencimiento').readOnly = true;
 
                 }
@@ -916,7 +916,7 @@
                     response =>{
 
                         let data = response.data.datos;
-                       
+
                         if(data.id==1){
                             document.getElementById("nombre_cliente_ventas").readOnly=false;
                             document.getElementById("nombre_cliente_ventas").value='';
@@ -924,12 +924,12 @@
                             document.getElementById("rtn_ventas").readOnly=false;
                             document.getElementById("rtn_ventas").value='';
                             let selectBox = document.getElementById("tipoPagoVenta");
-                            selectBox.remove(2); 
+                            selectBox.remove(2);
 
                         }else{
                             document.getElementById("nombre_cliente_ventas").readOnly=true;
                             document.getElementById("rtn_ventas").readOnly=true;
-                            
+
                             document.getElementById("nombre_cliente_ventas").value=data.nombre;
                             document.getElementById("rtn_ventas").value=data.rtn;
                             obtenerTipoPago();
@@ -948,7 +948,7 @@
                             title: 'Error...',
                             text: "Ha ocurrido un error al obtener los datos del cliente"
                         })
-                    
+
 
                 })
 
@@ -962,24 +962,24 @@
                 });
 
             function guardarVenta(){
-                
+
                 document.getElementById("guardar_cotizacion_btn").disabled=true;
 
                 var data = new FormData($('#crear_venta').get(0));
 
                 let longitudArreglo = arregloIdInputs.length;
                 for (var i = 0; i < longitudArreglo; i++) {
-                   
+
 
                     let name = "unidad"+arregloIdInputs[i];
                     let nameForm = "idUnidadVenta"+arregloIdInputs[i];
 
                     let e = document.getElementById(name);
-                    let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");                    
+                    let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
                     data.append("arregloIdInputs[]", arregloIdInputs[i]);
                     data.append(nameForm,idUnidadVenta)
-                   
+
                 }
 
                 data.append("numeroInputs", numeroInputs);
@@ -991,11 +991,11 @@
                     .then(response => {
                         let data = response.data;
 
-                        
+
 
                         if(data.idFactura ==0 ){
                             console.log("entro")
-                           
+
                             Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -1024,14 +1024,14 @@
                         var element = document.getElementById('detalleProducto');
                             element.classList.add("d-none");
                             element.href="";
-                        
+
                         document.getElementById("seleccionarCliente").innerHTML='<option value="" selected disabled>--Seleccionar un cliente--</option>';
-                        
-                        document.getElementById('seleccionarProducto').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';    
-                        document.getElementById('bodega').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';         
+
+                        document.getElementById('seleccionarProducto').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';
+                        document.getElementById('bodega').innerHTML='<option value="" selected disabled>--Seleccione un producto--</option>';
                         document.getElementById("bodega").disabled = true;
 
-                       
+
 
                         let element2 = document.getElementById('detalleProducto');
                             element2.classList.add("d-none");
@@ -1041,7 +1041,7 @@
                         numeroInputs = 0;
                         retencionEstado=false;
 
-   
+
                         document.getElementById("guardar_cotizacion_btn").disabled=false;
 
                     })
@@ -1061,7 +1061,7 @@
                 tipoPago = document.getElementById('tipoPagoVenta').value;
 
                 if(tipoPago==2){
-                   
+
                     let fechaEmision = document.getElementById("fecha_emision").value;
                     let date = new Date(fechaEmision);
                    date.setDate(date.getDate() + diasCredito);
