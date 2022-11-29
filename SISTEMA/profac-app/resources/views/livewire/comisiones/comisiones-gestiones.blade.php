@@ -16,7 +16,7 @@
                     data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Asignar techo de comisión</a>
             </div>
         </div>
-{{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+        {{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Otro boton</a>

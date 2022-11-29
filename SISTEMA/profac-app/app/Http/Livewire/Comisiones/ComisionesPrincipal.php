@@ -30,6 +30,7 @@ class ComisionesPrincipal extends Component
                         factura.numero_factura as 'numero_factura',
                         factura.fecha_emision as 'fecha_emision',
                         factura.fecha_vencimiento as 'fecha_vencimiento',
+                        date_add(factura.fecha_vencimiento, interval 30 day) as 'fechaGracia',
                         cliente.nombre as 'nombre',
                         factura.total as 'total'
                     from factura
@@ -41,7 +42,7 @@ class ComisionesPrincipal extends Component
                         on factura.vendedor = users.id
                         cross join (select @i := 0) r
                     where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )
-                    and (DATE_FORMAT(factura.created_at,'%m') = ".$mes.")
+                    and (DATE_FORMAT(factura.fecha_emision,'%m') = ".$mes.")
                     and factura.pendiente_cobro = 0
                     and factura.estado_venta_id<>2
                     and (factura.tipo_venta_id = 1)
@@ -55,6 +56,11 @@ class ComisionesPrincipal extends Component
 
                     '<span class="badge badge-success">CERRADA</span>';
                 })
+                ->addColumn('comision', function ($listaFacturas) {
+                    return
+
+                    '<span class="badge badge-danger">Sin comisionar</span>';
+                })
                 ->addColumn('acciones', function ($listaFacturas) {
                         return
 
@@ -66,11 +72,14 @@ class ComisionesPrincipal extends Component
                                 <li>
                                     <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de Factura </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="/desglose/factura/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Desglose  </a>
+                                </li>
 
                             </ul>
                         </div>';
                 })
-                ->rawColumns(['estadoPago','acciones'])
+                ->rawColumns(['estadoPago','comision','acciones'])
                 ->make(true);
 
             } catch (QueryException $e) {
@@ -91,6 +100,7 @@ class ComisionesPrincipal extends Component
                         factura.numero_factura as 'numero_factura',
                         factura.fecha_emision as 'fecha_emision',
                         factura.fecha_vencimiento as 'fecha_vencimiento',
+                        date_add(factura.fecha_vencimiento, interval 30 day) as 'fechaGracia',
                         cliente.nombre as 'nombre',
                         factura.total as 'total'
                     from factura
@@ -102,7 +112,7 @@ class ComisionesPrincipal extends Component
                         on factura.vendedor = users.id
                         cross join (select @i := 0) r
                     where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )
-                    and (DATE_FORMAT(factura.created_at,'%m') = ".$mes.")
+                    and (DATE_FORMAT(factura.fecha_emision,'%m') = ".$mes.")
                     and factura.pendiente_cobro <> 0
                     and factura.estado_venta_id<>2
                     and (factura.tipo_venta_id = 1)
@@ -116,6 +126,11 @@ class ComisionesPrincipal extends Component
 
                     '<span class="badge badge-danger">SIN CERRAR</span>';
                 })
+                ->addColumn('comision', function ($listaFacturas) {
+                    return
+
+                    '<span class="badge badge-danger">Sin comisionar</span>';
+                })
                 ->addColumn('acciones', function ($listaFacturas) {
                         return
 
@@ -127,11 +142,14 @@ class ComisionesPrincipal extends Component
                                 <li>
                                     <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de Factura </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="/desglose/factura/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Desglose  </a>
+                                </li>
 
                             </ul>
                         </div>';
                 })
-                ->rawColumns(['estadoPago','acciones'])
+                ->rawColumns(['estadoPago','comision','acciones'])
                 ->make(true);
 
             } catch (QueryException $e) {

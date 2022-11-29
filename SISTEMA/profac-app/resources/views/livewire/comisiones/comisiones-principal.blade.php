@@ -12,7 +12,7 @@
             </ol>
         </div>
 
-{{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+            {{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_usuario_crear"><i class="fa fa-plus"></i>Asignar Comisión</a>
@@ -82,9 +82,11 @@
                                         <th>Nº Factura</th>
                                         <th>Fecha de emisión</th>
                                         <th>Fecha de vencimiento</th>
+                                        <th>Fecha Máxima de gracia</th>
                                         <th>Cliente</th>
                                         <th>Total </th>
                                         <th>Estado de pago</th>
+                                        <th>Comisión</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -116,9 +118,11 @@
                                         <th>Nº Factura</th>
                                         <th>Fecha de emisión</th>
                                         <th>Fecha de vencimiento</th>
+                                        <th>Fecha Máxima de gracia</th>
                                         <th>Cliente</th>
                                         <th>Total </th>
                                         <th>Estado de pago</th>
+                                        <th>Comisión</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -222,6 +226,9 @@
                             data: 'fecha_vencimiento'
                         },
                         {
+                            data: 'fechaGracia'
+                        },
+                        {
                             data: 'nombre'
                         },
                         {
@@ -229,6 +236,9 @@
                         },
                         {
                             data: 'estadoPago'
+                        },
+                        {
+                            data: 'comision'
                         },
                         {
                             data: 'acciones'
@@ -290,6 +300,9 @@
                             data: 'fecha_vencimiento'
                         },
                         {
+                            data: 'fechaGracia'
+                        },
+                        {
                             data: 'nombre'
                         },
                         {
@@ -297,6 +310,9 @@
                         },
                         {
                             data: 'estadoPago'
+                        },
+                        {
+                            data: 'comision'
                         },
                         {
                             data: 'acciones'
