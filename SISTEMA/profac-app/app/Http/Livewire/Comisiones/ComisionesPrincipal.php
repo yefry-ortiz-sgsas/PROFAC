@@ -43,9 +43,8 @@ class ComisionesPrincipal extends Component
                         cross join (select @i := 0) r
                     where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )
                     and (DATE_FORMAT(factura.fecha_emision,'%m') = ".$mes.")
-                    and factura.pendiente_cobro = 0
-                    and factura.estado_venta_id<>2
-                    and (factura.tipo_venta_id = 1)
+                    and factura.pendiente_cobro <= 0
+                    and factura.estado_venta_id = 1
                     and factura.vendedor = ".$idVendedor."
                     order by factura.created_at desc;
                 ");
@@ -113,9 +112,8 @@ class ComisionesPrincipal extends Component
                         cross join (select @i := 0) r
                     where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )
                     and (DATE_FORMAT(factura.fecha_emision,'%m') = ".$mes.")
-                    and factura.pendiente_cobro <> 0
-                    and factura.estado_venta_id<>2
-                    and (factura.tipo_venta_id = 1)
+                    and factura.pendiente_cobro > 0
+                    and factura.estado_venta_id = 1
                     and factura.vendedor = ".$idVendedor."
                     order by factura.created_at desc;
                 ");
