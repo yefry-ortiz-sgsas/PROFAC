@@ -77,8 +77,6 @@
                             <table id="tbl_productos_factura" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-
-
                                         <th>Código Factura</th>
                                         <th>Nº Factura</th>
                                         <th>Código producto</th>
@@ -87,7 +85,8 @@
                                         <th>Último costo de compra</th>
                                         <th>Unidad</th>
                                         <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
+                                        <th>Precio de Venta</th>
+                                        <th>Ganancia del vendedor</th>
                                         <th>Total Facturado</th>
                                         <th>Sub Total</th>
                                         <th>ISV</th>
@@ -109,133 +108,100 @@
         </div>
     </div>
 
-{{--      <div class="wrapper wrapper-content animated fadeInRight">
-        <label for="" class="col-form-label focus-label">  <b> Lista de facturas sin cerrar:</b></label>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table id="tbl_facturasVendedor_sinCerrar" class="table table-striped table-bordered table-hover">
-                                <thead class="">
-                                    <tr>
-
-                                        <th>Código Factura</th>
-                                        <th>Nº Factura</th>
-                                        <th>Fecha de emisión</th>
-                                        <th>Fecha de vencimiento</th>
-                                        <th>Fecha Máxima de gracia</th>
-                                        <th>Cliente</th>
-                                        <th>Total </th>
-                                        <th>Estado de pago</th>
-                                        <th>Comisión</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  --}}
 
     @push('scripts')
 
     <script>
          var idFactura = document.getElementById('idFactura').value;
+         $( document ).ready(function() {
 
-        $('#tbl_productos_factura').DataTable({
-            "order": [0, 'desc'],
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-            },
-            pageLength: 10,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [{
-                    extend: 'copy'
-                },
-                {
-                    extend: 'csv'
-                },
-                {
-                    extend: 'excel',
-                    title: 'ExampleFile'
-                },
-                {
-                    extend: 'pdf',
-                    title: 'ExampleFile'
-                },
+                $('#tbl_productos_factura').DataTable({
+                    "order": [0, 'desc'],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                    },
+                    pageLength: 10,
+                    responsive: true,
+                    dom: '<"html5buttons"B>lTfgitp',
+                    buttons: [{
+                            extend: 'copy'
+                        },
+                        {
+                            extend: 'csv'
+                        },
+                        {
+                            extend: 'excel',
+                            title: 'ExampleFile'
+                        },
+                        {
+                            extend: 'pdf',
+                            title: 'ExampleFile'
+                        },
 
-                {
-                    extend: 'print',
-                    customize: function(win) {
-                        $(win.document.body).addClass('white-bg');
-                        $(win.document.body).css('font-size', '10px');
+                        {
+                            extend: 'print',
+                            customize: function(win) {
+                                $(win.document.body).addClass('white-bg');
+                                $(win.document.body).css('font-size', '10px');
 
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    }
-                }
-            ],
-            "ajax": "/desglose/factura/"+idFactura,
-            "columns": [
-                {
-                    data: 'id'
-                },
-                {
-                    data: 'numero_factura'
-                },
-                {
-                    data: 'idProducto'
-                },
-                {
-                    data: 'producto'
-                },
-                {
-                    data: 'precio_base'
-                },
-                {
-                    data: 'ultimo_costo_compra'
-                },
-                {
-                    data: 'unidad_venta'
-                },
-                {
-                    data: 'cantidad'
-                },
-                {
-                    data: 'precio_unidad'
-                },
-                {
-                    data: 'total'
-                },
-                {
-                    data: 'sub_total'
-                },
-                {
-                    data: 'isv'
-                },
-                {
-                    data: 'seccion_id'
-                },
-                {
-                    data: 'seccion'
-                },
-                {
-                    data: 'nombre'
-                }
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            }
+                        }
+                    ],
+                    "ajax": "/desglose/productos/"+idFactura,
+                    "columns": [
+                        {
+                            data: 'id'
+                        },
+                        {
+                            data: 'numero_factura'
+                        },
+                        {
+                            data: 'idProducto'
+                        },
+                        {
+                            data: 'producto'
+                        },
+                        {
+                            data: 'precio_base'
+                        },
+                        {
+                            data: 'ultimo_costo_compra'
+                        },
+                        {
+                            data: 'unidad_venta'
+                        },
+                        {
+                            data: 'cantidad'
+                        },
+                        {
+                            data: 'precio_unidad'
+                        },
+                        {
+                            data: 'total'
+                        },
+                        {
+                            data: 'sub_total'
+                        },
+                        {
+                            data: 'isv'
+                        },
+                        {
+                            data: 'seccion_id'
+                        },
+                        {
+                            data: 'seccion'
+                        },
+                        {
+                            data: 'nombre'
+                        }
 
-            ]
+                    ]
 
 
+                });
         });
 
 

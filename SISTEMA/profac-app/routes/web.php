@@ -589,8 +589,10 @@ Route::get('/comisiones/facturas/buscar2/{mes}/{idVendedor}', [ComisionesPrincip
 Route::post('/techo/guardar', [ComisionesGestiones::class, 'guardarTechoMasivo']);
 Route::get('/listar/techos', [ComisionesGestiones::class, 'obtenerVendedores']);
 
-Route::get('/desglose/factura/{id}', [ComisionesComisionar::class, 'obtenerDesglose']);
+Route::get('/desglose/factura/{id}', ComisionesComisionar::class);
+Route::get('/desglose/productos/{id}', [ComisionesComisionar::class, 'obtenerDesglose']);
 
+//Route::get('/desglose/factura', ComisionesComisionar::class);
 
 Route::get('/comisiones/gestion', ComisionesGestiones::class);
 Route::get('/comisiones/vendedor', ComisionesVendedor::class);
