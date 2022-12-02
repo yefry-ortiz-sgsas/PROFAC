@@ -70,6 +70,21 @@ class ComisionesComisionar extends Component
             group by A.id, A.numero_factura, C.id, C.nombre, C.precio_base, C.ultimo_costo_compra, E.nombre,  B.precio_unidad,B.cantidad, B.total, B.sub_total, B.isv, B.seccion_id, F.descripcion,  H.nombre
 
             ");
+
+            $idVendedores = DB::table('users')
+                                    ->where('rol_id', 2)
+                                    ->pluck('id');
+
+                foreach ($idVendedores as $value) {
+
+                    $techoComision = new comision_techo;
+                    $techoComision->monto_techo = $techo;
+                    $techoComision->vendedor_id =$value;
+                    $techoComision->meses_id = $mes;
+                    $techoComision->userRegistro = Auth::user()->id;
+                    $techoComision->estado_id = 1;
+                    $techoComision->save();
+                }
            // dd($listaVendedores);
             return Datatables::of($listaProd)
             ->addColumn('acciones', function ($listaProd) {
