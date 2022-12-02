@@ -78,15 +78,27 @@
                                 <thead class="">
                                     <tr>
                                         <th>Código Factura</th>
+
                                         <th>Nº Factura</th>
+
                                         <th>Código producto</th>
+
                                         <th>Producto</th>
+
                                         <th>Precio Base</th>
+
                                         <th>Último costo de compra</th>
+
                                         <th>Unidad</th>
+
                                         <th>Cantidad</th>
+
                                         <th>Precio de Venta</th>
-                                        <th>Ganancia del vendedor</th>
+
+                                        <th>Ganancia x Unidad</th>
+
+
+                                        <th>Ganancia total vendedor</th>
                                         <th>Total Facturado</th>
                                         <th>Sub Total</th>
                                         <th>ISV</th>
@@ -153,7 +165,7 @@
                     "ajax": "/desglose/productos/"+idFactura,
                     "columns": [
                         {
-                            data: 'id'
+                            data: 'idFactura'
                         },
                         {
                             data: 'numero_factura'
@@ -180,6 +192,12 @@
                             data: 'precio_unidad'
                         },
                         {
+                            data: 'gananciaUnidad'
+                        },
+                        {
+                            data: 'gananciatotal'
+                        },
+                        {
                             data: 'total'
                         },
                         {
@@ -195,7 +213,7 @@
                             data: 'seccion'
                         },
                         {
-                            data: 'nombre'
+                            data: 'bodega'
                         }
 
                     ]
