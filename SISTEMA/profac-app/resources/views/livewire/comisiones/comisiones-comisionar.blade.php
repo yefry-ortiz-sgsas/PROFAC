@@ -20,8 +20,16 @@
           <h1 class="display-4">Factura con código: {{ $idFactura }}</h1>
           <p class="lead">Total de ganancia del vendedor para comisionar: Lps. <b>{{ $gananciaTotal->gananciaTotal }}</b> </p>
             <div style="margin-top: 1.5rem">
-                <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
+                @if($centComisionado->estado == 0)
+
+                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_comision_crear"><i class="fa fa-plus"></i>Asignar comisión</a>
+                @else
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Esta factura ya fue comisionada</h4>
+                        <hr>
+                    </div>
+                @endif
             </div>
         </div>
       </div>
@@ -57,7 +65,7 @@
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Código de Factura No: <span class="text-danger">*</span></label>
                                     <input  class="form-control" required type="number" min="0" id="factura" name="factura" value="{{ $idFactura }}" data-parsley-required>
-                                    <input  class="form-control" required type="hide" id="mesFactura" name="mesFactura" value="{{ $mesFactura->mes }}">
+                                    <input  class="form-control" required type="hidden" id="mesFactura" name="mesFactura" value="{{ $mesFactura->mes }}">
                                 </div>
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Código de vendedor: <span class="text-danger">*</span></label>

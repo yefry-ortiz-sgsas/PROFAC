@@ -33,9 +33,11 @@ class ComisionesComisionar extends Component
         $idVendedor = DB::SELECTONE("SELECT desglose.vendedor_id as id FROM desglose where idFactura = ".$idFactura);
 
         $mesFactura = DB::SELECTONE("SELECT DATE_FORMAT(created_at,'%m') as mes  from factura where id =".$idFactura);
+
+        $centComisionado = DB::SELECTONE("SELECT factura.comision_estado_pagado as estado FROM factura where id =".$idFactura);
         //dd($idVendedor);
 
-        return view('livewire.comisiones.comisiones-comisionar', compact('idFactura', 'gananciaTotal','idVendedor', 'mesFactura'));
+        return view('livewire.comisiones.comisiones-comisionar', compact('idFactura', 'gananciaTotal','idVendedor', 'mesFactura', 'centComisionado'));
         //return view('livewire.comisiones.comisiones-comisionar');
     }
 
