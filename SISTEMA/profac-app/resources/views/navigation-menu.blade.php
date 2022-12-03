@@ -256,6 +256,9 @@
                                 </li>
                                 <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a>
                                 </li>
+
+                                <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a>
+                                </li>
                             </ul>
                         </li>
                        <!-----------------------------------Administrador------------------------------->

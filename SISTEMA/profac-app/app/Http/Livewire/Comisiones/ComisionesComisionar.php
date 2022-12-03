@@ -12,6 +12,8 @@ use DataTables;
 use Auth;
 use App\Models\Comisiones\desglose;
 
+use App\Models\Comisiones\comision;
+
 
 class ComisionesComisionar extends Component
 {
@@ -25,8 +27,15 @@ class ComisionesComisionar extends Component
     {
         $idFactura = $this->idVenta;
 
+        $gananciaTotal = DB::SELECTONE("SELECT SUM(desglose.gananciatotal) AS gananciaTotal FROM desglose where idFactura = ".$idFactura);
 
-        return view('livewire.comisiones.comisiones-comisionar', compact('idFactura'));
+
+        $idVendedor = DB::SELECTONE("SELECT desglose.vendedor_id as id FROM desglose where idFactura = ".$idFactura);
+
+        $mesFactura = DB::SELECTONE("SELECT DATE_FORMAT(created_at,'%m') as mes  from factura where id =".$idFactura);
+        //dd($idVendedor);
+
+        return view('livewire.comisiones.comisiones-comisionar', compact('idFactura', 'gananciaTotal','idVendedor', 'mesFactura'));
         //return view('livewire.comisiones.comisiones-comisionar');
     }
 
@@ -63,6 +72,99 @@ class ComisionesComisionar extends Component
                 'errorTh' => $e,
             ], 402);
 
+        }
+    }
+
+    public function guardarComision(Request $request){
+        try {
+
+
+            DB::beginTransaction();
+                //dd($techo);
+
+                $comisionMonto = (($request->porcentaje)/100)*$request->gananciaTotal;
+
+                $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$request->idVendedor." and comision_techo.meses_id = ".$request->mesFactura." and comision_techo.estado_id = 1");
+
+                //dd($idComisionTecho);
+                $comision = new comision;
+                $comision->comision_techo_id = $idComisionTecho->id;
+                $comision->factura_id = $request->factura;
+                $comision->vendedor_id = $request->idVendedor;
+                $comision->gananciaTotal = $request->gananciaTotal;
+                $comision->porcentaje = $request->porcentaje;
+                $comision->monto_comison = $comisionMonto;
+                $comision->estado_id = 1;
+                $comision->users_registro_id = Auth::user()->id;
+                $comision->save();
+
+                DB::update('
+                    update
+                    factura
+                    set comision_estado_pagado = 1, monto_comision = '.$comisionMonto.'
+                    where id = '.$request->factura.'
+                ');
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Registro de comisión hecho con éxito!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al registrar la comisión.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+    }
+
+
+    public function guardarComisionMasivo(Request $request){
+        try {
+            //dd();
+
+            DB::beginTransaction();
+                //dd($techo);
+
+                $comisionMonto = (($request->porcentaje)/100)*$request->gananciaTotal;
+                $comision = new comision;
+                $comision->comision_techo_id =
+                $comision->factura_id = $request->factura;
+                $comision->vendedor_id = $request->idVendedor;
+                $comision->gananciaTotal = $request->gananciaTotal;
+                $comision->porcentaje = $request->porcentaje;
+                $comision->monto_comison = $comisionMonto;
+                $comision->estado_id = 1;
+                $comision->users_registro_id = Auth::user()->id;
+                $comision->save();
+
+                DB::update('
+                update
+                factura
+                set comision_estado_pagado = 1, monto_comision = '.$comisionMonto.'
+                where id = '.$request->factura.'
+            ');
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Registro de comisión hecho con éxito!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al registrar la comisión.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
         }
     }
 }
