@@ -40,6 +40,7 @@ class ComisionesGestiones extends Component
                // dd($listaVendedores);
                 return Datatables::of($listaVendedores)
                 ->addColumn('acciones', function ($listaVendedores) {
+                        $mesL = "'".$listaVendedores->mes."'";
                         return
 
                         '<div class="btn-group">
@@ -48,7 +49,7 @@ class ComisionesGestiones extends Component
                             <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                                 <li>
-                                    <a class="dropdown-item" href="ir('.$listaVendedores->id.')" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Ver </a>
+                                    <a class="dropdown-item" onclick="editarTecho('.$listaVendedores->id.','.$mesL.','.$listaVendedores->techo.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar Techo </a>
                                 </li>
 
                             </ul>
@@ -122,6 +123,57 @@ class ComisionesGestiones extends Component
             return response()->json([
                 "icon" => "error",
                 "text" => "Ha ocurrido un error al registrar el techo masivo",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+    }
+
+    public function editarTecho(Request $request){
+        try {
+            //dd();
+            DB::beginTransaction();
+
+                //dd($request);
+/*                 $prueba = '
+                update
+                    comision_techo
+                set monto_techo = '.$request->nuevoTecho.'
+                where comision_techo.vendedor_id = '.$request->idVendedor.'
+                and comision_techo.meses_id = (select id from meses where meses.nombre ="'.$request->mesL.'")
+                and estado_id = 1
+            '; */
+                $idmes = DB::SELECTONE('select id from meses where meses.nombre ="'.$request->mesL.'"');
+                DB::update('
+                    update
+                        comision_techo
+                    set monto_techo = '.$request->nuevoTecho.'
+                    where comision_techo.vendedor_id = '.$request->idVendedor.'
+                    and comision_techo.meses_id = '.$idmes->id.'
+                    and estado_id = 1
+                ');
+
+
+
+
+
+                //dd($prueba);
+
+
+
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Registro Actualización de techo correcto!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al editar el techo ",
                 "title"=>"Error!",
                 "error" => $e
             ],402);

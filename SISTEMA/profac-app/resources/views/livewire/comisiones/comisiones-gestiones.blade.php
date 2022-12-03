@@ -12,8 +12,7 @@
 
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem">
-                <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
-                    data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Asignar techo de comisión</a>
+                <a href="#" class="btn add-btn btn-primary" data-toggle="modal" data-target="#modal_techo_crear"><i class="fa fa-plus"></i>Asignar techo de comisión</a>
             </div>
         </div>
         {{--          <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
@@ -92,6 +91,48 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="modal_techo_editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Techos de Comisiones</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form id="techoeditform" name="techoeditform" data-parsley-validate>
+                                <Label>Nota: El porcentaje aplicado será guardado unicamente a ésta factura, de no ser lo que necesita, regresar a la pantalla anterior a comisionar masivamente.</Label>
+                                <div class="row" id="row_datos">
+                                        <div class="col-md-12">
+                                            <label  class="col-form-label focus-label">Código de vendedor: <span class="text-danger">*</span></label>
+                                            <input  class="form-control" required type="number" min="0" id="idVendedor"  name="idVendedor" data-parsley-required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label  class="col-form-label focus-label">Mes de asignación: <span class="text-danger">*</span></label>
+                                            <input  class="form-control" required type="text" id="mesL" name="mesL"  data-parsley-required>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label  class="col-form-label focus-label">Techo actuál: <span class="text-danger">*</span></label>
+                                            <input  class="form-control" required type="text" min="0" id="techoAct" name="techoAct"  data-parsley-required >
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label  class="col-form-label focus-label">Nuevo techo a asignar: <span class="text-danger">*</span></label>
+                                            <input  class="form-control" required type="number" min="0" id="nuevoTecho" name="nuevoTecho"  data-parsley-required >
+                                        </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" form="techoeditform" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -198,7 +239,6 @@
 
 
         });
-        function ir(idVendedor){}
 
 
         $(document).on('submit', '#techoAddForm', function(event) {
@@ -249,7 +289,64 @@
 
             }
 
+            function editarTecho(idVendedor, mes, techoActual){
 
+                console.log(mes);
+                $("#idVendedor").val(idVendedor);
+                $("#mesL").val(mes);
+                $("#techoAct").val(techoActual);
+                $("#modal_techo_editar").modal("show");
+            }
+
+
+
+            $(document).on('submit', '#techoeditform', function(event) {
+                event.preventDefault();
+                editarTechos();
+            });
+
+                function editarTechos() {
+
+                    $('#modal_techo_editar').modal('hide');
+                    $('#modalSpinnerLoading').modal('show');
+
+                    var data = new FormData($('#techoeditform').get(0));
+
+                    axios.post("/techo/editar", data)
+                        .then(response => {
+
+
+
+                            document.getElementById("techoeditform").reset();
+                            $('#tbl_techos_guardados').DataTable().ajax.reload();
+
+                           // $('#tbl_techos_guardados').DataTable().ajax.reload();
+
+                           $('#modalSpinnerLoading').modal('hide');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito!',
+                                text: "Techo Editado con Éxito."
+                            })
+
+                        })
+                        .catch(err => {
+                            let data = err.response.data;
+                            $('#modalSpinnerLoading').modal('hide');
+
+                            document.getElementById("techoeditform").reset();
+                            Swal.fire({
+                                icon: data.icon,
+                                title: data.title,
+                                text: data.text
+                            })
+                            console.error(err);
+
+                        });
+
+
+
+                }
     </script>
 
     @endpush
