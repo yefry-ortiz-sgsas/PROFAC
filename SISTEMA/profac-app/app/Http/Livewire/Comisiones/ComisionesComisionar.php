@@ -80,14 +80,14 @@ class ComisionesComisionar extends Component
     public function guardarComision(Request $request){
         try {
 
-
             DB::beginTransaction();
                 //dd($techo);
 
                 $comisionMonto = (($request->porcentaje)/100)*$request->gananciaTotal;
 
-                $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$request->idVendedor." and comision_techo.meses_id = ".$request->mesFactura." and comision_techo.estado_id = 1");
 
+                $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$request->idVendedor." and comision_techo.meses_id = ".$request->mesFactura." and comision_techo.estado_id = 1");
+                dd($idComisionTecho);
                 //dd($idComisionTecho);
                 $comision = new comision;
                 $comision->comision_techo_id = $idComisionTecho->id;
