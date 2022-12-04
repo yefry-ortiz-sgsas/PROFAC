@@ -4,7 +4,7 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Listado de Vales</h2>
+            <h2>Listado De Vales</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">
                     <a>Listado</a>
@@ -57,38 +57,44 @@
         </div>
     </div>
 
-    <!-- Modal para Elegir Mes a Exportar-->
-    <div class="modal fade" id="modal_exportar_excel" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+        <!-- Modal para mostrar comentarios-->
+        <div class="modal fade" id="modal_comentarios" tabindex="-1" role="dialog"
+        aria-labelledby="modal_comentarios" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">Exportar Mes a Excel</h3>
+                    <h3 class="modal-title" id="modal_comentarios">Notas y Comentarios</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form id="exportarExcelForm" name="exportarExcelForm" data-parsley-validate>
-                        {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                        
-                        <div class="row" id="row_datos">
-                            
-                            <div class="col-md-12">
-                                <label for="compras_mes" class="col-form-label focus-label">Seleccione el Mes:<span class="text-danger">*</span></label>
-                                <input required type="month" id="compras_mes" name="compras_mes"  data-parsley-required onchange="insertarBotonExportar()"> 
-                            </div>
-                            <div class="col-md-12">
-                                <div class="d-flex justify-content-center mt-2" id="exportar">
-                                <!--///////////////////////Aqui se insertará el boton cuando se selecione un Mes///////////////////-->
-                                </div>
-                            </div>
-                            
+                        <div class="form-group">
+                            <label for="notas">Notas:</label>
+                            <textarea rows="4" placeholder="" required id="notas"     class="form-control"></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label for="notas">Comentarios realizados al anular:</label>
+                            <textarea rows="4" placeholder="" required id="comentario_anular"     class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notas">Comentarios realizados al eliminar:</label>
+                            <textarea rows="4" placeholder="" required id="comentario_eliminar"     class="form-control"></textarea>
+                        </div>
+
+
+             
+    
+
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                     <!--<button type="button" form="exportarExcelForm" class="btn btn-primary excel_compras_mes">Exportar
                         Excel</button>-->
                 </div>
@@ -153,26 +159,29 @@
              
             Swal.fire({
             title: '¿Está seguro de anular este vale?',
-            text:'Una vez sea anulado el vale, el producto listado en el mismo será restado del inventario automaticamente.',
+           
+            html: '<p>Una vez sea anulado el vale, el producto listado en el mismo será restado del inventario automaticamente.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
             showDenyButton: false,
             showCancelButton: true,
             confirmButtonText: 'Si, Anular vale', 
             confirmButtonColor:'#18A689',           
             cancelButtonText: `Cancelar`,
             }).then((result) => {
+                let motivo = document.getElementById("comentarioAnular").value
+                
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
 
                 //Swal.fire('Saved!', '', 'success')
-                this.anularValeGuardar(idVale);
+                this.anularValeGuardar(idVale,motivo);
 
             } 
             })
         }
 
-        function anularValeGuardar(idVale){
+        function anularValeGuardar(idVale,motivo){
 
-            axios.post("/vale/restar/lista/anular", {idVale:idVale})
+            axios.post("/vale/restar/lista/anular", {idVale:idVale,motivo:motivo})
             .then( response =>{
 
 
@@ -249,23 +258,26 @@
               
         }
 
-        function insertarBotonExportar(){
-            
-            try {
-                var compras_mes = document.getElementById('compras_mes').value;
+        function comentarios(idVale){
+            axios.get('/vale/comentarios/'+idVale)
+            .then( response=>{
 
-                let htmlSelect = ''
-                
-                htmlSelect =   ` 
-                        <a href="/compras/excel_mes/${compras_mes}" class="btn add-btn btn-primary"><i class="fa fa-plus "></i> Exportar Excel</a>
-                                `
+                let data = response.data;
 
-                document.getElementById('exportar').innerHTML = htmlSelect;
-                
-            } catch (error) {
-                
-            }
+                document.getElementById('notas').value = data.notas;
+                document.getElementById('comentario_anular').value = data.comentario_anular;
+                document.getElementById('comentario_eliminar').value = data.comentario_eliminar;
 
+                $('#modal_comentarios').modal('show')
+            })
+            .catch(err=>{
+                Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Ha ocurrido un error al obtener las notas y comentarios.',
+                        })
+            })
+          
         }
 
         </script>

@@ -374,7 +374,7 @@
                     
                     <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                                style="color:#ffffff;">Entregas Pendientes</span>
+                                style="color:#ffffff;">Entregas Agendadas</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">                            
@@ -411,7 +411,7 @@
                         <ul class="nav nav-second-level">
 
 
-                            <li><a href="/crear/vale/lista/espera/corporativo" style="color:#ffffff;">Vale Corporativo</a>
+                            <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
                             </li>
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
@@ -445,8 +445,7 @@
                             <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
                             </li>
 
-                            <li><a href="/crear/vale/lista/espera/corporativo" style="color:#ffffff;">Vale Corporativo</a>
-                            </li>
+
                             
                         </ul>
                     </li>
@@ -650,7 +649,7 @@
 
             <li>
                 <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                        style="color:#ffffff;">Entregas Pendientes</span>
+                        style="color:#ffffff;">Entregas Agendadas</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">                            

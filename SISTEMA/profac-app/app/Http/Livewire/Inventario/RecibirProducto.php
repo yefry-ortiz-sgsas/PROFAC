@@ -15,6 +15,7 @@ use Auth;
 use DataTables;
 use Validator;
 use Illuminate\Support\Facades\File;
+use Mail;
 
 use Livewire\Component;
 
@@ -353,7 +354,12 @@ class RecibirProducto extends Component
         ]);
 
 
+        $this->comprobarVales();
+
         DB::commit();
+
+      
+
         return response()->json([
             "text" => "Producto registrado en bodega con éxito.",
             "icon" => "success",
@@ -686,6 +692,57 @@ class RecibirProducto extends Component
        ],402);
        }
        }
+
+       public function comprobarVales(){
+  
+         $flagVale = false;
+         $valesArray =[];
+ 
+         $valesAnuladosLista = DB::SELECT("select
+         id,
+         numero_vale 
+         from vale
+         where estado_id = 1 
+         order by id ASC");
+ 
+ 
+ 
+             for ($i=0; $i < count($valesAnuladosLista) ; $i++) { 
+                 $flagVale = true;
+ 
+                 /*OBTIENE LOS PRODUCTOS DEL VALE */
+                 $productos = DB::SELECT("select producto_id, resta_inventario_total from espera_has_producto where vale_id =".$valesAnuladosLista[$i]->id);
+ 
+                 /*COMPRUEBA LA EXISTENCIA EN INVENTARIOS DE LOS PRODUCTOS CONTENIDOS EN EL VALE*/
+                 for ($j=0; $j <  count($productos) ; $j++) { 
+                     $disponible = DB::SELECTONE("select sum(cantidad_disponible) as cantidad_disponible from recibido_bodega where cantidad_disponible <> 0 and producto_id = ".$productos[$j]->producto_id);
+ 
+                     /*SI UN PRODUCTO NO CUENTA CON EXISTENCIA SUFICIENTE EN INVENTARIO EL VALE NO SE PUEDE ANULAR */
+                     if($productos[$j]->resta_inventario_total > $disponible->cantidad_disponible){
+                         $flagVale = false;
+                     }
+ 
+ 
+                 }
+ 
+                 if($flagVale){
+                     array_push($valesArray,$valesAnuladosLista[$i]->numero_vale);
+                 }
+ 
+             }
+             
+             $subject = "Vales disponibles para anular";
+             $for = ['luis.aviles@cadss.hn'];
+     
+             Mail::send('email/vales-disponibles',['valesArray' => $valesArray], function($msj) use($subject,$for){
+                 $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
+                 $msj->subject($subject);
+                 $msj->to($for);
+             });
+ 
+             return;
+        
+     }
 
 
 }

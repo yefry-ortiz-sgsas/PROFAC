@@ -125,4 +125,6 @@ class ListarVales extends Component
        ],402);
        }
     }
+
+
 }

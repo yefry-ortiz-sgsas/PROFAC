@@ -687,8 +687,10 @@
 
                     })
                     .catch(err => {
+                        document.getElementById("btn_recibir_bodega").disabled = false;
                         $('#modalRecibirProducto').modal('hide');
                         //console.log(err.response.data);
+                       
                         let data = err.response.data;
                         Swal.fire({
                             icon: data.icon,

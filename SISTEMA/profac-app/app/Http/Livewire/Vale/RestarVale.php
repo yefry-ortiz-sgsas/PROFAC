@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 
 use App\Models\ModelFactura;
-use App\Models\ModelCAI;
+
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelVentaProducto;
 use App\Models\ModelLogTranslados;
-use App\Models\ModelParametro;
-use App\Models\ModelLista;
+
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\ModelVale;
-use App\Models\User;
+use Luecano\NumeroALetras\NumeroALetras;
 
+use PDF;
 
 class RestarVale extends Component
 {
@@ -50,13 +50,12 @@ class RestarVale extends Component
         D.name,
         A.estado_id 
         from vale A
-        inner join espera_has_producto B
-        on A.id = B.vale_id
+       
         inner join factura C
         on A.factura_id = C.id
         inner join users D
         on A.users_id = D.id
-        where A.estado_id <>3
+        
        
         order by A.created_at desc
 
@@ -64,8 +63,8 @@ class RestarVale extends Component
         return Datatables::of($listaVales)
                 ->addColumn('opciones', function ($vale) {
 
-
-                    return
+                    if($vale->estado_id == 1){
+                        return
                         '<div class="btn-group">
                 <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                     más</button>
@@ -76,23 +75,53 @@ class RestarVale extends Component
                     </li>  
 
                     <li>
-                    <a class="dropdown-item" target="_blank"  href=""> <i class="fa-solid fa-file-invoice text-success"></i> Imprimir Vale </a>
+                    <a class="dropdown-item" target="_blank"  href="/vale/imprimir/'.$vale->id.'"> <i class="fa-solid fa-file-invoice text-success"></i> Imprimir Vale </a>
                     </li>  
 
                     <li>
                     <a class="dropdown-item" target="_blank"   onclick="eliminarVale('.$vale->id.')"> <i class="fa-regular fa-trash-can text-danger"></i> Eliminar Vale </a>
                     </li>  
+
+                    <li>
+                    <a class="dropdown-item" target="_blank"  onclick="comentarios('.$vale->id.')"> <i class="fa-solid fa-file-invoice text-info"></i> Ver notas y comentarios </a>
+                    </li> 
                                         
                 </ul>
             </div>';
+                    }else if($vale->estado_id == 2 || $vale->estado_id == 5){
+                        return
+                        '<div class="btn-group">
+                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                    más</button>
+                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+ 
+
+                <li>
+                <a class="dropdown-item" target="_blank"  href="/vale/imprimir/'.$vale->id.'"> <i class="fa-solid fa-file-invoice text-success"></i> Imprimir Vale </a>
+                </li>  
+
+                    <li>
+                    <a class="dropdown-item" target="_blank"  onclick="comentarios('.$vale->id.')"> <i class="fa-solid fa-file-invoice text-info"></i> Ver notas y comentarios </a>
+                    </li> 
+
+
+                                        
+                </ul>
+            </div>';
+                    }
+
+                    
                 })
                 ->addColumn('estado', function ($vale) {
 
                     if($vale->estado_id==1){
-                        return '<p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Pendiente</span></p>';
-                    }else{
+                        return '<p class="text-center"><span class="badge badge-warning p-2" style="font-size:0.75rem">Pendiente</span></p>';
+                    }else if($vale->estado_id==2){
                        
                        return  '<p class="text-center"><span class="badge badge-primary p-2" style="font-size:0.75rem">Anulado</span></p>';
+                    }else{
+
+                        return  '<p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Eliminado</span></p>';
                     }
                    
                        
@@ -154,7 +183,7 @@ class RestarVale extends Component
                 and producto_id = " .$producto->producto_id);
     
                     if ($producto->resta_inventario_total > $resultado->cantidad_disponoble) {
-                        $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $producto->nombre ."-"."$producto->producto_id  </b>.";
+                        $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>Cod." . $producto->producto_id ." - "."$producto->nombre  </b>.";
                         $flag = true;
                     }
             }
@@ -191,6 +220,7 @@ class RestarVale extends Component
 
             $vale =  ModelVale::find($request->idVale);
             $vale->estado_id = 2;
+            $vale->comentario_anular = $request->motivo;
             $vale->save();
 
 
@@ -314,7 +344,7 @@ class RestarVale extends Component
                     "cantidad" => $registroResta,
                     "unidad_medida_venta_id"=>$idUnidadVenta,
                     "users_id" => Auth::user()->id,
-                    "descripcion" => "Venta de producto",
+                    "descripcion" => "Venta de producto - vale",
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
@@ -333,6 +363,7 @@ class RestarVale extends Component
     public function eliminarVale(Request $request){
        try {
         DB::beginTransaction();
+
         $vale = ModelVale::find($request->idVale);
         $vale->estado_id = 5;
         $vale->comentario_eliminar = $request->motivo;
@@ -340,13 +371,36 @@ class RestarVale extends Component
 
         $factura = ModelFactura::find($vale->factura_id);        
         $factura->total = ROUND($factura->total - $vale->total,2);
-        $factura->isv = Round($factura->isv -  $vale->isv,2);
+        $factura->isv = ROUND($factura->isv -  $vale->isv,2);
         $factura->sub_total = ROUND($factura->sub_total - $vale->sub_total,2);
+        $factura->pendiente_cobro = ROUND($factura->pendiente_cobro - $vale->total,2);
+
+      
+
+        if($factura->tipo_pago_id == 2){
+            $factura->credito = ROUND(($factura->credito - $vale->total),2);
+
+            $cliente = ModelCliente::find($factura->cliente_id);
+            $cliente->credito = ROUND($cliente->credito + $request->totalGeneralVP,2);
+            $cliente->save();
+
+            $credito = new logCredito();
+            $credito->descripcion = "Aumento de credito por vale eliminado.";
+            $credito->monto =  $vale->total;
+            $credito->users_id = Auth::user()->id;
+            $credito->factura_id = $factura->id;
+            $credito->cliente_id = $factura->cliente_id;
+            $credito->save();
+        }
+
         $factura->save();
+       
+
+
         DB::commit();
        return response()->json([
         'icon' => 'success',
-        'text' => 'Vale Eliminado con éxito.',
+        'text' => 'Vale eliminado con éxito.',
         'title' => 'Exito!',
        ],200);
        } catch (QueryException $e) {
@@ -359,5 +413,213 @@ class RestarVale extends Component
         'error' => $e,
        ],402);
        }
+    }
+
+    public function mostrarNotas($idVale){
+       try {
+        
+        $notas = DB::SELECTONE("select notas, comentario_anular, comentario_eliminar from vale where id=".$idVale);
+
+       return response()->json([
+
+        'notas' => $notas->notas,
+        'comentario_anular' =>$notas->comentario_anular,
+        'comentario_eliminar'=> $notas->comentario_eliminar,
+
+       ],200);
+       } catch (QueryException $e) {
+       return response()->json([
+        'icon' => 'error',
+        'text' => 'Ha ocurrido un error al obtener los comentarios.',
+        'title' => 'Error!',
+        'message' => 'Ha ocurrido un error', 
+        'error' => $e,
+       ],402);
+       }
+    }
+
+    public function comprobarVales(){
+       try {
+            
+        $flagVale = false;
+        $valesArray =[];
+
+        $valesAnuladosLista = DB::SELECT("select
+        id,
+        numero_vale 
+        from vale
+        where estado_id = 1 
+        order by id ASC");
+
+
+
+            for ($i=0; $i < count($valesAnuladosLista) ; $i++) { 
+                $flagVale = true;
+
+                /*OBTIENE LOS PRODUCTOS DEL VALE */
+                $productos = DB::SELECT("select producto_id, resta_inventario_total from espera_has_producto where vale_id =".$valesAnuladosLista[$i]->id);
+
+                /*COMPRUEBA LA EXISTENCIA EN INVENTARIOS DE LOS PRODUCTOS CONTENIDOS EN EL VALE*/
+                for ($j=0; $j <  count($productos) ; $j++) { 
+                    $disponible = DB::SELECTONE("select sum(cantidad_disponible) as cantidad_disponible from recibido_bodega where cantidad_disponible <> 0 and producto_id = ".$productos[$j]->producto_id);
+
+                    /*SI UN PRODUCTO NO CUENTA CON EXISTENCIA SUFICIENTE EN INVENTARIO EL VALE NO SE PUEDE ANULAR */
+                    if($productos[$j]->resta_inventario_total > $disponible->cantidad_disponible){
+                        $flagVale = false;
+                    }
+
+
+                }
+
+                if($flagVale){
+                    array_push($valesArray,$valesAnuladosLista[$i]->numero_vale);
+                }
+
+            }
+            
+
+
+            return;
+       return response()->json([
+        'icon' => '',
+        'text' => '',
+        'title' => '',
+       ],200);
+       } catch (QueryException $e) {
+       return response()->json([
+        'icon' => '',
+        'text' => '',
+        'title' => '',
+        'message' => 'Ha ocurrido un error', 
+        'error' => $e,
+       ],402);
+       }
+    }
+
+    
+    public function imprimirVale($idVale)
+    {
+
+        $vale = DB::SELECTONE("
+        select 
+        A.id,
+        A.numero_vale,
+        A.sub_total,
+        A.isv,
+        A.total,
+        B.numero_factura,
+        B.cai,
+        B.cliente_id,
+        DATE(A.created_at) as fecha_emision,
+        TIME(A.created_at) as hora,
+        A.estado_id,
+        C.name,
+        B.estado_factura_id as estado_factura,
+        B.numero_factura,
+        B.estado_venta_id
+        from vale A
+        inner join factura B
+        on A.factura_id = B.id
+        inner join users C
+        on A.users_id = C.id
+        
+        
+        where A.id =".$idVale       
+        );
+
+       $cliente = DB::SELECTONE("
+       select        
+        factura.nombre_cliente as nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$vale->cliente_id);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idVale);
+   
+
+        $importesConCentavos= DB::SELECTONE("        
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total
+            from factura where factura.id = ".$idVale);
+        
+
+       $productos = DB::SELECT("
+       select 
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(sum(B.cantidad_s),2) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe
+
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=".$idVale."
+        group by codigo, descripcion, medida, bodega, seccion, precio");
+
+        $ordenCompra = DB::SELECTONE("
+        select
+        B.numero_orden
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =".$idVale);
+
+        if(empty($ordenCompra->numero_orden)){
+            $ordenCompra=["numero_orden"=>""];
+        }else{
+            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        }
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+          
+        }else{
+            $flagCentavos = true;
+        }
+
+        $formatter = new NumeroALetras();
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/vale', compact( 'vale','cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+       
+        return $pdf->stream("vale_numero" .$vale->numero_vale.".pdf");
+
+       
     }
 }

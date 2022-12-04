@@ -84,8 +84,16 @@
 
                 </div>
                 <div class="ibox-content">
-                    
                     <div class="row mt-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+                            <div class="form-group">
+                                <label for="comentario">Comentario:<span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="comentario" name="comentario" rows="5" data-parsley-required></textarea>
+                              </div>
+                        </div>    
+                    </div>    
+                    
+                    <div class="row ">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
 
 
@@ -761,6 +769,7 @@
                                 icon: data.icon,
                                 title: data.title,
                                 html: data.text,
+                                confirmButtonColor: "#18A689"
                             })
                             document.getElementById("btn_venta_vale_coorporativo").disabled = false;
                             return;
@@ -769,7 +778,7 @@
 
                         Swal.fire({
                             confirmButtonText: 'Cerrar',
-                            confirmButtonColor: '#5A6268',
+                            confirmButtonColor: '#18A689',
                             icon: data.icon,
                             title: data.title,
                             html: data.text

@@ -30,6 +30,7 @@ use App\Models\ModelValeHasProducto;
 use App\Models\ModelEsperaProducto;
 
 
+
 class ValeListaEspera extends Component
 {
 
@@ -59,7 +60,7 @@ class ValeListaEspera extends Component
         id,
         concat('cod ',id,' - ',nombre) as text
         from producto
-        where nombre like '%". $request->search ."%' or id like '% . $request->search .%' 
+        where nombre like '%". $request->search ."%' or id like '%" . $request->search ."%' 
         limit 15
         ");
 
@@ -80,19 +81,90 @@ class ValeListaEspera extends Component
     
     public function guardarVentaVale(Request $request){
        try{
+
+        $factura = ModelFactura::find($request->idFactura);
+
+        $cliente = ModelCliente::find($factura->cliente_id);
+
+        if(round($request->totalGeneralVP,2) > round($cliente->credito,2)){
+            return response()->json([
+                'icon' => "warning",
+                'text' => 'El vale no puede ser realizado, dado que la factura seleccionada es de tipo “crédito” y el valor del vale excede el crédito disponible del cliente.',
+                'title' => 'Advertencia!',
+            ], 200);
+        }
+
+        $arrayInputs = $request->arregloIdInputsVP;
+        $flagProductoExiste = false;
+        $mensaje ="El producto o productos:";
+        for ($i = 0; $i < count($arrayInputs); $i++) {
+
+          
+
+            $keyIdProducto = "idProductoVP" . $arrayInputs[$i];
+
+
+            $contadorProducto = DB::SELECTONE("
+            select 
+                count(producto_id) as contador,
+                B.nombre
+            from venta_has_producto A
+            inner join producto B
+            on A.producto_id = B.id where producto_id =".$request->$keyIdProducto." and factura_id =".$request->idFactura."  limit 1");
+            
+            if($contadorProducto->contador > 0){
+                $flagProductoExiste = true;
+                $mensaje = $mensaje . " <br><b>Cod." .  $request->$keyIdProducto ." - ". $contadorProducto->nombre . ".</b>";
+            }
+
+        }
+
+        if($flagProductoExiste){
+            $mensaje = $mensaje . "<br> Ya existe en factura, no se puede agregar a vale.";
+            return response()->json([
+                'icon' => "warning",
+                'text' =>  $mensaje,
+                'title' => 'Advertencia!',
+            ], 200);
+        }
+        
      //    dd($request->all());
         DB::beginTransaction();
 
         ////Verficar si es factura de credito, para umentar credito y disminuir credito disponible 
 
-        $this->guardarVale($request);
+       $idVale = $this->guardarVale($request);
+
 
 
         $factura = ModelFactura::find($request->idFactura);        
         $factura->total = ROUND($factura->total + $request->totalGeneralVP,2);
         $factura->isv = Round($factura->isv +  $request->isvGeneralVP,2);
         $factura->sub_total = ROUND($factura->sub_total + $request->subTotalGeneralVP,2);
+        $factura->pendiente_cobro = ROUND( $factura->pendiente_cobro + $request->totalGeneralVP,2);
+
+        if($factura->tipo_pago_id == 2){
+            $factura->credito = ROUND(($factura->credito + $request->totalGeneralVP),2);
+
+            $cliente = ModelCliente::find($factura->cliente_id);
+            $cliente->credito = ROUND($cliente->credito - $request->totalGeneralVP,2);
+            
+            $cliente->save();
+
+
+            $credito = new logCredito();
+            $credito->descripcion = "Reducción de credito por vale agregado a factura.";
+            $credito->monto =  $request->totalGeneralVP;
+            $credito->users_id = Auth::user()->id;
+            $credito->factura_id = $factura->id;
+            $credito->cliente_id = $factura->cliente_id;
+            $credito->save();          
+
+        }
+
         $factura->save();
+
+
 
         $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
         DB::commit();
@@ -101,13 +173,12 @@ class ValeListaEspera extends Component
             'icon' => "success",
             'text' => '
             <div class="d-flex justify-content-between">
-                <a href="/factura/cooporativo/' . $request->idFactura . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                <a href="/venta/cobro/' . $request->idFactura . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                <a href="/vale/imprimir/'.$idVale .'" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Imprimir Vale</a>
                 <a href="/detalle/venta/' . $request->idFactura . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
             </div>',
             'title' => 'Exito!',
             'idFactura' => $request->idFactura,
-            'numeroVenta' => $numeroVenta->numero
+            'numeroVenta' => ''
 
         ], 200);
 
@@ -150,6 +221,7 @@ class ValeListaEspera extends Component
         $vale->users_id = Auth::user()->id;
         $vale->notas = $request->comentario;
         $vale->estado_id = 1;
+        $vale->notas = $request->comentario;
         $vale->save();
 
 
@@ -188,7 +260,8 @@ class ValeListaEspera extends Component
         ModelEsperaProducto::insert($arrayProductosVale);
 
 
-       return ;
+       return  $vale->id;
 
     }
+
 }

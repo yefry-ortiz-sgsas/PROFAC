@@ -78,7 +78,8 @@ use App\Http\Livewire\Vale\FacturarVale;
 use App\Http\Livewire\Vale\ValeListaEspera;
 
 use App\Http\Livewire\Vale\RestarVale;
-
+use App\Http\Livewire\Vale\ListadoFacturasVale;
+use App\Http\Livewire\Ventas\ListarVale;
 
 /*
 |--------------------------------------------------------------------------
@@ -569,9 +570,15 @@ Route::get('/crear/vale/lista/espera/{id}',ValeListaEspera::class);
 Route::post('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);  
 Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVentaVale']);
 
+
 Route::get('/vale/restar/inventario', RestarVale::class);
 Route::get('/vale/restar/lista', [RestarVale::class,'listarVales']); 
 Route::post('/vale/restar/lista/anular', [RestarVale::class,'anularVale']); 
 Route::post('/vale/restar/lista/eliminar', [RestarVale::class,'eliminarVale']); 
+Route::get('/vale/comentarios/{id}',[RestarVale::class,'mostrarNotas']); 
+Route::get('/vale/imprimir/{id}',[RestarVale::class,'imprimirVale']);
+
+Route::get('/vale/listado/facturas',ListadoFacturasVale::class);
+Route::get('/vale/listado/facturas/obtener',[ListadoFacturasVale::class,'listarFacturasVale']);
 
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);
