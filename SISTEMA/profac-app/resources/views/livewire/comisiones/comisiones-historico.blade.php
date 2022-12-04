@@ -20,7 +20,7 @@
                         <div class="ibox ">
                             <div class="ibox-content">
                                 <div class="table-responsive">
-                                    <table name="tbl_historico_comisionesMes" id="tbl_historico_comisones" class="table table-striped table-bordered table-hover">
+                                    <table name="tbl_historico_comisionesMes" id="tbl_historico_comisionesMes" class="table table-striped table-bordered table-hover">
                                         <thead class="">
                                             <tr>
                                                 <th>Código de comisión</th>
