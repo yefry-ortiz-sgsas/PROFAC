@@ -131,6 +131,8 @@
                                         <th>Código de sección</th>
                                         <th>Sección</th>
                                         <th>Bodega</th>
+
+                                        <th>Comisionado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -240,6 +242,9 @@
                         },
                         {
                             data: 'bodega'
+                        },
+                        {
+                            data: 'estadoComisionado'
                         }
 
                     ]
@@ -257,7 +262,7 @@
                 guardarComision();
             });
 
-                function guardarComision() {
+            function guardarComision() {
 
                     $('#modal_comision_crear').modal('hide');
                     $('#modalSpinnerLoading').modal('show');
@@ -297,10 +302,7 @@
                             console.error(err);
 
                         });
-
-
-
-                }
+            }
 
 
 

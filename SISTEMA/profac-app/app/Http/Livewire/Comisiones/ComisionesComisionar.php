@@ -13,6 +13,8 @@ use Auth;
 use App\Models\Comisiones\desglose;
 
 use App\Models\Comisiones\comision;
+use App\Models\Comisiones\comision_temp;
+
 
 
 class ComisionesComisionar extends Component
@@ -27,10 +29,10 @@ class ComisionesComisionar extends Component
     {
         $idFactura = $this->idVenta;
 
-        $gananciaTotal = DB::SELECTONE("SELECT SUM(desglose.gananciatotal) AS gananciaTotal FROM desglose where idFactura = ".$idFactura);
+        $gananciaTotal = DB::SELECTONE("SELECT SUM(desglose.gananciatotal) AS gananciaTotal FROM desglose where estadoComisionado = 0 and idFactura = ".$idFactura);
 
 
-        $idVendedor = DB::SELECTONE("SELECT desglose.vendedor_id as id FROM desglose where idFactura = ".$idFactura);
+        $idVendedor = DB::SELECTONE("SELECT desglose.vendedor_id as id FROM desglose where estadoComisionado = 0 and idFactura = ".$idFactura);
 
         $mesFactura = DB::SELECTONE("SELECT DATE_FORMAT(fecha_emision,'%m') as mes  from factura where id =".$idFactura);
         //dd();
@@ -107,6 +109,20 @@ class ComisionesComisionar extends Component
                     where id = '.$request->factura.'
                 ');
 
+                DB::update('
+                    update
+                    desglose
+                    set estadoComisionado = 1
+                    where id = '.$request->factura.'
+                ');
+
+                DB::update('
+                    update
+                    desglose_temp
+                    set estadoComisionado = 1
+                    where id = '.$request->factura.'
+                ');
+
             DB::commit();
             return response()->json([
                 "icon" => "success",
@@ -128,29 +144,147 @@ class ComisionesComisionar extends Component
 
     public function guardarComisionMasivo(Request $request){
         try {
-            //dd();
+
+            DB::table('comision_temp')->truncate();
 
             DB::beginTransaction();
-                //dd($techo);
+                $facturas_desglose_temp = DB::SELECT("select idFactura from desglose_temp
+                group by idFactura;");
 
-                $comisionMonto = (($request->porcentaje)/100)*$request->gananciaTotal;
-                $comision = new comision;
-                $comision->comision_techo_id =
-                $comision->factura_id = $request->factura;
-                $comision->vendedor_id = $request->idVendedor;
-                $comision->gananciaTotal = $request->gananciaTotal;
-                $comision->porcentaje = $request->porcentaje;
-                $comision->monto_comison = $comisionMonto;
-                $comision->estado_id = 1;
-                $comision->users_registro_id = Auth::user()->id;
-                $comision->save();
+                $porcentaje = floatval((intval($request->porcentaje))/100);
 
-                DB::update('
-                update
-                factura
-                set comision_estado_pagado = 1, monto_comision = '.$comisionMonto.'
-                where id = '.$request->factura.'
-            ');
+                //dd($facturas_desglose_temp);
+                foreach ($facturas_desglose_temp  as $value) {
+
+                    $gananciaTotal_temp = DB::SELECTONE("SELECT SUM(desglose_temp.gananciatotal) AS gananciaTotal FROM desglose_temp where idFactura = ".$value->idFactura);
+
+                    $idVendedor_temp = DB::SELECTONE("SELECT desglose_temp.vendedor_id as id FROM desglose_temp where idFactura = ".$value->idFactura);
+
+                    $mesFactura_temp = DB::SELECTONE("SELECT DATE_FORMAT(fecha_emision,'%m') as mes  from factura where id =".$value->idFactura);
+
+                    $centComisionado_temp = DB::SELECTONE("SELECT factura.comision_estado_pagado as estado FROM factura where id =".$value->idFactura);
+
+                    $ganancia = floatval($gananciaTotal_temp->gananciaTotal);
+
+
+                    $comisionMonto = $porcentaje*$ganancia;
+
+                    $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$idVendedor_temp->id." and comision_techo.meses_id = ".$mesFactura_temp->mes." and comision_techo.estado_id = 1");
+
+
+
+                    //dd($idComisionTecho);
+
+
+                    $comision_temp = new comision_temp;
+                    $comision_temp->comision_techo_id = $idComisionTecho->id;
+                    $comision_temp->factura_id = $value->idFactura;
+                    $comision_temp->vendedor_id = $idVendedor_temp->id;
+                    $comision_temp->gananciaTotal = $ganancia;
+                    $comision_temp->porcentaje = $porcentaje;
+                    $comision_temp->monto_comison = $comisionMonto;
+                    $comision_temp->estado_id = 1;
+                    $comision_temp->users_registro_id = Auth::user()->id;
+                    $comision_temp->save();
+
+                }
+
+                $listaComisiones = DB::SELECTONE("
+
+                select
+                codigoVendedor,
+                vendedor,
+                mes,
+                facturasComisionadas,
+                montotecho as montotecho,
+                sum(gananciaTotal) as gananciatotalMes,
+                sum(montoAsignado)  as montoAsignado from (
+                                select
+                                    co.id as codigoComision,
+                                    co.vendedor_id as codigoVendedor,
+                                    us.name as vendedor,
+                                    co.comision_techo_id as techo,
+                                    SUM(co.monto_comison) as montoAsignado,
+                                    co.gananciaTotal as gananciaTotal,
+                                    (
+                                        select count(comision.factura_id) from comision
+                                        inner join comision_techo on (comision_techo.id = comision.comision_techo_id)
+                                        where comision_techo.meses_id = m.id
+                                        and comision_techo.vendedor_id = co.vendedor_id
+
+                                    ) as facturasComisionadas,
+                                    m.nombre as mes,
+                                    ct.monto_techo as montotecho
+                                from comision_temp co
+                                inner join users us on (us.id = co.vendedor_id)
+                                inner join comision_techo ct on (ct.id = co.comision_techo_id)
+                                inner join meses m on (m.id = ct.meses_id)
+                                where co.estado_id = 1 and ct.estado_id = 1
+                                group by co.id, us.name, co.comision_techo_id, co.monto_comison,facturasComisionadas, m.nombre, ct.monto_techo
+                            ) as comisiones
+                            group by codigoVendedor, vendedor, mes, facturasComisionadas,montotecho
+
+                ");
+
+                if( $listaComisiones->montoAsignado >  $listaComisiones->montotecho ){
+                    return response()->json([
+                        'message' => 'El monto total asignado a la comision para el vendedor '.$listaComisiones->vendedor.', es de L. '.$listaComisiones->montoAsignado.', lo que supera al techo asignado de L.'.$listaComisiones->montotecho.' para el mes de '.$listaComisiones->mes.'. Se le sugiere cambiar el monto de techo o disminuir el porcentaje de comisión',
+                        'permiso' => 0
+                    ], 200);
+                }else{
+
+                    foreach ($facturas_desglose_temp  as $value) {
+
+                        $gananciaTotal_temp = DB::SELECTONE("SELECT SUM(desglose_temp.gananciatotal) AS gananciaTotal FROM desglose_temp where idFactura = ".$value->idFactura);
+
+                        $idVendedor_temp = DB::SELECTONE("SELECT desglose_temp.vendedor_id as id FROM desglose_temp where idFactura = ".$value->idFactura);
+
+                        $mesFactura_temp = DB::SELECTONE("SELECT DATE_FORMAT(fecha_emision,'%m') as mes  from factura where id =".$value->idFactura);
+
+                        $centComisionado_temp = DB::SELECTONE("SELECT factura.comision_estado_pagado as estado FROM factura where id =".$value->idFactura);
+
+                        $ganancia = floatval($gananciaTotal_temp->gananciaTotal);
+
+
+                        $comisionMonto = $porcentaje*$ganancia;
+
+                        $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$idVendedor_temp->id." and comision_techo.meses_id = ".$mesFactura_temp->mes." and comision_techo.estado_id = 1");
+
+                        $comision = new comision;
+                        $comision->comision_techo_id = $idComisionTecho->id;
+                        $comision->factura_id = $value->idFactura;
+                        $comision->vendedor_id = $idVendedor_temp->id;
+                        $comision->gananciaTotal = $ganancia;
+                        $comision->porcentaje = $porcentaje;
+                        $comision->monto_comison = $comisionMonto;
+                        $comision->estado_id = 1;
+                        $comision->users_registro_id = Auth::user()->id;
+                        $comision->save();
+
+                        DB::update('
+                        update
+                        factura
+                        set comision_estado_pagado = 1, monto_comision = '.$comisionMonto.'
+                        where id = '.$value->idFactura.'
+                        ');
+
+                        DB::update('
+                        update
+                        desglose
+                        set estadoComisionado = 1
+                        where id = '.$value->idFactura.'
+                        ');
+
+                        DB::update('
+                            update
+                            desglose_temp
+                            set estadoComisionado = 1
+                            where id = '.$value->idFactura.'
+                        ');
+
+                    }
+
+                }
 
             DB::commit();
             return response()->json([

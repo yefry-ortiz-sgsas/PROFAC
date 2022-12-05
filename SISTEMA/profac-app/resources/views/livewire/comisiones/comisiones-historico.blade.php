@@ -12,38 +12,45 @@
             </ol>
         </div>
         <br>
+
+    </div>
+
+
+
         <div class="wrapper wrapper-content animated fadeInRight">
-                <br>
-                <label for="" class="col-form-label focus-label"><b> Lista Comisiones aprobadas por mes:</b></label>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table name="tbl_historico_comisionesMes" id="tbl_historico_comisionesMes" class="table table-striped table-bordered table-hover">
-                                        <thead class="">
-                                            <tr>
-                                                <th>Código de Vendedor</th>
-                                                <th>Vendedor</th>
-                                                <th>Mes de comisión</th>
-                                                <th>Cantidad de facturas comisionadas</th>
-                                                <th>Ganancia total del Mes</th>
-                                                <th>Monto Asignado</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+            <br>
+             <label for="" class="col-form-label focus-label"><b> Lista Comisiones por factura:</b></label>
+             <div class="row">
+                 <div class="col-lg-12">
+                     <div class="ibox ">
+                         <div class="ibox-content">
+                             <div class="table-responsive">
+                                 <table name="tbl_historico_comisionesMes" id="tbl_historico_comisionesMes" class="table table-striped table-bordered table-hover">
+                                     <thead class="">
+                                         <tr>
+                                            <th>Código de Vendedor</th>
+                                            <th>Vendedor</th>
+                                            <th>Mes de comisión</th>
+                                            <th>Cantidad de facturas comisionadas</th>
+                                            <th>Techo asignado</th>
+                                            <th>Ganancia total del Mes</th>
+                                            <th>Monto Asignado</th>
+                                            <th>Estado de pago</th>
+                                            <th>Acciones</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody>
 
-                                        </tbody>
-                                    </table>
+                                     </tbody>
+                                 </table>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                             </div>
+
+                         </div>
+                     </div>
+                 </div>
+             </div>
         </div>
-
 
         <div class="wrapper wrapper-content animated fadeInRight">
            <br>
@@ -250,10 +257,19 @@
                         data: 'facturasComisionadas'
                     },
                     {
+                        data: 'montotecho'
+                    },
+                    {
                         data: 'gananciatotalMes'
                     },
                     {
                         data: 'montoAsignado'
+                    },
+                    {
+                        data: 'estadoPago'
+                    },
+                    {
+                        data: 'acciones'
                     }
 
 

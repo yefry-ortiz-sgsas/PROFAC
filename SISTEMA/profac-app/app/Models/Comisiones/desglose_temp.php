@@ -5,10 +5,10 @@ namespace App\Models\Comisiones;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class desglose extends Model
+class desglose_temp extends Model
 {
     use HasFactory;
-    protected $table = 'desglose';
+    protected $table = 'desglose_temp';
     protected $primaryKey = 'id';
     protected $fillable =  ['idFactura',
             'numero_factura',

@@ -13,6 +13,7 @@ use Throwable;
 use App\Models\usuario;
 
 use App\Models\Comisiones\desglose;
+use App\Models\Comisiones\desglose_temp;
 
 use DataTables;
 
@@ -23,8 +24,34 @@ class ComisionesPrincipal extends Component
         return view('livewire.comisiones.comisiones-principal');
     }
 
+    public function existenciaTecho($mest,$idVendedort){
+
+        $existenciaTecho = DB::SELECTONE("
+        select users.name as vendedor, meses.nombre as mes, count(*) as canTecho from comision_techo
+        inner join users on (users.id = comision_techo.vendedor_id)
+        inner join meses on (meses.id = comision_techo.meses_id)
+        where comision_techo.estado_id = 1 and comision_techo.vendedor_id = ".$idVendedort." and comision_techo.meses_id = ".$mest."");
+
+        if ($existenciaTecho->canTecho == 0) {
+
+            return response()->json([
+                'message' => 'No se puede comisionar,el vendedor '.$existenciaTecho->vendedor.' no tiene un techo de comisión para el mes de '.$existenciaTecho->mes.'.',
+                'permiso' => 0
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Si tiene techo.',
+                'permiso' => 1
+            ], 200);
+        }
+    }
+
     public function obtenerFacturas($mes,$idVendedor){
         //dd($mes,$idVendedor);
+
+
+        DB::table('desglose_temp')->truncate();
+
             try {
                 $listaFacturas = DB::SELECT("
                     select
@@ -95,7 +122,9 @@ class ComisionesPrincipal extends Component
                     $existencia = DB::SELECTONE("select count(*) AS existencia FROM desglose WHERE idFactura in (SELECT idFactura FROM desglose WHERE idFactura = ".$value->id.")");
                     //dd($existencia->existencia);
                     if ($existencia->existencia == 0) {
+                        //DB::table('desglose_temp')->truncate();
                         foreach ($listaProd as $values) {
+
                             $desglose = new desglose;
                             $desglose->idFactura = $values->idFactura;
                             $desglose->numero_factura = $values->numero_factura;
@@ -115,14 +144,42 @@ class ComisionesPrincipal extends Component
                             $desglose->seccion= $values->seccion;
                             $desglose->bodega= $values->bodega;
                             $desglose->vendedor_id = $idVendedor;
-                        $desglose->save();
+                            $desglose->estadoComisionado = 0;
+                            $desglose->save();
+
+
+
+
                         }
+
+                    }
+
+
+                    foreach ($listaProd as $values) {
+                        $desgloseTemporal = new desglose_temp;
+                        $desgloseTemporal->idFactura = $values->idFactura;
+                        $desgloseTemporal->numero_factura = $values->numero_factura;
+                        $desgloseTemporal->idProducto= $values->idProducto;
+                        $desgloseTemporal->producto= $values->producto;
+                        $desgloseTemporal->precio_base= $values->precio_base;
+                        $desgloseTemporal->ultimo_costo_compra= $values->ultimo_costo_compra;
+                        $desgloseTemporal->unidad_venta= $values->unidad_venta;
+                        $desgloseTemporal->cantidad= $values->cantidad;
+                        $desgloseTemporal->precio_unidad= $values->precio_unidad;
+                        $desgloseTemporal->gananciaUnidad= $values->gananciaUnidad;
+                        $desgloseTemporal->gananciatotal= $values->gananciatotal;
+                        $desgloseTemporal->total= $values->total;
+                        $desgloseTemporal->sub_total= $values->sub_total;
+                        $desgloseTemporal->isv= $values->isv;
+                        $desgloseTemporal->seccion_id= $values->seccion_id;
+                        $desgloseTemporal->seccion= $values->seccion;
+                        $desgloseTemporal->bodega= $values->bodega;
+                        $desgloseTemporal->vendedor_id = $idVendedor;
+                        $desgloseTemporal->estadoComisionado = 0;
+                        $desgloseTemporal->save();
                     }
 
                 }
-
-
-
                 //dd($listaFacturas);
                 return Datatables::of($listaFacturas)
                 ->addColumn('estadoPago', function ($listaFacturas) {
@@ -155,7 +212,6 @@ class ComisionesPrincipal extends Component
                 })
                 ->rawColumns(['estadoPago','comision','acciones'])
                 ->make(true);
-
             } catch (QueryException $e) {
                 return response()->json([
                     'message' => 'Ha ocurrido un error al listar las facturas.',
@@ -163,10 +219,12 @@ class ComisionesPrincipal extends Component
                 ], 402);
 
             }
+
     }
 
     public function obtenerFacturasSinCerrar($mes,$idVendedor){
         //dd($mes,$idVendedor);
+
             try {
                 $listaFacturas = DB::SELECT("
                     select
@@ -232,5 +290,6 @@ class ComisionesPrincipal extends Component
                 ], 402);
 
             }
+
     }
 }
