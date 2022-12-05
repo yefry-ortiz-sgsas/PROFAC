@@ -507,6 +507,7 @@ class RestarVale extends Component
         A.sub_total,
         A.isv,
         A.total,
+        A.estado_id as estado_id_vale,
         B.numero_factura,
         B.cai,
         B.cliente_id,
@@ -521,9 +522,7 @@ class RestarVale extends Component
         inner join factura B
         on A.factura_id = B.id
         inner join users C
-        on A.users_id = C.id
-        
-        
+        on A.users_id = C.id    
         where A.id =".$idVale       
         );
 
@@ -545,9 +544,10 @@ class RestarVale extends Component
        $importes = DB::SELECTONE("
        select
         total,
+        FORMAT(total,2) as total2,
         isv,
         sub_total
-        from factura
+        from vale
         where id = ".$idVale);
    
 
@@ -556,39 +556,25 @@ class RestarVale extends Component
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
             FORMAT(sub_total,2) as sub_total
-            from factura where factura.id = ".$idVale);
+            from vale where id = ".$idVale);
         
 
-       $productos = DB::SELECT("
-       select 
-            B.producto_id as codigo,
-            concat(C.nombre) as descripcion,
-            UPPER(J.nombre) as medida,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            FORMAT(B.sub_total/B.cantidad,2) as precio,
-            FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
-
-        from factura A
-        inner join venta_has_producto B
-        on A.id = B.factura_id
-        inner join producto C
-        on B.producto_id = C.id
-        inner join unidad_medida_venta D
-        on B.unidad_medida_venta_id = D.id
-        inner join unidad_medida J
-        on J.id = D.unidad_medida_id
-        inner join recibido_bodega E
-        on B.lote = E.id
-        inner join seccion F
-        on E.seccion_id = F.id
-        inner join segmento G
-        on F.segmento_id = G.id
-        inner join bodega H
-        on G.bodega_id = H.id
-        where A.id=".$idVale."
-        group by codigo, descripcion, medida, bodega, seccion, precio");
+            $productos = DB::SELECT("
+            select
+            B.id as codigo,
+            B.nombre as descripcion,
+            D.nombre as medida,
+            A.precio,
+            A.cantidad,
+            A.sub_total as importe
+            from espera_has_producto A
+            inner join producto B
+            on A.producto_id = B.id
+            inner join unidad_medida_venta C
+            on A.unidad_medida_venta_id = C.id
+            inner join unidad_medida D
+            on C.unidad_medida_id = D.id
+            where A.vale_id =".$idVale);
 
         $ordenCompra = DB::SELECTONE("
         select

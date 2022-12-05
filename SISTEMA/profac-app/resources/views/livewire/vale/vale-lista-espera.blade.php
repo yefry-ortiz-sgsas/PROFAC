@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-            font-size: 0.8rem;
-            
-            
-          } */
+                font-size: 0.8rem;
+                
+                
+              } */
 
 
             .img-size {
@@ -54,7 +54,7 @@
             <h2>Crear Vale</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Código de Factura: {{$numeroFactura->numero_factura}}</a>
+                    <a>Código de Factura: {{ $numeroFactura->numero_factura }}</a>
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -73,9 +73,10 @@
 
 
     </div>
-    <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta"  name="crear_venta" data-parsley-validate>
+    <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta" name="crear_venta"
+        data-parsley-validate>
 
-        <input id="idFactura" name="idFactura" type="hidden" value="{{$idFactura}}">
+        <input id="idFactura" name="idFactura" type="hidden" value="{{ $idFactura }}">
         <!------------------------------------------------------------DIV DE VALE--------------------------------------------------------------------------------------->
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox ">
@@ -89,10 +90,10 @@
                             <div class="form-group">
                                 <label for="comentario">Comentario:<span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="comentario" name="comentario" rows="5" data-parsley-required></textarea>
-                              </div>
-                        </div>    
-                    </div>    
-                    
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row ">
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
 
@@ -161,8 +162,8 @@
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                             <div id="botonAddVale"
                                 class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-4 text-center d-none">
-                                <button type="button" class="btn-rounded btn btn-success p-3" style="font-weight: 900; "
-                                    onclick="agregarProductoVale()">Añadir
+                                <button type="button" class="btn-rounded btn btn-success p-3"
+                                    style="font-weight: 900; " onclick="agregarProductoVale()">Añadir
                                     Producto a Vale </button>
 
                             </div>
@@ -272,8 +273,9 @@
                         </div>
 
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                            <input type="text" placeholder="ISV " id="isvGeneralMostrarVP" name="isvGeneralMostrarVP"
-                                class="form-control" data-parsley-required autocomplete="off" readonly>
+                            <input type="text" placeholder="ISV " id="isvGeneralMostrarVP"
+                                name="isvGeneralMostrarVP" class="form-control" data-parsley-required
+                                autocomplete="off" readonly>
                             <input id="isvGeneralVP" name="isvGeneralVP" type="hidden" value="0" required>
                         </div>
                     </div>
@@ -293,16 +295,17 @@
                             <input id="totalGeneralVP" name="totalGeneralVP" type="hidden" value="0" required>
                         </div>
 
-                        
+
                     </div>
 
-                    
+
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <button id="btn_venta_vale_coorporativo" class="btn  btn-primary float-left m-t-n-xs"><strong>
+                            <button id="btn_venta_vale_coorporativo"
+                                class="btn  btn-primary float-left m-t-n-xs"><strong>
                                     Guardar Vale</strong></button>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -312,15 +315,13 @@
     </form>
     @push('scripts')
         <script>
-
-
             var numeroInputsVP = 0;
             var arregloIdInputsVP = [];
 
 
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
 
-      
+
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
 
@@ -331,8 +332,8 @@
                     type: "POST",
                     url: '/crear/vale/lista/espera/obtenerProductos',
                     headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                     },
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: function(params) {
                         var query = {
                             search: params.term,
@@ -491,7 +492,7 @@
                         });
 
 
-                       let htmlVP = `
+                        let htmlVP = `
                         <div id='VP${numeroInputsVP}' class="row no-gutters">
                                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                                                 <div class="d-flex">
@@ -607,7 +608,7 @@
 
 
             function eliminarInputVP(id) {
-                const element = document.getElementById("VP"+id);
+                const element = document.getElementById("VP" + id);
                 element.remove();
 
 
@@ -693,7 +694,7 @@
 
                 }
 
-               
+
 
                 document.getElementById('subTotalGeneralVP').value = subTotalGeneralValor.toFixed(3);
                 document.getElementById('subTotalGeneralMostrarVP').value = new Intl.NumberFormat('es-HN', {
@@ -734,7 +735,7 @@
 
                 document.getElementById("btn_venta_vale_coorporativo").disabled = true;
 
-                var data = new FormData($('#crear_venta').get(0));
+                let data = new FormData($('#crear_venta').get(0));
 
 
 
@@ -742,14 +743,14 @@
                 for (var i = 0; i < longitudArregloVP; i++) {
 
 
-                let name = "unidadVP" + arregloIdInputsVP[i];
-                let nameForm = "idUnidadVentaVP" + arregloIdInputsVP[i];
+                    let name = "unidadVP" + arregloIdInputsVP[i];
+                    let nameForm = "idUnidadVentaVP" + arregloIdInputsVP[i];
 
-                let e = document.getElementById(name);
-                let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
+                    let e = document.getElementById(name);
+                    let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                data.append("arregloIdInputsVP[]", arregloIdInputsVP[i]);
-                data.append(nameForm, idUnidadVenta)
+                    data.append("arregloIdInputsVP[]", arregloIdInputsVP[i]);
+                    data.append(nameForm, idUnidadVenta)
                 }
 
 
@@ -776,6 +777,7 @@
 
                         }
 
+
                         Swal.fire({
                             confirmButtonText: 'Cerrar',
                             confirmButtonColor: '#18A689',
@@ -784,9 +786,12 @@
                             html: data.text
                         })
 
+                        if(data.estadoBorrar == true){
+                            document.getElementById("btn_venta_vale_coorporativo").disabled = false;
+                            return
+                        }
 
-                        document.getElementById('bloqueImagenes').innerHTML = '';
-                        document.getElementById('divProductos').innerHTML = '';
+
 
                         document.getElementById('bloqueImagenesVale').innerHTML = '';
                         document.getElementById('divProductosVale').innerHTML = '';
@@ -794,21 +799,18 @@
                         document.getElementById("crear_venta").reset();
                         $('#crear_venta').parsley().reset();
 
-                        let element = document.getElementById('detalleProducto');
-                        element.classList.add("d-none");
-                        element.href = "";
 
 
                         let element2 = document.getElementById('detalleProductoVale');
                         element2.classList.add("d-none");
                         element2.href = "";
 
-                     
+
 
                         arregloIdInputsVP = [];
                         numeroInputsVP = 0;
 
-             
+
 
                         document.getElementById("btn_venta_vale_coorporativo").disabled = false;
 
@@ -818,19 +820,15 @@
                     })
                     .catch(err => {
                         document.getElementById("btn_venta_vale_coorporativo").disabled = false;
-                        let data = err.response.data;
                         console.log(err);
+
                         Swal.fire({
-                            icon: data.icon,
-                            title: data.title,
-                            text: data.text
+                            icon: 'error',
+                            title: 'Error!',
+                            text: "Ha ocurrido un error al intentar crear el vale."
                         })
                     })
             }
-
-
-
-
         </script>
     @endpush
 </div>

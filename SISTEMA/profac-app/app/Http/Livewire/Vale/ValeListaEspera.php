@@ -82,6 +82,17 @@ class ValeListaEspera extends Component
     public function guardarVentaVale(Request $request){
        try{
 
+        $comprobarValeExiste = DB::SELECTONE("select count(id) as contador from vale where (estado_id =1 or estado_id =2) and  factura_id = ".$request->idFactura);
+
+        if($comprobarValeExiste->contador > 0){
+            return response()->json([
+                'icon' => "warning",
+                'text' => 'El vale no puede ser realizado, dado que la factura seleccionada ya cuenta con un vale pendiente o anulado',
+                'title' => 'Advertencia!',
+                'estadoBorrar' => 'true'
+            ], 200);
+        }
+
         $factura = ModelFactura::find($request->idFactura);
 
         $cliente = ModelCliente::find($factura->cliente_id);
@@ -91,6 +102,7 @@ class ValeListaEspera extends Component
                 'icon' => "warning",
                 'text' => 'El vale no puede ser realizado, dado que la factura seleccionada es de tipo “crédito” y el valor del vale excede el crédito disponible del cliente.',
                 'title' => 'Advertencia!',
+                'estadoBorrar' => 'true'
             ], 200);
         }
 
@@ -125,6 +137,7 @@ class ValeListaEspera extends Component
                 'icon' => "warning",
                 'text' =>  $mensaje,
                 'title' => 'Advertencia!',
+                'estadoBorrar' => 'true'
             ], 200);
         }
         
@@ -178,7 +191,8 @@ class ValeListaEspera extends Component
             </div>',
             'title' => 'Exito!',
             'idFactura' => $request->idFactura,
-            'numeroVenta' => ''
+            'numeroVenta' => '',
+            'estadoBorrar' => 'false'
 
         ], 200);
 

@@ -39,15 +39,24 @@ class ListadoFacturasVale extends Component
             cliente.nombre,
             tipo_pago_venta.descripcion,
             fecha_vencimiento,
-            FORMAT(sub_total,2) as sub_total,
-            FORMAT(isv,2) as isv,
-            FORMAT(total,2) as total,
+            FORMAT(factura.sub_total,2) as sub_total,
+            FORMAT(factura.isv,2) as isv,
+            FORMAT(factura.total,2) as total,
             factura.credito,
             users.name as creado_por,
             (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
-            factura.estado_venta_id
+            factura.estado_venta_id,
+            factura.estado_id_vale
         
-        from factura
+        from (
+            select factura.id, factura.cai,factura.sub_total,factura.isv,factura.total,
+              factura.credito,factura.estado_venta_id, factura.cliente_id,factura.tipo_pago_id,
+              factura.vendedor,factura.cai_id,factura.created_at,numero_factura,fecha_emision, fecha_vencimiento, vale.estado_id as estado_id_vale  
+            from factura
+              left join vale
+              on factura.id = vale.factura_id       
+            
+            ) as factura
             inner join cliente
             on factura.cliente_id = cliente.id
             inner join tipo_pago_venta
@@ -57,7 +66,7 @@ class ListadoFacturasVale extends Component
             inner join cai A
             on factura.cai_id= A.id
             cross join (select @i := 0) r
-        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 
+        where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) ) and factura.estado_venta_id<>2 and (factura.estado_id_vale = 5 or factura.estado_id_vale IS NULL)
         order by factura.id desc
             ");
 

@@ -51,7 +51,7 @@
 
         }
     </style>
-    <title>FACTURA</title>
+    <title>VALE</title>
 </head>
 
 <body>
@@ -66,7 +66,7 @@
     <div class="pruebaFondo">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
-                <b>Vale No.  </b>
+                <b>Vale No. {{$vale->numero_vale}}</b>
               
             </div> 
 
@@ -74,7 +74,7 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro Tributario:
                         08011986138652</b></p>
                 <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>Factura N°:
-                       2123131312</b></p>
+                       {{$vale->cai}}</b></p>
                
             </div>
         </div>
@@ -82,11 +82,11 @@
         <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$cliente->nombre}}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 9px; max-width:500px"><b>Dirección:</b> {{$cliente->direccion}}</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:29px; max-width:500px"><b>Dirección:</b> {{$cliente->direccion}}</p>
                 
                 <p class="card-text" style="position:absolute;left:20px;  top:47px;"><b>Correo:</b> {{$cliente->correo}}
                 </p>
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b> </p>
+                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b>Entrega Pendiente</p>
 
 
                 <p class="card-text "  style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord. excenta</b>
@@ -119,9 +119,7 @@
                     <thead>
                     <tr>
                       <th>Código</th>
-                      <th>Descripción</th>                    
-                      <th>Bodega</th>
-                      <th>Seccion</th>
+                      <th>Descripción</th>   
                       <th>Medida</th>
                       <th>Precio </th>
                       <th>Cantidad</th>
@@ -132,9 +130,7 @@
                     @foreach ($productos as $producto)
                     <tr>
                         <td>{{$producto->codigo}}</td>
-                        <td>{{$producto->descripcion}}</td>                      
-                        <td>{{$producto->bodega}}</td>
-                        <td>{{$producto->seccion}}</td>
+                        <td>{{$producto->descripcion}}</td>      
                         <td>{{$producto->medida}}</td>
                         <td>{{$producto->precio}}</td>
                         <td>{{$producto->cantidad}}</td>
@@ -186,29 +182,12 @@
                         
                     <p class="card-text" style="position:absolute;left:0px;  top:28px; font-size:11px;">
                         ____________________________________________________________________</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:40px; font-size:11px;">1. por cada cheque
-                        devuelto se cobra 750 lempiras.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:51px; font-size:11px">2. toda cuenta
-                        vencida pagara el 3.5% de interés mensual.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:63px; font-size:11px">3. el único
-                        comprobante de pago de ésta factura es el emitido por distribuciones valencia.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:95px; font-size:11px">4 no se aceptan
-                        reclamos ni devoluciones después de 10 días.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:110px; font-size:11px">5. la firma del
-                        cliente o representante en la factura, da por hecho que acepta y obliga a este a cumplir con todas
-                        las condiciones estipuladas.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:143px; font-size:11px">6. el cliente
-                        debera realizar el pago de la factura a su fecha de vencimiento, en caso de incumplimiento de pago,
-                        este se compromete a aceptar otros procesos de cobrosm a la vez renuncia a su domicilio para efectos
-                        legales y somete a la jurisdicción de tegucigalpa municipio del distrito central.</p>
-                    <p class="card-text" style="position:absolute;left:10px;  top:205px; font-size:11px">7. las entregas y
-                        creditos para cuentas con facturas vencidas serán congeladas hasta el pago de las mismas haya sido
-                        efectuado en su totalidad. 
+                  
                         
                         @if($vale->estado_factura==1)
-                        <span style = "font-size: 10px">N{{$vale->numero_factura}}-CF11</span></p>
+                        <span style = "position:absolute; left:10px; font-size: 10px">N{{$vale->numero_factura}}-CF11</span></p>
                         @else
-                        <span style = "font-size: 10px">N{{$vale->numero_factura}}-CF12</span></p>
+                        <span style = "position:absolute; left:10px; font-size: 10px">N{{$vale->numero_factura}}-CF12</span></p>
                         @endif
                       
                     @if($flagCentavos == false)
@@ -276,12 +255,27 @@
             </div>
 
 
+            <div style="position:absolute;left:0px;  margin-top:{{$altura2 + 50}}px;  width:45rem;">
+                <p class="card-text" style="position:absolute;left:20px;  top:10px;">
+                    _______________________________________</p>
+              
+                <p class="card-text" style="position:absolute;left:80px;  top:25px; ">RECIBIDO COMPLETO</p>
+            
+            </div>
+
+
         </div>
 
-        @if($vale->estado_venta_id==2)
+        @if($vale->estado_id_vale==2)
         <div>
-            <p class="" style="position:absolute; margin-top:{{$altura2 + 40}}px;  left:80px;   font-size:50px;">--FACTURA ANULADA--</p>
+            <p class="" style="position:absolute; margin-top:{{$altura2 + 67}}px;  left:120px;   font-size:50px;">--VALE ANULADO--</p>
         </div>
+        @elseif($vale->estado_id_vale==5)
+        <div>
+            <p class="" style="position:absolute; margin-top:{{$altura2 + 67}}px;  left:120px;   font-size:50px;">--VALE ELIMINADO--</p>
+        </div>
+
+
         @endif
 
 
