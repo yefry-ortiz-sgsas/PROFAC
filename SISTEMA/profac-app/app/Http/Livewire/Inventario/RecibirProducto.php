@@ -731,8 +731,13 @@ class RecibirProducto extends Component
  
              }
              
+             $correos = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
+
              $subject = "Vales disponibles para anular";
-             $for = ['luis.aviles@cadss.hn'];
+            // $for = ['williams.villalta@distribucionesvalencia.hn','cristian.zelaya@distribucionesvalencia.hn' ];
+            $for =  $correos;
+
+
      
              Mail::send('email/vales-disponibles',['valesArray' => $valesArray], function($msj) use($subject,$for){
                  $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
