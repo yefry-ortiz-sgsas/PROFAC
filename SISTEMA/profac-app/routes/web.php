@@ -599,6 +599,10 @@ Route::post('/comision/guardar', [ComisionesComisionar::class, 'guardarComision'
 Route::get('/comisiones/historico', ComisionesHistorico::class);
 
 Route::get('/historico/listar', [ComisionesHistorico::class, 'listarHistorico']);
+Route::get('/historico/listar/mes', [ComisionesHistorico::class, 'historicoMes']);
+
+
+
 
 
 

@@ -32,8 +32,8 @@ class ComisionesComisionar extends Component
 
         $idVendedor = DB::SELECTONE("SELECT desglose.vendedor_id as id FROM desglose where idFactura = ".$idFactura);
 
-        $mesFactura = DB::SELECTONE("SELECT DATE_FORMAT(created_at,'%m') as mes  from factura where id =".$idFactura);
-
+        $mesFactura = DB::SELECTONE("SELECT DATE_FORMAT(fecha_emision,'%m') as mes  from factura where id =".$idFactura);
+        //dd();
         $centComisionado = DB::SELECTONE("SELECT factura.comision_estado_pagado as estado FROM factura where id =".$idFactura);
         //dd($idVendedor);
 
@@ -81,13 +81,13 @@ class ComisionesComisionar extends Component
         try {
 
             DB::beginTransaction();
-                //dd($techo);
+                //dd($request);
 
                 $comisionMonto = (($request->porcentaje)/100)*$request->gananciaTotal;
 
 
                 $idComisionTecho = DB::SELECTONE("select id from comision_techo where comision_techo.vendedor_id = ".$request->idVendedor." and comision_techo.meses_id = ".$request->mesFactura." and comision_techo.estado_id = 1");
-                dd($idComisionTecho);
+                //dd($idComisionTecho);
                 //dd($idComisionTecho);
                 $comision = new comision;
                 $comision->comision_techo_id = $idComisionTecho->id;
