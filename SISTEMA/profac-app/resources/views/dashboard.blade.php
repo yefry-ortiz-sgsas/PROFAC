@@ -6,7 +6,7 @@
                 <div class="ibox ">
                     <div class="ibox-content "  style="padding: 0">
 
-                        <iframe id="myvideo" width="100%" height="300px" style="padding: 0" src="https://www.google.com/finance/quote/USD-HNL?sa=X&ved=2ahUKEwj7wtvC4ZP7AhWtmYQIHaHVAxkQmY0JegQIBhAc"></iframe>
+                       
                               <iframe id="myvideo" width="100%" height="3000px" style="padding: 0" src="https://analytics.zoho.com/open-view/2278098000000153193"></iframe>
 
                                 
