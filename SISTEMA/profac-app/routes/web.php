@@ -1,5 +1,16 @@
 <?php
 
+/* ------------------------------COMISIONES------------------------------------------- */
+
+use App\Http\Livewire\Comisiones\ComisionesPrincipal;
+use App\Http\Livewire\Comisiones\ComisionesGestiones;
+use App\Http\Livewire\Comisiones\ComisionesVendedor;
+use App\Http\Livewire\Comisiones\ComisionesComisionar;
+use App\Http\Livewire\Comisiones\ComisionesHistorico;
+
+
+
+/* ------------------------------/COMISIONES------------------------------------------- */
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -69,11 +80,11 @@ use App\Http\Livewire\ComprovanteEntrega\ListarComprovantesAnulados;
 use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 
 
-use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno; 
+use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
 use App\Http\Livewire\Vale\CrearVale;
-use App\Http\Livewire\Vale\ListarVales; 
+use App\Http\Livewire\Vale\ListarVales;
 use App\Http\Livewire\Vale\FacturarVale;
 use App\Http\Livewire\Vale\ValeListaEspera;
 
@@ -539,9 +550,9 @@ Route::get('/comprovante/entrega/listado', ListarComprovantes::class);
 Route::get('/comprovante/entrega/listado/activos', [ListarComprovantes::class, 'listarComprovantesActivos']);
 Route::get('/comprovante/entrega/anulados', ListarComprovantesAnulados::class);
 Route::get('/comprovante/entrega/listado/anulados', [ListarComprovantesAnulados::class,'listarComprovantesAnulados']);
-Route::get('/orden/entrega/facturar/{id}', FacturarComprobante::class); 
-Route::post('/orden/entrega/guardar/factura', [FacturarComprobante::class,'facturarComprobanteCoorporativo']); 
-Route::post('/orden/entrega/estatal/factura', [FacturarComprobante::class,'facturarComprobanteEstatal']); 
+Route::get('/orden/entrega/facturar/{id}', FacturarComprobante::class);
+Route::post('/orden/entrega/guardar/factura', [FacturarComprobante::class,'facturarComprobanteCoorporativo']);
+Route::post('/orden/entrega/estatal/factura', [FacturarComprobante::class,'facturarComprobanteEstatal']);
 Route::get('/comprobante/entrega/anular/{idComprobante}',[ListarComprovantes::class,'anularComprobante']);
 
 return redirect('/login');
@@ -556,13 +567,13 @@ Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
 
 Route::get('/crear/vale/{id}', CrearVale::class );
 Route::post('/guardar/vale', [CrearVale::class ,'crearVale']);
-Route::post('/anular/vale',[CrearVale::class,'anularVale']); 
+Route::post('/anular/vale',[CrearVale::class,'anularVale']);
 Route::post('/eliminar/vale',[CrearVale::class,'eliminarVale']);
 
 Route::get("/listar/vale/entrega",ListarVales::class);
 Route::get('/vale/listado/general',[ListarVales::class,'MostrarlistarVales']);
-Route::get('/vale/crear/factura/{id}', FacturarVale::class); 
-Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']); 
+Route::get('/vale/crear/factura/{id}', FacturarVale::class);
+Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']);
 Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
 Route::get('/imprimir/entrega/{idEntrega}',[CrearVale::class,'imprimirEntregaProgramada']);
 
@@ -582,3 +593,43 @@ Route::get('/vale/listado/facturas',ListadoFacturasVale::class);
 Route::get('/vale/listado/facturas/obtener',[ListadoFacturasVale::class,'listarFacturasVale']);
 
 //Route::get('/listar/vale', [CrearVale::class,'listarVales']);
+
+
+
+Route::get('/comisiones', ComisionesPrincipal::class);
+Route::get('/comisiones/facturas/buscar/{mes}/{idVendedor}', [ComisionesPrincipal::class, 'obtenerFacturas']);
+
+Route::get('/existencia/techo/{mest}/{idVendedort}', [ComisionesPrincipal::class, 'existenciaTecho']);
+
+Route::get('/comisiones/facturas/buscar2/{mes}/{idVendedor}', [ComisionesPrincipal::class, 'obtenerFacturasSinCerrar']);
+
+
+Route::post('/techo/guardar', [ComisionesGestiones::class, 'guardarTechoMasivo']);
+Route::get('/listar/techos', [ComisionesGestiones::class, 'obtenerVendedores']);
+Route::post('/techo/editar', [ComisionesGestiones::class, 'editarTecho']);
+
+
+Route::get('/desglose/factura/{id}', ComisionesComisionar::class);
+Route::get('/desglose/productos/{id}', [ComisionesComisionar::class, 'obtenerDesglose']);
+
+Route::post('/comision/guardar', [ComisionesComisionar::class, 'guardarComision']);
+
+Route::post('/comision/guardar/masivo', [ComisionesComisionar::class, 'guardarComisionMasivo']);
+
+Route::get('/comisiones/historico', ComisionesHistorico::class);
+
+Route::get('/historico/listar', [ComisionesHistorico::class, 'listarHistorico']);
+Route::get('/historico/listar/mes', [ComisionesHistorico::class, 'historicoMes']);
+
+
+
+
+
+
+Route::get('/comisiones/gestion', ComisionesGestiones::class);
+Route::get('/comisiones/vendedor', ComisionesVendedor::class);
+Route::get('/comisiones/comisionar', ComisionesComisionar::class);
+
+
+
+
