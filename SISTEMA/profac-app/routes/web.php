@@ -92,6 +92,7 @@ use App\Http\Livewire\Vale\RestarVale;
 use App\Http\Livewire\Vale\ListadoFacturasVale;
 use App\Http\Livewire\Ventas\ListarVale;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

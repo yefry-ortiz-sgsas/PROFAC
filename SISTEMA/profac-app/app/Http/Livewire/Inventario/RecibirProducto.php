@@ -705,7 +705,7 @@ class RecibirProducto extends Component
          where estado_id = 1 
          order by id ASC");
  
- 
+   
  
              for ($i=0; $i < count($valesAnuladosLista) ; $i++) { 
                  $flagVale = true;
@@ -731,10 +731,24 @@ class RecibirProducto extends Component
  
              }
              
-             $correos = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
+
+             if(empty($valesArray)){
+                return;
+             }
+ 
+             
+             $correosDB = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
+             $correos =[];
+
+             foreach ($correosDB as $correo) {
+                array_push( $correos,$correo->email);
+             }
+
+
 
              $subject = "Vales disponibles para anular";
             // $for = ['williams.villalta@distribucionesvalencia.hn','cristian.zelaya@distribucionesvalencia.hn' ];
+
             $for =  $correos;
 
 
