@@ -146,10 +146,6 @@ class ComisionesPrincipal extends Component
                             $desglose->vendedor_id = $idVendedor;
                             $desglose->estadoComisionado = 0;
                             $desglose->save();
-
-
-
-
                         }
 
                     }

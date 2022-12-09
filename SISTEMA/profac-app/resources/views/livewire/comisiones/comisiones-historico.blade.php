@@ -19,7 +19,7 @@
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <br>
-             <label for="" class="col-form-label focus-label"><b> Lista Comisiones por factura:</b></label>
+             <label for="" class="col-form-label focus-label"><b> Lista Comisiones por Mes:</b></label>
              <div class="row">
                  <div class="col-lg-12">
                      <div class="ibox ">
@@ -67,6 +67,7 @@
                                             <th>Código de Factura</th>
                                             <th>Código de vendedor</th>
                                             <th>Vendedor</th>
+                                            <th>Mes de facturación</th>
                                             <th>Ganancia de Factura x vendedor</th>
                                             <th>Procentaje Asignado</th>
                                             <th>Monto de ganancia asignado</th>
@@ -181,6 +182,9 @@
                     },
                     {
                         data: 'vendedor'
+                    },
+                    {
+                        data: 'mes'
                     },
                     {
                         data: 'gananciaFactura'

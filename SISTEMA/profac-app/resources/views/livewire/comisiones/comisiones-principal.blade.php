@@ -70,7 +70,7 @@
         <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
             <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <h2>Comisión masiva</h2>
-                <button data-toggle="modal" data-target="#modal_comision_crearMasivo"type="button" class="btn btn-info btn-block" onclick="buscarFacturas()"><i class="fa-solid fa-paper-plane text-white"  ></i> Comisionar todas las facturas cerradas en lista </button>
+                <button disabled id="btnComiMasivo" data-toggle="modal" data-target="#modal_comision_crearMasivo" type="button" class="btn btn-info btn-block" onclick="buscarFacturas()"><i class="fa-solid fa-paper-plane text-white"  ></i> Comisionar todas las facturas cerradas en lista </button>
 
             </div>
         </div>
@@ -180,6 +180,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal" id="modalSpinnerLoading" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -372,6 +373,8 @@
 
 
                 });
+
+                document.getElementById("btnComiMasivo").removeAttribute("disabled");
 
     }
 

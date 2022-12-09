@@ -26,20 +26,26 @@ class ComisionesHistorico extends Component
         try {
             $listaComisiones = DB::SELECT("
 
-            SELECT
-                co.comision_techo_id as codigoComision,
-                co.factura_id as idFactura,
-                co.vendedor_id,
-                us.name as vendedor,
-                FORMAT(co.gananciaTotal,2) as gananciaFactura,
-                co.porcentaje,
-                FORMAT(co.monto_comison,2) as montoAsignado,
-                usA.name as userRegistro,
-                co.created_at as fechaRegistro
-            FROM comision co
-                inner join users us on (us.id = co.vendedor_id)
-                inner join users usA on (usA.id = co.users_registro_id)
-            where estado_id = 1
+                SELECT
+                    co.comision_techo_id as codigoComision,
+                    co.factura_id as idFactura,
+                    co.vendedor_id,
+                    us.name as vendedor,
+                    (select meses.nombre from meses where id = (
+                        select comision_techo.meses_id from comision_techo
+                        where  comision_techo.vendedor_id = co.vendedor_id
+                        and comision_techo.id = co.comision_techo_id
+                                                                        )
+                    ) as mes,
+                    FORMAT(co.gananciaTotal,2) as gananciaFactura,
+                    co.porcentaje,
+                    FORMAT(co.monto_comison,2) as montoAsignado,
+                    usA.name as userRegistro,
+                    co.created_at as fechaRegistro
+                FROM comision co
+                    inner join users us on (us.id = co.vendedor_id)
+                    inner join users usA on (usA.id = co.users_registro_id)
+                where co.estado_id = 1;
 
             ");
             return Datatables::of($listaComisiones)
