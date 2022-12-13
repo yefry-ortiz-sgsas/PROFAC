@@ -113,7 +113,7 @@ class ComisionesHistorico extends Component
                                 inner join users us on (us.id = co.vendedor_id)
                                 inner join comision_techo ct on (ct.id = co.comision_techo_id)
                                 inner join meses m on (m.id = ct.meses_id)
-                                where co.estado_id = 1 and ct.estado_id = 1
+                                where co.estado_id = 1 and ct.estado_id = 1 and co.vendedor_id NOT IN (select vendedor_id from pago_comision where meses_id = ct.meses_id)
                                 group by co.id, us.name, co.comision_techo_id, co.monto_comison,facturasComisionadas, m.nombre, ct.monto_techo
                             ) as comisiones
                             group by codigoVendedor, vendedor, mes, facturasComisionadas,montotecho
@@ -228,7 +228,7 @@ class ComisionesHistorico extends Component
 
     public function pagoComision(Request $request){
         try {
-            dd($request);
+            //dd($request);
             DB::beginTransaction();
 
                         $pago_comision = new pago_comision;
