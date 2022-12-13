@@ -129,6 +129,7 @@ class ComisionesHistorico extends Component
 
                 $idMes = DB::SELECTONE("select id from meses where nombre = '".$listaComisiones->mes."'");
                 //dd($listaComisiones->vendedor);
+                $comilla = "'";
                 return
 
                 '
@@ -146,7 +147,7 @@ class ComisionesHistorico extends Component
                             </div>
 
                             <div class="modal-body">
-                                <form id="pagarComisionForm" name="pagarComisionForm" data-parsley-validate>
+                                <form id="pagarComisionForm_'.$listaComisiones->codigoVendedor.'" name="pagarComisionForm_'.$listaComisiones->codigoVendedor.'" data-parsley-validate>
                                     <Label>Nota: Al registrar éste pago, se debe registrar un sólo pago, el pago completo del monto indicado en la comisión asignada.</Label>
                                     <div class="row" id="row_datos">
                                             <div class="col-md-12">
@@ -185,7 +186,7 @@ class ComisionesHistorico extends Component
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button type="submit" form="pagarComisionForm" class="btn btn-primary">Guardar Comisión</button>
+                                <button type="button"  onclick="registrarPago()" class="btn btn-primary">Guardar pago</button>
                             </div>
                         </div>
                     </div>
@@ -207,7 +208,7 @@ class ComisionesHistorico extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                             <li>
-                                <a class="dropdown-item" data-toggle="modal" data-target="#modal_pago_vendedor_'.$listaComisiones->codigoVendedor.'" > <i class="fa-solid fa-cash-register text-info"></i> Pago de comisión </a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modal_pago_vendedor_'.$listaComisiones->codigoVendedor.'" onclick="asignacion('.$comilla.'modal_pago_vendedor_'.$listaComisiones->codigoVendedor.''.$comilla.','.$comilla.'pagarComisionForm_'.$listaComisiones->codigoVendedor.''.$comilla.')" > <i class="fa-solid fa-cash-register text-info"></i> Pago de comisión </a>
                             </li>
 
                         </ul>

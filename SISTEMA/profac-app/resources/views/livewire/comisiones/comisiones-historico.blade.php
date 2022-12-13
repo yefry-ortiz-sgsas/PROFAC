@@ -15,7 +15,8 @@
 
     </div>
 
-
+    <input type="hidden" id="modalx" name="modalx" />
+    <input type="hidden" id="formx" name="formx" />
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <br>
@@ -132,6 +133,13 @@
 
  @push('scripts')
     <script>
+
+        function asignacion(modalName, formName){
+            //console.log(modalName, formName);
+            $("#modalx").val(modalName);
+            $("#formx").val(formName);
+        }
+
         $( document ).ready(function() {
 
             $('#tbl_historico_comisones').DataTable({
@@ -288,6 +296,59 @@
 
 
         });
+
+
+
+        /*$(document).on('submit', '#'+formx , function(event) {
+            event.preventDefault();
+            registrarPago();
+        });*/
+
+
+
+
+        function registrarPago() {
+            var modalx = $("#modalx").val();
+            var formx = $("#formx").val();
+                //console.log(modalx, formx);
+               $(`#${modalx}`).modal('hide');
+                //$('#modalSpinnerLoading').modal('show');
+                var data = new FormData($(`#${formx}`).get(0));
+                //console.log(data)
+                //console.log(data);
+                axios.post("/historico/registrar/pago", data)
+                    .then(response => {
+
+
+
+                        //document.getElementById(`${formx}`).reset();
+
+
+                       $('#modalSpinnerLoading').modal('hide');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Exito!',
+                            text: "Pago guardado con Éxito."
+                        });
+
+
+                        window.location.href = "/comisiones/historico";
+
+                    })
+                    .catch(err => {
+                        let data = err.response.data;
+                        //$('#modalSpinnerLoading').modal('hide');
+
+                        document.getElementById(`#${formx}`).reset();
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
+                        })
+                        console.error(err);
+
+                    });
+        }
     </script>
 @endpush
 </div>
