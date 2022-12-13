@@ -17,6 +17,19 @@
 
     <input type="hidden" id="modalx" name="modalx" />
     <input type="hidden" id="formx" name="formx" />
+    <div class="modal" id="modalSpinnerLoading" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <h2 class="text-center">Espere un momento...</h2>
+                    <div class="loader">Loading...</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
             <br>
@@ -133,11 +146,16 @@
 
  @push('scripts')
     <script>
-
+        var modalx ;
+        var formx ;
         function asignacion(modalName, formName){
             //console.log(modalName, formName);
             $("#modalx").val(modalName);
             $("#formx").val(formName);
+            modalx = $("#modalx").val();
+            formx = $("#formx").val();
+
+            //console.log(`'#${formx}'`);
         }
 
         $( document ).ready(function() {
@@ -299,7 +317,8 @@
 
 
 
-        /*$(document).on('submit', '#'+formx , function(event) {
+
+        /*$(document).on('submit', `'#${formx}'` , function(event) {
             event.preventDefault();
             registrarPago();
         });*/
@@ -308,11 +327,11 @@
 
 
         function registrarPago() {
-            var modalx = $("#modalx").val();
-            var formx = $("#formx").val();
+            modalx = $("#modalx").val();
+            formx = $("#formx").val();
                 //console.log(modalx, formx);
                $(`#${modalx}`).modal('hide');
-                //$('#modalSpinnerLoading').modal('show');
+                $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($(`#${formx}`).get(0));
                 //console.log(data)
                 //console.log(data);
@@ -321,7 +340,7 @@
 
 
 
-                        //document.getElementById(`${formx}`).reset();
+                        document.getElementById(`${formx}`).reset();
 
 
                        $('#modalSpinnerLoading').modal('hide');
@@ -337,7 +356,7 @@
                     })
                     .catch(err => {
                         let data = err.response.data;
-                        //$('#modalSpinnerLoading').modal('hide');
+                        $('#modalSpinnerLoading').modal('hide');
 
                         document.getElementById(`#${formx}`).reset();
                         Swal.fire({

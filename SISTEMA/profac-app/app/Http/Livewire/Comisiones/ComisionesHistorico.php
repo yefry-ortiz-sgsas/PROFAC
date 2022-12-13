@@ -186,7 +186,7 @@ class ComisionesHistorico extends Component
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                <button type="button"  onclick="registrarPago()" class="btn btn-primary">Guardar pago</button>
+                                <button type="button" onclick="registrarPago()" class="btn btn-primary">Guardar pago</button>
                             </div>
                         </div>
                     </div>
@@ -228,6 +228,7 @@ class ComisionesHistorico extends Component
 
     public function pagoComision(Request $request){
         try {
+            dd($request);
             DB::beginTransaction();
 
                         $pago_comision = new pago_comision;
