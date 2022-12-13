@@ -133,7 +133,7 @@ class ComisionesHistorico extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                             <li>
-                                <a class="dropdown-item"  > <i class="fa-solid fa-arrows-to-eye text-info"></i> Ver </a>
+                                <a class="dropdown-item"  > <i class="fa-solid fa-cash-register text-info"></i> Pago de comisión </a>
                             </li>
 
                         </ul>
