@@ -605,6 +605,7 @@ Route::get('/comisiones/historico', ComisionesHistorico::class);
 
 Route::get('/historico/listar', [ComisionesHistorico::class, 'listarHistorico']);
 Route::get('/historico/listar/mes', [ComisionesHistorico::class, 'historicoMes']);
+Route::post('/historico/registrar/pago', [ComisionesHistorico::class, 'pagoComision']);
 
 
 

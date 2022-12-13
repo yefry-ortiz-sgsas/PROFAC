@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 use App\Models\Comisiones\desglose;
-
+use App\Models\Comisiones\facturas_pagadas;
+use App\Models\Comisiones\pago_comision;
 use App\Models\Comisiones\comision;
 
 class ComisionesHistorico extends Component
@@ -125,19 +126,92 @@ class ComisionesHistorico extends Component
                 '<span class="badge badge-primary">No pagado</span>';
             })
             ->addColumn('acciones', function ($listaComisiones) {
+
+                $idMes = DB::SELECTONE("select id from meses where nombre = '".$listaComisiones->mes."'");
+                //dd($listaComisiones->vendedor);
                 return
 
-                '<div class="btn-group">
+                '
+
+
+
+                <div class="modal fade" id="modal_pago_vendedor_'.$listaComisiones->codigoVendedor.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel">Registro de Techos de Comisiones</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="pagarComisionForm" name="pagarComisionForm" data-parsley-validate>
+                                    <Label>Nota: Al registrar éste pago, se debe registrar un sólo pago, el pago completo del monto indicado en la comisión asignada.</Label>
+                                    <div class="row" id="row_datos">
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Código Vendedor: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="number" id="idVendedor" name="idVendedor" value="'.$listaComisiones->codigoVendedor.'"  data-parsley-required >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Vendedor: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text" id="vendedor" name="vendedor" value="'.$listaComisiones->vendedor.'" data-parsley-required >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Mes de Comisión: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text" id="mes" name="mes" value="'.$listaComisiones->mes.'" data-parsley-required >
+                                                <input  type="hidden"  id="idMes" name="idMes" value="'.$idMes->id.'" >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Cantidad de facturas comisionadas: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text"  id="facturasComisionadas" name="facturasComisionadas" value="'.$listaComisiones->facturasComisionadas.'" data-parsley-required >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Techo de comisión asignado: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text"  id="montotecho" name="montotecho" value="'.$listaComisiones->montotecho.'" data-parsley-required >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Ganancia total de facturas cerradas: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text"  id="gananciatotalMes" name="gananciatotalMes" value="'.$listaComisiones->gananciatotalMes.'"  data-parsley-required >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label  class="col-form-label focus-label">Monto asignado de comisión a pagar: <span class="text-danger">*</span></label>
+                                                <input  class="form-control" required type="text"  id="montoAsignado" name="montoAsignado" value="'.$listaComisiones->montoAsignado.'" data-parsley-required >
+                                            </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" form="pagarComisionForm" class="btn btn-primary">Guardar Comisión</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <div class="btn-group">
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                             <li>
-                                <a class="dropdown-item"  > <i class="fa-solid fa-cash-register text-info"></i> Pago de comisión </a>
+                                <a class="dropdown-item" data-toggle="modal" data-target="#modal_pago_vendedor_'.$listaComisiones->codigoVendedor.'" > <i class="fa-solid fa-cash-register text-info"></i> Pago de comisión </a>
                             </li>
 
                         </ul>
-                    </div>';
+                </div>';
             })
             ->rawColumns(['estadoPago','acciones'])
             ->make(true);
@@ -149,5 +223,55 @@ class ComisionesHistorico extends Component
             ], 402);
 
         }
+    }
+
+    public function pagoComision(Request $request){
+        try {
+            DB::beginTransaction();
+
+                        $pago_comision = new pago_comision;
+                        $pago_comision->vendedor_id = $request->idVendedor;
+                        $pago_comision->nombre_vendedor = $request->vendedor;
+                        $pago_comision->mes_comision = $request->mes;
+                        $pago_comision->meses_id = $request->idMes;
+                        $pago_comision->cantidad_facturas = $request->facturasComisionadas;
+                        $pago_comision->techo_asignado = $request->montotecho;
+                        $pago_comision->ganancia_total = $request->gananciatotalMes;
+                        $pago_comision->monto_asignado = $request->montoAsignado;
+                        $pago_comision->estado_pago = 1;
+                        $pago_comision->url_comprobante = "url";
+                        $pago_comision->users_registra_id = Auth::user()->id;
+                        $pago_comision->save();
+
+
+                $facturasComisionadas = DB::SELECT("
+                    select comision.factura_id as idFactura, comision.id as idComision from comision
+                    inner join comision_techo on (comision.comision_techo_id = comision_techo.id)
+                    where comision.vendedor_id = ".$request->idVendedor." and comision_techo.meses_id = ".$request->idMes."
+                ");
+
+                foreach ($facturasComisionadas  as $value) {
+                    $facturas_pagadas = new facturas_pagadas;
+                    $facturas_pagadas->factura_id = $value->idFactura;
+                    $facturas_pagadas->comision_id = $value->idComision;
+                    $facturas_pagadas->estado_pagado = 1;
+                    $facturas_pagadas->save();
+                }
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Pago registrado con éxito!",
+                "title"=>"Exito!"
+            ],200);
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al registrar el pago completo.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+
     }
 }
