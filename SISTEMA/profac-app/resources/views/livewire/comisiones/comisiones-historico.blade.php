@@ -112,19 +112,19 @@
                     <div class="ibox ">
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table name="tbl_historico_comisionesPagadas" id="tbl_historico_comisonesPagadas" class="table table-striped table-bordered table-hover">
+                                <table name="tbl_historico_comisionesPagadas" id="tbl_historico_comisionesPagadas" class="table table-striped table-bordered table-hover">
                                     <thead class="">
                                         <tr>
-                                            <th>Código de comisión</th>
-                                            <th>Código de Factura</th>
                                             <th>Código de vendedor</th>
                                             <th>Vendedor</th>
-                                            <th>Ganancia de Factura x vendedor</th>
-                                            <th>Procentaje Asignado</th>
-                                            <th>Monto de ganancia asignado</th>
-                                            <th>Usuario de Registro</th>
-                                            <th>Fecha de Registro</th>
-                                            <th>Acciones</th>
+                                            <th>Mes de comisión</th>
+                                            <th>Código de mes</th>
+                                            <th>Cantidad de facturas comisionadas</th>
+                                            <th>Techo asignado</th>
+                                            <th>Ganancia total de las facturas del mes</th>
+                                            <th>Monto asignado y pagado</th>
+                                            <th>Usuario de registro de pago</th>
+                                            <th>Fecha del registro de pago</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,10 +308,79 @@
 
             });
 
+            $('#tbl_historico_comisionesPagadas').DataTable({
+                "order": [0, 'desc'],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                },
+                pageLength: 10,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [{
+                        extend: 'copy'
+                    },
+                    {
+                        extend: 'csv'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'ExampleFile'
+                    },
+                    {
+                        extend: 'pdf',
+                        title: 'ExampleFile'
+                    },
+
+                    {
+                        extend: 'print',
+                        customize: function(win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "ajax": "/historico/listar/pagos",
+                "columns": [
+                    {
+                        data: 'vendedor_id'
+                    },
+                    {
+                        data: 'nombre_vendedor'
+                    },
+                    {
+                        data: 'mes_comision'
+                    },
+                    {
+                        data: 'meses_id'
+                    },
+                    {
+                        data: 'cantidad_facturas'
+                    },
+                    {
+                        data: 'techo_asignado'
+                    },
+                    {
+                        data: 'ganancia_total'
+                    },
+                    {
+                        data: 'monto_asignado'
+                    },
+                    {
+                        data: 'users_registra_id'
+                    },
+                    {
+                        data: 'created_at'
+                    }
 
 
+                ]
 
 
+            });
 
         });
 

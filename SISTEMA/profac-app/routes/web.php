@@ -606,6 +606,13 @@ Route::get('/comisiones/historico', ComisionesHistorico::class);
 Route::get('/historico/listar', [ComisionesHistorico::class, 'listarHistorico']);
 Route::get('/historico/listar/mes', [ComisionesHistorico::class, 'historicoMes']);
 Route::post('/historico/registrar/pago', [ComisionesHistorico::class, 'pagoComision']);
+Route::get('/historico/listar/pagos', [ComisionesHistorico::class, 'historicoPagos']);
+
+Route::get('/listar/pagos', [ComisionesVendedor::class, 'historicoPagos']);
+Route::get('/listar/cerradas', [ComisionesVendedor::class, 'obtenerFacturas']);
+Route::get('/listar/sinCerrar', [ComisionesVendedor::class, 'obtenerFacturasSinCerrar']);
+
+
 
 
 

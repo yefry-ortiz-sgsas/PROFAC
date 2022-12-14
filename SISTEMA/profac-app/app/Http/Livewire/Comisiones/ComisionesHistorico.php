@@ -152,32 +152,32 @@ class ComisionesHistorico extends Component
                                     <div class="row" id="row_datos">
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Código Vendedor: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="number" id="idVendedor" name="idVendedor" value="'.$listaComisiones->codigoVendedor.'"  data-parsley-required >
+                                                <input readonly class="form-control" required type="number" id="idVendedor" name="idVendedor" value="'.$listaComisiones->codigoVendedor.'"  data-parsley-required >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Vendedor: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text" id="vendedor" name="vendedor" value="'.$listaComisiones->vendedor.'" data-parsley-required >
+                                                <input readonly class="form-control" required type="text" id="vendedor" name="vendedor" value="'.$listaComisiones->vendedor.'" data-parsley-required >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Mes de Comisión: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text" id="mes" name="mes" value="'.$listaComisiones->mes.'" data-parsley-required >
+                                                <input readonly class="form-control" required type="text" id="mes" name="mes" value="'.$listaComisiones->mes.'" data-parsley-required >
                                                 <input  type="hidden"  id="idMes" name="idMes" value="'.$idMes->id.'" >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Cantidad de facturas comisionadas: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text"  id="facturasComisionadas" name="facturasComisionadas" value="'.$listaComisiones->facturasComisionadas.'" data-parsley-required >
+                                                <input readonly class="form-control" required type="text"  id="facturasComisionadas" name="facturasComisionadas" value="'.$listaComisiones->facturasComisionadas.'" data-parsley-required >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Techo de comisión asignado: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text"  id="montotecho" name="montotecho" value="'.$listaComisiones->montotecho.'" data-parsley-required >
+                                                <input readonly class="form-control" required type="text"  id="montotecho" name="montotecho" value="'.$listaComisiones->montotecho.'" data-parsley-required >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Ganancia total de facturas cerradas: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text"  id="gananciatotalMes" name="gananciatotalMes" value="'.$listaComisiones->gananciatotalMes.'"  data-parsley-required >
+                                                <input readonly class="form-control" required type="text"  id="gananciatotalMes" name="gananciatotalMes" value="'.$listaComisiones->gananciatotalMes.'"  data-parsley-required >
                                             </div>
                                             <div class="col-md-12">
                                                 <label  class="col-form-label focus-label">Monto asignado de comisión a pagar: <span class="text-danger">*</span></label>
-                                                <input  class="form-control" required type="text"  id="montoAsignado" name="montoAsignado" value="'.$listaComisiones->montoAsignado.'" data-parsley-required >
+                                                <input readonly class="form-control" required type="text"  id="montoAsignado" name="montoAsignado" value="'.$listaComisiones->montoAsignado.'" data-parsley-required >
                                             </div>
                                     </div>
                                 </form>
@@ -275,5 +275,38 @@ class ComisionesHistorico extends Component
             ],402);
         }
 
+    }
+
+    public function historicoPagos(){
+        //dd("entro al historico pago");
+        try {
+            $listaPagosComisiones = DB::SELECT("
+
+                select
+                    vendedor_id,
+                    nombre_vendedor,
+                    mes_comision,
+                    meses_id,
+                    cantidad_facturas,
+                    techo_asignado,
+                    ganancia_total,
+                    monto_asignado,
+                    (select name from users WHERE id = users_registra_id ) as users_registra_id,
+                    created_at
+                from pago_comision
+                where estado_pago = 1
+
+            ");
+            return Datatables::of($listaPagosComisiones)
+            ->rawColumns([])
+            ->make(true);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar las comisones.',
+                'errorTh' => $e,
+            ], 402);
+
+        }
     }
 }
