@@ -17,6 +17,7 @@ use App\Models\ModelpagoVenta;
 use App\Models\ModelFactura;
 use App\Models\ModelBanco;
 use App\Models\ModelTipoPagoCobro;
+use App\Models\ModelCliente;
 class Cobros extends Component
 {
     public $idFactura;
@@ -155,7 +156,13 @@ class Cobros extends Component
                     $compra = ModelFactura::find($request->idFactura);
                     $compra->pendiente_cobro = round($faltantePago,2);                   
                     $compra->save();
-
+                 
+             /*comprueba si es de credito para devolver el credito */       
+            if($compra->tipo_pago_id == 2){
+                $cliente = ModelCliente::find($compra->cliente_id);
+                $cliente->credito = $cliente->credito + $request->monto;
+                $cliente->save();
+            }
 
             DB::commit();
             return response()->json([

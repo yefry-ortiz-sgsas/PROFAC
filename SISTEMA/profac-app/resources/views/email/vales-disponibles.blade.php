@@ -16,7 +16,7 @@
             </a>
 
             @for ($i = 0; $i < count($valesArray); $i++)
-            <a href="" class="list-group-item list-group-item-action">Vale No: {{$valesArray[$i]}}</a>
+            <a href="https://ventas.distribucionesvalencia.hn/vale/restar/inventario" class="list-group-item list-group-item-action">Vale No: {{$valesArray[$i]}}</a>
             @endfor           
         
           

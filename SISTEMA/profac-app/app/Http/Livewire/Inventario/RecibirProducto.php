@@ -732,9 +732,9 @@ class RecibirProducto extends Component
              }
              
 
-             if(empty($valesArray)){
-                return;
-             }
+            //  if(empty($valesArray)){
+            //     return;
+            //  }
  
              
              $correosDB = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");

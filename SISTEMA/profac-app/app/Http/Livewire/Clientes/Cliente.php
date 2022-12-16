@@ -15,7 +15,7 @@ use Auth;
 
 use App\Models\ModelCliente;
 use App\Models\ModelContacto;
-
+use App\Models\logCredito;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ClientesExport;
@@ -325,7 +325,31 @@ class Cliente extends Component
     public function datosCliente(Request $request){
        try {
 
-        $datosCliente = ModelCliente::find($request['id']);
+        $datosCliente = DB::SELECTONE("
+        select 
+            id,
+            nombre,
+            direccion,
+            telefono_empresa,
+            rtn,
+            correo,
+            latitud,
+            longitud,
+            url_imagen,
+            credito_inicial,
+            credito,
+            dias_credito,
+            tipo_cliente_id,
+            tipo_personalidad_id,
+            categoria_id,
+            vendedor,
+            users_id,
+            estado_cliente_id,
+            municipio_id,
+            created_at,
+            updated_at
+        from cliente
+        where id =".$request['id']);
 
         $datosContacto = DB::SELECT("
         select
@@ -423,6 +447,26 @@ class Cliente extends Component
         $contaco2->cliente_id = $request->idCliente;
         $contaco2->estado_id = 1;
         $contaco2->save();
+
+
+        //-------------------------comprobar cambios de credito-----------------------------//
+
+
+
+        $creditoInicial = new logCredito();
+        $creditoInicial->descripcion = "Credito inicial editado.";
+        $creditoInicial->monto = trim($request->credito_inicial_editar);
+        $creditoInicial->users_id = Auth::user()->id;
+        $creditoInicial->cliente_id = $request->idCliente;
+        $creditoInicial->save();
+
+        $credito = new logCredito();
+        $credito->descripcion = "Credito disponible editado.";
+        $credito->monto = trim($request->credito_editar);
+        $credito->users_id = Auth::user()->id;
+        $credito->cliente_id = $request->idCliente;
+        $credito->save();
+        
 
 
 

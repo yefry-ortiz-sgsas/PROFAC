@@ -97,7 +97,8 @@ class CuentasPorCobrar extends Component
     public function listarCuentasPorCobrarInteres($id){
         try{
 
-            $interes_cuentas = DB::SELECT("select 
+            $interes_cuentas = DB::SELECT("
+            select 
             factura.numero_factura as numero_factura,
             cliente_id as id_cliente,
             factura.nombre_cliente as 'cliente', 
@@ -108,8 +109,8 @@ class CuentasPorCobrar extends Component
             (factura.total-factura.pendiente_cobro) as 'abonos', 
             @numeroDias := TIMESTAMPDIFF(DAY, fecha_vencimiento, DATE(NOW()) ) as dias,
             @interesDiario:=0 as interesInicia,
-            if(@numeroDias < 0, @interesDiario:=0, @interesDiario:= @numeroDias*0.1083333333) as interesDiario,
-            (factura.pendiente_cobro + @interesDiario) as acumulado
+            if(@numeroDias < 0, @interesDiario:=0, FORMAT(@interesDiario:= @numeroDias*0.1083333333,2)) as interesDiario,
+            FORMAT((factura.pendiente_cobro + @interesDiario),2) as acumulado
             
         from factura
         inner join cliente on (factura.cliente_id = cliente.id)

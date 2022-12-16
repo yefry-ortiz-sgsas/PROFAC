@@ -195,6 +195,9 @@
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Costo Promedio:
                         </strong> {{ $producto->costo_promedio }} Lps.</small></p>
 
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Ultimo Costo de compra:
+                        </strong> {{ $producto->ultimo_costo_compra }} Lps.</small></p>
+
 
 
 

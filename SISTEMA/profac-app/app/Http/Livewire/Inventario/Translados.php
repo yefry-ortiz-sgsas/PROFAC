@@ -161,7 +161,10 @@ class Translados extends Component
     }
 
     public function ejectarTranslado(Request $request){
+        dd($request->all());
        try {
+
+       
         $unidadesVenta = DB::SELECTONE("select id, unidad_venta from unidad_medida_venta where id =".$request->Umedida);
 
         $unidadesTraslado = $request->cantidad * $unidadesVenta->unidad_venta;

@@ -61,7 +61,7 @@
                                         <th>Cargo</th>
                                         <th>Credito</th>
                                         <th>Saldo</th>
-                                        <th>Opciones</th>
+                                       
                                         
                                     </tr>
                                 </thead>
@@ -105,7 +105,7 @@
                                         <th>Interes Inicia</th>
                                         <th>Interes Diario</th>
                                         <th>Acumulado</th>
-                                        <th>Opciones</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -222,10 +222,7 @@
                         },
                         {
                             data: 'saldo'
-                        },
-                        {
-                            data: 'opciones'
-                        }
+                        }   
 
                     ]
 
@@ -309,11 +306,7 @@
                         },
                         {
                             data: 'acumulado'
-                        },                        
-                        {
-                            data: 'opciones'
                         }
-
                     ]
 
 

@@ -746,12 +746,12 @@ $(document).ready(function() {
         });
 
       function registrarCliente(){
-
+        document.getElementById('btn_crear_cliente').disabled=true;
         let contacto2 = document.getElementsByName('contacto[]');
         let telefono2 = document.getElementsByName('telefono[]');
 
-        console.log(contacto2[1].value , telefono2[1].value)
-        document.getElementById('btn_crear_cliente').disabled=true;
+        //console.log(contacto2[1].value , telefono2[1].value)
+        
         if( contacto2[1].value  && telefono2[1].value  ){
             
                 var data = new FormData($('#clientesCreacionForm').get(0));
@@ -763,13 +763,12 @@ $(document).ready(function() {
                     let data = response.data;
 
                    
-                    $('#modal_clientes_crear').modal('hide');
-                    document.getElementById('btn_crear_cliente').disabled=false;
+                    $('#modal_clientes_crear').modal('hide');                   
                     document.getElementById("clientesCreacionForm").reset();                   
                     $('#clientesCreacionForm').parsley().reset(); 
                     $('#tbl_ClientesLista').DataTable().ajax.reload();       
                     $imagenPrevisualizacion.src = '';
-                    
+                    document.getElementById('btn_crear_cliente').disabled=false;
                    
 
                     Swal.fire({
@@ -800,7 +799,7 @@ $(document).ready(function() {
             .then( response => {
                 let data = response.data;                   
                 $('#modal_clientes_crear').modal('hide');
-                document.getElementById('btn_crear_cliente').disabled=false;
+                
                 document.getElementById("clientesCreacionForm").reset();                   
                 $('#clientesCreacionForm').parsley().reset(); 
                 $('#tbl_ClientesLista').DataTable().ajax.reload();   
@@ -810,7 +809,7 @@ $(document).ready(function() {
                     title: data.title,
                     text: data.text,
                 })
-
+                document.getElementById('btn_crear_cliente').disabled=false;
                 
 
             })
@@ -991,8 +990,8 @@ $(document).ready(function() {
 
             document.getElementById('nombre_cliente_editar').value =datosCliente.nombre;
             document.getElementById('direccion_cliente_editar').value =datosCliente.direccion;
-            document.getElementById('credito_inicial_editar').value = datosCliente.credito_inicial;
-            document.getElementById('credito_editar').value = datosCliente.credito;
+            document.getElementById('credito_inicial_editar').value = datosCliente.credito_inicial.toFixed(2);
+            document.getElementById('credito_editar').value = datosCliente.credito.toFixed(2);
             document.getElementById('dias_credito_editar').value = datosCliente.dias_credito;
             document.getElementById('rtn_cliente_editar').value = datosCliente.rtn;
             document.getElementById("correo_cliente_editar").value = datosCliente.correo;

@@ -42,6 +42,7 @@ class DetalleProducto extends Component
             E.descripcion as 'categoria',
             A.precio_base,
             A.costo_promedio,
+            A.ultimo_costo_compra,
             A.isv,
             C.nombre as 'unidad_medida',
             A.created_at as 'fecha_registro',
