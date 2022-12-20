@@ -49,8 +49,8 @@
 
                                     <label for="selectProducto" class="col-form-label focus-label">Seleccionar
                                         Producto:</label>
-                                    <select id="selectProducto" class="form-group form-control" style=""
-                                        data-parsley-required disabled>
+                                    <select id="selectProducto" class="form-group form-control" style="" 
+                                        data-parsley-required disabled >
                                         <option value="" selected disabled>--Seleccionar un producto por codigo ó
                                             nombre--</option>
                                     </select>
@@ -101,45 +101,6 @@
         </div>
     </div>
 
-    <div id="destino" class="d-none">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h3>Listado De Producto En Bodega De Destino</h3>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table id="tbl_translados_destino"
-                                    class="table table-striped table-bordered table-hover">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Cod Producto</th>
-                                            <th>Nombre</th>
-                                            <th>Unidad de Medida</th>
-                                            <th>Cantidad Disponible</th>
-                                            <th>Bodega</th>
-                                            <th>Sección</th>
-                                            <th>Fecha Ingreso</th>
-
-
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -263,7 +224,7 @@
                                        
                                     </table>
                                     
-                                    <button id="btn_guardar_translado" type="submit" form="guardar_translados"   class="btn btn-primary btn-lg mb-4 mt-3">Guardar Translado</button>                           
+                                    <button id="btn_guardar_translado" type="submit" form="guardar_translados"   class="btn btn-primary btn-lg mb-4 mt-3" >Guardar Translado</button>                           
                                 </div>
                             </div>
                     </div>
@@ -271,6 +232,48 @@
             </div>
         </div>
     </div>
+
+    <div id="destino" class="d-none">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h3>Listado De Producto En Bodega De Destino</h3>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table id="tbl_translados_destino"
+                                    class="table table-striped table-bordered table-hover">
+                                    <thead class="">
+                                        <tr>
+                                            <th>Cod Producto</th>
+                                            <th>Nombre</th>
+                                            <th>Unidad de Medida</th>
+                                            <th>Cantidad Disponible</th>
+                                            <th>Bodega</th>
+                                            <th>Sección</th>
+                                            <th>Fecha Ingreso</th>
+
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <button onclick="limpiar()" type="button" class="btn btn-warning btn-lg mb-4 mt-3" >Limpiar</button>                           
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @push('scripts')
     <script>
@@ -303,6 +306,12 @@
             obtenerListaBodega();
 
         });
+
+        function limpiar(){
+            window.location.reload()
+        }
+
+
 
         function obteneProducto() {
             let idBodega = document.getElementById('selectBodega').value;
@@ -604,14 +613,14 @@
 
             let seccionSelect = document.getElementById("seccion");
             let seccionNombre = seccionSelect.options[seccionSelect.selectedIndex].text
-            let seccionId = segmentoSelect.value;
+            let seccionId = seccionSelect.value;
 
             let cantidad = document.getElementById("cantidad").value;
 
 
             let medidaSelect = document.getElementById("Umedida");
             let medidaNombre = medidaSelect.options[medidaSelect.selectedIndex].text
-            let medidaId = segmentoSelect.value;
+            let medidaId = medidaSelect.value;
 
             let comprobarIdRecibido = idRecibidoArray.find(element => element == ('' + idProducto + seccionId));
 
@@ -626,13 +635,14 @@
                 return;
             }
 
+            let productoSeccion = ''+idProducto + seccionId;
 
             idRecibidoArray.push('' + idProducto + seccionId);
 
             let html = `
                 <tr id="tr${contador}">
                                             <td>
-                                                     <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${contador})"><i
+                                                     <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${contador},${productoSeccion})"><i
                                                             class="fa-regular fa-rectangle-xmark"></i>
                                                     </button>
                                             </dt>    
@@ -642,16 +652,16 @@
 
                                             <td>
                                                 <input id="nombreBodega${contador}" name="nombreBodega${contador}" type="text" value="${bodegaNombre}" disabled required class="form-control" form="guardar_translados">
-                                                <input id="idBodega${contador}" name="idBodega${contador}" type="hidden" value="${bodegaId}" required form="guardar_translados">
+                                                <input id="idBodega${contador}" name="idBodega${contador}" type="hidden" value="${bodegaId}" disabled required form="guardar_translados">
                                             </td>
 
                                             <td>
-                                                <input id="nombreSegmento${contador}" name="nombreSegmento${contador}" type="text" value="${segmentoNombre}" readonly class="form-control" required form="guardar_translados"> 
-                                                <input id="idSegmento${contador}" name="idSegmento${contador}" type="hidden" value="${segmentoId}" required form="guardar_translados">
+                                                <input id="nombreSegmento${contador}" name="nombreSegmento${contador}" type="text" value="${segmentoNombre}" disabled class="form-control" required form="guardar_translados"> 
+                                                <input id="idSegmento${contador}" name="idSegmento${contador}" type="hidden" value="${segmentoId}" disabled form="guardar_translados">
                                             </td>
 
                                             <td>
-                                                <input id="nombreSeccion${contador}" name="nombreSeccion${contador}" type="text" value="${seccionNombre}" readonly class="form-control" form="guardar_translados">
+                                                <input id="nombreSeccion${contador}" name="nombreSeccion${contador}" type="text" value="${seccionNombre}" disabled class="form-control" form="guardar_translados">
                                                 <input id="idSeccion${contador}" name="idSeccion${contador}" type="hidden" value="${seccionId}" required form="guardar_translados">
                                             </td>
 
@@ -660,8 +670,10 @@
                                             </td>
 
                                             <td>
-                                                <input id="unidadMedida${contador}" name="unidadMedida${contador}" type="text" value="${medidaNombre}" readonly class="form-control" form="guardar_translados">
+                                                <input id="unidadMedida${contador}" name="unidadMedida${contador}" type="text" value="${medidaNombre}" disabled class="form-control" form="guardar_translados">
                                                 <input id="unidadMedidaId${contador}" name="unidadMedidaId${contador}" type="hidden" value="${medidaId}" readonly form="guardar_translados">
+                                                <input id="idRecibido${contador}" name="idRecibido${contador}" type="hidden" value="${idRecibido}" readonly form="guardar_translados">
+                                                
                                             </td>
 
                                         </tr>
@@ -675,15 +687,15 @@
             $('#recibirProducto').parsley().reset();
 
             arrayInputs.push(contador);
-            //console.log(idRecibidoArray);
+          
             contador++;
             return;
         }
 
-        function listadoBodegaDestino(idSeccion) {
+        function listadoBodegaDestino(contadorTranslados) {
 
-            let idProducto = document.getElementById('selectProducto').value;
-
+           
+          let   contador = contadorTranslados;
 
             // console.log(idSeccion);
             // console.log(idProducto);
@@ -694,7 +706,8 @@
                 },
                 pageLength: 10,
                 responsive: true,
-                "ajax": "/translado/destino/lista/" + idSeccion + "/" + idProducto,
+                "ajax": "/translado/destino/lista/"+contador,
+                
                 "columns": [{
                         data: 'idProducto'
                     },
@@ -725,10 +738,11 @@
         }
 
 
-        function eliminarInput(id) {
-            const element = document.getElementById("tr" + id);
+        function eliminarInput(id, productoSeccion) {
+           const element = document.getElementById("tr" + id);
             element.remove();
 
+        
 
             var myIndex = arrayInputs.indexOf(id);
             if (myIndex !== -1) {
@@ -736,6 +750,15 @@
 
             }
 
+            productoSeccion = ''+productoSeccion;
+            var myIndex2 = idRecibidoArray.indexOf(productoSeccion);
+         
+            if (myIndex2 !== -1) {
+                idRecibidoArray.splice(myIndex2, 1);
+
+            }
+
+            
         }
 
 
@@ -761,34 +784,40 @@
 
             }
 
+            let table = $('#tbl_translados_destino').DataTable();
+            table.destroy();
+
             axios.post('/translado/producto/bodega', dataForm)
                 .then(response => {
 
                     let data = response.data;
+                    let contador = data.contadorTranslados;
 
 
 
 
-                    // Swal.fire({
-                    //     icon: data.icon,
-                    //     title: data.title,
-                    //     text: data.text,
+                    Swal.fire({
+                        icon: data.icon,
+                        title: data.title,
+                        html: data.text,
 
-                    // })
-
-
-                    // $('#tbl_translados').DataTable().ajax.reload();
-                    // $('# tbl_translados_productos').DataTable().ajax.reload();
+                    })
 
 
 
-                    // listadoBodegaDestino(idSeccion);
+                    let table1 = $('#tbl_translados').DataTable();
+                    table1.destroy();
 
-                    // //document.getElementById('destino').class
-                    // document.getElementById('destino').classList.remove('d-none');
-                    // document.getElementById("recibirProducto").reset();
-                    // $('#recibirProducto').parsley().reset();
 
+                    
+                 
+
+                    //document.getElementById('destino').class
+                    document.getElementById('destino').classList.remove('d-none');
+                    document.getElementById("recibirProducto").reset();
+                    $('#recibirProducto').parsley().reset();
+
+                    listadoBodegaDestino(contador);
 
                     return;
 
@@ -801,11 +830,11 @@
                     $('#modal_transladar_producto').modal('hide')
                     document.getElementById('btn_recibir_bodega').disabled = false;
 
-                    let data = err.response.data;
+                   
                     Swal.fire({
-                        icon: data.icon,
-                        title: data.title,
-                        text: data.text,
+                        icon: "error",
+                        title: "Error",
+                        text: "Ha ocurrido un error.",
                     })
 
                 })

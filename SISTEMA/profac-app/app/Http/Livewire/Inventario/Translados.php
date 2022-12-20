@@ -161,97 +161,123 @@ class Translados extends Component
     }
 
     public function ejectarTranslado(Request $request){
-        dd($request->all());
-       try {
+     
+       try {       
 
+        $contadorTranslados = 0;
+        // $validator = Validator::make($request->all(), [
+
+        //     'idRecibido' => 'required',
+        //     'cantidad' => 'required'
+
+        // ], [
+
+        //     'idRecibido' => 'codigo de recibido es necesario.',
+        //     'cantidad' => 'la cantidad de producto a transladar es requerida'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         "text" => "Ha ocurrido un error al realizar el transpaso de producto, uno o mas campos faltantes.",
+        //         "icon" => "error",
+        //         "title"=>"Error!"
+        //     ], 402);
+        // }
+
+        $arregloIdInputs = $request->arregloIdInputs;
+
+        $flagError = false;
        
-        $unidadesVenta = DB::SELECTONE("select id, unidad_venta from unidad_medida_venta where id =".$request->Umedida);
-
-        $unidadesTraslado = $request->cantidad * $unidadesVenta->unidad_venta;
-
-        $validator = Validator::make($request->all(), [
-
-            'idRecibido' => 'required',
-            'cantidad' => 'required'
-
-        ], [
-
-            'idRecibido' => 'codigo de recibido es necesario.',
-            'cantidad' => 'la cantidad de producto a transladar es requerida'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                "text" => "Ha ocurrido un error al realizar el transpaso de producto, uno o mas campos faltantes.",
-                "icon" => "error",
-                "title"=>"Error!"
-            ], 402);
-        }
-
-
-        $productoEnBodega = ModelRecibirBodega::find($request['idRecibido']);
-
-        //$unidadVenta = DB::SELECT("select id, unidad_venta, unidad_medida_id from unidad_medida_venta where producto_id = ".$productoEnBodega->producto_id." and id = ".$request->Umedida);
-
-
-
-        if($productoEnBodega->cantidad_disponible >= $unidadesTraslado ){
-
-
-
+     
+        $text2 = "<p>Los siguientes productos exceden la cantidad disponible para translado: <p><ul>";
 
         DB::beginTransaction();
 
-            $transladarBodega = new ModelRecibirBodega();
-            $transladarBodega->compra_id = $productoEnBodega->compra_id;
-            $transladarBodega->producto_id = $productoEnBodega->producto_id;
-            $transladarBodega->seccion_id = $request->seccion;
-            $transladarBodega->cantidad_compra_lote = $productoEnBodega->cantidad_compra_lote;
+        for ($i = 0; $i < count($arregloIdInputs); $i++) {
 
-            $transladarBodega->cantidad_inicial_seccion = $unidadesTraslado;
-            $transladarBodega->cantidad_disponible = $unidadesTraslado;
+        $keyIdRecibido = "idRecibido".$arregloIdInputs[$i];
+        $keyUnidadMedidaId = "unidadMedidaId".$arregloIdInputs[$i];
+        $keyCantidad = "cantidad".$arregloIdInputs[$i];
+        $keyIdSeccion = "idSeccion".$arregloIdInputs[$i];
 
-            $transladarBodega->fecha_recibido = now();
-            $transladarBodega->fecha_expiracion = $productoEnBodega->fecha_expiracion;
-            $transladarBodega->estado_recibido = 4;
-            $transladarBodega->recibido_por = Auth::user()->id;
-            $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id;
-            $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;
-
-            $transladarBodega->save();
-
-            $logTranslados = new ModelLogTranslados;
-            $logTranslados->origen = $productoEnBodega->id ;
-            $logTranslados->destino = $transladarBodega->id;
-
-            $logTranslados->cantidad = $unidadesTraslado;
-            $logTranslados->unidad_medida_venta_id = $request->Umedida;
-
-            $logTranslados->users_id= Auth::user()->id;
-            $logTranslados->descripcion="Translado de bodega";
-            $logTranslados->save();
+        $idRecibido = $request->$keyIdRecibido;
+        $unidadMedidaId = $request->$keyUnidadMedidaId;
+        $cantidad = $request->$keyCantidad;
+        $idSeccion = $request->$keyIdSeccion;
 
 
-            $productoEnBodega->cantidad_disponible = $productoEnBodega->cantidad_disponible - $unidadesTraslado;
-            $productoEnBodega->save();
+        $productoEnBodega = ModelRecibirBodega::find($idRecibido);
+        $unidadesVenta = DB::SELECTONE("select id, unidad_venta from unidad_medida_venta where id =".$unidadMedidaId);
+        $unidadesTraslado = $cantidad * $unidadesVenta->unidad_venta;
 
-            DB::commit();
-            return response()->json([
-                "text" => "El producto ha sido transladado de bodega con éxito.",
-                "icon" => "success",
-                "title"=>"Exito!"
-            ], 200);
+        $nombreProducto = DB::SELECTONE("select nombre from producto where id = ".$productoEnBodega->producto_id);
 
-        }else{
+            if($productoEnBodega->cantidad_disponible >= $unidadesTraslado ){
 
-            return response()->json([
-                "text" => "La cantidad solicitada para translado de bodega, excede la cantidad disponible. No se puede transladar el producto.",
-                "icon" => "warning",
-                "title"=>"Advertencia!"
-            ], 402);
+                $transladarBodega = new ModelRecibirBodega();
+                $transladarBodega->compra_id = $productoEnBodega->compra_id;
+                $transladarBodega->producto_id = $productoEnBodega->producto_id;
+                $transladarBodega->seccion_id = $idSeccion;
+                $transladarBodega->cantidad_compra_lote = $productoEnBodega->cantidad_compra_lote;
+                $transladarBodega->cantidad_inicial_seccion = $unidadesTraslado;
+                $transladarBodega->cantidad_disponible = $unidadesTraslado;
+                $transladarBodega->fecha_recibido = now();
+                $transladarBodega->fecha_expiracion = $productoEnBodega->fecha_expiracion;
+                $transladarBodega->estado_recibido = 4;
+                $transladarBodega->recibido_por = Auth::user()->id;
+                $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id;
+                $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;    
+                $transladarBodega->save();
+
+
+                $logTranslados = new ModelLogTranslados;
+                $logTranslados->origen = $productoEnBodega->id ;
+                $logTranslados->destino = $transladarBodega->id;
+
+                $logTranslados->cantidad = $unidadesTraslado;
+                $logTranslados->unidad_medida_venta_id =  $unidadMedidaId;
+
+                $logTranslados->users_id= Auth::user()->id;
+                $logTranslados->descripcion="Translado de bodega";
+                $logTranslados->save();
+
+
+                $productoEnBodega->cantidad_disponible = $productoEnBodega->cantidad_disponible - $unidadesTraslado;
+                $productoEnBodega->save();
+                $contadorTranslados++;
+
+                }else{
+                    $flagError = true;
+                    $text2 =  $text2."<li>".$productoEnBodega->producto_id."-".$nombreProducto."</li>";
+                }
+
 
 
         }
+
+        DB::commit();
+
+        if($flagError){
+            $text2 =  $text2."</ul>";
+            return response()->json([
+                "text" =>  $text2,
+                "icon" => "warning",
+                "title"=>"Advertencia!",
+                "contadorTranslados" => $contadorTranslados
+            ], 200);
+
+
+        }else{
+             return response()->json([
+                 "text" => "El producto ha sido transladado de bodega con éxito.",
+                 "icon" => "success",
+                 "title"=>"Exito!",
+                 "contadorTranslados" => $contadorTranslados
+             ], 200);
+        }
+        
+                  
+
 
        } catch (QueryException $e) {
         DB::rollback();
@@ -264,46 +290,50 @@ class Translados extends Component
        }
     }
 
-    public function productoGeneralBodega($idSeccion,$idProducto){
+    public function productoGeneralBodega($numeroFilas){
         try {
-        //dd($idSeccion,$idProducto);
-            $idBodega = DB::SELECTONE("
-                select
-                    bodega.id
-                from seccion
-                    inner join segmento
-                    on seccion.segmento_id = segmento.id
-                    inner join bodega
-                    on bodega.id = segmento.bodega_id
-                    where seccion.id =".$idSeccion);
+        
+            // $idBodega = DB::SELECTONE("
+            //     select
+            //         bodega.id
+            //     from seccion
+            //         inner join segmento
+            //         on seccion.segmento_id = segmento.id
+            //         inner join bodega
+            //         on bodega.id = segmento.bodega_id
+            //         where seccion.id =".$idSeccion);
 
 
 
          $listaProductos = DB::SELECT("
          select
-             A.id as 'idRecibido',
-             B.id as 'idProducto',
-             B.nombre,
-             C.nombre as 'simbolo',
-             A.cantidad_disponible,
-             bodega.nombre as bodega,
-             seccion.id as 'idSeccion',
-             seccion.descripcion,
-             A.created_at
-         from recibido_bodega A
-             inner join producto B
-             on A.producto_id = B.id
-             inner join seccion
-             on A.seccion_id = seccion.id
-             inner join segmento
-             on seccion.segmento_id = segmento.id
-             inner join bodega
-             on segmento.bodega_id = bodega.id
-             inner join unidad_medida C
-             on B.unidad_medida_compra_id = C.id
-             inner join compra
-             on A.compra_id = compra.id
-         where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega->id." and A.producto_id = ".$idProducto
+         A.id as 'idRecibido',
+         B.id as 'idProducto',
+         B.nombre,
+         C.nombre as 'simbolo',
+         A.cantidad_disponible,
+         bodega.nombre as bodega,
+         seccion.id as 'idSeccion',
+         seccion.descripcion,
+         A.created_at 
+       from log_translado Z
+         inner join recibido_bodega A
+         on Z.destino = A.id
+         inner join producto B
+         on A.producto_id = B.id
+         inner join seccion
+         on A.seccion_id = seccion.id
+         inner join segmento
+         on seccion.segmento_id = segmento.id
+         inner join bodega
+         on segmento.bodega_id = bodega.id
+         inner join unidad_medida C
+         on B.unidad_medida_compra_id = C.id
+         inner join compra
+         on A.compra_id = compra.id
+         where  A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and Z.descripcion ='Translado de bodega' 
+         order by Z.id desc 
+         limit ".$numeroFilas 
          );
 
          return Datatables::of($listaProductos)

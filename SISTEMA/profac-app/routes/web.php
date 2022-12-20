@@ -261,7 +261,7 @@ Route::get('/inventario/translado', Translados::class);
 Route::get('/translado/lista/productos',[Translados::class, 'listarProductos']);
 Route::get('/translado/lista/bodegas',[Translados::class, 'listarBodegas']);
 Route::get('/translado/producto/lista/{idBodega}/{idProducto}',[Translados::class, 'productoBodega']);
-Route::get('/translado/destino/lista/{idSeccion}/{idProducto}',[Translados::class, 'productoGeneralBodega']);
+Route::get('/translado/destino/lista/{numeroFilas}',[Translados::class, 'productoGeneralBodega']);
 Route::post('/translado/producto/bodega',[Translados::class, 'ejectarTranslado']);
 Route::post('/producto/compra/pagos/eliminar', [PagosCompra::class,'eliminarPago']);
 Route::post('/producto/compra/pagos/comprobar', [PagosCompra::class,'comprobarRetencion']);
