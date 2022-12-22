@@ -133,9 +133,6 @@ class ComisionesHistorico extends Component
                 return
 
                 '
-
-
-
                 <div class="modal fade" id="modal_pago_vendedor_'.$listaComisiones->codigoVendedor.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
