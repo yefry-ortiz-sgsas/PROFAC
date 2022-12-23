@@ -64,16 +64,16 @@
                         <div class="row" id="row_datos">
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Código de Factura No: <span class="text-danger">*</span></label>
-                                    <input  class="form-control" required type="number" min="0" id="factura" name="factura" value="{{ $idFactura }}" data-parsley-required>
-                                    <input  class="form-control" required type="hidden" id="mesFactura" name="mesFactura" value="{{ $mesFactura->mes }}">
+                                    <input readonly class="form-control" required type="number"  id="factura" name="factura" value="{{ $idFactura }}" data-parsley-required>
+                                    <input readonly class="form-control" required type="hidden" id="mesFactura" name="mesFactura" value="{{ $mesFactura->mes }}">
                                 </div>
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Código de vendedor: <span class="text-danger">*</span></label>
-                                    <input  class="form-control" required type="number" min="0" id="idVendedor" value="{{ $idVendedor->id }}" name="idVendedor" data-parsley-required >
+                                    <input readonly class="form-control" required type="number"  id="idVendedor" value="{{ $idVendedor->id }}" name="idVendedor" data-parsley-required >
                                 </div>
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Total por comisionar: <span class="text-danger">*</span></label>
-                                    <input  class="form-control" required type="text" min="0" id="gananciaTotal" name="gananciaTotal" value="{{ $gananciaTotal->gananciaTotal }}" data-parsley-required >
+                                    <input readonly class="form-control" required type="text"  id="gananciaTotal" name="gananciaTotal" value="{{ $gananciaTotal->gananciaTotal }}" data-parsley-required >
                                 </div>
                                 <div class="col-md-12">
                                     <label  class="col-form-label focus-label">Porcentaje de 0 a 100 (Ejemplo: 50 - equivaliendo al 50%): <span class="text-danger">*</span></label>
