@@ -243,24 +243,7 @@
                                     <li href="dashboard_2.html"><a >Gestiones</a></li>
                                     <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
                                 </ul> --}}
-                        </li>
-                                            <li>
-                            <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
-                                    class="nav-label" style="color:#ffffff;">Comisiones</span>
-                                <span class="fa arrow"></span></a>
 
-                            <ul class="nav nav-second-level">
-                                <li><a href="/comisiones/gestion" style="color:#ffffff;">Gestion inicial</a>
-                                </li>
-                                <li><a href="/comisiones" style="color:#ffffff;">Gestión de comisiones</a>
-                                </li>
-                                <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a>
-                                </li>
-
-                                <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a>
-                                </li>
-                            </ul>
-                        </li>
                        <!-----------------------------------Administrador------------------------------->
                     @if (Auth::user()->rol_id == '1')
                     <li>
@@ -391,7 +374,7 @@
 
                     <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                                style="color:#ffffff;">Comprobante De Entrega</span>
+                                style="color:#ffffff;">Entregas Agendadas</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
@@ -419,6 +402,26 @@
 
                         </ul>
                     </li>
+
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Vale</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+
+                            <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li>
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+
+
                     {{--  VENTAS COORPORATIVO  --}}
                     <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
@@ -439,11 +442,10 @@
                                     Cotizaciones</a></li>
                             <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas
-                                </a>
-
-
+                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
                             </li>
+
+
 
                         </ul>
                     </li>
@@ -499,6 +501,25 @@
 
                         </ul>
                     </li>
+
+                </li>
+                <li>
+<a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
+        class="nav-label" style="color:#ffffff;">Comisiones</span>
+    <span class="fa arrow"></span></a>
+
+<ul class="nav nav-second-level">
+    <li><a href="/comisiones/gestion" style="color:#ffffff;">Gestion inicial</a>
+    </li>
+    <li><a href="/comisiones" style="color:#ffffff;">Gestión de comisiones</a>
+    </li>
+    <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a>
+    </li>
+
+    <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a>
+    </li>
+</ul>
+</li>
 
                     {{-- Rol Vendedor --}}
                 @elseif (Auth::user()->rol_id == '2')
@@ -647,7 +668,7 @@
 
             <li>
                 <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                        style="color:#ffffff;">Entregas Pendientes</span>
+                        style="color:#ffffff;">Entregas Agendadas</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
@@ -751,6 +772,23 @@
                     <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de
                             Declaraciones</a></li>
                     <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Vale</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+
+                    <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                    </li>
+                    <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                     </li>
 
 
