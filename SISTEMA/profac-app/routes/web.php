@@ -93,6 +93,9 @@ use App\Http\Livewire\Vale\ListadoFacturasVale;
 use App\Http\Livewire\Ventas\ListarVale;
 
 
+use App\Http\Livewire\NotaDebito\NotaDebito;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -183,6 +186,7 @@ Route::post('/clientes/activar', [Cliente::class, 'activarCliente']);
 //----------------------------------------------FACTURACIONES---------------------------------------------------------------------------------------//
 
 Route::get('/facturas/corporativo', ListadoFacturas::class);
+
 Route::get('/lista/facturas/corporativo', [ListadoFacturas::class,'listarFacturas']);
 Route::post('/factura/corporativo/anular', [ListadoFacturas::class,'anularVentaRegistro']);
 
@@ -578,16 +582,16 @@ Route::get('/lista/producto/vale', [CrearVale::class,'listarProductos']);
 Route::post('/datos/producto/vale', [CrearVale::class,'datosProducto']);
 Route::get('/imprimir/entrega/{idEntrega}',[CrearVale::class,'imprimirEntregaProgramada']);
 
-Route::get('/crear/vale/lista/espera/{id}',ValeListaEspera::class); 
-Route::post('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);  
+Route::get('/crear/vale/lista/espera/{id}',ValeListaEspera::class);
+Route::post('/crear/vale/lista/espera/obtenerProductos',[ValeListaEspera::class,'obtenerProductosVale']);
 Route::post('/vale/lista/espera/guardar',[ValeListaEspera::class,'guardarVentaVale']);
 
 
 Route::get('/vale/restar/inventario', RestarVale::class);
-Route::get('/vale/restar/lista', [RestarVale::class,'listarVales']); 
-Route::post('/vale/restar/lista/anular', [RestarVale::class,'anularVale']); 
-Route::post('/vale/restar/lista/eliminar', [RestarVale::class,'eliminarVale']); 
-Route::get('/vale/comentarios/{id}',[RestarVale::class,'mostrarNotas']); 
+Route::get('/vale/restar/lista', [RestarVale::class,'listarVales']);
+Route::post('/vale/restar/lista/anular', [RestarVale::class,'anularVale']);
+Route::post('/vale/restar/lista/eliminar', [RestarVale::class,'eliminarVale']);
+Route::get('/vale/comentarios/{id}',[RestarVale::class,'mostrarNotas']);
 Route::get('/vale/imprimir/{id}',[RestarVale::class,'imprimirVale']);
 
 Route::get('/vale/listado/facturas',ListadoFacturasVale::class);
@@ -629,15 +633,17 @@ Route::get('/listar/cerradas', [ComisionesVendedor::class, 'obtenerFacturas']);
 Route::get('/listar/sinCerrar', [ComisionesVendedor::class, 'obtenerFacturasSinCerrar']);
 
 
-
-
-
-
-
-
 Route::get('/comisiones/gestion', ComisionesGestiones::class);
 Route::get('/comisiones/vendedor', ComisionesVendedor::class);
 Route::get('/comisiones/comisionar', ComisionesComisionar::class);
+
+
+/*************************NOTA DE DEBITO********************************** */
+
+Route::get('/debito', NotaDebito::class);
+Route::get('/debito/lista/facturas', [NotaDebito::class,'listarFacturas']);
+
+
 
 
 
