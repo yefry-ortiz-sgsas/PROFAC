@@ -10,14 +10,25 @@ use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 
+use PDF;
 use App\Models\NotaDebito\montoNotaDebito;
 use App\Models\NotaDebito\notaDebito as mNotaDebito;
+use Luecano\NumeroALetras\NumeroALetras;
+
+use App\Models\ModelFactura;
 use App\Models\ModelCAI;
+use App\Models\ModelRecibirBodega;
+use App\Models\ModelVentaProducto;
+use App\Models\ModelLogTranslados;
+use App\Models\ModelParametro;
+use App\Models\ModelLista;
+use App\Models\ModelCliente;
+use App\Models\logCredito;
+use App\Models\User;
 
 class NotaDebito extends Component
 {
-    public function render()
-    {
+    public function render(){
         $cai_nd_existencia = DB::SELECTONE("select count(id) as 'existe' from cai where cai.tipo_documento_fiscal_id = 4 and cai.estado_id = 1 and cai.cantidad_no_utilizada > 0");
         return view('livewire.nota-debito.nota-debito', compact('cai_nd_existencia'));
     }
@@ -343,6 +354,44 @@ class NotaDebito extends Component
     }
 
     public function descargarNota($idFactura){
+
+            $notaDebito = DB::SELECTONE("
+                select
+                    id
+                    ,factura_id
+                    ,monto_asignado
+                    ,fechaEmision
+                    ,motivoDescripcion
+                    ,cai_ndebito
+                    ,numeroCai
+                    ,correlativoND
+                    ,(select name from users where id = notaDebito.users_registra_id) as 'user'
+                    ,created_at
+                from notaDebito
+                where
+                notaDebito.estado_id = 1 and notaDebito.factura_id = ".$idFactura
+            );
+
+            $cai = DB::SELECTONE("select
+                *
+            from cai
+            where tipo_documento_fiscal_id = 4 and estado_id = 1 and id = ".$notaDebito->cai_ndebito);
+
+
+            $cliente = DB::SELECTONE("select nombre_cliente, cai from factura where id = ".$idFactura);
+
+            $formatter = new NumeroALetras();
+            $formatter->apocope = true;
+            $numeroLetras = $formatter->toMoney($notaDebito->monto_asignado, 2, 'LEMPIRAS', 'CENTAVOS');
+
+            $montoConCentavos= DB::SELECTONE("
+            select
+                FORMAT(monto_asignado,2) as total
+            from notaDebito where factura_id = ".$idFactura);
+
+            $pdf = PDF::loadView('/pdf/nodaDeDebito', compact('numeroLetras','notaDebito', 'cliente', 'cai', 'montoConCentavos'))->setPaper('letter');
+
+            return $pdf->stream("nota_debito_" . $notaDebito->factura_id.".pdf");
 
     }
 }
