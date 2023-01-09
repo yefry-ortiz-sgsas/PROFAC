@@ -67,15 +67,21 @@
     $contadorFilas = 0;
 @endphp
 
-
+        @if($cliente->estado_factura_id==1)
+        <span style = "font-size: 10px; position:absolute;left:500px;  top:105px;">Documento: N{{$cliente->numero_factura}}-CF11</span></p>
+        @else
+        <span style = "font-size: 10px; position:absolute;left:500px;  top:105px;">Documento: N{{$cliente->numero_factura}}-CF12</span></p>
+        @endif
     <div class="pruebaFondo">
-        <br><br><br><br><br>
+        <br><br><br>
+
+        <br><br>
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:7rem;">
 
             <div class="card-header">
 
             <p class="card-text" style="position:absolute;left:20px;  top:0px;"><b>CAI: {{ $cai->cai }} </b></p>
-            <p class="card-text" style="position:absolute;left:20px;  top:15px;"><b>Fecha Emisión: {{ $cai->fecha_limite_emision }} </b></p>
+            <p class="card-text" style="position:absolute;left:20px;  top:15px;"><b>Fecha Emisión Cai: {{ $cai->fecha_limite_emision }} </b></p>
             <br>
             <b style="margin-left:160px; ">NOTA DE DÉBITO No. {{$notaDebito->numeroCai}}</b>
 
@@ -83,7 +89,7 @@
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:73px;"><b>Cliente: {{ $cliente->nombre_cliente }} </b></p>
 
-                <p class="card-text" style="position:absolute;left:20px;  top:87px;"><b>Fecha Emisión: {{ $cliente->nombre_cliente }} </b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:87px;"><b>Fecha Emisión: {{$notaDebito->fechaEmision}} </b></p>
 
             </div>
         </div>
@@ -102,7 +108,7 @@
                         </tr>
                     </thead>
                         <tr>
-                            <td>POR FACTURA NO. {{ $cliente->cai }} </td>
+                            <td>POR FACTURA NO. {{ $cliente->cai }} - #</td>
                             <td>L - </td>
                             <td></td>
                         </tr>

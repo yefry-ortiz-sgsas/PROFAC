@@ -82,8 +82,10 @@ class NotaDebito extends Component
                 $existencianDebito = DB::SELECTONE("select COUNT(factura_id) as 'existe' from notadebito
                 where notadebito.factura_id = ".$listaFacturas->id." and notadebito.estado_id = 1");
 
-                $montoDebito = DB::SELECTONE("select monto, id from montoNotaDebito where estado_id = 1");
+
                     if ($existencianDebito->existe == 0) {
+
+                        $montoDebito = DB::SELECTONE("select monto, id from montoNotaDebito where estado_id = 1");
 
                         return
 
@@ -378,7 +380,7 @@ class NotaDebito extends Component
             where tipo_documento_fiscal_id = 4 and estado_id = 1 and id = ".$notaDebito->cai_ndebito);
 
 
-            $cliente = DB::SELECTONE("select nombre_cliente, cai from factura where id = ".$idFactura);
+            $cliente = DB::SELECTONE("select nombre_cliente, cai, estado_factura_id, numero_factura   from factura where id = ".$idFactura);
 
             $formatter = new NumeroALetras();
             $formatter->apocope = true;
