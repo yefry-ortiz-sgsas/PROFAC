@@ -10,11 +10,16 @@ use Illuminate\Http\Request;
 use DataTables;
 use Auth;
 
+use App\Models\NotaDebito\montoNotaDebito;
+use App\Models\NotaDebito\notaDebito as mNotaDebito;
+use App\Models\ModelCAI;
+
 class NotaDebito extends Component
 {
     public function render()
     {
-        return view('livewire.nota-debito.nota-debito');
+        $cai_nd_existencia = DB::SELECTONE("select count(id) as 'existe' from cai where cai.tipo_documento_fiscal_id = 4 and cai.estado_id = 1 and cai.cantidad_no_utilizada > 0");
+        return view('livewire.nota-debito.nota-debito', compact('cai_nd_existencia'));
     }
 
     public function listarFacturas(){
@@ -63,37 +68,40 @@ class NotaDebito extends Component
             return Datatables::of($listaFacturas)
             ->addColumn('opciones', function ($listaFacturas) {
 
+                $existencianDebito = DB::SELECTONE("select COUNT(factura_id) as 'existe' from notadebito
+                where notadebito.factura_id = ".$listaFacturas->id." and notadebito.estado_id = 1");
 
-                    return
+                $montoDebito = DB::SELECTONE("select monto, id from montoNotaDebito where estado_id = 1");
+                    if ($existencianDebito->existe == 0) {
 
-                    '<div class="btn-group">
-                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                            más</button>
-                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                        return
 
-                            <li>
-                                <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
-                            </li>
+                        '<div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                                más</button>
+                            <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
-                            <li>
-                                <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
-                            </li>
+                                <li>
+                                    <a class="dropdown-item" onclick="llenadoModalDebito('.$listaFacturas->id.', '.$montoDebito->monto.', '.$montoDebito->id.')" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Asignar Noda Débito </a>
+                                </li>
 
-                            <li>
-                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>
+                            </ul>
+                        </div>';
+                    }else{
+                        return
 
-                            <li>
-                            <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
-                            </li>
+                        '<div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                                más</button>
+                            <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
-                            <li>
-                                <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-calendar-days text-success"></i> Agendar Entrega </a>
-                            </li>
+                                <li>
+                                    <a class="dropdown-item" href="/debito/imprimir/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Imprimir Nota Débito </a>
+                                </li>
 
-
-                        </ul>
-                    </div>';
+                            </ul>
+                        </div>';
+                    }
 
             })
             ->addColumn('estado_cobro', function ($listaFacturas) {
@@ -115,7 +123,27 @@ class NotaDebito extends Component
                 }
 
            })
-            ->rawColumns(['opciones','estado_cobro'])
+           ->addColumn('estado_ndebito', function ($listaFacturas) {
+
+                $existencianDebito = DB::SELECTONE("select COUNT(factura_id) as 'existe' from notadebito
+                where notadebito.factura_id = ".$listaFacturas->id." and notadebito.estado_id = 1");
+               if( $existencianDebito->existe == 0 ){
+                   return
+                   '
+                   <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Nota Sin Asignar</span></p>
+                   ';
+
+               }else{
+
+                return
+                '
+
+                <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Nota Asignada</span></p>
+                ';
+               }
+
+          })
+            ->rawColumns(['opciones','estado_cobro','estado_ndebito'])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -125,6 +153,196 @@ class NotaDebito extends Component
             ], 402);
 
         }
+
+    }
+
+    public function listarMontos(){
+        try {
+
+            $listaMontos = DB::SELECT("
+                select
+                id,
+                monto,
+                descripcion,
+                (select name from users where id = montoNotaDebito.users_registra_id) as 'user',
+                created_at
+                from montoNotaDebito
+            ");
+
+            return Datatables::of($listaMontos)
+            ->addColumn('estado_monto', function ($listaMontos) {
+                $ESTADOmONTO = DB::SELECTONE("select estado_id from montoNotaDebito where id = ".$listaMontos->id);
+                if( $ESTADOmONTO->estado_id == 1){
+
+                    return
+                    '
+                    <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Activo</span></p>
+                    ';
+
+                }else if($ESTADOmONTO->estado_id == 2) {
+                    return
+                    '
+                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Inactivo</span></p>
+                    ';
+                }
+
+           })
+            ->rawColumns(['estado_monto'])
+            ->make(true);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar los montos.',
+                'errorTh' => $e,
+            ], 402);
+
+        }
+    }
+
+    public function guardarMonto(Request $request){
+        try {
+            DB::beginTransaction();
+
+                DB::update('
+                update
+                montoNotaDebito
+                set estado_id = 2');
+
+                $montoNotaDebito = new montoNotaDebito;
+                $montoNotaDebito->monto = $request->monto;
+                $montoNotaDebito->descripcion = $request->descripcion;
+                $montoNotaDebito->estado_id = 1;
+                $montoNotaDebito->users_registra_id = Auth::user()->id;
+                $montoNotaDebito->save();
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Registro de monto de débito con éxito!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al registrar el débito.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+    }
+
+    public function guardarNotaDebito(Request $request){
+
+        $cai = DB::SELECTONE("select
+        id,
+        numero_inicial,
+        numero_final,
+        cantidad_otorgada,
+        numero_actual
+        from cai
+        where tipo_documento_fiscal_id = 4 and estado_id = 1");
+
+        if($cai->numero_actual > $cai->cantidad_otorgada){
+
+            return response()->json([
+                "title" => "Advertencia",
+                "icon" => "warning",
+                "text" => "La Nota de débito no puede proceder, debido que ha alcanzadado el número maximo de unidades CAI.",
+            ], 401);
+
+        }
+        $numeroSecuencia = $cai->numero_actual;
+        $arrayCai = explode('-',$cai->numero_final);
+        $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
+        $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
+        $fechaActual = date('Y');
+        $correlativo = $fechaActual.'-'.$numeroSecuencia;
+
+        /* GUARDANDO LO DE LA NOTA DE DÉBITO */
+
+
+        $NotaDebito = new mNotaDebito;
+        $NotaDebito->factura_id = $request->factura_id;
+        $NotaDebito->montoNotaDebito_id = $request->montoNotaDebito_id;
+        $NotaDebito->monto_asignado = $request->monto_;
+        $NotaDebito->fechaEmision = $request->fechaEmision;
+        $NotaDebito->motivoDescripcion = $request->motivoDescripcion;
+        $NotaDebito->cai_ndebito = $cai->id;
+        $NotaDebito->numeroCai = $numeroCAI;
+        $NotaDebito->correlativoND = $correlativo;
+        $NotaDebito->estado_id = 1;
+        $NotaDebito->users_registra_id = Auth::user()->id;
+        $NotaDebito->save();
+
+
+
+        /* //////////////////////////////////////////////////////*/
+
+        $caiUpdated =  ModelCAI::find($cai->id);
+        $caiUpdated->numero_actual=$numeroSecuencia+1;
+        $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
+        $caiUpdated->save();
+    }
+
+    public function listarnotasDebito(){
+        try {
+
+            $listanotaDebito = DB::SELECT("
+                select
+                id
+                ,factura_id
+                ,monto_asignado
+                ,fechaEmision
+                ,motivoDescripcion
+                ,cai_ndebito
+                ,numeroCai
+                ,correlativoND
+                ,(select name from users where id = notaDebito.users_registra_id) as 'user'
+                ,created_at
+                from notaDebito
+            ");
+
+            return Datatables::of($listanotaDebito)
+            ->addColumn('estado', function ($listanotaDebito) {
+                $ESTADO = DB::SELECTONE("select estado_id from notaDebito where id = ".$listanotaDebito->id);
+                if( $ESTADO->estado_id == 1){
+
+                    return
+                    '
+                    <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Activo</span></p>
+                    ';
+
+                }else if($ESTADO->estado_id == 2) {
+                    return
+                    '
+                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Inactivo</span></p>
+                    ';
+                }
+
+           })
+           ->addColumn('file', function ($listanotaDebito) {
+
+                    return
+                    '
+                        <button type="button" href="/debito/imprimir/'.$listanotaDebito->factura_id.'" class="btn btn-success">Descargar <i class="fa-solid fa-file-pdf"></i></button>
+                    ';
+
+            })
+            ->rawColumns(['estado','file'])
+            ->make(true);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar las notas de debito.',
+                'errorTh' => $e,
+            ], 402);
+
+        }
+    }
+
+    public function descargarNota($idFactura){
 
     }
 }

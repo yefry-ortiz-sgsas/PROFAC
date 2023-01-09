@@ -642,6 +642,15 @@ Route::get('/comisiones/comisionar', ComisionesComisionar::class);
 
 Route::get('/debito', NotaDebito::class);
 Route::get('/debito/lista/facturas', [NotaDebito::class,'listarFacturas']);
+Route::get('/debito/lista/montos', [NotaDebito::class,'listarMontos']);
+Route::post('/debito/monto/guardar', [NotaDebito::class,'guardarMonto']);
+Route::post('/debito/notad/guardar', [NotaDebito::class,'guardarNotaDebito']);
+Route::get('/debito/lista/notas', [NotaDebito::class,'listarnotasDebito']);
+Route::get('/debito/imprimir/{idFactura}', [NotaDebito::class,'descargarNota']);
+
+
+
+
 
 
 
