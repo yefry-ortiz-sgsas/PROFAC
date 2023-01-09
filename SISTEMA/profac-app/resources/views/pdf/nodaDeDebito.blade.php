@@ -77,7 +77,7 @@
             <p class="card-text" style="position:absolute;left:20px;  top:0px;"><b>CAI: {{ $cai->cai }} </b></p>
             <p class="card-text" style="position:absolute;left:20px;  top:15px;"><b>Fecha Emisión: {{ $cai->fecha_limite_emision }} </b></p>
             <br>
-            <b>NOTA DE DÉBITO No. {{$notaDebito->numeroCai}}</b>
+            <b style="margin-left:160px; ">NOTA DE DÉBITO No. {{$notaDebito->numeroCai}}</b>
 
             </div>
             <div class="card-body">

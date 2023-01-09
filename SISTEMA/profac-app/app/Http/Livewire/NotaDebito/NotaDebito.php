@@ -337,7 +337,7 @@ class NotaDebito extends Component
 
                     return
                     '
-                        <button type="button" href="/debito/imprimir/'.$listanotaDebito->factura_id.'" class="btn btn-success">Descargar <i class="fa-solid fa-file-pdf"></i></button>
+                        <a class="btn btn-success" href="/debito/imprimir/'.$listanotaDebito->factura_id.'" > Ver <i class="fa-solid fa-file-pdf"></i></a>
                     ';
 
             })
