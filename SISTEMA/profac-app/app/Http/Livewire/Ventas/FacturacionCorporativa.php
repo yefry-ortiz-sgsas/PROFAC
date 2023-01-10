@@ -283,6 +283,7 @@ class FacturacionCorporativa extends Component
 
     public function guardarVenta(Request $request)
     {
+
         try {
 
             $validator = Validator::make($request->all(), [
@@ -419,13 +420,14 @@ class FacturacionCorporativa extends Component
                 from cai
                 where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
+
                 if($cai->numero_actual > $cai->cantidad_otorgada){
 
                     return response()->json([
                         "title" => "Advertencia",
                         "icon" => "warning",
                         "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 1.",
-                    ], 401);
+                    ], 200);
 
                 }
 
@@ -438,7 +440,6 @@ class FacturacionCorporativa extends Component
                 $arrayCai = explode('-',$cai->numero_final);
                 $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
                 $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
-                    // dd($cai->cantidad_otorgada);
 
 
 
@@ -489,6 +490,7 @@ class FacturacionCorporativa extends Component
 
 
             } else {
+
                 // alterna
                 $lista = DB::SELECT("select id, numero from listado where eliminado = 0");
                 $espera = DB::SELECT("select id from enumeracion where eliminado = 0");
@@ -503,6 +505,8 @@ class FacturacionCorporativa extends Component
 
                     $factura = $this->alternar($request);
                 }
+
+                dd($factura);
             }
 
 
@@ -535,7 +539,7 @@ class FacturacionCorporativa extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-                //dd($factura);
+               // dd($factura);
 
                 $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
@@ -663,12 +667,11 @@ class FacturacionCorporativa extends Component
             $numero_final= (string)((int)($arrayNumeroFinal[3]));
 
             if ($numeroSecuencia > $numero_final) {
-
                 return response()->json([
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 2.",
-                ], 401);
+                ], 200);
             }
 
             // if ($numeroSecuencia > $cai->numero_actual) {
@@ -813,7 +816,7 @@ class FacturacionCorporativa extends Component
                     "title" => "Advertencia",
                     "icon" => "warning",
                     "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 3.",
-                ], 402);
+                ], 200);
             }
 
 

@@ -162,7 +162,7 @@
                                         <th>Cod</th>
                                         <th>CAI</th>
                                         <th>Fecha Limite</th>
-                                        <th>Documento Fiscal</th>                                        
+                                        <th>Documento Fiscal</th>
                                         <th>Cantidad Otorgada</th>
                                         <th>Numero Inicial</th>
                                         <th>Numero Final</th>
@@ -267,7 +267,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarProductoForm" name="editarProductoForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -307,14 +307,14 @@
                                             <div class="col-md-12">
                                                 <label for="punto_emision_editar" class="col-form-label focus-label">Punto Emision:<span class="text-danger">*</span></label>
                                                 <input class="form-control" required type="text" id="punto_emision_editar" name="punto_emision_editar" data-parsley-required>
-                                            </div>      
-        
+                                            </div>
+
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarProductoForm" class="btn btn-primary">Editar
@@ -353,34 +353,32 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearCAIFacturacionForm', function(event) {
             event.preventDefault();
-            if (verificacionCAI()) {
-                guardarCaiFacturacion();
-            }else{
+            guardarCaiFacturacion();
+            {{--  $('#modal_cai_crear_facturacion').modal('hide');  --}}
 
-                Swal.fire({
-                        icon: 'error',
-                        title: 'Accion no permitida!',
-                        text: "Aun existen facturas pendientes de cierre."
-                    })
-            }
-            $('#modal_cai_crear_facturacion').modal('hide');
         });
 
             function guardarCaiFacturacion() {
+
+
+
                 $('#modalSpinnerLoading').modal('show');
 
-                var data = new FormData($('#crearCAIFacturacionForm').get(0));
-                
-                axios.post("/ventas/cai/guardar", data)
+                var datos = new FormData($('#crearCAIFacturacionForm').get(0));
+
+                axios.post("/ventas/cai/guardar", datos)
                     .then(response => {
+
+                            let data = response.data;
+
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearCAIFacturacionForm').parsley().reset();
-                        
+
                         document.getElementById("crearCAIFacturacionForm").reset();
                         $('#modal_cai_crear_facturacion').modal('hide');
 
@@ -388,22 +386,22 @@
 
 
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Exito!',
-                            text: "CAI creado con exito."
-                        })
-
-                    })
-                    .catch(err => {
-                        let data = err.response.data;
-                        $('#modalSpinnerLoading').modal('hide');
-                        $('#modal_cai_crear_facturacion').modal('hide');
-                        Swal.fire({
                             icon: data.icon,
                             title: data.title,
                             text: data.text
                         })
-                        console.error(err);
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        $('#modalSpinnerLoading').modal('hide');
+                        $('#modal_cai_crear_facturacion').modal('hide');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'error!',
+                            text: "Ha ocurrido un error al guardar cai"
+                        })
+
 
                     })
 
@@ -463,7 +461,7 @@
                         },
                         {
                             data: 'numero_inicial'
-                        },                        
+                        },
                         {
                             data: 'numero_final'
                         },
@@ -482,7 +480,7 @@
                 let data = {id:id}
                 axios.post('/ventas/cai/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('cai_editar').value = datos.cai;
@@ -493,7 +491,7 @@
                     document.getElementById('numero_final_editar').value = datos.numero_final;
                     document.getElementById('punto_emision_editar').value = datos.punto_de_emision;
                     document.getElementById('idCAI').value = datos.id;
-                                      
+
                     $('#modal_cai_editar').modal('show');
                 })
                 .catch( err=>{
@@ -512,15 +510,15 @@
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarProductoForm').get(0));
-                
-            
+
+
                 axios.post('/ventas/cai/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarProductoForm').parsley().reset();
-                    
+
                     document.getElementById("editarProductoForm").reset();
                     $('#modal_cai_editar').modal('hide');
 
@@ -538,7 +536,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_cai_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -551,21 +549,21 @@
 
             //////////////////////////////////////////////////////////////////////////////////
              function verificacionCAI(){
-               
-            
+
+
                 axios.get('/cai/verificacion')
                 .then( response =>{
 
-                    
-                    
+
+
                     return response;
 
-                   
+
 
                 })
                 .catch( err=>{
                     let data = err.response.data;
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
