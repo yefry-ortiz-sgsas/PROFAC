@@ -152,6 +152,16 @@ class PagosCompra extends Component
                     from cai
                     where tipo_documento_fiscal_id = 2 and estado_id = 1");
 
+                    if(empty($cai)){
+
+                        return response()->json([
+                            "title" => "Advertencia",
+                            "icon" => "warning",
+                            "text" => "La factura no puede proceder, debido a que no se encuentra registrado un CAI de retenecion activo.",
+                        ], 200);
+
+                    }
+
                     $arrayNumeroFinal = explode('-', $cai->numero_final);
                     $numero_final= (string)((int)($arrayNumeroFinal[3]));
 

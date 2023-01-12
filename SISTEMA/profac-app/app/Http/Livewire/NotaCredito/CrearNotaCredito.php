@@ -13,6 +13,13 @@ use Auth;
 use Validator;
 use PDF;
 use Luecano\NumeroALetras\NumeroALetras;
+
+use App\Models\ModelNotaCredito;
+use App\Models\ModelNotaCreditoProducto;
+use App\Models\ModelLogTranslados;
+use App\Models\ModelRecibirBodega;
+use App\Models\ModelCAI;
+
 class CrearNotaCredito extends Component
 {
     public function render()
@@ -22,7 +29,7 @@ class CrearNotaCredito extends Component
 
     public function obtenerClientes(Request $request){
 
-        $clientes = DB::SELECT("select id, concat(id,'-',nombre) as text from cliente where (nombre like '%".$request->search."%') or (id like '%".$request->search."%') limit 15");
+        $clientes = DB::SELECT("select id, concat(id,'-',nombre) as text from cliente where id <> 1 and ((nombre like '%".$request->search."%') or (id like '%".$request->search."%')) limit 15");
 
         return response()->json([
             "results"=>$clientes,
@@ -84,12 +91,13 @@ class CrearNotaCredito extends Component
         B.producto_id,
         C.nombre,
         concat(F.nombre,' - ',D.descripcion ) as bodega,
-        B.precio_unidad,
+        format(B.precio_unidad,2) as precio_unidad,
         B.cantidad,
-        H.nombre as unidad_medida,
-        B.sub_total,
-        B.isv,
-        B.total 
+        concat(H.nombre,' - ', G.unidad_venta ) as unidad_medida,
+        format(B.sub_total,2) as sub_total,
+        format(B.isv,2) as isv,
+        format(B.total,2) as total,
+        C.isv as productoISV
         from factura A
         inner join venta_has_producto B
         on A.id = B.factura_id
@@ -105,7 +113,9 @@ class CrearNotaCredito extends Component
         on G.id = B.unidad_medida_venta_id
         inner join unidad_medida H
         on H.id = G.unidad_medida_id
-        where A.id =".$request->idFactura
+        where A.id =".$request->idFactura."
+        group by B.seccion_id,  B.factura_id, B.producto_id,  C.nombre,  B.cantidad,  H.nombre, unidad_medida, C.isv, B.precio_unidad, B.sub_total,B.isv,B.total
+        "
         );
 
         return Datatables::of($productos)
@@ -147,7 +157,9 @@ class CrearNotaCredito extends Component
             B.precio_unidad,
             B.cantidad,
             H.nombre as unidad_medida,
-            B.unidad_medida_venta_id as idUnidadVenta       
+            B.unidad_medida_venta_id as idUnidadVenta ,
+            G.unidad_venta,
+            C.isv as porcentajeISV      
        
         from factura A
         inner join venta_has_producto B
@@ -187,5 +199,307 @@ class CrearNotaCredito extends Component
         'error' => $e,
        ],402);
        }
+    }
+
+    public function obtenerMotivos(){
+   
+
+
+        $obtenerMotivos = DB::SELECT("select id, descripcion as text from motivo_nota_credito");
+
+
+       return response()->json([
+        'results' => $obtenerMotivos
+        
+       ],200);
+       
+    }
+
+    public function guardarNotaCredito(Request $request){
+       try {
+
+        dd($request->all());
+
+        $flagError = false;
+        $text1 ="<p>Los siguientes productos exceden la cantidad disponible para realizar la nota de credito: <p><ul>";
+        $nombreProducto ="";
+
+        $arregloIdInputs = $request->arregloIdInputs;
+
+       
+        /***VERIFICA LA EXISTENCIA DEL PRODUCTO EN LA FACTURA PARA REALIZAR LA DEVOLUCION - SI NO ENCUENTRA CANTIDAD DISPONIBLE, NO REALIZAR LA NOTA DE CREDITO */
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+
+            $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
+            $keyNombreProducto = "nombreProducto".$arregloIdInputs[$i];
+            $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
+            $keyCantidad = "cantidad".$arregloIdInputs[$i];          
+
+            $idProducto = $request->$keyIdProducto;
+            $idSeccion = $request->$keyIdSeccion;
+            $cantidad = $request->$keyCantidad;
+            $nombreProducto = $request->$keyNombreProducto;
+           
+
+            $cantidadDisponible = DB::SELECTONE("select sum(numero_unidades_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
+
+            if($cantidad  > $cantidadDisponible){
+                $flagError = true;
+                $text1 =  $text1."<li>".$idProducto."-".$nombreProducto."</li>";
+            }
+        }
+
+        if($flagError){
+            $text1 =  $text1."</ul>";
+            return response()->json([
+                "text" =>  $text1,
+                "icon" => "warning",
+                "title"=>"Advertencia!"               
+            ], 200);
+        }
+
+
+
+        $numeroNota = DB::SELECTONE("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from nota_credito");
+
+        $cai = DB::SELECTONE("
+        select
+            id,
+            numero_inicial,
+            numero_final,
+            cantidad_otorgada,
+            numero_actual,
+            serie,
+            fecha_limite_emision
+        from cai 
+        where tipo_documento_fiscal_id = 3 and estado_id = 1");
+
+        $limite = explode('-',$cai->numero_final);
+        $limite = ltrim($limite[3],"0");
+
+        if($cai->numero_actual > $limite){
+
+            return response()->json([
+                "title" => "Advertencia",
+                "icon" => "warning",
+                "text" => "La nota de credito no puede proceder, debido que ha alcanzadado el número maximo  de CAI otorgado.",
+            ], 401);
+
+        }
+
+
+
+        DB::beginTransaction();
+           //SE CREA LA NOTA DE CREDITO 
+
+        $numeroSecuencia = $cai->numero_actual;
+        $arrayCai = explode('-',$cai->numero_final);          
+        $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
+        $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
+
+        $notaCredito = new ModelNotaCredito();
+        $notaCredito->numero_nota =$numeroNota ;
+        $notaCredito->cai =$numeroCAI;
+        $notaCredito->numero_secuencia_cai = $numeroSecuencia;
+        $notaCredito->fecha = now();
+        $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
+        $notaCredito->isv = round($request->isvGeneralCredito,2);
+        $notaCredito->total = round($request->totalGeneralCredito,2);
+        $notaCredito->factura_id = $request->idFactura;
+        $notaCredito->cai_id = $cai->id;
+        $notaCredito->motivo_nota_credito_id = $request->motivo_nota;
+        $notaCredito->users_id = Auth::user()->id;  
+        $notaCredito->estado_nota_id = 1;
+        $notaCredito->save();
+
+        //GUARDA LOS PRODUCTOS DE LA NOTA DE CREDITO
+
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+
+            $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
+            $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
+            $keyCantidad = "cantidad".$arregloIdInputs[$i];
+            
+            $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
+            $keySubTotal = "subTotal".$arregloIdInputs[$i];
+            $keyISV = "isv".$arregloIdInputs[$i];
+            $keyTotal = "total".$arregloIdInputs[$i];
+
+            $keyPrecio = "precio".$arregloIdInputs[$i];
+
+            $idProducto = $request->$keyIdProducto;
+            $idSeccion = $request->$keyIdSeccion;
+            $cantidad = $request->$keyCantidad;
+            $idUnidadMedida = $request->$keyIdUnidadMedida;
+            $subTotal = $request->$keySubTotal;
+            $isv = $request->$keyISV;
+            $total = $request->$keyTotal;
+            $precio = $request->$keyPrecio;
+
+            $productoNota = new ModelNotaCreditoProducto();
+            $productoNota->nota_credito_id = $notaCredito->id;
+            $productoNota->producto_id = $request->$idProducto;
+            $productoNota->cantidad = $request->$cantidad;
+            $productoNota->precio_unidad = $precio;
+            $productoNota->sub_total = $subTotal;
+            $productoNota->isv =  $isv;
+            $productoNota->total = $total;
+            $productoNota->seccion_id = $idSeccion;
+            $productoNota->unidad_medida_venta_id = $idUnidadMedida;
+            $productoNota->save();
+            
+        }
+
+
+
+
+        //RESTA LOS PRODUCTOS DE LA FACTURA 
+
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+
+            $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
+            $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
+            $keyCantidad = "cantidad".$arregloIdInputs[$i];
+            
+            $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
+            $keySubTotal = "subTotal".$arregloIdInputs[$i];
+            $keyISV = "isv".$arregloIdInputs[$i];
+            $keyTotal = "total".$arregloIdInputs[$i];
+
+            $idProducto = $request->$keyIdProducto;
+            $idSeccion = $request->$keyIdSeccion;
+            $cantidad = $request->$keyCantidad;
+            $idUnidadMedida = $request->$keyIdUnidadMedida;
+            $SubTotal = $request->$keySubTotal;
+            $isv = $request->$keyISV;
+            $total = $request->$keyTotal;
+
+            $unidadVenta = DB::SELECTONE("select unidad_venta from unidad_medida_venta where id =".$idUnidadMedida);
+            $cantidadBaseSeccion = $unidadVenta*$cantidad;
+
+            $this->restarUnidadesDevolver($request->idFactura,$idProducto,$idSeccion,$cantidadBaseSeccion,$unidadVenta, $productoNota->id);
+
+        }   
+
+
+
+        $caiUpdated =  ModelCAI::find($cai->id);
+        $caiUpdated->numero_actual=$numeroSecuencia+1;
+        $caiUpdated->serie=$numeroSecuencia+1;
+        $caiUpdated->cantidad_no_utilizada=$cai->cantidad_no_utilizada - 1;
+        $caiUpdated->save();
+
+        
+        
+
+
+        DB::commit();
+       return response()->json([
+        'icon' => 'success',
+        'text' => 'Nota de credito creada correctamente.',
+        'title' => 'Exito!',
+       ],200);
+       } catch (QueryException $e) {
+        DB::rollback();
+       return response()->json([
+        'icon' => 'error',
+        'text' => 'Ha ocurrido un error al guardar la nota de credito',
+        'title' => 'Error',
+        'message' => 'Ha ocurrido un error', 
+        'error' => $e,
+       ],402);
+       }
+    }
+
+    public function restarUnidadesDevolver($idFactura, $idProducto, $idSeccion, $cantidadBaseSeccion, $unidadVenta, $idNotaCredito ){
+        $i = 0;
+
+
+        $cantidadSeccionRestar = $cantidadBaseSeccion; //unidad base a restar 
+        $lotes = DB::SELECT("
+        select 
+        lote,
+        numero_unidades_resta_inventario as unidadesLote,      
+        unidad_medida_venta_id
+        from venta_has_producto, 
+        where factura_id=".$idFactura." and producto_id= ".$idProducto." and seccion_id =".$idSeccion
+        );
+
+
+        while($cantidadSeccionRestar > 0){
+            $lote = $lotes[$i];
+        
+            if($lote->unidadesLote > $cantidadSeccionRestar){
+                $cantidadSeccionRestar = $lote->unidadesLote - $cantidadSeccionRestar;
+                $cantidadLoteRestarUpdate = $cantidadSeccionRestar;                                                     
+            }
+        
+            if($lote->unidadesLote == $cantidadSeccionRestar){
+                $cantidadSeccionRestar = 0;
+                $cantidadLoteRestarUpdate = 0;   
+              
+            }
+        
+            if($lote->unidadesLote < $cantidadSeccionRestar){
+                $cantidadSeccionRestar = $cantidadSeccionRestar - $lote->unidadesLote;
+                $cantidadLoteRestarUpdate = 0;  
+            }  
+            
+            
+            //***QUERY***//
+
+            DB::table('venta_has_producto')
+            ->where('factura_id',$idFactura)
+            ->where('producto_id', $idProducto)
+            ->where('seccion_id', $idSeccion)
+            ->where('lote', $lote->lote)
+            ->update([
+                'numero_unidades_resta_inventario' => $cantidadLoteRestarUpdate,
+                'cantidad_para_entregar' => $cantidadLoteRestarUpdate,
+                'cantidad_s' => ($cantidadLoteRestarUpdate/$unidadVenta)
+            ]);
+
+
+            DB::table('log_translado')
+            ->where('origen',$lote->lote)
+            ->where('factura_id',$idFactura)
+            ->update([
+               'cantidad' => $cantidadLoteRestarUpdate,                   
+               'updated_at' => now()
+            ]);
+
+            $logTranslados = new ModelLogTranslados;
+            $logTranslados->origen = $lote->lote ;
+            $logTranslados->destino = $lote->lote;
+            $logTranslados->cantidad = $cantidadLoteRestarUpdate;
+            $logTranslados->unidad_medida_venta_id =  $lote->unidad_medida_venta_id;
+            $logTranslados->users_id= Auth::user()->id;
+            $logTranslados->descripcion="Devolucion de producto";
+            $logTranslados->save();
+
+            $recibidoBodega = ModelRecibirBodega::find($lote->lote);
+            $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $cantidadLoteRestarUpdate;
+            $recibidoBodega->updated_at = now();
+            $recibidoBodega->save();
+
+            //***FIN QUERY***//
+
+                
+            $i++;
+        }
+
+        $cantidadIngresadaUsuario = $cantidadBaseSeccion/$unidadVenta;
+
+        DB::table('venta_has_producto')
+        ->where('factura_id',$idFactura)
+        ->where('producto_id', $idProducto)
+        ->where('seccion_id', $idSeccion)        
+        ->update([
+            'resta_inventario_total' => ($lotes[0]->resta_inventario_total - $cantidadBaseSeccion),
+            'cantidad' => $lotes[0]->cantidad - $cantidadIngresadaUsuario
+        ]);
+
+        return;
+
     }
 }

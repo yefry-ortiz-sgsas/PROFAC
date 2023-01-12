@@ -441,7 +441,7 @@
                     this.totalesGenerales();
                 }
 
-                console.log(arregloIdInputs)
+               
 
             }
 

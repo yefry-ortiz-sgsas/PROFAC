@@ -449,15 +449,18 @@ Route::post('/inventario/tipoajuste/editar', [TipoAjuste::class,'editarTipoAjust
 Route::get('/nota/credito',CrearNotaCredito::class);
 ROUTE::get('/nota/credito/clientes', [CrearNotaCredito::class, 'obtenerClientes']);
 Route::get('/nota/credito/facturas', [CrearNotaCredito::class,'obtenerFactura']);
+Route::get('/nota/credito/motivos', [CrearNotaCredito::class,'obtenerMotivos']);
 Route::post('/nota/credito/datos/factura',[CrearNotaCredito::class, 'obtenerDetalleFactura']);
 Route::post('/nota/credito/obtener/productos',[CrearNotaCredito::class,'obtenerProductos']);
 Route::post('/nota/credito/datos/producto',[CrearNotaCredito::class,'datosProducto']);
+Route::post('/nota/credito/guardar',[CrearNotaCredito::class,'guardarNotaCredito']);
 
 Route::get('/ventas/motivo_credito',MotivoNotaCredito::class);
 Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardarMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
+
 
 
 //--------------------------------------------------------------------------CARDEX----------------------------------------------------------------------------------------------//

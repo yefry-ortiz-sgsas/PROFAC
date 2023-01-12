@@ -356,6 +356,7 @@
          
          $(document).on('submit', '#crearCAIFacturacionForm', function(event) {
             event.preventDefault();
+            
             if (verificacionCAI()) {
                 guardarCaiFacturacion();
             }else{
