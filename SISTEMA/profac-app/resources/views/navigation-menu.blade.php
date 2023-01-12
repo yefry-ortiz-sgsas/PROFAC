@@ -257,6 +257,7 @@
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
                     </li>
+
                     <li>
                         <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
                                 style="color:#ffffff;">Bodega</span>
@@ -340,6 +341,16 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Nota de Débito</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a>
+                            </li>
+                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
                                 class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
                             <span class="fa arrow"></span></a>
@@ -415,12 +426,12 @@
                             </li>
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
-                            
-                            
+
+
                         </ul>
                     </li>
 
-                    
+
 
                     {{--  VENTAS COORPORATIVO  --}}
                     <li>
@@ -446,7 +457,7 @@
                             </li>
 
 
-                            
+
                         </ul>
                     </li>
 
@@ -790,8 +801,8 @@
                     </li>
                     <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                     </li>
-                    
-                    
+
+
                 </ul>
             </li>
               {{-- Rol Axuliar Contable --}}
