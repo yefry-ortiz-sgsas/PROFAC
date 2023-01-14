@@ -506,7 +506,6 @@ class FacturacionCorporativa extends Component
                     $factura = $this->alternar($request);
                 }
 
-                dd($factura);
             }
 
 
@@ -976,12 +975,12 @@ class FacturacionCorporativa extends Component
                     "lote" => $unidadesDisponibles->id,
                     "seccion_id" => $idSeccion,
                     "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
-                    "seccion_id" => $idSeccion,                    
+                    "seccion_id" => $idSeccion,
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
                     "numero_unidades_resta_inventario" => $registroResta, //La cantidad de unidades que se resta por lote - esta canitdad es ingresada por el usuario - se **multipla** por la unidad de medida venta para convertir a unidad base y restar de la tabla recibido bodega **la cantidad que se resta por lote**
-                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad ingresada por el usuario en la pantalla de factura - misma cantidad se **multiplica** por la unidad de venta - registra la cantidad total a restar en la seccion_id- se repite para el lote 
+                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad ingresada por el usuario en la pantalla de factura - misma cantidad se **multiplica** por la unidad de venta - registra la cantidad total a restar en la seccion_id- se repite para el lote
                     "unidad_medida_venta_id" => $idUnidadVenta, //la unidad de medida que selecciono el usuario para la venta
                     "precio_unidad" => $precio, // precio de venta ingresado por el usuario
                     "cantidad" => $cantidad, //Es la cantidad escrita por el usuario en la pantalla de factura la cual se va restar a la seccion - esta cantidad no sufre ningun tipo de alteracion - se guardar tal cual la ingresa el usuario
