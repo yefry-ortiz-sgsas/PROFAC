@@ -335,6 +335,7 @@
                         <ul class="nav nav-second-level">
 
                             <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
                             <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                             </li>
 

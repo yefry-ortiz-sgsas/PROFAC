@@ -62,6 +62,7 @@ use App\Http\Livewire\Inventario\TipoAjuste;
 use App\Http\Livewire\Ventas\MotivoNotaCredito;
 
 use App\Http\Livewire\NotaCredito\CrearNotaCredito;
+use App\Http\Livewire\NotaCredito\ListadoNotaCredito;
 use App\Http\Livewire\Inventario\Categoria;
 use App\Http\Livewire\Inventario\SubCategoria;
 
@@ -464,6 +465,10 @@ Route::get('/ventas/motivo_credito/listar', [MotivoNotaCredito::class,'listarMot
 Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardarMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
+
+Route::get('/nota/credito/listado',ListadoNotaCredito::class); 
+Route::post('/nota/credito/listar',[ListadoNotaCredito::class,'listadoNotaCredito']); 
+Route::get('/nota/credito/imprimir/{idNota}',[ListadoNotaCredito::class,'imprimirFacturaCoorporativa2']);
 
 
 

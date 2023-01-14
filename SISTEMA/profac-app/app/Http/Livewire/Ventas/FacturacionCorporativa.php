@@ -506,7 +506,7 @@ class FacturacionCorporativa extends Component
                     $factura = $this->alternar($request);
                 }
 
-                dd($factura);
+               
             }
 
 

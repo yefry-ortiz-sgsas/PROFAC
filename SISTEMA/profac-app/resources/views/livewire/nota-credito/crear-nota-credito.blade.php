@@ -410,7 +410,10 @@
                                 <div class="col-12 col-md-12">
                                     <label for="precio" class="col-form-label focus-label">Precio de producto:<span
                                             class="text-danger">*</span></label>
-                                    <input class="form-control" required type="number" step="any"
+                                    <input class="form-control" required type="text" step="any"
+                                        id="precioMostrar" name="precioMostrar" disabled>
+
+                                        <input required type="hidden" step="any"
                                         id="precio" name="precio" data-parsley-required readonly>
                                 </div>
                                 <div class="col-12 col-md-6">
@@ -485,6 +488,7 @@
         <script>
             var contador = 1;
             var arrayInputs = [];
+            var productoSeccion =[];
 
             $('#cliente').select2({
                 ajax: {
@@ -650,16 +654,20 @@
                 $('#tbl_productos').DataTable().clear().destroy();
             }
 
-            function infoProducto(facturaId, productoId) {
+            function infoProducto(facturaId, productoId,seccionId) {
+
 
                 axios.post('/nota/credito/datos/producto', {
                         idFactura: facturaId,
-                        idProducto: productoId
+                        idProducto: productoId,
+                        idSeccion: seccionId
                     })
                     .then(response => {
 
+
+
                         let data = response.data.datos;
-                        let cantidadMax = response.data.cantidadMax;
+                        let cantidadMax =data.cantidad;
 
                         document.getElementById('nombre').value = data.producto;
                         document.getElementById('idFactura').value = data.factura_id;
@@ -670,7 +678,8 @@
                         document.getElementById('precio').value = data.precio_unidad;
                         document.getElementById('isvPorcentaje').value = data.porcentajeISV;
                         document.getElementById('cantidadMaxima').value = cantidadMax;
-
+                        document.getElementById('precioMostrar').value = monedaLempiras(data.precio_unidad);
+                        document.getElementById("cantidad").value = 0;
                         document.getElementById('cantidad').max = cantidadMax;
                         document.getElementById('cantidad').min = 1;
 
@@ -686,7 +695,6 @@
                         document.getElementById('seccion').innerHTML = htmlSeccion;
 
                         $('#modal_devolver_producto').modal('show');
-
 
                     })
                     .catch(err => {
@@ -704,10 +712,36 @@
             function agregarProductoLista() {
                 let cantidad = document.getElementById('cantidad').value;
                 let cantidadMaxima = document.getElementById('cantidadMaxima').value;
-               
+
+                let idProducto = document.getElementById('idProducto').value;
+                let seccion = document.getElementById('seccion');
+
+
+                let repetidoFlag = false;
+
+                //****************Comprueba si el producto con la seccion se repite************************/
+                productoSeccion.forEach(array => {
+                            if(array[0] == idProducto && array[1] == seccion.value ){
+                                repetidoFlag = true;
+                                return;
+                            }
+                });
+
+                    if(repetidoFlag){    
+
+                        Swal.fire({
+                                icon: "warning",
+                                title: "Advertencia!",
+                                text: "El producto con la sección correspondiente ya se encuentra en la lista.",
+                            })
+                        $('#modal_devolver_producto').modal('hide')
+                        return;
+                }
+                //****************Comprueba si el producto con la seccion se repite************************/
+                            
                
 
-                if(cantidad==0){
+                if(+cantidad==0 || !cantidad){
                     $('#modal_devolver_producto').modal('hide')
                     Swal.fire({
                             icon: "warning",
@@ -718,7 +752,7 @@
                 }
 
                 
-                if(cantidad > cantidadMaxima){
+                if(+cantidad > +cantidadMaxima){
                     $('#modal_devolver_producto').modal('hide')
                     Swal.fire({
                             icon: "warning",
@@ -729,9 +763,10 @@
                 }
 
 
+
+
                 let nombre = document.getElementById('nombre').value;
                 let idFactura = document.getElementById('idFactura').value;
-                let idProducto = document.getElementById('idProducto').value;
                 let idMedidaVenta = document.getElementById('idMedidaVenta').value;
                 let unidad = document.getElementById('unidad').value;
                 let precio = document.getElementById('precio').value;
@@ -743,7 +778,7 @@
 
                 let bodega = document.getElementById('bodega');
                 let segmento = document.getElementById('segmento');
-                let seccion = document.getElementById('seccion');
+
 
                 let bodegaTexto = bodega.options[bodega.selectedIndex].text;
                 let seccionTexto = seccion.options[seccion.selectedIndex].text;
@@ -798,10 +833,6 @@
                 document.getElementById("form_producto_devolver").reset();
                 $('#form_producto_devolver').parsley().reset();
 
-                arrayInputs.push(contador);
-
-                contador++;
-
                let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;               
                sub_totalInput =  (+sub_totalInput) + (+subTotal);               
                document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
@@ -822,7 +853,11 @@
                document.getElementById("cliente").disabled = true;
                document.getElementById("factura").disabled = true;
 
-                return;
+               arrayInputs.push(contador);
+               contador++;
+               productoSeccion.push([idProducto,seccion.value]);
+
+               return;
             }
 
             function monedaLempiras(monto) {
@@ -836,6 +871,22 @@
             }
 
             function eliminarFila(id,subtotal,isv,total) {
+
+                let idProducto =  document.getElementById("IdProducto"+id).value;
+                let idSeccion = document.getElementById("IdSeccion"+id).value;
+                let array =[];
+                for (let i = 0; i < productoSeccion.length; i++) {
+                    
+                  array = productoSeccion[i];
+                  if(array[0] == idProducto && array[1] == idSeccion){
+                    productoSeccion.splice(i, 1);
+                  }
+                    
+                }
+
+              
+
+
                 const element = document.getElementById('tr' + id);
                 element.remove();
 
@@ -919,10 +970,10 @@
                 })
                 .catch(err => {
                     //console.log(err)
-                    document.getElementById("btn_guardar_translado").disabled = false;
+                    document.getElementById("btn_guardar_nota_credito").disabled = false;
                     console.log(err);
                     $('#modal_transladar_producto').modal('hide')
-                    document.getElementById('btn_recibir_bodega').disabled = false;
+
 
                    
                     Swal.fire({
