@@ -26,7 +26,7 @@ class CompraProducto extends Component
     public function render()
 
     {
-        
+
 
         $ordenNumero = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from compra");
 
@@ -38,7 +38,7 @@ class CompraProducto extends Component
         try {
 
             $proveedores = DB::SELECT("select id, concat(id,' - ',nombre) as text  from proveedores where estado_id = 1 and (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15");
-            
+
             return response()->json([
                 "results" => $proveedores,
             ], 200);
@@ -74,13 +74,13 @@ class CompraProducto extends Component
 
         try {
 
-            $productos = DB::SELECT("select id, concat(id, ' - ', nombre) as 'text' from producto proveedores where id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%' limit 15");
-            
+            $productos = DB::SELECT("select id, concat(id, ' - ', nombre) as 'text' from producto proveedores where id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%' or nombre Like '%".$request->search."%' limit 15");
+
             return response()->json([
                 "results" => $productos,
             ], 200);
         } catch (QueryException $e) {
-          
+
 
             return response()->json([
                 'message' => 'Ha ocurrido un error al listar los productos.',
@@ -92,12 +92,12 @@ class CompraProducto extends Component
     public function obtenerImagenes(Request $request){
         try {
         $imagenes = DB::SELECT("
-        
+
         select
             @i := @i + 1 as contador,
             id,
             url_img
-        from 
+        from
             img_producto
             cross join (select @i := 0) r
             where producto_id = ".$request['id']."
@@ -108,14 +108,14 @@ class CompraProducto extends Component
             "imagenes" => $imagenes,
         ], 200);
 
-           
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => 'Ha ocurrido un error al listar las imagenes.',
                 'errorTh' => $e,
             ], 402);
 
-          
+
         }
     }
 
@@ -124,9 +124,9 @@ class CompraProducto extends Component
 
         try {
 
-         
+
             $producto = DB::SELECT("
-            select 
+            select
             A.id,
             concat(A.id,' - ',A.nombre) as nombre,
             A.isv,
@@ -153,20 +153,20 @@ class CompraProducto extends Component
 
     }
 
-    public function comprobarRetencion(Request $request){        
+    public function comprobarRetencion(Request $request){
         try {
 
             $retencion = DB::SELECTONE("
             select
                 proveedores_id
-            from 
+            from
             retenciones_has_proveedores
             where proveedores_id = ".$request['idProveedor']." and retenciones_id = 2
             ");
 
            // dd($retencion);
 
-            
+
             if(empty($retencion)){
                 return response()->json([
                     'title' => '*No* se registra retencion del 1% para este proveedor.',
@@ -181,7 +181,7 @@ class CompraProducto extends Component
                     'retencion_id' => 2,
                 ], 200);
 
-            }       
+            }
 
         } catch (QueryException $e) {
             return response()->json([
@@ -199,33 +199,33 @@ class CompraProducto extends Component
        $validator = Validator::make($request->all(), [
             'numero_emision' => 'required',
             'numero_factura' => 'required',
-            'tipoPagoCompra' => 'required', 
+            'tipoPagoCompra' => 'required',
             'fecha_vencimiento' => 'required',
             'fecha_emision' => 'required',
             'fecha_entrega' => 'required',
-         
+
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
-            'totalGeneral' => 'required', 
-          
+            'totalGeneral' => 'required',
+
             'arregloIdInputs' => 'required',
             'numeroInputs' => 'required',
             'seleccionarProveedorId' => 'required',
-        
 
-            
+
+
         ],[
             'numero_emision' => 'Número emision es requerido',
             'numero_factura' => 'Número Factura es requerido',
-            'tipoPagoCompra' => 'Tipo de Pago es requerido', 
+            'tipoPagoCompra' => 'Tipo de Pago es requerido',
             'fecha_vencimiento' => 'Fecha de Vencimiento es requerido',
             'fecha_emision' => 'Fecha de emisión es requerido ',
             'fecha_entrega' => 'Fecha de entrega es requerido',
-          
+
             'subTotalGeneral' => 'Sub total es requerido',
             'isvGeneral' => 'ISV es requerido',
-            'totalGeneral' => 'Total General es requerido', 
-          
+            'totalGeneral' => 'Total General es requerido',
+
             'arregloIdInputs' => 'arregloIdInputs es requerido',
             'numeroInputs' => 'numeroInputs es requerido',
             'seleccionarProveedorId' => 'Proveedor es requerido',
@@ -264,7 +264,7 @@ class CompraProducto extends Component
             $guardarCompra->monto_retencion = 0;
             $guardarCompra->estado_compra_id =1;
             $guardarCompra->retenciones_id = 2;
-           
+
             $guardarCompra->save();
 
             $idCompra = $guardarCompra->id;
@@ -275,9 +275,9 @@ class CompraProducto extends Component
             $arrayInputs = $request->arregloIdInputs;
 
 
-            for ($i=0; $i < count($arrayInputs) ; $i++) { 
+            for ($i=0; $i < count($arrayInputs) ; $i++) {
 
-                
+
 
                 $idProducto = 'idProducto'.$arrayInputs[$i];
                 $precio='precio'.$arrayInputs[$i];
@@ -289,8 +289,8 @@ class CompraProducto extends Component
                 $unidadesCompra='unidadesCompra'.$arrayInputs[$i];
                 $medidaCompraId = 'medidaCompraId'.$arrayInputs[$i];
 
-                
-           
+
+
                 $producto = ModelProducto::find($request->$idProducto);
 
                 $primerCompraAnio = DB::SELECTONE("
@@ -308,14 +308,14 @@ class CompraProducto extends Component
                     $valorCostoActual = $request->$precio + ($request->$precio*($producto->isv/100));
 
                     $costoPromedio = round((($valorPrimeraCompra+$valorCostoActual)/2),2);
-                 
+
                 }else{
                     $valorCostoActual = $request->$precio + $request->$precio*($producto->isv/100);
 
                     $costoPromedio = $request->$precio + $request->$precio*($producto->isv/100);
                 }
 
-                
+
 
                 $producto = ModelProducto::find($request->$idProducto);
                 $producto->ultimo_costo_compra =  $valorCostoActual;
@@ -323,7 +323,7 @@ class CompraProducto extends Component
                // $producto->precio_base = $valorCostoActual;
                 $producto->save();
 
-                
+
 
                 $productoCompra = new ModelCompraProducto;
                 $productoCompra->compra_id = $idCompra;
@@ -332,24 +332,24 @@ class CompraProducto extends Component
                 $productoCompra->cantidad_ingresada = $request->$cantidad;
                 $productoCompra->cantidad_sin_asignar = $request->$cantidad;
                 $productoCompra->fecha_expiracion = $request->$vencimiento;
-                $productoCompra->sub_total_producto=$request->$subTotal;               
-                $productoCompra->isv = $request->$isvProducto;              
-                $productoCompra->precio_total = $request->$total;              
+                $productoCompra->sub_total_producto=$request->$subTotal;
+                $productoCompra->isv = $request->$isvProducto;
+                $productoCompra->precio_total = $request->$total;
                 $productoCompra->cantidad_disponible = 0;
-                $productoCompra->unidades_compra = $request->$unidadesCompra;   
-                $productoCompra->unidad_compra_id= $request->$medidaCompraId;       
-            
+                $productoCompra->unidades_compra = $request->$unidadesCompra;
+                $productoCompra->unidad_compra_id= $request->$medidaCompraId;
+
                 $productoCompra->save();
 
-               
+
             }
 
             DB::commit();
 
             return response()->json([
                 'message' => 'Creado con exito.',
-                
-            ], 200);  
+
+            ], 200);
 
         } catch (QueryException $e) {
             return response()->json([
