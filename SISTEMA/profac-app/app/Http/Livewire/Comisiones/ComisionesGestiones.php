@@ -135,7 +135,7 @@ class ComisionesGestiones extends Component
             DB::beginTransaction();
 
                 //dd($request);
-/*                 $prueba = '
+                /*                 $prueba = '
                 update
                     comision_techo
                 set monto_techo = '.$request->nuevoTecho.'

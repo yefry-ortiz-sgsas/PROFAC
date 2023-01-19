@@ -275,11 +275,17 @@
                                     <option value="" selected disabled>--Seleccionar Motivo--</option>
                                 </select>
                             </div>
-                        </div>   
+
+                             <div class="col-12 col-sm-12 col-md-6">
+                                <label for="comentario_nota" class="col-form-label focus-label">
+                                    Comentario de nota de crédito:</label>
+                                    <textarea class="form-group form-control"  name="comentario" id="comentario" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
 
                          </form>
 
-                       
+
 
                             <div class="table-responsive mt-4">
 
@@ -362,7 +368,7 @@
 
                             <button type="submit" id="btn_guardar_nota_credito" form="guardar_devolucion"  class="btn btn-success">Cerrar Nota de Credito</button>
 
-                        
+
                     </div>
                 </div>
             </div>
@@ -575,8 +581,8 @@
                         document.getElementById('vendedor').value = data.vendedor;
                         document.getElementById('facturado').value = data.facturador;
                         document.getElementById('fecha_registro').value = data.fechaRegistro;
-                       
-   
+
+
                         document.getElementById('subTotalGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.sub_total);
                         document.getElementById('isvGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.isv);
                         document.getElementById('totalGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.total);
@@ -588,7 +594,7 @@
 
             function obtenerProductos(idFactura) {
 
-                //let table = $('#tbl_productos').DataTable();                
+                //let table = $('#tbl_productos').DataTable();
                 //table.destroy();
 
 
@@ -727,7 +733,7 @@
                             }
                 });
 
-                    if(repetidoFlag){    
+                    if(repetidoFlag){
 
                         Swal.fire({
                                 icon: "warning",
@@ -738,8 +744,8 @@
                         return;
                 }
                 //****************Comprueba si el producto con la seccion se repite************************/
-                            
-               
+
+
 
                 if(+cantidad==0 || !cantidad){
                     $('#modal_devolver_producto').modal('hide')
@@ -751,7 +757,7 @@
                         return;
                 }
 
-                
+
                 if(+cantidad > +cantidadMaxima){
                     $('#modal_devolver_producto').modal('hide')
                     Swal.fire({
@@ -770,7 +776,7 @@
                 let idMedidaVenta = document.getElementById('idMedidaVenta').value;
                 let unidad = document.getElementById('unidad').value;
                 let precio = document.getElementById('precio').value;
-                
+
 
                 let unidad_venta = document.getElementById('unidad_venta').value;
                 let isvPorcentaje = document.getElementById('isvPorcentaje').value;
@@ -833,8 +839,8 @@
                 document.getElementById("form_producto_devolver").reset();
                 $('#form_producto_devolver').parsley().reset();
 
-               let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;               
-               sub_totalInput =  (+sub_totalInput) + (+subTotal);               
+               let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;
+               sub_totalInput =  (+sub_totalInput) + (+subTotal);
                document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
 
                let isvInput = document.getElementById("isvGeneralCredito").value;
@@ -843,8 +849,8 @@
 
                let totalInput = document.getElementById("totalGeneralCredito").value;
                totalInput = (+totalInput) + (+total);
-               document.getElementById("totalGeneralCredito").value =  totalInput;        
-               
+               document.getElementById("totalGeneralCredito").value =  totalInput;
+
                document.getElementById("subTotalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(sub_totalInput);
                document.getElementById("isvGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isvInput);
                document.getElementById("totalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalInput);
@@ -876,15 +882,15 @@
                 let idSeccion = document.getElementById("IdSeccion"+id).value;
                 let array =[];
                 for (let i = 0; i < productoSeccion.length; i++) {
-                    
+
                   array = productoSeccion[i];
                   if(array[0] == idProducto && array[1] == idSeccion){
                     productoSeccion.splice(i, 1);
                   }
-                    
+
                 }
 
-              
+
 
 
                 const element = document.getElementById('tr' + id);
@@ -899,8 +905,8 @@
 
                 }
 
-                let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;               
-                sub_totalInput =  (+sub_totalInput) - (+subtotal);               
+                let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;
+                sub_totalInput =  (+sub_totalInput) - (+subtotal);
                 document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
 
                let isvInput = document.getElementById("isvGeneralCredito").value;
@@ -909,8 +915,8 @@
 
                let totalInput = document.getElementById("totalGeneralCredito").value;
                totalInput = (+totalInput) - (+total);
-               document.getElementById("totalGeneralCredito").value =  totalInput;        
-               
+               document.getElementById("totalGeneralCredito").value =  totalInput;
+
                document.getElementById("subTotalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(sub_totalInput);
                document.getElementById("isvGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isvInput);
                document.getElementById("totalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalInput);
@@ -975,7 +981,7 @@
                     $('#modal_transladar_producto').modal('hide')
 
 
-                   
+
                     Swal.fire({
                         icon: "error",
                         title: "Error",
@@ -985,7 +991,7 @@
                 })
             }
 
-            
+
         </script>
     @endpush
 

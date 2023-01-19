@@ -59,7 +59,6 @@ class FacturacionCorporativa extends Component
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and tipo_cliente_id=1
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
             } else {
@@ -69,7 +68,6 @@ class FacturacionCorporativa extends Component
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and tipo_cliente_id=1
                     and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
@@ -166,7 +164,7 @@ class FacturacionCorporativa extends Component
             $listaProductos = DB::SELECT("
          select
             B.id,
-            concat('cod ',B.id,' - ',B.nombre,' - ','cantidad ',sum(A.cantidad_disponible)) as text
+            concat('cod ',B.id,' - ',B.nombre,' - ',B.codigo_barra,' - ','cantidad ',sum(A.cantidad_disponible)) as text
          from
             recibido_bodega A
             inner join producto B
@@ -179,7 +177,7 @@ class FacturacionCorporativa extends Component
             on segmento.bodega_id = bodega.id
          where
          A.cantidad_disponible <> 0 and
-         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%')
+         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%".$request->search."%')
          group by A.producto_id
          limit 15
          ");
@@ -557,12 +555,12 @@ class FacturacionCorporativa extends Component
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             DB::commit();
 
+           /*  <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> */
             return response()->json([
                 'icon' => "success",
                 'text' => '
                 <div class="d-flex justify-content-between">
                     <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',

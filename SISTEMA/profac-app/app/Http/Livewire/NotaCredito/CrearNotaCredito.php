@@ -50,7 +50,7 @@ class CrearNotaCredito extends Component
     public function obtenerDetalleFactura(Request $request){
 
         $datosFactura = DB::SELECTONE("
-        select 
+        select
         factura.id,
         fecha_emision,
         B.descripcion as tipoPago,
@@ -86,10 +86,10 @@ class CrearNotaCredito extends Component
     public function obtenerProductos(Request $request){
 
         $productos = DB::SELECT("
-        select 
+        select
             B.factura_id,
-            B.producto_id,  
-            B.seccion_id, 
+            B.producto_id,
+            B.seccion_id,
             C.nombre,
             concat(F.nombre,' - ',D.descripcion ) as bodega,
             format(B.precio_unidad,2) as precio_unidad,
@@ -127,9 +127,9 @@ class CrearNotaCredito extends Component
 
                 '<div class="text-center">
                     <button  onclick="infoProducto('.$producto->factura_id.','.$producto->producto_id.','.$producto->seccion_id.')" class="btn btn-warning " >Devolución</button>
-                  
+
                 </div>';
-            
+
         })
 
         ->rawColumns(['opciones'])
@@ -141,27 +141,27 @@ class CrearNotaCredito extends Component
        try {
 
         $datos = DB::SELECTONE("
-        select 
+        select
             B.factura_id,
             B.producto_id,
-            
+
             C.nombre as producto,
             concat(F.nombre,' - ',D.descripcion ) as bodega,
-            
+
             F.id as bodegaId,
             F.nombre as nombreBodega,
             E.id as segmentoId,
             E.descripcion as segmento,
             D.id as seccionId,
             D.descripcion as seccion,
-        
+
             B.precio_unidad,
             B.cantidad,
             H.nombre as unidad_medida,
             B.unidad_medida_venta_id as idUnidadVenta ,
             G.unidad_venta,
-            C.isv as porcentajeISV      
-       
+            C.isv as porcentajeISV
+
         from factura A
         inner join venta_has_producto B
         on A.id = B.factura_id
@@ -179,7 +179,7 @@ class CrearNotaCredito extends Component
         on H.id = G.unidad_medida_id
         where B.producto_id = ".$request->idProducto." and A.id =".$request->idFactura." and B.seccion_id =".$request->idSeccion);
 
-     
+
 
 
        return response()->json([
@@ -192,14 +192,14 @@ class CrearNotaCredito extends Component
         'icon' => 'error',
         'text' => 'Ha ocurrido un error.',
         'title' => 'Error',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
     }
 
     public function obtenerMotivos(){
-   
+
 
 
         $obtenerMotivos = DB::SELECT("select id, descripcion as text from motivo_nota_credito");
@@ -207,35 +207,35 @@ class CrearNotaCredito extends Component
 
        return response()->json([
         'results' => $obtenerMotivos
-        
+
        ],200);
-       
+
     }
 
     public function guardarNotaCredito(Request $request){
        try {
 
-      
+
         $flagError = false;
         $text1 ="<p>Los siguientes productos exceden la cantidad disponible para realizar la nota de credito: <p><ul>";
         $nombreProducto ="";
 
         $arregloIdInputs = $request->arregloIdInputs;
 
-       
+
         /***VERIFICA LA EXISTENCIA DEL PRODUCTO EN LA FACTURA PARA REALIZAR LA DEVOLUCION - SI NO ENCUENTRA CANTIDAD DISPONIBLE, NO REALIZAR LA NOTA DE CREDITO */
-        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) {
 
             $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
             $keyNombreProducto = "nombreProducto".$arregloIdInputs[$i];
             $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
-            $keyCantidad = "cantidad".$arregloIdInputs[$i];          
+            $keyCantidad = "cantidad".$arregloIdInputs[$i];
 
             $idProducto = $request->$keyIdProducto;
             $idSeccion = $request->$keyIdSeccion;
             $cantidad = $request->$keyCantidad;
             $nombreProducto = $request->$keyNombreProducto;
-           
+
 
             $cantidadDisponible = DB::SELECTONE("select sum(numero_unidades_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
 
@@ -250,7 +250,7 @@ class CrearNotaCredito extends Component
             return response()->json([
                 "text" =>  $text1,
                 "icon" => "warning",
-                "title"=>"Advertencia!"               
+                "title"=>"Advertencia!"
             ], 200);
         }
 
@@ -268,7 +268,7 @@ class CrearNotaCredito extends Component
             serie,
             if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
             cantidad_no_utilizada
-        from cai 
+        from cai
         where tipo_documento_fiscal_id = 3 and estado_id = 1
         ");
 
@@ -305,12 +305,12 @@ class CrearNotaCredito extends Component
 
 
         DB::beginTransaction();
-           //SE CREA LA NOTA DE CREDITO 
+           //SE CREA LA NOTA DE CREDITO
 
         $numeroSecuencia = $cai->numero_actual;
-        $arrayCai = explode('-',$cai->numero_final);          
+        $arrayCai = explode('-',$cai->numero_final);
         $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
-        $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI; 
+        $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
 
         $notaCredito = new ModelNotaCredito();
         $notaCredito->numero_nota =$numeroNota->numero;
@@ -323,20 +323,21 @@ class CrearNotaCredito extends Component
         $notaCredito->factura_id = $request->idFactura;
         $notaCredito->cai_id = $cai->id;
         $notaCredito->motivo_nota_credito_id = $request->motivo_nota;
-        $notaCredito->users_id = Auth::user()->id;  
+        $notaCredito->users_id = Auth::user()->id;
         $notaCredito->estado_nota_id = 1;
+        $notaCredito->comentario = $request->comentario;
         $notaCredito->save();
 
-   
+
 
         //GUARDA LOS PRODUCTOS DE LA NOTA DE CREDITO
 
-        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) {
 
             $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
             $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
             $keyCantidad = "cantidad".$arregloIdInputs[$i];
-            
+
             $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
             $keySubTotal = "subTotal".$arregloIdInputs[$i];
             $keyISV = "isv".$arregloIdInputs[$i];
@@ -353,7 +354,7 @@ class CrearNotaCredito extends Component
             $total = $request->$keyTotal;
             $precio = $request->$keyPrecio;
 
-    
+
             $productoNota = new ModelNotaCreditoProducto();
             $productoNota->nota_credito_id = $notaCredito->id;
             $productoNota->producto_id = $idProducto;
@@ -365,20 +366,20 @@ class CrearNotaCredito extends Component
             $productoNota->seccion_id = $idSeccion;
             $productoNota->unidad_medida_venta_id = $idUnidadMedida;
             $productoNota->save();
-            
+
         }
 
 
 
 
-        //RESTA LOS PRODUCTOS DE LA FACTURA 
+        //RESTA LOS PRODUCTOS DE LA FACTURA
 
-        for ($i=0; $i < count($arregloIdInputs) ; $i++) { 
+        for ($i=0; $i < count($arregloIdInputs) ; $i++) {
 
             $keyIdProducto = "IdProducto".$arregloIdInputs[$i];
             $keyIdSeccion = "IdSeccion".$arregloIdInputs[$i];
             $keyCantidad = "cantidad".$arregloIdInputs[$i];
-            
+
             $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
             $keySubTotal = "subTotal".$arregloIdInputs[$i];
             $keyISV = "isv".$arregloIdInputs[$i];
@@ -388,13 +389,13 @@ class CrearNotaCredito extends Component
             $idSeccion = $request->$keyIdSeccion;
             $cantidad = $request->$keyCantidad;
             $idUnidadMedida = $request->$keyIdUnidadMedida;
-            
+
             $unidadVenta = DB::SELECTONE("select unidad_venta from unidad_medida_venta where id =".$idUnidadMedida);
             $cantidadBaseSeccion = $unidadVenta->unidad_venta*$cantidad;
 
             $this->restarUnidadesDevolver($request->idFactura,$idProducto,$idSeccion,$cantidadBaseSeccion,$unidadVenta->unidad_venta, $notaCredito->id);
 
-        }   
+        }
 
 
 
@@ -404,8 +405,8 @@ class CrearNotaCredito extends Component
         $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
         $caiUpdated->save();
 
-        
-        
+
+
 
 
         DB::commit();
@@ -420,7 +421,7 @@ class CrearNotaCredito extends Component
         'icon' => 'error',
         'text' => 'Ha ocurrido un error al guardar la nota de credito',
         'title' => 'Error',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
@@ -430,11 +431,11 @@ class CrearNotaCredito extends Component
         $i = 0;
 
 
-        $cantidadSeccionRestar = $cantidadBaseSeccion; //unidad base a restar 
+        $cantidadSeccionRestar = $cantidadBaseSeccion; //unidad base a restar
         $lotes = DB::SELECT("
-        select 
+        select
         lote,
-        numero_unidades_resta_inventario as unidadesLote,      
+        numero_unidades_resta_inventario as unidadesLote,
         unidad_medida_venta_id,
         resta_inventario_total,
         cantidad
@@ -444,7 +445,7 @@ class CrearNotaCredito extends Component
 
     // if($idProducto==1943 && $idSeccion==137){
     //     DB::rollBack();
-        
+
     //     dd($lotes,$i );
     // }
 
@@ -452,29 +453,29 @@ class CrearNotaCredito extends Component
 
             $lote = $lotes[$i];
 
-        
+
             if($lote->unidadesLote > $cantidadSeccionRestar){
-               
-                $cantidadLoteRestarUpdate = $lote->unidadesLote - $cantidadSeccionRestar ; 
-                $cantidadDevolver = $cantidadSeccionRestar;    
-                $cantidadSeccionRestar = 0;                                                 
-            }
-        
-            if($lote->unidadesLote == $cantidadSeccionRestar){
-                $cantidadDevolver = $cantidadSeccionRestar;  
+
+                $cantidadLoteRestarUpdate = $lote->unidadesLote - $cantidadSeccionRestar ;
+                $cantidadDevolver = $cantidadSeccionRestar;
                 $cantidadSeccionRestar = 0;
-                $cantidadLoteRestarUpdate = 0;  
-                        
-              
             }
-        
+
+            if($lote->unidadesLote == $cantidadSeccionRestar){
+                $cantidadDevolver = $cantidadSeccionRestar;
+                $cantidadSeccionRestar = 0;
+                $cantidadLoteRestarUpdate = 0;
+
+
+            }
+
             if($lote->unidadesLote < $cantidadSeccionRestar){
                 $cantidadSeccionRestar = $cantidadSeccionRestar - $lote->unidadesLote;
-                $cantidadLoteRestarUpdate = 0;  
-                $cantidadDevolver = $lote->unidadesLote;         
-            }  
-            
-            
+                $cantidadLoteRestarUpdate = 0;
+                $cantidadDevolver = $lote->unidadesLote;
+            }
+
+
             //***QUERY***//
 
             DB::table('venta_has_producto')
@@ -493,11 +494,11 @@ class CrearNotaCredito extends Component
             ->where('origen',$lote->lote)
             ->where('factura_id',$idFactura)
             ->update([
-               'cantidad' => $cantidadLoteRestarUpdate,                   
+               'cantidad' => $cantidadLoteRestarUpdate,
                'updated_at' => now()
             ]);
 
-            
+
             $logTranslados = new ModelLogTranslados;
             $logTranslados->origen = $lote->lote ;
             $logTranslados->destino = $lote->lote;
@@ -515,7 +516,7 @@ class CrearNotaCredito extends Component
 
             //***FIN QUERY***//
 
-                
+
             $i++;
         }
 
@@ -525,7 +526,7 @@ class CrearNotaCredito extends Component
         DB::table('venta_has_producto')
         ->where('factura_id',$idFactura)
         ->where('producto_id', $idProducto)
-        ->where('seccion_id', $idSeccion)        
+        ->where('seccion_id', $idSeccion)
         ->update([
             'resta_inventario_total' => ($lotes[0]->resta_inventario_total - $cantidadBaseSeccion),
             'cantidad' => $lotes[0]->cantidad - $cantidadIngresadaUsuario

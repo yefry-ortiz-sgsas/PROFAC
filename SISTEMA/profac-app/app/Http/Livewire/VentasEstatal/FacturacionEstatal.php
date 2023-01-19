@@ -42,36 +42,36 @@ class FacturacionEstatal extends Component
 
             if (Auth::user()->rol_id == 1 or Auth::user()->rol_id == 3) {
                 $listaClientes = DB::SELECT("
-                select 
-                    id,
-                    nombre as text
-                from cliente
-                    where estado_cliente_id = 1
-                    and tipo_cliente_id=2                        
-                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                        ");
-            }else{
-                $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
                     and tipo_cliente_id=2
-                    and vendedor =" . Auth::user()->id . "             
+                    and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                        ");
+            }else{
+                $listaClientes = DB::SELECT("
+                select
+                    id,
+                    nombre as text
+                from cliente
+                    where estado_cliente_id = 1
+                    and tipo_cliente_id=2
+                    and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
             }
 
 
             //  $listaClientes = DB::SELECT("
-            //  select 
+            //  select
             //      id,
             //      nombre as text
             //  from cliente
             //      where estado_cliente_id = 1
             //      and tipo_cliente_id=2
-            //      and vendedor =".Auth::user()->id."             
+            //      and vendedor =".Auth::user()->id."
             //      and  (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15
             //          ");
 
@@ -129,10 +129,10 @@ class FacturacionEstatal extends Component
         try {
 
             $results = DB::SELECT("
-        select 
+        select
             A.seccion_id as id,
             D.id as 'idBodega',
-            CONCAT(D.nombre,'',REPLACE(B.descripcion,'Seccion','')) as 'bodegaSeccion',                        
+            CONCAT(D.nombre,'',REPLACE(B.descripcion,'Seccion','')) as 'bodegaSeccion',
             concat(D.nombre,' - ', REPLACE(B.descripcion,'Seccion',''),' - cantidad ',sum(A.cantidad_disponible)) as 'text'
         from recibido_bodega A
             inner join seccion B
@@ -141,9 +141,9 @@ class FacturacionEstatal extends Component
             on B.segmento_id = C.id
             inner join bodega D
             on C.bodega_id = D.id
-        where  A.cantidad_disponible <> 0 and producto_id = " . $request->idProducto . "   
+        where  A.cantidad_disponible <> 0 and producto_id = " . $request->idProducto . "
         and (D.nombre LIKE '%" . $request->search . "%' or B.descripcion LIKE '%" . $request->search . "%')
-        group by A.seccion_id       
+        group by A.seccion_id
             ");
 
             return response()->json([
@@ -163,9 +163,9 @@ class FacturacionEstatal extends Component
 
 
             $listaProductos = DB::SELECT("
-         select 
+         select
             B.id,
-            concat('cod ',B.id,' - ',B.nombre,' - ','cantidad ',sum(A.cantidad_disponible)) as text
+            concat('cod ',B.id,' - ',B.nombre,' - ',B.codigo_barra,' - ','cantidad ',sum(A.cantidad_disponible)) as text
          from
             recibido_bodega A
             inner join producto B
@@ -176,9 +176,9 @@ class FacturacionEstatal extends Component
             on seccion.segmento_id = segmento.id
             inner join bodega
             on segmento.bodega_id = bodega.id
-         where 
+         where
          A.cantidad_disponible <> 0 and
-         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%')
+         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%".$request->search."%')
          group by A.producto_id
          limit 15
          ");
@@ -199,12 +199,12 @@ class FacturacionEstatal extends Component
     {
         try {
             $imagenes = DB::SELECT("
-        
+
         select
             @i := @i + 1 as contador,
             id,
             url_img
-        from 
+        from
             img_producto
             cross join (select @i := 0) r
             where producto_id = " . $request['id'] . "
@@ -230,7 +230,7 @@ class FacturacionEstatal extends Component
 
             $unidades = DB::SELECT(
                 "
-            select 
+            select
                 A.unidad_venta as id,
                 CONCAT(B.nombre,'-',A.unidad_venta) as nombre ,
                 A.unidad_venta_defecto as 'valor_defecto',
@@ -271,7 +271,7 @@ class FacturacionEstatal extends Component
 
         $validator = Validator::make($request->all(), [
 
-            'fecha_vencimiento' => 'required',            
+            'fecha_vencimiento' => 'required',
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
@@ -280,7 +280,7 @@ class FacturacionEstatal extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',            
+            'bodega' => 'required',
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:2,2',
             'ordenCompra'=>'required'
@@ -341,7 +341,7 @@ class FacturacionEstatal extends Component
             $keyNombre = "nombre" . $arrayInputs[$j];
             $keyBodega = "bodega" . $arrayInputs[$j];
 
-            $resultado = DB::selectONE("select 
+            $resultado = DB::selectONE("select
             if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
             from recibido_bodega
             where cantidad_disponible <> 0
@@ -377,7 +377,7 @@ class FacturacionEstatal extends Component
                     numero_final,
                     cantidad_otorgada,
                     numero_actual
-                    from cai 
+                    from cai
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
             $arrayNumeroFinal = explode('-', $cai->numero_final);
@@ -403,7 +403,7 @@ class FacturacionEstatal extends Component
             $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
             // dd($cai->cantidad_otorgada);
 
-            
+
 
 
 
@@ -436,7 +436,7 @@ class FacturacionEstatal extends Component
             $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 2; // estatal
-            $factura->estado_factura_id = 1; // se presenta     
+            $factura->estado_factura_id = 1; // se presenta
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
@@ -450,7 +450,7 @@ class FacturacionEstatal extends Component
             $caiUpdated->save();
 
             DB::INSERT("INSERT INTO listado(
-                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
+                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
                     ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
 
 
@@ -545,12 +545,12 @@ class FacturacionEstatal extends Component
             while (!($unidadesRestar <= 0)) {
 
                 $unidadesDisponibles = DB::SELECTONE("
-                        select 
+                        select
                             id,
                             cantidad_disponible
                         from recibido_bodega
-                            where seccion_id = " . $idSeccion . " and 
-                            producto_id = " . $idProducto . " and 
+                            where seccion_id = " . $idSeccion . " and
+                            producto_id = " . $idProducto . " and
                             cantidad_disponible <>0
                             order by created_at asc
                         limit 1
@@ -641,10 +641,10 @@ class FacturacionEstatal extends Component
                 ]);
             };
 
-            //dd($arrarVentasProducto);   
-            //ModelVentaProducto::created($arrarVentasProducto);  
-            //ModelVentaProducto::insert($arrarVentasProducto);  
-            //DB::table('venta_has_producto')->insert($arrarVentasProducto); 
+            //dd($arrarVentasProducto);
+            //ModelVentaProducto::created($arrarVentasProducto);
+            //ModelVentaProducto::insert($arrarVentasProducto);
+            //DB::table('venta_has_producto')->insert($arrarVentasProducto);
 
 
             return;
@@ -683,11 +683,11 @@ class FacturacionEstatal extends Component
         $facturasVencidas = DB::SELECT(
             "
             select
-            id       
-            from factura 
-            where   
-            pendiente_cobro > 0 
-            and fecha_vencimiento < curdate() 
+            id
+            from factura
+            where
+            pendiente_cobro > 0
+            and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );

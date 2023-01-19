@@ -74,7 +74,7 @@ class CompraProducto extends Component
 
         try {
 
-            $productos = DB::SELECT("select id, concat(id, ' - ', nombre) as 'text' from producto proveedores where id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%' or nombre Like '%".$request->search."%' limit 15");
+            $productos = DB::SELECT("select id, concat(id, ' - ', nombre, ' - ',codigo_barra) as 'text' from producto proveedores where id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%' or codigo_barra Like '%".$request->search."%' limit 15");
 
             return response()->json([
                 "results" => $productos,

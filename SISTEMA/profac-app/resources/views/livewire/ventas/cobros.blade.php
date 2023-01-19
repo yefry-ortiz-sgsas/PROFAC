@@ -3,7 +3,7 @@
         <style>
 
 
-            
+
         </style>
     @endpush
 
@@ -38,7 +38,7 @@
                         <div class="d-flex justify-content-between my-2">
                             <h3>Faltante de cobro: <span id="debitoCompra" class="text-danger"></span></h3>
                             <h3>Total de venta: <span id="totalComra" class="text-info"></span></h3>
-                         
+
 
                         </div>
                         <hr>
@@ -46,8 +46,8 @@
                             <table id="tbl_listar_pagos" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>N° de Pago</th>                                    
-                                       
+                                        <th>N° de Pago</th>
+
                                         <th>CAI</th>
                                         <th>Monto</th>
                                         <th>Tipo de Pago</th>
@@ -56,7 +56,7 @@
                                         <th>Registrado por:</th>
                                         <th>Registrado en sistema:</th>
                                         <th>Evidencia</th>
-                                        <th>Eliminar Pago</th>                                          
+                                        <th>Eliminar Pago</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,12 +86,12 @@
                         <form id="form_registro_pago" name="form_registro_pago" data-parsley-validate>
 
                             <input type="hidden" id="compraId" name="compraId">
-                     
+
                             <div class="row" >
-                                
+
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label class="col-form-label focus-label">Numero de Factura:<span class="text-danger">*</span></label>
-                                    <input class="form-control" required type="text"  id="numero_factura" name="numero_factura" readonly 
+                                    <input class="form-control" required type="text"  id="numero_factura" name="numero_factura" readonly
                                       value="{{ $datosFactura->numero_factura }}"  data-parsley-required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -122,12 +122,12 @@
                                         @foreach ($bancos as $item)
                                         <option value="{{$item->id}}" >{{$item->nombre}}-{{$item->cuenta}}</option>
                                         @endforeach
-                                    
-                                      
-                                     
+
+
+
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
                                     <label for="monto" class="col-form-label focus-label">Monto a pagar:<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="number" step="any" id="monto" name="monto" min="0"
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
                                     <label for="img_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
-                                    <input class="form-control" required  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf"
+                                    <input class="form-control"  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf"
                                         data-parsley-required>
                                 </div>
                             </div>
@@ -149,29 +149,29 @@
                             form="form_registro_pago" >
                             <strong>Registrar Pago
                                 </strong>
-                               
+
                             </button>
                     </div>
-    
+
                 </div>
             </div>
         </div>
-   
+
     @push('scripts')
 
-    
+
     <script>
         var idFactura = {{$idFactura}};
 
 
         //window.onload=datosCompra;
-        
+
 
         $(document).ready(
             function() {
 
-            datosCompra();    
-          
+            datosCompra();
+
             $('#tbl_listar_pagos').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -184,7 +184,7 @@
                                     data: 'contador'
                                 },
 
-       
+
                                 {
                                     data: 'cai'
                                 },
@@ -212,16 +212,16 @@
                                 {
                                     data: 'opciones'
                                 },
-                    
+
                             ]
 
 
-            });              
-        
+            });
+
         }
-       
+
         );
-    
+
 
         $(document).on('submit', '#form_registro_pago', function(event) {
         event.preventDefault();
@@ -233,7 +233,7 @@
         function registrarPago(){
 
             document.getElementById('btn_registro_pago').disabled = true;
-            
+
 
             document.getElementById("compraId").value=idFactura;
             var data = new FormData($('#form_registro_pago').get(0));
@@ -246,18 +246,18 @@
 
                 if(data.icon == "success"){
                     document.getElementById('form_registro_pago').reset();
-                   
+
                    $('#form_registro_pago').parsley().reset();
-                   $('#modal_registro_pagos').modal('hide')  
-   
+                   $('#modal_registro_pagos').modal('hide')
+
                    Swal.fire({
                    icon: data.icon,
                    title: data.title,
                    text: data.text,
                    })
-   
+
                    datosCompra();
-                   $('#tbl_listar_pagos').DataTable().ajax.reload();  
+                   $('#tbl_listar_pagos').DataTable().ajax.reload();
                 }
 
                 Swal.fire({
@@ -267,17 +267,17 @@
                    })
 
                    document.getElementById('form_registro_pago').reset();
-                   
+
                    $('#form_registro_pago').parsley().reset();
-                   $('#modal_registro_pagos').modal('hide')  
+                   $('#modal_registro_pagos').modal('hide')
                    document.getElementById('btn_registro_pago').disabled = false;
                    return;
 
-   
+
 
             })
             .catch( err =>{
-                $('#modal_registro_pagos').modal('hide')  
+                $('#modal_registro_pagos').modal('hide')
                 document.getElementById('btn_registro_pago').disabled = false;
                 Swal.fire({
                 icon: 'error',
@@ -288,7 +288,7 @@
                 console.log(err);
 
             })
-            
+
 
         }
 
@@ -298,9 +298,9 @@
 
                 let data = response.data.factura;
 
-            document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.pendiente_cobro); 
+            document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.pendiente_cobro);
             document.getElementById("totalComra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.total);
-          
+
 
             })
             .catch( err=>{
@@ -325,13 +325,13 @@
             showDenyButton: false,
             showCancelButton: true,
             confirmButtonText: 'Si, eliminar',
-            
+
             cancelButtonText: `Cancelar`,
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 eliminarPago(idPago);
-            } 
+            }
             })
 
         }
@@ -348,7 +348,7 @@
                 })
 
                 datosCompra();
-                $('#tbl_listar_pagos').DataTable().ajax.reload();  
+                $('#tbl_listar_pagos').DataTable().ajax.reload();
 
             })
             .catch(err=>{
@@ -369,13 +369,13 @@
             let element = document.getElementById('bancoCuenta');
 
             if(meotodo.value==1){
-              
+
                 element.classList.add("d-none");
             }else{
                 element.classList.remove("d-none");
             }
         }
-                       
+
 
 
 

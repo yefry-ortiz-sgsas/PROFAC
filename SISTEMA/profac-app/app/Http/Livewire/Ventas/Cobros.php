@@ -30,10 +30,10 @@ class Cobros extends Component
     {
         $idFactura = $this->idFactura;
         $datosFactura = DB::SELECTONE(
-            "select 
+            "select
             numero_factura,
             cai,
-            nombre_cliente            
+            nombre_cliente
             from factura
             where id = ".$idFactura
         );
@@ -51,7 +51,6 @@ class Cobros extends Component
                 'cliente' => 'required',
                 'monto' => 'required',
                 'fecha_pago' => 'required',
-                'img_pago' => 'required|mimes:png,jpeg,jpg,pdf',
                 'metoPago'=>'required'
 
 
@@ -61,7 +60,6 @@ class Cobros extends Component
                 'cliente' => 'El cliente es requerido',
                 'monto' => 'El monto es requerido',
                 'fecha_pago' => 'La fecha de pago es requerida',
-                'img_pago' => 'Formato de imagen invalido',
                 'metoPago'=>'El metodo de pago es requerido'
             ]);
 
@@ -146,18 +144,18 @@ class Cobros extends Component
                     $registroPago->save();
                 }
 
-                
+
 
                 $totalCompra = DB::SELECTONE("select total from factura where id=".$request->idFactura);
                 $totalPagos = DB::SELECTONE("select sum(monto) as monto from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
 
-                $faltantePago = round($totalCompra->total,2) - round($totalPagos->monto,2);   
+                $faltantePago = round($totalCompra->total,2) - round($totalPagos->monto,2);
 
                     $compra = ModelFactura::find($request->idFactura);
-                    $compra->pendiente_cobro = round($faltantePago,2);                   
+                    $compra->pendiente_cobro = round($faltantePago,2);
                     $compra->save();
-                 
-             /*comprueba si es de credito para devolver el credito */       
+
+             /*comprueba si es de credito para devolver el credito */
             if($compra->tipo_pago_id == 2){
                 $cliente = ModelCliente::find($compra->cliente_id);
                 $cliente->credito = $cliente->credito + $request->monto;
@@ -189,14 +187,14 @@ class Cobros extends Component
 
     public function DatosCompra(Request $request){
         try {
- 
+
          $factura = DB::SELECTONE("select total, pendiente_cobro from factura where id=".$request->idFactura);
- 
+
         return response()->json([
             "factura"=>$factura,
- 
+
         ]);
- 
+
         } catch (QueryException $e) {
         return response()->json([
             'message' => 'Ha ocurrido un error',
@@ -209,9 +207,9 @@ class Cobros extends Component
 
 
         try {
- 
+
          $listaPagos = DB::SELECT("
-         select 
+         select
          @i := @i + 1 as contador,
          B.id,
          B.url_img,
@@ -235,45 +233,45 @@ class Cobros extends Component
         CROSS JOIN (select @i := 0) compra
         where A.estado_venta_id = 1 and B.estado_venta_id= 1 and A.id = ".$id
         );
- 
+
          return Datatables::of($listaPagos)
          ->addColumn('opciones', function ($listaPagos) {
- 
+
              return
              '
              <div class="text-center">
                  <button class="btn btn-danger " onclick="confirmarEliminarPago('.$listaPagos->id.')"><i class="fa-solid fa-trash-can "></i></button>
              </div>
- 
- 
- 
- 
+
+
+
+
          ';
          })
          ->addColumn('documento', function ($listaPagos) {
- 
+
              return
              '
              <div class="text-center ">
                      <a href="/documentos_ventas/'.$listaPagos->url_img.'" target="_blank" class=""><i class="fa-solid fa-file-pdf text-danger" style="font-size: 2rem;"></i></a>
              </div>
- 
- 
- 
- 
+
+
+
+
          ';
          })
- 
+
          ->rawColumns(['opciones','documento'])
          ->make(true);
- 
+
         } catch (QueryException $e) {
         return response()->json([
             'message' => 'Ha ocurrido un error',
             'error' => $e
         ]);
         }
- 
+
      }
 
      public function eliminarPago(Request $request){
@@ -296,9 +294,9 @@ class Cobros extends Component
 
             $faltantePago = round($totalCompra->total,2) - round($totalPagos->monto,2);
 
-      
+
                 $compra = ModelFactura::find($idFactura);
-                $compra->pendiente_cobro = round( $faltantePago,2);             
+                $compra->pendiente_cobro = round( $faltantePago,2);
                 $compra->save();
 
 
@@ -315,5 +313,5 @@ class Cobros extends Component
         }
 
     }
- 
+
 }

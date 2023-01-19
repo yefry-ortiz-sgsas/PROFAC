@@ -79,6 +79,7 @@
                                         <tr>
                                             <th>Código de comisión</th>
                                             <th>Código de Factura</th>
+                                            <th>Número de Factura</th>
                                             <th>Código de vendedor</th>
                                             <th>Vendedor</th>
                                             <th>Mes de facturación</th>
@@ -202,6 +203,9 @@
                     },
                     {
                         data: 'idFactura'
+                    },
+                    {
+                        data: 'numero_factura'
                     },
                     {
                         data: 'vendedor_id'

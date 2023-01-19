@@ -67,7 +67,7 @@ class NotaDebito extends Component
             on factura.cai_id= A.id
             inner join pago_venta on (pago_venta.factura_id = factura.id)
             cross join (select @i := 0) r
-            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 and pago_venta.tipo_pago_id = 3
+            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 
             order by factura.created_at desc
             ");
 

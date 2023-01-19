@@ -31,6 +31,7 @@ class ComisionesHistorico extends Component
                     co.comision_techo_id as codigoComision,
                     co.factura_id as idFactura,
                     co.vendedor_id,
+                    f.numero_factura,
                     us.name as vendedor,
                     (select meses.nombre from meses where id = (
                         select comision_techo.meses_id from comision_techo
@@ -46,6 +47,7 @@ class ComisionesHistorico extends Component
                 FROM comision co
                     inner join users us on (us.id = co.vendedor_id)
                     inner join users usA on (usA.id = co.users_registro_id)
+                    inner join factura f on (f.id = co.factura_id)
                 where co.estado_id = 1;
 
             ");
