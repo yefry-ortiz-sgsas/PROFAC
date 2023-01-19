@@ -38,9 +38,9 @@ class Cotizacion extends Component
     public function listarClientes(Request $request)
     {
         try {
-          
-            
-           $tipoCotizacion = $request->tipoCotizacion;          
+
+
+           $tipoCotizacion = $request->tipoCotizacion;
 
             if($tipoCotizacion==1){
                 $listaClientes = $this->clientesCorporativo($request);
@@ -66,23 +66,33 @@ class Cotizacion extends Component
 
         if (Auth::user()->rol_id == 1) {
             $listaClientes = DB::SELECT("
-            select 
-                id,
-                nombre as text
-            from cliente
-                where estado_cliente_id = 1
-                and tipo_cliente_id=1                           
-                and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                    ");
-        } else {
-            $listaClientes = DB::SELECT("
-            select 
+            select
                 id,
                 nombre as text
             from cliente
                 where estado_cliente_id = 1
                 and tipo_cliente_id=1
-                and vendedor =" . Auth::user()->id . "             
+                and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                    ");
+        } elseif (Auth::user()->rol_id == 3) {
+            $listaClientes = DB::SELECT("
+            select
+                id,
+                nombre as text
+            from cliente
+                where estado_cliente_id = 1
+                and tipo_cliente_id=1
+                and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                    ");
+        }else {
+            $listaClientes = DB::SELECT("
+            select
+                id,
+                nombre as text
+            from cliente
+                where estado_cliente_id = 1
+                and tipo_cliente_id=1
+                and vendedor =" . Auth::user()->id . "
                 and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                     ");
         }
@@ -94,25 +104,25 @@ class Cotizacion extends Component
     public function clientesEstatal(Request $request)
     {
 
-        if (Auth::user()->rol_id == 1) {
+        if (Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3) {
             $listaClientes = DB::SELECT("
-                    select 
-                        id,
-                        nombre as text
-                    from cliente
-                        where estado_cliente_id = 1
-                        and tipo_cliente_id=2                               
-                        and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                            ");
-        } else {
-            $listaClientes = DB::SELECT("
-                    select 
+                    select
                         id,
                         nombre as text
                     from cliente
                         where estado_cliente_id = 1
                         and tipo_cliente_id=2
-                        and vendedor =" . Auth::user()->id . "             
+                        and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                            ");
+        } else {
+            $listaClientes = DB::SELECT("
+                    select
+                        id,
+                        nombre as text
+                    from cliente
+                        where estado_cliente_id = 1
+                        and tipo_cliente_id=2
+                        and vendedor =" . Auth::user()->id . "
                         and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                             ");
         }
@@ -126,23 +136,23 @@ class Cotizacion extends Component
 
         if (Auth::user()->rol_id == 1) {
             $listaClientes = DB::SELECT("
-                    select 
-                        id,
-                        nombre as text
-                    from cliente
-                        where estado_cliente_id = 1
-                        and id<>1                                     
-                        and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
-                            ");
-        } else {
-            $listaClientes = DB::SELECT("
-                    select 
+                    select
                         id,
                         nombre as text
                     from cliente
                         where estado_cliente_id = 1
                         and id<>1
-                        and vendedor =" . Auth::user()->id . "             
+                        and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
+                            ");
+        } else {
+            $listaClientes = DB::SELECT("
+                    select
+                        id,
+                        nombre as text
+                    from cliente
+                        where estado_cliente_id = 1
+                        and id<>1
+                        and vendedor =" . Auth::user()->id . "
                         and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                             ");
         }
@@ -159,7 +169,7 @@ class Cotizacion extends Component
         $validator = Validator::make($request->all(), [
 
             'fecha_vencimiento' => 'required',
-           
+
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
@@ -205,7 +215,7 @@ class Cotizacion extends Component
        $cotizacion->save();
 
 
-       
+
        for ($i = 0; $i < count($arrayInputs); $i++) {
 
         $keyRestaInventario = "restaInventario" . $arrayInputs[$i];
@@ -220,11 +230,11 @@ class Cotizacion extends Component
         $keyIsvAsigando = "isv" . $arrayInputs[$i];
         $keyunidad = 'unidad' . $arrayInputs[$i];
         $keyidBodega = 'idBodega'.$arrayInputs[$i];
-     
+
         $keyNombreProducto = 'nombre'.$arrayInputs[$i];
         $keyBodegaNombre = 'bodega'.$arrayInputs[$i];
-    
-  
+
+
 
         $restaInventario = $request->$keyRestaInventario;
         $idSeccion = $request->$keyIdSeccion;
@@ -235,7 +245,7 @@ class Cotizacion extends Component
         $precio = $request->$keyPrecio;
         $cantidad = $request->$keyCantidad;
         $subTotal = $request->$keySubTotal;
-       
+
         $total = $request->$keyTotal;
         $idBodega = $request->$keyidBodega;
         $ivsProductoAsignado = $request->$keyIsvAsigando;
@@ -262,7 +272,7 @@ class Cotizacion extends Component
            'updated_at'=>now()
 
         ]);
-       
+
     };
 
         ModelCotizacionProducto::insert($arrayProductos);
@@ -283,7 +293,7 @@ class Cotizacion extends Component
         'icon'=>'error',
         'text'=>'Ha ocurrido un error al guardar la cotización.',
         'title'=>'Error!',
-        'message' => $e, 
+        'message' => $e,
         'error' => $e
        ],402);
        }
@@ -293,7 +303,7 @@ class Cotizacion extends Component
     {
 
         $datos = DB::SELECTONE("
-        select 
+        select
         concat(YEAR(NOW()),'-',A.id) as codigo,
         B.nombre,
         B.direccion,
@@ -304,7 +314,7 @@ class Cotizacion extends Component
         A.fecha_vencimiento,
         B.rtn,
         users.name
-        
+
         from cotizacion A
         inner join cliente B
         on A.cliente_id = B.id
@@ -335,7 +345,7 @@ class Cotizacion extends Component
         );
 
         $importes = DB::SELECTONE("
-        select 
+        select
         sub_total,
         isv,
         total
@@ -343,7 +353,7 @@ class Cotizacion extends Component
         );
 
         $importesDecimales = DB::SELECTONE("
-        select 
+        select
         FORMAT(sub_total,2) as sub_total,
         FORMAT(isv,2) as isv,
         FORMAT(total,2) as total
@@ -352,7 +362,7 @@ class Cotizacion extends Component
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
-          
+
         }else{
             $flagCentavos = true;
         }
@@ -362,7 +372,7 @@ class Cotizacion extends Component
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/cotizacion',compact('datos','productos','importes','importesDecimales','flagCentavos','numeroLetras'))->setPaper('letter');
-       
+
         return $pdf->stream("factura_numero.pdf");
 
 
@@ -372,7 +382,7 @@ class Cotizacion extends Component
     {
 
         $datos = DB::SELECTONE("
-        select 
+        select
         concat(YEAR(NOW()),'-',A.id) as codigo,
         B.nombre,
         B.direccion,
@@ -383,7 +393,7 @@ class Cotizacion extends Component
         A.fecha_vencimiento,
         B.rtn,
         users.name
-        
+
         from cotizacion A
         inner join cliente B
         on A.cliente_id = B.id
@@ -401,7 +411,7 @@ class Cotizacion extends Component
             J.nombre as medida,
             FORMAT(B.precio_unidad,2) as precio,
             FORMAT(B.cantidad,2) as cantidad,
-            FORMAT(B.sub_total,2) as importe    
+            FORMAT(B.sub_total,2) as importe
             from cotizacion A
             inner join cotizacion_has_producto B
             inner join producto C
@@ -415,12 +425,12 @@ class Cotizacion extends Component
             inner join segmento G
             on F.segmento_id = G.id
             inner join bodega H
-            on G.bodega_id = H.id       
+            on G.bodega_id = H.id
             where A.id = ".$idFactura
         );
 
         $importes = DB::SELECTONE("
-        select 
+        select
         sub_total,
         isv,
         total
@@ -428,7 +438,7 @@ class Cotizacion extends Component
         );
 
         $importesDecimales = DB::SELECTONE("
-        select 
+        select
         FORMAT(sub_total,2) as sub_total,
         FORMAT(isv,2) as isv,
         FORMAT(total,2) as total
@@ -437,7 +447,7 @@ class Cotizacion extends Component
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
-          
+
         }else{
             $flagCentavos = true;
         }
@@ -446,10 +456,10 @@ class Cotizacion extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
         $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesDecimales','flagCentavos','numeroLetras'))->setPaper('letter');
-       
+
         return $pdf->stream("Proforma N.".$datos->codigo.".pdf");
 
-   
+
     }
 }
 

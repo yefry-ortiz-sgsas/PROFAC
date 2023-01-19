@@ -59,6 +59,8 @@ class FacturacionCorporativa extends Component
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
+
+                    and tipo_cliente_id=1
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
             } else {
@@ -68,6 +70,8 @@ class FacturacionCorporativa extends Component
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
+
+                    and tipo_cliente_id=1
                     and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
