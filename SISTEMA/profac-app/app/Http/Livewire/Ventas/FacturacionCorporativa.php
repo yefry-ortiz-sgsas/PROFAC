@@ -284,11 +284,17 @@ class FacturacionCorporativa extends Component
     }
 
     public function guardarVenta(Request $request)
-    {
+    {   $v = [];
+        $puta = $request->arregloIdInputs;
+        $puta2 = str_replace(["[", "]"], '', $puta);
+        $v= $puta2;
+        $array = explode(',', $v);
 
+        //quitar corchetes en javascript
+        dd($array);
         try {
 
-            $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request, [
 
                 'fecha_vencimiento' => 'required',
                 'subTotalGeneral' => 'required',
@@ -306,7 +312,8 @@ class FacturacionCorporativa extends Component
 
             ]);
 
-             //dd($request->all());
+
+
 
             if ($validator->fails()) {
                 return response()->json([
@@ -318,6 +325,8 @@ class FacturacionCorporativa extends Component
                 ], 401);
             }
             //
+
+            //dd($request->all());
 
             if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
