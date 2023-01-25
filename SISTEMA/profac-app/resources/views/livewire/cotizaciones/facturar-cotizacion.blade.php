@@ -99,6 +99,17 @@
                             <input name="idComprobante" id="idComprobante" type="hidden" value="">
 
 
+                            <div class="row  mt-4 mb-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                      <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
+                                      <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                        <option value="" selected disabled>--Seleccionar un vendedor--</option>
+                                      </select>
+
+                                </div>
+                            </div>
+
+
 
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -404,9 +415,10 @@
 
     @push('scripts')
         <script>
-            var array = [];
+            var array = [1,2,3,4,5];
+            var arregloIdInputs = [];
             var numeroInputs = {{ $cotizacion->numeroInputs }};
-            var arregloIdInputs = {!! $cotizacion->arregloIdInputs !!};
+            var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
             var urlGuardarVenta = "{{ $urlGuardarVenta }}";
 
@@ -414,14 +426,37 @@
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
 
-            for (let i = 0; i < arregloIdInputs.length; i++) {
-                arregloIdInputs[i] = Number(arregloIdInputs[i]);
+
+           
+
+            for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
+
+                if(!isNaN(arregloIdInputsTemporal[i]) ){
+                    arregloIdInputs.push(arregloIdInputsTemporal[i])
+                }
+                
+                
 
             }
+            
+            console.log(arregloIdInputs)
 
+            $('#vendedor').select2({
+                ajax:{
+                    url:'/ventas/corporativo/vendedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
 
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
 
-
+                }
+            });
 
 
 
@@ -702,8 +737,8 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control"  data-parsley-required step="any"
-                                                    autocomplete="off" min="${producto.ultimo_costo_compra}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
+                                                    autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -952,17 +987,24 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+
                     data.append(nameForm, idUnidadVenta)
 
                 }
-
                 data.append("numeroInputs", numeroInputs);
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
+                const formDataObj = {};
+                data.forEach((value, key) => (formDataObj[key] = value));                 
 
-                axios.post(urlGuardarVenta, data)
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+
+
+                axios.post(urlGuardarVenta, formDataObj, options )
                     .then(response => {
                         let data = response.data;
 

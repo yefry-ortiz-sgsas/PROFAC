@@ -1129,16 +1129,28 @@ return 0;
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+             
                     data.append(nameForm, idUnidadVenta)
                 }
 
+
+                
+
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
+
                 data.append("numeroInputs", numeroInputs);
+                const formDataObj = {};
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                data.forEach((value, key) => (formDataObj[key] = value));
+                    
 
-                axios.post('/ventas/corporativo/guardar', data)
+                const options = {
+                    headers: {"content-type": "application/json"}
+                }
+
+
+                axios.post('/ventas/corporativo/guardar', formDataObj,options)
                     .then(response => {
                         let data = response.data;
                         idAutorizacion = document.getElementById('codigo_autorizacion').value;

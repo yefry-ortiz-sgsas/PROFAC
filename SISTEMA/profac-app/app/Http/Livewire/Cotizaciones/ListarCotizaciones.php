@@ -84,7 +84,7 @@ class ListarCotizaciones extends Component
                                 <a class="dropdown-item" target="_blank"  href="/cotizacion/facturar/'.$cotizacion->id.'" > <i class="fa-solid fa-file-invoice text-info"></i> Facturar </a>
                             </li>
     
-                            /cotizacion/facturar/gobierno
+                           
     
                             <li>
                                 <a class="dropdown-item"  target="_blank" href="/cotizacion/imprimir/'.$cotizacion->id.'">  <i class="fa-solid fa-print text-success"></i> Imprimir Cotización </a>

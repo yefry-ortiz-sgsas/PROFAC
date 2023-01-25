@@ -162,9 +162,7 @@ class Cotizacion extends Component
     public function guardarCotizacion(Request $request){
        try {
 
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;
-        $arrayProductos = [];
+
 
         $validator = Validator::make($request->all(), [
 
@@ -173,7 +171,7 @@ class Cotizacion extends Component
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
-            'arregloIdInputs' => 'required',
+          
             'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
@@ -196,6 +194,11 @@ class Cotizacion extends Component
                 'errors' => $validator->errors()
             ], 401);
         }
+
+
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arrayInputs = explode(',', $arrayTemporal);
+        $arrayProductos = [];
 
         DB::beginTransaction();
 

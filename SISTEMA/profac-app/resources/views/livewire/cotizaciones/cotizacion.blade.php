@@ -977,17 +977,23 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+
                     data.append(nameForm,idUnidadVenta)
 
                 }
-
                 data.append("numeroInputs", numeroInputs);
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
+                const formDataObj = {};
+                data.forEach((value, key) => (formDataObj[key] = value));
 
-                axios.post('/guardar/cotizacion', data)
+                const options = {
+                    headers: {"content-type": "application/json"}
+                }
+
+
+                axios.post('/guardar/cotizacion', formDataObj, options)
                     .then(response => {
                         let data = response.data;
 

@@ -284,23 +284,16 @@ class FacturacionCorporativa extends Component
     }
 
     public function guardarVenta(Request $request)
-    {   $v = [];
-        $puta = $request->arregloIdInputs;
-        $puta2 = str_replace(["[", "]"], '', $puta);
-        $v= $puta2;
-        $array = explode(',', $v);
-
-        //quitar corchetes en javascript
-        dd($array);
+    {          
+                    
         try {
 
-            $validator = Validator::make($request, [
+            $validator = Validator::make($request->all(), [
 
                 'fecha_vencimiento' => 'required',
                 'subTotalGeneral' => 'required',
                 'isvGeneral' => 'required',
-                'totalGeneral' => 'required',
-                'arregloIdInputs' => 'required',
+                'totalGeneral' => 'required',          
                 'numeroInputs' => 'required',
                 'seleccionarCliente' => 'required',
                 'nombre_cliente_ventas' => 'required',
@@ -325,8 +318,8 @@ class FacturacionCorporativa extends Component
                 ], 401);
             }
             //
-
-            //dd($request->all());
+            
+           
 
             if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
@@ -342,6 +335,8 @@ class FacturacionCorporativa extends Component
 
             }
 
+         
+
             if($request->tipoPagoVenta == 2){
                 $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente,$request->totalGeneral);
 
@@ -355,10 +350,14 @@ class FacturacionCorporativa extends Component
                 }
             }
 
-            //dd($request->all());
-            $arrayInputs = [];
-            $arrayInputs = $request->arregloIdInputs;
-            //$arrayProductosVentas = [];
+           
+
+
+            $arrayTemporal = $request->arregloIdInputs;            
+            $arrayInputs = explode(',', $arrayTemporal);
+            
+
+
             $numeroSecuencia = null;
             $mensaje = "";
             $flag = false;

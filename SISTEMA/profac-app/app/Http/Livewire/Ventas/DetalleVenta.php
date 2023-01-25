@@ -91,7 +91,7 @@ class DetalleVenta extends Component
         C.nombre,  
         E.nombre as unidad,
         B.precio_unidad,
-        B.cantidad,  
+        sum(B.cantidad) as cantidad,  
         sum(B.numero_unidades_resta_inventario )as unidades_vendidas,  
         sum(B.sub_total_s) as sub_total,
         sum(B.isv_s) as isv,
