@@ -421,15 +421,28 @@
 
     @push('scripts')
         <script>
-   var array=[];
+
+            var array=[];
+            var arregloIdInputs = [];
             var numeroInputs = {{$cotizacion->numeroInputs}};
-            var arregloIdInputs = {!!$cotizacion->arregloIdInputs!!};            
+            var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
+        
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
            
 
             window.onload = obtenerTipoPago;
          
             var public_path = "{{ asset('catalogo/') }}";
+
+            for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
+
+                if(!isNaN(arregloIdInputsTemporal[i]) ){
+                    arregloIdInputs.push(arregloIdInputsTemporal[i])
+                }
+
+                
+
+}
 
 
             $('#vendedor').select2({
@@ -1022,16 +1035,26 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+               
                     data.append(nameForm, idUnidadVenta)
                 }
 
                 data.append("numeroInputs", numeroInputs);
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
 
-                axios.post('/ventas/estatal/guardar', data)
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+
+                axios.post('/ventas/estatal/guardar', formDataObj, options)
                     .then(response => {
                         let data = response.data;
 

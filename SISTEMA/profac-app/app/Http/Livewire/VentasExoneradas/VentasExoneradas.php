@@ -135,27 +135,7 @@ class VentasExoneradas extends Component
             }
         }
 
-        // $codigo = DB::SELECT("
-        // select 
-        // id 
-        // from factura 
-        // where tipo_venta_id = 3 and estado_venta_id = 1 and 
-        // cliente_id = ".$request->seleccionarCliente." and
-        // UPPER(REPLACE(codigo_exoneracion,' ','')) = UPPER(REPLACE('".$request->codigo_exoneracion."',' ',''))
-        // ");
 
-        // if (!empty($codigo)) {
-          
-
-        //     if ($facturaVencida) {
-        //         return response()->json([
-        //             'icon' => 'warning',
-        //             'title' => 'Advertencia!',
-        //             'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con una factura con este mismo código de exoneración. No se puede emitir factura para dicho número de orden de  exoneración.',
-
-        //         ], 401);
-        //     }
-        // }
 
         if ($request->tipoPagoVenta == 2) {
             $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
@@ -170,9 +150,9 @@ class VentasExoneradas extends Component
             }
         }
 
-        //dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;     
+        //dd($request->all());        
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arrayInputs = explode(',', $arrayTemporal);
         
         $mensaje = "";
         $flag = false;
@@ -360,7 +340,7 @@ class VentasExoneradas extends Component
                 'text' =>  '
                 <div class="d-flex justify-content-between">
                     <a href="/exonerado/factura/'. $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                    <!-- <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> -->
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',

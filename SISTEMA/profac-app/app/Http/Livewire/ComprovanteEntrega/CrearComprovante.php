@@ -87,8 +87,10 @@ class CrearComprovante extends Component
         }
 
            //dd($request->all());
-           $arrayInputs = [];
-           $arrayInputs = $request->arregloIdInputs;
+
+           $arrayTemporal = $request->arregloIdInputs;            
+           $arrayInputs = explode(',', $arrayTemporal);
+
            $arrayProductosVentas = [];
    
            $mensaje = "";
@@ -219,10 +221,10 @@ class CrearComprovante extends Component
             return response()->json([
                 'icon' => "success",
                 'text' =>  '
-                <div class="d-flex justify-content-between">
+                <div class="text-center">
                    
-                <a class="dropdown-item" target="_blank"  href="/orden/entrega/facturar/' . $comprovante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante </a>
-                   
+                <a href="/orden/entrega/facturar/' . $comprovante->id . '"    class="btn btn-sm btn-warning" target="_blank"  > <i class="fa-solid fa-print"></i> Imprimir Comprobante </a>
+               
                 </div>',
                 'title' => 'Exito!',
                 'idComprobante' => $comprovante->id,

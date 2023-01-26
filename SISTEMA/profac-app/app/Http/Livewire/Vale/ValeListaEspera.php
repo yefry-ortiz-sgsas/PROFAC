@@ -106,7 +106,10 @@ class ValeListaEspera extends Component
             ], 200);
         }
 
-        $arrayInputs = $request->arregloIdInputsVP;
+
+        $arrayTemporal = $request->arregloIdInputsVP;            
+        $arrayInputs = explode(',', $arrayTemporal);
+
         $flagProductoExiste = false;
         $mensaje ="El producto o productos:";
         for ($i = 0; $i < count($arrayInputs); $i++) {
@@ -211,9 +214,12 @@ class ValeListaEspera extends Component
        }
     }
 
-    public function guardarVale($request){       
+    public function guardarVale($request){     
+        
+        $arrayTemporal = $request->arregloIdInputsVP;            
+        $arrayInputs = explode(',', $arrayTemporal);
     
-        $arrayInputs = $request->arregloIdInputsVP;
+     
         $arrayProductosVale =[];
         $idVale = DB::selectOne("  select id  from vale order by id desc");
         $anio = DB::SELECTONE("select year(now()) as anio");

@@ -276,7 +276,7 @@ class FacturacionEstatal extends Component
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
             'arregloIdInputs' => 'required',
-            'numeroInputs' => 'required',
+           
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
@@ -325,9 +325,11 @@ class FacturacionEstatal extends Component
         }
 
         //dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arrayInputs = explode(',', $arrayTemporal);
         $arrayProductosVentas = [];
+
+
 
         $mensaje = "";
         $flag = false;
@@ -513,7 +515,7 @@ class FacturacionEstatal extends Component
                 'text' =>  '
                 <div class="d-flex justify-content-between">
                     <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                   <!-- <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> -->
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',

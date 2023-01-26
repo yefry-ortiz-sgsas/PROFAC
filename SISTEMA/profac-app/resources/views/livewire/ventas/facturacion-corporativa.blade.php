@@ -1029,11 +1029,11 @@
 
                     data.append(nameForm,idUnidadVenta)
                 }
-
-                let text = arregloIdInputs.toString();
-                data.append("arregloIdInputs", text);
                 
                 data.append("numeroInputs", numeroInputs);
+                
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
 
                 const formDataObj = {};
               

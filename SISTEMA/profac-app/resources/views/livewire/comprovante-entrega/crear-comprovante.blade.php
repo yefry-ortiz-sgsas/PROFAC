@@ -976,17 +976,26 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");                    
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+
                     data.append(nameForm,idUnidadVenta)
                    
                 }
 
                 data.append("numeroInputs", numeroInputs);
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
 
-                axios.post('/comprovante/guardar/orden', data)
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+                axios.post('/comprovante/guardar/orden', formDataObj,options)
                     .then(response => {
                         let data = response.data;
 
@@ -997,6 +1006,8 @@
                            
                             Swal.fire({
                             icon: data.icon,
+                            confirmButtonText:'Cerrar',
+                            confirmButtonColor: '#19A689',
                             title: data.title,
                             html: data.text,
                              })
@@ -1007,7 +1018,7 @@
 
                         Swal.fire({
                             confirmButtonText:'Cerrar',
-                            confirmButtonColor: '#5A6268',
+                            confirmButtonColor: '#19A689',
                             icon: data.icon,
                             title: data.title,
                             html: data.text

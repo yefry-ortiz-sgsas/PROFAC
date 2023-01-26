@@ -749,15 +749,28 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputsVP[]", arregloIdInputsVP[i]);
                     data.append(nameForm, idUnidadVenta)
                 }
+
 
 
                 data.append("numeroInputsVP", numeroInputsVP);
 
 
-                axios.post('/vale/lista/espera/guardar', data)
+                let text = arregloIdInputsVP.toString();
+                data.append("arregloIdInputsVP", text);
+
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+
+                axios.post('/vale/lista/espera/guardar', formDataObj,options)
                     .then(response => {
                         let data = response.data;
 

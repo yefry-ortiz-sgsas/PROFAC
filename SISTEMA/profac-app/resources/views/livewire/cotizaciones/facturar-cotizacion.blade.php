@@ -415,7 +415,7 @@
 
     @push('scripts')
         <script>
-            var array = [1,2,3,4,5];
+           
             var arregloIdInputs = [];
             var numeroInputs = {{ $cotizacion->numeroInputs }};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
