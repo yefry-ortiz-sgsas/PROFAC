@@ -117,6 +117,7 @@ class Cobros extends Component
             DB::beginTransaction();
 
             $file = $request->file('img_pago');
+<<<<<<< Updated upstream
             if($file ){
                 $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
                 $path = public_path() . '/documentos_ventas';
@@ -125,6 +126,16 @@ class Cobros extends Component
                 $name = null;
             }
 
+=======
+            if($file != NULL){
+
+            $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/documentos_ventas';
+            $file->move($path, $name);
+            }else{
+                $name = '';
+            }
+>>>>>>> Stashed changes
 
                 if($request->metoPago ==1 ){
                     $registroPago = new ModelpagoVenta;
