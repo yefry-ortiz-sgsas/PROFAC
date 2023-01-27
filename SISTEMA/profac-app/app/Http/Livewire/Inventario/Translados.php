@@ -184,7 +184,10 @@ class Translados extends Component
         //     ], 402);
         // }
 
-        $arregloIdInputs = $request->arregloIdInputs;
+      
+
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arregloIdInputs  = explode(',', $arrayTemporal);
 
         $flagError = false;
        

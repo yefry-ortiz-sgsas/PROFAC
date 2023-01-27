@@ -775,19 +775,29 @@
 
             var dataForm = new FormData($('#guardar_translados').get(0));
 
-            let longitudArreglo = arrayInputs.length;
-            for (var i = 0; i < longitudArreglo; i++) {
+            // let longitudArreglo = arrayInputs.length;
+            // for (var i = 0; i < longitudArreglo; i++) {
+            //     dataForm.append("arregloIdInputs[]", arrayInputs[i]);
+            // }
 
-
-
-                dataForm.append("arregloIdInputs[]", arrayInputs[i]);
-
-            }
 
             let table = $('#tbl_translados_destino').DataTable();
             table.destroy();
+         
+                
+                let text = arrayInputs.toString();
+                dataForm.append("arregloIdInputs", text);
 
-            axios.post('/translado/producto/bodega', dataForm)
+                const formDataObj = {};
+              
+                dataForm.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+            axios.post('/translado/producto/bodega', formDataObj,options)
                 .then(response => {
 
                     let data = response.data;
@@ -825,6 +835,7 @@
                 })
                 .catch(err => {
                     //console.log(err)
+                    
                     document.getElementById("btn_guardar_translado").disabled = false;
                     console.log(err);
                     $('#modal_transladar_producto').modal('hide')
