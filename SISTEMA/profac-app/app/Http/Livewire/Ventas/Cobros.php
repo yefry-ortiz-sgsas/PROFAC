@@ -117,25 +117,14 @@ class Cobros extends Component
             DB::beginTransaction();
 
             $file = $request->file('img_pago');
-<<<<<<< Updated upstream
-            if($file ){
-                $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
-                $path = public_path() . '/documentos_ventas';
-                $file->move($path, $name);
-            }else{
-                $name = null;
-            }
-
-=======
             if($file != NULL){
-
+                
             $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
             $path = public_path() . '/documentos_ventas';
             $file->move($path, $name);
             }else{
                 $name = '';
             }
->>>>>>> Stashed changes
 
                 if($request->metoPago ==1 ){
                     $registroPago = new ModelpagoVenta;
@@ -191,6 +180,7 @@ class Cobros extends Component
 
             $carpetaPublic = public_path();
             $path = $carpetaPublic.'/documentos_ventas/'.$name;
+
             File::delete($path);
 
             return response()->json([
@@ -251,33 +241,30 @@ class Cobros extends Component
 
          return Datatables::of($listaPagos)
          ->addColumn('opciones', function ($listaPagos) {
-            
 
              return
              '
              <div class="text-center">
                  <button class="btn btn-danger " onclick="confirmarEliminarPago('.$listaPagos->id.')"><i class="fa-solid fa-trash-can "></i></button>
              </div>
+
+
+
+
          ';
          })
          ->addColumn('documento', function ($listaPagos) {
 
-            if($listaPagos->url_img){
-                return
-                '
-                <div class="text-center ">
-                        <a href="/documentos_ventas/'.$listaPagos->url_img.'" target="_blank" class=""><i class="fa-solid fa-file-pdf text-danger" style="font-size: 2rem;"></i></a>
-                </div>
-            ';
-            }else{
-                return
-                '
-                <div class="text-center ">
-                        <a  target="_blank" class=""><i class="fa-solid fa-ban text-danger" style="font-size: 2rem;"></i></a>
-                </div>
-            ';
-            }
+             return
+             '
+             <div class="text-center ">
+                     <a href="/documentos_ventas/'.$listaPagos->url_img.'" target="_blank" class=""><i class="fa-solid fa-file-pdf text-danger" style="font-size: 2rem;"></i></a>
+             </div>
 
+
+
+
+         ';
          })
 
          ->rawColumns(['opciones','documento'])

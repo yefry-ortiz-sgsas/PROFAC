@@ -139,13 +139,8 @@
                                         data-parsley-required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
-                                    <label for="img_pago" class="col-form-label focus-label">Documento de Pago:</label>
-                                    <input class="form-control"  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf"
-<<<<<<< Updated upstream
-                                        >
-=======
-                                     >
->>>>>>> Stashed changes
+                                    <label for="img_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
+                                    <input class="form-control"  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf">
                                 </div>
                             </div>
                         </form>
