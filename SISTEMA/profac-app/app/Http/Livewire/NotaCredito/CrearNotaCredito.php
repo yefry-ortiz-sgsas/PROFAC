@@ -441,13 +441,13 @@ class CrearNotaCredito extends Component
         cantidad
         from venta_has_producto
         where factura_id=".$idFactura." and producto_id=".$idProducto." and seccion_id=".$idSeccion
-    );
+        );
 
-    // if($idProducto==1943 && $idSeccion==137){
-    //     DB::rollBack();
+        // if($idProducto==1943 && $idSeccion==137){
+        //     DB::rollBack();
 
-    //     dd($lotes,$i );
-    // }
+        //     dd($lotes,$i );
+        // }
 
         while($cantidadSeccionRestar > 0){
 

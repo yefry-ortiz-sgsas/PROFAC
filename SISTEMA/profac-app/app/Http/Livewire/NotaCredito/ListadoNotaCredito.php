@@ -20,7 +20,7 @@ class ListadoNotaCredito extends Component
     {
         $fechaActual = date('n');
         $resta = $fechaActual - 2;
-        
+
         $mesActual =0;
         $AnioActual = date('Y');
 
@@ -32,19 +32,19 @@ class ListadoNotaCredito extends Component
         }else{
             $mesActual = date('m');
         }
-      
+
 
         $fechaInicio = $AnioActual.'-'.$mesActual.'-01';
 
-        
-        
+
+
         return view('livewire.nota-credito.listado-nota-credito',compact('fechaInicio'));
     }
 
     public function listadoNotaCredito(Request $request){
         try{
             $listado = DB::SELECT("
-            select 
+            select
             A.id as codigo,
             A.numero_nota,
             B.descripcion as motivo,
@@ -57,31 +57,31 @@ class ListadoNotaCredito extends Component
             inner join motivo_nota_credito B
             on A.motivo_nota_credito_id = B.id
             inner join users
-            on A.users_id = users.id            
+            on A.users_id = users.id
             where fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
-    
+
             return Datatables::of($listado)
             ->addColumn('opciones', function ($nota) {
-    
+
                 return
-    
-                '<div class="text-center">        
-                <a href="/nota/credito/imprimir/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir</a>   
+
+                '<div class="text-center">
+                <a href="/nota/credito/imprimir/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir</a>
                 </div>';
             })
-    
+
             ->rawColumns(['opciones',])
             ->make(true);
-    
-         
-    
+
+
+
            } catch (QueryException $e) {
            return response()->json([
             'icon' => '',
             'text' => '',
             'title' => '',
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e,
            ],402);
            }
@@ -90,7 +90,40 @@ class ListadoNotaCredito extends Component
 
     public function imprimirFacturaCoorporativa($idFactura)
     {
+            /*CONSULTA PARA LISTAR PRODUCTOS NOTA DE CRÉDITO*/
 
+            /*
+
+
+        select
+            D.id AS codigo,
+            D.nombre as descripcion,
+            F.nombre as medida,
+            H.nombre AS bodega,
+            FF.descripcion as seccion,
+            FORMAT(C.precio_unidad,2) as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            FORMAT(C.sub_total,2) as sub_total
+        from factura A
+        inner join nota_credito B
+        on A.id = B.factura_id
+        inner join nota_credito_has_producto C
+        on B.id = C.nota_credito_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        inner join seccion FF
+        on C.seccion_id = FF.id
+        inner join segmento G
+        on FF.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where B.estado_nota_id=1 and A.id = 1422
+        group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
+            */
         $cai = DB::SELECTONE("
         select
         A.cai as numero_factura,
@@ -246,7 +279,7 @@ class ListadoNotaCredito extends Component
     public function imprimirFacturaCoorporativa2($idNota)
     {
         $cai = DB::SELECTONE("
-        select 
+        select
         A.cai nota_credito_cai,
         B.cai factura,
         C.cai,
@@ -274,7 +307,7 @@ class ListadoNotaCredito extends Component
          from factura
          inner join cliente
          on factura.cliente_id = cliente.id
-         inner join nota_credito 
+         inner join nota_credito
          on nota_credito.factura_id = factura.id
          where nota_credito.id = ".$idNota
         );
