@@ -371,6 +371,7 @@ Route::get('/cotizacion/facturar/gobierno/{id}',FacturarCotizacionGobierno::clas
 //--------------------------------------------------------Ajustes------------------------------------------------------//
 Route::get('/inventario/ajustes', Ajustes::class);
 Route::get('/ajustes/listar/bodegas', [Ajustes::class,'listarBodegas']);
+Route::get('/ajuste/listar/secciones', [Ajustes::class,'seccionesLista']);
 Route::get('/ajustes/listar/productos', [Ajustes::class,'listarProductos']);
 Route::get('/ajustes/motivos/listar', [Ajustes::class,'obtenerTiposAjuste']);
 Route::post('/ajustes/datos/producto', [Ajustes::class,'datosProducto']);

@@ -34,10 +34,7 @@ class Ajustes extends Component
          $listaBodegas = DB::SELECT("
              select id ,nombre as 'text' from bodega  where nombre like '%".$request->search."%' or id like '%".$request->search."%' limit 15
          ");
-
-         
- 
- 
+      
  
         return response()->json([
             "results" => $listaBodegas
@@ -51,6 +48,34 @@ class Ajustes extends Component
         }
      }
 
+
+     public function seccionesLista(Request $request){
+        try {
+ 
+            $listaSecciones = DB::SELECT("
+                select 
+                A.id,
+                UPPER(A.descripcion) as text
+                from seccion A
+                inner join segmento B
+                on A.segmento_id = B.id
+                where B.bodega_id = ".$request->bodegaId." and A.descripcion like  '%".$request->search."%' "
+            );         
+        
+            return response()->json([
+                "results" => $listaSecciones 
+            ],200);
+
+        } catch (QueryException $e) {
+        return response()->json([
+            'message' => 'Ha ocurrido un error', 
+            'error' => $e
+        ],402);
+        }
+     }
+
+
+
      public function listarProductos(Request $request){
         try {
 
@@ -59,7 +84,7 @@ class Ajustes extends Component
          $listaProductos = DB::select("
          select 
          B.id,
-         CONCAT(B.id,' - ',B.nombre) as text            
+         UPPER(CONCAT(B.id,' - ',B.nombre,' _ ', bodega.nombre,' ',seccion.descripcion,' _ Lote ',A.id )) as text            
          from recibido_bodega A
          inner join producto B
          on A.producto_id = B.id
@@ -69,7 +94,7 @@ class Ajustes extends Component
          on seccion.segmento_id = segmento.id
          inner join bodega
          on segmento.bodega_id = bodega.id
-         where bodega.id=".$request->bodegaId." and (B.nombre like '%".$request->search."%' or B.id like '%".$request->search."%') limit 15
+         where A.cantidad_disponible <> 0 and bodega.id=".$request->bodegaId." and (B.nombre like '%".$request->search."%' or B.id like '%".$request->search."%') limit 15
          ");
  
         return response()->json([
@@ -100,6 +125,20 @@ class Ajustes extends Component
 
         $producto = DB::SELECTONE("select id, nombre, precio_base from producto where id=".$request->id);
 
+        $datosBodega = DB::SELECTONE("
+        select
+        UPPER(D.nombre) as bodega,
+        UPPER(B.descripcion) as seccion
+        
+        from recibido_bodega A
+        inner join seccion B
+        on A.seccion_id = B.id
+        inner join segmento C
+        on C.id = B.segmento_id
+        inner join bodega D
+        on D.id = C.bodega_id
+        where A.id = ".$request->idRecibido);
+
         $unidadesMedida = DB::SELECT("
         select
         B.id,
@@ -116,6 +155,7 @@ class Ajustes extends Component
        return response()->json([
         'unidadesMedida'=>$unidadesMedida,
         'producto'=>$producto,
+        'datosBodega' => $datosBodega
        ],200);
        } catch (QueryException $e) {
        return response()->json([
