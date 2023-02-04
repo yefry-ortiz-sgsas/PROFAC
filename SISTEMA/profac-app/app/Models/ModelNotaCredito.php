@@ -13,6 +13,7 @@ class ModelNotaCredito extends Model
     protected $fillable = [
         'id',
         'numero_nota',
+        'comentario',
         'cai',
         'numero_secuencia_cai',
         'fecha',
