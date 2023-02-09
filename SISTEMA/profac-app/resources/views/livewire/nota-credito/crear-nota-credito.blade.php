@@ -928,7 +928,7 @@
             $(document).on('submit', '#guardar_devolucion', function(event) {
 
             event.preventDefault();
-            console.log("llego");
+           
             guardarNotaCredito();
 
             });
@@ -963,12 +963,12 @@
 
 
 
-                    // Swal.fire({
-                    //     icon: data.icon,
-                    //     title: data.title,
-                    //     html: data.text,
+                    Swal.fire({
+                        icon: data.icon,
+                        title: data.title,
+                        html: data.text,
 
-                    // })
+                    })
 
                     return;
 

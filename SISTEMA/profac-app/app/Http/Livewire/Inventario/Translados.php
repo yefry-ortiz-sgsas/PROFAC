@@ -165,25 +165,6 @@ class Translados extends Component
        try {       
 
         $contadorTranslados = 0;
-        // $validator = Validator::make($request->all(), [
-
-        //     'idRecibido' => 'required',
-        //     'cantidad' => 'required'
-
-        // ], [
-
-        //     'idRecibido' => 'codigo de recibido es necesario.',
-        //     'cantidad' => 'la cantidad de producto a transladar es requerida'
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         "text" => "Ha ocurrido un error al realizar el transpaso de producto, uno o mas campos faltantes.",
-        //         "icon" => "error",
-        //         "title"=>"Error!"
-        //     ], 402);
-        // }
-
       
 
         $arrayTemporal = $request->arregloIdInputs;            

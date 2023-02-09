@@ -19,6 +19,7 @@ use App\Models\ModelAjuste;
 use App\Models\ModelTipoAjuste;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelRecibirBodega;
+use App\Models\ModelAjusteProducto;
 
 class Ajustes extends Component
 
@@ -59,7 +60,11 @@ class Ajustes extends Component
                 from seccion A
                 inner join segmento B
                 on A.segmento_id = B.id
-                where B.bodega_id = ".$request->bodegaId." and A.descripcion like  '%".$request->search."%' "
+                inner join recibido_bodega C
+                on A.id = C.seccion_id
+                where C.cantidad_disponible <> 0 and B.bodega_id = ".$request->bodegaId." and A.descripcion like  '%".$request->search."%'
+                group by A.id, text
+                "
             );         
         
             return response()->json([
@@ -84,7 +89,7 @@ class Ajustes extends Component
          $listaProductos = DB::select("
          select 
          B.id,
-         UPPER(CONCAT(B.id,' - ',B.nombre,' _ ', bodega.nombre,' ',seccion.descripcion,' _ Lote ',A.id )) as text            
+         UPPER(CONCAT(B.id,' - ',B.nombre,' _ Lote ',A.id )) as text            
          from recibido_bodega A
          inner join producto B
          on A.producto_id = B.id
@@ -94,7 +99,7 @@ class Ajustes extends Component
          on seccion.segmento_id = segmento.id
          inner join bodega
          on segmento.bodega_id = bodega.id
-         where A.cantidad_disponible <> 0 and bodega.id=".$request->bodegaId." and (B.nombre like '%".$request->search."%' or B.id like '%".$request->search."%') limit 15
+         where A.cantidad_disponible <> 0 and bodega.id=".$request->idBodega." and seccion.id = ".$request->idSeccion." and (B.nombre like '%".$request->search."%' or B.id like '%".$request->search."%') limit 15
          ");
  
         return response()->json([
@@ -230,87 +235,168 @@ class Ajustes extends Component
        }
      }
 
-     public function realizarAjuste(Request $request){
-       try {
+public function realizarAjuste(Request $request){
+    try 
+    {
+ 
 
+                $arrayTemporal = $request->arregloIdInputs;            
+                $arregloIdInputs  = explode(',', $arrayTemporal);
 
-        $lote = ModelRecibirBodega::find($request->idRecibido);
+                $msjCantidadRestarEncabezado ="Ajuste no realizado a los siguientes productos, dado que la cantidad a restar es mayor que la cantidad disponible en la sección de bodega: <br>";
+                $msjCantidadRestarCuerpo ="";
 
-        if($request->aritmetica==1){
-            $operacion = $lote->cantidad_disponible + $request->cantidad;
-            $ajusteTipoAritmetica = "Ajuste de tipo suma de unidades";
-        }else{
+                for ($i = 0; $i < count($arregloIdInputs); $i++) {
+
+                    $keyIdRecibido = "idRecibido".$arregloIdInputs[$i];     
+                    $keyAritmetica = "aritmetica".$arregloIdInputs[$i];      
+                    $keyIdProducto = "idProducto".$arregloIdInputs[$i];
+                    $keyNombre_producto = "nombre_producto".$arregloIdInputs[$i];
+                    $keyCantidad = "cantidad".$arregloIdInputs[$i];
+                    $keyTotal_unidades = "total_unidades".$arregloIdInputs[$i];  
+
             
-           
-            $operacion = $lote->cantidad_disponible - $request->cantidad;
-            if($operacion<0){
+                    $idRecibido = $request->$keyIdRecibido;
+                    $aritmetica = $request->$keyAritmetica;
+                    $idProducto = $request->$keyIdProducto;
+                    $nombre_producto = $request->$keyNombre_producto;
+                    $cantidad = $request->$keyCantidad;
+                    $total_unidades = $request->$keyTotal_unidades;
+
+
+                    $lote = ModelRecibirBodega::find($idRecibido);
+
+                    if($aritmetica==1){
+                        $operacion = $lote->cantidad_disponible + $total_unidades;               
+                    }else{    
+                        $operacion = $lote->cantidad_disponible - $total_unidades;
+                        if($operacion<0){
+                            $msjCantidadRestarCuerpo = $msjCantidadRestarCuerpo.$idProducto ."-".$nombre_producto.". <br>";   
+                        }  
+                    }   
+
+                }
+
+
+                //Comprobar si hay productos que exceden
+                if($msjCantidadRestarCuerpo <> ""){
+
+                    return response()->json([
+                        'icon' => 'warning',
+                        'text' => $msjCantidadRestarEncabezado.$msjCantidadRestarCuerpo,
+                        'title' => 'Advertencia!',
+                        'message' => 'Ha ocurrido un error', 
+                    ],402); 
+                }
+
+               
+
+                ////REALIZAR LA OPERACION DE REALIZAR AJUSTE////
+                DB::beginTransaction();
+
+                
+                $numeroOrden = DB::SELECTONE("select concat(YEAR(NOW()),'-',count(id)+1) as numero_orden from ajuste");
+
+                $ajuste = new ModelAjuste;
+                $ajuste->numero_ajuste = $numeroOrden->numero_orden;
+                $ajuste->comentario = trim($request->comentario);
+                $ajuste->tipo_ajuste_id = $request->tipo_ajuste_id;
+                $ajuste->solicitado_por = $request->solicitado_por;
+                $ajuste->fecha = $request->fecha;   
+                $ajuste->users_id = Auth::user()->id;          
+                $ajuste->save();
+
+
+                for ($i = 0; $i < count($arregloIdInputs); $i++) {
+                 
+                    $keyIdRecibido = "idRecibido".$arregloIdInputs[$i];
+                    $keyAritmetica = "aritmetica".$arregloIdInputs[$i];
+                    $keyIdProducto = "idProducto".$arregloIdInputs[$i];
+                    $keyNombre_producto = "nombre_producto".$arregloIdInputs[$i];
+                    $keyCantidad_dispo = "cantidad_dispo".$arregloIdInputs[$i];
+                    // $keyUnidad = "unidad".$arregloIdInputs[$i];
+                    $keyPrecio_producto = "precio_producto".$arregloIdInputs[$i];
+                    $keyCantidad = "cantidad".$arregloIdInputs[$i];
+                    $keyTotal_unidades = "total_unidades".$arregloIdInputs[$i];   
+                    $keyIdUnidadVenta = "idUnidadVenta".$arregloIdInputs[$i];
+
+
             
-                return response()->json([
-                 'icon' => 'warning',
-                 'text' => 'La acción de ajuste no puede proceder, dado que la cantidad a restar es mayor que la cantidad disponible en la sección de bodega.',
-                 'title' => 'Advertencia!',
-                 'message' => 'Ha ocurrido un error', 
-                ],402);
-            }
-          
-            $ajusteTipoAritmetica = "Ajuste de tipo resta de unidades";
-        }
+                    $idRecibido = $request->$keyIdRecibido;                 
+                    $aritmetica = $request->$keyAritmetica;
+                    $idProducto = $request->$keyIdProducto;
+                    $nombre_producto = $request->$keyNombre_producto;
+                    $cantidad_dispo = $request->$keyCantidad_dispo;
+                    // $unidad = $request->$keyUnidad;
+                    $precio_producto = $request-> $keyPrecio_producto;
+                    $cantidad = $request->$keyCantidad;
+                    $total_unidades = $request->$keyTotal_unidades;
+                    $idUnidadVenta = $request->$keyIdUnidadVenta;
 
-        $numeroOrden = DB::SELECTONE("select concat(YEAR(NOW()),'-',count(id)+1) as numero_orden from ajuste");
+                  
 
-        DB::beginTransaction();
+                    $lote = ModelRecibirBodega::find($idRecibido);
 
-        $ajuste = new ModelAjuste;
-        $ajuste->numero_ajuste = $numeroOrden->numero_orden;
-        $ajuste->comentario = trim($request->comentario);
-        $ajuste->tipo_ajuste_id = $request->tipo_ajuste_id;
-        $ajuste->solicitado_por = $request->solicitado_por;
-        $ajuste->fecha = $request->fecha;
-        $ajuste->recibido_bodega_id = $request->idRecibido;
-        $ajuste->producto_id = $request->idProducto;
-        $ajuste->precio_producto = round($request->precio_producto,2);
-        $ajuste->cantidad = $request->cantidad ;
-        $ajuste->cantidad_total = $request->total_unidades;
-        $ajuste->users_id = Auth::user()->id;
-        $ajuste->tipo_aritmetica = $ajusteTipoAritmetica;
-        $ajuste->cantidad_inicial = $lote->cantidad_disponible; 
-        $ajuste->unidad_medida_venta_id=$request->idUnidadVenta;
-        $ajuste->save();
+                    if($request->aritmetica==1){
+                        $operacion = $lote->cantidad_disponible +  $total_unidades;
+                        $ajusteTipoAritmetica = "Ajuste de tipo suma de unidades";
+                    }else{
+                                    
+                        $operacion = $lote->cantidad_disponible -  $total_unidades;
+                        $ajusteTipoAritmetica = "Ajuste de tipo resta de unidades";
+
+                    }
 
 
+    
+                    $ajusteProducto = new ModelAjusteProducto;
+                    $ajusteProducto->ajuste_id = $ajuste->id;
+                    $ajusteProducto->producto_id = $idProducto;
+                    $ajusteProducto->recibido_bodega_id = $idRecibido;
+                    $ajusteProducto->tipo_aritmetica = $aritmetica;
+                    $ajusteProducto->precio_producto = $precio_producto;
+                    $ajusteProducto->cantidad_inicial = $lote->cantidad_disponible;
+                    $ajusteProducto->cantidad = $cantidad;
+                    $ajusteProducto->cantidad_total = $total_unidades;
+                    $ajusteProducto->unidad_medida_venta_id = $idUnidadVenta;
+                    $ajusteProducto->save();
 
-        $lote->cantidad_disponible = $operacion;
-        $lote->save();
-
-        $logRegistro = new ModelLogTranslados;
-        $logRegistro->origen=$request->idRecibido;
-        $logRegistro->cantidad=$request->total_unidades;
-        $logRegistro->unidad_medida_venta_id = $request->idUnidadVenta;
-        $logRegistro->users_id=Auth::user()->id;
-        $logRegistro->descripcion=$ajusteTipoAritmetica;
-        $logRegistro->ajuste_id=$ajuste->id;
-        $logRegistro->save();
-
-
-        DB::commit();
-    //    return response()->json([
-    //     'icon' => 'success',
-    //     'text' => 'Ajuste realizado con éxito.',
-    //     'title' => 'Exito!',
-    //    ],200);
-
-       return response()->json([
-        'icon' => "success",
-        'text' => '
-        <p class="text-center">Ajuste realizado con exito.<p>
-        <div class="text-center">
-            <a href="/ajustes/imprimir/ajuste/'.$ajuste->id.'" target="_blank" class="btn btn-sm btn-success btn-lg"><i class="fa-solid fa-file-invoice"></i> Imprimir Documento de Ajuste</a>
-     
-        </div>',
-        'title' => 'Exito!',
+                    $lote->cantidad_disponible = $operacion;
+                    $lote->save();
+    
+    
+                    $logRegistro = new ModelLogTranslados;
+                    $logRegistro->origen=$idRecibido;
+                    $logRegistro->cantidad= $total_unidades;
+                    $logRegistro->unidad_medida_venta_id = $idUnidadVenta;
+                    $logRegistro->users_id=Auth::user()->id;
+                    $logRegistro->descripcion=$ajusteTipoAritmetica;
+                    $logRegistro->ajuste_id=$ajuste->id;
+                    $logRegistro->save();
 
 
-    ], 200);
+
+
+                }
+
+    
+
+
+            DB::commit();
+
+
+            return response()->json([
+                'icon' => "success",
+                'text' => '
+                <p class="text-center">Ajuste realizado con exito.<p>
+                <div class="text-center">
+                    <a href="/ajustes/imprimir/ajuste/'.$ajuste->id.'" target="_blank" class="btn btn-sm btn-success btn-lg"><i class="fa-solid fa-file-invoice"></i> Imprimir Documento de Ajuste</a>
+            
+                </div>',
+                'title' => 'Exito!',
+
+
+                ], 200);
        } catch (QueryException $e) {
         DB::rollback(); 
        return response()->json([

@@ -42,8 +42,9 @@
                                         <label for="selectSeccion" class="col-form-label focus-label">Seleccionar
                                             Seccion:</label>
                                         <select id="selectSeccion" class="form-group form-control" style=""
-                                            data-parsley-required >
-                                            <option value="" selected disabled>--Seleccionar una Seccion--</option>
+                                            data-parsley-required onchange="obtenerProductosBodega()">
+                                            <option value="" selected disabled>--Seleccionar una Seccion--
+                                            </option>
                                         </select>
 
                                     </div>
@@ -119,8 +120,54 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <form onkeydown="return event.key != 'Enter';" autocomplete="off"
-                                    id="guardar_translados" name="guardar_translados" data-parsley-validate>
+                                <form onkeydown="return event.key != 'Enter';" id="ajustar_producto_form"
+                                    data-parsley-validate>
+                                    <div class="form-group">
+                                        <label for="tipo_ajuste_id">Motivo de ajuste<span
+                                            class="text-danger">*</span></label>
+                                        <select class="form-control m-b" name="tipo_ajuste_id" id="tipo_ajuste_id"
+                                            required data-parsley-required>
+                                            <option value="" selected disabled>---Seleccione una bodega de
+                                                destino---
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comentario" class="col-form-label focus-label">Comentario:<span
+                                                class="text-danger">*</span></label>
+                                        <textarea spellcheck="true" placeholder="Escriba aquí..." required id="comentario" name="comentario" cols="30"
+                                            rows="3" class="form-group form-control" data-parsley-required></textarea>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="solicitado_por">Solicitado por:<span
+                                                    class="text-danger">*</span></label>
+                                                <select class="form-control " name="solicitado_por" id="solicitado_por"
+                                                    required data-parsley-required>
+                                                    <option value="" selected disabled>---Seleccionar una
+                                                        opción:---
+                                                    </option>
+
+                                                </select>
+                                            </div>
+
+
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+
+                                                <label for="fecha">Fecha de solicitud:<span
+                                                    class="text-danger">*</span></label>
+                                                <input class="form-control" required data-parsley-required
+                                                    type="date" name="fecha" id="fecha">
+                                            </div>
+
+                                        </div>
+                                    </div>
 
                                 </form>
                                 <table id="tbl_translados_productos"
@@ -144,8 +191,11 @@
 
                                 </table>
 
-                                <button id="btn_guardar_translado" type="submit" form="guardar_translados"
+
+
+                                <button id="btn_realizar_ajuste" type="submit" form="ajustar_producto_form"
                                     class="btn btn-primary btn-lg mb-4 mt-3">Guardar Ajuste</button>
+
                             </div>
                         </div>
                     </div>
@@ -171,8 +221,7 @@
                 <div class="modal-body" id="modalBody">
                     <div class="row">
                         <div class="col-sm-12">
-                            <form onkeydown="return event.key != 'Enter';" id="ajustar_producto_form"
-                                data-parsley-validate>
+                            <form id="datos_ajuste_form" name="datos_ajuste_form" data-parsley-validate>
                                 <input type="hidden" name="idRecibido" id="idRecibido">
 
                                 <input type="hidden" name="bodega" id="bodega" value="">
@@ -180,17 +229,7 @@
 
 
 
-                                <div class="form-group">
-                                    <label for="tipo_ajuste_id">Motivo</label>
-                                    <select class="form-control m-b" name="tipo_ajuste_id" id="tipo_ajuste_id" required
-                                        data-parsley-required>
-                                        <option value="" selected disabled>---Seleccione una bodega de destino---
-                                        </option>
 
-
-
-                                    </select>
-                                </div>
 
                                 <div class="form-group">
                                     <label for="aritmetica">Método de ajuste</label>
@@ -202,14 +241,6 @@
                                         <option value="2">Restar Unidades</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="comentario" class="col-form-label focus-label">Comentario:<span
-                                            class="text-danger">*</span></label>
-                                    <textarea spellcheck="true" placeholder="Escriba aquí..." required id="comentario" name="comentario" cols="30"
-                                        rows="3" class="form-group form-control" data-parsley-required></textarea>
-                                </div>
-
 
 
                                 <div class="row">
@@ -276,48 +307,15 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="solicitado_por">Solicitado por:</label>
-                                            <select class="form-control " name="solicitado_por" id="solicitado_por"
-                                                required data-parsley-required>
-                                                <option value="" selected disabled>---Seleccionar una opción:---
-                                                </option>
-
-                                            </select>
-                                        </div>
-
-
-
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-
-                                            <label for="fecha">Fecha de solicitud:</label>
-                                            <input class="form-control" required data-parsley-required type="date"
-                                                name="fecha" id="fecha">
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-
 
                             </form>
+
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button id="btn_realizar_ajuste" type="submit" form="ajustar_producto_form"
-                        class="btn btn-primary">Realizar Ajuste</button>
+                    <button type="submit" form="datos_ajuste_form" class="btn btn-primary">Agregar producto</button>
                 </div>
             </div>
         </div>
@@ -355,6 +353,15 @@
 
 
 
+
+
+            $(document).on('submit', '#datos_ajuste_form', function(event) {
+
+                event.preventDefault();
+                agregarProductoLista();
+
+            });
+
             $(document).on('submit', '#selec_data_form', function(event) {
 
                 event.preventDefault();
@@ -362,9 +369,8 @@
 
             });
 
-            function obtenerSecciones(){
+            function obtenerSecciones() {
                 let bodegaId = document.getElementById('selectBodega').value;
-                console.log("entro")
                 let selectSeccion = document.getElementById('selectSeccion');
                 selectSeccion.innerHTML = '<option value="" selected disabled>--Seleccionar un Sección --</option>';
 
@@ -380,7 +386,7 @@
                                 page: params.page || 1
                             }
 
-                            
+
                             return query;
                         }
                     }
@@ -388,7 +394,10 @@
             }
 
             function obtenerProductosBodega() {
-               
+
+                let idBodega = document.getElementById("selectBodega").value;
+                let idSeccion = document.getElementById("selectSeccion").value;
+
                 let bodegaId = document.getElementById('selectBodega').value;
                 let selectProducto = document.getElementById('selectProducto');
                 selectProducto.innerHTML =
@@ -400,7 +409,8 @@
                         data: function(params) {
                             var query = {
                                 search: params.term,
-                                bodegaId: bodegaId,
+                                idBodega: idBodega,
+                                idSeccion: idSeccion,
                                 type: 'public',
                                 page: params.page || 1
                             }
@@ -471,15 +481,14 @@
                         var sum = $('#tbl_translados').DataTable().column(3).data().sum();
                         let html = 'Cantidad Total en Bodega: ' + sum
                         $('#total').html(html);
+
+
                     }
-
-
 
                 });
 
-                // let tabla = $('#tbl_translados').DataTable();
-                // let suma = tabla.column(4,{page:'current'}).data().sum();
-                // console.log(suma);
+
+
             }
 
 
@@ -488,7 +497,7 @@
             $(document).on('submit', '#ajustar_producto_form', function(event) {
 
                 event.preventDefault();
-                agregarProductoLista();
+                realizarAjuste();
 
             });
 
@@ -586,9 +595,13 @@
                 let bodega = document.getElementById("bodega").value;
                 let seccion = document.getElementById("seccion").value;
 
-                //---------------------Formulario-----------------------------------//            
+                //---------------------Formulario-----------------------------------//   
+
+                // let tipo_ajuste_id = document.getElementById("tipo_ajuste_id").value;
+                // let solicitado_por = document.getElementById("solicitado_por").value;
+                // let fecha = document.getElementById("fecha").value;
+
                 let idRecibido = document.getElementById("idRecibido").value;
-                let tipo_ajuste_id = document.getElementById("tipo_ajuste_id").value;
                 let aritmetica = document.getElementById("aritmetica").value;
                 let comentario = document.getElementById("comentario").value;
                 let idProducto = document.getElementById("idProducto").value;
@@ -598,8 +611,7 @@
                 let precio_producto = document.getElementById("precio_producto").value
                 let cantidad = document.getElementById("cantidad").value;
                 let total_unidades = document.getElementById("total_unidades").value;
-                let solicitado_por = document.getElementById("solicitado_por").value;
-                let fecha = document.getElementById("fecha").value;
+
 
                 let aritmeticaSelect = document.getElementById("aritmetica");
                 let aritmeticaNombre = aritmeticaSelect.options[aritmeticaSelect.selectedIndex].text
@@ -607,6 +619,10 @@
 
                 let unidadSelect = document.getElementById("unidad");
                 let unidadNombre = unidadSelect.options[unidadSelect.selectedIndex].text
+
+
+                let e = document.getElementById('unidad');
+                let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
                 //------------------------------------------------------------------//
 
@@ -658,19 +674,16 @@
                             ${unidadNombre}
                         </td>
 
-                                <input type="hidden" id="idRecibido${contador}" name="idRecibido${contador}" value="${idRecibido}">
-                                <input type="hidden" id="tipo_ajuste_id${contador}" name="tipo_ajuste_id${contador}" value="${tipo_ajuste_id}">
-                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}">
-                                <input type="hidden" id="comentario${contador}" name="comentario${contador}" value="${comentario}">
-                                <input type="hidden" id="idProducto${contador}" name="idProducto${contador}" value="${idProducto}">
-                                <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}">
-                                <input type="hidden" id="cantidad_dispo${contador}" name="cantidad_dispo${contador}" value="${cantidad_dispo}">
-                                <input type="hidden" id="unidad${contador}" name="unidad${contador}" value="${unidad}">
-                                <input type="hidden" id="precio_producto${contador}" name="precio_producto${contador}" value="${precio_producto}">
-                                <input type="hidden" id="cantidad${contador}" name="cantidad${contador}" value="${cantidad}">
-                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}">
-                                <input type="hidden" id="solicitado_por${contador}" name="solicitado_por${contador}" value="${solicitado_por}">
-                                <input type="hidden" id="fecha${contador}" name="fecha${contador}" value="${fecha}">
+                                <input type="hidden" id="idRecibido${contador}" name="idRecibido${contador}" value="${idRecibido}" form="ajustar_producto_form">                          
+                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">                              
+                                <input type="hidden" id="idProducto${contador}" name="idProducto${contador}" value="${idProducto}" form="ajustar_producto_form">
+                                <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}" form="ajustar_producto_form">
+                                <input type="hidden" id="cantidad_dispo${contador}" name="cantidad_dispo${contador}" value="${cantidad_dispo}" form="ajustar_producto_form">
+                               
+                                <input type="hidden" id="precio_producto${contador}" name="precio_producto${contador}" value="${precio_producto}" form="ajustar_producto_form">
+                                <input type="hidden" id="cantidad${contador}" name="cantidad${contador}" value="${cantidad}" form="ajustar_producto_form">
+                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">  
+                                <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form"> 
 
                     </tr>   
            `;
@@ -683,6 +696,9 @@
 
                 contador++;
 
+                document.getElementById("datos_ajuste_form").reset();
+                $('#datos_ajuste_form').parsley().reset()
+
                 return;
 
 
@@ -693,11 +709,26 @@
 
                 let dataForm = new FormData($('#ajustar_producto_form').get(0));
 
-                let e = document.getElementById('unidad');
-                let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
-                dataForm.append('idUnidadVenta', idUnidadVenta);
 
-                axios.post('/ajustes/guardar/ajuste', dataForm)
+                let text = arrayInputs.toString();
+                dataForm.append("arregloIdInputs", text);
+
+                const formDataObj = {};
+
+                dataForm.forEach((value, key) => (formDataObj[key] = value));
+
+
+                const options = {
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                }
+
+
+
+
+
+                axios.post('/ajustes/guardar/ajuste', formDataObj, options)
                     .then(response => {
 
                         $('#modal_transladar_producto').modal('hide')
@@ -753,7 +784,7 @@
 
                 }
 
-                let myIndex2 = idRecibidoArray.indexOf(''+idRecibido);
+                let myIndex2 = idRecibidoArray.indexOf('' + idRecibido);
                 console.log(myIndex2);
                 if (myIndex2 !== -1) {
                     idRecibidoArray.splice(myIndex2, 1);
