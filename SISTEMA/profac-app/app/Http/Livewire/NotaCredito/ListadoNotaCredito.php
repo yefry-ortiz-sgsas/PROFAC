@@ -187,60 +187,35 @@ class ListadoNotaCredito extends Component
 
         $productos = DB::SELECT("
 
-        select
-            B.producto_id as codigo,
-            concat(C.nombre) as descripcion,
-            UPPER(J.nombre) as medida,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            FORMAT(B.sub_total/B.cantidad,2) as precio,
-            FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
-
-        from factura A
-        inner join venta_has_producto B
-        on A.id = B.factura_id
-        inner join producto C
-        on B.producto_id = C.id
-        inner join unidad_medida_venta D
-        on B.unidad_medida_venta_id = D.id
-        inner join unidad_medida J
-        on J.id = D.unidad_medida_id
-        inner join recibido_bodega E
-        on B.lote = E.id
-        inner join seccion F
-        on E.seccion_id = F.id
-        inner join segmento G
-        on F.segmento_id = G.id
-        inner join bodega H
-        on G.bodega_id = H.id
-        where A.id=".$idFactura."
-        group by codigo, descripcion, medida, bodega, seccion, precio
-
-        union
-
-        select
-            D.id,
-            D.nombre as descripcion,
-            F.nombre as medida,
-            'Pendiente',
-            'Pendiente',
-            FORMAT(C.precio,2) as precio,
-            FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
-        from factura A
-        inner join vale B
-        on A.id = B.factura_id
-        inner join espera_has_producto C
-        on B.id = C.vale_id
-        inner join producto D
-        on C.producto_id = D.id
-        inner join unidad_medida_venta E
-        on C.unidad_medida_venta_id = E.id
-        inner join unidad_medida F
-        on F.id = E.unidad_medida_id
-        where B.estado_id=1 and A.id = ".$idFactura
-
+                select
+                D.id AS codigo,
+                D.nombre as descripcion,
+                F.nombre as medida,
+                H.nombre AS bodega,
+                FF.descripcion as seccion,
+                FORMAT(C.precio_unidad,2) as precio,
+                FORMAT(C.cantidad,2) as cantidad,
+                FORMAT(C.sub_total,2) as sub_total
+            from factura A
+            inner join nota_credito B
+            on A.id = B.factura_id
+            inner join nota_credito_has_producto C
+            on B.id = C.nota_credito_id
+            inner join producto D
+            on C.producto_id = D.id
+            inner join unidad_medida_venta E
+            on C.unidad_medida_venta_id = E.id
+            inner join unidad_medida F
+            on F.id = E.unidad_medida_id
+            inner join seccion FF
+            on C.seccion_id = FF.id
+            inner join segmento G
+            on FF.segmento_id = G.id
+            inner join bodega H
+            on G.bodega_id = H.id
+            where B.estado_nota_id=1 and A.id = ".$idFactura."
+            group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
+            "
         );
 
         $ordenCompra = DB::SELECTONE("
