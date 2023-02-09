@@ -963,12 +963,12 @@
 
 
 
-                    Swal.fire({
+                     Swal.fire({
                         icon: data.icon,
                         title: data.title,
                         html: data.text,
 
-                    })
+                     })
 
                     return;
 
