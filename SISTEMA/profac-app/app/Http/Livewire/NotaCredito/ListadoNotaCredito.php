@@ -7,12 +7,23 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-use Auth;
-use DataTables;
-use Validator;
 use Illuminate\Support\Facades\File;
+use DataTables;
+use Auth;
+use Validator;
 use PDF;
 use Luecano\NumeroALetras\NumeroALetras;
+
+use App\Models\ModelFactura;
+use App\Models\ModelCAI;
+use App\Models\ModelRecibirBodega;
+use App\Models\ModelVentaProducto;
+use App\Models\ModelLogTranslados;
+use App\Models\ModelParametro;
+use App\Models\ModelLista;
+use App\Models\ModelCliente;
+use App\Models\logCredito;
+use App\Models\User;
 
 class ListadoNotaCredito extends Component
 {
@@ -260,14 +271,21 @@ class ListadoNotaCredito extends Component
         C.cai,
         CONCAT(DAY(C.fecha_limite_emision),'/',MONTH(C.fecha_limite_emision),'/',YEAR(C.fecha_limite_emision)) fecha_limite_emision,
         C.numero_inicial,
-        C.numero_final
+        C.numero_final,
+        DATE_FORMAT(B.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(C.created_at) as hora,
+        DATE_FORMAT(B.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        U.name, B.estado_factura_id as estado_factura, B.estado_venta_id, B.numero_factura
         from nota_credito A
         inner join factura B
         on A.factura_id = B.id
         inner join cai C
         on A.cai_id = C.id
+        inner join users U on (U.id = A.users_id)
         where A.id =".$idNota
         );
+
+
 
         $cliente = DB::SELECTONE("
         select
@@ -286,6 +304,109 @@ class ListadoNotaCredito extends Component
          on nota_credito.factura_id = factura.id
          where nota_credito.id = ".$idNota
         );
+
+                    /*CONSULTA PARA LISTAR PRODUCTOS NOTA DE CRÉDITO*/
+
+            /*
+
+
+        select
+            D.id AS codigo,
+            D.nombre as descripcion,
+            F.nombre as medida,
+            H.nombre AS bodega,
+            FF.descripcion as seccion,
+            FORMAT(C.precio_unidad,2) as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            FORMAT(C.sub_total,2) as sub_total
+        from factura A
+        inner join nota_credito B
+        on A.id = B.factura_id
+        inner join nota_credito_has_producto C
+        on B.id = C.nota_credito_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        inner join seccion FF
+        on C.seccion_id = FF.id
+        inner join segmento G
+        on FF.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where B.estado_nota_id=1 and A.id = 1422
+        group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
+            */
+
+           $importes = DB::SELECTONE("
+           select
+           total,
+           isv,
+           sub_total
+           from nota_credito
+           where nota_credito.id =".$idNota);
+
+
+            $importesConCentavos= DB::SELECTONE("
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total
+            from nota_credito
+        where nota_credito.id = ".$idNota);
+
+
+
+            $productos = DB::SELECT("
+
+            select
+            D.id AS codigo,
+            D.nombre as descripcion,
+            F.nombre as medida,
+            H.nombre AS bodega,
+            FF.descripcion as seccion,
+            FORMAT(C.precio_unidad,2) as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            FORMAT(C.sub_total,2) as sub_total
+        from factura A
+        inner join nota_credito B
+        on A.id = B.factura_id
+        inner join nota_credito_has_producto C
+        on B.id = C.nota_credito_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        inner join seccion FF
+        on C.seccion_id = FF.id
+        inner join segmento G
+        on FF.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where B.estado_nota_id=1 and B.id = ".$idNota."
+        group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
+                "
+            );
+
+
+            if( fmod($importes->total, 1) == 0.0 ){
+                $flagCentavos = false;
+
+            }else{
+                $flagCentavos = true;
+            }
+
+            $formatter = new NumeroALetras();
+            $formatter->apocope = true;
+            $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+            $pdf = PDF::loadView('/pdf/notaCredito', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+
+            return $pdf->stream("nota_credito" . $cai->nota_credito_cai.".pdf");
 
 
 
