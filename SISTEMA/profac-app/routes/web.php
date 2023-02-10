@@ -95,6 +95,7 @@ use App\Http\Livewire\Ventas\ListarVale;
 
 
 use App\Http\Livewire\NotaDebito\NotaDebito;
+use App\Http\Livewire\Inventario\AjusteIngresoProducto;
 
 
 /*
@@ -383,6 +384,10 @@ Route::get('/ajustes/imprimir/ajuste/{id}', [Ajustes::class,'imprimirAjuste']);
 
 Route::get('/listado/ajustes',ListadoAjustes::class);
 Route::post('/obtener/listado/ajustes',[ListadoAjustes::class,'listarAjustes']);
+
+Route::get('/inventario/ajuste/ingreso', AjusteIngresoProducto::class);
+Route::get('/ajuste/ingreso/productos', [AjusteIngresoProducto::class,'obtenerProducto']);
+Route::post('/ajuste/ingreso/datos/producto', [AjusteIngresoProducto::class,'datosProducto']);
 
 //------------------------------------------------------Facturas Nulas---------------------------------------------//
 

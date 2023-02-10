@@ -84,6 +84,8 @@ class Ajustes extends Component
      public function listarProductos(Request $request){
         try {
 
+
+
             //dd($request->all());
  
          $listaProductos = DB::select("
