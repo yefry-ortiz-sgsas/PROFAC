@@ -185,8 +185,6 @@ class Ajustes extends Component
             B.id as 'idProducto',
             B.nombre,            
             C.nombre as 'simbolo',
-            compra.numero_factura,
-            compra.id as cod_compra,
             A.cantidad_disponible,
             bodega.nombre as bodega,
             seccion.id as 'idSeccion',
@@ -205,7 +203,34 @@ class Ajustes extends Component
             on B.unidad_medida_compra_id = C.id
             inner join compra
             on A.compra_id = compra.id
-            where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$request->idBodega." and A.producto_id = ".$request->idProducto
+            where A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$request->idBodega." and A.producto_id = ".$request->idProducto."
+            
+            union
+
+            select 
+                A.id as 'idRecibido',
+                B.id as 'idProducto',
+                B.nombre,            
+                C.nombre as 'simbolo',
+                A.cantidad_disponible,
+                bodega.nombre as bodega,
+                seccion.id as 'idSeccion',
+                seccion.descripcion,
+                A.created_at
+            from recibido_bodega A
+                inner join producto B
+                on A.producto_id = B.id
+                inner join seccion
+                on A.seccion_id = seccion.id
+                inner join segmento
+                on seccion.segmento_id = segmento.id
+                inner join bodega
+                on segmento.bodega_id = bodega.id
+                inner join unidad_medida C
+                on B.unidad_medida_compra_id = C.id
+                 where A.cantidad_disponible <> 0 and A.comentario = 'Ingreso de producto por ajuste' and bodega.id = ".$request->idBodega." and A.producto_id = ".$request->idProducto
+            
+            
         );
 
         return Datatables::of($listaProductos)
@@ -240,7 +265,7 @@ class Ajustes extends Component
 public function realizarAjuste(Request $request){
     try 
     {
- 
+              // dd($request->all());
 
                 $arrayTemporal = $request->arregloIdInputs;            
                 $arregloIdInputs  = explode(',', $arrayTemporal);
@@ -312,7 +337,7 @@ public function realizarAjuste(Request $request){
                 for ($i = 0; $i < count($arregloIdInputs); $i++) {
                  
                     $keyIdRecibido = "idRecibido".$arregloIdInputs[$i];
-                    $keyAritmetica = "aritmetica".$arregloIdInputs[$i];
+                    $keyAritmetica = "aritmetica".$arregloIdInputs[$i];                                     
                     $keyIdProducto = "idProducto".$arregloIdInputs[$i];
                     $keyNombre_producto = "nombre_producto".$arregloIdInputs[$i];
                     $keyCantidad_dispo = "cantidad_dispo".$arregloIdInputs[$i];
@@ -335,11 +360,13 @@ public function realizarAjuste(Request $request){
                     $total_unidades = $request->$keyTotal_unidades;
                     $idUnidadVenta = $request->$keyIdUnidadVenta;
 
-                  
+                   
 
                     $lote = ModelRecibirBodega::find($idRecibido);
 
-                    if($request->aritmetica==1){
+                    
+
+                    if($aritmetica==1){
                         $operacion = $lote->cantidad_disponible +  $total_unidades;
                         $ajusteTipoAritmetica = "Ajuste de tipo suma de unidades";
                     }else{
