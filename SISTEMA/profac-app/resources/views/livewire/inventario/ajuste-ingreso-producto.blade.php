@@ -283,7 +283,7 @@
         <script>
             var contador = 1;
             var arrayInputs = [];
-            var idRecibidoArray = [];
+            var idProductoSeccionArray = [];
             var idProductoArray = [];
             var idRecibido = null;
 
@@ -450,13 +450,9 @@
                             '<option value="" data-id="" selected disabled>---Seleccionar una unidad de medida:---</option>';
 
                         unidades.forEach(unidad => {
-                            if (unidad.unidad_venta == 1) {
-                                htmlUnidades += "<option value=" + unidad.unidad_venta + " data-id=" + unidad.id +
-                                    "  selected>" + unidad.nombre + "</option>";
-                            } else {
+                           
                                 htmlUnidades += "<option value=" + unidad.unidad_venta + " data-id=" + unidad.id +
                                     "  >" + unidad.nombre + "</option>";
-                            }
 
                         });
 
@@ -482,6 +478,8 @@
 
 
                 let idCuerpoLista = document.getElementById("cuerpoListaProducto");
+
+                let idSeccion = document.getElementById("selectSeccion").value;
 
                 let bodega = document.getElementById("bodega").value;
                 let seccion = document.getElementById("seccion").value;
@@ -518,13 +516,13 @@
                 //------------------------------------------------------------------//
 
                 //-----------------------------Comprobar existencia de lote en arreglo------------------------//
-                let comprobarIdRecibido = idRecibidoArray.find(element => element == (idRecibido));
+                let comprobarIdRecibido = idProductoSeccionArray.find(element => element == (''+idProducto+idSeccion));
 
                 if (comprobarIdRecibido) {
                     Swal.fire({
                         icon: "warning",
                         title: "Advertencia!",
-                        text: "El producto,  y Lote de destino ya existen en la lista. No se puede repetir estos elementos. ",
+                        text: "El producto,  y sección ya existen en la lista. No se puede repetir estos elementos. ",
                         confirmButtonColor: "#1AA689",
                     })
                     $('#modal_transladar_producto').modal('hide')
@@ -534,12 +532,13 @@
 
 
 
-                idRecibidoArray.push(idRecibido);
+                idProductoSeccionArray.push(''+idProducto+idSeccion);
+
 
                 let html = `
                     <tr id="tr${contador}">
                         <td>
-                            <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${contador},${idRecibido})"" >
+                            <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${''+idProducto+idSeccion},${contador})" >
                                 <i class="fa-regular fa-rectangle-xmark"></i>
                             </button>
                         </dt>                       
@@ -565,7 +564,7 @@
                             ${unidadNombre}
                         </td>
 
-                          
+                                <input type="hidden" id="idSeccion${contador}" name="idSeccion${contador}" value="${idSeccion}" form="ajustar_producto_form"> 
                                 <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">                              
                                 <input type="hidden" id="idProducto${contador}" name="idProducto${contador}" value="${idProducto}" form="ajustar_producto_form">
                                 <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}" form="ajustar_producto_form">    
@@ -573,6 +572,8 @@
                                 <input type="hidden" id="cantidad${contador}" name="cantidad${contador}" value="${cantidad}" form="ajustar_producto_form">
                                 <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">  
                                 <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form"> 
+                                
+                                
 
                     </tr>   
            `;
@@ -584,7 +585,7 @@
                 arrayInputs.push(contador);
 
                 contador++;
-
+            
                 document.getElementById("datos_ajuste_form").reset();
                 $('#datos_ajuste_form').parsley().reset()
 
@@ -617,7 +618,7 @@
 
 
 
-                axios.post('/ajustes/guardar/ajuste', formDataObj, options)
+                axios.post('/ajuste/ingreso/guardar', formDataObj, options)
                     .then(response => {
 
                         $('#modal_transladar_producto').modal('hide')
@@ -663,22 +664,25 @@
                 return;
             }
 
-            function eliminarInput(id, idRecibido) {
-                const element = document.getElementById("tr" + id);
+            function eliminarInput(idProductoSeccion, idInput) {
+                const element = document.getElementById("tr" + idInput);
                 element.remove();
 
-                let myIndex = arrayInputs.indexOf(id);
+                console.log(arrayInputs,idProductoSeccionArray)
+
+                let myIndex = arrayInputs.indexOf(idInput);
                 if (myIndex !== -1) {
                     arrayInputs.splice(myIndex, 1);
 
                 }
 
-                let myIndex2 = idRecibidoArray.indexOf('' + idRecibido);
+                let myIndex2 = idProductoSeccionArray.indexOf(''+idProductoSeccion);
                 console.log(myIndex2);
                 if (myIndex2 !== -1) {
-                    idRecibidoArray.splice(myIndex2, 1);
+                    idProductoSeccionArray.splice(myIndex2, 1);
                 }
 
+                console.log(arrayInputs,idProductoSeccionArray)
 
 
             }

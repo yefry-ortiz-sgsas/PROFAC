@@ -323,6 +323,7 @@
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                            <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
                             <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                             <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                         </ul>
@@ -654,6 +655,7 @@
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                    <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
                     <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                     <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                 </ul>
