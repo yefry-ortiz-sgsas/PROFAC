@@ -270,7 +270,7 @@ public function realizarAjuste(Request $request){
                 $arrayTemporal = $request->arregloIdInputs;            
                 $arregloIdInputs  = explode(',', $arrayTemporal);
 
-                $msjCantidadRestarEncabezado ="Ajuste no realizado a los siguientes productos, dado que la cantidad a restar es mayor que la cantidad disponible en la sección de bodega: <br>";
+                $msjCantidadRestarEncabezado ="Ajuste no realizado, los siguientes productos no tienen cantidad suficiente en bodega: <br>";
                 $msjCantidadRestarCuerpo ="";
 
                 for ($i = 0; $i < count($arregloIdInputs); $i++) {
@@ -298,7 +298,7 @@ public function realizarAjuste(Request $request){
                     }else{    
                         $operacion = $lote->cantidad_disponible - $total_unidades;
                         if($operacion<0){
-                            $msjCantidadRestarCuerpo = $msjCantidadRestarCuerpo.$idProducto ."-".$nombre_producto.". <br>";   
+                            $msjCantidadRestarCuerpo = "<p> <b>".$msjCantidadRestarCuerpo.$idProducto ."-".$nombre_producto.".</b> </p> <br>";   
                         }  
                     }   
 
@@ -310,7 +310,7 @@ public function realizarAjuste(Request $request){
 
                     return response()->json([
                         'icon' => 'warning',
-                        'text' => $msjCantidadRestarEncabezado.$msjCantidadRestarCuerpo,
+                        'text' => "<div> ".$msjCantidadRestarEncabezado.$msjCantidadRestarCuerpo." </div>",
                         'title' => 'Advertencia!',
                         'message' => 'Ha ocurrido un error', 
                     ],402); 

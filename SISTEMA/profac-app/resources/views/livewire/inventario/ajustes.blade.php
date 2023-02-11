@@ -752,7 +752,7 @@
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
-                            text: data.text,
+                            html: data.text,
 
                         })
                         document.getElementById('btn_realizar_ajuste').disabled = false;
