@@ -417,15 +417,15 @@
                     </li>
 
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Vale</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
 
 
-                            <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                            </li>
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
 
@@ -793,15 +793,15 @@
             </li>
 
             <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Vale</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
 
 
-                    <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li>
+                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                    </li> --}}
                     <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                     </li>
 
