@@ -19,7 +19,7 @@
             margin: -45px;
             padding: 0px;
             background-image: url('img/membrete/membrete2.jpg');
-            
+
             background-size: 200% 200%;
             background-size: cover;
 
@@ -28,7 +28,7 @@
         }
 
         table {
-        font-size: 12px;    
+        font-size: 12px;
         border-collapse: collapse;
         border-spacing: 0;
         width: 100%;
@@ -37,7 +37,7 @@
         th, td {
         text-align: left;
         padding: 2px;
-       
+
         }
 
         thead {
@@ -48,7 +48,7 @@
 
         .letra {
             font-weight: 800;
-           
+
 
         }
     </style>
@@ -69,8 +69,8 @@ $altura =20;
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
                 <b>Registro de Ajuste No. {{$ajuste->numero_ajuste}} </b>
-               
-            </div> 
+
+            </div>
 
 
         </div>
@@ -85,7 +85,7 @@ $altura =20;
                 <p class="card-text" style="position:absolute;left:20px;  top:40px;"><b>Motivo de Ajuste: </b> {{$datos->motivo}}</p>
 
                 <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b> {{$datos->comentario}}</p>
-                
+
 
 
 
@@ -104,7 +104,7 @@ $altura =20;
                     <thead>
                     <tr>
                       <th>Código</th>
-                      <th>Descripción</th>                    
+                      <th>Descripción</th>
                       <th>Bodega</th>
                       <th>Seccion</th>
                       <th>Medida</th>
@@ -116,31 +116,31 @@ $altura =20;
                 <tbody>
                     @foreach ($productos as $producto)
                     <tr>
-                        <td>{{$producto->id}}</td>
-                        <td>{{$producto->nombre}}</td>                      
+                        <td>{{$producto->producto_id}}</td>
+                        <td>{{$producto->producto}}</td>
                         <td>{{$producto->bodega}}</td>
                         <td>{{$producto->seccion}}</td>
                         <td>{{$producto->medida}}</td>
-                        <td>{{$producto->precio}}</td>
+                        <td>{{$producto->precio_producto}}</td>
                         <td>{{$producto->cantidad}}</td>
                         <td>{{$producto->total}}</td>
                     </tr>
 
 
                     @endforeach
-               
 
-                </tbody>      
+
+                </tbody>
                   </table>
             </div>
         </div>
 
-        <div class="card  border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
+        {{--  <div class="card  border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
                 <table>
                     <thead>
                         <tr>
-                         
-                          <th>Descripción</th>                    
+
+                          <th>Descripción</th>
                           <th>Cantidad Inicial </th>
                           <th>Unidades a sumar</th>
                           <th>Unidades a Restar</th>
@@ -152,7 +152,7 @@ $altura =20;
                         <tr>
                             <td>
                                 Cantidades
-                                
+
                             </td>
                             <td>
                                 {{$ajuste->cantidad_inicial}}
@@ -178,7 +178,7 @@ $altura =20;
                                 @endphp
                             </td>
                             @endif
-                           
+
                             <td>
                                 {{$suma}}
                             </td>
@@ -186,7 +186,7 @@ $altura =20;
                         <tr>
                             <td>
                                 Costos
-                                
+
                             </td>
                             <td>
                                 --
@@ -213,24 +213,24 @@ $altura =20;
                                 (-) {{$ajuste->costo}} Lps
                             </td>
                             @endif
-                           
+
 
                         </tr>
 
-                    </tbody>      
+                    </tbody>
                 </table>
         </div>
+        --}}
 
-        
 
-            
-   
 
-        
-      
+
+
+
+
         <div style=" position: relative; margin-left:44px;">
 
-    
+
 
 
             <div style="position:absolute;left:0px;  margin-top:{{$altura2}}px;  width:45rem;">
@@ -248,7 +248,7 @@ $altura =20;
 
 
 
-           
+
 
 
 
