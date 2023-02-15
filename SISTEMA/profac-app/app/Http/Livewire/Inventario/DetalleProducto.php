@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use DataTables;
 use Auth;
 
+
 class DetalleProducto extends Component
 {
 
@@ -203,9 +204,15 @@ class DetalleProducto extends Component
 
         // })
         ->addColumn('editar', function ($unidad) {
-            return
+            
+            $cadena = "";
+            if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'){
+                $cadena =   '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
+            }
 
-            '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
+            return  $cadena;
+
+            
 
     })
 

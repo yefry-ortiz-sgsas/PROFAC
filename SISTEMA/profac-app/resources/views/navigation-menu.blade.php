@@ -848,6 +848,20 @@
                 </ul>
             </li>
             @elseif (Auth::user()->rol_id == '3')
+                  {{--INVENTARIO--}}
+                  <li>
+                    <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                        <span class="fa arrow"></span></a>
+
+                    <ul class="nav nav-second-level">
+                
+                        <li>
+                            <a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
+                        </li>
+                        
+                    </ul>
+                </li>
                   {{--  VENTAS COORPORATIVO  --}}
                   <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
