@@ -180,7 +180,7 @@ class FacturacionCorporativa extends Component
             inner join bodega
             on segmento.bodega_id = bodega.id
          where
-         A.cantidad_disponible <> 0 and
+         
          (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%".$request->search."%')
          group by A.producto_id
          limit 15
