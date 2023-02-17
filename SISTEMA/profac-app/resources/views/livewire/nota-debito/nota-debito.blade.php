@@ -141,8 +141,6 @@
                                             <tr>
 
                                                 <th>N° Factura</th>
-                                                <th>Correlativo</th>
-                                                <th>CAI</th>
                                                 <th>Fecha de Emision</th>
                                                 <th>Cliente</th>
                                                 <th>Tipo de Pago</th>
@@ -336,7 +334,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
-                        text: "Noda de débito creada Creado con exito."
+                        text: "Noda de débito creada realizada con éxito."
                     })
 
                 })
@@ -374,12 +372,6 @@
                 "columns": [
                     {
                         data: 'numero_factura'
-                    },
-                    {
-                        data: 'correlativo'
-                    },
-                    {
-                        data: 'cai'
                     },
                     {
                         data: 'fecha_emision'

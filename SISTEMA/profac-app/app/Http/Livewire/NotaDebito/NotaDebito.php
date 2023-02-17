@@ -67,7 +67,7 @@ class NotaDebito extends Component
             on factura.cai_id= A.id
             inner join pago_venta on (pago_venta.factura_id = factura.id)
             cross join (select @i := 0) r
-            where ( YEAR(factura.created_at) >= (YEAR(NOW())-2) )and factura.estado_factura_id=1 and factura.estado_venta_id<>2 
+            where factura.estado_venta_id<>2 
             order by factura.created_at desc
             ");
 
@@ -248,16 +248,46 @@ class NotaDebito extends Component
 
     public function guardarNotaDebito(Request $request){
 
-        $cai = DB::SELECTONE("select
-        id,
-        numero_inicial,
-        numero_final,
-        cantidad_otorgada,
-        numero_actual
-        from cai
-        where tipo_documento_fiscal_id = 4 and estado_id = 1");
+       try {
 
-        if($cai->numero_actual > $cai->cantidad_otorgada){
+
+
+        $factura = DB::SELECTONE("select estado_factura_id from factura where id = ". $request->factura_id);
+
+        if ($factura->estado_factura_id == 1 ) {
+            $estado = 1;
+       
+             $cai = DB::SELECTONE("select
+                             id,
+                             numero_inicial,
+                             numero_final,
+                             cantidad_otorgada,
+                             numero_actual as 'numero_actual',
+                             if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
+                             cantidad_no_utilizada
+                             from cai
+                             where tipo_documento_fiscal_id = 4 and estado_id = 1");
+ 
+         } elseif($factura->estado_factura_id == 2) {
+ 
+             $estado = 2;
+            
+             $cai = DB::SELECTONE("select
+                             id,
+                             numero_inicial,
+                             numero_final,
+                             cantidad_otorgada,
+                             serie as 'numero_actual',
+                             if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
+                             cantidad_no_utilizada
+                             from cai
+                             where tipo_documento_fiscal_id = 4 and estado_id = 1");
+         }
+
+         $limite = explode('-',$cai->numero_final);
+         $limite = ltrim($limite[3],"0");
+
+        if($cai->numero_actual >  $limite ){
 
             return response()->json([
                 "title" => "Advertencia",
@@ -276,6 +306,8 @@ class NotaDebito extends Component
         /* GUARDANDO LO DE LA NOTA DE DÉBITO */
 
 
+        DB::beginTransaction();
+
         $NotaDebito = new mNotaDebito;
         $NotaDebito->factura_id = $request->factura_id;
         $NotaDebito->montoNotaDebito_id = $request->montoNotaDebito_id;
@@ -286,6 +318,7 @@ class NotaDebito extends Component
         $NotaDebito->numeroCai = $numeroCAI;
         $NotaDebito->correlativoND = $correlativo;
         $NotaDebito->estado_id = 1;
+        $NotaDebito->estado_nota_dec = $estado;
         $NotaDebito->users_registra_id = Auth::user()->id;
         $NotaDebito->save();
 
@@ -293,10 +326,38 @@ class NotaDebito extends Component
 
         /* //////////////////////////////////////////////////////*/
 
-        $caiUpdated =  ModelCAI::find($cai->id);
-        $caiUpdated->numero_actual=$numeroSecuencia+1;
-        $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
-        $caiUpdated->save();
+
+        if ($factura->estado_factura_id == 1 ) {
+            $caiUpdated =  ModelCAI::find($cai->id);
+            $caiUpdated->numero_actual = $caiUpdated->numero_actual + 1;
+            $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
+            $caiUpdated->save();
+        } else {
+            $caiUpdated =  ModelCAI::find($cai->id);
+            $caiUpdated->serie = $caiUpdated->serie + 1;
+            $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
+            $caiUpdated->save();
+        }
+
+        DB::commit();
+       return response()->json([
+        'icon' => 'success',
+        'text' => 'Nota de debito realizada con éxito.',
+        'title' => 'Exito!',
+       ],200);
+       } catch (QueryException $e) {
+        DB::rollback();
+        return response()->json([
+            'icon' => 'error',
+            'text' => 'Ha ocurrido un error al guardar la nota de debito',
+            'title' => 'Error',
+            'message' => 'Ha ocurrido un error',
+            'error' => $e,
+           ],402);
+       }
+
+      
+    
     }
 
     public function listarnotasDebito(){
