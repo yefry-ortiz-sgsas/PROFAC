@@ -25,10 +25,10 @@ use App\Models\ModelCodigoExoneracion;
 class VentasExoneradas extends Component
 {
 
-    
+
     public $arrayProductos = [];
     public $arrayLogs = [];
-    
+
     public function render()
     {
         return view('livewire.ventas-exoneradas.ventas-exoneradas');
@@ -39,29 +39,29 @@ class VentasExoneradas extends Component
         try {
             if (Auth::user()->rol_id == 1 or Auth::user()->rol_id == 3) {
                 $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and id<>1                                 
+                    and id<>1
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
-       
+
             }else{
                 $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and id<>1     
-                    and vendedor =" . Auth::user()->id . "                            
+                    and id<>1
+                    and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
 
             }
-                
+
 
 
 
@@ -101,7 +101,7 @@ class VentasExoneradas extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',            
+            'bodega' => 'required',
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:3,3',
             'codigo'=>'required'
@@ -150,10 +150,10 @@ class VentasExoneradas extends Component
             }
         }
 
-        //dd($request->all());        
-        $arrayTemporal = $request->arregloIdInputs;            
+        //dd($request->all());
+        $arrayTemporal = $request->arregloIdInputs;
         $arrayInputs = explode(',', $arrayTemporal);
-        
+
         $mensaje = "";
         $flag = false;
 
@@ -166,7 +166,7 @@ class VentasExoneradas extends Component
             $keyNombre = "nombre" . $arrayInputs[$j];
             $keyBodega = "bodega" . $arrayInputs[$j];
 
-            $resultado = DB::selectONE("select 
+            $resultado = DB::selectONE("select
             if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
             from recibido_bodega
             where cantidad_disponible <> 0
@@ -202,7 +202,7 @@ class VentasExoneradas extends Component
                     numero_final,
                     cantidad_otorgada,
                     numero_actual
-                    from cai 
+                    from cai
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
             $arrayNumeroFinal = explode('-', $cai->numero_final);
@@ -260,7 +260,7 @@ class VentasExoneradas extends Component
             $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 3; // exonerado
-            $factura->estado_factura_id = 1; // se presenta     
+            $factura->estado_factura_id = 1; // se presenta
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
@@ -274,13 +274,13 @@ class VentasExoneradas extends Component
             $caiUpdated->save();
 
             DB::INSERT("INSERT INTO listado(
-                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
+                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
                     ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
 
 
 
 
-            $codigoExoneracion = ModelCodigoExoneracion::find($request->codigo);    
+            $codigoExoneracion = ModelCodigoExoneracion::find($request->codigo);
             $codigoExoneracion->estado_id = 2;
             $codigoExoneracion->save();
 
@@ -374,12 +374,12 @@ class VentasExoneradas extends Component
             while (!($unidadesRestar <= 0)) {
 
                 $unidadesDisponibles = DB::SELECTONE("
-                        select 
+                        select
                             id,
                             cantidad_disponible
                         from recibido_bodega
-                            where seccion_id = " . $idSeccion . " and 
-                            producto_id = " . $idProducto . " and 
+                            where seccion_id = " . $idSeccion . " and
+                            producto_id = " . $idProducto . " and
                             cantidad_disponible <>0
                             order by created_at asc
                         limit 1
@@ -470,10 +470,10 @@ class VentasExoneradas extends Component
                 ]);
             };
 
-            //dd($arrarVentasProducto);   
-            //ModelVentaProducto::created($arrarVentasProducto);  
-            //ModelVentaProducto::insert($arrarVentasProducto);  
-            //DB::table('venta_has_producto')->insert($arrarVentasProducto); 
+            //dd($arrarVentasProducto);
+            //ModelVentaProducto::created($arrarVentasProducto);
+            //ModelVentaProducto::insert($arrarVentasProducto);
+            //DB::table('venta_has_producto')->insert($arrarVentasProducto);
 
 
             return;
@@ -512,11 +512,11 @@ class VentasExoneradas extends Component
         $facturasVencidas = DB::SELECT(
             "
             select
-            id       
-            from factura 
-            where   
-            pendiente_cobro > 0 
-            and fecha_vencimiento < curdate() 
+            id
+            from factura
+            where
+            pendiente_cobro > 0
+            and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
@@ -553,7 +553,7 @@ class VentasExoneradas extends Component
     {
 
         $cai = DB::SELECTONE("
-        select 
+        select
         A.cai as numero_factura,
         A.numero_factura as numero,
         A.estado_factura_id as estado_factura,
@@ -561,13 +561,14 @@ class VentasExoneradas extends Component
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
         B.numero_final,
-        C.descripcion,       
+        C.descripcion,
         DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
-        TIME(A.created_at) as hora,        
+        TIME(A.created_at) as hora,
         DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
         name,
         D.id as factura,
-        E.codigo as codigo_exoneracion
+        E.codigo as codigo_exoneracion,
+        E.corrOrd as correlativoexo
        from factura A
        inner join cai B
        on A.cai_id = B.id
@@ -582,7 +583,7 @@ class VentasExoneradas extends Component
        where A.id = ".$idFactura);
 
        $cliente = DB::SELECTONE("
-       select        
+       select
         cliente.nombre,
         cliente.direccion,
         cliente.correo,
@@ -604,7 +605,7 @@ class VentasExoneradas extends Component
         from factura
         where id = ".$idFactura);
 
-        $importesConCentavos= DB::SELECTONE("        
+        $importesConCentavos= DB::SELECTONE("
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
@@ -612,7 +613,7 @@ class VentasExoneradas extends Component
         from factura where factura.id = ".$idFactura);
 
        $productos = DB::SELECT("
-       select 
+       select
             B.producto_id as codigo,
             concat(C.nombre) as descripcion,
             UPPER(J.nombre) as medida,
@@ -641,7 +642,7 @@ class VentasExoneradas extends Component
         on G.bodega_id = H.id
         where A.id=".$idFactura."
         group by codigo, descripcion, medida, bodega, seccion, precio
-        
+
         union
 
         select
@@ -665,31 +666,31 @@ class VentasExoneradas extends Component
         inner join unidad_medida F
         on F.id = E.unidad_medida_id
         where B.estado_id=1 and A.id = ".$idFactura
-        
-        
-        
-        
+
+
+
+
         );
 
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
-          
+
         }else{
             $flagCentavos = true;
         }
 
 
 
-     
+
         $formatter = new NumeroALetras();
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/factura-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
-        
+
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
-        
+
     }
 }
 

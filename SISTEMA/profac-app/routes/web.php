@@ -473,8 +473,8 @@ Route::post('/ventas/motivo_credito/guardar', [MotivoNotaCredito::class,'guardar
 Route::post('/ventas/motivo_credito/datos', [MotivoNotaCredito::class,'obtenerMotivoNotaCredito']);
 Route::post('/ventas/motivo_credito/editar', [MotivoNotaCredito::class,'editarMotivoNotaCredito']);
 
-Route::get('/nota/credito/listado',ListadoNotaCredito::class); 
-Route::post('/nota/credito/listar',[ListadoNotaCredito::class,'listadoNotaCredito']); 
+Route::get('/nota/credito/listado',ListadoNotaCredito::class);
+Route::post('/nota/credito/listar',[ListadoNotaCredito::class,'listadoNotaCredito']);
 Route::get('/nota/credito/imprimir/{idNota}',[ListadoNotaCredito::class,'imprimirFacturaCoorporativa2']);
 
 
