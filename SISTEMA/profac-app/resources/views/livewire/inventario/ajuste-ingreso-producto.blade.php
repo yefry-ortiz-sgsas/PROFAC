@@ -354,7 +354,7 @@
 
             function obtenerProductosBodega() {
 
-          
+
                 let selectProducto = document.getElementById('selectProducto');
                 selectProducto.innerHTML =
                     '<option value="" selected disabled>--Seleccionar un producto por codigo ó nombre--</option>';
@@ -364,7 +364,7 @@
                         url: '/ajuste/ingreso/productos',
                         data: function(params) {
                             var query = {
-                                search: params.term,                             
+                                search: params.term,
                                 type: 'public',
                                 page: params.page || 1
                             }
@@ -423,8 +423,8 @@
                 let idSeccion = document.getElementById("selectSeccion").value;
                 let idProducto = document.getElementById("selectProducto").value;
                 axios.post('/ajuste/ingreso/datos/producto', {
-                        id:idProducto,     
-                        idSeccion:idSeccion                
+                        id:idProducto,
+                        idSeccion:idSeccion
                     })
                     .then(response => {
 
@@ -450,7 +450,7 @@
                             '<option value="" data-id="" selected disabled>---Seleccionar una unidad de medida:---</option>';
 
                         unidades.forEach(unidad => {
-                           
+
                                 htmlUnidades += "<option value=" + unidad.unidad_venta + " data-id=" + unidad.id +
                                     "  >" + unidad.nombre + "</option>";
 
@@ -484,13 +484,13 @@
                 let bodega = document.getElementById("bodega").value;
                 let seccion = document.getElementById("seccion").value;
 
-                //---------------------Formulario-----------------------------------//   
+                //---------------------Formulario-----------------------------------//
 
                 // let tipo_ajuste_id = document.getElementById("tipo_ajuste_id").value;
                 // let solicitado_por = document.getElementById("solicitado_por").value;
                 // let fecha = document.getElementById("fecha").value;
 
-              
+
                 let aritmetica = document.getElementById("aritmetica").value;
 
                 let idProducto = document.getElementById("idProducto").value;
@@ -502,7 +502,7 @@
                 let total_unidades = document.getElementById("total_unidades").value;
 
 
-              
+
                 let aritmeticaNombre = "Sumar Unidades";
 
 
@@ -541,14 +541,14 @@
                             <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${''+idProducto+idSeccion},${contador})" >
                                 <i class="fa-regular fa-rectangle-xmark"></i>
                             </button>
-                        </dt>                       
+                        </dt>
                         <td>
                             ${idProducto}
                         </td>
                         <td>
                            ${nombre_producto}
                         </td>
-      
+
                         <td>
                             ${bodega} - ${seccion}
                         </td>
@@ -564,18 +564,18 @@
                             ${unidadNombre}
                         </td>
 
-                                <input type="hidden" id="idSeccion${contador}" name="idSeccion${contador}" value="${idSeccion}" form="ajustar_producto_form"> 
-                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">                              
+                                <input type="hidden" id="idSeccion${contador}" name="idSeccion${contador}" value="${idSeccion}" form="ajustar_producto_form">
+                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">
                                 <input type="hidden" id="idProducto${contador}" name="idProducto${contador}" value="${idProducto}" form="ajustar_producto_form">
-                                <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}" form="ajustar_producto_form">    
+                                <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}" form="ajustar_producto_form">
                                 <input type="hidden" id="precio_producto${contador}" name="precio_producto${contador}" value="${precio_producto}" form="ajustar_producto_form">
                                 <input type="hidden" id="cantidad${contador}" name="cantidad${contador}" value="${cantidad}" form="ajustar_producto_form">
-                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">  
-                                <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form"> 
-                                
-                                
+                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">
+                                <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form">
 
-                    </tr>   
+
+
+                    </tr>
            `;
 
                 $('#modal_transladar_producto').modal('hide')
@@ -585,7 +585,7 @@
                 arrayInputs.push(contador);
 
                 contador++;
-            
+
                 document.getElementById("datos_ajuste_form").reset();
                 $('#datos_ajuste_form').parsley().reset()
 
@@ -634,7 +634,7 @@
                         document.getElementById("ajustar_producto_form").reset();
                         $('#ajustar_producto_form').parsley().reset();
 
-
+                        window.location.href = "/listado/ajustes";
                     })
                     .catch(err => {
                         let data = err.response.data;

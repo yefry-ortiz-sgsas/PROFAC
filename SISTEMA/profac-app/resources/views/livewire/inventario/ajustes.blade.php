@@ -6,7 +6,7 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Ajustes de Producto</h2>
+            <h2>Ajustes de Producto </h2>
 
         </div>
     </div>
@@ -595,7 +595,7 @@
                 let bodega = document.getElementById("bodega").value;
                 let seccion = document.getElementById("seccion").value;
 
-                //---------------------Formulario-----------------------------------//   
+                //---------------------Formulario-----------------------------------//
 
                 // let tipo_ajuste_id = document.getElementById("tipo_ajuste_id").value;
                 // let solicitado_por = document.getElementById("solicitado_por").value;
@@ -651,14 +651,14 @@
                             <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${contador},${idRecibido})"" >
                                 <i class="fa-regular fa-rectangle-xmark"></i>
                             </button>
-                        </dt>                       
+                        </dt>
                         <td>
                             ${idProducto}
                         </td>
                         <td>
                            ${nombre_producto}
                         </td>
-      
+
                         <td>
                             ${bodega} - ${seccion}
                         </td>
@@ -674,18 +674,18 @@
                             ${unidadNombre}
                         </td>
 
-                                <input type="hidden" id="idRecibido${contador}" name="idRecibido${contador}" value="${idRecibido}" form="ajustar_producto_form">                          
-                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">                              
+                                <input type="hidden" id="idRecibido${contador}" name="idRecibido${contador}" value="${idRecibido}" form="ajustar_producto_form">
+                                <input type="hidden" id="aritmetica${contador}" name="aritmetica${contador}" value="${aritmetica}" form="ajustar_producto_form">
                                 <input type="hidden" id="idProducto${contador}" name="idProducto${contador}" value="${idProducto}" form="ajustar_producto_form">
                                 <input type="hidden" id="nombre_producto${contador}" name="nombre_producto${contador}" value="${nombre_producto}" form="ajustar_producto_form">
                                 <input type="hidden" id="cantidad_dispo${contador}" name="cantidad_dispo${contador}" value="${cantidad_dispo}" form="ajustar_producto_form">
-                               
+
                                 <input type="hidden" id="precio_producto${contador}" name="precio_producto${contador}" value="${precio_producto}" form="ajustar_producto_form">
                                 <input type="hidden" id="cantidad${contador}" name="cantidad${contador}" value="${cantidad}" form="ajustar_producto_form">
-                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">  
-                                <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form"> 
+                                <input type="hidden" id="total_unidades${contador}" name="total_unidades${contador}" value="${total_unidades}" form="ajustar_producto_form">
+                                <input type="hidden" id="idUnidadVenta${contador}" name="idUnidadVenta${contador}" value="${idUnidadVenta}" form="ajustar_producto_form">
 
-                    </tr>   
+                    </tr>
            `;
 
                 $('#modal_transladar_producto').modal('hide')
@@ -745,6 +745,8 @@
                         $('#ajustar_producto_form').parsley().reset();
 
                         $('#tbl_translados').DataTable().ajax.reload();
+
+                        window.location.href = "/listado/ajustes";
                     })
                     .catch(err => {
                         let data = err.response.data;
