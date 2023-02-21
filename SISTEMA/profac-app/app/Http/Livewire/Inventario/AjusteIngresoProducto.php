@@ -147,7 +147,7 @@ class AjusteIngresoProducto extends Component
                 $ajusteProducto = new ModelAjusteProducto;
                 $ajusteProducto->ajuste_id = $ajuste->id;
                 $ajusteProducto->producto_id = $idProducto;         
-                $ajusteProducto->tipo_aritmetica = $aritmetica;
+                $ajusteProducto->tipo_aritmetica = 1; // ingreso de producto
                 $ajusteProducto->precio_producto = $precio_producto;
                 $ajusteProducto->cantidad_inicial = $total_unidades;
                 $ajusteProducto->cantidad = $cantidad;

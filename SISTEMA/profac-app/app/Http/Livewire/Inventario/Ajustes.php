@@ -369,7 +369,7 @@ class Ajustes extends Component
                         if($aritmetica==1){
                             $operacion = $lote->cantidad_disponible +  $total_unidades;
                             $ajusteTipoAritmetica = "Ajuste de tipo suma de unidades";
-                        }else{
+                        }elseif($aritmetica==2){
 
                             $operacion = $lote->cantidad_disponible -  $total_unidades;
                             $ajusteTipoAritmetica = "Ajuste de tipo resta de unidades";
