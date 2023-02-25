@@ -1,7 +1,7 @@
 <div>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <h2>Cardex</h2>
+            <h2>Cardex General</h2>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -23,19 +23,13 @@
 
 
                             <div class="col-6 col-sm-6 col-md-6 ">
-                                <label for="seleccionarBodega" class="col-form-label focus-label">Seleccionar Bodega:<span class="text-danger">*</span></label>
-                                <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                    data-parsley-required onchange="obtenerIdBodega()">
-                                    <option value="" selected disabled>--Seleccionar una Bodega--</option>
-                                </select>
+                                <label for="fecha_inicio" class="col-form-label focus-label">Fecha de inicio:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_inicio" name="fecha_inicio" value="{{date('Y-m-01')}}">
                             </div>
 
                             <div class="col-6 col-sm-6 col-md-6">
-                                <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
-                                <select id="producto" name="producto" class="form-group form-control" style=""
-                                    data-parsley-required >
-                                    <option value="" selected disabled>--Seleccionar una Producto--</option>
-                                </select>
+                                <label for="fecha_final" class="col-form-label focus-label">Fecha final:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_final" name="fecha_final" value="{{date('Y-m-t')}}">
                             </div>
 
                         </div>
@@ -95,61 +89,15 @@
 <script>
 
 
-    cargarBodegas();
-
-    function cargarBodegas(){
-        $('#bodega').select2({
-            ajax: {
-                url: '/cardex/listar/bodega',
-                data: function(params) {
-                    var query = {
-                        search: params.term,
-                        type: 'public',
-                        page: params.page || 1
-                    }
-
-                    // Query parameters will be ?search=[term]&type=public
-                    return query;
-                }
-            }
-        });
-
-
-    }
-
-    function obtenerIdBodega() {
-
-        var idBodega = document.getElementById('bodega').value;
-        obtenerProductos();
-    }
-
-    function obtenerProductos(){
-        var idBodega = document.getElementById('bodega').value;
-        $('#producto').select2({
-            ajax: {
-                url: '/cardex/listar/productos',
-                data: function(params) {
-                    var query = {
-                        search: params.term,
-                        idBodega:idBodega,
-                        type: 'public',
-                        page: params.page || 1
-                    }
-
-                    // Query parameters will be ?search=[term]&type=public
-                    return query;
-                }
-            }
-        });
-    }
+ 
 
     function cargaCardex(){
 
         $("#tbl_cardex").dataTable().fnDestroy();
 
-        var idBodega = document.getElementById('bodega');
-        var idProducto = document.getElementById('producto');
-        console.log(idBodega.options[idBodega.selectedIndex].text, idProducto.options[idProducto.selectedIndex].text);
+        var fecha_inicio = document.getElementById('fecha_inicio').value;
+        var fecha_final = document.getElementById('fecha_final').value;
+
         $('#tbl_cardex').DataTable({
             "order": [0, 'asc'],
             "paging": false,
@@ -187,7 +135,7 @@
                     }
                 }
             ],
-            "ajax": "/listado/cardex/"+idBodega.value+"/"+idProducto.value,
+            "ajax": "/listado/cardex/general/"+fecha_inicio+"/"+fecha_final,
             "columns": [
                 {
                     data: 'fechaIngreso'

@@ -511,6 +511,7 @@
 
                         <ul class="nav nav-second-level">
                             <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                            <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                         </ul>
                     </li>
@@ -769,6 +770,7 @@
 
                 <ul class="nav nav-second-level">
                     <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                    <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                 </ul>
             </li>

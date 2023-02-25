@@ -97,6 +97,8 @@ use App\Http\Livewire\Ventas\ListarVale;
 use App\Http\Livewire\NotaDebito\NotaDebito;
 use App\Http\Livewire\Inventario\AjusteIngresoProducto;
 
+use App\Http\Livewire\Cardex\CardexGeneral;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -485,6 +487,9 @@ Route::get('/cardex/listar/bodega', [Cardex::class, 'listarBodegas']);
 Route::get('/cardex/listar/productos', [Cardex::class, 'listarProductos']);
 
 Route::get('/listado/cardex/{idBodega}/{idProducto}', [Cardex::class, 'listarCardex']);
+
+Route::get('/cardex/general',CardexGeneral::class);
+Route::get('/listado/cardex/general/{fecha_inicio}/{fecha_final}',[CardexGeneral::class,'listarCardex']);
 
 
 //------------------------------------------establecer links de storage---------------------------//

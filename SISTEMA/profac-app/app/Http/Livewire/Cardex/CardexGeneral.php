@@ -11,66 +11,18 @@ use Auth;
 use Validator;
 use DataTables;
 
-class Cardex extends Component
+class CardexGeneral extends Component
 {
     public function render()
     {
-        return view('livewire.cardex.cardex');
+        return view('livewire.cardex.cardex-general');
     }
 
-
-    public function listarBodegas(Request $request){
-        try {
-
-            $bodegas = DB::SELECT("select id, concat(id,' - ',nombre) as text  from bodega where estado_id = 1 and (id LIKE '%".$request->search."%' or nombre Like '%".$request->search."%') limit 15");
-
-            return response()->json([
-                "results" => $bodegas,
-            ], 200);
-
-        } catch (QueryException $e) {
-            DB::rollback();
-
-            return response()->json([
-                'message' => 'Ha ocurrido un error al listar las bodegas.',
-                'errorTh' => $e,
-            ], 402);
-        }
-    }
-
-    public function listarProductos(Request $request){
-        try {
-          
-            $productos = DB::SELECT("
-                SELECT producto.id as id, concat(producto.id,' - ',producto.nombre) as text FROM producto
-                INNER JOIN recibido_bodega on (producto.id = recibido_bodega.producto_id)
-                INNER JOIN seccion on (seccion.id = recibido_bodega.seccion_id)
-                INNER JOIN segmento on (segmento.id = seccion.segmento_id)
-                INNER JOIN bodega on (segmento.bodega_id = bodega.id)
-                WHERE
-                estado_producto_id = 1
-                and (  producto.nombre like  '%".$request->search."%' or  producto.id like  '%".$request->search."%')
-                and bodega.id = ".$request->idBodega);
-
-            return response()->json([
-                "results" => $productos,
-            ], 200);
-
-        } catch (QueryException $e) {
-            DB::rollback();
-
-            return response()->json([
-                'message' => 'Ha ocurrido un error al listar las bodegas.',
-                'errorTh' => $e,
-            ], 402);
-        }
-    }
-
-    public function listarCardex($idBodega, $idProducto){
+    public function listarCardex($fecha_inicio, $fecha_final){
         //dd($idBodega, $idProducto);
         try {
 
-            $listaCardex = DB::SELECT("CALL obtrCardex(".$idBodega.",". $idProducto.")");
+            $listaCardex = DB::SELECT("CALL obtrCardexGeneral('".$fecha_inicio."','". $fecha_final."')");
 
             
 
