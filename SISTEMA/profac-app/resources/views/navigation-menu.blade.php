@@ -336,7 +336,8 @@
                         <ul class="nav nav-second-level">
 
                             <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
+                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a> 
+                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Gobierno</a> 
                             <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                             </li>
 
@@ -347,8 +348,9 @@
                                 style="color:#ffffff;">Nota de Débito</span>
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a>
-                            </li>
+                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                            <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
+                            <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
                     </li>
@@ -659,6 +661,33 @@
                     <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
                     <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                     <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                    <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a> 
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Gobierno</a> 
+                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                        style="color:#ffffff;">Nota de Débito</span>
+                    <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
+                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
+                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                 </ul>
             </li>
 

@@ -7,7 +7,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h2>Historial de Translados de Bodega</h2>
+                    <h2>Notas De Credito Gobierno</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a>Listado </a>
@@ -35,12 +35,12 @@
 
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <label for="fechaInicio" class="col-form-label focus-label">Fecha de inicio</label>
+                                <label for="_venta" class="col-form-label focus-label">Fecha de inicio</label>
                                 <input id="fechaInicio" type="date" value="{{ $fechaInicio }}" class="form-group form-control">
                             </div>
 
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                                <label for="fechaFinal" class="col-form-label focus-label">Fecha Final</label>
+                                <label for="_venta" class="col-form-label focus-label">Fecha Final</label>
                                 <input id="fechaFinal" type="date" value="{{ date('Y-m-t') }}" class="form-group form-control">
                             </div>
 
@@ -70,10 +70,13 @@
                                     <tr>
                                     
                                         <th>Codigo</th>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Registrado por:</th>
-                                        <th>Fecha de registro</th>
+                                        <th>Registro N°</th>                                        
+                                        <th>Motivo</th>
+                                        <th>Sub Total</th>
+                                        <th>ISV</th>
+                                        <th>Total</th>
+                                        <th>Fecha</th>
+                                        <th>Registrado por:</th>                                        
                                         <th>Opciones</th>
                                       
 
@@ -115,10 +118,14 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
+
                     pageLength: 15,
                     responsive: true,
+
+
+
                     'ajax': {
-                        'url': "/translados/obtener/listado",
+                        'url': "/nota/credito/lista/gobierno",
                         'data': {
                             'fechaInicio': fechaInicio,
                             'fechaFinal': fechaFinal,
@@ -132,21 +139,29 @@
                             data: 'codigo'
                         },
                         {
-                            data: 'nombre'
+                            data: 'numero_nota'
                         },
                         {
-                            data: 'cantidad'
+                            data: 'motivo'
                         },
                         {
-                            data: 'name'
+                            data: 'sub_total'
                         },
                         {
-                            data: 'created_at'
+                            data: 'isv'
+                        },
+                        {
+                            data: 'total'
+                        },
+                        {
+                            data: 'fecha_registro'
+                        },
+                        {
+                            data: 'registrado_por'
                         },
                         {
                             data: 'opciones'
                         },
-
 
                     ]
 
@@ -162,13 +177,13 @@
                 let inicio = document.getElementById('fechaInicio').value;
                 let final = document.getElementById('fechaFinal').value;
 
-            
+                console.log("entro")
+
                 fechaInicio = inicio;
                 fechaFinal = final;
 
                 $('#tbl_listar_ajustes').DataTable().clear().destroy();
                // $('#tbl_listar_ventas_dos').DataTable().clear().destroy();
-                //$('#tbl_listar_ventas_uno').DataTable().ajax.reload();
 
                 this.tablas();
 
