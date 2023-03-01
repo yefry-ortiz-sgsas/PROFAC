@@ -47,17 +47,17 @@ class ListadoNotasDebitoND extends Component
             ,cai_ndebito
             ,numeroCai
             ,correlativoND
-            ,(select name from users where id = notaDebito.users_registra_id) as 'user'
-            ,notadebito.created_at 
+            ,(select name from users where id = notadebito.users_registra_id) as 'user'
+            ,notadebito.created_at
             from notadebito
             inner join factura
             on notadebito.factura_id = factura.id
-            where estado_nota_dec = 2 and notadebito.created_at between '".$fechaInicio."' and '".$fechaFinal."'"  
+            where estado_nota_dec = 2 and notadebito.created_at >= '".$fechaInicio."' or notadebito.created_at <= '".$fechaFinal."'"
             );
 
             return Datatables::of($listanotaDebito)
             ->addColumn('estado', function ($listanotaDebito) {
-                $ESTADO = DB::SELECTONE("select estado_id from notaDebito where id = ".$listanotaDebito->id);
+                $ESTADO = DB::SELECTONE("select estado_id from notadebito where id = ".$listanotaDebito->id);
                 if( $ESTADO->estado_id == 1){
 
                     return

@@ -67,7 +67,7 @@ class NotaDebito extends Component
             on factura.cai_id= A.id
             inner join pago_venta on (pago_venta.factura_id = factura.id)
             cross join (select @i := 0) r
-            where factura.estado_venta_id<>2 
+            where factura.estado_venta_id<>2
             order by factura.created_at desc
             ");
 
@@ -85,7 +85,7 @@ class NotaDebito extends Component
 
                     if ($existencianDebito->existe == 0) {
 
-                        $montoDebito = DB::SELECTONE("select monto, id from montoNotaDebito where estado_id = 1");
+                        $montoDebito = DB::SELECTONE("select monto, id from montonotadebito where estado_id = 1");
 
                         return
 
@@ -177,14 +177,14 @@ class NotaDebito extends Component
                 id,
                 monto,
                 descripcion,
-                (select name from users where id = montoNotaDebito.users_registra_id) as 'user',
+                (select name from users where id = montonotadebito.users_registra_id) as 'user',
                 created_at
-                from montoNotaDebito
+                from montonotadebito
             ");
 
             return Datatables::of($listaMontos)
             ->addColumn('estado_monto', function ($listaMontos) {
-                $ESTADOmONTO = DB::SELECTONE("select estado_id from montoNotaDebito where id = ".$listaMontos->id);
+                $ESTADOmONTO = DB::SELECTONE("select estado_id from montonotadebito where id = ".$listaMontos->id);
                 if( $ESTADOmONTO->estado_id == 1){
 
                     return
@@ -218,7 +218,7 @@ class NotaDebito extends Component
 
                 DB::update('
                 update
-                montoNotaDebito
+                montonotadebito
                 set estado_id = 2');
 
                 $montoNotaDebito = new montoNotaDebito;
@@ -256,7 +256,7 @@ class NotaDebito extends Component
 
         if ($factura->estado_factura_id == 1 ) {
             $estado = 1;
-       
+
              $cai = DB::SELECTONE("select
                              id,
                              numero_inicial,
@@ -267,11 +267,11 @@ class NotaDebito extends Component
                              cantidad_no_utilizada
                              from cai
                              where tipo_documento_fiscal_id = 4 and estado_id = 1");
- 
+
          } elseif($factura->estado_factura_id == 2) {
- 
+
              $estado = 2;
-            
+
              $cai = DB::SELECTONE("select
                              id,
                              numero_inicial,
@@ -356,8 +356,8 @@ class NotaDebito extends Component
            ],402);
        }
 
-      
-    
+
+
     }
 
     public function listarnotasDebito(){
@@ -373,9 +373,9 @@ class NotaDebito extends Component
                 ,cai_ndebito
                 ,numeroCai
                 ,correlativoND
-                ,(select name from users where id = notaDebito.users_registra_id) as 'user'
+                ,(select name from users where id = notadebito.users_registra_id) as 'user'
                 ,created_at
-                from notaDebito
+                from notadebito
             ");
 
             return Datatables::of($listanotaDebito)
@@ -428,11 +428,11 @@ class NotaDebito extends Component
                     ,cai_ndebito
                     ,numeroCai
                     ,correlativoND
-                    ,(select name from users where id = notaDebito.users_registra_id) as 'user'
+                    ,(select name from users where id = notadebito.users_registra_id) as 'user'
                     ,created_at
-                from notaDebito
+                from notadebito
                 where
-                notaDebito.estado_id = 1 and notaDebito.factura_id = ".$idFactura
+                notadebito.estado_id = 1 and notadebito.factura_id = ".$idFactura
             );
 
             $cai = DB::SELECTONE("select
@@ -450,7 +450,7 @@ class NotaDebito extends Component
             $montoConCentavos= DB::SELECTONE("
             select
                 FORMAT(monto_asignado,2) as total
-            from notaDebito where factura_id = ".$idFactura);
+            from notadebito where factura_id = ".$idFactura);
 
             $pdf = PDF::loadView('/pdf/nodaDeDebito', compact('numeroLetras','notaDebito', 'cliente', 'cai', 'montoConCentavos'))->setPaper('letter');
 
