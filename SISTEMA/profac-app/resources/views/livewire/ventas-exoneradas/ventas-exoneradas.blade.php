@@ -1026,6 +1026,7 @@ return 0;
 
                 data.append("numeroInputs", numeroInputs);
 
+                
                 let text = arregloIdInputs.toString();
                 data.append("arregloIdInputs", text);
 

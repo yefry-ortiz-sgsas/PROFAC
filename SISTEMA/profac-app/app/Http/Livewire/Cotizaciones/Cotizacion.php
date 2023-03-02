@@ -405,30 +405,31 @@ class Cotizacion extends Component
         where A.id =".$idFactura);
 
         $productos = DB::SELECT("
-            select
-            C.id as codigo,
-            C.nombre,
-            C.descripcion,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            J.nombre as medida,
-            FORMAT(B.precio_unidad,2) as precio,
-            FORMAT(B.cantidad,2) as cantidad,
-            FORMAT(B.sub_total,2) as importe
-            from cotizacion A
-            inner join cotizacion_has_producto B
-            inner join producto C
-            on B.producto_id = C.id
-            inner join unidad_medida_venta D
-            on B.unidad_medida_venta_id = D.id
-            inner join unidad_medida J
-            on J.id = D.unidad_medida_id
-            inner join seccion F
-            on B.seccion_id = F.id
-            inner join segmento G
-            on F.segmento_id = G.id
-            inner join bodega H
-            on G.bodega_id = H.id
+        select
+        C.id as codigo,
+        C.nombre,
+        C.descripcion,
+        H.nombre as bodega,
+        F.descripcion as seccion,
+        J.nombre as medida,
+        FORMAT(B.precio_unidad,2) as precio,
+        FORMAT(B.cantidad,2) as cantidad,
+        FORMAT(B.sub_total,2) as importe
+        from cotizacion A
+        inner join cotizacion_has_producto B
+        on A.id = B.cotizacion_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join seccion F
+        on B.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
             where A.id = ".$idFactura
         );
 

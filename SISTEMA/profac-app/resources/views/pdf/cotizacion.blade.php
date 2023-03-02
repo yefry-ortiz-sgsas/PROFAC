@@ -122,7 +122,7 @@
                     @foreach ($productos as $producto)
                     <tr>
                         <td>{{$producto->codigo}}</td>
-                        <td>{{$producto->descripcion}}</td>                      
+                        <td>{{$producto->nombre}}</td>                      
                        
 
                         <td>{{$producto->medida}}</td>

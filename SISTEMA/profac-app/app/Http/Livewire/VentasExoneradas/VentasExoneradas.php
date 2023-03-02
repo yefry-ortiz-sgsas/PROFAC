@@ -110,7 +110,8 @@ class VentasExoneradas extends Component
 
         ]);
 
-        // dd($request->all());
+        
+         
 
         if ($validator->fails()) {
             return response()->json([
@@ -150,10 +151,9 @@ class VentasExoneradas extends Component
             }
         }
 
-        //dd($request->all());
+      
         $arrayTemporal = $request->arregloIdInputs;
-        $arrayInputs = explode(',', $arrayTemporal);
-
+        $arrayInputs = explode(',', $arrayTemporal);        
         $mensaje = "";
         $flag = false;
 
