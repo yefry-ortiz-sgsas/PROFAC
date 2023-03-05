@@ -1188,6 +1188,12 @@ class FacturacionCorporativa extends Component
 
         );
 
+        // for ($i=0; $i < 15 ; $i++) { 
+        //     echo($productos[$i]);
+        // }
+
+        //dd($productos);
+
         $ordenCompra = DB::SELECTONE("
         select
         B.numero_orden
