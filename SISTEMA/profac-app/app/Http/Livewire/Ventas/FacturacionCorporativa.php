@@ -180,7 +180,7 @@ class FacturacionCorporativa extends Component
             inner join bodega
             on segmento.bodega_id = bodega.id
          where
-         
+
          (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%".$request->search."%')
          group by A.producto_id
          limit 15
@@ -284,8 +284,8 @@ class FacturacionCorporativa extends Component
     }
 
     public function guardarVenta(Request $request)
-    {          
-                    
+    {
+
         try {
 
             $validator = Validator::make($request->all(), [
@@ -293,7 +293,7 @@ class FacturacionCorporativa extends Component
                 'fecha_vencimiento' => 'required',
                 'subTotalGeneral' => 'required',
                 'isvGeneral' => 'required',
-                'totalGeneral' => 'required',          
+                'totalGeneral' => 'required',
                 'numeroInputs' => 'required',
                 'seleccionarCliente' => 'required',
                 'nombre_cliente_ventas' => 'required',
@@ -318,8 +318,8 @@ class FacturacionCorporativa extends Component
                 ], 401);
             }
             //
-            
-           
+
+
 
             if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
@@ -335,7 +335,7 @@ class FacturacionCorporativa extends Component
 
             }
 
-         
+
 
             if($request->tipoPagoVenta == 2){
                 $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente,$request->totalGeneral);
@@ -350,12 +350,12 @@ class FacturacionCorporativa extends Component
                 }
             }
 
-           
 
 
-            $arrayTemporal = $request->arregloIdInputs;            
+
+            $arrayTemporal = $request->arregloIdInputs;
             $arrayInputs = explode(',', $arrayTemporal);
-            
+
 
 
             $numeroSecuencia = null;
@@ -1188,7 +1188,7 @@ class FacturacionCorporativa extends Component
 
         );
 
-        // for ($i=0; $i < 15 ; $i++) { 
+        // for ($i=0; $i < 15 ; $i++) {
         //     echo($productos[$i]);
         // }
 
