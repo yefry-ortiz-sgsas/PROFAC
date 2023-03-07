@@ -79,7 +79,7 @@
 
             $(document).ready(function() {             
             $('#tbl_listar_cotizaciones').DataTable({
-                "order": [0, 'desc'],
+                "order": [7, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },

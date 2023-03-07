@@ -67,6 +67,7 @@ class ListarCotizaciones extends Component
         inner join users B
         on A.users_id = B.id
         where A.tipo_venta_id = ".$request->id."
+        order by A.id desc
         ");
 
       
