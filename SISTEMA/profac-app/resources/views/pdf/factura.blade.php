@@ -75,10 +75,10 @@
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Logo1.png" width="800rem"
+        <img src="img/membrete/Logo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:100px; width:45rem; height:5.5rem;">
+        <div class="card border border-dark" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Factura No. {{ $cai->numero_factura }} </b>
                 <b style="position:absolute;right: 10px">Factura de: {{ $cai->descripcion }}</b>
@@ -100,7 +100,7 @@
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente:
                     </b>{{ $cliente->nombre }}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 9px; max-width:500px">
+                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 10px; max-width:500px">
                     <b>Dirección:</b> {{ $cliente->direccion }}
                 </p>
 
@@ -144,7 +144,7 @@
             <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
                 <div>
 
-                    <table class="" style="font-size: 12px; ">
+                    <table class="" style="font-size: 11px; ">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -174,14 +174,16 @@
                             @endforeach
 
 
+                            @php
 
+                                $altura = 50;
+                                $altura2 = 450;
+                            @endphp
 
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <div style="page-break-after: always"></div>
 
         @elseif(count($productos) > 10)
                 <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">

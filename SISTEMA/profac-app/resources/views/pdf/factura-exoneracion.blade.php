@@ -18,7 +18,7 @@
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete2.jpg');
+            /* background-image: url('img/membrete/membrete2.jpg'); */
 
             background-size: 200% 200%;
             background-size: cover;
@@ -64,6 +64,9 @@
 
 
     <div class="pruebaFondo">
+        <img src="img/membrete/Logo3.png" width="800rem"
+        style="margin-left:3%; margin-top:25px; position:absolute;"
+         alt="">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Factura No. {{$cai->numero_factura}} </b>
