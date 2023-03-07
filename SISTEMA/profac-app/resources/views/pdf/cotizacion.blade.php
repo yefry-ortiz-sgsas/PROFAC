@@ -117,7 +117,7 @@
                     <thead>
                         <tr>
                             <th>Código</th>
-                            <th>Descripción</th>
+                            <th>Producto</th>
                             <th>Medida</th>
                             <th>Precio </th>
                             <th>Cantidad</th>
@@ -130,7 +130,7 @@
 
                             <tr>
                                 <td>{{ $producto->codigo }}</td>
-                                <td>{{ $producto->descripcion }}</td>
+                                <td>{{ $producto->nombre }}</td>
                                 <td>{{ $producto->medida }}</td>
                                 <td>{{ $producto->precio }}</td>
                                 <td>{{ $producto->cantidad }}</td>
@@ -162,7 +162,7 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th>Descripción</th>
+                                    <th>Producto</th>
                                     <th>Medida</th>
                                     <th>Precio </th>
                                     <th>Cantidad</th>
@@ -175,7 +175,7 @@
 
                                     <tr>
                                         <td>{{ $producto->codigo }}</td>
-                                        <td>{{ $producto->descripcion }}</td>
+                                        <td>{{ $producto->nombre }}</td>
                                         <td>{{ $producto->medida }}</td>
                                         <td>{{ $producto->precio }}</td>
                                         <td>{{ $producto->cantidad }}</td>
@@ -229,7 +229,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descripción</th>
+                                                <th>Producto</th>
                                                 <th>Medida</th>
                                                 <th>Precio </th>
                                                 <th>Cantidad</th>
@@ -242,7 +242,7 @@
 
                                                 <tr>
                                                     <td>{{ $producto->codigo }}</td>
-                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->nombre }}</td>
                                                     <td>{{ $producto->medida }}</td>
                                                     <td>{{ $producto->precio }}</td>
                                                     <td>{{ $producto->cantidad }}</td>
@@ -302,7 +302,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descripción</th>
+                                                <th>Producto</th>
                                                 <th>Medida</th>
                                                 <th>Precio </th>
                                                 <th>Cantidad</th>
@@ -315,7 +315,7 @@
 
                                                 <tr>
                                                     <td>{{ $producto->codigo }}</td>
-                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->nombre}}</td>
                                                     <td>{{ $producto->medida }}</td>
                                                     <td>{{ $producto->precio }}</td>
                                                     <td>{{ $producto->cantidad }}</td>
@@ -343,7 +343,7 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
                                             <th>Medida</th>
                                             <th>Precio </th>
                                             <th>Cantidad</th>
@@ -356,7 +356,7 @@
 
                                             <tr>
                                                 <td>{{ $producto->codigo }}</td>
-                                                <td>{{ $producto->descripcion }}</td>
+                                                <td>{{ $producto->nombre }}</td>
                                                 <td>{{ $producto->medida }}</td>
                                                 <td>{{ $producto->precio }}</td>
                                                 <td>{{ $producto->cantidad }}</td>

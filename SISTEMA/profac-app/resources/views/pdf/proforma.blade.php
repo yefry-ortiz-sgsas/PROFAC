@@ -117,7 +117,7 @@
                     <thead>
                         <tr>
                             <th>Código</th>
-                            <th>Descripción</th>
+                            <th>Producto</th>
                             <th>Bodega</th>
                             <th>Seccion</th>
                             <th>Medida</th>
@@ -132,7 +132,7 @@
 
                             <tr>
                                 <td>{{ $producto->codigo }}</td>
-                                <td>{{ $producto->descripcion }}</td>
+                                <td>{{ $producto->nombre }}</td>
                                 <td>{{ $producto->bodega }}</td>
                                 <td>{{ $producto->seccion }}</td>
                                 <td>{{ $producto->medida }}</td>
@@ -166,7 +166,7 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th>Descripción</th>
+                                    <th>Producto</th>
                                     <th>Bodega</th>
                                     <th>Seccion</th>
                                     <th>Medida</th>
@@ -181,7 +181,7 @@
 
                                     <tr>
                                         <td>{{ $producto->codigo }}</td>
-                                        <td>{{ $producto->descripcion }}</td>
+                                        <td>{{ $producto->nombre }}</td>
                                         <td>{{ $producto->bodega }}</td>
                                         <td>{{ $producto->seccion }}</td>
                                         <td>{{ $producto->medida }}</td>
@@ -237,7 +237,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descripción</th>
+                                                <th>Producto</th>
                                                 <th>Bodega</th>
                                                 <th>Seccion</th>
                                                 <th>Medida</th>
@@ -252,7 +252,7 @@
 
                                                 <tr>
                                                     <td>{{ $producto->codigo }}</td>
-                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->nombre }}</td>
                                                     <td>{{ $producto->bodega }}</td>
                                                     <td>{{ $producto->seccion }}</td>
                                                     <td>{{ $producto->medida }}</td>
@@ -314,7 +314,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Código</th>
-                                                <th>Descripción</th>
+                                                <th>Producto</th>
                                                 <th>Bodega</th>
                                                 <th>Seccion</th>
                                                 <th>Medida</th>
@@ -329,7 +329,7 @@
 
                                                 <tr>
                                                     <td>{{ $producto->codigo }}</td>
-                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->nombre }}</td>
                                                     <td>{{ $producto->bodega }}</td>
                                                     <td>{{ $producto->seccion }}</td>
                                                     <td>{{ $producto->medida }}</td>
@@ -358,7 +358,7 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
                                             <th>Bodega</th>
                                             <th>Seccion</th>
                                             <th>Medida</th>
@@ -373,7 +373,7 @@
 
                                             <tr>
                                                 <td>{{ $producto->codigo }}</td>
-                                                <td>{{ $producto->descripcion }}</td>
+                                                <td>{{ $producto->nombre }}</td>
                                                 <td>{{ $producto->bodega }}</td>
                                                 <td>{{ $producto->seccion }}</td>
                                                 <td>{{ $producto->medida }}</td>

@@ -149,7 +149,7 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Descripción</th>
+                                <th>Producto</th>
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
@@ -175,7 +175,7 @@
 
 
                             @php
-                                
+
                                 $altura = 50;
                                 $altura2 = 450;
                             @endphp
@@ -197,7 +197,7 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Descripción</th>
+                                <th>Producto</th>
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
@@ -226,7 +226,7 @@
                                     } else {
                                         $contadorFilas++;
                                     }
-                                    
+
                                 @endphp
                             @endforeach
 
@@ -239,7 +239,7 @@
                 </div>
             </div>
             <div style="page-break-after: always"></div>
-            
+
             @if (count($productos) > 20)
                 @php
                     $numeroTablas = ceil(count($productos) / 20);
@@ -263,7 +263,7 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
                                             <th>Bodega</th>
                                             <th>Seccion</th>
                                             <th>Medida</th>
@@ -292,7 +292,7 @@
                                                 } else {
                                                     $contadorFilas++;
                                                 }
-                                                
+
                                             @endphp
                                         @endforeach
 
@@ -330,7 +330,7 @@
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Descripción</th>
+                                            <th>Producto</th>
                                             <th>Bodega</th>
                                             <th>Seccion</th>
                                             <th>Medida</th>
@@ -373,7 +373,7 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th>Descripción</th>
+                                    <th>Producto</th>
                                     <th>Bodega</th>
                                     <th>Seccion</th>
                                     <th>Medida</th>
@@ -402,7 +402,7 @@
                                         } else {
                                             $contadorFilas++;
                                         }
-                                        
+
                                     @endphp
                                 @endforeach
 
