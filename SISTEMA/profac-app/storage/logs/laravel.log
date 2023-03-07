@@ -13404,3 +13404,188 @@ Stack trace:
 #59 C:\\Users\\Yefry\\Downloads\\profac\\PROFAC\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\Users\\\\Yefry\\\\...')
 #60 {main}
 "} 
+[2023-03-06 20:31:36] local.ERROR: Undefined property: stdClass::$bodega {"view":{"view":"C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\resources\\views\\pdf\\cotizacion.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-74025337 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#996</a><samp data-depth=1 class=sf-dump-expanded>
+  #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
+</samp>}
+</pre><script>Sfdump(\"sf-dump-74025337\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","datos":"<pre class=sf-dump id=sf-dump-1783584906 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1963</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": \"<span class=sf-dump-str title=\"6 characters\">2023-9</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">nombre</span>\": \"<span class=sf-dump-str title=\"26 characters\">INVERSIONES MARSOF S DE RL</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">direccion</span>\": \"<span class=sf-dump-str title=\"43 characters\">GALERIA LAPAZ CUBICULO N.100 AVENIDA LA PAZ</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">correo</span>\": \"<span class=sf-dump-str title=\"19 characters\">NO TENEMOS REGISTRO</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">telefono_empresa</span>\": \"<span class=sf-dump-str title=\"9 characters\">2238-6390</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_emision</span>\": \"<span class=sf-dump-str title=\"10 characters\">2023-03-01</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">hora</span>\": \"<span class=sf-dump-str title=\"8 characters\">04:47:33</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_vencimiento</span>\": \"<span class=sf-dump-str title=\"10 characters\">2023-03-01</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">rtn</span>\": \"<span class=sf-dump-str title=\"14 characters\">08019006022489</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">name</span>\": \"<span class=sf-dump-str title=\"10 characters\">Roy Zelaya</span>\"
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1783584906\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","productos":"<pre class=sf-dump id=sf-dump-566282825 data-indent-pad=\"  \"><span class=sf-dump-note>array:1</span> [<samp data-depth=1 class=sf-dump-expanded>
+  <span class=sf-dump-index>0</span> => {<a class=sf-dump-ref>#1979</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1946</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">nombre</span>\": \"<span class=sf-dump-str title=\"47 characters\">PAPEL BOND T/CARTA 8.5X11 BASE 20 70G PAPERLINE</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"50 characters\">RESMA DE 500 HOJAS COLOR BLANCO, CAJA DE 10 RESMAS</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"6 characters\">104.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"8 characters\">1,000.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"10 characters\">104,000.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> RESMA</span>\"
+  </samp>}
+</samp>]
+</pre><script>Sfdump(\"sf-dump-566282825\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","importes":"<pre class=sf-dump id=sf-dump-104490577 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1967</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total</span>\": <span class=sf-dump-num>104000.0</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">isv</span>\": <span class=sf-dump-num>15600.0</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">total</span>\": <span class=sf-dump-num>119600.0</span>
+</samp>}
+</pre><script>Sfdump(\"sf-dump-104490577\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","importesDecimales":"<pre class=sf-dump id=sf-dump-1021205462 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1981</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total</span>\": \"<span class=sf-dump-str title=\"10 characters\">104,000.00</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">isv</span>\": \"<span class=sf-dump-str title=\"9 characters\">15,600.00</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">total</span>\": \"<span class=sf-dump-str title=\"10 characters\">119,600.00</span>\"
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1021205462\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","flagCentavos":"<pre class=sf-dump id=sf-dump-971733617 data-indent-pad=\"  \"><span class=sf-dump-const>false</span>
+</pre><script>Sfdump(\"sf-dump-971733617\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","numeroLetras":"<pre class=sf-dump id=sf-dump-1886120469 data-indent-pad=\"  \">\"<span class=sf-dump-str title=\"42 characters\">CIENTO DIECINUEVE MIL SEISCIENTOS LEMPIRAS</span>\"
+</pre><script>Sfdump(\"sf-dump-1886120469\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+"}},"userId":2,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): Undefined property: stdClass::$bodega at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\resources\\views\\pdf\\cotizacion.blade.php:136)
+[stacktrace]
+#0 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(266): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined prope...', 'C:\\\\laragon\\\\www\\\\...', 138)
+#1 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\resources\\views\\pdf\\cotizacion.blade.php(136): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Undefined prope...', 'C:\\\\laragon\\\\www\\\\...', 138)
+#2 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\laragon\\\\www\\\\...')
+#3 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#4 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\laragon\\\\www\\\\...', Array)
+#5 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(69): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#6 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Livewire\\LivewireViewCompilerEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#7 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(35): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#8 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Livewire\\LivewireViewCompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#9 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#10 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#11 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\PDF.php(133): Illuminate\\View\\View->render()
+#12 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\Facade\\Pdf.php(51): Barryvdh\\DomPDF\\PDF->loadView('/pdf/cotizacion', Array)
+#13 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\app\\Http\\Livewire\\Cotizaciones\\Cotizacion.php(377): Barryvdh\\DomPDF\\Facade\\Pdf::__callStatic('loadView', Array)
+#14 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(46): App\\Http\\Livewire\\Cotizaciones\\Cotizacion->imprimirCotizacion('9')
+#15 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(260): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Livewire\\Cotizaciones\\Cotizacion), 'imprimirCotizac...')
+#16 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#17 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#18 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(30): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(44): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#29 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#30 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#33 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#34 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(799): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#40 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#41 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#42 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#43 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#44 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\DisableBrowserCache.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Livewire\\DisableBrowserCache->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#53 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#54 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#55 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#56 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#57 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#58 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#59 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#60 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#61 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#62 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#63 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#64 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\public\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#65 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\laragon\\\\www\\\\...')
+#66 {main}
+
+[previous exception] [object] (ErrorException(code: 0): Undefined property: stdClass::$bodega at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\storage\\framework\\views\\b1a1ca23364e664a202bac655ed918af9b0951da.php:138)
+[stacktrace]
+#0 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\HandleExceptions.php(266): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Undefined prope...', 'C:\\\\laragon\\\\www\\\\...', 138)
+#1 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\storage\\framework\\views\\b1a1ca23364e664a202bac655ed918af9b0951da.php(138): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Undefined prope...', 'C:\\\\laragon\\\\www\\\\...', 138)
+#2 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(109): require('C:\\\\laragon\\\\www\\\\...')
+#3 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#4 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\laragon\\\\www\\\\...', Array)
+#5 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(69): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#6 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Livewire\\LivewireViewCompilerEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#7 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(35): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#8 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Livewire\\LivewireViewCompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#9 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#10 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#11 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\PDF.php(133): Illuminate\\View\\View->render()
+#12 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\Facade\\Pdf.php(51): Barryvdh\\DomPDF\\PDF->loadView('/pdf/cotizacion', Array)
+#13 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\app\\Http\\Livewire\\Cotizaciones\\Cotizacion.php(377): Barryvdh\\DomPDF\\Facade\\Pdf::__callStatic('loadView', Array)
+#14 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(46): App\\Http\\Livewire\\Cotizaciones\\Cotizacion->imprimirCotizacion('9')
+#15 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(260): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Livewire\\Cotizaciones\\Cotizacion), 'imprimirCotizac...')
+#16 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#17 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#18 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(30): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#21 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#25 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#27 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(44): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#28 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#29 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#30 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#33 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#34 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#35 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#36 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#37 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(799): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#40 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#41 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#42 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#43 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#44 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\DisableBrowserCache.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Livewire\\DisableBrowserCache->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#53 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#54 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#55 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#56 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#57 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#58 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#59 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#60 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#61 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#62 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#63 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#64 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\public\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#65 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\laragon\\\\www\\\\...')
+#66 {main}
+"} 

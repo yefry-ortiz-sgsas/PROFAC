@@ -57,9 +57,13 @@
 <body>
 
 @php
-    $altura =20;
-    $altura2 = 320;
-    $contadorFilas = 0;
+        $altura = 200;
+        $altura2 = 720;
+        $contadorFilas = 0;
+        $contPe = 0;
+        $p1 = 14;
+        $p2 = 20;
+        $vueltasTabla = 0;
 @endphp
 
 
@@ -105,48 +109,285 @@
             </div>
         </div>
 
+        @if(count($productos) <= 10)
         <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
-            <div >
+            <div>
 
-
-                <table  class="" style="font-size: 11px; ">
+                <table class="" style="font-size: 11px; ">
                     <thead>
                         <tr>
-                          <th>Código</th>
-                          <th>Descripción</th>
-                          <th>Bodega</th>
-                          <th>Seccion</th>
-                          <th>Medida</th>
-                          <th>Precio </th>
-                          <th>Cantidad</th>
-                          <th>Importe</th>
+                            <th>Código</th>
+                            <th>Descripción</th>
+                            <th>Medida</th>
+                            <th>Precio </th>
+                            <th>Cantidad</th>
+                            <th>Importe</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($productos as $producto)
-                        <tr>
-                            <td>{{$producto->codigo}}</td>
-                            <td>{{$producto->nombre}}</td>
-                            <td>{{$producto->bodega}}</td>
-                            <td>{{$producto->seccion}}</td>
-                            <td>{{$producto->medida}}</td>
-                            <td>{{$producto->precio}}</td>
-                            <td>{{$producto->cantidad}}</td>
-                            <td>{{$producto->importe}}</td>
-                        </tr>
-                        @php
-                        $contadorFilas++;
-                        @endphp
 
+                        @foreach ($productos as $producto)
+
+                            <tr>
+                                <td>{{ $producto->codigo }}</td>
+                                <td>{{ $producto->descripcion }}</td>
+                                <td>{{ $producto->medida }}</td>
+                                <td>{{ $producto->precio }}</td>
+                                <td>{{ $producto->cantidad }}</td>
+                                <td>{{ $producto->importe }}</td>
+                            </tr>
                         @endforeach
 
 
+                        @php
 
+                            $altura = 50;
+                            $altura2 = 450;
+                        @endphp
 
                     </tbody>
                 </table>
             </div>
         </div>
+
+        @elseif(count($productos) > 10)
+                <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
+                    <div>
+
+                        @php
+                            $contadorFilas = 0;
+                        @endphp
+
+                        <table class="" style="font-size: 11px; ">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Descripción</th>
+                                    <th>Medida</th>
+                                    <th>Precio </th>
+                                    <th>Cantidad</th>
+                                    <th>Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($productos as $producto)
+
+                                    <tr>
+                                        <td>{{ $producto->codigo }}</td>
+                                        <td>{{ $producto->descripcion }}</td>
+                                        <td>{{ $producto->medida }}</td>
+                                        <td>{{ $producto->precio }}</td>
+                                        <td>{{ $producto->cantidad }}</td>
+                                        <td>{{ $producto->importe }}</td>
+                                    </tr>
+                                    @php
+                                        $contPe++;
+                                        if ($contadorFilas > 12) {
+                                            break;
+                                        } else {
+                                            $contadorFilas++;
+                                        }
+
+                                    @endphp
+                                @endforeach
+
+                                        {{-- eliminando productos ya rebderizados --}}
+                                @for ($i = 0; $i < 14; $i++)
+                                    @php
+                                    unset($productos[$i]);
+                                    @endphp
+                                @endfor
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="page-break-after: always"></div>
+                @if (count($productos) > 20)
+                    @php
+                        $numeroTablas = ceil(count($productos) / 20);
+                    @endphp
+
+                    @for ($g = 0; $g < $numeroTablas; $g++)
+                        @if(count($productos) > 20)
+
+                            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem; page-break-inside: auto;">
+                                <div>
+
+                                    @php
+                                        if ($g != 0) {
+                                            $vueltasTabla++;
+                                        }
+                                        $contadorFilas = 0;
+                                        $contPe = 0;
+                                    @endphp
+
+                                    <table class="" style="font-size: 12px; ">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Descripción</th>
+                                                <th>Medida</th>
+                                                <th>Precio </th>
+                                                <th>Cantidad</th>
+                                                <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach ($productos as $producto)
+
+                                                <tr>
+                                                    <td>{{ $producto->codigo }}</td>
+                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->medida }}</td>
+                                                    <td>{{ $producto->precio }}</td>
+                                                    <td>{{ $producto->cantidad }}</td>
+                                                    <td>{{ $producto->importe }}</td>
+                                                </tr>
+                                                @php
+                                                    $contPe++;
+                                                    if ($contadorFilas > 18) {
+                                                        break;
+                                                    } else {
+                                                        $contadorFilas++;
+                                                    }
+
+                                                @endphp
+                                            @endforeach
+
+
+
+
+
+                                        </tbody>
+                                    </table>
+                                    @if($vueltasTabla == 0)
+                                        @php
+                                            $p2 =$p2  + $p1;
+                                        @endphp
+                                        @for ($i = $p1; $i < $p2 ; $i++)
+                                            @php
+                                            unset($productos[$i]);
+                                            @endphp
+                                        @endfor
+
+                                    @elseif($vueltasTabla > 1 && $vueltasTabla < $numeroTablas)
+                                        @php
+                                            $p2 =$p2  + 20;
+                                        @endphp
+                                        @for ($i = $p2; $i < $p2 ; $i++)
+                                            @php
+                                            unset($productos[$i]);
+                                            @endphp
+                                        @endfor
+                                    @endif
+
+                                </div>
+                            </div>
+                            <div style="page-break-after: always"></div>
+
+                        @elseif(count($productos) < 20)
+                            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem; page-break-inside: auto;">
+                                <div>
+
+                                    @php
+                                        $contadorFilas = 0;
+                                    @endphp
+
+                                    <table class="" style="font-size: 11px; ">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Descripción</th>
+                                                <th>Medida</th>
+                                                <th>Precio </th>
+                                                <th>Cantidad</th>
+                                                <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach ($productos as $producto)
+
+                                                <tr>
+                                                    <td>{{ $producto->codigo }}</td>
+                                                    <td>{{ $producto->descripcion }}</td>
+                                                    <td>{{ $producto->medida }}</td>
+                                                    <td>{{ $producto->precio }}</td>
+                                                    <td>{{ $producto->cantidad }}</td>
+                                                    <td>{{ $producto->importe }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div style="page-break-after: always"></div>
+                        @endif
+                    @endfor
+                @else
+                        <div class="card border border-dark"
+                        style="position: relative; margin-left:44px; margin-top:80px; width:45rem; page-break-inside: auto;">
+                            <div>
+
+                                @php
+                                    $contadorFilas = 0;
+                                @endphp
+
+                                <table class="" style="font-size: 11px; ">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Descripción</th>
+                                            <th>Medida</th>
+                                            <th>Precio </th>
+                                            <th>Cantidad</th>
+                                            <th>Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach ($productos as $producto)
+
+                                            <tr>
+                                                <td>{{ $producto->codigo }}</td>
+                                                <td>{{ $producto->descripcion }}</td>
+                                                <td>{{ $producto->medida }}</td>
+                                                <td>{{ $producto->precio }}</td>
+                                                <td>{{ $producto->cantidad }}</td>
+                                                <td>{{ $producto->importe }}</td>
+                                            </tr>
+                                            @php
+                                                $contPe++;
+                                                if ($contadorFilas > 12) {
+                                                    break;
+                                                } else {
+                                                    $contadorFilas++;
+                                                }
+
+                                            @endphp
+                                        @endforeach
+
+                                                {{-- eliminando productos ya rebderizados --}}
+                                        @for ($i = 0; $i < 14; $i++)
+                                            @php
+                                            unset($productos[$i]);
+                                            @endphp
+                                        @endfor
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div style="page-break-after: always"></div>
+                @endif
+        @endif
 
 
 
