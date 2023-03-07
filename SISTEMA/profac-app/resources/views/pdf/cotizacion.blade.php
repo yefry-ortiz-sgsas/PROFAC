@@ -58,7 +58,7 @@
 
 @php
         $altura = 200;
-        $altura2 = 720;
+        $altura2 = 620;
         $contadorFilas = 0;
         $contPe = 0;
         $p1 = 14;
@@ -326,6 +326,7 @@
                                     </table>
                                 </div>
                             </div>
+
                             <div style="page-break-after: always"></div>
                         @endif
                     @endfor
@@ -385,14 +386,13 @@
                                 </table>
                             </div>
                         </div>
-                        <div style="page-break-after: always"></div>
                 @endif
         @endif
 
 
 
 
-        <div style=" position: relative; margin-left:44px;">
+        <div style=" position: relative; margin-left:44px; page-break-inside: avoid;">
             <div class="card border border-dark" style="position:absolute;left:0px; margin-top:{{$altura}}px;   width:26rem; height:15rem;">
                 <div class="card-body">
 
