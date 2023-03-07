@@ -110,8 +110,8 @@ class VentasExoneradas extends Component
 
         ]);
 
-        
-         
+
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -151,9 +151,9 @@ class VentasExoneradas extends Component
             }
         }
 
-      
+
         $arrayTemporal = $request->arregloIdInputs;
-        $arrayInputs = explode(',', $arrayTemporal);        
+        $arrayInputs = explode(',', $arrayTemporal);
         $mensaje = "";
         $flag = false;
 
@@ -687,6 +687,150 @@ class VentasExoneradas extends Component
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/factura-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
+
+
+    }
+
+    public function imprimirFacturaExoneradaCopia($idFactura)
+    {
+
+        $cai = DB::SELECTONE("
+        select
+        A.cai as numero_factura,
+        A.numero_factura as numero,
+        A.estado_factura_id as estado_factura,
+        B.cai,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura,
+        E.codigo as codigo_exoneracion,
+        E.corrOrd as correlativoexo
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       inner join codigo_exoneracion E
+       on A.codigo_exoneracion_id = E.id
+       where A.id = ".$idFactura);
+
+       $cliente = DB::SELECTONE("
+       select
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total
+        from factura where factura.id = ".$idFactura);
+
+       $productos = DB::SELECT("
+       select
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(sum(B.cantidad_s),2) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe
+
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=".$idFactura."
+        group by codigo, descripcion, medida, bodega, seccion, precio
+
+        union
+
+        select
+            D.id,
+            D.nombre as descripcion,
+            F.nombre as medida,
+            'Pendiente',
+            'Pendiente',
+            FORMAT(C.precio,2) as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            FORMAT(C.sub_total,2) as sub_total
+        from factura A
+        inner join vale B
+        on A.id = B.factura_id
+        inner join espera_has_producto C
+        on B.id = C.vale_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        where B.estado_id=1 and A.id = ".$idFactura
+
+
+
+
+        );
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+
+        }else{
+            $flagCentavos = true;
+        }
+
+
+
+
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/facturacopia-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
 
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 

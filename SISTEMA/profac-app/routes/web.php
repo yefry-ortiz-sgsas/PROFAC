@@ -338,6 +338,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/exonerado/ventas/lista', ListadoFacturasExonerads::class);
     Route::get('/exonerado/listas/facturas', [ListadoFacturasExonerads::class, 'listarFacturas']);
     Route::get('/exonerado/factura/{id}', [VentasExoneradas::class, 'imprimirFacturaExonerada']);
+    Route::get('/exonerado/facturaCopia/{id}', [VentasExoneradas::class, 'imprimirFacturaExoneradaCopia']);
     Route::get('/exonerado/listar/codigos', [VentasExoneradas::class, 'obtenerCodigoExoneracion']);
 
 
