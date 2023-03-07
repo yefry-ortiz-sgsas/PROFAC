@@ -13,7 +13,7 @@
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete2.jpg');
+            /* background-image: url('img/membrete/membrete2.jpg'); */
             background-repeat: no-repeat;
             background-size: 200% 200%;
             background-size: cover;
@@ -31,6 +31,9 @@
 
 
     <div class="pruebaFondo">
+        <img src="img/membrete/Logo3.png" width="800rem"
+        style="margin-left:3%; margin-top:25px; position:absolute;"
+         alt="">
         <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
                <b>Retención No. {{$data->cai_retencion}} </b>

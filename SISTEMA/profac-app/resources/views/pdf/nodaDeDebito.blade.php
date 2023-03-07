@@ -18,7 +18,7 @@
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete2.jpg');
+           /*  background-image: url('img/membrete/membrete2.jpg'); */
 
             background-size: 200% 200%;
             background-size: cover;
@@ -73,6 +73,9 @@
         <span style = "font-size: 10px; position:absolute;left:500px;  top:105px;">Documento: N{{$cliente->numero_factura}}-CF12</span></p>
         @endif
     <div class="pruebaFondo">
+        <img src="img/membrete/Logo3.png" width="800rem"
+        style="margin-left:3%; margin-top:25px; position:absolute;"
+         alt="">
         <br><br><br>
 
         <br><br>
