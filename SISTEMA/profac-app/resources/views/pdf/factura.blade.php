@@ -452,7 +452,7 @@
 
 
 
-        <div style=" position: relative; margin-left:44px;">
+        <div style=" position: relative; margin-left:44px; page-break-inside: avoid;">
             <div class="card border border-dark"
                 style="position:absolute;left:0px; margin-top:{{ $altura }}px;   width:26rem; height:15rem;">
                 <div class="card-body">
