@@ -294,6 +294,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/venta/datos/compra', [Cobros::class, 'DatosCompra']);
     Route::post('/venta/cobro/eliminar', [Cobros::class, 'eliminarPago']);
     Route::get('/factura/cooporativo/{idFactura}', [FacturacionCorporativa::class, 'imprimirFacturaCoorporativa']);
+    Route::get('/factura/cooporativoCopia/{idFactura}', [FacturacionCorporativa::class, 'imprimirFacturaCoorporativaCopia']);
     Route::get('/ventas/Configuracion', Configuracion::class);
 
 

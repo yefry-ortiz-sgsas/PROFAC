@@ -13,8 +13,8 @@ use Illuminate\Database\QueryException;
 use Throwable;
 use DataTables;
 
-use App\Models\ModelFactura; 
-use App\Models\ModelLogEstadoFactura; 
+use App\Models\ModelFactura;
+use App\Models\ModelLogEstadoFactura;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelLogTranslados;
 
@@ -31,9 +31,9 @@ class ListadoFacturaEstatal extends Component
 
         try {
 
-         
+
                 $listaFacturas = DB::SELECT("
-                select 
+                select
                     factura.id as id,
                     @i := @i + 1 as contador,
                     numero_factura,
@@ -49,7 +49,7 @@ class ListadoFacturaEstatal extends Component
                     users.name as creado_por,
                     (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
                     factura.estado_venta_id,
-                    factura.created_at as fecha_registro            
+                    factura.created_at as fecha_registro
                 from factura
                     inner join cliente
                     on factura.cliente_id = cliente.id
@@ -62,7 +62,7 @@ class ListadoFacturaEstatal extends Component
                 order by factura.created_at desc
                 ");
 
-          
+
 
 
 
@@ -76,22 +76,22 @@ class ListadoFacturaEstatal extends Component
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-    
+
                             <li>
                                 <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
                             </li>
-    
+
                             <li>
                                 <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                             </li>
-                            
+
                             <li>
                             <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>    
-    
-                            
-    
-                            
+                            </li>
+
+
+
+
                         </ul>
                     </div>';
                 }else{
@@ -101,19 +101,24 @@ class ListadoFacturaEstatal extends Component
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-    
+
                             <li>
                                 <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
                             </li>
-    
+
                             <li>
                                 <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                             </li>
-                            
+
                             <li>
-                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>    
-    
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Original </a>
+                            </li>
+
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativoCopia/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Copia </a>
+                            </li>
+
+
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
                              </li>
@@ -121,8 +126,8 @@ class ListadoFacturaEstatal extends Component
                              <li>
                              <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-calendar-days text-success"></i> Agendar Entrega </a>
                              </li>
-    
-                            
+
+
                         </ul>
                     </div>';
                 }
@@ -153,13 +158,13 @@ class ListadoFacturaEstatal extends Component
            })
             ->rawColumns(['opciones','estado_cobro'])
             ->make(true);
-           
+
         } catch (QueryException $e) {
             return response()->json([
                 'message' => 'Ha ocurrido un error al listar las compras.',
                 'errorTh' => $e,
             ], 402);
-           
+
         }
 
     }
@@ -169,7 +174,7 @@ class ListadoFacturaEstatal extends Component
         try {
         DB::beginTransaction();
 
-         
+
          $numeroPagos = DB::SELECTONE("select count(id) as 'numero_pagos' from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
 
          if($numeroPagos->numero_pagos != 0 ){
@@ -181,11 +186,11 @@ class ListadoFacturaEstatal extends Component
          }
 
          $estadoVenta = DB::SELECTONE("select estado_venta_id from factura where id =".$request->idFactura );
- 
+
          $compra = ModelFactura::find($request->idFactura);
          $compra->estado_venta_id = 2;
          $compra->save();
- 
+
          $logEstado = new ModelLogEstadoFactura;
          $logEstado->factura_id = $request->idFactura;
          $logEstado->estado_venta_id_anterior = $estadoVenta->estado_venta_id;
@@ -209,7 +214,7 @@ class ListadoFacturaEstatal extends Component
                     "users_id"=> Auth::user()->id,
                     "descripcion"=>"Factura Anulada",
                     "created_at"=>now(),
-                    "updated_at"=>now(),  
+                    "updated_at"=>now(),
                 ]);
 
             };
@@ -229,11 +234,11 @@ class ListadoFacturaEstatal extends Component
 
         DB::rollback();
         return response()->json([
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e
         ], 402);
         }
- 
+
      }
 }
 

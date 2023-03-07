@@ -13,8 +13,8 @@ use DataTables;
 use Auth;
 use Validator;
 
-use App\Models\ModelFactura; 
-use App\Models\ModelLogEstadoFactura; 
+use App\Models\ModelFactura;
+use App\Models\ModelLogEstadoFactura;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelLogTranslados;
 
@@ -32,7 +32,7 @@ class ListadoFacturasExonerads extends Component
 
             if((Auth::user()->rol_id == 1 || Auth::user()->rol_id == 3 || Auth::user()->rol_id == 5)){
                 $listaFacturas = DB::SELECT("
-                select 
+                select
                     factura.id as id,
                     @i := @i + 1 as contador,
                     numero_factura,
@@ -63,7 +63,7 @@ class ListadoFacturasExonerads extends Component
             }else{
 
                 $listaFacturas = DB::SELECT("
-                select 
+                select
                     factura.id as id,
                     @i := @i + 1 as contador,
                     numero_factura,
@@ -105,22 +105,26 @@ class ListadoFacturasExonerads extends Component
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-    
+
                             <li>
                                 <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
                             </li>
-    
+
                             <li>
                                 <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                             </li>
-                            
-                            <li>
-                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>    
-    
 
-    
-                            
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Original </a>
+                            </li>
+
+
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativoCopia/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Copia </a>
+                            </li>
+
+
+
                         </ul>
                     </div>';
                 }else{
@@ -130,19 +134,19 @@ class ListadoFacturasExonerads extends Component
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                             más</button>
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-    
+
                             <li>
                                 <a class="dropdown-item" href="/detalle/venta/'.$listaFacturas->id.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
                             </li>
-    
+
                             <li>
                                 <a class="dropdown-item" href="/venta/cobro/'.$listaFacturas->id.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                             </li>
-                            
+
                             <li>
                             <a class="dropdown-item" target="_blank"  href="/exonerado/factura/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>    
-    
+                            </li>
+
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
                             </li>
@@ -150,8 +154,8 @@ class ListadoFacturasExonerads extends Component
                             <li>
                             <a class="dropdown-item" href="/crear/vale/'.$listaFacturas->id.'" > <i class="fa-solid fa-calendar-days text-success"></i> Agendar Entrega </a>
                             </li>
-    
-                            
+
+
                         </ul>
                     </div>';
                 }
@@ -187,7 +191,7 @@ class ListadoFacturasExonerads extends Component
                 'message' => 'Ha ocurrido un error al listar las compras.',
                 'errorTh' => $e,
             ], 402);
-           
+
         }
 
     }
@@ -197,7 +201,7 @@ class ListadoFacturasExonerads extends Component
         try {
         DB::beginTransaction();
 
-         
+
          $numeroPagos = DB::SELECTONE("select count(id) as 'numero_pagos' from pago_venta where estado_venta_id = 1 and factura_id = ".$request->idFactura);
 
          if($numeroPagos->numero_pagos != 0 ){
@@ -209,11 +213,11 @@ class ListadoFacturasExonerads extends Component
          }
 
          $estadoVenta = DB::SELECTONE("select estado_venta_id from factura where id =".$request->idFactura );
- 
+
          $compra = ModelFactura::find($request->idFactura);
          $compra->estado_venta_id = 2;
          $compra->save();
- 
+
          $logEstado = new ModelLogEstadoFactura;
          $logEstado->factura_id = $request->idFactura;
          $logEstado->estado_venta_id_anterior = $estadoVenta->estado_venta_id;
@@ -237,7 +241,7 @@ class ListadoFacturasExonerads extends Component
                     "users_id"=> Auth::user()->id,
                     "descripcion"=>"Factura Anulada",
                     "created_at"=>now(),
-                    "updated_at"=>now(),  
+                    "updated_at"=>now(),
                 ]);
 
             };
@@ -257,10 +261,10 @@ class ListadoFacturasExonerads extends Component
 
         DB::rollback();
         return response()->json([
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e
         ], 402);
         }
- 
+
      }
 }
