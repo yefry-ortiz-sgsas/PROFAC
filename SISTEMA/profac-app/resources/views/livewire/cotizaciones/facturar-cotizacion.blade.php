@@ -445,6 +445,11 @@
             arregloIdInputsTemporal = arregloIdInputsTemporal.replace(searchRegExp, '')
             arregloIdInputs = arregloIdInputsTemporal.split(",");
 
+            for (let z = 0; z < arregloIdInputs.length; z++) {
+               arregloIdInputs[z] = parseInt(arregloIdInputs[z]);
+                
+            }
+
         
 
 

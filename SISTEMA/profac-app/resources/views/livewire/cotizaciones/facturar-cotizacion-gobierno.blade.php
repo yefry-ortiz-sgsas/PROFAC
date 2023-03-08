@@ -91,7 +91,8 @@
                                     <select id="seleccionarCliente" name="seleccionarCliente"
                                         class="form-group form-control" style="" data-parsley-required
                                         onchange="obtenerDatosCliente()">
-                                        <option value="{{$cotizacion->cliente_id}}" selected >{{$cotizacion->nombre_cliente}}</option>
+                                        <option value="{{ $cotizacion->cliente_id }}" selected>
+                                            {{ $cotizacion->nombre_cliente }}</option>
                                     </select>
                                 </div>
 
@@ -122,13 +123,15 @@
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">Nombre del cliente</label>
-                                    <input class="form-control" required type="text" id="nombre_cliente_ventas" name="nombre_cliente_ventas" value="{{$cotizacion->nombre_cliente}}" readonly>
+                                    <input class="form-control" required type="text" id="nombre_cliente_ventas"
+                                        name="nombre_cliente_ventas" value="{{ $cotizacion->nombre_cliente }}" readonly>
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">RTN</label>
-                                    <input class="form-control"  type="text" id="rtn_ventas" name="rtn_ventas" value="{{$cotizacion->RTN}}" readonly>
+                                    <input class="form-control" type="text" id="rtn_ventas" name="rtn_ventas"
+                                        value="{{ $cotizacion->RTN }}" readonly>
 
                                 </div>
 
@@ -351,52 +354,59 @@
                             </div>
 
                             <div id="divProductos">
-                                {!!$htmlProductos!!}
+                                {!! $htmlProductos !!}
                             </div>
-  
+
                             <hr>
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input value="{{$cotizacion->sub_total}}" type="text"  placeholder="Sub total " id="subTotalGeneralMostrar"
-                                        name="subTotalGeneralMostrar" class="form-control"  data-parsley-required
+                                    <input value="{{ $cotizacion->sub_total }}" type="text"
+                                        placeholder="Sub total " id="subTotalGeneralMostrar"
+                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
                                         autocomplete="off" readonly>
 
-                                        <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value="{{$cotizacion->sub_total}}" required>   
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"
+                                        value="{{ $cotizacion->sub_total }}" required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="ISV " id="isvGeneralMostrar" name="isvGeneralMostrar"
-                                        class="form-control" data-parsley-required autocomplete="off"
-                                        readonly value="{{$cotizacion->isv}}">
+                                    <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                        name="isvGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly value="{{ $cotizacion->isv }}">
 
-                                        <input value="{{$cotizacion->isv}}" id="isvGeneral" name="isvGeneral" type="hidden" min="0" required>       
+                                    <input value="{{ $cotizacion->isv }}" id="isvGeneral" name="isvGeneral"
+                                        type="hidden" min="0" required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="Total  " id="totalGeneralMostrar"
+                                    <input type="text" placeholder="Total  " id="totalGeneralMostrar"
                                         name="totalGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" readonly  value="{{$cotizacion->total}}">
+                                        autocomplete="off" readonly value="{{ $cotizacion->total }}">
 
-                                        <input id="totalGeneral" name="totalGeneral" type="hidden"  value="{{$cotizacion->total}}" min="0" required>            
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden"
+                                        value="{{ $cotizacion->total }}" min="0" required>
                                 </div>
                             </div>
 
@@ -404,7 +414,7 @@
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button id="guardar_cotizacion_btn" 
+                                    <button id="guardar_cotizacion_btn"
                                         class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
                                             Realizar Factura</strong></button>
                                 </div>
@@ -421,19 +431,18 @@
 
     @push('scripts')
         <script>
-
-            var array=[];
+            var array = [];
             var arregloIdInputs = [];
-            var numeroInputs = {{$cotizacion->numeroInputs}};
+            var numeroInputs = {{ $cotizacion->numeroInputs }};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
 
-          
-        
+
+
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
-           
+
 
             window.onload = obtenerTipoPago;
-         
+
             var public_path = "{{ asset('catalogo/') }}";
 
             // for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
@@ -445,10 +454,16 @@
             // }
 
             const searchRegExp = /\"/g;
+            
             arregloIdInputsTemporal = arregloIdInputsTemporal.replace(searchRegExp, '')
             arregloIdInputs = arregloIdInputsTemporal.split(",");
 
-            console.log(arregloIdInputs)
+            for (let z = 0; z < arregloIdInputs.length; z++) {
+               arregloIdInputs[z] = parseInt(arregloIdInputs[z]);
+                
+            }
+         
+
 
             $('#vendedor').select2({
                 ajax: {
@@ -583,7 +598,7 @@
 
                         if (imagenes.length == 0) {
 
-                            console.log("entro")
+
                             htmlImagenes += `                                                
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+'noimage.png'}" alt="noimage.png" style="width: 100%; height:20rem" >
@@ -687,11 +702,11 @@
                         let arrayUnidades = response.data.unidades;
 
 
-                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length-1];
+                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length - 1];
 
 
-                        numeroInputs = parseInt(ultimoElemento)+1;
-                       
+                        numeroInputs = parseInt(ultimoElemento) + 1;
+
 
                         //     let arraySecciones  = response.data.secciones;
                         // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
@@ -808,7 +823,7 @@
 
                         arregloIdInputs.push(numeroInputs);
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                     
+
                         return;
 
                     })
@@ -829,76 +844,79 @@
                 element.remove();
 
 
+                console.log(arregloIdInputs);
                 var myIndex = arregloIdInputs.indexOf(id);
                 if (myIndex !== -1) {
                     arregloIdInputs.splice(myIndex, 1);
                     this.totalesGenerales();
                 }
 
+                console.log(arregloIdInputs);
             }
+
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
-valorInputPrecio = idPrecio.value;
-valorInputCantidad = idCantidad.value;
-valorSelectUnidad = idUnidad.value;
+                valorInputPrecio = idPrecio.value;
+                valorInputCantidad = idCantidad.value;
+                valorSelectUnidad = idUnidad.value;
 
-if (valorInputPrecio && valorInputCantidad) {
+                if (valorInputPrecio && valorInputCantidad) {
 
-    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-    let isv = subTotal * (isvProducto / 100);
-    let total = subTotal + subTotal * (isvProducto / 100);
+                    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                    let isv = subTotal * (isvProducto / 100);
+                    let total = subTotal + subTotal * (isvProducto / 100);
 
-    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
-    document.getElementById('total' + id).value = total.toFixed(3);
-    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
-    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
-    this.totalesGenerales();
-
-
-
-}
-
-
-return 0;
-
-
-}
-
-function totalesGenerales() {
-
-//console.log(arregloIdInputs);
-
-if (numeroInputs == 0) {
-    return;
-}
+                    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                    document.getElementById('total' + id).value = total.toFixed(3);
+                    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
+                    this.totalesGenerales();
 
 
 
-let totalGeneralValor = new Number(0);
-let totalISV = new Number(0);
-let subTotalGeneralValor = new Number(0);
+                }
 
 
-for (let i = 0; i < arregloIdInputs.length; i++) {
-    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
-    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
-
-}
-
-document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
-document.getElementById('isvGeneral').value = totalISV.toFixed(3);
-document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                return 0;
 
 
+            }
+
+            function totalesGenerales() {
+
+                //console.log(arregloIdInputs);
+
+                if (numeroInputs == 0) {
+                    return;
+                }
 
 
 
-return 0;
+                let totalGeneralValor = new Number(0);
+                let totalISV = new Number(0);
+                let subTotalGeneralValor = new Number(0);
 
 
-}
+                for (let i = 0; i < arregloIdInputs.length; i++) {
+                    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+                    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
+
+                }
+
+                document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
+                document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+
+
+
+
+
+                return 0;
+
+
+            }
 
             function validarFechaPago() {
 
@@ -980,7 +998,7 @@ return 0;
                 function(event) {
                     event.preventDefault();
                     guardarVenta();
-            });
+                });
 
             function guardarVenta() {
 
@@ -989,7 +1007,7 @@ return 0;
                 var data = new FormData($('#crear_venta').get(0));
 
                 let longitudArreglo = arregloIdInputs.length;
-                console.log(arregloIdInputs);
+
                 for (var i = 0; i < longitudArreglo; i++) {
 
 
@@ -997,10 +1015,10 @@ return 0;
                     let nameForm = "idUnidadVenta" + arregloIdInputs[i];
 
                     let e = document.getElementById(name);
-                    console.log(arregloIdInputs[i]);
+
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-               
+
                     data.append(nameForm, idUnidadVenta)
                 }
 
@@ -1010,13 +1028,15 @@ return 0;
                 data.append("arregloIdInputs", text);
 
                 const formDataObj = {};
-              
-                    data.forEach((value, key) => (formDataObj[key] = value));
-                    
 
-                    const options = {
-                        headers: {"content-type": "application/json"}
+                data.forEach((value, key) => (formDataObj[key] = value));
+
+
+                const options = {
+                    headers: {
+                        "content-type": "application/json"
                     }
+                }
 
 
                 axios.post('/ventas/estatal/guardar', formDataObj, options)
@@ -1026,7 +1046,7 @@ return 0;
 
 
                         if (data.idFactura == 0) {
-                        
+
                             Swal.fire({
                                 icon: data.icon,
                                 title: data.title,
@@ -1079,7 +1099,7 @@ return 0;
 
                     })
                     .catch(err => {
-                      
+
                         document.getElementById("guardar_cotizacion_btn").disabled = false;
                         let data = err.response.data;
                         console.log(err);
@@ -1089,7 +1109,7 @@ return 0;
                             text: data.text
                         })
                     })
-                    document.getElementById("guardar_cotizacion_btn").disabled = false;
+                document.getElementById("guardar_cotizacion_btn").disabled = false;
             }
 
 
