@@ -68,15 +68,14 @@
         $altura2 = 320;
         $contadorFilas = 0;
         $contPe = 0;
-        $p1 = 14;
-        $p2 = 20;
+        $p1 = 24;
+        $p2 = 30;
         $vueltasTabla = 0;
     @endphp
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Logo3.png" width="800rem" style="margin-left:3%; margin-top:25px; position:absolute;"
-            alt="">
+        <img src="img/membrete/Logo3.png" width="800rem" style="margin-left:3%; margin-top:25px; position:absolute;"alt="">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Factura No. {{ $cai->numero_factura }} </b>
@@ -139,13 +138,15 @@
             </div>
         </div>
 
+                 @php
+                    $cant = count($productos);
+                @endphp
+        @if (count($productos) < 15)
+            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
 
-        @if (count($productos) <= 10)
-            <div class="card border border-dark"
-                style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
                 <div>
 
-                    <table class="" style="font-size: 11px; ">
+                    <table class="" style="font-size: 10px; ">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -184,16 +185,19 @@
                     </table>
                 </div>
             </div>
-        @elseif(count($productos) > 10)
-            <div class="card border border-dark"
-                style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
+
+            {{-- <div style="page-break-after: always"></div> --}}
+        @elseif(count($productos) > 15)
+            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
+
+
                 <div>
 
                     @php
                         $contadorFilas = 0;
                     @endphp
 
-                    <table class="" style="font-size: 11px; ">
+                    <table class="" style="font-size: 10px; ">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -221,7 +225,7 @@
                                 </tr>
                                 @php
                                     $contPe++;
-                                    if ($contadorFilas > 12) {
+                                    if ($contadorFilas > 22) {
                                         break;
                                     } else {
                                         $contadorFilas++;
@@ -230,8 +234,7 @@
                                 @endphp
                             @endforeach
 
-                            {{-- eliminando productos ya rebderizados --}}
-                            @for ($i = 0; $i < 14; $i++)
+                            @for ($i = 0; $i < 24; $i++)
                                 @php unset($productos[$i]); @endphp
                             @endfor
                         </tbody>
@@ -240,15 +243,15 @@
             </div>
             <div style="page-break-after: always"></div>
 
-            @if (count($productos) > 20)
+            @if (count($productos) > 30)
                 @php
-                    $numeroTablas = ceil(count($productos) / 20);
+                    $numeroTablas = ceil(count($productos) / 30);
                 @endphp
 
                 @for ($g = 0; $g < $numeroTablas; $g++)
-                    @if (count($productos) > 20)
-                        <div class="card border border-dark"
-                            style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+                    @if (count($productos) >= 30)
+                        <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+
                             <div>
 
                                 @php
@@ -259,7 +262,7 @@
                                     $contPe = 0;
                                 @endphp
 
-                                <table class="" style="font-size: 12px; ">
+                                <table class="" style="font-size: 10px; ">
                                     <thead>
                                         <tr>
                                             <th>Código</th>
@@ -287,7 +290,7 @@
                                             </tr>
                                             @php
                                                 $contPe++;
-                                                if ($contadorFilas > 18) {
+                                                if ($contadorFilas > 28) {
                                                     break;
                                                 } else {
                                                     $contadorFilas++;
@@ -310,23 +313,24 @@
                                         @php unset($productos[$i]); @endphp
                                     @endfor
                                 @elseif($vueltasTabla > 1 && $vueltasTabla < $numeroTablas)
-                                    @php $p2=$p2 + 20; @endphp @for ($i = $p2; $i < $p2; $i++)
+
+                                    @php $p2=$p2 + 30; @endphp @for ($i = $p2; $i < $p2; $i++)
                                         @php unset($productos[$i]); @endphp
                                     @endfor
                                 @endif
                             </div>
                         </div>
                         <div style="page-break-after: always"></div>
-                    @elseif(count($productos) < 20)
-                        <div class="card border border-dark"
-                            style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+                    @elseif(count($productos) < 30)
+                        <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+
                             <div>
 
                                 @php
                                     $contadorFilas = 0;
                                 @endphp
 
-                                <table class="" style="font-size: 11px; ">
+                                <table class="" style="font-size: 10px; ">
                                     <thead>
                                         <tr>
                                             <th>Código</th>
@@ -360,9 +364,8 @@
                         <div style="page-break-after: always"></div>
                     @endif
                 @endfor
-            @else
-                <div class="card border border-dark"
-                    style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+            {{-- @else
+                <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
                     <div>
 
                         @php
@@ -405,16 +408,96 @@
 
                                     @endphp
                                 @endforeach
-
-                                {{-- eliminando productos ya rebderizados --}}
                                 @for ($i = 0; $i < 14; $i++)
                                     @php unset($productos[$i]); @endphp
                                 @endfor
                             </tbody>
                         </table>
                     </div>
+                </div> --}}
+            @elseif(count($productos) <= 15)
+            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+
+                <div>
+
+                    @php
+                        $contadorFilas = 0;
+                    @endphp
+
+                    <table class="" style="font-size: 10px; ">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Bodega</th>
+                                <th>Seccion</th>
+                                <th>Medida</th>
+                                <th>Precio </th>
+                                <th>Cantidad</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($productos as $producto)
+                                <tr>
+                                    <td>{{ $producto->codigo }}</td>
+                                    <td>{{ $producto->descripcion }}</td>
+                                    <td>{{ $producto->bodega }}</td>
+                                    <td>{{ $producto->seccion }}</td>
+                                    <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->precio }}</td>
+                                    <td>{{ $producto->cantidad }}</td>
+                                    <td>{{ $producto->importe }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+            @elseif(count($productos) < 30 && count($productos) > 15)
+            <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:80px; width:45rem">
+
+                <div>
+
+                    @php
+                        $contadorFilas = 0;
+                    @endphp
+
+                    <table class="" style="font-size: 10px; ">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Bodega</th>
+                                <th>Seccion</th>
+                                <th>Medida</th>
+                                <th>Precio </th>
+                                <th>Cantidad</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach ($productos as $producto)
+                                <tr>
+                                    <td>{{ $producto->codigo }}</td>
+                                    <td>{{ $producto->descripcion }}</td>
+                                    <td>{{ $producto->bodega }}</td>
+                                    <td>{{ $producto->seccion }}</td>
+                                    <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->precio }}</td>
+                                    <td>{{ $producto->cantidad }}</td>
+                                    <td>{{ $producto->importe }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="page-break-after: always"></div>
             @endif
+
         @endif
 
 
@@ -432,17 +515,12 @@
 
 
         <div style=" position: relative; margin-left:44px; margin-top:30px">
-            <div class="card border border-dark"
-                style="position:absolute;left:0px;  width:26rem; height:15rem;">
+            <div class="card border border-dark" style="position:absolute;left:0px;  width:26rem; height:15rem;">
                 <div class="card-body">
 
                     <p class="card-text" style="position:absolute;left:10px;  top:2px; font-size:14px;"><b>Vendedor:
                         </b>
                         {{ $cai->name }} </p>
-
-
-
-
 
 
                     <p class="card-text" style="position:absolute;left:0px;  top:28px; font-size:11px;">
