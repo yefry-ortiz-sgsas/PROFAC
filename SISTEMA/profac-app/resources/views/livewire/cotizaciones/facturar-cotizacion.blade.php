@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-            font-size: 0.8rem;
-            
-            
-          } */
+                font-size: 0.8rem;
+                
+                
+              } */
 
 
             .img-size {
@@ -101,10 +101,11 @@
 
                             <div class="row  mt-4 mb-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                      <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span> </label>
-                                      <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                    <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span>
+                                    </label>
+                                    <select name="vendedor" id="vendedor" class="form-group form-control" required>
                                         <option value="" selected disabled>--Seleccionar un vendedor--</option>
-                                      </select>
+                                    </select>
 
                                 </div>
                             </div>
@@ -206,9 +207,10 @@
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
 
-                                    <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
-                                    <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                        onchange="prueba()" disabled>
+                                    <label for="bodega" class="col-form-label focus-label">Seleccionar
+                                        bodega:</label>
+                                    <select id="bodega" name="bodega" class="form-group form-control"
+                                        style="" onchange="prueba()" disabled>
                                         <option value="" selected disabled>--Seleccione un producto--</option>
                                     </select>
 
@@ -415,7 +417,6 @@
 
     @push('scripts')
         <script>
-           
             var arregloIdInputs = [];
             var numeroInputs = {{ $cotizacion->numeroInputs }};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
@@ -427,23 +428,30 @@
             var diasCredito = 0;
 
 
-           
 
-            for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
 
-                if(!isNaN(arregloIdInputsTemporal[i]) ){
-                    arregloIdInputs.push(arregloIdInputsTemporal[i])
-                }
-                
-                
 
-            }
-            
-            console.log(arregloIdInputs)
+            // for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
+
+            //     if(!isNaN(arregloIdInputsTemporal[i]) ){
+            //         arregloIdInputs.push(arregloIdInputsTemporal[i])
+            //     }
+
+
+
+            // }
+
+            const searchRegExp = /\"/g;
+            arregloIdInputsTemporal = arregloIdInputsTemporal.replace(searchRegExp, '')
+            arregloIdInputs = arregloIdInputsTemporal.split(",");
+
+        
+
+
 
             $('#vendedor').select2({
-                ajax:{
-                    url:'/ventas/corporativo/vendedores',
+                ajax: {
+                    url: '/ventas/corporativo/vendedores',
                     data: function(params) {
                         var query = {
                             search: params.term,
@@ -681,7 +689,11 @@
                         let arrayUnidades = response.data.unidades;
 
 
-                        numeroInputs += 1;
+                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length-1];
+
+
+                        numeroInputs = parseInt(ultimoElemento)+1;
+                       
 
                         //     let arraySecciones  = response.data.secciones;
                         // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
@@ -796,9 +808,9 @@
                         </div>
                         `;
 
-                        arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
+                        arregloIdInputs.push(numeroInputs);
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                        console.log(numeroInputs, arregloIdInputs);
+                     
                         return;
 
                     })
@@ -825,7 +837,7 @@
                     this.totalesGenerales();
                 }
 
-              
+
 
             }
 
@@ -985,6 +997,7 @@
                     let nameForm = "idUnidadVenta" + arregloIdInputs[i];
 
                     let e = document.getElementById(name);
+      
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
 
@@ -996,22 +1009,24 @@
                 let text = arregloIdInputs.toString();
                 data.append("arregloIdInputs", text);
                 const formDataObj = {};
-                data.forEach((value, key) => (formDataObj[key] = value));                 
+                data.forEach((value, key) => (formDataObj[key] = value));
 
-                    const options = {
-                        headers: {"content-type": "application/json"}
+                const options = {
+                    headers: {
+                        "content-type": "application/json"
                     }
+                }
 
 
 
-                axios.post(urlGuardarVenta, formDataObj, options )
+                axios.post(urlGuardarVenta, formDataObj, options)
                     .then(response => {
                         let data = response.data;
 
 
 
                         if (data.idFactura == 0) {
-                            console.log("entro")
+                  
 
                             Swal.fire({
                                 icon: data.icon,

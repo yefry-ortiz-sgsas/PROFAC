@@ -426,6 +426,8 @@
             var arregloIdInputs = [];
             var numeroInputs = {{$cotizacion->numeroInputs}};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
+
+          
         
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
            
@@ -434,16 +436,19 @@
          
             var public_path = "{{ asset('catalogo/') }}";
 
-            for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
+            // for (let i = 0; i < arregloIdInputsTemporal.length; i++) {
 
-                if(!isNaN(arregloIdInputsTemporal[i]) ){
-                    arregloIdInputs.push(arregloIdInputsTemporal[i])
-                }
+            //     if(!isNaN(arregloIdInputsTemporal[i]) ){
+            //         arregloIdInputs.push(arregloIdInputsTemporal[i])
+            //     }                
 
-                
+            // }
 
-}
+            const searchRegExp = /\"/g;
+            arregloIdInputsTemporal = arregloIdInputsTemporal.replace(searchRegExp, '')
+            arregloIdInputs = arregloIdInputsTemporal.split(",");
 
+            
 
             $('#vendedor').select2({
                 ajax: {
@@ -1026,6 +1031,7 @@
                 var data = new FormData($('#crear_venta').get(0));
 
                 let longitudArreglo = arregloIdInputs.length;
+                console.log(arregloIdInputs);
                 for (var i = 0; i < longitudArreglo; i++) {
 
 
@@ -1033,6 +1039,7 @@
                     let nameForm = "idUnidadVenta" + arregloIdInputs[i];
 
                     let e = document.getElementById(name);
+                    console.log(arregloIdInputs[i]);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
                
@@ -1061,8 +1068,7 @@
 
 
                         if (data.idFactura == 0) {
-                            console.log("entro")
-
+                        
                             Swal.fire({
                                 icon: data.icon,
                                 title: data.title,
@@ -1115,6 +1121,7 @@
 
                     })
                     .catch(err => {
+                      
                         document.getElementById("guardar_cotizacion_btn").disabled = false;
                         let data = err.response.data;
                         console.log(err);
@@ -1124,6 +1131,7 @@
                             text: data.text
                         })
                     })
+                    document.getElementById("guardar_cotizacion_btn").disabled = false;
             }
 
 

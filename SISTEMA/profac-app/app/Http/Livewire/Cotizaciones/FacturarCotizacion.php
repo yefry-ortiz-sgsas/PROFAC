@@ -47,13 +47,13 @@ class FacturarCotizacion extends Component
         numeroInputs,
         created_at,
         updated_at,
-        REPLACE(arregloIdInputs,'.$char2.$char.$char2.','.$char2.$char.$char2.')  as "arregloIdInputs"
+        REPLACE(arregloIdInputs,' . $char2 . $char . $char2 . ',' . $char2 . $char . $char2 . ')  as "arregloIdInputs"
         from cotizacion 
         where id =' . $idCotizacion);
 
-        
 
-      
+
+
         $htmlProductos =  $this->generarHTML($idCotizacion);
 
         $urlGuardarVenta = $this->obtenerURL($cotizacion->tipo_venta_id);
@@ -61,7 +61,7 @@ class FacturarCotizacion extends Component
 
 
 
-        return view('livewire.cotizaciones.facturar-cotizacion', compact('cotizacion','htmlProductos','urlGuardarVenta'));
+        return view('livewire.cotizaciones.facturar-cotizacion', compact('cotizacion', 'htmlProductos', 'urlGuardarVenta'));
     }
 
     public function generarHTML($idCotizacion)
@@ -69,7 +69,7 @@ class FacturarCotizacion extends Component
 
         $html = '';
         $htmlSelectUnidadVenta = '';
-        $i = 1;
+        $j = 0;
 
         $productos = DB::SELECT("
         select
@@ -88,15 +88,24 @@ class FacturarCotizacion extends Component
         A.isv_producto,
         A.unidad_medida_venta_id,
         B.ultimo_costo_compra,
-        B.isv as isvTblProducto
+        B.isv as isvTblProducto,
+        C.arregloIdInputs
         from cotizacion_has_producto A
         inner join producto B
         on A.producto_id = B.id
+        inner join cotizacion C
+        on A.cotizacion_id = C.id
         where cotizacion_id =  " . $idCotizacion);
+
+        $arregloInputs = $productos[0]->arregloIdInputs;
+        $arregloInputs = str_replace('"','',$arregloInputs);
+        $arregloInputs = explode(",",$arregloInputs);
+       
 
 
 
         foreach ($productos as $producto) {
+
 
             $unidadesVenta = DB::SELECT(
                 "
@@ -107,22 +116,23 @@ class FacturarCotizacion extends Component
                 from unidad_medida_venta A 
                 inner join unidad_medida B
                 on A.unidad_medida_id = B.id
-        where A.producto_id = " . $producto->producto_id
+                where A.producto_id = " . $producto->producto_id
             );
 
             foreach ($unidadesVenta as $unidad) {
 
                 if ($producto->unidad_medida_venta_id == $unidad->idUnidadVenta) {
-                    $htmlSelectUnidadVenta =$htmlSelectUnidadVenta. '<option selected value="' . $unidad->unidades . '" data-id="' . $unidad->idUnidadVenta . '">' . $unidad->nombre . '</option>';
+                    $htmlSelectUnidadVenta = $htmlSelectUnidadVenta . '<option selected value="' . $unidad->unidades . '" data-id="' . $unidad->idUnidadVenta . '">' . $unidad->nombre . '</option>';
                 } else {
-                    $htmlSelectUnidadVenta =$htmlSelectUnidadVenta. '<option  value="' . $unidad->unidades . '" data-id="' . $unidad->idUnidadVenta . '">' . $unidad->nombre . '</option>';
+                    $htmlSelectUnidadVenta = $htmlSelectUnidadVenta . '<option  value="' . $unidad->unidades . '" data-id="' . $unidad->idUnidadVenta . '">' . $unidad->nombre . '</option>';
                 }
             }
 
 
+            $i = $arregloInputs[$j];
 
-            $html = $html. 
-                '<div id="'.$i.'" class="row no-gutters">
+            $html = $html .
+                '<div id="' . $i . '" class="row no-gutters">
                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                         <div class="d-flex">
 
@@ -154,14 +164,14 @@ class FacturarCotizacion extends Component
 
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                         <label for="precio' . $i . '" class="sr-only">Precio</label>
-                        <input value="'.$producto->precio_unidad.'" type="number" placeholder="Precio Unidad" id="precio' . $i . '"
+                        <input value="' . $producto->precio_unidad . '" type="number" placeholder="Precio Unidad" id="precio' . $i . '"
                             name="precio' . $i . '" class="form-control"  data-parsley-required step="any"
                             autocomplete="off" min="' . $producto->ultimo_costo_compra . '" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isv . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
                     </div>
 
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                         <label for="cantidad' . $i . '" class="sr-only">cantidad</label>
-                        <input value="'.$producto->cantidad.'" type="number" placeholder="Cantidad" id="cantidad' . $i . '"
+                        <input value="' . $producto->cantidad . '" type="number" placeholder="Cantidad" id="cantidad' . $i . '"
                             name="cantidad' . $i . '" class="form-control" min="0" data-parsley-required
                             autocomplete="off" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isvTblProducto . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
                     </div>
@@ -182,7 +192,7 @@ class FacturarCotizacion extends Component
 
                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                         <label for="subTotal' . $i . '" class="sr-only">Sub Total</label>
-                        <input value="'.$producto->sub_total.'" type="number" placeholder="Sub total producto" id="subTotal' . $i . '"
+                        <input value="' . $producto->sub_total . '" type="number" placeholder="Sub total producto" id="subTotal' . $i . '"
                             name="subTotal' . $i . '" class="form-control" min="0" step="any"
                             autocomplete="off"
                             readonly >
@@ -190,7 +200,7 @@ class FacturarCotizacion extends Component
 
                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                         <label for="isvProducto' . $i . '" class="sr-only">ISV</label>
-                        <input value="'.$producto->isv.'" type="number" placeholder="ISV" id="isvProducto' . $i . '"
+                        <input value="' . $producto->isv . '" type="number" placeholder="ISV" id="isvProducto' . $i . '"
                             name="isvProducto' . $i . '" class="form-control" min="0" step="any"
                             autocomplete="off"
                             readonly >
@@ -198,40 +208,41 @@ class FacturarCotizacion extends Component
 
                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                         <label for="total' . $i . '" class="sr-only">Total</label>
-                        <input value="'.$producto->total.'" type="number" placeholder="Total del producto" id="total' . $i . '"
+                        <input value="' . $producto->total . '" type="number" placeholder="Total del producto" id="total' . $i . '"
                             name="total' . $i . '" class="form-control" min="1"  step="any"
                             autocomplete="off"
                             readonly >
                     </div>
 
-                    <input id="idBodega'.$i.'" name="idBodega' . $i . '" type="hidden" value="'.$producto->bodega_id.'">
+                    <input id="idBodega' . $i . '" name="idBodega' . $i . '" type="hidden" value="' . $producto->bodega_id . '">
                     <input id="idSeccion' . $i . '" name="idSeccion' . $i . '" type="hidden" value="' . $producto->seccion_id . '">
                     <input id="restaInventario' . $i . '" name="restaInventario' . $i . '" type="hidden" value="' . $producto->resta_inventario . '">
                     <input id="isv' . $i . '" name="isv' . $i . '" type="hidden" value="' . $producto->isvTblProducto . '">                
 
                     </div>';
-            $htmlSelectUnidadVenta='';        
-            $i++;
+            $htmlSelectUnidadVenta = '';
+            $j++;
         }
 
         return  $html;
     }
 
-    public function obtenerURL($tipoVenta){
-        $url='';
+    public function obtenerURL($tipoVenta)
+    {
+        $url = '';
 
         switch ($tipoVenta) {
             case 1:
-                $url='/ventas/corporativo/guardar';
+                $url = '/ventas/corporativo/guardar';
                 break;
             case 2:
-                $url='/ventas/estatal/guardar';
-                break; 
+                $url = '/ventas/estatal/guardar';
+                break;
             case 3:
-                $url='/exonerado/venta/guardar';
-                break;   
+                $url = '/exonerado/venta/guardar';
+                break;
         }
 
-       return  $url;
+        return  $url;
     }
 }

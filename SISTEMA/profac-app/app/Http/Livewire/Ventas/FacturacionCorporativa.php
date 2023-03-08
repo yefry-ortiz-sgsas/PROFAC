@@ -306,7 +306,7 @@ class FacturacionCorporativa extends Component
             ]);
 
 
-
+            
 
             if ($validator->fails()) {
                 return response()->json([

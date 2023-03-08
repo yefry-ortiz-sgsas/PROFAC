@@ -280,7 +280,7 @@ class FacturacionEstatal extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',
+          
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:2,2',
             'ordenCompra'=>'required'
@@ -289,11 +289,11 @@ class FacturacionEstatal extends Component
 
         ]);
 
-        // dd($request->all());
+      
 
         if ($validator->fails()) {
             return response()->json([
-                'mensaje' => 'Ha ocurrido un error al crear la compra.',
+                'mensaje' => 'Ha ocurrido un error al intentar crear la venta.',
                 'errors' => $validator->errors()
             ], 406);
         }
