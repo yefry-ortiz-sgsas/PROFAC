@@ -66,7 +66,7 @@ class FacturarCotizacionGobierno extends Component
 
         $html = '';
         $htmlSelectUnidadVenta = '';
-        $i = 1;
+        $j = 0;
 
         $productos = DB::SELECT("
         select
@@ -84,12 +84,19 @@ class FacturarCotizacionGobierno extends Component
         A.resta_inventario,
         A.isv_producto,
         A.unidad_medida_venta_id,
-        FORMAT(B.ultimo_costo_compra,2) as ultimo_costo_compra,
-        B.isv as isvTblProducto
+        B.ultimo_costo_compra,
+        B.isv as isvTblProducto,
+        C.arregloIdInputs
         from cotizacion_has_producto A
         inner join producto B
         on A.producto_id = B.id
+        inner join cotizacion C
+        on A.cotizacion_id = C.id
         where cotizacion_id =  " . $idCotizacion);
+
+        $arregloInputs = $productos[0]->arregloIdInputs;
+        $arregloInputs = str_replace('"','',$arregloInputs);
+        $arregloInputs = explode(",",$arregloInputs);
 
 
 
@@ -116,7 +123,7 @@ class FacturarCotizacionGobierno extends Component
                 }
             }
 
-
+            $i = $arregloInputs[$j];
 
             $html = $html. 
                 '<div id="'.$i.'" class="row no-gutters">
@@ -224,7 +231,7 @@ class FacturarCotizacionGobierno extends Component
 
                     </div>';
             $htmlSelectUnidadVenta='';        
-            $i++;
+            $j++;
         }
 
         return  $html;
