@@ -506,7 +506,7 @@
                 let idProducto = id;
                 $('#bodega').select2({
                 ajax: {
-                    url: '/ventas/listar/bodegas/'+idProducto,
+                    url: '/cotizacion/listar/bodegas/'+idProducto,
                     data: function(params) {
                         var query = {
                             search: params.term,
