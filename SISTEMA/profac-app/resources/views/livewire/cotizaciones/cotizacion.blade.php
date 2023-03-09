@@ -131,7 +131,7 @@
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: none;">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
@@ -151,13 +151,13 @@
                                 </div>
 
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: none;">
                                     <div class="form-group">
                                         <label for="fecha_vencimiento"
                                             class="col-form-label focus-label text-warning">Fecha de vencimiento:
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
-                                            name="fecha_vencimiento" value="" data-parsley-required
+                                            name="fecha_vencimiento" value=""
                                             min="{{ date('Y-m-d') }}" readonly>
                                     </div>
                                 </div>
