@@ -166,7 +166,7 @@ class Cotizacion extends Component
 
         $validator = Validator::make($request->all(), [
 
-            'fecha_vencimiento' => 'required',
+
 
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
@@ -205,12 +205,12 @@ class Cotizacion extends Component
             $cotizacion->nombre_cliente = $request->nombre_cliente_ventas;
             $cotizacion->RTN = $request->rtn_ventas;
             $cotizacion->fecha_emision = $request->fecha_emision;
-            $cotizacion->fecha_vencimiento = $request->fecha_vencimiento;
+            $cotizacion->fecha_vencimiento = $request->fecha_emision;
             $cotizacion->sub_total = $request->subTotalGeneral;
             $cotizacion->isv= $request->isvGeneral;
             $cotizacion->total = $request->totalGeneral;
             $cotizacion->cliente_id = $request->seleccionarCliente;
-            $cotizacion->tipo_venta_id = $request->tipo_venta_id;
+            $cotizacion->tipo_venta_id = 1;
             $cotizacion->users_id = Auth::user()->id;
             $cotizacion->arregloIdInputs = json_encode($request->arregloIdInputs);
             $cotizacion->numeroInputs = $request->numeroInputs;
