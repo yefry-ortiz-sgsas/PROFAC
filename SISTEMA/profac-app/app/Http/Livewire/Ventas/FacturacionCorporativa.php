@@ -287,10 +287,13 @@ class FacturacionCorporativa extends Component
     {
 
         try {
+  
 
             $validator = Validator::make($request->all(), [
 
                 'fecha_vencimiento' => 'required',
+                'subTotalGeneralGrabado' => 'required',
+                'subTotalGeneralGrabadoMostrar' => 'required',
                 'subTotalGeneral' => 'required',
                 'isvGeneral' => 'required',
                 'totalGeneral' => 'required',
@@ -470,7 +473,9 @@ class FacturacionCorporativa extends Component
                 $factura->numero_secuencia_cai=$numeroSecuencia;
                 $factura->nombre_cliente = $request->nombre_cliente_ventas;
                 $factura->rtn=$request->rtn_ventas;
-                $factura->sub_total=$request->subTotalGeneral;
+                $factura->sub_total = $request->subTotalGeneral;
+                $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+                $factura->sub_total_excento=$request->subTotalGeneralExcento;
                 $factura->isv=$request->isvGeneral;
                 $factura->total=$request->totalGeneral;
                 $factura->credito=$request->totalGeneral;
@@ -711,6 +716,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $factura->sub_total_excento=$request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -851,6 +858,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $factura->sub_total_excento=$request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -1083,20 +1092,24 @@ class FacturacionCorporativa extends Component
         where factura.id = ".$idFactura);
 
        $importes = DB::SELECTONE("
-       select
+        select
         total,
         isv,
-        sub_total
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento     
         from factura
         where id = ".$idFactura);
 
 
         $importesConCentavos= DB::SELECTONE("
-            select
-            FORMAT(total,2) as total,
-            FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
-            from factura where factura.id = ".$idFactura);
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+        from factura where factura.id = ".$idFactura);
 
 
 
@@ -1106,8 +1119,9 @@ class FacturacionCorporativa extends Component
             B.producto_id as codigo,
             concat(C.nombre) as descripcion,
             UPPER(J.nombre) as medida,
-            H.nombre as bodega,
-            F.descripcion as seccion,
+            if(C.isv = 0, 'SI' , 'NO' ) as excento,
+            H.nombre as bodega, 
+            REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
             FORMAT(B.sub_total/B.cantidad,2) as precio,
             FORMAT(sum(B.cantidad_s),2) as cantidad,
             FORMAT(sum(B.sub_total_s),2) as importe
@@ -1135,14 +1149,15 @@ class FacturacionCorporativa extends Component
         union
 
         select
-            D.id,
-            D.nombre as descripcion,
-            F.nombre as medida,
-            'Pendiente',
-            'Pendiente',
-            FORMAT(C.precio,2) as precio,
-            FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
+        D.id,
+        D.nombre as descripcion,
+        F.nombre as medida,
+        if(C.isv = 0, 'SI' , 'NO' ) as excento,
+        'N/A',
+        'N/A',
+        FORMAT(C.precio,2) as precio,
+        FORMAT(C.cantidad,2) as cantidad,
+        FORMAT(C.sub_total,2) as sub_total
         from factura A
         inner join vale B
         on A.id = B.factura_id
@@ -1157,7 +1172,6 @@ class FacturacionCorporativa extends Component
         where B.estado_id=1 and A.id = ".$idFactura
 
         );
-
         // for ($i=0; $i < 15 ; $i++) {
         //     echo($productos[$i]);
         // }
@@ -1243,21 +1257,25 @@ class FacturacionCorporativa extends Component
         on factura.cliente_id = cliente.id
         where factura.id = ".$idFactura);
 
-       $importes = DB::SELECTONE("
-       select
+        $importes = DB::SELECTONE("
+        select
         total,
         isv,
-        sub_total
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento     
         from factura
         where id = ".$idFactura);
 
 
         $importesConCentavos= DB::SELECTONE("
-            select
-            FORMAT(total,2) as total,
-            FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
-            from factura where factura.id = ".$idFactura);
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+        from factura where factura.id = ".$idFactura);
 
 
 
@@ -1267,7 +1285,8 @@ class FacturacionCorporativa extends Component
             B.producto_id as codigo,
             concat(C.nombre) as descripcion,
             UPPER(J.nombre) as medida,
-            H.nombre as bodega,
+            if(C.isv = 0, 'SI' , 'NO' ) as excento,
+            concat(H.nombre,'-', REPLACE(F.descripcion,'Seccion','')) as bodega, 
             F.descripcion as seccion,
             FORMAT(B.sub_total/B.cantidad,2) as precio,
             FORMAT(sum(B.cantidad_s),2) as cantidad,
@@ -1296,14 +1315,15 @@ class FacturacionCorporativa extends Component
         union
 
         select
-            D.id,
-            D.nombre as descripcion,
-            F.nombre as medida,
-            'Pendiente',
-            'Pendiente',
-            FORMAT(C.precio,2) as precio,
-            FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
+        D.id,
+        D.nombre as descripcion,
+        F.nombre as medida,
+        if(C.isv = 0, 'SI' , 'NO' ) as excento,
+        'Pendiente',
+        'Pendiente',
+        FORMAT(C.precio,2) as precio,
+        FORMAT(C.cantidad,2) as cantidad,
+        FORMAT(C.sub_total,2) as sub_total
         from factura A
         inner join vale B
         on A.id = B.factura_id
@@ -1448,6 +1468,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $factura->sub_total_excento=$request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;

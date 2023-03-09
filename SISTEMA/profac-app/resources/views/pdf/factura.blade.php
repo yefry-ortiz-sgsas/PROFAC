@@ -154,6 +154,7 @@
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
+                                <th>Excento</th>
                                 <th>Precio </th>
                                 <th>Cantidad</th>
                                 <th>Importe</th>
@@ -167,7 +168,8 @@
                                     <td>{{ $producto->descripcion }}</td>
                                     <td>{{ $producto->bodega }}</td>
                                     <td>{{ $producto->seccion }}</td>
-                                    <td>{{ $producto->medida }}</td>
+                                     <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                     <td>{{ $producto->precio }}</td>
                                     <td>{{ $producto->cantidad }}</td>
                                     <td>{{ $producto->importe }}</td>
@@ -205,6 +207,7 @@
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
+                                <th>Excento</th>
                                 <th>Precio </th>
                                 <th>Cantidad</th>
                                 <th>Importe</th>
@@ -218,7 +221,8 @@
                                     <td>{{ $producto->descripcion }}</td>
                                     <td>{{ $producto->bodega }}</td>
                                     <td>{{ $producto->seccion }}</td>
-                                    <td>{{ $producto->medida }}</td>
+                                                                        <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                     <td>{{ $producto->precio }}</td>
                                     <td>{{ $producto->cantidad }}</td>
                                     <td>{{ $producto->importe }}</td>
@@ -270,6 +274,7 @@
                                             <th>Bodega</th>
                                             <th>Seccion</th>
                                             <th>Medida</th>
+                                <th>Excento</th>
                                             <th>Precio </th>
                                             <th>Cantidad</th>
                                             <th>Importe</th>
@@ -283,7 +288,8 @@
                                                 <td>{{ $producto->descripcion }}</td>
                                                 <td>{{ $producto->bodega }}</td>
                                                 <td>{{ $producto->seccion }}</td>
-                                                <td>{{ $producto->medida }}</td>
+                                                                                    <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                                 <td>{{ $producto->precio }}</td>
                                                 <td>{{ $producto->cantidad }}</td>
                                                 <td>{{ $producto->importe }}</td>
@@ -338,6 +344,7 @@
                                             <th>Bodega</th>
                                             <th>Seccion</th>
                                             <th>Medida</th>
+                                <th>Excento</th>
                                             <th>Precio </th>
                                             <th>Cantidad</th>
                                             <th>Importe</th>
@@ -351,7 +358,8 @@
                                                 <td>{{ $producto->descripcion }}</td>
                                                 <td>{{ $producto->bodega }}</td>
                                                 <td>{{ $producto->seccion }}</td>
-                                                <td>{{ $producto->medida }}</td>
+                                                                                    <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                                 <td>{{ $producto->precio }}</td>
                                                 <td>{{ $producto->cantidad }}</td>
                                                 <td>{{ $producto->importe }}</td>
@@ -380,6 +388,7 @@
                                     <th>Bodega</th>
                                     <th>Seccion</th>
                                     <th>Medida</th>
+                                <th>Excento</th>
                                     <th>Precio </th>
                                     <th>Cantidad</th>
                                     <th>Importe</th>
@@ -393,7 +402,8 @@
                                         <td>{{ $producto->descripcion }}</td>
                                         <td>{{ $producto->bodega }}</td>
                                         <td>{{ $producto->seccion }}</td>
-                                        <td>{{ $producto->medida }}</td>
+                                                                            <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                         <td>{{ $producto->precio }}</td>
                                         <td>{{ $producto->cantidad }}</td>
                                         <td>{{ $producto->importe }}</td>
@@ -432,6 +442,7 @@
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
+                                <th>Excento</th>
                                 <th>Precio </th>
                                 <th>Cantidad</th>
                                 <th>Importe</th>
@@ -445,7 +456,8 @@
                                     <td>{{ $producto->descripcion }}</td>
                                     <td>{{ $producto->bodega }}</td>
                                     <td>{{ $producto->seccion }}</td>
-                                    <td>{{ $producto->medida }}</td>
+                                                                        <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                     <td>{{ $producto->precio }}</td>
                                     <td>{{ $producto->cantidad }}</td>
                                     <td>{{ $producto->importe }}</td>
@@ -472,6 +484,7 @@
                                 <th>Bodega</th>
                                 <th>Seccion</th>
                                 <th>Medida</th>
+                                <th>Excento</th>
                                 <th>Precio </th>
                                 <th>Cantidad</th>
                                 <th>Importe</th>
@@ -485,7 +498,8 @@
                                     <td>{{ $producto->descripcion }}</td>
                                     <td>{{ $producto->bodega }}</td>
                                     <td>{{ $producto->seccion }}</td>
-                                    <td>{{ $producto->medida }}</td>
+                                                                        <td>{{ $producto->medida }}</td>
+                                    <td>{{ $producto->excento }}</td>
                                     <td>{{ $producto->precio }}</td>
                                     <td>{{ $producto->cantidad }}</td>
                                     <td>{{ $producto->importe }}</td>
@@ -581,13 +595,13 @@
                         <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe
                             Gravado: </p>
                         <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:16px;">L.
-                            {{ $importesConCentavos->sub_total }}</p>
+                            {{ $importesConCentavos->sub_total_grabado }}</p>
                     </div>
 
                     <div>
                         <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:16px;">Importe
                             Exento: </p>
-                        <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:16px;">L. 0.00
+                        <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:16px;">L. {{ $importesConCentavos->sub_total_excento }}
                         </p>
                     </div>
 
