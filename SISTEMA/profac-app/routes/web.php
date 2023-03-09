@@ -361,6 +361,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/proforma/imprimir/{id}', [Cotizacion::class, 'imprimirProforma']);
     Route::get('/cotizacion/facturar/{id}', FacturarCotizacion::class);
     Route::get('/cotizacion/facturar/gobierno/{id}', FacturarCotizacionGobierno::class);
+    Route::get('/cotizacion/listar/bodegas/{idProducto}', [Cotizacion::class, 'listarBodegas']);
 
 
     //--------------------------------------------------------Ajustes------------------------------------------------------//

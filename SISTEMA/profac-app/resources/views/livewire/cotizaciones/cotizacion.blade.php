@@ -135,7 +135,7 @@
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
-                                        data-parsley-required onchange="validarFechaPago()">
+                                         onchange="validarFechaPago()">
                                     </select>
                                 </div>
 
@@ -506,7 +506,7 @@
                 let idProducto = id;
                 $('#bodega').select2({
                 ajax: {
-                    url: '/ventas/listar/bodegas/'+idProducto,
+                    url: '/cotizacion/listar/bodegas/'+idProducto,
                     data: function(params) {
                         var query = {
                             search: params.term,
