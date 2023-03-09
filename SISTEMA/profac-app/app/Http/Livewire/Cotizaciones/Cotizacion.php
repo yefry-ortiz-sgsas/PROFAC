@@ -175,7 +175,6 @@ class Cotizacion extends Component
             'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
-            'tipoPagoVenta' => 'required',
             'bodega' => 'required',
             'seleccionarProducto' => 'required',
 
