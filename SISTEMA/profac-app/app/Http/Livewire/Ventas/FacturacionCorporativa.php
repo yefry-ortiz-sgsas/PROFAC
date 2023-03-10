@@ -555,7 +555,7 @@ class FacturacionCorporativa extends Component
 
                // dd($factura);
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$i);
             };
 
             if($request->tipoPagoVenta==2 ){//si el tipo de pago es credito
@@ -563,8 +563,9 @@ class FacturacionCorporativa extends Component
             }
 
 
-        
-            ModelVentaProducto::insert($this->arrayProductos);
+           
+              
+            ModelVentaProducto::insert($this->arrayProductos);   
             ModelLogTranslados::insert($this->arrayLogs);
 
 
@@ -917,7 +918,7 @@ class FacturacionCorporativa extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$indice)
     {
         try {
 
@@ -994,6 +995,7 @@ class FacturacionCorporativa extends Component
                     "factura_id" => $idFactura,
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
+                    "indice" => $indice,
                     "seccion_id" => $idSeccion,
                     "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
                     "seccion_id" => $idSeccion,
@@ -1145,7 +1147,8 @@ class FacturacionCorporativa extends Component
         inner join bodega H
         on G.bodega_id = H.id
         where A.id=".$idFactura."
-        group by codigo, descripcion, medida, bodega, seccion, precio
+        group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
+        order by B.indice asc
 
         union
 
