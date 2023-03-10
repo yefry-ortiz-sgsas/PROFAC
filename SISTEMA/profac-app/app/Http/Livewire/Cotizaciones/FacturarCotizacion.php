@@ -39,6 +39,8 @@ class FacturarCotizacion extends Component
         fecha_emision,
         fecha_vencimiento,
         sub_total,
+        sub_total_grabado,
+        sub_total_excento,
         isv,
         total,
         cliente_id,

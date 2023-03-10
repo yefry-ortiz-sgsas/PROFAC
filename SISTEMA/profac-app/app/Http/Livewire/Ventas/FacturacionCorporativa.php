@@ -289,6 +289,7 @@ class FacturacionCorporativa extends Component
         try {
   
 
+
             $validator = Validator::make($request->all(), [
 
                 'fecha_vencimiento' => 'required',
@@ -359,8 +360,7 @@ class FacturacionCorporativa extends Component
             $arrayTemporal = $request->arregloIdInputs;
             $arrayInputs = explode(',', $arrayTemporal);
 
-
-
+            
             $numeroSecuencia = null;
             $mensaje = "";
             $flag = false;
@@ -523,7 +523,7 @@ class FacturacionCorporativa extends Component
 
             }
 
-
+           
 
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
@@ -563,14 +563,15 @@ class FacturacionCorporativa extends Component
             }
 
 
-
-            // dd($this->arrayProductos);
+        
             ModelVentaProducto::insert($this->arrayProductos);
             ModelLogTranslados::insert($this->arrayLogs);
 
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             DB::commit();
+
+        
 
            /*  <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> */
             return response()->json([

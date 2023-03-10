@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-                font-size: 0.8rem;
-                
-                
-              } */
+                    font-size: 0.8rem;
+                    
+                    
+                  } */
 
 
             .img-size {
@@ -351,47 +351,87 @@
 
 
                             <hr>
+
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneral">Sub Total L.<span
+                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
                                             class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input value="{{ $cotizacion->sub_total }}" type="number" step="any"
-                                        placeholder="Sub total " id="subTotalGeneral" name="subTotalGeneral"
-                                        class="form-control" min="0" data-parsley-required autocomplete="off"
-                                        readonly>
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar" value="{{ $cotizacion->sub_total}}"
+                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
+
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"  value="{{ $cotizacion->sub_total}}"
+                                        required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneral">ISV L.<span
-                                            class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
+                                        Grabado L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input value="{{ $cotizacion->isv }}" type="number" step="any"
-                                        placeholder="ISV " id="isvGeneral" name="isvGeneral" class="form-control"
-                                        min="0" data-parsley-required autocomplete="off" readonly>
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
+                                        name="subTotalGeneralGrabadoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off"   value="{{$cotizacion->sub_total_grabado}}" readonly>
+
+                                    <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
+                                    value="{{$cotizacion->sub_total_grabado}}" required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneral">Total L.<span
+                                    <label class="col-form-label" for="subTotalGeneralExcentoMostrar">Sub Total
+                                        Excento L.<span class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
+                                        name="subTotalGeneralExcentoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off" value="{{$cotizacion->sub_total_excento}}" readonly>
+
+                                    <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
+                                    value="{{$cotizacion->sub_total_excento}}" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
                                             class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input value="{{ $cotizacion->total }}" type="number" step="any"
-                                        placeholder="Total  " id="totalGeneral" name="totalGeneral"
-                                        class="form-control" min="0" data-parsley-required autocomplete="off"
-                                        readonly>
+                                    <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                        name="isvGeneralMostrar" class="form-control"  value="{{$cotizacion->isv}}" data-parsley-required
+                                        autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="{{$cotizacion->isv}}" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                            class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Total  " id="totalGeneralMostrar"
+                                        name="totalGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" value="{{$cotizacion->total}}" readonly>
+
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value="{{$cotizacion->total}}"
+                                        required>
                                 </div>
                             </div>
 
@@ -446,11 +486,11 @@
             arregloIdInputs = arregloIdInputsTemporal.split(",");
 
             for (let z = 0; z < arregloIdInputs.length; z++) {
-               arregloIdInputs[z] = parseInt(arregloIdInputs[z]);
-                
+                arregloIdInputs[z] = parseInt(arregloIdInputs[z]);
+
             }
 
-        
+
 
 
 
@@ -694,11 +734,11 @@
                         let arrayUnidades = response.data.unidades;
 
 
-                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length-1];
+                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length - 1];
 
 
-                        numeroInputs = parseInt(ultimoElemento)+1;
-                       
+                        numeroInputs = parseInt(ultimoElemento) + 1;
+
 
                         //     let arraySecciones  = response.data.secciones;
                         // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
@@ -815,7 +855,7 @@
 
                         arregloIdInputs.push(numeroInputs);
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                     
+
                         return;
 
                     })
@@ -887,19 +927,71 @@
 
                 let totalGeneralValor = new Number(0);
                 let totalISV = new Number(0);
-                let subTotalGeneralValor = new Number(0);
-
+                let subTotalGeneralGrabadoValor = new Number(0);
+                let subTotalGeneralExcentoValor = new Number(0);
+                let subTotalGeneral = new Number(0);
+                let subTotalFila = 0;
+                let isvFila = 0;
 
                 for (let i = 0; i < arregloIdInputs.length; i++) {
-                    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+
+                    subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                    isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+
+                    ;
+
+                    if (isvFila == 0) {
+                        subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    } else if (subTotalFila > 0) {
+                        subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    }
+
+                    subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+
+
                     totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
                     totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
                 }
 
-                document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
+
+
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
+                document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneral)
+
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralGrabadoValor)
+
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralExcentoValor)
+
                 document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalISV)
+
                 document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalGeneralValor)
 
 
 
@@ -1002,7 +1094,7 @@
                     let nameForm = "idUnidadVenta" + arregloIdInputs[i];
 
                     let e = document.getElementById(name);
-      
+
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
 
@@ -1031,7 +1123,7 @@
 
 
                         if (data.idFactura == 0) {
-                  
+
 
                             Swal.fire({
                                 icon: data.icon,

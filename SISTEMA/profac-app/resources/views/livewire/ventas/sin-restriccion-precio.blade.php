@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-            font-size: 0.8rem;
-            
-            
-          } */
+                font-size: 0.8rem;
+                
+                
+              } */
 
 
             .img-size {
@@ -93,7 +93,8 @@
 
                             <input type="hidden" id="restriccion" name="restriccion" value="2">
                             <input name="idComprobante" id="idComprobante" type="hidden" value="">
-                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value="" required>
+                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value=""
+                                required>
                             <div class="row">
                                 <div class="col-6 col-sm-6 col-md-2 col-lg-2 col-xl-2">
                                     <label class="col-form-label text-danger" for="numero_venta"
@@ -370,46 +371,86 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="Sub total " id="subTotalGeneralMostrar"
-                                        name="subTotalGeneralMostrar" class="form-control"  data-parsley-required
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
+                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
                                         autocomplete="off" readonly>
 
-                                        <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value="" required>   
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
+                                        required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
+                                        Grabado L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="ISV " id="isvGeneralMostrar" name="isvGeneralMostrar"
-                                        class="form-control" data-parsley-required autocomplete="off"
-                                        readonly>
-                                        <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>       
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
+                                        name="subTotalGeneralGrabadoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off" readonly>
+
+                                    <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
+                                        value="" required>
                                 </div>
                             </div>
 
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="subTotalGeneralExcentoMostrar">Sub Total
+                                        Excento L.<span class="text-danger">*</span></label>
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text"  placeholder="Total  " id="totalGeneralMostrar"
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
+                                        name="subTotalGeneralExcentoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off" readonly>
+
+                                    <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
+                                        value="" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
+                                            class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                        name="isvGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                            class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Total  " id="totalGeneralMostrar"
                                         name="totalGeneralMostrar" class="form-control" data-parsley-required
                                         autocomplete="off" readonly>
 
-                                        <input id="totalGeneral" name="totalGeneral" type="hidden" value="" required>            
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
+                                        required>
                                 </div>
                             </div>
+
 
 
                             <div class="row">
@@ -429,65 +470,69 @@
 
 
 
-    <!-- Modal Solictar codigo -->
+        <!-- Modal Solictar codigo -->
 
-    <div class="modal fade" id="modal_solicitar_codigo" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel"  aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLabel">Solicitar código</h3>
-                
+        <div class="modal fade" id="modal_solicitar_codigo" data-backdrop="static" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Solicitar código</h3>
+
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <button class="btn btn-primary  btn-large-dim" type="button"
+                                onclick="solicitarCodigo()"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+
+                        <div id="div_imprimir" class="text-center mt-2 d-none">
+                            <a id="btn_imprimir" target="_blank" class="btn add-btn btn-success text-white"><i
+                                    class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+
+                    </div>
+
+
+                </div>
             </div>
-
-            <div class="modal-body">
-              <div class="text-center">
-                  <button class="btn btn-primary  btn-large-dim" type="button" onclick="solicitarCodigo()"><i class="fa-solid fa-paper-plane"></i></button>
-              </div>
-
-              <div id="div_imprimir" class="text-center mt-2 d-none"  >
-                <a id="btn_imprimir" target="_blank" class="btn add-btn btn-success text-white" ><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-
-              </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
-               
-            </div>
-
-
         </div>
-    </div>
-</div>
 
 
-<!-- Modal Ingresar codigo -->
-<div class="modal fade" id="modalPermiso" data-backdrop="static" tabindex="1" role="dialog" aria-labelledby="modalPermisoTitle" >
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="1">Ingresar código</h3>
+        <!-- Modal Ingresar codigo -->
+        <div class="modal fade" id="modalPermiso" data-backdrop="static" tabindex="1" role="dialog"
+            aria-labelledby="modalPermisoTitle">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="1">Ingresar código</h3>
 
-      </div>
-      <div class="modal-body">
-          <form id="verificarCodigoForm" autocomplete="off" data-parsley-validate>
-             
-                      <label for="codigo" class="col-form-label focus-label">Código de autorización:<span class="text-danger">*</span></label>
-                      <input class="form-control" required type="text" id="codigo"
-                          name="codigo" data-parsley-required>
-                 
-          </form>
-          <span id="mensajeCodigo" class="text-danger d-none">Código incorrecto</span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
-        <button type="submit" form="verificarCodigoForm" class="btn btn-primary">Verificar</button>
-      </div>
-    </div>
-  </div>
-</div>
+                    </div>
+                    <div class="modal-body">
+                        <form id="verificarCodigoForm" autocomplete="off" data-parsley-validate>
+
+                            <label for="codigo" class="col-form-label focus-label">Código de autorización:<span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" required type="text" id="codigo" name="codigo"
+                                data-parsley-required>
+
+                        </form>
+                        <span id="mensajeCodigo" class="text-danger d-none">Código incorrecto</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+                        <button type="submit" form="verificarCodigoForm" class="btn btn-primary">Verificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -498,10 +543,10 @@
 
     @push('scripts')
         <script>
-
-        $( document ).ready(function() {
-            $('#modal_solicitar_codigo').modal('show')
-        });
+            $( document ).ready(function() {
+                $('#modal_solicitar_codigo').modal('show')
+            });
+            
             var numeroInputs = 0;
             var arregloIdInputs = [];
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
@@ -509,11 +554,11 @@
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
-            var idAutorizacion=0;
+            var idAutorizacion = 0;
             var idFactura = 0;
 
-            
-            
+
+
 
 
             $('#vendedor').select2({
@@ -571,54 +616,56 @@
                 }
             });
 
-            function solicitarCodigo(){
+            function solicitarCodigo() {
                 axios.get('/ventas/solicitud/codigo')
-                .then( response=>{
+                    .then(response => {
 
-             
-                    $("#modal_solicitar_codigo").removeClass("fade").modal("hide");
-                    $("#modalPermiso").modal("show").addClass("fade");
-                    
-                    
-                    
 
-                })
-                .catch(err=>{
-                    console.log(err);
-                })
+                        $("#modal_solicitar_codigo").removeClass("fade").modal("hide");
+                        $("#modalPermiso").modal("show").addClass("fade");
+
+
+
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             }
 
             $(document).on('submit', '#verificarCodigoForm', function(event) {
 
-            event.preventDefault();
-            ocultarModalVerificar();
+                event.preventDefault();
+                ocultarModalVerificar();
 
             });
 
-            function ocultarModalVerificar(){
+            function ocultarModalVerificar() {
                 let codigo = document.getElementById('codigo').value;
 
-                axios.post('/ventas/verificar/codigo',{codigo:codigo})
-                .then( response=>{
-                   
-                    let data = response.data;
-                    if(data.estado == 1){
-                        $("#modalPermiso").removeClass("fade").modal("hide");
-                        document.getElementById('mensajeCodigo').classList.add('d-none')
-                        document.getElementById('codigo_autorizacion').value = data.idAutorizacion;
-                    }else{
-                        document.getElementById('mensajeCodigo').classList.remove('d-none')
-                        document.getElementById('codigo_autorizacion').value = '';
-                    }
-                })
-                .catch( err=>{
-                    console.log(err);
-                })
+                axios.post('/ventas/verificar/codigo', {
+                        codigo: codigo
+                    })
+                    .then(response => {
+
+                        let data = response.data;
+                        if (data.estado == 1) {
+                            $("#modalPermiso").removeClass("fade").modal("hide");
+                            document.getElementById('mensajeCodigo').classList.add('d-none')
+                            document.getElementById('codigo_autorizacion').value = data.idAutorizacion;
+                        } else {
+                            document.getElementById('mensajeCodigo').classList.remove('d-none')
+                            document.getElementById('codigo_autorizacion').value = '';
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             }
 
-           
+
             function prueba() {
-                
+
                 var element = document.getElementById('botonAdd');
                 element.classList.remove("d-none");
 
@@ -957,82 +1004,143 @@
 
             }
 
-            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad,id ,idRestaInventario) {
+            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
-valorInputPrecio = idPrecio.value;
-valorInputCantidad = idCantidad.value;
-valorSelectUnidad = idUnidad.value;
+                valorInputPrecio = idPrecio.value;
+                valorInputCantidad = idCantidad.value;
+                valorSelectUnidad = idUnidad.value;
 
-if (valorInputPrecio && valorInputCantidad) {
+                if (valorInputPrecio && valorInputCantidad) {
 
-    let subTotal = valorInputPrecio * (valorInputCantidad*valorSelectUnidad);
-    let isv = subTotal * (isvProducto / 100);
-    let total = subTotal + subTotal * (isvProducto / 100);
+                    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                    let isv = subTotal * (isvProducto / 100);
+                    let total = subTotal + subTotal * (isvProducto / 100);
 
-    document.getElementById('total' + id).value = total.toFixed(3);
-    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(total)
+                    document.getElementById('total' + id).value = total.toFixed(3);
+                    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(total)
 
-    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
-    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotal)
-    
-   
-    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
-    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isv)
-
-    
-    idRestaInventario.value = valorInputCantidad*valorSelectUnidad;
-    this.totalesGenerales();
-
-
-
-}
+                    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(subTotal)
 
 
-return 0;
+                    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(isv)
 
 
-}
-
-function totalesGenerales() {
-
-//console.log(arregloIdInputs);
-
-if (numeroInputs == 0) {
-    return;
-}
+                    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
+                    this.totalesGenerales();
 
 
 
-let totalGeneralValor = new Number(0);
-let totalISV = new Number(0);
-let subTotalGeneralValor = new Number(0);
+                }
 
 
-for (let i = 0; i < arregloIdInputs.length; i++) {
-    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
-    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
+                return 0;
 
-}
 
-document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
-document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotalGeneralValor)
+            }
 
-document.getElementById('isvGeneral').value = totalISV.toFixed(3); 
-document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalISV)
 
-document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
-document.getElementById('totalGeneralMostrar').value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalGeneralValor)
+            function totalesGenerales() {
+
+                //console.log(arregloIdInputs);
+
+                if (numeroInputs == 0) {
+                    return;
+                }
 
 
 
+                let totalGeneralValor = new Number(0);
+                let totalISV = new Number(0);
+                let subTotalGeneralGrabadoValor = new Number(0);
+                let subTotalGeneralExcentoValor = new Number(0);
+                let subTotalGeneral = new Number(0);
+                let subTotalFila = 0;
+                let isvFila = 0;
+
+                for (let i = 0; i < arregloIdInputs.length; i++) {
+
+                    subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                    isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+
+                    ;
+
+                    if (isvFila == 0) {
+                        subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    } else if (subTotalFila > 0) {
+                        subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    }
+
+                    subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
 
 
-return 0;
+                    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+                    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
+
+                }
 
 
-}
+
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
+                document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneral)
+
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralGrabadoValor)
+
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralExcentoValor)
+
+                document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalISV)
+
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalGeneralValor)
+
+
+
+
+
+                return 0;
+
+
+            }
+
 
 
             function validarFechaPago() {
@@ -1129,12 +1237,12 @@ return 0;
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-             
+
                     data.append(nameForm, idUnidadVenta)
                 }
 
 
-                
+
 
                 let text = arregloIdInputs.toString();
                 data.append("arregloIdInputs", text);
@@ -1143,20 +1251,22 @@ return 0;
                 const formDataObj = {};
 
                 data.forEach((value, key) => (formDataObj[key] = value));
-                    
+
 
                 const options = {
-                    headers: {"content-type": "application/json"}
+                    headers: {
+                        "content-type": "application/json"
+                    }
                 }
 
 
-                axios.post('/ventas/corporativo/guardar', formDataObj,options)
+                axios.post('/ventas/corporativo/guardar', formDataObj, options)
                     .then(response => {
                         let data = response.data;
                         idAutorizacion = document.getElementById('codigo_autorizacion').value;
                         idFactura = data.idFactura
 
-                        document.getElementById('btn_imprimir').href="/factura/cooporativo/"+idFactura 
+                        document.getElementById('btn_imprimir').href = "/factura/cooporativo/" + idFactura
 
 
                         if (data.idFactura == 0) {
@@ -1212,7 +1322,7 @@ return 0;
 
                         document.getElementById('numero_venta').value = data.numeroVenta;
                         document.getElementById("btn_venta_coorporativa").disabled = false;
-                        
+
                         desactivarCodigo();
 
                     })
@@ -1228,25 +1338,27 @@ return 0;
                     })
             }
 
-            function desactivarCodigo(){
+            function desactivarCodigo() {
                 //console.log(idAutorizacion);
-                axios.post('/ventas/autorizacion/desactivar',{'idAutorizacion':idAutorizacion})
-                .then( response=>{
+                axios.post('/ventas/autorizacion/desactivar', {
+                        'idAutorizacion': idAutorizacion
+                    })
+                    .then(response => {
 
-                    let element = document.getElementById("div_imprimir");
-                     element.classList.remove("d-none");
+                        let element = document.getElementById("div_imprimir");
+                        element.classList.remove("d-none");
 
-                    $("#modal_solicitar_codigo").modal("show").addClass("fade");
-                    return;
-                })
-                .catch(err=>{
-                   
-                    Swal.fire({
+                        $("#modal_solicitar_codigo").modal("show").addClass("fade");
+                        return;
+                    })
+                    .catch(err => {
+
+                        Swal.fire({
                             icon: 'error',
                             title: 'Error!',
                             text: 'Ha ocurrido un error al desactivar el codigo de autorizacion'
                         })
-                })
+                    })
 
             }
 

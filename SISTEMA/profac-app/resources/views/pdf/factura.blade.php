@@ -638,10 +638,6 @@
                         <b>L. {{ $importesConCentavos->total }}</b>
                     </p>
                 </div>
-
-
-
-
             </div>
 
 
