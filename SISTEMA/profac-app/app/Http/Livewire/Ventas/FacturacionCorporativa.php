@@ -1119,6 +1119,9 @@ class FacturacionCorporativa extends Component
         $productos = DB::SELECT("
 
         select
+        *
+        from (
+        select
             B.producto_id as codigo,
             concat(C.nombre) as descripcion,
             UPPER(J.nombre) as medida,
@@ -1149,6 +1152,8 @@ class FacturacionCorporativa extends Component
         where A.id=".$idFactura."
         group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
         order by B.indice asc
+        ) A
+
 
         union
 
@@ -1162,6 +1167,7 @@ class FacturacionCorporativa extends Component
         FORMAT(C.precio,2) as precio,
         FORMAT(C.cantidad,2) as cantidad,
         FORMAT(C.sub_total,2) as sub_total
+
         from factura A
         inner join vale B
         on A.id = B.factura_id
