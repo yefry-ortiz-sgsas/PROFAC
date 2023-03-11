@@ -168,6 +168,8 @@ class Cotizacion extends Component
 
 
 
+            'subTotalGeneralGrabado' => 'required',
+            'subTotalGeneralGrabadoMostrar' => 'required',
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
@@ -207,6 +209,8 @@ class Cotizacion extends Component
             $cotizacion->fecha_emision = $request->fecha_emision;
             $cotizacion->fecha_vencimiento = $request->fecha_emision;
             $cotizacion->sub_total = $request->subTotalGeneral;
+            $cotizacion->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $cotizacion->sub_total_excento=$request->subTotalGeneralExcento;
             $cotizacion->isv= $request->isvGeneral;
             $cotizacion->total = $request->totalGeneral;
             $cotizacion->cliente_id = $request->seleccionarCliente;
@@ -349,19 +353,24 @@ class Cotizacion extends Component
 
         $importes = DB::SELECTONE("
         select
-        sub_total,
+        total,
         isv,
-        total
-        from cotizacion where id = ".$idFactura
-        );
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento     
+        from cotizacion
+        where id = ".$idFactura);
 
-        $importesDecimales = DB::SELECTONE("
+
+        $importesConCentavos= DB::SELECTONE("
         select
-        FORMAT(sub_total,2) as sub_total,
+        FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
-        FORMAT(total,2) as total
-        from cotizacion where id = ".$idFactura
-        );
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+        from cotizacion where id = ".$idFactura);
+
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
@@ -374,7 +383,7 @@ class Cotizacion extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/cotizacion',compact('datos','productos','importes','importesDecimales','flagCentavos','numeroLetras'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/cotizacion',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
         return $pdf->stream("factura_numero.pdf");
 
@@ -435,19 +444,24 @@ class Cotizacion extends Component
 
         $importes = DB::SELECTONE("
         select
-        sub_total,
+        total,
         isv,
-        total
-        from cotizacion where id = ".$idFactura
-        );
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento     
+        from cotizacion
+        where id = ".$idFactura);
 
-        $importesDecimales = DB::SELECTONE("
+
+        $importesConCentavos= DB::SELECTONE("
         select
-        FORMAT(sub_total,2) as sub_total,
+        FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
-        FORMAT(total,2) as total
-        from cotizacion where id = ".$idFactura
-        );
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+        from cotizacion where id = ".$idFactura);
+
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
@@ -459,7 +473,7 @@ class Cotizacion extends Component
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
-        $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesDecimales','flagCentavos','numeroLetras'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
         return $pdf->stream("Proforma N.".$datos->codigo.".pdf");
 

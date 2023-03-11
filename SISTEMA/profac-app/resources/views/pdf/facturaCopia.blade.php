@@ -503,13 +503,13 @@
                         <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe
                             Gravado: </p>
                         <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:16px;">L.
-                            {{ $importesConCentavos->sub_total }}</p>
+                            {{ $importesConCentavos->sub_total_grabado }}</p>
                     </div>
 
                     <div>
                         <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:16px;">Importe
                             Exento: </p>
-                        <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:16px;">L. 0.00
+                        <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:16px;">L. {{ $importesConCentavos->sub_total_excento }}
                         </p>
                     </div>
 
@@ -546,12 +546,7 @@
                         <b>L. {{ $importesConCentavos->total }}</b>
                     </p>
                 </div>
-
-
-
-
             </div>
-
 
 
             <div style="position:absolute; left:0px;   width:45rem; margin-top:300px">
