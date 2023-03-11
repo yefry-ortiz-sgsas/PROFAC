@@ -272,18 +272,17 @@ class FacturacionEstatal extends Component
         $validator = Validator::make($request->all(), [
 
             'fecha_vencimiento' => 'required',
+            'subTotalGeneralGrabado' => 'required',
+            'subTotalGeneralGrabadoMostrar' => 'required',
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
-            'arregloIdInputs' => 'required',
-           
+            'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-          
             'restriccion' => 'required',
-            'tipo_venta_id'=>'required|integer|between:2,2',
-            'ordenCompra'=>'required'
+            'vendedor'=>'required'
 
 
 
@@ -425,6 +424,8 @@ class FacturacionEstatal extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $factura->sub_total_excento=$request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -495,7 +496,7 @@ class FacturacionEstatal extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $i);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $arrayInputs[$i]);
             };
 
             if ($request->tipoPagoVenta == 2) { //si el tipo de pago es credito

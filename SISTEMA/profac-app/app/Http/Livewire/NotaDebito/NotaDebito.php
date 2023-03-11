@@ -42,8 +42,7 @@ class NotaDebito extends Component
             factura.id as id,
             @i := @i + 1 as contador,
             numero_factura,
-            factura.cai as correlativo,
-            A.cai as cai,
+            factura.cai as correlativo,         
             fecha_emision,
             cliente.nombre,
             tipo_pago_venta.descripcion,
@@ -53,7 +52,7 @@ class NotaDebito extends Component
             FORMAT(total,2) as total,
             factura.credito,
             users.name as creado_por,
-            (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
+            factura.pendiente_cobro as monto_pagado,
             factura.estado_venta_id
 
             from factura
@@ -63,9 +62,7 @@ class NotaDebito extends Component
             on factura.tipo_pago_id = tipo_pago_venta.id
             inner join users
             on factura.vendedor = users.id
-            inner join cai A
-            on factura.cai_id= A.id
-            inner join pago_venta on (pago_venta.factura_id = factura.id)
+
             cross join (select @i := 0) r
             where factura.estado_venta_id<>2
             order by factura.created_at desc
