@@ -211,6 +211,7 @@ class Cotizacion extends Component
             $cotizacion->total = $request->totalGeneral;
             $cotizacion->cliente_id = $request->seleccionarCliente;
             $cotizacion->tipo_venta_id = 1;
+            $cotizacion->vendedor = $request->vendedor;
             $cotizacion->users_id = Auth::user()->id;
             $cotizacion->arregloIdInputs = json_encode($request->arregloIdInputs);
             $cotizacion->numeroInputs = $request->numeroInputs;
@@ -315,8 +316,8 @@ class Cotizacion extends Component
         time(A.created_at) as hora,
         A.fecha_vencimiento,
         B.rtn,
-        users.name
-
+        users.name,
+        (select name from users where id = A.vendedor) as vendedor
         from cotizacion A
         inner join cliente B
         on A.cliente_id = B.id

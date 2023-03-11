@@ -138,6 +138,13 @@
                                          onchange="validarFechaPago()">
                                     </select>
                                 </div>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="vendedor">Seleccionar Vendedor:<span class="text-danger"></span> </label>
+                                    <select name="vendedor" id="vendedor" class="form-group form-control" data-parsley-required>
+                                      <option value="" selected disabled>--Seleccionar un vendedor--</option>
+                                    </select>
+
+                              </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
@@ -339,31 +346,6 @@
                             <div id="divProductos" >
 
                             </div>
-                            {{-- <div class="table-responsive">
-                                <table id="tbl_productos_venta" class="table table-striped table-bordered table-hover">
-                                    <thead class="">
-                                        <tr>
-                                            <th><label class="sr-only">Total</label>
-                                                <input type="number" placeholder="Total del producto" class="form-control"
-                                                    min="1"  autocomplete="off" style="min-width: 100px">
-                                            </th>
-                                            <th><label class="sr-only">Total</label>
-                                                <input type="number" placeholder="Total del producto" class="form-control"
-                                                    min="1" disabled autocomplete="off" style="min-width: 100px">
-                                            </th>
-                                            <th><label class="sr-only">Total</label>
-                                                <input type="number" placeholder="Total del producto" class="form-control"
-                                                    min="1" disabled autocomplete="off" style="min-width: 100px">
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-
-                            </div> --}}
 
 
 
@@ -452,6 +434,22 @@
             var public_path = "{{ asset('catalogo/') }}";
             var diasCredito = 0;
 
+            $('#vendedor').select2({
+                ajax:{
+                    url:'/ventas/corporativo/vendedores',
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+                        return query;
+                    }
+
+                }
+            });
 
 
 
