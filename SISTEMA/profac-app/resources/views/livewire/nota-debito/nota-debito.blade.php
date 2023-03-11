@@ -129,6 +129,46 @@
                     </div>
                 </div></div>
 
+                <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+                    <div style="margin-top: 1.5rem">
+                        <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
+                            data-target="#modal_monto_crear"><i class="fa fa-plus"></i>Registrar Monto de Nota de Débito</a>
+                    </div>
+                </div>
+
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <div class="table-responsive">
+                                        <table id="tbl_listar_monto_debito" class="table table-striped table-bordered table-hover">
+                                            <thead class="">
+                                                <tr>
+
+                                                    <th>Código Monto</th>
+                                                    <th>Monto</th>
+                                                    <th>Registrado por</th>
+                                                    <th>Fecha creación</th>
+                                                    <th>Estado</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <label for=""><b>Nota:<b> Lista de facturas. Se enlistan todas las facturas activas para realizarse una nota de débito.
+                Para revisar una lista separada de notas coorporativas y de gobierno, ingrese al menú y encontrará un enlace específico para cada una.
+            </label>
 
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row">
@@ -170,43 +210,7 @@
 
             <hr>
 
-            <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
-                <div style="margin-top: 1.5rem">
-                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
-                        data-target="#modal_monto_crear"><i class="fa fa-plus"></i>Registrar Monto de Nota de Débito</a>
-                </div>
-            </div>
 
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table id="tbl_listar_monto_debito" class="table table-striped table-bordered table-hover">
-                                        <thead class="">
-                                            <tr>
-
-                                                <th>Código Monto</th>
-                                                <th>Monto</th>
-                                                <th>Descripción</th>
-                                                <th>Registrado por</th>
-                                                <th>Fecha creación</th>
-                                                <th>Estado</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <hr>
             <label for=""><b>Nota:<b> Se enlistan todas las notas de débito generadas y listas para descargar sus pdf</label>
@@ -278,7 +282,7 @@
                     $('#modal_monto_crear').modal('hide');
                     $('#modalSpinnerLoading').modal('hide');
                     $('#tbl_listar_monto_debito').DataTable().ajax.reload();
-
+                    $('#tbl_listar_facturas').DataTable().ajax.reload();
 
                     Swal.fire({
                         icon: 'success',
@@ -429,9 +433,6 @@
                     },
                     {
                         data: 'monto'
-                    },
-                    {
-                        data: 'descripcion'
                     },
                     {
                         data: 'user'
