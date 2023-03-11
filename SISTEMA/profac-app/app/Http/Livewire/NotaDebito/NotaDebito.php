@@ -64,7 +64,6 @@ class NotaDebito extends Component
             on factura.vendedor = users.id
 
             cross join (select @i := 0) r
-            where factura.estado_venta_id<>2
             order by factura.created_at desc
             ");
 
@@ -173,10 +172,10 @@ class NotaDebito extends Component
                 select
                 id,
                 monto,
-                descripcion,
                 (select name from users where id = montonotadebito.users_registra_id) as 'user',
                 created_at
                 from montonotadebito
+                where estado_id = 1
             ");
 
             return Datatables::of($listaMontos)
@@ -189,11 +188,6 @@ class NotaDebito extends Component
                     <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Activo</span></p>
                     ';
 
-                }else if($ESTADOmONTO->estado_id == 2) {
-                    return
-                    '
-                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Inactivo</span></p>
-                    ';
                 }
 
            })
@@ -321,7 +315,6 @@ class NotaDebito extends Component
 
 
 
-        /* //////////////////////////////////////////////////////*/
 
 
         if ($factura->estado_factura_id == 1 ) {
@@ -373,6 +366,7 @@ class NotaDebito extends Component
                 ,(select name from users where id = notadebito.users_registra_id) as 'user'
                 ,created_at
                 from notadebito
+                where estado_id = 1
             ");
 
             return Datatables::of($listanotaDebito)
@@ -453,5 +447,33 @@ class NotaDebito extends Component
 
             return $pdf->stream("nota_debito_" . $notaDebito->factura_id.".pdf");
 
+    }
+
+    public function anularNotaDebito($idNota){
+        try {
+            DB::beginTransaction();
+
+                DB::update('
+                update
+                notadebito
+                set estado_id = 2
+                where id ='.$idNota);
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Nota Anulada con éxito!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al Anular la nota.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
     }
 }
