@@ -99,14 +99,15 @@
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente:
                     </b>{{ $cliente->nombre }}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 10px; max-width:500px">
-                    <b>Dirección:</b> {{ $cliente->direccion }}
-                </p>
+                    <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 11px; max-width:500px">
+                        <b>Dirección:</b> {{ $cliente->direccion }}
+                    </p>
+                    <br>
 
-                <p class="card-text" style="position:absolute;left:20px;  top:47px;"><b>Correo:</b>
+                <p class="card-text" style="position:absolute;left:20px;  top:60px;"><b>Correo:</b>
                     {{ $cliente->correo }}
                 </p>
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b> </p>
+                <p class="card-text" style="position:absolute;left:20px;  top:80px;"><b>Notas:</b> </p>
 
 
                 <p class="card-text " style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord.
@@ -132,7 +133,7 @@
 
 
 
-                <p class="card-text" style="position:absolute;left:270px;  top:45px;"><b>Teléfono:</b>
+                <p class="card-text" style="position:absolute;left:270px;  top:60px;"><b>Teléfono:</b>
                     {{ $cliente->telefono_empresa }}
                 </p>
             </div>
@@ -187,7 +188,7 @@
 
                         </table>
 
-                        {{-- <div style="page-break-after: always"></div> --}}
+
 
                     </div>
 
@@ -207,9 +208,9 @@
 
 
 
+                <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:15rem;">
 
 
-                <div style=" position: relative; margin-left:44px; margin-top:30px">
                     <div class="card border border-dark" style="position:absolute;left:0px;  width:26rem; height:15rem;">
                         <div class="card-body">
 
@@ -326,7 +327,7 @@
                             _______________________________________</p>
                         <p class="card-text" style="position:absolute;left:450px;  top:10px;">
                             _______________________________________</p>
-                        <p class="card-text" style="position:absolute;left:80px;  top:25px; ">
+                        <p class="card-text" style="position:absolute;left:80px;  top:25px; max-width:250px;  ">
                             {{ strtoupper($cliente->nombre) }}</p>
                         <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
                     </div>

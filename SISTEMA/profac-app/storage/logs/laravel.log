@@ -14685,3 +14685,416 @@ Stack trace:
 [stacktrace]
 #0 {main}
 "} 
+[2023-03-12 17:04:36] local.ERROR: syntax error, unexpected token "=>" {"view":{"view":"C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\resources\\views\\pdf\\factura.blade.php","data":{"errors":"<pre class=sf-dump id=sf-dump-1277164438 data-indent-pad=\"  \"><span class=sf-dump-note>Illuminate\\Support\\ViewErrorBag</span> {<a class=sf-dump-ref>#974</a><samp data-depth=1 class=sf-dump-expanded>
+  #<span class=sf-dump-protected title=\"Protected property\">bags</span>: []
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1277164438\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","cai":"<pre class=sf-dump id=sf-dump-1287694689 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1941</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">numero_factura</span>\": \"<span class=sf-dump-str title=\"19 characters\">000-001-01-00020186</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">numero</span>\": \"<span class=sf-dump-str title=\"9 characters\">2023-2051</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">estado_factura</span>\": <span class=sf-dump-num>1</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">estado_venta_id</span>\": <span class=sf-dump-num>1</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cai</span>\": \"<span class=sf-dump-str title=\"37 characters\">1B5009-D99956-A54E81-893D56-6FE244-E4</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_limite_emision</span>\": \"<span class=sf-dump-str title=\"10 characters\">11/01/2024</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">numero_inicial</span>\": \"<span class=sf-dump-str title=\"19 characters\">000-001-01-00020001</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">numero_final</span>\": \"<span class=sf-dump-str title=\"19 characters\">000-001-01-00022350</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"7 characters\">credito</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_emision</span>\": \"<span class=sf-dump-str title=\"10 characters\">01/02/2023</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">hora</span>\": \"<span class=sf-dump-str title=\"8 characters\">10:16:10</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_vencimiento</span>\": \"<span class=sf-dump-str title=\"10 characters\">03/03/2023</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">name</span>\": \"<span class=sf-dump-str title=\"13 characters\">Belinda Lopez</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">factura</span>\": <span class=sf-dump-num>1</span>
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1287694689\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","cliente":"<pre class=sf-dump id=sf-dump-855092065 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1958</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">nombre</span>\": \"<span class=sf-dump-str title=\"30 characters\">REFINADORA DE SAL S.A. (RESAL)</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">direccion</span>\": \"<span class=sf-dump-str title=\"28 characters\">BOULEVAR SUYAPA, TEGUCIGALPA</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">correo</span>\": \"<span class=sf-dump-str title=\"12 characters\">SIN REGISTRO</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_emision</span>\": \"<span class=sf-dump-str title=\"10 characters\">2023-02-01</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">fecha_vencimiento</span>\": \"<span class=sf-dump-str title=\"10 characters\">2023-03-03</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">hora</span>\": \"<span class=sf-dump-str title=\"8 characters\">10:16:10</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">telefono_empresa</span>\": \"<span class=sf-dump-str title=\"8 characters\">22392877</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">rtn</span>\": \"<span class=sf-dump-str title=\"14 characters\">08019995320926</span>\"
+</samp>}
+</pre><script>Sfdump(\"sf-dump-855092065\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","importes":"<pre class=sf-dump id=sf-dump-1713386835 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1946</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">total</span>\": <span class=sf-dump-num>4577.472</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">isv</span>\": <span class=sf-dump-num>569.892</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total</span>\": <span class=sf-dump-num>4007.58</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total_grabado</span>\": <span class=sf-dump-num>0.0</span>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total_excento</span>\": <span class=sf-dump-num>0.0</span>
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1713386835\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","productos":"<pre class=sf-dump id=sf-dump-1297905863 data-indent-pad=\"  \"><span class=sf-dump-note>array:20</span> [<samp data-depth=1 class=sf-dump-expanded>
+  <span class=sf-dump-index>0</span> => {<a class=sf-dump-ref>#1959</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1071</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"56 characters\">ARCHIVADOR T/CARTA AMPO DE CARTON GANCHO METALICO  T-830</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 4</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B4</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">39.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"5 characters\">12.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">468.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>1</span> => {<a class=sf-dump-ref>#1956</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1148</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"39 characters\">BOLSA MANILA T/LEGAL 10X14 CONCEPT PLUS</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"7 characters\"> UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">C1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.02</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"6 characters\">200.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">404.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>2</span> => {<a class=sf-dump-ref>#1955</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1175</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"34 characters\">BORRADOR ESCOLAR ER210A-20 POINTER</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"7 characters\"> UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">SI</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">G2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">3.50</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"4 characters\">7.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>3</span> => {<a class=sf-dump-ref>#1954</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1505</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"27 characters\">FASTENER POINTER 8 MM X80MM</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"5 characters\"> CAJA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 3</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">A1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">24.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">6.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">144.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>4</span> => {<a class=sf-dump-ref>#1953</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1554</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"32 characters\">FOLDER MANILA T/OFICIO DVALENCIA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> RESMA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"6 characters\">144.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">144.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>5</span> => {<a class=sf-dump-ref>#1952</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1685</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"40 characters\">LAPIZ TINTA ULTRA FINO COLOR NEGRO BOLIK</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">SI</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">4.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"5 characters\">36.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">176.40</span>\"
+  </samp>}
+  <span class=sf-dump-index>6</span> => {<a class=sf-dump-ref>#1951</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1821</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"33 characters\">MASKING TAPE WM1830 3/4X30YSD WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> ROLLO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">G1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">8.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"4 characters\">8.90</span>\"
+  </samp>}
+  <span class=sf-dump-index>7</span> => {<a class=sf-dump-ref>#1950</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2101</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"29 characters\">REGLA METALICA RMT30 30CM WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">SI</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">A2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">10.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"5 characters\">20.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>8</span> => {<a class=sf-dump-ref>#1949</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2141</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"36 characters\">TABLERO DE MADERA T/CARTA TMW500 WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">F1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">31.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"5 characters\">62.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>9</span> => {<a class=sf-dump-ref>#1948</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2158</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"38 characters\">TAPE 3/4X30YDS TRANSPARENTE WS1830 WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> ROLLO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">G3</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">3.50</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">4.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"5 characters\">14.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>10</span> => {<a class=sf-dump-ref>#1947</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1142</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"33 characters\">BOLSA MANILA T/CARTA 9X12 CONCEPT</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.70</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"6 characters\">200.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">340.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>11</span> => {<a class=sf-dump-ref>#1961</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1149</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"35 characters\">BOLSA MANILA T/OFICIO 10X13 CONCEPT</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"6 characters\">100.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">190.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>12</span> => {<a class=sf-dump-ref>#1962</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1195</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"55 characters\">CALCULADORA DE ESCRITORIO DE 12 D&#205;GITOS MX-12B-BK CASIO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">A1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"6 characters\">159.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">159.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>13</span> => {<a class=sf-dump-ref>#1963</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1552</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"31 characters\">FOLDER MANILA T/CARTA DVALENCIA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> RESMA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"7 characters\">ANEXO 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"6 characters\">119.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">3.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">357.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>14</span> => {<a class=sf-dump-ref>#1964</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1684</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"39 characters\">LAPIZ TINTA ULTRA FINO COLOR AZUL BOLIK</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">SI</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">B1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">4.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">1.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"4 characters\">4.90</span>\"
+  </samp>}
+  <span class=sf-dump-index>15</span> => {<a class=sf-dump-ref>#1965</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1802</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"51 characters\">MARCADOR PERMANENTE ROJO PUNTA BISELADA MP830RJ WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\">UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 2</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">F1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"4 characters\">9.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"5 characters\">36.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">356.40</span>\"
+  </samp>}
+  <span class=sf-dump-index>16</span> => {<a class=sf-dump-ref>#1966</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>1947</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"47 characters\">PAPEL BOND T/LEGAL 8.5X14 BASE 20 70G PAPERLINE</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> RESMA</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 3</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">A1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"6 characters\">145.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">6.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">870.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>17</span> => {<a class=sf-dump-ref>#1967</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2123</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"42 characters\">BANDERILLAS AUTOADHESIVAS MODELO S5032 WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"8 characters\"> PAQUETE</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">C3</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">14.59</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"5 characters\">29.18</span>\"
+  </samp>}
+  <span class=sf-dump-index>18</span> => {<a class=sf-dump-ref>#1968</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2155</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"42 characters\">TAPE TRANSPARENTE 2X200 MODELO W2180T  WEX</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"6 characters\"> ROLLO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">G3</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">45.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">5.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"6 characters\">225.00</span>\"
+  </samp>}
+  <span class=sf-dump-index>19</span> => {<a class=sf-dump-ref>#1969</a><samp data-depth=2 class=sf-dump-compact>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">codigo</span>\": <span class=sf-dump-num>2323</span>
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">descripcion</span>\": \"<span class=sf-dump-str title=\"32 characters\">LAPIZ CORRECTOR BENSSINI BS-1008</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">medida</span>\": \"<span class=sf-dump-str title=\"7 characters\"> UNIDAD</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">excento</span>\": \"<span class=sf-dump-str title=\"2 characters\">NO</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">bodega</span>\": \"<span class=sf-dump-str title=\"9 characters\">CENTRAL 1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">seccion</span>\": \"<span class=sf-dump-str title=\"2 characters\">A1</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">precio</span>\": \"<span class=sf-dump-str title=\"5 characters\">13.90</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">cantidad</span>\": \"<span class=sf-dump-str title=\"4 characters\">2.00</span>\"
+    +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">importe</span>\": \"<span class=sf-dump-str title=\"5 characters\">27.80</span>\"
+  </samp>}
+</samp>]
+</pre><script>Sfdump(\"sf-dump-1297905863\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","numeroLetras":"<pre class=sf-dump id=sf-dump-663681220 data-indent-pad=\"  \">\"<span class=sf-dump-str title=\"76 characters\">CUATRO MIL QUINIENTOS SETENTA Y SIETE LEMPIRAS CON CUARENTA Y SIETE CENTAVOS</span>\"
+</pre><script>Sfdump(\"sf-dump-663681220\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","importesConCentavos":"<pre class=sf-dump id=sf-dump-1905432403 data-indent-pad=\"  \">{<a class=sf-dump-ref>#1943</a><samp data-depth=1 class=sf-dump-expanded>
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">total</span>\": \"<span class=sf-dump-str title=\"8 characters\">4,577.47</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">isv</span>\": \"<span class=sf-dump-str title=\"6 characters\">569.89</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total</span>\": \"<span class=sf-dump-str title=\"8 characters\">4,007.58</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total_grabado</span>\": \"<span class=sf-dump-str title=\"4 characters\">0.00</span>\"
+  +\"<span class=sf-dump-public title=\"Runtime added dynamic property\">sub_total_excento</span>\": \"<span class=sf-dump-str title=\"4 characters\">0.00</span>\"
+</samp>}
+</pre><script>Sfdump(\"sf-dump-1905432403\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","flagCentavos":"<pre class=sf-dump id=sf-dump-2080379233 data-indent-pad=\"  \"><span class=sf-dump-const>true</span>
+</pre><script>Sfdump(\"sf-dump-2080379233\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+","ordenCompra":"<pre class=sf-dump id=sf-dump-663698827 data-indent-pad=\"  \"><span class=sf-dump-note>array:1</span> [<samp data-depth=1 class=sf-dump-expanded>
+  \"<span class=sf-dump-key>numero_orden</span>\" => \"\"
+</samp>]
+</pre><script>Sfdump(\"sf-dump-663698827\", {\"maxDepth\":3,\"maxStringLength\":160})</script>
+"}},"userId":2,"exception":"[object] (Spatie\\LaravelIgnition\\Exceptions\\ViewException(code: 0): syntax error, unexpected token \"=>\" at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\resources\\views\\pdf\\factura.blade.php:190)
+[stacktrace]
+#0 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#1 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\laragon\\\\www\\\\...', Array)
+#2 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(69): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#3 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Livewire\\LivewireViewCompilerEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#4 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(35): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#5 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Livewire\\LivewireViewCompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#6 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#7 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#8 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\PDF.php(133): Illuminate\\View\\View->render()
+#9 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\Facade\\Pdf.php(51): Barryvdh\\DomPDF\\PDF->loadView('/pdf/factura', Array)
+#10 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\app\\Http\\Livewire\\Ventas\\FacturacionCorporativa.php(1217): Barryvdh\\DomPDF\\Facade\\Pdf::__callStatic('loadView', Array)
+#11 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(46): App\\Http\\Livewire\\Ventas\\FacturacionCorporativa->imprimirFacturaCoorporativa('2056')
+#12 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(260): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Livewire\\Ventas\\FacturacionCorporativa), 'imprimirFactura...')
+#13 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#14 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#15 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(30): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(44): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#26 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#30 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(799): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#37 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#38 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#39 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#40 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#41 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\DisableBrowserCache.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Livewire\\DisableBrowserCache->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#58 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#59 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#60 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#61 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\public\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#62 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\laragon\\\\www\\\\...')
+#63 {main}
+
+[previous exception] [object] (ParseError(code: 0): syntax error, unexpected token \"=>\" at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\storage\\framework\\views\\d87a39d646253c4e357381946a7051f079769982.php:196)
+[stacktrace]
+#0 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Filesystem\\Filesystem.php(110): Illuminate\\Filesystem\\Filesystem::Illuminate\\Filesystem\\{closure}()
+#1 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\PhpEngine.php(58): Illuminate\\Filesystem\\Filesystem->getRequire('C:\\\\laragon\\\\www\\\\...', Array)
+#2 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(69): Illuminate\\View\\Engines\\PhpEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#3 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Engines\\CompilerEngine.php(70): Livewire\\LivewireViewCompilerEngine->evaluatePath('C:\\\\laragon\\\\www\\\\...', Array)
+#4 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\ComponentConcerns\\RendersLivewireComponents.php(35): Illuminate\\View\\Engines\\CompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#5 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(195): Livewire\\LivewireViewCompilerEngine->get('C:\\\\laragon\\\\www\\\\...', Array)
+#6 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(178): Illuminate\\View\\View->getContents()
+#7 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\View.php(147): Illuminate\\View\\View->renderContents()
+#8 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\PDF.php(133): Illuminate\\View\\View->render()
+#9 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\barryvdh\\laravel-dompdf\\src\\Facade\\Pdf.php(51): Barryvdh\\DomPDF\\PDF->loadView('/pdf/factura', Array)
+#10 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\app\\Http\\Livewire\\Ventas\\FacturacionCorporativa.php(1217): Barryvdh\\DomPDF\\Facade\\Pdf::__callStatic('loadView', Array)
+#11 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(46): App\\Http\\Livewire\\Ventas\\FacturacionCorporativa->imprimirFacturaCoorporativa('2056')
+#12 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(260): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Livewire\\Ventas\\FacturacionCorporativa), 'imprimirFactura...')
+#13 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(205): Illuminate\\Routing\\Route->runController()
+#14 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(798): Illuminate\\Routing\\Route->run()
+#15 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#16 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified.php(30): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#17 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\EnsureEmailIsVerified->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#18 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(50): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#19 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(78): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\AuthenticateSession.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\AuthenticateSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#24 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Middleware\\Authenticate.php(44): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#25 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#26 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#28 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#30 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#33 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(67): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#34 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#35 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#36 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(799): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#37 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(776): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#38 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(740): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#39 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(729): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#40 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(190): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#41 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(141): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#42 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\livewire\\livewire\\src\\DisableBrowserCache.php(19): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Livewire\\DisableBrowserCache->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(40): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#49 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(86): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\fruitcake\\laravel-cors\\src\\HandleCors.php(38): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Fruitcake\\Cors\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(39): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(180): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#58 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#59 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(165): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#60 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(134): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#61 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\public\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#62 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\laragon\\\\www\\\\...')
+#63 {main}
+"} 
