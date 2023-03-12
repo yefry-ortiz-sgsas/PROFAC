@@ -204,42 +204,83 @@
                         <div class="row">
 
                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                <label class="col-form-label" for="subTotalGeneral">Sub Total L.<span
+                                <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
                                         class="text-danger">*</span></label>
                             </div>
 
                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                <input type="text" step="any" placeholder="Sub total " id="subTotalGeneral"
-                                    name="subTotalGeneral"  class="form-control"  data-parsley-required
+                                <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
+                                    name="subTotalGeneralMostrar" class="form-control" data-parsley-required
                                     autocomplete="off" readonly>
+
+                                <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
+                                    required>
                             </div>
                         </div>
 
                         <div class="row">
 
                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                <label class="col-form-label" for="isvGeneral">ISV L.<span
-                                        class="text-danger">*</span></label>
+                                <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
+                                    Grabado L.<span class="text-danger">*</span></label>
                             </div>
 
                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                <input type="text" step="any" placeholder="ISV " id="isvGeneral"
-                                    name="isvGeneral" class="form-control"  data-parsley-required
-                                    autocomplete="off" readonly>
+                                <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
+                                    name="subTotalGeneralGrabadoMostrar" class="form-control"
+                                    data-parsley-required autocomplete="off" readonly>
+
+                                <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
+                                    value="" required>
                             </div>
                         </div>
 
                         <div class="row">
 
                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                <label class="col-form-label" for="totalGeneral">Total L.<span
+                                <label class="col-form-label" for="subTotalGeneralExcentoMostrar">Sub Total
+                                    Excento L.<span class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
+                                    name="subTotalGeneralExcentoMostrar" class="form-control"
+                                    data-parsley-required autocomplete="off" readonly>
+
+                                <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
+                                    value="" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
                                         class="text-danger">*</span></label>
                             </div>
 
                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                <input type="text" step="any" placeholder="Total  " id="totalGeneral"
-                                    name="totalGeneral" class="form-control"  data-parsley-required
+                                <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                    name="isvGeneralMostrar" class="form-control" data-parsley-required
                                     autocomplete="off" readonly>
+                                <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                        class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                <input type="text" placeholder="Total  " id="totalGeneralMostrar"
+                                    name="totalGeneralMostrar" class="form-control" data-parsley-required
+                                    autocomplete="off" readonly>
+
+                                <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
+                                    required>
                             </div>
                         </div>
 

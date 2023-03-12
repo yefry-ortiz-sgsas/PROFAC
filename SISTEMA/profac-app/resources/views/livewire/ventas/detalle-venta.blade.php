@@ -74,9 +74,11 @@
                     <div class="ibox-content "
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de pago </strong> {{$detalleVenta->tipo_pago}}  </p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                       
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Comision del vendedor: </strong> {{$detalleVenta->monto_comision}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                      
+
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Grabado: </strong> {{$detalleVenta->sub_total_grabado}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Excento: </strong> {{$detalleVenta->sub_total_excento}} Lps.</p>  
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>  
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>  
 
@@ -170,8 +172,10 @@
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de pago </strong> {{$detalleVenta->tipo_pago}}  </p>
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                       
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Comision del vendedor: </strong> {{$detalleVenta->monto_comision}} Lps.</p>  
+
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Grabado: </strong> {{$detalleVenta->sub_total_grabado}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Excento: </strong> {{$detalleVenta->sub_total_excento}} Lps.</p>  
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>  
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>  
 
@@ -179,7 +183,6 @@
     
                     </div>
                 </div>
-    
     
             </div>
         </div>

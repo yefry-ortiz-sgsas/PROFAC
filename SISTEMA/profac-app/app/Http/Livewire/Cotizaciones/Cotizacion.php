@@ -184,7 +184,7 @@ class Cotizacion extends Component
 
         ]);
 
-        // dd($request->all());
+      
 
         if ($validator->fails()) {
             return response()->json([
@@ -214,7 +214,7 @@ class Cotizacion extends Component
             $cotizacion->isv= $request->isvGeneral;
             $cotizacion->total = $request->totalGeneral;
             $cotizacion->cliente_id = $request->seleccionarCliente;
-            $cotizacion->tipo_venta_id = 1;
+            $cotizacion->tipo_venta_id = $request->tipo_venta_id;
             $cotizacion->vendedor = $request->vendedor;
             $cotizacion->users_id = Auth::user()->id;
             $cotizacion->arregloIdInputs = json_encode($request->arregloIdInputs);

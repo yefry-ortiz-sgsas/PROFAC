@@ -545,19 +545,22 @@ class RestarVale extends Component
 
        $importes = DB::SELECTONE("
        select
-        total,
-        FORMAT(total,2) as total2,
-        isv,
-        sub_total
-        from vale
+       total,
+       isv,
+       sub_total,
+       sub_total_grabado,
+       sub_total_excento     
+       from factura
         where id = ".$idVale);
 
 
         $importesConCentavos= DB::SELECTONE("
-            select
-            FORMAT(total,2) as total,
-            FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
             from vale where id = ".$idVale);
 
 
@@ -576,7 +579,9 @@ class RestarVale extends Component
             on A.unidad_medida_venta_id = C.id
             inner join unidad_medida D
             on C.unidad_medida_id = D.id
-            where A.vale_id =".$idVale);
+            where A.vale_id =".$idVale."
+            order by  A.index asc
+            ");
 
         $ordenCompra = DB::SELECTONE("
         select

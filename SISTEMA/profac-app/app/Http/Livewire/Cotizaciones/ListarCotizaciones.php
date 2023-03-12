@@ -49,7 +49,6 @@ class ListarCotizaciones extends Component
 
     public function listarCotizaciones(Request $request){
         
-        
 
         $cotizaciones = DB::SELECT("
         select
