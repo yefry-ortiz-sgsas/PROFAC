@@ -227,8 +227,8 @@
 
                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                 <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
-                                    name="subTotalGeneralGrabadoMostrar" class="form-control"
-                                    data-parsley-required autocomplete="off" readonly>
+                                    name="subTotalGeneralGrabadoMostrar" class="form-control" data-parsley-required
+                                    autocomplete="off" readonly>
 
                                 <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
                                     value="" required>
@@ -244,8 +244,8 @@
 
                             <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                 <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
-                                    name="subTotalGeneralExcentoMostrar" class="form-control"
-                                    data-parsley-required autocomplete="off" readonly>
+                                    name="subTotalGeneralExcentoMostrar" class="form-control" data-parsley-required
+                                    autocomplete="off" readonly>
 
                                 <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
                                     value="" required>
@@ -279,8 +279,7 @@
                                     name="totalGeneralMostrar" class="form-control" data-parsley-required
                                     autocomplete="off" readonly>
 
-                                <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
-                                    required>
+                                <input id="totalGeneral" name="totalGeneral" type="hidden" value="" required>
                             </div>
                         </div>
 
@@ -305,109 +304,152 @@
 
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="guardar_devolucion"
-                        name="guardar_devolucion" data-parsley-validate>
+                            name="guardar_devolucion" data-parsley-validate>
 
-                        <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6">
-                                <label for="motivo_nota" class="col-form-label focus-label">
-                                    Seleccionar motivo de nota de credito:</label>
-                                <select id="motivo_nota" name="motivo_nota" class="form-group form-control" style=""
-                                     data-parsley-required form="guardar_devolucion" >
-                                    <option value="" selected disabled>--Seleccionar Motivo--</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <label for="motivo_nota" class="col-form-label focus-label">
+                                        Seleccionar motivo de nota de credito:</label>
+                                    <select id="motivo_nota" name="motivo_nota" class="form-group form-control"
+                                        style="" data-parsley-required form="guardar_devolucion">
+                                        <option value="" selected disabled>--Seleccionar Motivo--</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-6">
+                                    <label for="comentario_nota" class="col-form-label focus-label">
+                                        Comentario de nota de crédito:</label>
+                                    <textarea class="form-group form-control" name="comentario" id="comentario" cols="30" rows="10"></textarea>
+                                </div>
                             </div>
 
-                             <div class="col-12 col-sm-12 col-md-6">
-                                <label for="comentario_nota" class="col-form-label focus-label">
-                                    Comentario de nota de crédito:</label>
-                                    <textarea class="form-group form-control"  name="comentario" id="comentario" cols="30" rows="10"></textarea>
+                        </form>
+
+
+
+                        <div class="table-responsive mt-4">
+
+
+
+
+
+                            <table id="tbl_productos_lista" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Bodega</th>
+                                        <th>Seccion</th>
+                                        <th>Precio Unidad en Lps</th>
+                                        <th>Cantidad</th>
+                                        <th>Unidad de medida</th>
+                                        <th>Sub total</th>
+                                        <th>ISV</th>
+                                        <th>Total</th>
+                                        <th>Opciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="cuerpoLista">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="subTotalGeneralCreditoMostrar">Sub Total L.<span
+                                        class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+
+                                <input id="subTotalGeneralCreditoMostrar" class="form-control" type="text"
+                                    placeholder="Sub total " disabled>
+
+                                <input type="hidden" step="any" placeholder="Sub total "
+                                    id="subTotalGeneralCredito" name="subTotalGeneralCredito" class="form-control"
+                                    value="0" min="0" data-parsley-required autocomplete="off"
+                                    form="guardar_devolucion">
                             </div>
                         </div>
 
-                         </form>
+                        <div class="row">
 
-
-
-                            <div class="table-responsive mt-4">
-
-
-
-
-
-                                <table id="tbl_productos_lista" class="table table-striped table-bordered table-hover">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Producto</th>
-                                            <th>Bodega</th>
-                                            <th>Seccion</th>
-                                            <th>Precio Unidad en Lps</th>
-                                            <th>Cantidad</th>
-                                            <th>Unidad de medida</th>
-                                            <th>Sub total</th>
-                                            <th>ISV</th>
-                                            <th>Total</th>
-                                            <th>Opciones</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody id="cuerpoLista">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <br>
-                            <div class="row">
-
-                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="subTotalGeneralCreditoMostrar">Sub Total L.<span
-                                            class="text-danger">*</span></label>
-                                </div>
-
-                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-
-                                    <input id="subTotalGeneralCreditoMostrar"  class="form-control" type="text" placeholder="Sub total " disabled>
-
-                                    <input type="hidden" step="any" placeholder="Sub total "
-                                        id="subTotalGeneralCredito" name="subTotalGeneralCredito" class="form-control"
-                                        value="0" min="0" data-parsley-required autocomplete="off" form="guardar_devolucion">
-                                </div>
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="subTotalGeneralCreditoMostrar">Sub Total Grabado
+                                    L.<span class="text-danger">*</span></label>
                             </div>
 
-                            <div class="row">
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
 
-                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="isvGeneralCreditoMostrar">ISV L.<span
-                                            class="text-danger">*</span></label>
-                                </div>
+                                <input id="subTotalGeneralGrabadoCreditoMostrar" class="form-control" type="text"
+                                    placeholder="Sub total " disabled>
 
-                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input id="isvGeneralCreditoMostrar" type="text"  class="form-control" placeholder="ISV " disabled>
+                                <input type="hidden" step="any" placeholder="Sub total "
+                                    id="subTotalGeneralGrabadoCredito" name="subTotalGeneralGrabadoCredito"
+                                    class="form-control" value="0" min="0" data-parsley-required
+                                    autocomplete="off" form="guardar_devolucion">
+                            </div>
+                        </div>
 
-                                    <input type="hidden" step="any"  id="isvGeneralCredito"
-                                        name="isvGeneralCredito" class="form-control" min="0" value="0" data-parsley-required
-                                        autocomplete="off" form="guardar_devolucion">
-                                </div>
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="subTotalGeneralCreditoMostrar">Sub Total Excento
+                                    L.<span class="text-danger">*</span></label>
                             </div>
 
-                            <div class="row">
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
 
-                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="totalGeneralCreditoMostrar">Total L.<span
-                                            class="text-danger">*</span></label>
-                                </div>
+                                <input id="subTotalGeneralExcentoCreditoMostrar" class="form-control" type="text"
+                                    placeholder="Sub total " disabled>
 
-                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input id="totalGeneralCreditoMostrar"  class="form-control" type="text" placeholder="Total " disabled>
+                                <input type="hidden" step="any" placeholder="Sub total "
+                                    id="subTotalGeneralExcentoCredito" name="subTotalGeneralExcentoCredito"
+                                    class="form-control" value="0" min="0" data-parsley-required
+                                    autocomplete="off" form="guardar_devolucion">
+                            </div>
+                        </div>
 
-                                    <input type="hidden" step="any"  id="totalGeneralCredito"
-                                        name="totalGeneralCredito" min="0" value="0" data-parsley-required
-                                        autocomplete="off" form="guardar_devolucion">
-                                </div>
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="isvGeneralCreditoMostrar">ISV L.<span
+                                        class="text-danger">*</span></label>
                             </div>
 
-                            <br>
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                <input id="isvGeneralCreditoMostrar" type="text" class="form-control"
+                                    placeholder="ISV " disabled>
 
-                            <button type="submit" id="btn_guardar_nota_credito" form="guardar_devolucion"  class="btn btn-success">Cerrar Nota de Credito</button>
+                                <input type="hidden" step="any" id="isvGeneralCredito" name="isvGeneralCredito"
+                                    class="form-control" min="0" value="0" data-parsley-required
+                                    autocomplete="off" form="guardar_devolucion">
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                <label class="col-form-label" for="totalGeneralCreditoMostrar">Total L.<span
+                                        class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                <input id="totalGeneralCreditoMostrar" class="form-control" type="text"
+                                    placeholder="Total " disabled>
+
+                                <input type="hidden" step="any" id="totalGeneralCredito"
+                                    name="totalGeneralCredito" min="0" value="0" data-parsley-required
+                                    autocomplete="off" form="guardar_devolucion">
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <button type="submit" id="btn_guardar_nota_credito" form="guardar_devolucion"
+                            class="btn btn-success">Cerrar Nota de Credito</button>
 
 
                     </div>
@@ -460,14 +502,14 @@
                                     <input class="form-control" required type="text" step="any"
                                         id="precioMostrar" name="precioMostrar" disabled>
 
-                                        <input required type="hidden" step="any"
-                                        id="precio" name="precio" data-parsley-required readonly>
+                                    <input required type="hidden" step="any" id="precio" name="precio"
+                                        data-parsley-required readonly>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <label for="cantidadMaxima" class="col-form-label focus-label">Cantidad maxima permitida:<span
-                                            class="text-danger">*</span></label>
-                                    <input class="form-control" value="0" required type="number" id="cantidadMaxima"
-                                        name="cantidadMaxima" data-parsley-required disabled>
+                                    <label for="cantidadMaxima" class="col-form-label focus-label">Cantidad maxima
+                                        permitida:<span class="text-danger">*</span></label>
+                                    <input class="form-control" value="0" required type="number"
+                                        id="cantidadMaxima" name="cantidadMaxima" data-parsley-required disabled>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label for="cantidad" class="col-form-label focus-label">Cantidad a devolver:<span
@@ -535,7 +577,7 @@
         <script>
             var contador = 1;
             var arrayInputs = [];
-            var productoSeccion =[];
+            var productoSeccion = [];
 
             $('#cliente').select2({
                 ajax: {
@@ -608,6 +650,7 @@
                     .then(response => {
 
                         let data = response.data.datosFactura;
+              
 
                         document.getElementById('codigo_factura').value = data.id;
                         document.getElementById('fecha').value = data.fecha_emision;
@@ -624,9 +667,32 @@
                         document.getElementById('fecha_registro').value = data.fechaRegistro;
 
 
-                        document.getElementById('subTotalGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.sub_total);
-                        document.getElementById('isvGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.isv);
-                        document.getElementById('totalGeneral').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(data.total);
+                        document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(data.sub_total);
+                        document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(data.sub_total_grabado);
+                        document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(data.sub_total_excento);
+
+                        document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(data.isv);
+                        document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(data.total);
                     })
 
                 $('#tbl_productos').DataTable().clear().destroy();
@@ -701,7 +767,7 @@
                 $('#tbl_productos').DataTable().clear().destroy();
             }
 
-            function infoProducto(facturaId, productoId,seccionId) {
+            function infoProducto(facturaId, productoId, seccionId) {
 
 
                 axios.post('/nota/credito/datos/producto', {
@@ -714,7 +780,7 @@
 
 
                         let data = response.data.datos;
-                        let cantidadMax =data.cantidad;
+                        let cantidadMax = data.cantidad;
 
                         document.getElementById('nombre').value = data.producto;
                         document.getElementById('idFactura').value = data.factura_id;
@@ -768,45 +834,45 @@
 
                 //****************Comprueba si el producto con la seccion se repite************************/
                 productoSeccion.forEach(array => {
-                            if(array[0] == idProducto && array[1] == seccion.value ){
-                                repetidoFlag = true;
-                                return;
-                            }
+                    if (array[0] == idProducto && array[1] == seccion.value) {
+                        repetidoFlag = true;
+                        return;
+                    }
                 });
 
-                    if(repetidoFlag){
+                if (repetidoFlag) {
 
-                        Swal.fire({
-                                icon: "warning",
-                                title: "Advertencia!",
-                                text: "El producto con la sección correspondiente ya se encuentra en la lista.",
-                            })
-                        $('#modal_devolver_producto').modal('hide')
-                        return;
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Advertencia!",
+                        text: "El producto con la sección correspondiente ya se encuentra en la lista.",
+                    })
+                    $('#modal_devolver_producto').modal('hide')
+                    return;
                 }
                 //****************Comprueba si el producto con la seccion se repite************************/
 
 
 
-                if(+cantidad==0 || !cantidad){
+                if (+cantidad == 0 || !cantidad) {
                     $('#modal_devolver_producto').modal('hide')
                     Swal.fire({
-                            icon: "warning",
-                            title: "Advertencia",
-                            text: "La cantidad a devolver debe ser mayor a 0.",
-                        })
-                        return;
+                        icon: "warning",
+                        title: "Advertencia",
+                        text: "La cantidad a devolver debe ser mayor a 0.",
+                    })
+                    return;
                 }
 
 
-                if(+cantidad > +cantidadMaxima){
+                if (+cantidad > +cantidadMaxima) {
                     $('#modal_devolver_producto').modal('hide')
                     Swal.fire({
-                            icon: "warning",
-                            title: "Advertencia",
-                            text: "La cantidad excede el maximo permitido.",
-                        })
-                        return;
+                        icon: "warning",
+                        title: "Advertencia",
+                        text: "La cantidad excede el maximo permitido.",
+                    })
+                    return;
                 }
 
 
@@ -880,31 +946,78 @@
                 document.getElementById("form_producto_devolver").reset();
                 $('#form_producto_devolver').parsley().reset();
 
-               let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;
-               sub_totalInput =  (+sub_totalInput) + (+subTotal);
-               document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
+                let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;
+                sub_totalInput = (+sub_totalInput) + (+subTotal);
+                document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
 
-               let isvInput = document.getElementById("isvGeneralCredito").value;
-               isvInput = (+isvInput) + (+isv);
-               document.getElementById("isvGeneralCredito").value = isvInput;
+                let sub_totalGrabadoInput = document.getElementById("subTotalGeneralGrabadoCredito").value;
+                let sub_totalExcentoInput = document.getElementById("subTotalGeneralExcentoCredito").value;
 
-               let totalInput = document.getElementById("totalGeneralCredito").value;
-               totalInput = (+totalInput) + (+total);
-               document.getElementById("totalGeneralCredito").value =  totalInput;
+                if(isv >0){                   
+                sub_totalGrabadoInput = (+sub_totalGrabadoInput) + (+subTotal);
+                document.getElementById("subTotalGeneralGrabadoCredito").value = sub_totalGrabadoInput;
+                }
 
-               document.getElementById("subTotalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(sub_totalInput);
-               document.getElementById("isvGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isvInput);
-               document.getElementById("totalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalInput);
 
-               document.getElementById("solicitarFactura").disabled = true;
-               document.getElementById("cliente").disabled = true;
-               document.getElementById("factura").disabled = true;
+              
+                if (isv == 0) {                    
+                    sub_totalExcentoInput = (+sub_totalExcentoInput) + (+subTotal);
+                    document.getElementById("subTotalGeneralExcentoCredito").value = sub_totalExcentoInput;
+                }
 
-               arrayInputs.push(contador);
-               contador++;
-               productoSeccion.push([idProducto,seccion.value]);
 
-               return;
+                let isvInput = document.getElementById("isvGeneralCredito").value;
+                isvInput = (+isvInput) + (+isv);
+                document.getElementById("isvGeneralCredito").value = isvInput;
+
+                let totalInput = document.getElementById("totalGeneralCredito").value;
+                totalInput = (+totalInput) + (+total);
+                document.getElementById("totalGeneralCredito").value = totalInput;
+
+                document.getElementById("subTotalGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalInput);
+
+
+                document.getElementById("subTotalGeneralGrabadoCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalGrabadoInput);
+
+
+
+                document.getElementById("subTotalGeneralExcentoCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalExcentoInput);
+
+
+
+
+                document.getElementById("isvGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(isvInput);
+                document.getElementById("totalGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalInput);
+
+                document.getElementById("solicitarFactura").disabled = true;
+                document.getElementById("cliente").disabled = true;
+                document.getElementById("factura").disabled = true;
+
+                arrayInputs.push(contador);
+                contador++;
+                productoSeccion.push([idProducto, seccion.value]);
+
+                return;
             }
 
             function monedaLempiras(monto) {
@@ -917,17 +1030,17 @@
                 return numero;
             }
 
-            function eliminarFila(id,subtotal,isv,total) {
+            function eliminarFila(id, subtotal, isv, total) {
 
-                let idProducto =  document.getElementById("IdProducto"+id).value;
-                let idSeccion = document.getElementById("IdSeccion"+id).value;
-                let array =[];
+                let idProducto = document.getElementById("IdProducto" + id).value;
+                let idSeccion = document.getElementById("IdSeccion" + id).value;
+                let array = [];
                 for (let i = 0; i < productoSeccion.length; i++) {
 
-                  array = productoSeccion[i];
-                  if(array[0] == idProducto && array[1] == idSeccion){
-                    productoSeccion.splice(i, 1);
-                  }
+                    array = productoSeccion[i];
+                    if (array[0] == idProducto && array[1] == idSeccion) {
+                        productoSeccion.splice(i, 1);
+                    }
 
                 }
 
@@ -947,20 +1060,75 @@
                 }
 
                 let sub_totalInput = document.getElementById("subTotalGeneralCredito").value;
-                sub_totalInput =  (+sub_totalInput) - (+subtotal);
+                sub_totalInput = (+sub_totalInput) - (+subtotal);
                 document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
 
-               let isvInput = document.getElementById("isvGeneralCredito").value;
-               isvInput = (+isvInput) - (+isv);
-               document.getElementById("isvGeneralCredito").value = isvInput;
+                let sub_totalGrabadoInput = document.getElementById("subTotalGeneralGrabadoCredito").value;                
+                if(isv > 0){
+                sub_totalGrabadoInput = (+sub_totalGrabadoInput) - (+subtotal);
+                document.getElementById("subTotalGeneralGrabadoCredito").value = sub_totalGrabadoInput;
+                }
 
-               let totalInput = document.getElementById("totalGeneralCredito").value;
-               totalInput = (+totalInput) - (+total);
-               document.getElementById("totalGeneralCredito").value =  totalInput;
 
-               document.getElementById("subTotalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(sub_totalInput);
-               document.getElementById("isvGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isvInput);
-               document.getElementById("totalGeneralCreditoMostrar").value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalInput);
+                let sub_totalExcentoInput = document.getElementById("subTotalGeneralExcentoCredito").value;
+                if(isv == 0){
+
+                sub_totalExcentoInput = (+sub_totalExcentoInput) - (+subtotal);
+                document.getElementById("subTotalGeneralExcentoCredito").value = sub_totalExcentoInput;
+                }
+
+                
+
+
+
+
+
+
+                let isvInput = document.getElementById("isvGeneralCredito").value;
+                isvInput = (+isvInput) - (+isv);
+                document.getElementById("isvGeneralCredito").value = isvInput;
+
+                let totalInput = document.getElementById("totalGeneralCredito").value;
+                totalInput = (+totalInput) - (+total);
+                document.getElementById("totalGeneralCredito").value = totalInput;
+
+
+                document.getElementById("subTotalGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalInput);
+
+
+                document.getElementById("subTotalGeneralGrabadoCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalGrabadoInput);
+
+
+
+                document.getElementById("subTotalGeneralExcentoCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(sub_totalExcentoInput);
+
+
+
+
+
+
+                document.getElementById("isvGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(isvInput);
+                document.getElementById("totalGeneralCreditoMostrar").value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(totalInput);
 
 
 
@@ -968,13 +1136,13 @@
 
             $(document).on('submit', '#guardar_devolucion', function(event) {
 
-            event.preventDefault();
-           
-            guardarNotaCredito();
+                event.preventDefault();
+
+                guardarNotaCredito();
 
             });
 
-            function guardarNotaCredito(){
+            function guardarNotaCredito() {
                 let idFactura = document.getElementById("idFactura").value;
                 document.getElementById("btn_guardar_nota_credito").disabled = true;
 
@@ -989,50 +1157,48 @@
 
                 }
 
-                dataForm.append("idFactura",idFactura);
+                dataForm.append("idFactura", idFactura);
 
                 // let table = $('#tbl_translados_destino').DataTable();
                 // table.destroy();
 
                 axios.post('/nota/credito/guardar', dataForm)
-                .then(response => {
+                    .then(response => {
 
-                    let data = response.data;
-                    let contador = data.contadorTranslados;
+                        let data = response.data;
+                        let contador = data.contadorTranslados;
 
-                    document.getElementById("btn_guardar_nota_credito").disabled = false;
-
-
-
-                     Swal.fire({
-                        icon: data.icon,
-                        title: data.title,
-                        html: data.text,
-
-                     })
-
-                    return;
-
-
-                })
-                .catch(err => {
-                    //console.log(err)
-                    document.getElementById("btn_guardar_nota_credito").disabled = false;
-                    console.log(err);
-                    $('#modal_transladar_producto').modal('hide')
+                        document.getElementById("btn_guardar_nota_credito").disabled = false;
 
 
 
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "Ha ocurrido un error.",
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            html: data.text,
+
+                        })
+
+                        return;
+
+
                     })
+                    .catch(err => {
+                        //console.log(err)
+                        document.getElementById("btn_guardar_nota_credito").disabled = false;
+                        console.log(err);
+                        $('#modal_transladar_producto').modal('hide')
 
-                })
+
+
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Ha ocurrido un error.",
+                        })
+
+                    })
             }
-
-
         </script>
     @endpush
 

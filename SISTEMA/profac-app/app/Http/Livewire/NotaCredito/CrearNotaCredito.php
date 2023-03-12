@@ -62,8 +62,11 @@ class CrearNotaCredito extends Component
         (select name from users where id = factura.users_id) as facturador,
         factura.created_at as fechaRegistro,
         sub_total,
+        sub_total_grabado,
+        sub_total_excento,
         total,
         isv
+
 
         from factura
         inner join tipo_pago_venta B
@@ -339,6 +342,8 @@ class CrearNotaCredito extends Component
         $notaCredito->numero_secuencia_cai = $numeroSecuencia;
         $notaCredito->fecha = now();
         $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
+        $notaCredito->sub_total_grabado = round($request->subTotalGeneralGrabadoCredito,2);
+        $notaCredito->sub_total_excento = round($request->subTotalGeneralExcentoCredito,2);
         $notaCredito->isv = round($request->isvGeneralCredito,2);
         $notaCredito->total = round($request->totalGeneralCredito,2);
         $notaCredito->factura_id = $request->idFactura;
@@ -380,12 +385,13 @@ class CrearNotaCredito extends Component
             $productoNota = new ModelNotaCreditoProducto();
             $productoNota->nota_credito_id = $notaCredito->id;
             $productoNota->producto_id = $idProducto;
+            $productoNota->seccion_id = $idSeccion;
+            $productoNota->indice = $arregloIdInputs[$i];
             $productoNota->cantidad = $cantidad;
             $productoNota->precio_unidad = $precio;
             $productoNota->sub_total = $subTotal;
             $productoNota->isv =  $isv;
-            $productoNota->total = $total;
-            $productoNota->seccion_id = $idSeccion;
+            $productoNota->total = $total; 
             $productoNota->unidad_medida_venta_id = $idUnidadMedida;
             $productoNota->save();
 
