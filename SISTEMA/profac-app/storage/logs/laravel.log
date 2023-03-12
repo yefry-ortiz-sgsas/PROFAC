@@ -14677,3 +14677,11 @@ Stack trace:
 #59 C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(16): require_once('C:\\\\laragon\\\\www\\\\...')
 #60 {main}
 "} 
+[2023-03-12 15:48:04] local.ERROR: Can't use function return value in write context {"userId":2,"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Can't use function return value in write context at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\storage\\framework\\views\\d87a39d646253c4e357381946a7051f079769982.php:150)
+[stacktrace]
+#0 {main}
+"} 
+[2023-03-12 15:48:08] local.ERROR: Can't use function return value in write context {"userId":2,"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Can't use function return value in write context at C:\\laragon\\www\\profac\\SISTEMA\\profac-app\\storage\\framework\\views\\d87a39d646253c4e357381946a7051f079769982.php:150)
+[stacktrace]
+#0 {main}
+"} 
