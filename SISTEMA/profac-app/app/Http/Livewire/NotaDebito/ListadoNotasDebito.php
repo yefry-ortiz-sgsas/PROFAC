@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Database\QueryException;
+use App\Models\NotaDebito\notaDebito;
 
 class ListadoNotasDebito extends Component
 {
@@ -52,7 +53,7 @@ class ListadoNotasDebito extends Component
             from notadebito
             inner join factura
             on notadebito.factura_id = factura.id
-            where estado_nota_dec = 1 and factura.tipo_venta_id = 1 and notadebito.created_at >= '".$fechaInicio."' or notadebito.created_at <= '".$fechaFinal."'"
+            where estado_nota_dec = 1 and factura.tipo_venta_id = 1 and notadebito.created_at >= '".$fechaInicio."' and notadebito.created_at <= '".$fechaFinal."'"
             );
 
             return Datatables::of($listanotaDebito)
@@ -81,7 +82,34 @@ class ListadoNotasDebito extends Component
                     ';
 
             })
-            ->rawColumns(['estado','file'])
+            ->addColumn('acciones', function ($listanotaDebito) {
+                $ESTADO = DB::SELECTONE("select estado_id from notadebito where id = ".$listanotaDebito->id);
+                if( $ESTADO->estado_id == 1){
+
+                    return '
+                    <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                        más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start"
+                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                        <li><a class="dropdown-item" href="#" onclick="anularnd('.$listanotaDebito->id.')"> <i class="fa fa-check-circle text-danger" aria-hidden="true"></i>
+                                Anular</a></li>
+
+                    </ul>
+                    </div>
+                    ';
+
+                }else if($ESTADO->estado_id == 2) {
+                    return
+                    '
+                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Sin Acciones</span></p>
+                    ';
+                }
+
+
+             })
+            ->rawColumns(['estado','file','acciones'])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -90,6 +118,35 @@ class ListadoNotasDebito extends Component
                 'errorTh' => $e,
             ], 402);
 
+        }
+    }
+
+
+    public function anularNota($idNota){
+
+
+        try {
+            DB::beginTransaction();
+
+            $notaAnular = notaDebito::find($idNota);
+            $notaAnular->estado_id = 2;
+            $notaAnular->save();
+
+            DB::commit();
+            return response()->json([
+                "icon" => "success",
+                "text" => "Nota de débito anulada con éxito!",
+                "title"=>"Exito!"
+            ],200);
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al anular nota débito.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
         }
     }
 }

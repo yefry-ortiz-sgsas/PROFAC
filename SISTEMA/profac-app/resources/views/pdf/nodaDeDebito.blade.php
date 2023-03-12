@@ -111,7 +111,7 @@
                         </tr>
                     </thead>
                         <tr>
-                            <td>POR FACTURA NO. {{ $cliente->cai }} - #</td>
+                            <td>POR FACTURA NO. {{ $cliente->cai }} </td>
                             <td>L - </td>
                             <td></td>
                         </tr>
@@ -120,11 +120,11 @@
                             <td>L. {{ $montoConCentavos->total }}</td>
                             <td></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>RECARGO APLICADO</td>
                             <td>L - </td>
                             <td>L. {{ $montoConCentavos->total }}</td>
-                        </tr>
+                        </tr> --}}
                     <tbody>
 
                     </tbody>
@@ -149,15 +149,11 @@
 
         </div>
 
-        {{-- @if($datosEntrega->estadoVale==2)
+        @if($notaDebito->estado_id==2)
         <div>
-            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:50px;">--VALE ANULADO--</p>
+            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:30px;">--Nota de Débito Anulada--</p>
         </div>
-        @elseif($datosEntrega->estadoVale==5)
-        <div>
-            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:50px;">--VALE ELIMINADO--</p>
-        </div>
-        @endif --}}
+        @endif
 
 
 
