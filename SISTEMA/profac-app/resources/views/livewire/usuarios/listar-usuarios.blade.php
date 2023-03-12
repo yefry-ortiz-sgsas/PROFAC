@@ -137,23 +137,23 @@
 
             var data = new FormData($('#userAddForm').get(0));
 
-            axios.post("/usuario/guardar", data)
-                .then(response => {
+                axios.post("/usuario/guardar", data)
+                    .then(response => {
 
 
-                    $('#userAddForm').parsley().reset();
+                        $('#userAddForm').parsley().reset();
 
-                    document.getElementById("userAddForm").reset();
-                    $('#modal_usuario_crear').modal('hide');
+                        document.getElementById("userAddForm").reset();
+                        $('#modal_usuario_crear').modal('hide');
 
-                    $('#tbl_usuariosListar').DataTable().ajax.reload();
+                        $('#tbl_usuariosListar').DataTable().ajax.reload();
 
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Exito!',
-                        text: "Usuario Creado con exito."
-                    })
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Exito!',
+                            text: "Usuario Creado con exito."
+                        })
 
                 })
                 .catch(err => {

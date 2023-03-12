@@ -69,13 +69,14 @@
                                         <th>#</th>
                                         <th>Nota de débito</th>
                                         <th>Monto Asignado</th>
-                                        <th>Código de Factura</th>                                       
-                                        <th>Fecha de Emisión</th>                                                                          
-                                       
+                                        <th>Código de Factura</th>
+                                        <th>Fecha de Emisión</th>
+
                                         <th>Registrado por</th>
                                         <th>Estado</th>
                                         <th>Documento</th>
                                         <th>Fecha de registro</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -99,11 +100,11 @@
             listarNotasDebito();
             function listarNotasDebito(){
 
-                let fechaInicio = document.getElementById("fechaInicio").value; 
-                let fechaFinal = document.getElementById("fechaFinal").value; 
+                let fechaInicio = document.getElementById("fechaInicio").value;
+                let fechaFinal = document.getElementById("fechaFinal").value;
 
                 $('#tbl_listar_notas_debito').DataTable().clear().destroy();
-              
+
 
                 $('#tbl_listar_notas_debito').DataTable({
                 "order": [3, 'desc'],
@@ -132,8 +133,8 @@
 
                     {
                         data: 'fechaEmision'
-                    },                 
-  
+                    },
+
                     {
                         data: 'user'
                     },
@@ -145,6 +146,9 @@
                     },
                     {
                         data: 'created_at'
+                    },
+                    {
+                        data: 'acciones'
                     }
 
                 ]
@@ -152,7 +156,32 @@
 
             });
             }
+            function anularnd(idNota){
 
+                axios.get("/debito/anular/"+idNota)
+                    .then(response => {
+
+
+                        $('#tbl_listar_notas_debito').DataTable().ajax.reload();
+
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Exito!',
+                            text: "Anulado con exito."
+                        })
+
+                })
+                .catch(err => {
+                    console.error(err);
+                    Swal.fire({
+                            icon: 'error',
+                            text: "Hubo un error al anular nota de débito."
+                        })
+
+                })
+
+            }
         </script>
     @endpush
 </div>

@@ -257,15 +257,15 @@
 @push('scripts')
 
 <script>
-    $(document).on('submit', '#montoAddForm', function(event) {
-        event.preventDefault();
-        guardarMonto();
-    });
+        $(document).on('submit', '#montoAddForm', function(event) {
+            event.preventDefault();
+            guardarMonto();
+        });
 
-    $(document).on('submit', '#ndAddForm', function(event) {
-        event.preventDefault();
-        guardarNotaDebito();
-    });
+        $(document).on('submit', '#ndAddForm', function(event) {
+            event.preventDefault();
+            guardarNotaDebito();
+        });
 
         function guardarMonto() {
             $('#modalSpinnerLoading').modal('show');

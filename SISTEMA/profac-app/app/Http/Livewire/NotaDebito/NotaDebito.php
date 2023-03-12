@@ -42,7 +42,7 @@ class NotaDebito extends Component
             factura.id as id,
             @i := @i + 1 as contador,
             numero_factura,
-            factura.cai as correlativo,         
+            factura.cai as correlativo,
             fecha_emision,
             cliente.nombre,
             tipo_pago_venta.descripcion,
@@ -421,9 +421,9 @@ class NotaDebito extends Component
                     ,correlativoND
                     ,(select name from users where id = notadebito.users_registra_id) as 'user'
                     ,created_at
+                    ,estado_id
                 from notadebito
-                where
-                notadebito.estado_id = 1 and notadebito.factura_id = ".$idFactura
+                where notadebito.factura_id = ".$idFactura
             );
 
             $cai = DB::SELECTONE("select

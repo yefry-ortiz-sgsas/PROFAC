@@ -659,6 +659,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/nota/debito/lista/gobierno', ListadoNotasDebitoND::class);
     Route::get('/listado/nota/debito/gobierno/{fechaInicio}/{fechaFinal}', [ListadoNotasDebitoND::class,'listarnotasDebito']);
 
+    Route::get('/debito/anular/{idNota}', [ListadoNotasDebitoND::class,'anularNota']);
+
+
     //------------------------------------------establecer links de storage---------------------------//
     Route::get('/linkstorage', function () {
         Artisan::call('storage:link'); // this will do the command line job
