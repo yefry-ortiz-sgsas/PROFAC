@@ -319,7 +319,7 @@ class VentasExoneradas extends Component
 
                 //dd($factura);
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$arrayInputs[$i]);
             };
 
             if ($request->tipoPagoVenta == 2) { //si el tipo de pago es credito
@@ -363,7 +363,7 @@ class VentasExoneradas extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
     {
         try {
 
@@ -440,6 +440,7 @@ class VentasExoneradas extends Component
                     "factura_id" => $idFactura,
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
+                    "indice" => $indice,
                     "seccion_id" => $idSeccion,
                     "numero_unidades_resta_inventario" => $registroResta,
                     "sub_total" => $subTotal,
