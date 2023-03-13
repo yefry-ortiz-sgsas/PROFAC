@@ -361,7 +361,8 @@ class ListadoNotaCredito extends Component
 
             $productos = DB::SELECT("
 
-            select
+            select * from (
+                select
             D.id AS codigo,
             D.nombre as descripcion,
             F.nombre as medida,
@@ -369,7 +370,8 @@ class ListadoNotaCredito extends Component
             FF.descripcion as seccion,
             FORMAT(C.precio_unidad,2) as precio,
             FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
+            FORMAT(C.sub_total,2) as sub_total,
+            C.indice
         from factura A
         inner join nota_credito B
         on A.id = B.factura_id
@@ -387,8 +389,10 @@ class ListadoNotaCredito extends Component
         on FF.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where B.estado_nota_id=1 and B.id = ".$idNota."
-        group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
+        where B.estado_nota_id=1 and B.id = ".$idNota."               
+        group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total,C.indice
+        ) A 
+        order by A.indice asc
                 "
             );
 

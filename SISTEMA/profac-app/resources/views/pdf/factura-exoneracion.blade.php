@@ -489,6 +489,7 @@
                     </p>
                 </div>
             </div>
+          
 
             <div style="position:absolute;left:0px;  margin-top:{{$altura2}}px;  width:45rem;">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;">

@@ -88,6 +88,7 @@ use App\Http\Livewire\Cardex\CardexGeneral;
 use App\Http\Livewire\NotaCredito\ListadoNotasND;
 use App\Http\Livewire\NotaDebito\ListadoNotasDebito;
 use App\Http\Livewire\NotaDebito\ListadoNotasDebitoND;
+use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
 /*
@@ -303,6 +304,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/ventas/listado/dos', [Comparacion::class, 'listadoDos']);
     Route::get('/ventas/estado/nd/{idFactura}', [Comparacion::class, 'cambioEstadoND']);
     Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class, 'cambioEstadoDC']);
+
+    Route::get('/ventas/coorporativo/orden/compra', NumOrdenCompraCoorporativo::class);
+    Route::get('/coorporativo/ordenCompra/listar', [NumOrdenCompraCoorporativo::class,'listarNumOrdenCompraCoorporativo']); 
+    Route::get('/coorporativo/ordenCompra/clientes', [NumOrdenCompraCoorporativo::class,'listarClientesCoorporativo']); 
 
 
     //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//

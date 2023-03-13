@@ -101,10 +101,10 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Orden Compra </h2>
+            <h2>Orden de compra </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Gobierno</a>
+                    <a>Coorporativo</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Listar</a>
@@ -161,7 +161,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Gobierno</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Coorporativo</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -357,7 +357,7 @@
                             }
                         }
                     ],
-                    "ajax": "/estatal/ordenes/listar",
+                    "ajax": "/coorporativo/ordenCompra/listar",
                     "columns": [{
                             data: 'id'
                         },
@@ -410,7 +410,7 @@
 
             function obtenerClientes() {
 
-                axios.get("/estatal/ordenes/listar/clientes")
+                axios.get("/coorporativo/ordenCompra/clientes")
                     .then( response=>{
                     let data = response.data.clientes;
                     let htmlSelect = ''
