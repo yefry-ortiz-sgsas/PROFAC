@@ -188,13 +188,7 @@
 
                         </table>
 
-
-
                     </div>
-
-
-
-
 
                 </div>
 
@@ -256,8 +250,7 @@
                         </div>
                     </div>
 
-                    <div class="card border border-dark"
-                        style="position:absolute;left:430px;   width:18rem; height:15rem;">
+                    <div class="card border border-dark" style="position:absolute;left:430px;   width:18rem; height:15rem;">
                         <div class="card-body">
                             <div>
                                 <p class="card-text " style="position:absolute; left:10px;  top:10px; font-size:16px;">Importe
