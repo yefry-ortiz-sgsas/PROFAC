@@ -263,6 +263,7 @@ class Cotizacion extends Component
                 array_push($arrayProductos,[
                 'cotizacion_id'=> $cotizacion->id,
                 'producto_id'=> $idProducto,
+                'indice'=>$arrayInputs[$i],
                 'nombre_producto'=>$nombreProducto,
                 'nombre_bodega'=> $nombreBodega,
                 'precio_unidad'=>$precio,
@@ -348,7 +349,9 @@ class Cotizacion extends Component
             on B.unidad_medida_venta_id = D.id
             inner join unidad_medida J
             on J.id = D.unidad_medida_id
-            where A.id = ".$idFactura
+            where A.id = ".$idFactura."
+            order by B.indice asc
+            "
         );
 
         $importes = DB::SELECTONE("
@@ -439,7 +442,8 @@ class Cotizacion extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-            where A.id = ".$idFactura
+        where A.id = ".$idFactura."
+        order by B.indice asc"
         );
 
         $importes = DB::SELECTONE("

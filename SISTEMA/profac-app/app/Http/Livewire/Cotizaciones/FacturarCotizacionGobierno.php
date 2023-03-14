@@ -40,6 +40,8 @@ class FacturarCotizacionGobierno extends Component
         fecha_emision,
         fecha_vencimiento,
         sub_total,
+        sub_total_grabado,
+        sub_total_excento,
         isv,
         total,
         cliente_id,
@@ -92,7 +94,9 @@ class FacturarCotizacionGobierno extends Component
         on A.producto_id = B.id
         inner join cotizacion C
         on A.cotizacion_id = C.id
-        where cotizacion_id =  " . $idCotizacion);
+        where cotizacion_id =  " . $idCotizacion."
+        order by A.indice asc
+        ");
 
         $arregloInputs = $productos[0]->arregloIdInputs;
         $arregloInputs = str_replace('"','',$arregloInputs);
