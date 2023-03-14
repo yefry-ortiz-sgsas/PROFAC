@@ -332,18 +332,18 @@
                         <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
                     </div>
 
+                    @if ($cai->estado_venta_id == 2)
+                    <div  style="position:absolute;   text-align: center; margin-top:350px;width:45rem">
+                        <p style="font-size:50px">
+                            --FACTURA ANULADA--</p>
+                    </div>
+                    @endif
+
                 </div>
 
 
 
 
-        @if ($cai->estado_venta_id == 2)
-            <div>
-                <p class=""
-                    style="position:absolute; margin-top:{{ $altura2 + 40 }}px;  left:80px;   font-size:50px;">
-                    --FACTURA ANULADA--</p>
-            </div>
-        @endif
 
 
 

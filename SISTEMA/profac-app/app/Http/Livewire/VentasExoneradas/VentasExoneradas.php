@@ -569,7 +569,8 @@ class VentasExoneradas extends Component
         name,
         D.id as factura,
         E.codigo as codigo_exoneracion,
-        E.corrOrd as correlativoexo
+        E.corrOrd as correlativoexo,
+        A.estado_venta_id
        from factura A
        inner join cai B
        on A.cai_id = B.id
@@ -713,7 +714,8 @@ class VentasExoneradas extends Component
         name,
         D.id as factura,
         E.codigo as codigo_exoneracion,
-        E.corrOrd as correlativoexo
+        E.corrOrd as correlativoexo,
+        A.estado_venta_id
        from factura A
        inner join cai B
        on A.cai_id = B.id

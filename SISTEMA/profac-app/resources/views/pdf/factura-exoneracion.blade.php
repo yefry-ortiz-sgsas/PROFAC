@@ -184,7 +184,7 @@
 
 
 
-                <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:15rem;">
+                <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
 
 
                     <div class="card border border-dark" style="position:absolute;left:0px;  width:26rem; height:15rem;">
@@ -297,6 +297,13 @@
                             {{ strtoupper($cliente->nombre) }}</p>
                         <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
                     </div>
+
+                    @if ($cai->estado_venta_id == 2)
+                    <div  style="position:absolute;   text-align: center; margin-top:350px;width:45rem">
+                        <p style="font-size:50px">
+                            --FACTURA ANULADA--</p>
+                    </div>
+                    @endif
 
                 </div>
 
