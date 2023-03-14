@@ -90,6 +90,7 @@ class FacturarCotizacion extends Component
         A.isv_producto,
         A.unidad_medida_venta_id,
         B.ultimo_costo_compra,
+        B.precio_base,
         B.isv as isvTblProducto,
         C.arregloIdInputs
         from cotizacion_has_producto A
@@ -170,7 +171,7 @@ class FacturarCotizacion extends Component
                         <label for="precio' . $i . '" class="sr-only">Precio</label>
                         <input value="' . $producto->precio_unidad . '" type="number" placeholder="Precio Unidad" id="precio' . $i . '"
                             name="precio' . $i . '" class="form-control"  data-parsley-required step="any"
-                            autocomplete="off" min="' . $producto->ultimo_costo_compra . '" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isv . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
+                            autocomplete="off" min="' . $producto->precio_base . '" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isv . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
                     </div>
 
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
