@@ -85,26 +85,30 @@
         <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:6.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$datos->nombre}}</p>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;;"><b>Dirección:</b> {{$datos->direccion}}</p>
 
-                <p class="card-text" style="position:absolute;left:20px;  top:47px;"><b>Correo:</b> {{$datos->correo}}
+                <br>
+                <br>
+                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 11px; max-width:520px">
+                    <b>Dirección:</b> {{ $datos->direccion }}
                 </p>
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b> </p>
+                <br>
+                <br>
+                <br>
 
-
-
-
-
-                <p class="card-text" style="position:absolute;left:520px;  top:10px;"><b>Fecha:</b> {{$datos->fecha_emision}} </p>
-                <p class="card-text" style="position:absolute;left:520px;  top:25px;"><b>Hora:</b> {{$datos->hora}}</p>
-                <p class="card-text" style="position:absolute;left:520px;  top:40px;"><b>Vence:</b> {{$datos->fecha_vencimiento}}</p>
-                <p class="card-text" style="position:absolute;left:520px;  top:57px;"><b>RTN:</b> {{$datos->rtn}}</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:75px;"><b>Correo:</b> {{$datos->correo}}
+                </p>{{--
+                        <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b> </p>
+                    --}}
+                <p class="card-text" style="position:absolute;left:540px;  top:10px;"><b>Fecha:</b> {{$datos->fecha_emision}} </p>
+                <p class="card-text" style="position:absolute;left:540px;  top:25px;"><b>Hora:</b> {{$datos->hora}}</p>
+                <p class="card-text" style="position:absolute;left:540px;  top:40px;"><b>Vence:</b> {{$datos->fecha_vencimiento}}</p>
+                <p class="card-text" style="position:absolute;left:540px;  top:57px;"><b>RTN:</b> {{$datos->rtn}}</p>
 
                 </p>
 
 
 
-                <p class="card-text" style="position:absolute;left:270px;  top:45px;"><b>Teléfono:</b> {{ $datos->telefono_empresa}}
+                <p class="card-text" style="position:absolute;left:270px;  top:75px;"><b>Teléfono:</b> {{ $datos->telefono_empresa}}
                 </p>
             </div>
         </div>
