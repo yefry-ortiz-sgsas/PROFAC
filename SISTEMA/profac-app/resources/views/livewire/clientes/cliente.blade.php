@@ -111,12 +111,12 @@
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Nombre del cliente<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente" name="nombre_cliente"
-                                        data-parsley-required>
+                                        data-parsley-required maxlength="60">
                                 </div>
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Dirección<span class="text-danger">*</span></label>
                                     <textarea name="direccion_cliente" placeholder="Escriba aquí..." required id="direccion_cliente" cols="30" rows="3"
-                                        class="form-group form-control" data-parsley-required></textarea>
+                                        class="form-group form-control" data-parsley-required maxlength="60"></textarea>
                                 </div>                                
                                 <div class="col-md-6">
                                     <label class="col-form-label focus-label">Credito Disponible<span class="text-danger">*</span></label>
