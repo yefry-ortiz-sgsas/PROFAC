@@ -516,13 +516,15 @@ class FacturacionCorporativa extends Component
                 if (!empty($lista)) {
 
                     $factura = $this->metodoLista($request);
+
                 } else if (!empty($espera)) {
 
                     $factura = $this->enumerar($request);
 
-                }else if($diferenciaContador >= 5){
+                }else if($diferenciaContador >= 2){
 
                     $factura = $this->nivelacion($request);
+                    
                 } else {
 
                     $factura = $this->alternar($request);
