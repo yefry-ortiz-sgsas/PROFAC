@@ -41,7 +41,7 @@ class FacturacionCorporativa extends Component
         try {
 
 
-               /* $listaClientes = DB::SELECT("
+            /* $listaClientes = DB::SELECT("
                 select
                     id,
                     nombre as text
@@ -181,7 +181,7 @@ class FacturacionCorporativa extends Component
             on segmento.bodega_id = bodega.id
          where
 
-         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%".$request->search."%')
+         (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%" . $request->search . "%')
          group by A.producto_id
          limit 15
          ");
@@ -287,7 +287,7 @@ class FacturacionCorporativa extends Component
     {
 
         try {
-  
+
 
 
             $validator = Validator::make($request->all(), [
@@ -303,14 +303,14 @@ class FacturacionCorporativa extends Component
                 'nombre_cliente_ventas' => 'required',
                 'tipoPagoVenta' => 'required',
                 'restriccion' => 'required',
-                'vendedor'=>'required'
+                'vendedor' => 'required'
 
 
 
             ]);
 
 
-            
+
 
             if ($validator->fails()) {
                 return response()->json([
@@ -327,7 +327,7 @@ class FacturacionCorporativa extends Component
 
             if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
-               // DD($facturaVencida);
+                // DD($facturaVencida);
                 if ($facturaVencida) {
                     return response()->json([
                         'icon' => 'warning',
@@ -336,13 +336,12 @@ class FacturacionCorporativa extends Component
 
                     ], 401);
                 }
-
             }
 
 
 
-            if($request->tipoPagoVenta == 2){
-                $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente,$request->totalGeneral);
+            if ($request->tipoPagoVenta == 2) {
+                $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
 
                 if ($comprobarCredito) {
                     return response()->json([
@@ -360,7 +359,7 @@ class FacturacionCorporativa extends Component
             $arrayTemporal = $request->arregloIdInputs;
             $arrayInputs = explode(',', $arrayTemporal);
 
-            
+
             $numeroSecuencia = null;
             $mensaje = "";
             $flag = false;
@@ -420,8 +419,7 @@ class FacturacionCorporativa extends Component
 
 
 
-            if ($estado == 1)
-            {
+            if ($estado == 1) {
                 //presenta
 
                 $cai = DB::SELECTONE("select
@@ -434,14 +432,13 @@ class FacturacionCorporativa extends Component
                 where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
 
-                if($cai->numero_actual > $cai->cantidad_otorgada){
+                if ($cai->numero_actual > $cai->cantidad_otorgada) {
 
                     return response()->json([
                         "title" => "Advertencia",
                         "icon" => "warning",
                         "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 1.",
                     ], 200);
-
                 }
 
 
@@ -450,18 +447,18 @@ class FacturacionCorporativa extends Component
 
 
                 $numeroSecuencia = $cai->numero_actual;
-                $arrayCai = explode('-',$cai->numero_final);
+                $arrayCai = explode('-', $cai->numero_final);
                 $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
-                $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
+                $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
 
 
 
-                $montoComision = $request->totalGeneral*0.5;
+                $montoComision = $request->totalGeneral * 0.5;
 
-                if($request->tipoPagoVenta==1){
+                if ($request->tipoPagoVenta == 1) {
                     $diasCredito = 0;
-                }else{
-                    $dias = DB::SELECTONE("select dias_credito from cliente where id = ".$request->seleccionarCliente);
+                } else {
+                    $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                     $diasCredito = $dias->dias_credito;
                 }
 
@@ -469,70 +466,63 @@ class FacturacionCorporativa extends Component
 
                 $factura = new ModelFactura;
                 $factura->numero_factura = $numeroVenta->numero;
-                $factura->cai=$numeroCAI;
-                $factura->numero_secuencia_cai=$numeroSecuencia;
+                $factura->cai = $numeroCAI;
+                $factura->numero_secuencia_cai = $numeroSecuencia;
                 $factura->nombre_cliente = $request->nombre_cliente_ventas;
-                $factura->rtn=$request->rtn_ventas;
+                $factura->rtn = $request->rtn_ventas;
                 $factura->sub_total = $request->subTotalGeneral;
-                $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
-                $factura->sub_total_excento=$request->subTotalGeneralExcento;
-                $factura->isv=$request->isvGeneral;
-                $factura->total=$request->totalGeneral;
-                $factura->credito=$request->totalGeneral;
-                $factura->fecha_emision=$request->fecha_emision;
-                $factura->fecha_vencimiento=$request->fecha_vencimiento;
-                $factura->tipo_pago_id=$request->tipoPagoVenta;
-                $factura->dias_credito=$diasCredito;
-                $factura->cai_id=$cai->id;
-                $factura->estado_venta_id=1;
-                $factura->cliente_id=$request->seleccionarCliente;
-                $factura->vendedor=$request->vendedor;
-                $factura->monto_comision=$montoComision;
-                $factura->tipo_venta_id=1;// corporativa
-                $factura->estado_factura_id=1; // se presenta
+                $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+                $factura->sub_total_excento = $request->subTotalGeneralExcento;
+                $factura->isv = $request->isvGeneral;
+                $factura->total = $request->totalGeneral;
+                $factura->credito = $request->totalGeneral;
+                $factura->fecha_emision = $request->fecha_emision;
+                $factura->fecha_vencimiento = $request->fecha_vencimiento;
+                $factura->tipo_pago_id = $request->tipoPagoVenta;
+                $factura->dias_credito = $diasCredito;
+                $factura->cai_id = $cai->id;
+                $factura->estado_venta_id = 1;
+                $factura->cliente_id = $request->seleccionarCliente;
+                $factura->vendedor = $request->vendedor;
+                $factura->monto_comision = $montoComision;
+                $factura->tipo_venta_id = 1; // corporativa
+                $factura->estado_factura_id = 1; // se presenta
                 $factura->users_id = Auth::user()->id;
-                $factura->comision_estado_pagado=0;
-                $factura->pendiente_cobro=$request->totalGeneral;
+                $factura->comision_estado_pagado = 0;
+                $factura->pendiente_cobro = $request->totalGeneral;
                 $factura->estado_editar = 1;
                 $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
                 $factura->comprovante_entrega_id = $request->idComprobante;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
-                $caiUpdated->numero_actual=$numeroSecuencia+1;
-                $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - $numeroSecuencia;
+                $caiUpdated->numero_actual = $numeroSecuencia + 1;
+                $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
                 $caiUpdated->save();
-
-
             } else {
 
                 // alterna
                 $lista = DB::SELECT("select id, numero from listado where eliminado = 0 order by secuencia ASC");
                 $espera = DB::SELECT("select id from enumeracion where eliminado = 0 order by secuencia ASC");
-                
+
                 $contadorCai = DB::SELECTONE("select numero_actual, serie from cai where estado_id = 1 and tipo_documento_fiscal_id=1");
                 $diferenciaContador = $contadorCai->numero_actual - $contadorCai->serie;
 
                 if (!empty($lista)) {
 
                     $factura = $this->metodoLista($request);
-
                 } else if (!empty($espera)) {
 
                     $factura = $this->enumerar($request);
+                } 
 
-                }else if($diferenciaContador >= 2){
-
-                    $factura = $this->nivelacion($request);
-                    
-                } else {
+                else {
 
                     $factura = $this->alternar($request);
                 }
-
             }
 
-           
+
 
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
@@ -562,28 +552,28 @@ class FacturacionCorporativa extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-               // dd($factura);
+                // dd($factura);
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$arrayInputs[$i]);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $arrayInputs[$i]);
             };
 
-            if($request->tipoPagoVenta==2 ){//si el tipo de pago es credito
-                $this->restarCreditoCliente($request->seleccionarCliente,$request->totalGeneral,$factura->id);
+            if ($request->tipoPagoVenta == 2) { //si el tipo de pago es credito
+                $this->restarCreditoCliente($request->seleccionarCliente, $request->totalGeneral, $factura->id);
             }
 
 
-           
-              
-            ModelVentaProducto::insert($this->arrayProductos);   
+
+
+            ModelVentaProducto::insert($this->arrayProductos);
             ModelLogTranslados::insert($this->arrayLogs);
 
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             DB::commit();
 
-        
 
-           /*  <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> */
+
+            /*  <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> */
             return response()->json([
                 'icon' => "success",
                 'text' => '
@@ -606,7 +596,7 @@ class FacturacionCorporativa extends Component
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
                 'idFactura' => $factura->id,
-                'mensajeError'=>$e
+                'mensajeError' => $e
             ], 402);
         }
     }
@@ -621,7 +611,7 @@ class FacturacionCorporativa extends Component
 
             $turno = DB::SELECTONE("select turno from parametro where id =1");
 
-           
+
 
             if ($turno->turno == 1) {
                 $turnoActualizar = 2;
@@ -667,7 +657,7 @@ class FacturacionCorporativa extends Component
                 "select
                             id
                             from factura
-                            where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual 
+                            where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual
             );
 
             // if(!empty($existencia)){
@@ -691,7 +681,7 @@ class FacturacionCorporativa extends Component
             }
 
             $arrayNumeroFinal = explode('-', $cai->numero_final);
-            $numero_final= (string)((int)($arrayNumeroFinal[3]));
+            $numero_final = (string)((int)($arrayNumeroFinal[3]));
 
             if ($numeroSecuencia > $numero_final) {
                 return response()->json([
@@ -728,8 +718,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
-            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
-            $factura->sub_total_excento=$request->subTotalGeneralExcento;
+            $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $factura->sub_total_excento = $request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -795,12 +785,12 @@ class FacturacionCorporativa extends Component
 
 
 
-            $numeroSecuencia = 0;
-            $numeroSecuenciaUpdated = 0;
+        $numeroSecuencia = 0;
+        $numeroSecuenciaUpdated = 0;
 
 
 
-            $cai = DB::SELECTONE("select
+        $cai = DB::SELECTONE("select
             id,
             numero_inicial,
             numero_final,
@@ -809,102 +799,102 @@ class FacturacionCorporativa extends Component
             from cai
             where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
-   
-
-            $arrayCai = explode('-', $cai->numero_final);
-            $cuartoSegmentoCAI = sprintf("%'.08d", $cai->numero_actual);
-            $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
-
-            $duplicado = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai_id=" . $cai->id . " and cai='" . $numeroCAI . "'");
 
 
+        $arrayCai = explode('-', $cai->numero_final);
+        $cuartoSegmentoCAI = sprintf("%'.08d", $cai->numero_actual);
+        $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
 
-            $existencia = DB::SELECTONE(
-                "select
+        $duplicado = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai_id=" . $cai->id . " and cai='" . $numeroCAI . "'");
+
+
+
+        $existencia = DB::SELECTONE(
+            "select
                             id
                             from factura
-                            where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual            
-            );
+                            where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual
+        );
 
 
 
-            if ($duplicado->contador >= 2 || !empty($existencia)) {
-                $numeroSecuencia =  $this->comprobacionRecursiva($request, $cai, $cai->numero_actual, 2);
-                $numeroSecuenciaUpdated = $numeroSecuencia + 1;
-            } else {
-                $numeroSecuencia = $cai->numero_actual;
-                $numeroSecuenciaUpdated = $cai->numero_actual + 1;
-            }
+        if ($duplicado->contador >= 2 || !empty($existencia)) {
+            $numeroSecuencia =  $this->comprobacionRecursiva($request, $cai, $cai->numero_actual, 2);
+            $numeroSecuenciaUpdated = $numeroSecuencia + 1;
+        } else {
+            $numeroSecuencia = $cai->numero_actual;
+            $numeroSecuenciaUpdated = $cai->numero_actual + 1;
+        }
 
-            $arrayNumeroFinal = explode('-', $cai->numero_final);
-            $numero_final= (string)((int)($arrayNumeroFinal[3]));
+        $arrayNumeroFinal = explode('-', $cai->numero_final);
+        $numero_final = (string)((int)($arrayNumeroFinal[3]));
 
-            if ($numeroSecuencia > $numero_final) {
-                return response()->json([
-                    "title" => "Advertencia",
-                    "icon" => "warning",
-                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 2.",
-                ], 200);
-            }
-
-
-            $arrayCai = explode('-', $cai->numero_final);
-            $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
-            $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
-            // dd($cai->cantidad_otorgada);
-            $montoComision = $request->totalGeneral * 0.5;
+        if ($numeroSecuencia > $numero_final) {
+            return response()->json([
+                "title" => "Advertencia",
+                "icon" => "warning",
+                "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 2.",
+            ], 200);
+        }
 
 
-
-            if ($request->tipoPagoVenta == 1) {
-                $diasCredito = 0;
-            } else {
-                $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
-                $diasCredito = $dias->dias_credito;
-            }
-
-            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
-            $factura = new ModelFactura;
-            $factura->numero_factura = $numeroVenta->numero;
-            $factura->cai = $numeroCAI;
-            $factura->numero_secuencia_cai = $numeroSecuencia;
-            $factura->nombre_cliente = $request->nombre_cliente_ventas;
-            $factura->rtn = $request->rtn_ventas;
-            $factura->sub_total = $request->subTotalGeneral;
-            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
-            $factura->sub_total_excento=$request->subTotalGeneralExcento;
-            $factura->isv = $request->isvGeneral;
-            $factura->total = $request->totalGeneral;
-            $factura->credito = $request->totalGeneral;
-            $factura->fecha_emision = $request->fecha_emision;
-            $factura->fecha_vencimiento = $request->fecha_vencimiento;
-            $factura->tipo_pago_id = $request->tipoPagoVenta;
-            $factura->dias_credito = $diasCredito;
-            $factura->cai_id = $cai->id;
-            $factura->estado_venta_id = 1;
-            $factura->cliente_id = $request->seleccionarCliente;
-            $factura->vendedor = $request->vendedor;
-            $factura->monto_comision = $montoComision;
-            $factura->tipo_venta_id = 1; //coorporativo;
-            $factura->estado_factura_id = 2; // se presenta
-            $factura->users_id = Auth::user()->id;
-            $factura->comision_estado_pagado = 0;
-            $factura->pendiente_cobro = $request->totalGeneral;
-            $factura->estado_editar = 1;
-            $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
-            $factura->comprovante_entrega_id = $request->idComprobante;
-            $factura->save();
-
-
-            $caiUpdated =  ModelCAI::find($cai->id);
-            $caiUpdated->serie = $numeroSecuenciaUpdated;
-            $caiUpdated->save();
-      
+        $arrayCai = explode('-', $cai->numero_final);
+        $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
+        $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
+        // dd($cai->cantidad_otorgada);
+        $montoComision = $request->totalGeneral * 0.5;
 
 
 
+        if ($request->tipoPagoVenta == 1) {
+            $diasCredito = 0;
+        } else {
+            $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
+            $diasCredito = $dias->dias_credito;
+        }
 
-            return $factura;
+        $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+        $factura = new ModelFactura;
+        $factura->numero_factura = $numeroVenta->numero;
+        $factura->cai = $numeroCAI;
+        $factura->numero_secuencia_cai = $numeroSecuencia;
+        $factura->nombre_cliente = $request->nombre_cliente_ventas;
+        $factura->rtn = $request->rtn_ventas;
+        $factura->sub_total = $request->subTotalGeneral;
+        $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+        $factura->sub_total_excento = $request->subTotalGeneralExcento;
+        $factura->isv = $request->isvGeneral;
+        $factura->total = $request->totalGeneral;
+        $factura->credito = $request->totalGeneral;
+        $factura->fecha_emision = $request->fecha_emision;
+        $factura->fecha_vencimiento = $request->fecha_vencimiento;
+        $factura->tipo_pago_id = $request->tipoPagoVenta;
+        $factura->dias_credito = $diasCredito;
+        $factura->cai_id = $cai->id;
+        $factura->estado_venta_id = 1;
+        $factura->cliente_id = $request->seleccionarCliente;
+        $factura->vendedor = $request->vendedor;
+        $factura->monto_comision = $montoComision;
+        $factura->tipo_venta_id = 1; //coorporativo;
+        $factura->estado_factura_id = 2; // se presenta
+        $factura->users_id = Auth::user()->id;
+        $factura->comision_estado_pagado = 0;
+        $factura->pendiente_cobro = $request->totalGeneral;
+        $factura->estado_editar = 1;
+        $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+        $factura->comprovante_entrega_id = $request->idComprobante;
+        $factura->save();
+
+
+        $caiUpdated =  ModelCAI::find($cai->id);
+        $caiUpdated->serie = $numeroSecuenciaUpdated;
+        $caiUpdated->save();
+
+
+
+
+
+        return $factura;
         // } catch (QueryException $e) {
         //     DB::rollback();
         //     return response()->json([
@@ -940,13 +930,14 @@ class FacturacionCorporativa extends Component
                 // ], 402);
             }
 
-            $existencia = DB::SELECTONE("
+            $existencia = DB::SELECTONE(
+                "
                 select
                 id
                 from factura
                 where estado_factura_id=2  and  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->cai_id . " and numero_secuencia_cai=" . $cai->secuencia
-                
-                );
+
+            );
 
 
 
@@ -964,7 +955,7 @@ class FacturacionCorporativa extends Component
                 $numeroSecuencia = $cai->secuencia;
             }
 
-            if ($numeroSecuencia < $cai->cantidad_otorgada) {//$cai->numero_actual > $cai->cantidad_otorgada//$numeroSecuencia > $cai->cantidad_otorgada
+            if ($numeroSecuencia < $cai->cantidad_otorgada) { //$cai->numero_actual > $cai->cantidad_otorgada//$numeroSecuencia > $cai->cantidad_otorgada
 
                 return response()->json([
                     "title" => "Advertencia",
@@ -995,8 +986,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
-            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
-            $factura->sub_total_excento=$request->subTotalGeneralExcento;
+            $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $factura->sub_total_excento = $request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -1053,13 +1044,13 @@ class FacturacionCorporativa extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$indice)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
     {
         try {
 
             $precioUnidad = $subTotal / $unidadesRestarInv;
 
-            $unidadesRestar = $unidadesRestarInv;//es la cantidad ingresada por el usuario multiplicado por unidades de venta del producto
+            $unidadesRestar = $unidadesRestarInv; //es la cantidad ingresada por el usuario multiplicado por unidades de venta del producto
             $registroResta = 0;
             while (!($unidadesRestar <= 0)) {
 
@@ -1155,7 +1146,7 @@ class FacturacionCorporativa extends Component
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
                     "cantidad" => $registroResta,
-                    "unidad_medida_venta_id"=>$idUnidadVenta,
+                    "unidad_medida_venta_id" => $idUnidadVenta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -1212,9 +1203,9 @@ class FacturacionCorporativa extends Component
        on A.vendedor = users.id
        inner join estado_factura D
        on A.estado_factura_id = D.id
-       where A.id = ".$idFactura);
+       where A.id = " . $idFactura);
 
-       $cliente = DB::SELECTONE("
+        $cliente = DB::SELECTONE("
        select
         factura.nombre_cliente as nombre,
         cliente.direccion,
@@ -1227,9 +1218,9 @@ class FacturacionCorporativa extends Component
         from factura
         inner join cliente
         on factura.cliente_id = cliente.id
-        where factura.id = ".$idFactura);
+        where factura.id = " . $idFactura);
 
-       $importes = DB::SELECTONE("
+        $importes = DB::SELECTONE("
         select
         total,
         isv,
@@ -1237,21 +1228,22 @@ class FacturacionCorporativa extends Component
         sub_total_grabado,
         sub_total_excento     
         from factura
-        where id = ".$idFactura);
+        where id = " . $idFactura);
 
 
-        $importesConCentavos= DB::SELECTONE("
+        $importesConCentavos = DB::SELECTONE("
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
         FORMAT(sub_total_excento,2) as sub_total_excento
-        from factura where factura.id = ".$idFactura);
+        from factura where factura.id = " . $idFactura);
 
 
 
-        $productos = DB::SELECT("
+        $productos = DB::SELECT(
+            "
 
         select
         *
@@ -1284,7 +1276,7 @@ class FacturacionCorporativa extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=".$idFactura."
+        where A.id=" . $idFactura . "
         group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
         order by B.indice asc
         ) A
@@ -1314,7 +1306,7 @@ class FacturacionCorporativa extends Component
         on C.unidad_medida_venta_id = E.id
         inner join unidad_medida F
         on F.id = E.unidad_medida_id
-        where B.estado_id=1 and A.id = ".$idFactura
+        where B.estado_id=1 and A.id = " . $idFactura
 
         );
         // for ($i=0; $i < 15 ; $i++) {
@@ -1329,19 +1321,18 @@ class FacturacionCorporativa extends Component
         from factura A
         inner join numero_orden_compra B
         on A.numero_orden_compra_id = B.id
-        where A.id =".$idFactura);
+        where A.id =" . $idFactura);
 
-        if(empty($ordenCompra->numero_orden)){
-            $ordenCompra=["numero_orden"=>""];
-        }else{
-            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        if (empty($ordenCompra->numero_orden)) {
+            $ordenCompra = ["numero_orden" => ""];
+        } else {
+            $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
 
 
-        if( fmod($importes->total, 1) == 0.0 ){
+        if (fmod($importes->total, 1) == 0.0) {
             $flagCentavos = false;
-
-        }else{
+        } else {
             $flagCentavos = true;
         }
 
@@ -1349,11 +1340,9 @@ class FacturacionCorporativa extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra'))->setPaper('letter');
 
-        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
-
-
+        return $pdf->stream("factura_numero" . $cai->numero_factura . ".pdf");
     }
 
     public function imprimirFacturaCoorporativaCopia($idFactura)
@@ -1385,9 +1374,9 @@ class FacturacionCorporativa extends Component
        on A.vendedor = users.id
        inner join estado_factura D
        on A.estado_factura_id = D.id
-       where A.id = ".$idFactura);
+       where A.id = " . $idFactura);
 
-       $cliente = DB::SELECTONE("
+        $cliente = DB::SELECTONE("
        select
         factura.nombre_cliente as nombre,
         cliente.direccion,
@@ -1400,7 +1389,7 @@ class FacturacionCorporativa extends Component
         from factura
         inner join cliente
         on factura.cliente_id = cliente.id
-        where factura.id = ".$idFactura);
+        where factura.id = " . $idFactura);
 
         $importes = DB::SELECTONE("
         select
@@ -1410,21 +1399,22 @@ class FacturacionCorporativa extends Component
         sub_total_grabado,
         sub_total_excento     
         from factura
-        where id = ".$idFactura);
+        where id = " . $idFactura);
 
 
-        $importesConCentavos= DB::SELECTONE("
+        $importesConCentavos = DB::SELECTONE("
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
         FORMAT(sub_total_excento,2) as sub_total_excento
-        from factura where factura.id = ".$idFactura);
+        from factura where factura.id = " . $idFactura);
 
 
 
-        $productos = DB::SELECT("
+        $productos = DB::SELECT(
+            "
 
         select
             B.producto_id as codigo,
@@ -1454,7 +1444,7 @@ class FacturacionCorporativa extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=".$idFactura."
+        where A.id=" . $idFactura . "
         group by codigo, descripcion, medida, bodega, seccion, precio
 
         union
@@ -1480,7 +1470,7 @@ class FacturacionCorporativa extends Component
         on C.unidad_medida_venta_id = E.id
         inner join unidad_medida F
         on F.id = E.unidad_medida_id
-        where B.estado_id=1 and A.id = ".$idFactura
+        where B.estado_id=1 and A.id = " . $idFactura
 
         );
 
@@ -1496,19 +1486,18 @@ class FacturacionCorporativa extends Component
         from factura A
         inner join numero_orden_compra B
         on A.numero_orden_compra_id = B.id
-        where A.id =".$idFactura);
+        where A.id =" . $idFactura);
 
-        if(empty($ordenCompra->numero_orden)){
-            $ordenCompra=["numero_orden"=>""];
-        }else{
-            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        if (empty($ordenCompra->numero_orden)) {
+            $ordenCompra = ["numero_orden" => ""];
+        } else {
+            $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
 
 
-        if( fmod($importes->total, 1) == 0.0 ){
+        if (fmod($importes->total, 1) == 0.0) {
             $flagCentavos = false;
-
-        }else{
+        } else {
             $flagCentavos = true;
         }
 
@@ -1516,11 +1505,9 @@ class FacturacionCorporativa extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/facturaCopia', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/facturaCopia', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra'))->setPaper('letter');
 
-        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
-
-
+        return $pdf->stream("factura_numero" . $cai->numero_factura . ".pdf");
     }
 
 
@@ -1572,23 +1559,23 @@ class FacturacionCorporativa extends Component
             count(id) as contador
             from factura
             where estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $listado->cai_id . " and numero_secuencia_cai=" . $listado->secuencia
-                    
+
             );
 
 
 
             //
-            if ( $duplicado->contador >= 2) {
+            if ($duplicado->contador >= 2) {
                 DB::update("UPDATE enumeracion SET eliminado =  1 WHERE id = " . $listado->id);
                 return $this->alternar($request);
             }
 
-            if(!empty($existencia->contador >=2)){
+            if (!empty($existencia->contador >= 2)) {
                 DB::update("UPDATE enumeracion SET eliminado =  1 WHERE id = " . $listado->id);
                 return $this->alternar($request);
             }
 
-            if($existencia->contador != 0){
+            if ($existencia->contador != 0) {
                 return $this->alternar($request);
             }
 
@@ -1613,8 +1600,8 @@ class FacturacionCorporativa extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
-            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
-            $factura->sub_total_excento=$request->subTotalGeneralExcento;
+            $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $factura->sub_total_excento = $request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -1685,13 +1672,13 @@ class FacturacionCorporativa extends Component
         }
     }
 
-    public function comprobarCreditoCliente($idCliente,$totalFactura)
+    public function comprobarCreditoCliente($idCliente, $totalFactura)
     {
 
 
 
         $credito = DB::SELECTONE(
-        "
+            "
         select credito from cliente where  id = " . $idCliente
         );
 
@@ -1702,7 +1689,8 @@ class FacturacionCorporativa extends Component
         return false;
     }
 
-    public function comprobarFacturaVencida($idCliente){
+    public function comprobarFacturaVencida($idCliente)
+    {
         $facturasVencidas = DB::SELECT(
             "
             select
@@ -1724,7 +1712,8 @@ class FacturacionCorporativa extends Component
 
 
 
-    public function restarCreditoCliente($idCliente,$totalFactura, $idFactura){
+    public function restarCreditoCliente($idCliente, $totalFactura, $idFactura)
+    {
 
         $cliente = ModelCliente::find($idCliente);
         $resta = $cliente->credito - $totalFactura;
@@ -1734,15 +1723,16 @@ class FacturacionCorporativa extends Component
         $logCredito = new logCredito;
         $logCredito->descripcion = 'Reducción  de credito por factura.';
         $logCredito->monto = $totalFactura;
-        $logCredito->factura_id=$idFactura;
-        $logCredito->cliente_id=$idCliente;
+        $logCredito->factura_id = $idFactura;
+        $logCredito->cliente_id = $idCliente;
         $logCredito->users_id = Auth::user()->id;
         $logCredito->save();
 
         return true;
     }
 
-    public function listadoVendedores(){
+    public function listadoVendedores()
+    {
 
         //$rolId = Auth::user()->rol_id;
         //$idUser = Auth::user()->id;
@@ -1760,10 +1750,150 @@ class FacturacionCorporativa extends Component
         */
 
         return response()->json([
-            'results'=>$listadoVendedores,
-        ],200);
-
-
+            'results' => $listadoVendedores,
+        ], 200);
     }
 
+    public function guardarVentaND($request)
+    {
+
+
+        try {
+            $numeroSecuencia = 0;
+            $numeroSecuenciaUpdated = 0;
+
+
+        $cai = DB::SELECTONE("select
+                                id,
+                                numero_inicial,
+                                numero_final,
+                                cantidad_otorgada,
+                                serie as 'numero_actual'
+                                from cai
+                                where tipo_documento_fiscal_id = 1 and estado_id = 1");
+            
+
+            $estado = 2;
+
+            $arrayCai = explode('-', $cai->numero_final);
+            $cuartoSegmentoCAI = sprintf("%'.08d", $cai->numero_actual);
+            $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
+
+            $duplicado = DB::SELECTONE("select count(id) as contador from factura where estado_venta_id=1 and cai_id=" . $cai->id . " and cai='" . $numeroCAI . "'");
+
+
+
+            $existencia = DB::SELECTONE(
+                "select
+                            id
+                            from factura
+                            where  estado_venta_id=1 and cliente_id=" . $request->seleccionarCliente . " and cai_id=" . $cai->id . " and numero_secuencia_cai=" . $cai->numero_actual
+            );
+
+
+
+            if ($duplicado->contador >= 2 || !empty($existencia)) {
+                $numeroSecuencia =  $this->comprobacionRecursiva($request, $cai, $cai->numero_actual, $estado);
+                $numeroSecuenciaUpdated = $numeroSecuencia + 1;
+            } else {
+                $numeroSecuencia = $cai->numero_actual;
+                $numeroSecuenciaUpdated = $cai->numero_actual + 1;
+            }
+
+            $arrayNumeroFinal = explode('-', $cai->numero_final);
+            $numero_final = (string)((int)($arrayNumeroFinal[3]));
+
+            if ($numeroSecuencia > $numero_final) {
+                return response()->json([
+                    "title" => "Advertencia",
+                    "icon" => "warning",
+                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado 2.",
+                ], 200);
+            }
+
+
+
+            $arrayCai = explode('-', $cai->numero_final);
+            $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
+            $numeroCAI = $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2] . '-' . $cuartoSegmentoCAI;
+
+            $montoComision = $request->totalGeneral * 0.5;
+
+
+
+            if ($request->tipoPagoVenta == 1) {
+                $diasCredito = 0;
+            } else {
+                $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
+                $diasCredito = $dias->dias_credito;
+            }
+
+            $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+            $factura = new ModelFactura;
+            $factura->numero_factura = $numeroVenta->numero;
+            $factura->cai = $numeroCAI;
+            $factura->numero_secuencia_cai = $numeroSecuencia;
+            $factura->nombre_cliente = $request->nombre_cliente_ventas;
+            $factura->rtn = $request->rtn_ventas;
+            $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $factura->sub_total_excento = $request->subTotalGeneralExcento;
+            $factura->isv = $request->isvGeneral;
+            $factura->total = $request->totalGeneral;
+            $factura->credito = $request->totalGeneral;
+            $factura->fecha_emision = $request->fecha_emision;
+            $factura->fecha_vencimiento = $request->fecha_vencimiento;
+            $factura->tipo_pago_id = $request->tipoPagoVenta;
+            $factura->dias_credito = $diasCredito;
+            $factura->cai_id = $cai->id;
+            $factura->estado_venta_id = 1;
+            $factura->cliente_id = $request->seleccionarCliente;
+            $factura->vendedor = $request->vendedor;
+            $factura->monto_comision = $montoComision;
+            $factura->tipo_venta_id = 1; //coorporativo;
+            $factura->estado_factura_id = $estado; // se presenta
+            $factura->users_id = Auth::user()->id;
+            $factura->comision_estado_pagado = 0;
+            $factura->pendiente_cobro = $request->totalGeneral;
+            $factura->estado_editar = 1;
+            $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
+            $factura->comprovante_entrega_id = $request->idComprobante;
+            $factura->save();
+
+            if ($turno->turno == 1) {
+                $caiUpdated =  ModelCAI::find($cai->id);
+                $caiUpdated->numero_actual = $numeroSecuenciaUpdated;
+                $caiUpdated->save();
+            } else {
+                $caiUpdated =  ModelCAI::find($cai->id);
+                $caiUpdated->serie = $numeroSecuenciaUpdated;
+                $caiUpdated->save();
+            }
+
+
+            // if(empty($existencia)){
+            //     $caiUpdated =  ModelCAI::find($cai->id);
+            //     $caiUpdated->serie=$numeroSecuencia;
+            //     //$caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
+            //     $caiUpdated->save();
+            // }else{
+            //     $caiUpdated =  ModelCAI::find($cai->id);
+            //     $caiUpdated->serie=$numeroSecuencia+1;
+            // // $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
+            //     $caiUpdated->save();
+            // }
+
+            $parametro = ModelParametro::find('1');
+            $parametro->turno = $turnoActualizar;
+            $parametro->save();
+
+            return $factura;
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                'message' => 'Ha ocurrido un error, meotodo alternar',
+                'error' => $e
+            ], 402);
+        }
+    }
 }
