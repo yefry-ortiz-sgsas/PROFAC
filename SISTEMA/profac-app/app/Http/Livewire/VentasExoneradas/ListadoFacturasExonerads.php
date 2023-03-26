@@ -122,7 +122,9 @@ class ListadoFacturasExonerads extends Component
                             <a class="dropdown-item" target="_blank"  href="/factura/cooporativoCopia/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Copia </a>
                             </li>
 
-
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/facturaCoor/actaRec/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Acta de Recepción </a>
+                            </li>
 
                         </ul>
                     </div>';
@@ -150,6 +152,9 @@ class ListadoFacturasExonerads extends Component
                             <a class="dropdown-item" target="_blank"  href="/exonerado/facturaCopia/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Copia </a>
                             </li>
 
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/exonerado/actaRec/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Acta de Recepción </a>
+                            </li>
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>
                             </li>
