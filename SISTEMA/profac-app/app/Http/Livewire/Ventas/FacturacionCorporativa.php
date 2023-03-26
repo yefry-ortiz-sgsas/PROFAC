@@ -505,8 +505,8 @@ class FacturacionCorporativa extends Component
                 $lista = DB::SELECT("select id, numero from listado where eliminado = 0 order by secuencia ASC");
                 $espera = DB::SELECT("select id from enumeracion where eliminado = 0 order by secuencia ASC");
 
-                $contadorCai = DB::SELECTONE("select numero_actual, serie from cai where estado_id = 1 and tipo_documento_fiscal_id=1");
-                $diferenciaContador = $contadorCai->numero_actual - $contadorCai->serie;
+                // $contadorCai = DB::SELECTONE("select numero_actual, serie from cai where estado_id = 1 and tipo_documento_fiscal_id=1");
+                // $diferenciaContador = $contadorCai->numero_actual - $contadorCai->serie;
 
                 if (!empty($lista)) {
 
@@ -518,7 +518,8 @@ class FacturacionCorporativa extends Component
 
                 else {
 
-                    $factura = $this->alternar($request);
+                    //$factura = $this->alternar($request);
+                    $factura = $this->guardarVentaND($request);
                 }
             }
 
@@ -1734,20 +1735,11 @@ class FacturacionCorporativa extends Component
     public function listadoVendedores()
     {
 
-        //$rolId = Auth::user()->rol_id;
-        //$idUser = Auth::user()->id;
 
 
         $listadoVendedores = DB::SELECT("select id, name as text from users where rol_id = 2  ");
 
-        /*
-        if($rolId==3 or $rolId==1 ){
-            $listadoVendedores = DB::SELECT("select id, name as text from users where rol_id = 2 ");
-        }else{
-            $listadoVendedores = DB::SELECT("select id, name as text from users where id = ".$idUser);
-        }
 
-        */
 
         return response()->json([
             'results' => $listadoVendedores,
@@ -1758,12 +1750,12 @@ class FacturacionCorporativa extends Component
     {
 
 
-        try {
+  
             $numeroSecuencia = 0;
             $numeroSecuenciaUpdated = 0;
+            $estado = 2;
 
-
-        $cai = DB::SELECTONE("select
+            $cai = DB::SELECTONE("select
                                 id,
                                 numero_inicial,
                                 numero_final,
@@ -1773,7 +1765,7 @@ class FacturacionCorporativa extends Component
                                 where tipo_documento_fiscal_id = 1 and estado_id = 1");
             
 
-            $estado = 2;
+            
 
             $arrayCai = explode('-', $cai->numero_final);
             $cuartoSegmentoCAI = sprintf("%'.08d", $cai->numero_actual);
@@ -1851,7 +1843,7 @@ class FacturacionCorporativa extends Component
             $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 1; //coorporativo;
-            $factura->estado_factura_id = $estado; // se presenta
+            $factura->estado_factura_id = $estado; 
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
@@ -1860,40 +1852,13 @@ class FacturacionCorporativa extends Component
             $factura->comprovante_entrega_id = $request->idComprobante;
             $factura->save();
 
-            if ($turno->turno == 1) {
-                $caiUpdated =  ModelCAI::find($cai->id);
-                $caiUpdated->numero_actual = $numeroSecuenciaUpdated;
-                $caiUpdated->save();
-            } else {
-                $caiUpdated =  ModelCAI::find($cai->id);
-                $caiUpdated->serie = $numeroSecuenciaUpdated;
-                $caiUpdated->save();
-            }
 
+            $caiUpdated =  ModelCAI::find($cai->id);
+            $caiUpdated->serie = $numeroSecuenciaUpdated;
+            $caiUpdated->save();            
 
-            // if(empty($existencia)){
-            //     $caiUpdated =  ModelCAI::find($cai->id);
-            //     $caiUpdated->serie=$numeroSecuencia;
-            //     //$caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
-            //     $caiUpdated->save();
-            // }else{
-            //     $caiUpdated =  ModelCAI::find($cai->id);
-            //     $caiUpdated->serie=$numeroSecuencia+1;
-            // // $caiUpdated->cantidad_no_utilizada=$cai->cantidad_otorgada - 1;
-            //     $caiUpdated->save();
-            // }
-
-            $parametro = ModelParametro::find('1');
-            $parametro->turno = $turnoActualizar;
-            $parametro->save();
 
             return $factura;
-        } catch (QueryException $e) {
-            DB::rollback();
-            return response()->json([
-                'message' => 'Ha ocurrido un error, meotodo alternar',
-                'error' => $e
-            ], 402);
-        }
+        
     }
 }

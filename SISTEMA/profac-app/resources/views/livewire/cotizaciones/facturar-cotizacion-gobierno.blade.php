@@ -495,6 +495,8 @@
             }
 
 
+            calcularTotalesInicioPagina();
+
 
             $('#vendedor').select2({
                 ajax: {
@@ -773,12 +775,12 @@
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
                                                         <input type="text" placeholder="Nombre del producto" id="nombre${numeroInputs}"
-                                                            name="nombre${numeroInputs}" class="form-control" 
+                                                            name="nombre${numeroInputs}" class="form-control"
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            readonly 
+                                                            readonly
                                                             value='${producto.nombre}'
-                                                            
+
                                                             >
                                                     </div>
                                                 </div>
@@ -786,10 +788,10 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">cantidad</label>
                                                 <input type="text" value="${bodega}" placeholder="bodega-seccion" id="bodega${numeroInputs}"
-                                                    name="bodega${numeroInputs}" class="form-control" 
+                                                    name="bodega${numeroInputs}" class="form-control"
                                                     autocomplete="off"  readonly  >
                                             </div>
-                                    
+
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
@@ -800,46 +802,54 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
-                                                    name="cantidad${numeroInputs}" class="form-control" min="0" data-parsley-required
+                                                    name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">unidad</label>
                                                 <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}"
-                                                    data-parsley-required style="height:35.7px;" 
+                                                    data-parsley-required style="height:35.7px;"
                                                     onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
-                                                            ${htmlSelectUnidades} 
-                                                </select> 
-                                             
-                                                
+                                                            ${htmlSelectUnidades}
+                                                </select>
+
+
                                             </div>
 
 
 
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                                <label for="subTotal${numeroInputs}" class="sr-only">Sub Total</label>
-                                                <input type="number" placeholder="Sub total producto" id="subTotal${numeroInputs}"
-                                                    name="subTotal${numeroInputs}" class="form-control" min="0" step="any"
+                                                <label for="subTotalMostrar${numeroInputs}" class="sr-only">Sub Total</label>
+                                                <input type="text" placeholder="Sub total producto" id="subTotalMostrar${numeroInputs}"
+                                                    name="subTotalMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
+
+                                                <input id="subTotal${numeroInputs}" name="subTotal${numeroInputs}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                                <label for="isvProducto${numeroInputs}" class="sr-only">ISV</label>
-                                                <input type="number" placeholder="ISV" id="isvProducto${numeroInputs}"
-                                                    name="isvProducto${numeroInputs}" class="form-control" min="0" step="any"
+                                                <label for="isvProductoMostrar${numeroInputs}" class="sr-only">ISV</label>
+                                                <input type="text" placeholder="ISV" id="isvProductoMostrar${numeroInputs}"
+                                                    name="isvProductoMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
+
+                                                    <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                                                <label for="total${numeroInputs}" class="sr-only">Total</label>
-                                                <input type="number" placeholder="Total del producto" id="total${numeroInputs}"
-                                                    name="total${numeroInputs}" class="form-control" min="1"  step="any"
+                                                <label for="totalMostrar${numeroInputs}" class="sr-only">Total</label>
+                                                <input type="text" placeholder="Total del producto" id="totalMostrar${numeroInputs}"
+                                                    name="totalMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
+
+                                                    <input id="total${numeroInputs}" name="total${numeroInputs}" type="hidden" value="" required>
+
+
                                             </div>
 
                                             <input id="idBodega${numeroInputs}" name="idBodega${numeroInputs}" type="hidden" value="${idBodega}">
@@ -847,8 +857,8 @@
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
                                             <input id="isv${numeroInputs}" name="isv${numeroInputs}" type="hidden" value="${producto.isv}">
 
-                                           
-                                    
+
+
                         </div>
                         `;
 
@@ -885,8 +895,75 @@
                 console.log(arregloIdInputs);
             }
 
+            function calcularTotalesInicioPagina() {
+
+let arrayInputs = this.arregloIdInputs;
+
+
+let valorInputPrecio = 0;
+let valorInputCantidad = 0;
+let valorSelectUnidad =0;
+let isvProducto = 0;
+
+let subTotal = 0;
+let isv =0;
+let total = 0;
+
+arrayInputs.forEach(id => {
+    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id) 
+        valorInputPrecio = document.getElementById('precio' + id).value;
+        valorInputCantidad = document.getElementById('cantidad' + id).value; 
+        valorSelectUnidad = document.getElementById('unidad' + id).value;
+        isvProducto = document.getElementById("isv"+id).value;
+
+            if (valorInputPrecio && valorInputCantidad) {
+
+                subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                isv = subTotal * (isvProducto / 100);
+                total = subTotal + subTotal * (isvProducto / 100);
+
+                document.getElementById('total' + id).value = total.toFixed(3);
+                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(total)
+
+                document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotal)
+
+
+                document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                    'es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(isv)
+
+
+               
+                this.totalesGenerales();
+
+            }
+
+        });
+
+
+
+    this.totalesGenerales();
+    return 0;
+
+
+}
+
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
+               
 
                 valorInputPrecio = idPrecio.value;
                 valorInputCantidad = idCantidad.value;
@@ -898,9 +975,29 @@
                     let isv = subTotal * (isvProducto / 100);
                     let total = subTotal + subTotal * (isvProducto / 100);
 
-                    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
                     document.getElementById('total' + id).value = total.toFixed(3);
+                    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(total)
+
+                    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(subTotal)
+
+
                     document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(isv)
+
+
                     idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
                     this.totalesGenerales();
 
@@ -911,14 +1008,13 @@
 
                 return 0;
 
-
             }
 
             function totalesGenerales() {
 
-                //console.log(arregloIdInputs);
+                                //console.log(arregloIdInputs);
 
-                if (numeroInputs == 0) {
+                                if (numeroInputs == 0) {
                     return;
                 }
 

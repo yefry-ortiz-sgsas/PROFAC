@@ -79,7 +79,7 @@ class FacturarCotizacion extends Component
         A.producto_id,
         A.nombre_producto,
         A.nombre_bodega,
-        A.precio_unidad,
+        FORMAT(A.precio_unidad,2) as precio_unidad,
         A.cantidad,
         A.sub_total,
         A.isv,
@@ -90,7 +90,7 @@ class FacturarCotizacion extends Component
         A.isv_producto,
         A.unidad_medida_venta_id,
         B.ultimo_costo_compra,
-        B.precio_base,
+        format(B.precio_base,2) as precio_base,
         B.isv as isvTblProducto,
         C.arregloIdInputs
         from cotizacion_has_producto A
@@ -98,14 +98,14 @@ class FacturarCotizacion extends Component
         on A.producto_id = B.id
         inner join cotizacion C
         on A.cotizacion_id = C.id
-        where cotizacion_id =  " . $idCotizacion."
+        where cotizacion_id =  " . $idCotizacion . "
         order by A.indice asc
         ");
 
         $arregloInputs = $productos[0]->arregloIdInputs;
-        $arregloInputs = str_replace('"','',$arregloInputs);
-        $arregloInputs = explode(",",$arregloInputs);
-       
+        $arregloInputs = str_replace('"', '', $arregloInputs);
+        $arregloInputs = explode(",", $arregloInputs);
+
 
 
 
@@ -193,31 +193,41 @@ class FacturarCotizacion extends Component
                     </div>
 
 
+                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                    <label for="subTotalMostrar' . $i . '" class="sr-only">Sub Total</label>
+                    <input type="text" placeholder="Sub total producto" id="subTotalMostrar' . $i . '"
+                        value="' . $producto->sub_total . '"
+                        name="subTotalMostrar' . $i . '" class="form-control"
+                        autocomplete="off"
+                        readonly >
+
+                    <input id="subTotal' . $i . '" name="subTotal' . $i . '" type="hidden" value="' . $producto->sub_total . '" required>
+                </div>
 
 
-                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <label for="subTotal' . $i . '" class="sr-only">Sub Total</label>
-                        <input value="' . $producto->sub_total . '" type="number" placeholder="Sub total producto" id="subTotal' . $i . '"
-                            name="subTotal' . $i . '" class="form-control" min="0" step="any"
-                            autocomplete="off"
-                            readonly >
-                    </div>
-
-                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <label for="isvProducto' . $i . '" class="sr-only">ISV</label>
-                        <input value="' . $producto->isv . '" type="number" placeholder="ISV" id="isvProducto' . $i . '"
-                            name="isvProducto' . $i . '" class="form-control" min="0" step="any"
-                            autocomplete="off"
-                            readonly >
-                    </div>
 
                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <label for="total' . $i . '" class="sr-only">Total</label>
-                        <input value="' . $producto->total . '" type="number" placeholder="Total del producto" id="total' . $i . '"
-                            name="total' . $i . '" class="form-control" min="1"  step="any"
-                            autocomplete="off"
-                            readonly >
-                    </div>
+                    <label for="isvProductoMostrar' . $i . '" class="sr-only">ISV</label>
+                    <input type="text" value="' . $producto->isv . '" placeholder="ISV" id="isvProductoMostrar' . $i . '"
+                        name="isvProductoMostrar' . $i . '" class="form-control"
+                        autocomplete="off"
+                        readonly >
+
+                        <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
+                </div>
+
+
+                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                    <label for="totalMostrar' . $i . '" class="sr-only">Total</label>
+                    <input type="text"  value="' . $producto->total . '" placeholder="Total del producto" id="totalMostrar' . $i . '"
+                        name="totalMostrar' . $i . '" class="form-control"
+                        autocomplete="off"
+                        readonly >
+
+                        <input id="total' . $i . '" name="total' . $i . '" type="hidden"  value="' . $producto->total . '" required>
+
+
+                </div>
 
                     <input id="idBodega' . $i . '" name="idBodega' . $i . '" type="hidden" value="' . $producto->bodega_id . '">
                     <input id="idSeccion' . $i . '" name="idSeccion' . $i . '" type="hidden" value="' . $producto->seccion_id . '">
