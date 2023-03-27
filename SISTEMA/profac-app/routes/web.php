@@ -296,6 +296,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/venta/cobro/eliminar', [Cobros::class, 'eliminarPago']);
     Route::get('/factura/cooporativo/{idFactura}', [FacturacionCorporativa::class, 'imprimirFacturaCoorporativa']);
     Route::get('/factura/cooporativoCopia/{idFactura}', [FacturacionCorporativa::class, 'imprimirFacturaCoorporativaCopia']);
+    Route::get('/facturaCoor/actaRec/{idFactura}', [FacturacionCorporativa::class, 'imprimirActaCoorporativa']);
+
+
     Route::get('/ventas/Configuracion', Configuracion::class);
 
 
@@ -306,8 +309,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/ventas/estado/dc/{idFactura}', [Comparacion::class, 'cambioEstadoDC']);
 
     Route::get('/ventas/coorporativo/orden/compra', NumOrdenCompraCoorporativo::class);
-    Route::get('/coorporativo/ordenCompra/listar', [NumOrdenCompraCoorporativo::class,'listarNumOrdenCompraCoorporativo']); 
-    Route::get('/coorporativo/ordenCompra/clientes', [NumOrdenCompraCoorporativo::class,'listarClientesCoorporativo']); 
+    Route::get('/coorporativo/ordenCompra/listar', [NumOrdenCompraCoorporativo::class,'listarNumOrdenCompraCoorporativo']);
+    Route::get('/coorporativo/ordenCompra/clientes', [NumOrdenCompraCoorporativo::class,'listarClientesCoorporativo']);
 
 
     //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
@@ -344,6 +347,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/exonerado/listas/facturas', [ListadoFacturasExonerads::class, 'listarFacturas']);
     Route::get('/exonerado/factura/{id}', [VentasExoneradas::class, 'imprimirFacturaExonerada']);
     Route::get('/exonerado/facturaCopia/{id}', [VentasExoneradas::class, 'imprimirFacturaExoneradaCopia']);
+    Route::get('/exonerado/actaRec/{id}', [VentasExoneradas::class, 'imprimirActarepExonerada']);
+
     Route::get('/exonerado/listar/codigos', [VentasExoneradas::class, 'obtenerCodigoExoneracion']);
 
 
