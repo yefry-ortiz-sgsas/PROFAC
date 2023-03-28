@@ -3,8 +3,8 @@
         <style>
             /* #divProductos  input {
                             font-size: 0.8rem;
-                            
-                            
+
+
                           } */
 
 
@@ -440,7 +440,7 @@
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button id="guardar_cotizacion_btn"
+                                    <button id="guardar_cotizacion_btn" name="guardar_cotizacion_btn"
                                         class="btn  btn-primary float-left m-t-n-xs"><strong>
                                             Realizar Factura</strong></button>
                                 </div>
@@ -586,7 +586,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
+                            <option value="${element.id}" >${element.descripcion}</option>
                             `
                         });
 
@@ -621,8 +621,8 @@
 
                         if (imagenes.length == 0) {
 
-                    
-                            htmlImagenes += `                                                
+
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
                             </div>`
@@ -636,13 +636,13 @@
                             imagenes.forEach(element => {
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
@@ -711,8 +711,8 @@
                                 title: 'Advertencia!',
                                 html: `
                             <p class="text-left">
-                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
-                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br>
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br>
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
                             </p>`
                             })
@@ -901,9 +901,9 @@
                 let total = 0;
 
                 arrayInputs.forEach(id => {
-                    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id) 
+                    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
                         valorInputPrecio = document.getElementById('precio' + id).value;
-                        valorInputCantidad = document.getElementById('cantidad' + id).value; 
+                        valorInputCantidad = document.getElementById('cantidad' + id).value;
                         valorSelectUnidad = document.getElementById('unidad' + id).value;
                         isvProducto = document.getElementById("isv"+id).value;
 
@@ -937,7 +937,7 @@
                                     }).format(isv)
 
 
-                               
+
                                 this.totalesGenerales();
 
                             }
@@ -1253,7 +1253,7 @@
                                 '<option value="" selected disabled>--Seleccione un producto--</option>';
                             document.getElementById("bodega").disabled = true;
 
-                            
+
                             document.getElementById("subTotalGeneralMostrar").value="";
                             document.getElementById("subTotalGeneral").value="";
                             document.getElementById("subTotalGeneralGrabadoMostrar").value="";
@@ -1264,7 +1264,7 @@
                             document.getElementById("isvGeneral").value="";
                             document.getElementById("totalGeneralMostrar").value="";
                             document.getElementById("totalGeneral").value="";
-            
+
                             let element2 = document.getElementById('detalleProducto');
                             element2.classList.add("d-none");
 
