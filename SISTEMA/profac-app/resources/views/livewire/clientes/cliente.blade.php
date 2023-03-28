@@ -116,7 +116,7 @@
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Dirección<span class="text-danger">*</span></label>
                                     <textarea name="direccion_cliente" placeholder="Escriba aquí..." required id="direccion_cliente" cols="30" rows="3"
-                                        class="form-group form-control" data-parsley-required maxlength="60"></textarea>
+                                        class="form-group form-control" data-parsley-required maxlength="142"></textarea>
                                 </div>                                
                                 <div class="col-md-6">
                                     <label class="col-form-label focus-label">Credito Disponible<span class="text-danger">*</span></label>
@@ -273,7 +273,7 @@
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Dirección</label>
                                     <textarea name="direccion_cliente_editar" placeholder="Escriba aquí..." required id="direccion_cliente_editar" cols="30" rows="3"
-                                        class="form-group form-control" data-parsley-required></textarea>
+                                        class="form-group form-control" data-parsley-required maxlength="142"></textarea>
                                 </div>                                
                                 <div class="col-md-4">
                                     <label class="col-form-label focus-label">Credito Inicial</label>
