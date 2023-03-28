@@ -105,14 +105,14 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Notas:</b> </p>
 
 
-                <p class="card-text "  style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord. excenta</b>
+                {{-- <p class="card-text "  style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord. excenta</b>
                 </p>
                 <p class="card-text" style="position:absolute;left:250px;  top:120px;"><b>Constancia de registro
                         exonerado</b></p>
                 <p class="card-text" style="position:absolute;left:500px;  top:120px;"><b>Identificativo del registro de
-                        la SAG</b></p>
+                        la SAG</b></p> --}}
 
-                <p class="card-text" style="position:absolute;left:250px;  top:140px;">R-{{strtoupper($cai->codigo_exoneracion)}}</p>
+                <p class="card-text" style="position:absolute;left:250px;  top:140px;">{{-- R-{{strtoupper($cai->codigo_exoneracion)}} --}}</p>
 
                 <p class="card-text" style="position:absolute;left:20px;  top:140px;">{{strtoupper($cai->correlativoexo)}}</p>
 
@@ -187,7 +187,7 @@
                 <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
 
 
-                    <div class="card border border-dark" style="position:absolute;left:0px;  width:26rem; height:15rem;">
+                    <div class="card {{-- border border-dark --}}" style="position:absolute;left:0px;  width:26rem; height:15rem;">
                         <div class="card-body">
 
                             <p class="card-text" style="position:absolute;left:10px;  top:2px; font-size:14px;"><b>Vendedor: </b>
@@ -206,7 +206,7 @@
 
 
 
-                            <p class="card-text" style="position:absolute;left:0px;  top:28px; font-size:11px;">
+                            {{-- <p class="card-text" style="position:absolute;left:0px;  top:28px; font-size:11px;">
                                 ____________________________________________________________________</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:40px; font-size:11px;">1. por cada cheque
                                 devuelto se cobra 750 lempiras.</p>
@@ -225,20 +225,20 @@
                                 legales y somete a la jurisdicción de tegucigalpa municipio del distrito central.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:205px; font-size:11px">7. las entregas y
                                 creditos para cuentas con facturas vencidas serán congeladas hasta el pago de las mismas haya sido
-                                efectuado en su totalidad.
+                                efectuado en su totalidad. --}}
 
                                 @if($cai->estado_factura==1)
-                                <span style = "font-size: 10px">N{{$cai->numero}}-CF11</span></p>
+                                <span style = "font-size: 10px">{{-- N{{$cai->numero}}-CF11 --}}</span></p>
                                 @else
-                                <span style = "font-size: 10px">N{{$cai->numero}}-CF12</span></p>
+                                <span style = "font-size: 10px">{{-- N{{$cai->numero}}-CF12 --}}</span></p>
                                 @endif
 
 
                             @if($flagCentavos == false)
-                            <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">"{{$numeroLetras." CON CERO CENTAVOS"}}"</p>
+                            <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:12px;">{{-- "{{$numeroLetras." CON CERO CENTAVOS"}}" --}}</p>
 
                             @else
-                            <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:14px;">"{{$numeroLetras }}"</p>
+                            <p class="card-text" style="position:absolute;left:35px;  top:240px; font-size:14px;">{{-- "{{$numeroLetras }}" --}}</p>
                             @endif
                         </div>
                     </div>
@@ -289,13 +289,13 @@
 
 
                     <div style="position:absolute; left:0px;   width:45rem; margin-top:300px">
-                        <p class="card-text" style="position:absolute;left:20px;  top:10px;">
+                        <p class="card-text" style="position:absolute;left:50px;  top:-235px;">
                             _______________________________________</p>
-                        <p class="card-text" style="position:absolute;left:450px;  top:10px;">
+                        <p class="card-text" style="position:absolute;left:50px;  top:-130px;">
                             _______________________________________</p>
-                        <p class="card-text" style="position:absolute;left:80px;  top:25px; max-width:250px;  ">
+                        <p class="card-text" style="position:absolute;left:50px;  top:-220px; max-width:350px;  ">
                             {{ strtoupper($cliente->nombre) }}</p>
-                        <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
+                        <p class="card-text" style="position:absolute;left:50px;  top:-115px;">DISTRIBUCIONES VALENCIA</p>
                     </div>
 
                     @if ($cai->estado_venta_id == 2)
