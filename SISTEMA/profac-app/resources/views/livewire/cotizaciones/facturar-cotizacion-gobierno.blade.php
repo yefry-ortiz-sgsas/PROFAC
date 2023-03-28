@@ -230,13 +230,13 @@
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
                                         {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
-                
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
-                                           
+
+                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
+
                                                 <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-                                                  
-                                           
-                
+
+
+
                                         </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner ">
 
@@ -445,7 +445,7 @@
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button id="guardar_cotizacion_btn"
+                                    <button id="guardar_cotizacion_btn" name="guardar_cotizacion_btn"
                                         class="btn btn-sm btn-primary float-left m-t-n-xs"><strong>
                                             Realizar Factura</strong></button>
                                 </div>
@@ -480,7 +480,7 @@
 
             //     if(!isNaN(arregloIdInputsTemporal[i]) ){
             //         arregloIdInputs.push(arregloIdInputsTemporal[i])
-            //     }                
+            //     }
 
             // }
 
@@ -596,7 +596,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
+                            <option value="${element.id}" >${element.descripcion}</option>
                             `
                         });
 
@@ -632,7 +632,7 @@
                         if (imagenes.length == 0) {
 
 
-                            htmlImagenes += `                                                
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+'noimage.png'}" alt="noimage.png" style="width: 100%; height:20rem" >
                             </div>`
@@ -646,13 +646,13 @@
                             imagenes.forEach(element => {
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:30rem" >
                             </div>`
@@ -721,8 +721,8 @@
                                 title: 'Advertencia!',
                                 html: `
                             <p class="text-left">
-                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
-                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br>
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br>
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
                             </p>`
                             })
@@ -910,9 +910,9 @@ let isv =0;
 let total = 0;
 
 arrayInputs.forEach(id => {
-    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id) 
+    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
         valorInputPrecio = document.getElementById('precio' + id).value;
-        valorInputCantidad = document.getElementById('cantidad' + id).value; 
+        valorInputCantidad = document.getElementById('cantidad' + id).value;
         valorSelectUnidad = document.getElementById('unidad' + id).value;
         isvProducto = document.getElementById("isv"+id).value;
 
@@ -946,7 +946,7 @@ arrayInputs.forEach(id => {
                     }).format(isv)
 
 
-               
+
                 this.totalesGenerales();
 
             }
@@ -963,7 +963,7 @@ arrayInputs.forEach(id => {
 
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
-               
+
 
                 valorInputPrecio = idPrecio.value;
                 valorInputCantidad = idCantidad.value;
