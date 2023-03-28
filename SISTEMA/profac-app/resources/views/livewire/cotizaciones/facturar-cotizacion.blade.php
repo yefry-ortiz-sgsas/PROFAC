@@ -955,9 +955,12 @@
                 function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
+
                 valorInputPrecio = idPrecio.value;
                 valorInputCantidad = idCantidad.value;
                 valorSelectUnidad = idUnidad.value;
+
+                console.log(valorInputCantidad,isvProducto);
 
                 if (valorInputPrecio && valorInputCantidad) {
 

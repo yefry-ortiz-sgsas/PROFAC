@@ -112,7 +112,8 @@ class DetalleProducto extends Component
                     D.descripcion as 'seccion',
                     C.numeracion,
                     H.cantidad_disponible,
-                    H.created_at
+                    H.created_at,
+                    H.id as idRecibido
                 from compra_has_producto A
                 inner join producto B
                 on A.producto_id = B.id
@@ -144,7 +145,8 @@ class DetalleProducto extends Component
                     D.descripcion as 'seccion',
                     C.numeracion,
                     H.cantidad_disponible,
-                    H.created_at
+                    H.created_at,
+                    H.id as idRecibido
                 from  producto B        
                 inner join recibido_bodega H
                 on  B.id = H.producto_id
@@ -158,10 +160,10 @@ class DetalleProducto extends Component
                 on E.municipio_id = F.id
                 inner join departamento G
                 on F.departamento_id = G.id     
-                where B.id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4 and H.comentario = 'Ingreso de producto por ajuste'
+                where B.id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4 
         ) listado
         cross join (select @i := 0) r
-        order by created_at ASC
+        order by idRecibido ASC
         ");
 
 
