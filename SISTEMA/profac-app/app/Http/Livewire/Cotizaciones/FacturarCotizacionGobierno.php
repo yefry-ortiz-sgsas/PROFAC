@@ -86,7 +86,7 @@ class FacturarCotizacionGobierno extends Component
         A.resta_inventario,
         A.isv_producto,
         A.unidad_medida_venta_id,
-        B.ultimo_costo_compra,
+        format(B.ultimo_costo_compra,2) as ultimo_costo_compra,
         format(B.precio_base,2) as precio_base,
         B.isv as isvTblProducto,
         C.arregloIdInputs
