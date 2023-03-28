@@ -366,12 +366,12 @@
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar" value="{{ $cotizacion->sub_total}}"
-                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" readonly>
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
+                                        value="{{ $cotizacion->sub_total }}" name="subTotalGeneralMostrar"
+                                        class="form-control" data-parsley-required autocomplete="off" readonly>
 
-                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"  value="{{ $cotizacion->sub_total}}"
-                                        required>
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"
+                                        value="{{ $cotizacion->sub_total }}" required>
                                 </div>
                             </div>
 
@@ -385,10 +385,11 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
                                         name="subTotalGeneralGrabadoMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off"   value="{{$cotizacion->sub_total_grabado}}" readonly>
+                                        data-parsley-required autocomplete="off"
+                                        value="{{ $cotizacion->sub_total_grabado }}" readonly>
 
                                     <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
-                                    value="{{$cotizacion->sub_total_grabado}}" required>
+                                        value="{{ $cotizacion->sub_total_grabado }}" required>
                                 </div>
                             </div>
 
@@ -402,10 +403,11 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
                                         name="subTotalGeneralExcentoMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" value="{{$cotizacion->sub_total_excento}}" readonly>
+                                        data-parsley-required autocomplete="off"
+                                        value="{{ $cotizacion->sub_total_excento }}" readonly>
 
                                     <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
-                                    value="{{$cotizacion->sub_total_excento}}" required>
+                                        value="{{ $cotizacion->sub_total_excento }}" required>
                                 </div>
                             </div>
 
@@ -418,9 +420,10 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="ISV " id="isvGeneralMostrar"
-                                        name="isvGeneralMostrar" class="form-control"  value="{{$cotizacion->isv}}" data-parsley-required
-                                        autocomplete="off" readonly>
-                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="{{$cotizacion->isv}}" required>
+                                        name="isvGeneralMostrar" class="form-control" value="{{ $cotizacion->isv }}"
+                                        data-parsley-required autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden"
+                                        value="{{ $cotizacion->isv }}" required>
                                 </div>
                             </div>
 
@@ -434,10 +437,10 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Total  " id="totalGeneralMostrar"
                                         name="totalGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" value="{{$cotizacion->total}}" readonly>
+                                        autocomplete="off" value="{{ $cotizacion->total }}" readonly>
 
-                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value="{{$cotizacion->total}}"
-                                        required>
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden"
+                                        value="{{ $cotizacion->total }}" required>
                                 </div>
                             </div>
 
@@ -897,73 +900,73 @@
 
             function calcularTotalesInicioPagina() {
 
-let arrayInputs = this.arregloIdInputs;
+                let arrayInputs = this.arregloIdInputs;
 
 
-let valorInputPrecio = 0;
-let valorInputCantidad = 0;
-let valorSelectUnidad =0;
-let isvProducto = 0;
+                let valorInputPrecio = 0;
+                let valorInputCantidad = 0;
+                let valorSelectUnidad = 0;
+                let isvProducto = 0;
 
-let subTotal = 0;
-let isv =0;
-let total = 0;
+                let subTotal = 0;
+                let isv = 0;
+                let total = 0;
 
-arrayInputs.forEach(id => {
-    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id) 
-        valorInputPrecio = document.getElementById('precio' + id).value;
-        valorInputCantidad = document.getElementById('cantidad' + id).value; 
-        valorSelectUnidad = document.getElementById('unidad' + id).value;
-        isvProducto = document.getElementById("isv"+id).value;
+                arrayInputs.forEach(id => {
+                    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id) 
+                    valorInputPrecio = document.getElementById('precio' + id).value;
+                    valorInputCantidad = document.getElementById('cantidad' + id).value;
+                    valorSelectUnidad = document.getElementById('unidad' + id).value;
+                    isvProducto = document.getElementById("isv" + id).value;
 
-            if (valorInputPrecio && valorInputCantidad) {
+                    if (valorInputPrecio && valorInputCantidad) {
 
-                subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                isv = subTotal * (isvProducto / 100);
-                total = subTotal + subTotal * (isvProducto / 100);
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + subTotal * (isvProducto / 100);
 
-                document.getElementById('total' + id).value = total.toFixed(3);
-                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                    style: 'currency',
-                    currency: 'HNL',
-                    minimumFractionDigits: 2,
-                }).format(total)
+                        document.getElementById('total' + id).value = total.toFixed(3);
+                        document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(total)
 
-                document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
-                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                    style: 'currency',
-                    currency: 'HNL',
-                    minimumFractionDigits: 2,
-                }).format(subTotal)
-
-
-                document.getElementById('isvProducto' + id).value = isv.toFixed(3);
-                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
-                    'es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 2,
-                    }).format(isv)
+                        document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                        document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(subTotal)
 
 
-               
+                        document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                            'es-HN', {
+                                style: 'currency',
+                                currency: 'HNL',
+                                minimumFractionDigits: 2,
+                            }).format(isv)
+
+
+
+                        this.totalesGenerales();
+
+                    }
+
+                });
+
+
+
                 this.totalesGenerales();
+                return 0;
+
 
             }
 
-        });
-
-
-
-    this.totalesGenerales();
-    return 0;
-
-
-}
-
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
-               
+
 
                 valorInputPrecio = idPrecio.value;
                 valorInputCantidad = idCantidad.value;
@@ -1012,9 +1015,9 @@ arrayInputs.forEach(id => {
 
             function totalesGenerales() {
 
-                                //console.log(arregloIdInputs);
+                //console.log(arregloIdInputs);
 
-                                if (numeroInputs == 0) {
+                if (numeroInputs == 0) {
                     return;
                 }
 
@@ -1220,24 +1223,27 @@ arrayInputs.forEach(id => {
 
                 axios.post('/ventas/estatal/guardar', formDataObj, options)
                     .then(response => {
+
                         let data = response.data;
 
 
 
                         if (data.idFactura == 0) {
 
+
                             Swal.fire({
                                 icon: data.icon,
                                 title: data.title,
                                 html: data.text,
                             })
-
                             document.getElementById("guardar_cotizacion_btn").disabled = false;
                             return;
 
                         }
 
                         Swal.fire({
+                            confirmButtonText: 'Cerrar',
+                            confirmButtonColor: '#5A6268',
                             icon: data.icon,
                             title: data.title,
                             html: data.text
@@ -1264,6 +1270,16 @@ arrayInputs.forEach(id => {
                         document.getElementById("bodega").disabled = true;
 
 
+                        document.getElementById("subTotalGeneralMostrar").value = "";
+                        document.getElementById("subTotalGeneral").value = "";
+                        document.getElementById("subTotalGeneralGrabadoMostrar").value = "";
+                        document.getElementById("subTotalGeneralGrabado").value = "";
+                        document.getElementById("subTotalGeneralExcentoMostrar").value = "";
+                        document.getElementById("subTotalGeneralExcento").value = "";
+                        document.getElementById("isvGeneralMostrar").value = "";
+                        document.getElementById("isvGeneral").value = "";
+                        document.getElementById("totalGeneralMostrar").value = "";
+                        document.getElementById("totalGeneral").value = "";
 
                         let element2 = document.getElementById('detalleProducto');
                         element2.classList.add("d-none");
@@ -1273,7 +1289,8 @@ arrayInputs.forEach(id => {
                         numeroInputs = 0;
                         retencionEstado = false;
 
-                        document.getElementById('numero_venta').value = data.numeroVenta;
+
+
                         document.getElementById("guardar_cotizacion_btn").disabled = false;
 
                     })
@@ -1288,7 +1305,7 @@ arrayInputs.forEach(id => {
                             text: data.text
                         })
                     })
-                document.getElementById("guardar_cotizacion_btn").disabled = false;
+
             }
 
 
