@@ -266,6 +266,7 @@ class VentasExoneradas extends Component
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->codigo_exoneracion_id = $request->codigo;
             $factura->estado_editar = 1;
+            $factura->sub_total_grabado = 0;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
