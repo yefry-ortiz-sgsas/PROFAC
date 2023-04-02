@@ -251,16 +251,16 @@
                     <div class="row">
 
                         <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                            <label class="col-form-label" for="subTotalGeneralMostrarVP">Sub Total L.<span
+                            <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
                                     class="text-danger">*</span></label>
                         </div>
 
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                            <input type="text" placeholder="Sub total " id="subTotalGeneralMostrarVP"
-                                name="subTotalGeneralMostrarVP" class="form-control" data-parsley-required
+                            <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
+                                name="subTotalGeneralMostrar" class="form-control" data-parsley-required
                                 autocomplete="off" readonly>
 
-                            <input id="subTotalGeneralVP" name="subTotalGeneralVP" type="hidden" value="0"
+                            <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
                                 required>
                         </div>
                     </div>
@@ -268,34 +268,67 @@
                     <div class="row">
 
                         <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                            <label class="col-form-label" for="isvGeneralMostrarVP">ISV L.<span
-                                    class="text-danger">*</span></label>
+                            <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
+                                Grabado L.<span class="text-danger">*</span></label>
                         </div>
 
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                            <input type="text" placeholder="ISV " id="isvGeneralMostrarVP"
-                                name="isvGeneralMostrarVP" class="form-control" data-parsley-required
-                                autocomplete="off" readonly>
-                            <input id="isvGeneralVP" name="isvGeneralVP" type="hidden" value="0" required>
+                            <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
+                                name="subTotalGeneralGrabadoMostrar" class="form-control"
+                                data-parsley-required autocomplete="off" readonly>
+
+                            <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
+                                value="" required>
                         </div>
                     </div>
 
                     <div class="row">
 
                         <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                            <label class="col-form-label" for="totalGeneralMostrarVP">Total L.<span
+                            <label class="col-form-label" for="subTotalGeneralExcentoMostrar">Sub Total
+                                Excento L.<span class="text-danger">*</span></label>
+                        </div>
+
+                        <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                            <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
+                                name="subTotalGeneralExcentoMostrar" class="form-control"
+                                data-parsley-required autocomplete="off" readonly>
+
+                            <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
+                                value="" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                            <label class="col-form-label" for="isvGeneralMostrar">ISV L.<span
                                     class="text-danger">*</span></label>
                         </div>
 
                         <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                            <input type="text" placeholder="Total  " id="totalGeneralMostrarVP"
-                                name="totalGeneralMostrarVP" class="form-control" data-parsley-required
+                            <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                name="isvGeneralMostrar" class="form-control" data-parsley-required
                                 autocomplete="off" readonly>
+                            <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
+                        </div>
+                    </div>
 
-                            <input id="totalGeneralVP" name="totalGeneralVP" type="hidden" value="0" required>
+                    <div class="row">
+
+                        <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                            <label class="col-form-label" for="totalGeneralMostrar">Total L.<span
+                                    class="text-danger">*</span></label>
                         </div>
 
+                        <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                            <input type="text" placeholder="Total  " id="totalGeneralMostrar"
+                                name="totalGeneralMostrar" class="form-control" data-parsley-required
+                                autocomplete="off" readonly>
 
+                            <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
+                                required>
+                        </div>
                     </div>
 
 
@@ -631,9 +664,9 @@
 
                 if (valorInputPrecio && valorInputCantidad) {
 
-                    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                    let isv = subTotal * (isvProducto / 100);
-                    let total = subTotal + subTotal * (isvProducto / 100);
+                    let subTotalVP = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                    let isv = subTotalVP * (isvProducto / 100);
+                    let total = subTotalVP + subTotalVP * (isvProducto / 100);
 
                     document.getElementById('totalVP' + id).value = total.toFixed(3);
                     document.getElementById('totalMostrarVP' + id).value = new Intl.NumberFormat('es-HN', {
@@ -642,12 +675,12 @@
                         minimumFractionDigits: 2,
                     }).format(total)
 
-                    document.getElementById('subTotalVP' + id).value = subTotal.toFixed(3);
+                    document.getElementById('subTotalVP' + id).value = subTotalVP.toFixed(3);
                     document.getElementById('subTotalMostrarVP' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
                         minimumFractionDigits: 2,
-                    }).format(subTotal)
+                    }).format(subTotalVP)
 
 
                     document.getElementById('isvProductoVP' + id).value = isv.toFixed(3);
@@ -674,9 +707,9 @@
 
             function totalesGeneralesVP() {
 
-                //console.log(arregloIdInputs);
+             //console.log(arregloIdInputsVP);
 
-                if (numeroInputsVP == 0) {
+             if (numeroInputsVP == 0) {
                     return;
                 }
 
@@ -684,11 +717,30 @@
 
                 let totalGeneralValor = new Number(0);
                 let totalISV = new Number(0);
-                let subTotalGeneralValor = new Number(0);
-
+                let subTotalGeneralGrabadoValor = new Number(0);
+                let subTotalGeneralExcentoValor = new Number(0);
+                let subTotalGeneral = new Number(0);
+                let subTotalFila = 0;
+                let isvFila = 0;
 
                 for (let i = 0; i < arregloIdInputsVP.length; i++) {
-                    subTotalGeneralValor += new Number(document.getElementById('subTotalVP' + arregloIdInputsVP[i]).value);
+
+                    subTotalFila = new Number(document.getElementById('subTotalVP' + arregloIdInputsVP[i]).value);
+                    isvFila = new Number(document.getElementById('isvProductoVP' + arregloIdInputsVP[i]).value);
+
+                    ;
+
+                    if (isvFila == 0) {
+                        subTotalGeneralExcentoValor += new Number(document.getElementById('subTotalVP' + arregloIdInputsVP[i])
+                            .value);
+                    } else if (subTotalFila > 0) {
+                        subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotalVP' + arregloIdInputsVP[i])
+                            .value);
+                    }
+
+                    subTotalGeneral += new Number(document.getElementById('subTotalVP' + arregloIdInputsVP[i]).value);
+
+
                     totalISV += new Number(document.getElementById('isvProductoVP' + arregloIdInputsVP[i]).value);
                     totalGeneralValor += new Number(document.getElementById('totalVP' + arregloIdInputsVP[i]).value);
 
@@ -696,30 +748,46 @@
 
 
 
-                document.getElementById('subTotalGeneralVP').value = subTotalGeneralValor.toFixed(3);
-                document.getElementById('subTotalGeneralMostrarVP').value = new Intl.NumberFormat('es-HN', {
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
+                document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
-                }).format(subTotalGeneralValor)
+                }).format(subTotalGeneral)
 
-                document.getElementById('isvGeneralVP').value = totalISV.toFixed(3);
-                document.getElementById('isvGeneralMostrarVP').value = new Intl.NumberFormat('es-HN', {
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralGrabadoValor)
+
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralExcentoValor)
+
+                document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(totalISV)
 
-                document.getElementById('totalGeneralVP').value = totalGeneralValor.toFixed(3);
-                document.getElementById('totalGeneralMostrarVP').value = new Intl.NumberFormat('es-HN', {
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(totalGeneralValor)
 
 
-                return 0;
 
+
+
+                return 0;
 
             }
 
@@ -749,15 +817,28 @@
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
-                    data.append("arregloIdInputsVP[]", arregloIdInputsVP[i]);
                     data.append(nameForm, idUnidadVenta)
                 }
+
 
 
                 data.append("numeroInputsVP", numeroInputsVP);
 
 
-                axios.post('/vale/lista/espera/guardar', data)
+                let text = arregloIdInputsVP.toString();
+                data.append("arregloIdInputsVP", text);
+
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+
+                axios.post('/vale/lista/espera/guardar', formDataObj,options)
                     .then(response => {
                         let data = response.data;
 

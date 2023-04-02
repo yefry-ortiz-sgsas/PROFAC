@@ -1,7 +1,7 @@
 <div>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <h2>Usuarios</h2>
+            <h2>Cardex</h2>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -62,6 +62,10 @@
                                         <th>Factura</th>
                                         <th>Ajuste</th>
                                         <th>Compra</th>
+                                        <th>Comprobante de entrega</th>
+                                        <th>Vale Tipo 1</th>
+                                        <th>Vale Tipo 2</th>
+                                        <th>Nota de credito</th>
                                         <th>Descripcion</th>
                                         <th>Origen</th>
                                         <th>Destino</th>
@@ -203,6 +207,20 @@
                 {
                     data: 'detalleCompra'
                 },
+
+                {
+                    data: 'comprobante_entrega'
+                },
+                {
+                    data: 'vale_tipo_1'
+                },
+                {
+                    data: 'vale_tipo_2'
+                },
+                {
+                    data: 'nota_credito'
+                },
+
                 {
                     data: 'descripcion'
                 },

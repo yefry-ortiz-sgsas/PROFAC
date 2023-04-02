@@ -133,7 +133,37 @@ class Translados extends Component
         on C.unidad_medida_id = D.id
         inner join compra
         on A.compra_id = compra.id
-        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto."
+        
+        union 
+
+        select
+        A.id as 'idRecibido',
+        B.id as 'idProducto',
+        B.nombre,
+        UPPER(D.nombre) as 'simbolo',
+        A.cantidad_disponible,
+        bodega.nombre as bodega,
+        seccion.id as 'idSeccion',
+        seccion.descripcion,
+        A.created_at
+    from recibido_bodega A
+        inner join producto B
+        on A.producto_id = B.id
+        inner join seccion
+        on A.seccion_id = seccion.id
+        inner join segmento
+        on seccion.segmento_id = segmento.id
+        inner join bodega
+        on segmento.bodega_id = bodega.id
+        inner join unidad_medida_venta C
+        on B.id = C.producto_id
+        inner join unidad_medida D
+        on C.unidad_medida_id = D.id
+      
+        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and A.compra_id is null and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+
+        
         );
 
         return Datatables::of($listaProductos)
@@ -165,26 +195,10 @@ class Translados extends Component
        try {       
 
         $contadorTranslados = 0;
-        // $validator = Validator::make($request->all(), [
+      
 
-        //     'idRecibido' => 'required',
-        //     'cantidad' => 'required'
-
-        // ], [
-
-        //     'idRecibido' => 'codigo de recibido es necesario.',
-        //     'cantidad' => 'la cantidad de producto a transladar es requerida'
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         "text" => "Ha ocurrido un error al realizar el transpaso de producto, uno o mas campos faltantes.",
-        //         "icon" => "error",
-        //         "title"=>"Error!"
-        //     ], 402);
-        // }
-
-        $arregloIdInputs = $request->arregloIdInputs;
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arregloIdInputs  = explode(',', $arrayTemporal);
 
         $flagError = false;
        

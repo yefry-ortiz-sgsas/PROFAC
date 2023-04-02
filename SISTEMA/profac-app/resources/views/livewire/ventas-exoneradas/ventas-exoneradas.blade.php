@@ -1020,16 +1020,26 @@ return 0;
                     let e = document.getElementById(name);
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");                    
 
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
+
                     data.append(nameForm,idUnidadVenta)
                 }
 
                 data.append("numeroInputs", numeroInputs);
 
-                // let seleccionarCliente = document.getElementById('seleccionarCliente').value;
-                // data.append("seleccionarCliente", seleccionarCliente);
+                
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
 
-                axios.post('/exonerado/venta/guardar', data)
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+                axios.post('/exonerado/venta/guardar', formDataObj,options)
                     .then(response => {
                         let data = response.data;
 

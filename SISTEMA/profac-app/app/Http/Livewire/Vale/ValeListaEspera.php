@@ -106,7 +106,10 @@ class ValeListaEspera extends Component
             ], 200);
         }
 
-        $arrayInputs = $request->arregloIdInputsVP;
+
+        $arrayTemporal = $request->arregloIdInputsVP;            
+        $arrayInputs = explode(',', $arrayTemporal);
+
         $flagProductoExiste = false;
         $mensaje ="El producto o productos:";
         for ($i = 0; $i < count($arrayInputs); $i++) {
@@ -211,9 +214,12 @@ class ValeListaEspera extends Component
        }
     }
 
-    public function guardarVale($request){       
+    public function guardarVale($request){     
+        
+        $arrayTemporal = $request->arregloIdInputsVP;            
+        $arrayInputs = explode(',', $arrayTemporal);
     
-        $arrayInputs = $request->arregloIdInputsVP;
+     
         $arrayProductosVale =[];
         $idVale = DB::selectOne("  select id  from vale order by id desc");
         $anio = DB::SELECTONE("select year(now()) as anio");
@@ -228,9 +234,11 @@ class ValeListaEspera extends Component
 
         $vale = new ModelVale;
         $vale->numero_vale = $numero_vale;
-        $vale->sub_total = $request->subTotalGeneralVP;
-        $vale->isv = $request->isvGeneralVP;
-        $vale->total = $request->totalGeneralVP;
+        $vale->sub_total = $request->subTotalGeneral;
+        $vale->sub_total_grabado=$request->subTotalGeneralGrabado;
+        $vale->sub_total_excento=$request->subTotalGeneralExcento;
+        $vale->isv = $request->isvGeneral;
+        $vale->total = $request->totalGeneral;
         $vale->factura_id = $request->idFactura;
         $vale->users_id = Auth::user()->id;
         $vale->notas = $request->comentario;
@@ -257,6 +265,7 @@ class ValeListaEspera extends Component
             array_push($arrayProductosVale,[
                 'vale_id'=> $vale->id,
                 'producto_id'=>$request->$keyIdProducto,
+                'index' =>  $arrayInputs[$i],
                 'cantidad'=>$request->$keyCantidad,
                 'cantidad_pendiente'=>$request->$keyCantidad,
                 'precio'=>$request->$keyPrecio,

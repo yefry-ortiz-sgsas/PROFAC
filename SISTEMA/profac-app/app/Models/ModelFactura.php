@@ -15,6 +15,8 @@ class ModelFactura extends Model
         'cai',
         'rtn',
         'sub_total',
+        'sub_total_grabado',
+        'sub_total_excento',
         'isv',
         'total',
         'fecha_emision',

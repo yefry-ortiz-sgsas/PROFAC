@@ -272,28 +272,27 @@ class FacturacionEstatal extends Component
         $validator = Validator::make($request->all(), [
 
             'fecha_vencimiento' => 'required',
+            'subTotalGeneralGrabado' => 'required',
+            'subTotalGeneralGrabadoMostrar' => 'required',
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
-            'arregloIdInputs' => 'required',
             'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',
             'restriccion' => 'required',
-            'tipo_venta_id'=>'required|integer|between:2,2',
-            'ordenCompra'=>'required'
+            'vendedor'=>'required'
 
 
 
         ]);
 
-        // dd($request->all());
+      
 
         if ($validator->fails()) {
             return response()->json([
-                'mensaje' => 'Ha ocurrido un error al crear la compra.',
+                'mensaje' => 'Ha ocurrido un error al intentar crear la venta.',
                 'errors' => $validator->errors()
             ], 406);
         }
@@ -325,9 +324,11 @@ class FacturacionEstatal extends Component
         }
 
         //dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;
+        $arrayTemporal = $request->arregloIdInputs;            
+        $arrayInputs = explode(',', $arrayTemporal);
         $arrayProductosVentas = [];
+
+
 
         $mensaje = "";
         $flag = false;
@@ -423,6 +424,8 @@ class FacturacionEstatal extends Component
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn = $request->rtn_ventas;
             $factura->sub_total = $request->subTotalGeneral;
+            $factura->sub_total_grabado=$request->subTotalGeneralGrabado;
+            $factura->sub_total_excento=$request->subTotalGeneralExcento;
             $factura->isv = $request->isvGeneral;
             $factura->total = $request->totalGeneral;
             $factura->credito = $request->totalGeneral;
@@ -449,9 +452,11 @@ class FacturacionEstatal extends Component
             $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
             $caiUpdated->save();
 
-            DB::INSERT("INSERT INTO listado(
-                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
-                    ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
+            //Tabla de listado
+
+            // DB::INSERT("INSERT INTO listado(
+            //          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
+            //         ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
 
 
 
@@ -493,7 +498,7 @@ class FacturacionEstatal extends Component
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $arrayInputs[$i]);
             };
 
             if ($request->tipoPagoVenta == 2) { //si el tipo de pago es credito
@@ -513,7 +518,8 @@ class FacturacionEstatal extends Component
                 'text' =>  '
                 <div class="d-flex justify-content-between">
                     <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                    <a href="/crear/vale/lista/espera/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-list-check"></i> Crear Vale Tipo: 2</a>
+                   <!-- <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> -->
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',
@@ -534,7 +540,7 @@ class FacturacionEstatal extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
     {
         try {
 
@@ -611,6 +617,7 @@ class FacturacionEstatal extends Component
                     "factura_id" => $idFactura,
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
+                    "indice" =>$indice,
                     "seccion_id" => $idSeccion,
                     "numero_unidades_resta_inventario" => $registroResta,
                     "sub_total" => $subTotal,

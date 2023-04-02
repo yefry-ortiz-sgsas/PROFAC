@@ -41,6 +41,7 @@
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
                                         <th>Vendedor</th>
+                                        <th>Fecha Registro</th>
                                         <th>Opciones</th>
                                         
                                     </tr>
@@ -61,12 +62,12 @@
         <script>
             $(document).ready(function() {
             $('#tbl_listar_compras').DataTable({
-                "order": [0, 'desc'],
+                "order": [12, 'desc'],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
                 
-                pageLength: 10,
+                pageLength: 11,
                 responsive: true,
               
 
@@ -104,6 +105,9 @@
                     },
                     {
                         data: 'creado_por'
+                    },
+                    {
+                        data:'fecha_registro',
                     },
    
                     {

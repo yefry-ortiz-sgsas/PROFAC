@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\File;
 use DataTables;
 use Auth;
 
+
 class DetalleProducto extends Component
 {
 
@@ -97,38 +98,72 @@ class DetalleProducto extends Component
         //dd($imagenes);
 
         $lotes = DB::SELECT("
-        select
-            @i := @i + 1 as contador,
-            B.id,
-            B.nombre,
-            G.nombre as 'departamento',
-            F.nombre as 'municipio',
-            E.nombre as 'bodega',
-            E.direccion,
-            D.descripcion as 'seccion',
-            C.numeracion,
-            H.cantidad_disponible,
-            H.created_at
-        from compra_has_producto A
-        inner join producto B
-        on A.producto_id = B.id
-        inner join recibido_bodega H
-        on A.compra_id = H.compra_id and A.producto_id = H.producto_id
-        inner join seccion C
-        on H.seccion_id = C.id
-        inner join segmento D
-        on C.segmento_id = D.id
-        inner join bodega E
-        on D.bodega_id = E.id
-        inner join municipio F
-        on E.municipio_id = F.id
-        inner join departamento G
-        on F.departamento_id = G.id
-        inner join compra
-        on A.compra_id = compra.id
+        select 
+        *,
+        @i := @i + 1 as contador
+        from  (
+                select          
+                    B.id,
+                    B.nombre,
+                    G.nombre as 'departamento',
+                    F.nombre as 'municipio',
+                    E.nombre as 'bodega',
+                    E.direccion,
+                    D.descripcion as 'seccion',
+                    C.numeracion,
+                    H.cantidad_disponible,
+                    H.created_at,
+                    H.id as idRecibido
+                from compra_has_producto A
+                inner join producto B
+                on A.producto_id = B.id
+                inner join recibido_bodega H
+                on A.compra_id = H.compra_id and A.producto_id = H.producto_id
+                inner join seccion C
+                on H.seccion_id = C.id
+                inner join segmento D
+                on C.segmento_id = D.id
+                inner join bodega E
+                on D.bodega_id = E.id
+                inner join municipio F
+                on E.municipio_id = F.id
+                inner join departamento G
+                on F.departamento_id = G.id
+                inner join compra
+                on A.compra_id = compra.id     
+                where B.id = ".$id."  and H.cantidad_disponible <> 0 and H.estado_recibido = 4 and compra.estado_compra_id =1 
+                
+                union 
+                
+                select            
+                    B.id,
+                    B.nombre,
+                    G.nombre as 'departamento',
+                    F.nombre as 'municipio',
+                    E.nombre as 'bodega',
+                    E.direccion,
+                    D.descripcion as 'seccion',
+                    C.numeracion,
+                    H.cantidad_disponible,
+                    H.created_at,
+                    H.id as idRecibido
+                from  producto B        
+                inner join recibido_bodega H
+                on  B.id = H.producto_id
+                inner join seccion C
+                on H.seccion_id = C.id
+                inner join segmento D
+                on C.segmento_id = D.id
+                inner join bodega E
+                on D.bodega_id = E.id
+                inner join municipio F
+                on E.municipio_id = F.id
+                inner join departamento G
+                on F.departamento_id = G.id     
+                where B.id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4 
+        ) listado
         cross join (select @i := 0) r
-        where A.producto_id = ".$id." and H.cantidad_disponible <> 0 and H.estado_recibido = 4 and compra.estado_compra_id =1
-        order by H.created_at ASC
+        order by idRecibido ASC
         ");
 
 
@@ -171,9 +206,15 @@ class DetalleProducto extends Component
 
         // })
         ->addColumn('editar', function ($unidad) {
-            return
+            
+            $cadena = "";
+            if(Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5'){
+                $cadena =   '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
+            }
 
-            '<div class="text-center">  <button onclick="modalEditarUnidades('.$unidad->id.','.$unidad->unidad_venta.','.$unidad->unidad_medida_id.')" class="btn btn-warning  btn-dim" type="button"><i class="fa-solid fa-pencil"></i></button></div>';
+            return  $cadena;
+
+            
 
     })
 

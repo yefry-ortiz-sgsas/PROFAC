@@ -40,6 +40,7 @@
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
                                         <th>Vendedor</th>
+                                        <th>Fecha Registro</th>
                                         <th>Opciones</th>
                                         
                                     </tr>
@@ -104,6 +105,10 @@
                     },
                     {
                         data: 'creado_por'
+                    },
+
+                    {
+                        data:'fecha_registro',
                     },
    
                     {

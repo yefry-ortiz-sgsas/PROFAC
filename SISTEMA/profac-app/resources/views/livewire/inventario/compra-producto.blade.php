@@ -794,17 +794,29 @@
 
                 var data = new FormData($('#crear_compra').get(0));
 
-                let longitudArreglo = arregloIdInputs.length;
-                for (var i = 0; i < longitudArreglo; i++) {
-                    data.append("arregloIdInputs[]", arregloIdInputs[i]);
-                }
+                // let longitudArreglo = arregloIdInputs.length;
+                // for (var i = 0; i < longitudArreglo; i++) {
+                //     data.append("arregloIdInputs[]", arregloIdInputs[i]);
+                // }
 
                 data.append("numeroInputs", numeroInputs);
 
                 let seleccionarProveedorId = document.getElementById('seleccionarProveedor').value;
                 data.append("seleccionarProveedorId", seleccionarProveedorId);
 
-                axios.post('/producto/compra/guardar', data)
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
+
+                const formDataObj = {};
+              
+                    data.forEach((value, key) => (formDataObj[key] = value));
+                    
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+                axios.post('/producto/compra/guardar', formDataObj,options)
                     .then(response => {
 
 

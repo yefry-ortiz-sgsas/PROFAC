@@ -49,7 +49,6 @@ class ListarCotizaciones extends Component
 
     public function listarCotizaciones(Request $request){
         
-        
 
         $cotizaciones = DB::SELECT("
         select
@@ -67,6 +66,7 @@ class ListarCotizaciones extends Component
         inner join users B
         on A.users_id = B.id
         where A.tipo_venta_id = ".$request->id."
+        order by A.id desc
         ");
 
       
@@ -84,7 +84,7 @@ class ListarCotizaciones extends Component
                                 <a class="dropdown-item" target="_blank"  href="/cotizacion/facturar/'.$cotizacion->id.'" > <i class="fa-solid fa-file-invoice text-info"></i> Facturar </a>
                             </li>
     
-                            /cotizacion/facturar/gobierno
+                           
     
                             <li>
                                 <a class="dropdown-item"  target="_blank" href="/cotizacion/imprimir/'.$cotizacion->id.'">  <i class="fa-solid fa-print text-success"></i> Imprimir Cotización </a>

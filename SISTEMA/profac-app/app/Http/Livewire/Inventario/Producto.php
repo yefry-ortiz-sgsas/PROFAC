@@ -195,20 +195,24 @@ class Producto extends Component
             A.isv as 'ISV',
             B.descripcion as 'categoria',
             C.nombre as 'unidad_medida',
-
-            IFNULL ((select
+            @existenciaCompra := IFNULL ((select
             sum(cantidad_disponible)
             from recibido_bodega
             inner join compra
             on recibido_bodega.compra_id = compra.id
-            where compra.estado_compra_id=1 and  producto_id = A.id), 0)  as 'existencia'
-
-
+            where compra.estado_compra_id=1 and  producto_id = A.id), 0)  as 'existenciaCompra',
+           @existenciaAjuste := IFNULL (
+           (
+            select
+            sum(cantidad_disponible)
+            from recibido_bodega  G
+            where G.compra_id is null and G.cantidad_disponible <> 0 and G.producto_id = A.id),0 ) as 'existenciaAjuste',
+            FORMAT(@existenciaCompra + @existenciaAjuste,0) as existencia
             from producto A
             inner join sub_categoria B
             on A.sub_categoria_id = B.id
             inner join unidad_medida C
-            on A.unidad_medida_compra_id = C.id
+            on A.unidad_medida_compra_id = C.id            
             order by A.created_at DESC
                         ");
 

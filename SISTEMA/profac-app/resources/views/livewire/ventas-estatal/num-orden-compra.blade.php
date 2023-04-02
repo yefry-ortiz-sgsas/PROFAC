@@ -101,14 +101,15 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Numero Orden Compra </h2>
+            <h2>Orden Compra </h2>
             <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Gobierno</a>
+                </li>
                 <li class="breadcrumb-item">
                     <a>Listar</a>
                 </li>
-                <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Numero Orden Compra</a>
-                </li>
+
                 
             </ol>
         </div>
@@ -160,7 +161,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Gobierno</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

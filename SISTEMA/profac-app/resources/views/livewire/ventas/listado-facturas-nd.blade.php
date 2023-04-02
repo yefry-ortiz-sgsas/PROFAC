@@ -42,6 +42,7 @@
                                         <th>Total en Lps.</th>
                                         <th>Esto de Cobro</th>
                                         <th>Vendedor</th>
+                                        <th>Fecha Registro</th>
                                         <th>Opciones</th>
                                         
                                     </tr>
@@ -66,7 +67,7 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                "order": [0, 'asc'],
+                "order": [12, 'desc'],
                 pageLength: 10,
                 responsive: true,
               
@@ -109,6 +110,9 @@
                     },
                     {
                         data: 'creado_por'
+                    },
+                    {
+                        data: 'fecha_registro',
                     },
    
                     {

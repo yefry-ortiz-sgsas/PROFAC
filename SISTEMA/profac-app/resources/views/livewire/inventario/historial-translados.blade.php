@@ -168,6 +168,7 @@
 
                 $('#tbl_listar_ajustes').DataTable().clear().destroy();
                // $('#tbl_listar_ventas_dos').DataTable().clear().destroy();
+                //$('#tbl_listar_ventas_uno').DataTable().ajax.reload();
 
                 this.tablas();
 

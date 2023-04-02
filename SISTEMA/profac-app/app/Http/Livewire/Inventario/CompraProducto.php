@@ -203,12 +203,9 @@ class CompraProducto extends Component
             'fecha_vencimiento' => 'required',
             'fecha_emision' => 'required',
             'fecha_entrega' => 'required',
-
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
-            'totalGeneral' => 'required',
-
-            'arregloIdInputs' => 'required',
+            'totalGeneral' => 'required',           
             'numeroInputs' => 'required',
             'seleccionarProveedorId' => 'required',
 
@@ -221,12 +218,9 @@ class CompraProducto extends Component
             'fecha_vencimiento' => 'Fecha de Vencimiento es requerido',
             'fecha_emision' => 'Fecha de emisión es requerido ',
             'fecha_entrega' => 'Fecha de entrega es requerido',
-
             'subTotalGeneral' => 'Sub total es requerido',
             'isvGeneral' => 'ISV es requerido',
-            'totalGeneral' => 'Total General es requerido',
-
-            'arregloIdInputs' => 'arregloIdInputs es requerido',
+            'totalGeneral' => 'Total General es requerido',          
             'numeroInputs' => 'numeroInputs es requerido',
             'seleccionarProveedorId' => 'Proveedor es requerido',
         ]);
@@ -271,8 +265,10 @@ class CompraProducto extends Component
 
             //dd( $guardarCompra);
 
-            $arrayInputs=[];
-            $arrayInputs = $request->arregloIdInputs;
+
+
+            $arrayTemporal = $request->arregloIdInputs;            
+            $arrayInputs = explode(',', $arrayTemporal);
 
 
             for ($i=0; $i < count($arrayInputs) ; $i++) {

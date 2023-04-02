@@ -358,7 +358,7 @@ class RecibirProducto extends Component
 
         DB::commit();
 
-      
+
 
         return response()->json([
             "text" => "Producto registrado en bodega con éxito.",
@@ -694,49 +694,53 @@ class RecibirProducto extends Component
        }
 
        public function comprobarVales(){
-  
+
          $flagVale = false;
          $valesArray =[];
- 
-         $valesAnuladosLista = DB::SELECT("select
-         id,
-         numero_vale 
-         from vale
-         where estado_id = 1 
-         order by id ASC");
- 
-   
- 
-             for ($i=0; $i < count($valesAnuladosLista) ; $i++) { 
+
+         $valesAnuladosLista = DB::SELECT("
+         select
+         A.id,
+         A.numero_vale
+         from vale A
+         inner join espera_has_producto B
+         on A.id = B.vale_id
+         where estado_id = 1
+         order by id ASC
+         ");
+
+
+
+             for ($i=0; $i < count($valesAnuladosLista) ; $i++) {
                  $flagVale = true;
- 
+
                  /*OBTIENE LOS PRODUCTOS DEL VALE */
                  $productos = DB::SELECT("select producto_id, resta_inventario_total from espera_has_producto where vale_id =".$valesAnuladosLista[$i]->id);
- 
+
                  /*COMPRUEBA LA EXISTENCIA EN INVENTARIOS DE LOS PRODUCTOS CONTENIDOS EN EL VALE*/
-                 for ($j=0; $j <  count($productos) ; $j++) { 
+                 for ($j=0; $j <  count($productos) ; $j++) {
                      $disponible = DB::SELECTONE("select sum(cantidad_disponible) as cantidad_disponible from recibido_bodega where cantidad_disponible <> 0 and producto_id = ".$productos[$j]->producto_id);
- 
+
                      /*SI UN PRODUCTO NO CUENTA CON EXISTENCIA SUFICIENTE EN INVENTARIO EL VALE NO SE PUEDE ANULAR */
                      if($productos[$j]->resta_inventario_total > $disponible->cantidad_disponible){
                          $flagVale = false;
                      }
- 
- 
+
+
                  }
- 
+
                  if($flagVale){
                      array_push($valesArray,$valesAnuladosLista[$i]->numero_vale);
                  }
- 
-             }
-             
 
-            //  if(empty($valesArray)){
-            //     return;
-            //  }
- 
-             
+             }
+
+
+              if(empty($valesArray)){
+                return;
+             }
+
+
              $correosDB = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
              $correos =[];
 
@@ -752,15 +756,15 @@ class RecibirProducto extends Component
             $for =  $correos;
 
 
-     
+
              Mail::send('email/vales-disponibles',['valesArray' => $valesArray], function($msj) use($subject,$for){
                  $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
                  $msj->subject($subject);
                  $msj->to($for);
              });
- 
+
              return;
-        
+
      }
 
 

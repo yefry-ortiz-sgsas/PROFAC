@@ -28,7 +28,8 @@ class NumOrdenCompra extends Component
                                 ->join('cliente', 'numero_orden_compra.cliente_id', '=', 'cliente.id')
                                 ->join('users', 'numero_orden_compra.users_id', '=', 'users.id')
                                 ->select('numero_orden_compra.id', 'numero_orden_compra.numero_orden','cliente.nombre', 'users.name','estado_id')
-                                ->where('numero_orden_compra.estado_id', '=', '1')                                
+                                ->where('numero_orden_compra.estado_id', '=', '1')    
+                                ->where('cliente.tipo_cliente_id', '=', '2')                               
                                 ->get();
 
         return Datatables::of($num_orden_compras)

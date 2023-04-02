@@ -323,6 +323,7 @@
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                            <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
                             <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                             <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                         </ul>
@@ -336,6 +337,7 @@
 
                             <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
                             <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
+                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Gobierno</a>
                             <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                             </li>
 
@@ -346,8 +348,9 @@
                                 style="color:#ffffff;">Nota de Débito</span>
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a>
-                            </li>
+                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                            <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
+                            <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
                     </li>
@@ -361,8 +364,7 @@
                             </li>
                             <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a>
                             </li>
-                            <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de
-                                    Precios</a></li>
+
 
                         </ul>
                     </li>
@@ -416,15 +418,15 @@
                     </li>
 
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Vale</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
 
 
-                            <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                            </li>
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
 
@@ -510,6 +512,7 @@
 
                         <ul class="nav nav-second-level">
                             <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                            <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                         </ul>
                     </li>
@@ -654,8 +657,36 @@
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                    <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
                     <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                     <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                    <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Gobierno</a>
+                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                        style="color:#ffffff;">Nota de Débito</span>
+                    <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
+                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
+                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                 </ul>
             </li>
 
@@ -767,6 +798,7 @@
 
                 <ul class="nav nav-second-level">
                     <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                    <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                 </ul>
             </li>
@@ -791,15 +823,15 @@
             </li>
 
             <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Vale</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
 
 
-                    <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li>
+                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                    </li> --}}
                     <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                     </li>
 
@@ -840,39 +872,50 @@
                     </li>
                     <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a>
                     </li>
-                    <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de
-                            Precios</a></li>
 
                 </ul>
             </li>
             @elseif (Auth::user()->rol_id == '3')
-                  {{--  VENTAS COORPORATIVO  --}}
+                  {{--INVENTARIO--}}
                   <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas Corporativas</span>
+                    <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
-                        <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                        </li>
-                        <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                ND</a></li>
-                        <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
-                                Anuladas</a></li>
-                        <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                Cotizaciones</a></li>
 
-
-
-
-
+                        <li>
+                            <a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
                         </li>
 
                     </ul>
                 </li>
+                  {{--  VENTAS COORPORATIVO  --}}
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas Corporativas</span><span class="fa arrow"></span></a>
+
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
+                                </li>
+                                <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
+                                        ND</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
+                                        Anuladas</a></li>
+                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
+                                        Cotizaciones</a></li>
+
+
+
+
+
+                                </li>
+
+                            </ul>
+                    </li>
+
 
                 {{--  VENTAS GOBIERNO  --}}
                 <li>
@@ -913,7 +956,16 @@
                     </ul>
                 </li>
             @endif
+            @if (Auth::user()->rol_id == '3' || Auth::user()->rol_id == '1')
+            <li>
+                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
 
+                    <ul class="nav nav-second-level">
+                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de
+                            Precios</a></li>
+                    </ul>
+            </li>
+            @endif
             </ul>
 
         </div>

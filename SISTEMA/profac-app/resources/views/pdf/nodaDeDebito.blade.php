@@ -18,7 +18,7 @@
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete2.jpg');
+           /*  background-image: url('img/membrete/membrete2.jpg'); */
 
             background-size: 200% 200%;
             background-size: cover;
@@ -73,6 +73,9 @@
         <span style = "font-size: 10px; position:absolute;left:500px;  top:105px;">Documento: N{{$cliente->numero_factura}}-CF12</span></p>
         @endif
     <div class="pruebaFondo">
+        <img src="img/membrete/Logo3.png" width="800rem"
+        style="margin-left:3%; margin-top:25px; position:absolute;"
+         alt="">
         <br><br><br>
 
         <br><br>
@@ -108,7 +111,7 @@
                         </tr>
                     </thead>
                         <tr>
-                            <td>POR FACTURA NO. {{ $cliente->cai }} - #</td>
+                            <td>POR FACTURA NO. {{ $cliente->cai }} </td>
                             <td>L - </td>
                             <td></td>
                         </tr>
@@ -117,11 +120,11 @@
                             <td>L. {{ $montoConCentavos->total }}</td>
                             <td></td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>RECARGO APLICADO</td>
                             <td>L - </td>
                             <td>L. {{ $montoConCentavos->total }}</td>
-                        </tr>
+                        </tr> --}}
                     <tbody>
 
                     </tbody>
@@ -146,15 +149,11 @@
 
         </div>
 
-        {{-- @if($datosEntrega->estadoVale==2)
+        @if($notaDebito->estado_id==2)
         <div>
-            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:50px;">--VALE ANULADO--</p>
+            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:30px;">--Nota de Débito Anulada--</p>
         </div>
-        @elseif($datosEntrega->estadoVale==5)
-        <div>
-            <p class="" style="position:absolute; margin-top:{{$altura2 + 85}}px;  left:140px;   font-size:50px;">--VALE ELIMINADO--</p>
-        </div>
-        @endif --}}
+        @endif
 
 
 
