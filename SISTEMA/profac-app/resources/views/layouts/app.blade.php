@@ -15,13 +15,13 @@
 
     <!-- ApexChart -->
 
-    
+
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-  
+
 
     <!--font awesome-->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -40,7 +40,7 @@
 
     <!--Data-parsley-validate-->
     <link href="{{ asset('css/plugins/parsley/parsley.css') }}" rel="stylesheet">
-    
+
     <!--Datatable-->
     <link href="{{ asset('css/plugins/dataTables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
@@ -60,13 +60,13 @@
 
 
     <!--Menu lateral-->
-    
-   
-        @livewire('navigation-menu')
-  
-  
 
-    
+
+        @livewire('navigation-menu')
+
+
+
+
 
 
 
@@ -77,7 +77,7 @@
 
                 <div class="wrapper wrapper-content animated fadeInRight">
 
-                    <main  >{{-- <img src="{{ asset('img/LOGO_VALENCIA.jpg') }}" alt=""> --}}
+                    <main  >{{-- <img src="{{ asset('img/GALCA.jpeg') }}" alt=""> --}}
                         {{ $slot }}
 
                     </main>

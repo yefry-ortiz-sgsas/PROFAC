@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link rel="icon" type="image/x-icon" href="/img/valencia-fondo-transparente.png">
-        <title>{{ config('app.name', 'D. VALENCIA') }}</title>
+        <link rel="icon" type="image/x-icon" href="/img/GALCA.jpeg">
+        <title>{{ config('app.name', 'GRUPOA ALCA') }}</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
