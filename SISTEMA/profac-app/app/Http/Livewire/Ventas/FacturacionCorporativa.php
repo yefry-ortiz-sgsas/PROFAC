@@ -464,6 +464,10 @@ class FacturacionCorporativa extends Component
 
                 $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
+                $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
+
+                $dolarValor = number_format($precioDolar->valor);
+
                 $factura = new ModelFactura;
                 $factura->numero_factura = $numeroVenta->numero;
                 $factura->cai = $numeroCAI;
@@ -493,6 +497,7 @@ class FacturacionCorporativa extends Component
                 $factura->estado_editar = 1;
                 $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
                 $factura->comprovante_entrega_id = $request->idComprobante;
+                $factura->precio_dolar = $dolarValor;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);

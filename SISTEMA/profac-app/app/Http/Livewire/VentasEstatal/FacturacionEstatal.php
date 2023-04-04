@@ -288,7 +288,7 @@ class FacturacionEstatal extends Component
 
         ]);
 
-      
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -324,7 +324,7 @@ class FacturacionEstatal extends Component
         }
 
         //dd($request->all());
-        $arrayTemporal = $request->arregloIdInputs;            
+        $arrayTemporal = $request->arregloIdInputs;
         $arrayInputs = explode(',', $arrayTemporal);
         $arrayProductosVentas = [];
 
@@ -417,6 +417,9 @@ class FacturacionEstatal extends Component
                 $diasCredito = $dias->dias_credito;
             }
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+            $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
+
+            $dolarValor = number_format($precioDolar->valor);
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -445,6 +448,7 @@ class FacturacionEstatal extends Component
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->estado_editar = 1;
             $factura->numero_orden_compra_id=$request->ordenCompra;
+            $factura->precio_dolar = $dolarValor;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);

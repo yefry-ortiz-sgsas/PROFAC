@@ -19,6 +19,8 @@ where  estado_venta_id=1 and fecha_vencimiento < curdate() and pendiente_cobro >
 
 
 
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 para configurar la hora de forma global independiente de la hora del sistema.
 configurar:
