@@ -178,21 +178,27 @@ class ListadoNotaCredito extends Component
         on factura.cliente_id = cliente.id
         where factura.id = ".$idFactura);
 
-       $importes = DB::SELECTONE("
-       select
-        total,
-        isv,
-        sub_total
-        from factura
-        where id = ".$idFactura);
 
-
-        $importesConCentavos= DB::SELECTONE("
+            $importes = DB::SELECTONE("
+            select
+            total,
+            isv,
+            sub_total,
+            sub_total_grabado,
+            sub_total_excento
+            from factura
+            where id = " . $idFactura);
+    
+    
+            $importesConCentavos = DB::SELECTONE("
             select
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
-            from factura where factura.id = ".$idFactura);
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento
+            from factura where factura.id = " . $idFactura);
+    
 
 
 
@@ -340,23 +346,26 @@ class ListadoNotaCredito extends Component
         group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total
             */
 
-           $importes = DB::SELECTONE("
-           select
-           total,
-           isv,
-           sub_total
-           from nota_credito
-           where nota_credito.id =".$idNota);
 
-
-            $importesConCentavos= DB::SELECTONE("
+            $importes = DB::SELECTONE("
+            select
+            total,
+            isv,
+            sub_total,
+            sub_total_grabado,
+            sub_total_excento
+            from nota_credito
+            where id = " . $idNota);
+    
+    
+            $importesConCentavos = DB::SELECTONE("
             select
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
-            from nota_credito
-        where nota_credito.id = ".$idNota);
-
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento
+            from nota_credito where nota_credito.id = " . $idNota);
 
 
             $productos = DB::SELECT("

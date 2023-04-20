@@ -1168,9 +1168,14 @@
                         let data = response.data;
                         let contador = data.contadorTranslados;
 
-                        document.getElementById("btn_guardar_nota_credito").disabled = false;
+                        // document.getElementById("btn_guardar_nota_credito").disabled = false;
 
+                        //Eliminar DIVS y que muestre alert para imprimir
+                        //Agregar funcion para anular
 
+                        setTimeout(function(){
+                            location.reload()
+                        }, 3000)
 
                         Swal.fire({
                             icon: data.icon,
@@ -1178,6 +1183,10 @@
                             html: data.text,
 
                         })
+ 
+
+   
+
 
                         return;
 

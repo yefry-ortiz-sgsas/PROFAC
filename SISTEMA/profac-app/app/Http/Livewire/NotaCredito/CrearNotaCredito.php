@@ -96,7 +96,7 @@ class CrearNotaCredito extends Component
             C.nombre,
             concat(F.nombre,' - ',D.descripcion ) as bodega,
             format(B.precio_unidad,2) as precio_unidad,
-            B.cantidad,
+            B.cantidad_nota_credito as cantidad,
             concat(H.nombre,' - ', G.unidad_venta ) as unidad_medida,
             format(B.sub_total,2) as sub_total,
             format(B.isv,2) as isv,
@@ -118,7 +118,7 @@ class CrearNotaCredito extends Component
             inner join unidad_medida H
             on H.id = G.unidad_medida_id
         where A.id =".$request->idFactura."
-        group by B.seccion_id,  B.factura_id, B.producto_id,  C.nombre,  B.cantidad,  H.nombre, unidad_medida, C.isv, B.precio_unidad, B.sub_total,B.isv,B.total
+        group by B.seccion_id,  B.factura_id, B.producto_id,  C.nombre,  B.cantidad_nota_credito,  H.nombre, unidad_medida, C.isv, B.precio_unidad, B.sub_total,B.isv,B.total
         "
         );
 
@@ -159,7 +159,7 @@ class CrearNotaCredito extends Component
             D.descripcion as seccion,
 
             B.precio_unidad,
-            B.cantidad,
+            B.cantidad_nota_credito as cantidad,
             H.nombre as unidad_medida,
             B.unidad_medida_venta_id as idUnidadVenta ,
             G.unidad_venta,
@@ -241,7 +241,7 @@ class CrearNotaCredito extends Component
             $nombreProducto = $request->$keyNombreProducto;
 
 
-            $cantidadDisponible = DB::SELECTONE("select sum(numero_unidades_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
+            $cantidadDisponible = DB::SELECTONE("select sum(unidades_nota_credito_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
 
             if($cantidad  > $cantidadDisponible){
                 $flagError = true;
@@ -449,6 +449,7 @@ class CrearNotaCredito extends Component
         'icon' => 'success',
         'text' => 'Nota de credito creada correctamente.',
         'title' => 'Exito!',
+        'idNota'=> $notaCredito->id
        ],200);
        } catch (QueryException $e) {
         DB::rollback();
@@ -470,10 +471,10 @@ class CrearNotaCredito extends Component
         $lotes = DB::SELECT("
         select
         lote,
-        numero_unidades_resta_inventario as unidadesLote,
+        unidades_nota_credito_resta_inventario as unidadesLote,
         unidad_medida_venta_id,
         resta_inventario_total,
-        cantidad
+        cantidad_nota_credito
         from venta_has_producto
         where factura_id=".$idFactura." and producto_id=".$idProducto." and seccion_id=".$idSeccion
         );
@@ -519,9 +520,13 @@ class CrearNotaCredito extends Component
             ->where('seccion_id', $idSeccion)
             ->where('lote', $lote->lote)
             ->update([
-                'numero_unidades_resta_inventario' => $cantidadLoteRestarUpdate,
+                //'numero_unidades_resta_inventario' => $cantidadLoteRestarUpdate,
+                //'cantidad_para_entregar' => $cantidadLoteRestarUpdate,
+                //'cantidad_s' => ($cantidadLoteRestarUpdate/$unidadVenta)
+
+                'unidades_nota_credito_resta_inventario' => $cantidadLoteRestarUpdate,
                 'cantidad_para_entregar' => $cantidadLoteRestarUpdate,
-                'cantidad_s' => ($cantidadLoteRestarUpdate/$unidadVenta)
+                // 'cantidad_nota_credito'=>$cantidadLoteRestarUpdate/$unidadVenta
             ]);
 
 
@@ -564,7 +569,7 @@ class CrearNotaCredito extends Component
         ->where('seccion_id', $idSeccion)
         ->update([
             'resta_inventario_total' => ($lotes[0]->resta_inventario_total - $cantidadBaseSeccion),
-            'cantidad' => $lotes[0]->cantidad - $cantidadIngresadaUsuario
+            'cantidad_nota_credito' => $lotes[0]->cantidad_nota_credito - $cantidadIngresadaUsuario
         ]);
 
         return;
