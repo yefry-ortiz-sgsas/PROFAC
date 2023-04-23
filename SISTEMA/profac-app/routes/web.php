@@ -108,8 +108,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('/dashboard');
-    //return redirect('/bodega');
+    //return view('/dashboard');
+    return redirect('/usuarios');
 })->name('dashboard');
 
 
