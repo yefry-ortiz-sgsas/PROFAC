@@ -235,10 +235,10 @@
 
 
                     <li>
-                        <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
+                     {{--    <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
                                 aria-hidden="true"></i> <span class="nav-label"
                                 style="color:#ffffff;">Dashboard</span>
-                        </a>
+                        </a> --}}
                         {{-- <ul class="nav nav-second-level">
                                     <li href="dashboard_2.html"><a >Gestiones</a></li>
                                     <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
@@ -328,7 +328,7 @@
                             <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                         </ul>
                     </li>
-                    <li>
+                {{--     <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                             <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
                             <span class="fa arrow"></span></a>
@@ -342,8 +342,8 @@
                             </li>
 
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                                 style="color:#ffffff;">Nota de Débito</span>
                             <span class="fa arrow"></span></a>
@@ -351,10 +351,9 @@
                             <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
                             <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
                             <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
-                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
                                 class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
                             <span class="fa arrow"></span></a>
@@ -367,8 +366,8 @@
 
 
                         </ul>
-                    </li>
-                    <li>
+                    </li> --}}
+                    {{-- <li>
                         <a><i class="fa-solid fa-clipboard-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Declaraciones </span>
                             <span class="fa arrow"></span></a>
@@ -384,9 +383,9 @@
 
 
                         </ul>
-                    </li>
+                    </li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
                                 style="color:#ffffff;">Entregas Agendadas</span>
                             <span class="fa arrow"></span></a>
@@ -399,7 +398,7 @@
 
 
                         </ul>
-                    </li>
+                    </li> --}}
                     <li>
                         <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span class="nav-label"
                                 style="color:#ffffff;">Comprobante De Entrega</span>
@@ -417,7 +416,7 @@
                         </ul>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Vale</span>
                             <span class="fa arrow"></span></a>
@@ -425,14 +424,12 @@
                         <ul class="nav nav-second-level">
 
 
-                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                            </li> --}}
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
 
 
                         </ul>
-                    </li>
+                    </li> --}}
 
 
 
@@ -466,7 +463,7 @@
 
                     {{--  VENTAS GOBIERNO  --}}
 
-                    <li>
+                    {{-- <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Ventas Gobierno</span>
                             <span class="fa arrow"></span></a>
@@ -488,9 +485,9 @@
 
 
                         </ul>
-                    </li>
+                    </li> --}}
                     {{--   vENTAS EXONERADAS  --}}
-                    <li>
+                    {{-- <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Ventas exoneradas</span>
                             <span class="fa arrow"></span></a>
@@ -502,10 +499,10 @@
                                     Anuladas</a></li>
                             <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
 
 
-                    <li>
+                    {{-- <li>
                         <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Cardex</span>
                             <span class="fa arrow"></span></a>
@@ -517,8 +514,8 @@
                         </ul>
                     </li>
 
-                </li>
-                <li>
+                </li>--}}
+{{--                 <li>
 <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
         class="nav-label" style="color:#ffffff;">Comisiones</span>
     <span class="fa arrow"></span></a>
@@ -534,7 +531,7 @@
     <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a>
     </li>
 </ul>
-</li>
+</li> --}}
 
                     {{-- Rol Vendedor --}}
                 @elseif (Auth::user()->rol_id == '2')
@@ -567,7 +564,7 @@
 
             {{--  VENTAS GOBIERNO  --}}
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Ventas Gobierno</span>
                     <span class="fa arrow"></span></a>
@@ -588,9 +585,9 @@
 
 
                 </ul>
-            </li>
+            </li> --}}
             {{--   vENTAS EXONERADAS  --}}
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Ventas exoneradas</span>
                     <span class="fa arrow"></span></a>
@@ -602,7 +599,7 @@
                     </li>
                     <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- Rol Axuliar Administrativo --}}
         @elseif (Auth::user()->rol_id == '5')
             <li>
@@ -663,7 +660,7 @@
                 </ul>
             </li>
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
                     <span class="fa arrow"></span></a>
@@ -677,8 +674,8 @@
                     </li>
 
                 </ul>
-            </li>
-            <li>
+            </li> --}}
+            {{-- <li>
                 <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                         style="color:#ffffff;">Nota de Débito</span>
                     <span class="fa arrow"></span></a>
@@ -686,9 +683,8 @@
                     <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
                     <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
                     <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
-                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                 </ul>
-            </li>
+            </li> --}}
 
 
 
@@ -709,7 +705,7 @@
                 </ul>
             </li>
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
                         style="color:#ffffff;">Entregas Agendadas</span>
                     <span class="fa arrow"></span></a>
@@ -722,7 +718,7 @@
 
 
                 </ul>
-            </li>
+            </li> --}}
 
             {{--  VENTAS COORPORATIVO  --}}
             <li>
@@ -752,7 +748,7 @@
 
             {{--  VENTAS GOBIERNO  --}}
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Ventas Gobierno</span>
                     <span class="fa arrow"></span></a>
@@ -773,9 +769,9 @@
 
 
                 </ul>
-            </li>
+            </li> --}}
             {{--   vENTAS EXONERADAS  --}}
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Ventas exoneradas</span>
                     <span class="fa arrow"></span></a>
@@ -787,11 +783,11 @@
                     </li>
                     <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
                 </ul>
-            </li>
+            </li> --}}
 
 
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Cardex</span>
                     <span class="fa arrow"></span></a>
@@ -801,10 +797,10 @@
                     <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
 
-            <li>
+           {{--  <li>
                 <a><i class="fa-solid fa-clipboard-check" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Declaraciones </span>
                     <span class="fa arrow"></span></a>
@@ -820,9 +816,9 @@
 
 
                 </ul>
-            </li>
+            </li> --}}
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Vale</span>
                     <span class="fa arrow"></span></a>
@@ -830,14 +826,12 @@
                 <ul class="nav nav-second-level">
 
 
-                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li> --}}
                     <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                     </li>
 
 
                 </ul>
-            </li>
+            </li> --}}
               {{-- Rol Axuliar Contable --}}
             @elseif (Auth::user()->rol_id == '6')
             <li>
@@ -862,7 +856,7 @@
                 </ul>
             </li>
 
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
                         class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
                     <span class="fa arrow"></span></a>
@@ -874,7 +868,7 @@
                     </li>
 
                 </ul>
-            </li>
+            </li> --}}
             @elseif (Auth::user()->rol_id == '3')
                   {{--INVENTARIO--}}
                   <li>
@@ -918,7 +912,7 @@
 
 
                 {{--  VENTAS GOBIERNO  --}}
-                <li>
+                {{-- <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                             style="color:#ffffff;">Ventas Gobierno</span>
                         <span class="fa arrow"></span></a>
@@ -940,9 +934,9 @@
 
 
                     </ul>
-                </li>
+                </li> --}}
                 {{--   vENTAS EXONERADAS  --}}
-                <li>
+                {{-- <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
                             style="color:#ffffff;">Ventas exoneradas</span>
                         <span class="fa arrow"></span></a>
@@ -954,17 +948,17 @@
                                 Anuladas</a></li>
                         <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
                     </ul>
-                </li>
+                </li> --}}
             @endif
             @if (Auth::user()->rol_id == '3' || Auth::user()->rol_id == '1')
-            <li>
+            {{-- <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de
                             Precios</a></li>
                     </ul>
-            </li>
+            </li> --}}
             @endif
             </ul>
 
