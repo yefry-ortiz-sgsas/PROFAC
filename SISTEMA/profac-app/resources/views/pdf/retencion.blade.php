@@ -31,15 +31,15 @@
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Logo3.png" width="800rem"
+        {{-- <img src="img/membrete/Logo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt="">
+         alt=""> --}}
         <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
                <b>Retención No. {{$data->cai_retencion}} </b>
               </div>
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: 0801198892837</b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: RTN GRUPO ALCA</b></p>
                 <p class="card-text" style="position:absolute;left:433px;  top:50px;"><b>CAI: {{ $data->numeroCai }}</b></p>
                 <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: {{$data->fecha_limite}}</b></p>
                 <p class="card-text" style="position:absolute;left:350px;  top:65px;"><b>Rango autorizado: {{$data->numero_inicial}} al {{$data->numero_final}}</b></p>
@@ -81,7 +81,7 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;">_______________________________________</p>
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;">_______________________________________</p>
                 <p class="card-text" style="position:absolute;left:20px;  top:25px; ">FACTURA N° {{$data->numero_factura}} / {{$data->fecha_emision}}</p>
-                <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
+                <p class="card-text" style="position:absolute;left:495px;  top:25px;">GRUPO ALCA</p>
         </div>
     </div>
 

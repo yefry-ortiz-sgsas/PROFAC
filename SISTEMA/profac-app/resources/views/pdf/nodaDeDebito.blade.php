@@ -73,9 +73,9 @@
         <span style = "font-size: 10px; position:absolute;left:500px;  top:105px;">Documento: N{{$cliente->numero_factura}}-CF12</span></p>
         @endif
     <div class="pruebaFondo">
-        <img src="img/membrete/Logo3.png" width="800rem"
+        {{-- <img src="img/membrete/Logo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt="">
+         alt=""> --}}
         <br><br><br>
 
         <br><br>
@@ -142,7 +142,7 @@
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;">
                     _______________________________________</p>
                 <p class="card-text" style="position:absolute;left:60px;  top:25px; ">{{ $cliente->nombre_cliente }}</p>
-                <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
+                <p class="card-text" style="position:absolute;left:495px;  top:25px;">GRUPO ALCA</p>
             </div>
 
 

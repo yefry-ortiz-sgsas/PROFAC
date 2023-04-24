@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'D. VALENCIA') }}</title>
-    <link rel="icon" type="image/x-icon" href="/img/valencia-fondo-transparente.png">
+    <title>{{ config('app.name', 'GRUPO ALCA') }}</title>
+    <link rel="icon" type="image/x-icon" href="/img/GALCA.jpeg">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @livewireStyles
     @stack('styles')<!--Por esta ranura se cargan los estilos de las paginas individuales-->

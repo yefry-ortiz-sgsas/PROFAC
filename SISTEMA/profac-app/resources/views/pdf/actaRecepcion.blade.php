@@ -74,9 +74,9 @@
     @endphp
 
 
-    <div class="pruebaFondo">
+    <div class="pruebaFondo">{{--
         <img src="img/membrete/Logo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
-
+ --}}
         <div class="card border border-dark" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b> ACTA DE RECEPCIÓN </b>
@@ -86,7 +86,7 @@
 
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
-                        08011986138652</b></p>
+                    RTN GRUPO ALCA</b></p>
                 <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>CAI:
                         {{ $cai->cai }}</b></p>
                 <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión:
@@ -315,7 +315,7 @@
                             _______________________________________</p>
                         <p class="card-text" style="position:absolute;left:50px;  top:-220px; max-width:350px;  ">
                             {{ strtoupper($cliente->nombre) }}</p>
-                        <p class="card-text" style="position:absolute;left:50px;  top:-115px;">DISTRIBUCIONES VALENCIA</p>
+                        <p class="card-text" style="position:absolute;left:50px;  top:-115px;">GRUPO ALCA</p>
                     </div>
 
                     @if ($cai->estado_venta_id == 2)

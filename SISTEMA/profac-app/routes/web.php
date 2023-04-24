@@ -73,7 +73,7 @@ use App\Http\Livewire\ComprovanteEntrega\ListarComprovantes;
 use App\Http\Livewire\ComprovanteEntrega\ListarComprovantesAnulados;
 use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
-
+use  App\Http\Livewire\CvDolar\CvDolar;
 
 use App\Http\Livewire\Vale\CrearVale;
 use App\Http\Livewire\Vale\ListarVales;
@@ -671,6 +671,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/debito/anular/{idNota}', [ListadoNotasDebitoND::class,'anularNota']);
 
+    Route::get('/conversion/dolar', CvDolar::class);
+    Route::post('/conversion/dolar/guardar',[CvDolar::class,'guardarpDolar']);
+    Route::get('/conversion/dolar/listar',[CvDolar::class,'listarValorDolares']);
 
     //------------------------------------------establecer links de storage---------------------------//
     Route::get('/linkstorage', function () {

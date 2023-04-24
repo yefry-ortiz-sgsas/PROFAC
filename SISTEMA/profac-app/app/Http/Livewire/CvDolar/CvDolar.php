@@ -20,7 +20,7 @@ class CvDolar extends Component
     }
 
     public function guardarpDolar(Request $request){
-
+            //dd($request);
 
             /*         CREATE TABLE `cvDolar` (
             `id` int(11) NOT NULL,

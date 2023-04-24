@@ -318,6 +318,17 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa-solid fa-building-columns" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Coversiones $</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+                            <li><a href="/conversion/dolar" style="color:#ffffff;">Gestiones</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
                             <span class="nav-label" style="color:#ffffff;">Ajustes</span>
                             <span class="fa arrow"></span></a>
@@ -441,11 +452,11 @@
 
                         <ul class="nav nav-second-level">
                             <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                            </li>
+                            {{-- <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
+                            </li> --}}
                             <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                            <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                    ND</a></li>
+                           {{--  <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
+                                    ND</a></li> --}}
                             <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
                                     Anuladas</a></li>
                             <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
@@ -543,8 +554,8 @@
 
                         <ul class="nav nav-second-level">
                             <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                            </li>
+                            {{-- <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
+                            </li> --}}
                             <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas
                                 </a>
                             <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
@@ -728,10 +739,10 @@
 
                 <ul class="nav nav-second-level">
                     <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
+                    {{-- li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li> --}}
                     <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                     <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                    <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li>
+                   {{--  <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li> --}}
                     <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a>
                     </li>
                     <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a>
@@ -890,11 +901,11 @@
 
                             <ul class="nav nav-second-level">
                                 <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                                <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                                </li>
+                                {{-- <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
+                                </li> --}}
                                 <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                        ND</a></li>
+                               {{--  <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
+                                        ND</a></li> --}}
                                 <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
                                         Anuladas</a></li>
                                 <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
