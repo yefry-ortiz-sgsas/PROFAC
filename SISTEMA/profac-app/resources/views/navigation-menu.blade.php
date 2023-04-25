@@ -464,7 +464,7 @@
                                     Cotizaciones</a></li>
                             <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
+                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas vendedor</a>
                             </li>
 
 
@@ -556,7 +556,7 @@
                             <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                             {{-- <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
                             </li> --}}
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas
+                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas vendedor
                                 </a>
                             <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
                                     Anuladas</a></li>
