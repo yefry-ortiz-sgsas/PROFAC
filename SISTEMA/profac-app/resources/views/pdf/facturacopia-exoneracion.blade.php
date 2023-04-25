@@ -212,7 +212,7 @@
                         <p class="card-text" style="position:absolute;left:10px;  top:51px; font-size:11px">2. toda cuenta
                             vencida pagara el 3.5% de interés mensual.</p>
                         <p class="card-text" style="position:absolute;left:10px;  top:63px; font-size:11px">3. el único
-                            comprobante de pago de ésta factura es el emitido por distribuciones valencia.</p>
+                            comprobante de pago de ésta factura es el emitido por Grupo Alca.</p>
                         <p class="card-text" style="position:absolute;left:10px;  top:95px; font-size:11px">4 no se aceptan
                             reclamos ni devoluciones después de 10 días.</p>
                         <p class="card-text" style="position:absolute;left:10px;  top:110px; font-size:11px">5. la firma del
