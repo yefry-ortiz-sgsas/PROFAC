@@ -39,7 +39,7 @@ class CrearNotaCredito extends Component
 
     public function obtenerFactura(Request $request){
 
-        $clientes = DB::SELECT("select id, cai as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and cai like '%".$request->search."%' limit 15");
+        $clientes = DB::SELECT("select id, concat('cor: ',cai,' _ cod: ',numero_factura) as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and (cai like '%".$request->search."%' or numero_factura like '%".$request->search."%' ) limit 15");
 
         return response()->json([
             "results"=>$clientes,
