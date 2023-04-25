@@ -147,7 +147,7 @@
 
                     <div>
 
-                        <table class="" style="font-size: 10px; ">
+                        <table class="table" style="font-size: 10px; ">
                             <thead>
                                 <tr>
                                     <th>Código</th>

@@ -100,9 +100,9 @@
         <br>
         <br><br>
 
-        <div class="card border border-dark" style="position: relative; margin-left:44px; margin-top:10px; width:45rem;">
+        <div class="card " style="position: relative; margin-left:44px; margin-top:10px; width:45rem;">
             <div >
-                <table  class="" style="font-size: 11px;">
+                <table  class="table" style="font-size: 11px;">
                     <thead>
                         <tr>
                           <th>DESCRIPCIÓN</th>
