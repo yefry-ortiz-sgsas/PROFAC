@@ -39,7 +39,7 @@ class CrearNotaCredito extends Component
 
     public function obtenerFactura(Request $request){
 
-        $clientes = DB::SELECT("select id, cai as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and cai like '%".$request->search."%' limit 15");
+        $clientes = DB::SELECT("select id, concat('cor: ',cai,' _ cod: ',numero_factura) as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and (cai like '%".$request->search."%' or numero_factura like '%".$request->search."%' ) limit 15");
 
         return response()->json([
             "results"=>$clientes,
@@ -225,7 +225,7 @@ class CrearNotaCredito extends Component
 
         $arregloIdInputs = $request->arregloIdInputs;
 
-        
+
 
         /***VERIFICA LA EXISTENCIA DEL PRODUCTO EN LA FACTURA PARA REALIZAR LA DEVOLUCION - SI NO ENCUENTRA CANTIDAD DISPONIBLE, NO REALIZAR LA NOTA DE CREDITO */
         for ($i=0; $i < count($arregloIdInputs) ; $i++) {
@@ -264,11 +264,11 @@ class CrearNotaCredito extends Component
 
         $factura = DB::SELECTONE("select estado_factura_id from factura where id = ". $request->idFactura);
 
-        
+
 
         if ($factura->estado_factura_id == 1 ) {
            $estado = 1;
-      
+
             $cai = DB::SELECTONE("select
                             id,
                             numero_inicial,
@@ -283,7 +283,7 @@ class CrearNotaCredito extends Component
         } elseif($factura->estado_factura_id == 2) {
 
             $estado = 2;
-           
+
             $cai = DB::SELECTONE("select
                             id,
                             numero_inicial,
@@ -391,7 +391,7 @@ class CrearNotaCredito extends Component
             $productoNota->precio_unidad = $precio;
             $productoNota->sub_total = $subTotal;
             $productoNota->isv =  $isv;
-            $productoNota->total = $total; 
+            $productoNota->total = $total;
             $productoNota->unidad_medida_venta_id = $idUnidadMedida;
             $productoNota->save();
 

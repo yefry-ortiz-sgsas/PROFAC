@@ -78,7 +78,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
-                        08011986138652</b></p>
+                    08019020234099</b></p>
             </div>
         </div>
 

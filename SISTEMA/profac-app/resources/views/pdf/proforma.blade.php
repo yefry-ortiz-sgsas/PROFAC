@@ -78,7 +78,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
-                    RTN GRUPO ALCA</b></p>
+                    08019020234099</b></p>
             </div>
         </div>
 

@@ -115,37 +115,37 @@
 
 
                             </div>
-                            {{-- 
+                            {{--
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                 
-                                        
+
+
                                             <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                             <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
                                                  onchange="obtenerImagenes()">
                                                 <option value="" selected disabled>--Seleccione un producto--</option>
                                             </select>
-                                    
+
 
 
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                   
+
                                         <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
                                         <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                            onchange="prueba()"  disabled 
+                                            onchange="prueba()"  disabled
                                         >
                                             <option value="" selected disabled>--Seleccione un producto--</option>
                                         </select>
                                     </div>
-  
+
 
 
                             </div>
 
-                            
+
                             <div class="row">
 
 
@@ -156,7 +156,7 @@
 
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
-      
+
                                         <div id="bloqueImagenes" class="carousel-inner " >
 
 
@@ -187,7 +187,7 @@
                                         Producto a venta <i class="fa-solid fa-cart-plus"></i> </button>
 
                                     </div>
-                                </div>    
+                                </div>
 
                             </div> --}}
 
@@ -385,7 +385,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-            <option value="${element.id}" >${element.descripcion}</option>                                      
+            <option value="${element.id}" >${element.descripcion}</option>
             `
                         });
 
@@ -441,7 +441,7 @@
                     this.totalesGenerales();
                 }
 
-               
+
 
             }
 
@@ -569,7 +569,7 @@
                 });
 
             function guardarVenta() {
-
+                console.log("prueba de que llega");
                 document.getElementById("facturar_comprobante_btn").disabled = true;
 
                 var data = new FormData($('#crear_venta').get(0));
@@ -601,7 +601,7 @@
 
 
                         if (data.idFactura == 0) {
-                          
+
 
                             Swal.fire({
                                 icon: data.icon,

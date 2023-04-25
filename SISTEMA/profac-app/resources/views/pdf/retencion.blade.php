@@ -39,7 +39,7 @@
                <b>Retención No. {{$data->cai_retencion}} </b>
               </div>
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: RTN GRUPO ALCA</b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: 08019020234099</b></p>
                 <p class="card-text" style="position:absolute;left:433px;  top:50px;"><b>CAI: {{ $data->numeroCai }}</b></p>
                 <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: {{$data->fecha_limite}}</b></p>
                 <p class="card-text" style="position:absolute;left:350px;  top:65px;"><b>Rango autorizado: {{$data->numero_inicial}} al {{$data->numero_final}}</b></p>

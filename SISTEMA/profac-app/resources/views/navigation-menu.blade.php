@@ -339,7 +339,7 @@
                             <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                         </ul>
                     </li>
-                {{--     <li>
+                    <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                             <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
                             <span class="fa arrow"></span></a>
@@ -353,8 +353,8 @@
                             </li>
 
                         </ul>
-                    </li> --}}
-                    {{-- <li>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                                 style="color:#ffffff;">Nota de Débito</span>
                             <span class="fa arrow"></span></a>
@@ -363,7 +363,7 @@
                             <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
                             <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
                         </ul>
-                    </li> --}}
+                    </li>
                     {{-- <li>
                         <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
                                 class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
@@ -513,7 +513,7 @@
                     </li> --}}
 
 
-                    {{-- <li>
+                    <li>
                         <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Cardex</span>
                             <span class="fa arrow"></span></a>
@@ -525,7 +525,7 @@
                         </ul>
                     </li>
 
-                </li>--}}
+                </li>
 {{--                 <li>
 <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
         class="nav-label" style="color:#ffffff;">Comisiones</span>
@@ -671,7 +671,7 @@
                 </ul>
             </li>
 
-            {{-- <li>
+            <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
                     <span class="fa arrow"></span></a>
@@ -685,8 +685,8 @@
                     </li>
 
                 </ul>
-            </li> --}}
-            {{-- <li>
+            </li>
+            <li>
                 <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                         style="color:#ffffff;">Nota de Débito</span>
                     <span class="fa arrow"></span></a>
@@ -695,7 +695,7 @@
                     <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
                     <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
                 </ul>
-            </li> --}}
+            </li>
 
 
 
@@ -798,7 +798,7 @@
 
 
 
-            {{-- <li>
+            <li>
                 <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
                         style="color:#ffffff;">Cardex</span>
                     <span class="fa arrow"></span></a>
@@ -808,7 +808,7 @@
                     <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
 
                 </ul>
-            </li> --}}
+            </li>
 
 
            {{--  <li>

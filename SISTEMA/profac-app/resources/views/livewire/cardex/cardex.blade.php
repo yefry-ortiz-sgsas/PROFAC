@@ -144,8 +144,8 @@
     }
 
     function cargaCardex(){
-
         $("#tbl_cardex").dataTable().fnDestroy();
+        console.log("entra");
 
         var idBodega = document.getElementById('bodega');
         var idProducto = document.getElementById('producto');
