@@ -31,9 +31,9 @@
 
 
     <div class="pruebaFondo">
-        {{-- <img src="img/membrete/Logo3.png" width="800rem"
+        <img src="img/membrete/Loggo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt=""> --}}
+         alt="">
         <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
                <b>Retención No. {{$data->cai_retencion}} </b>

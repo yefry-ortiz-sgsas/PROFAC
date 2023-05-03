@@ -74,8 +74,8 @@
     @endphp
 
 
-    <div class="pruebaFondo">{{--
-        <img src="img/membrete/Logo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt=""> --}}
+    <div class="pruebaFondo">
+        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Factura No. {{$cai->numero_factura}} </b>
