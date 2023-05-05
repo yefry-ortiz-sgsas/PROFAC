@@ -770,18 +770,22 @@ class CrearVale extends Component
 
         $importes = DB::SELECTONE("
         select
-            format(sub_total,2) as sub_total,
-            format(isv,2) as isv,
-            format(total,2) as total
+        format(sub_total_grabado,2) as sub_total_grabado,
+        format(sub_total_excento,2) as sub_total_excento,
+        format(sub_total,2) as sub_total,
+        format(isv,2) as isv,
+        format(total,2) as total        
         from vale
         where id =".$idEntrega 
     );
 
     $importesSinCentavos = DB::SELECTONE("
     select
-        sub_total as sub_total,
-        isv as isv,
-        total as total
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento,
+        isv,
+        total 
     from vale
     where id =".$idEntrega 
 );
