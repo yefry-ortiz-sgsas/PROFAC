@@ -40,8 +40,7 @@ class ListarVales extends Component
        on vale.factura_id = factura.id
        inner join users
        on vale.users_id = users.id  
-       inner join vale_has_producto 
-       on vale.id = vale_has_producto.vale_id
+
        cross join (select @i := 0) r
        where  YEAR(vale.created_at) = YEAR(NOW())
         ");

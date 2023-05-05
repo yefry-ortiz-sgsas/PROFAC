@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-            font-size: 0.8rem;
-            
-            
-          } */
+                font-size: 0.8rem;
+                
+                
+              } */
 
 
             .img-size {
@@ -850,6 +850,8 @@
                     this.totalesGenerales();
                 }
 
+                
+
             }
 
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
@@ -913,22 +915,57 @@
 
                 let totalGeneralValor = new Number(0);
                 let totalISV = new Number(0);
-                let subTotalGeneralValor = new Number(0);
-
+                let subTotalGeneralGrabadoValor = new Number(0);
+                let subTotalGeneralExcentoValor = new Number(0);
+                let subTotalGeneral = new Number(0);
+                let subTotalFila = 0;
+                let isvFila = 0;
 
                 for (let i = 0; i < arregloIdInputs.length; i++) {
-                    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+
+                    subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                    isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+
+                    ;
+
+                    if (isvFila == 0) {
+                        subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    } else if (subTotalFila > 0) {
+                        subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    }
+
+                    subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+
+
                     totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
                     totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
                 }
 
-                document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
+
+
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
-                }).format(subTotalGeneralValor)
+                }).format(subTotalGeneral)
+
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralGrabadoValor)
+
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotalGeneralExcentoValor)
 
                 document.getElementById('isvGeneral').value = totalISV.toFixed(3);
                 document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
@@ -949,7 +986,6 @@
 
 
                 return 0;
-
 
             }
 

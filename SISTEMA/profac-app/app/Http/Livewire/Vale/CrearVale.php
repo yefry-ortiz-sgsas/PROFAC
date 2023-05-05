@@ -290,6 +290,8 @@ class CrearVale extends Component
             $vale = new ModelVale;
             $vale->numero_vale = $numero_vale;
             $vale->sub_total = $request->subTotalGeneral;
+            $vale->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $vale->sub_total_excento = $request->subTotalGeneralExcento;
             $vale->isv = $request->isvGeneral;
             $vale->total = $request->totalGeneral;
             $vale->factura_id = $request->idFactura;
