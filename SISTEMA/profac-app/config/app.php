@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'America/Tegucigalpa'),
+    'timezone' => 'America/Tegucigalpa',
 
     /*
     |--------------------------------------------------------------------------

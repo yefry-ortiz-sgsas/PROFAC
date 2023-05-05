@@ -24,7 +24,7 @@ para configurar la hora de forma global independiente de la hora del sistema.
 configurar:
 Paso1)
 En el archivo .env agregar la variable
-APP_TIMEZONE="America/Tegucigalpa"
+APP_TIMEZONE='America/Tegucigalpa'
 
 paso2)
 config/app.php

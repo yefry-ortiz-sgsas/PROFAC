@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,7 @@ class ModelCliente extends Model
     use HasFactory;
     protected $table = 'cliente';
     protected $primaryKey = 'id';
+   // protected $dateFormat = 'America/Tegucigalpa';
     protected $fillable = [
         'id',
         'rtn',  
@@ -25,4 +26,6 @@ class ModelCliente extends Model
         'users_id',  
         'estado_cliente_id',        
     ];
+
+
 }
