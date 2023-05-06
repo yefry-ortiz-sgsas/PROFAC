@@ -170,6 +170,10 @@ class CrearComprovante extends Component
             $comprovante->fecha_emision = $request->fecha_emision;
             $comprovante->fecha_vencimineto = $request->fecha_vencimiento; 
             $comprovante->sub_total = $request->subTotalGeneral;
+
+            $comprovante->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $comprovante->sub_total_excento = $request->subTotalGeneralExcento;
+
             $comprovante->isv =  $request->isvGeneral;
             $comprovante->total =  $request->totalGeneral;
             $comprovante->cliente_id =  $request->seleccionarCliente;
@@ -221,10 +225,11 @@ class CrearComprovante extends Component
             return response()->json([
                 'icon' => "success",
                 'text' =>  '
-                <div class="text-center">
+                <div class="">
                    
-                <a href="/orden/entrega/facturar/' . $comprovante->id . '"    class="btn btn-sm btn-warning" target="_blank"  > <i class="fa-solid fa-print"></i> Imprimir Comprobante </a>
-               
+                <a href="/comprobante/imprimir/' . $comprovante->id . '"    class="btn btn-sm btn-warning" target="_blank"  > <i class="fa-solid fa-print"></i> Imprimir Comprobante </a>
+                <a href="/orden/entrega/facturar/' . $comprovante->id . '"    class="btn btn-sm btn-success" target="_blank"  > <i class="fa-solid fa-print"></i> Facturar Comprobante </a>
+
                 </div>',
                 'title' => 'Exito!',
                 'idComprobante' => $comprovante->id,
@@ -413,9 +418,11 @@ class CrearComprovante extends Component
 
         $importes = DB::SELECTONE("
         select  
-            format(A.sub_total,2) as sub_total,
-            format(A.isv,2) as isv,
-            format(A.total,2) as total
+            format(sub_total_grabado,2) as sub_total_grabado,
+            format(sub_total_excento,2) as sub_total_excento,
+            format(sub_total,2) as sub_total,
+            format(isv,2) as isv,
+            format(total,2) as total  
         from comprovante_entrega A
             where id =".$idComprobante
         );
