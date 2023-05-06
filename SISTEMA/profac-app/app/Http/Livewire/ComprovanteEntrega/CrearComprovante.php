@@ -336,7 +336,7 @@ class CrearComprovante extends Component
                     "precio_unidad" => $precio,
                     "cantidad" => $cantidad,
                     "cantidad_s" => $cantidadSeccion,
-                    "cantidad_sin_entregar" => $cantidadSeccion,
+                    "cantidad_para_entregar" => $cantidadSeccion,
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,

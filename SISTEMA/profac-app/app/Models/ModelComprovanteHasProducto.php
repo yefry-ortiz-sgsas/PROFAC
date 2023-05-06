@@ -20,7 +20,7 @@ class ModelComprovanteHasProducto extends Model
         'precio_unidad',
         'cantidad',
         'cantidad_s',
-        'cantidad_sin_entregar',
+        'cantidad_para_entregar',
         'sub_total',
         'isv',
         'total',

@@ -516,7 +516,7 @@ class CrearVale extends Component
                 'total_s' => $totalSecccionado,
 
 
-                'cantidad_sin_entregar' => $cantidad,
+                'cantidad_para_entregar' => $cantidad,
 
 
                 'resta_inventario_total' => $restaInventario, //el total de unidades a restar de la factura
@@ -754,8 +754,8 @@ class CrearVale extends Component
             A.producto_id,
             B.nombre,
             D.nombre as unidad,
-            A.cantidad_sin_entregar as cantidad,
-            FORMAT(A.sub_total/A.cantidad_sin_entregar,2) as precio,
+            A.cantidad_para_entregar as cantidad,
+            FORMAT(A.sub_total/A.cantidad_para_entregar,2) as precio,
             FORMAT(A.sub_total,2) sub_total
         from vale_has_producto A
             inner join producto B
@@ -765,7 +765,7 @@ class CrearVale extends Component
             inner join unidad_medida D
             on C.unidad_medida_id = D.id
             where vale_id = ".$idEntrega."
-        group by A.producto_id, B.nombre, D.nombre, A.cantidad_sin_entregar, A.sub_total
+        group by A.producto_id, B.nombre, D.nombre, A.cantidad_para_entregar, A.sub_total
         ");
 
         $importes = DB::SELECTONE("
