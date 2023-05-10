@@ -20,7 +20,7 @@ class CvDolar extends Component
     }
 
     public function guardarpDolar(Request $request){
-            //dd($request);
+
 
             /*         CREATE TABLE `cvDolar` (
             `id` int(11) NOT NULL,
@@ -50,7 +50,6 @@ class CvDolar extends Component
             }
 
 
-
             $cvDolar = new cDolar;
 
             $cvDolar->user_id = Auth::user()->id;
@@ -59,6 +58,7 @@ class CvDolar extends Component
             $cvDolar->save();
 
 
+            //dd($request->valor_dolar);
 
 
             return response()->json([
@@ -72,7 +72,7 @@ class CvDolar extends Component
         return response()->json([
          'icon'=>'error',
          'title'=>'Error!',
-         'text'=>'Ha ocurrido un error, intente de nuevo.',
+         'text'=>'Ha ocurrido un error, intente de nuevo.222',
          'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);

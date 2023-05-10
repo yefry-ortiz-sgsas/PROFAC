@@ -73,6 +73,9 @@
         $vueltasTabla = 0;
     @endphp
 
+    @php
+        $USD = number_format($precioDolar->valor, 4, '.', ' ');
+    @endphp
 
     <div class="pruebaFondo">
         <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
@@ -108,6 +111,7 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:60px;"><b>Correo:</b>
                     {{ $cliente->correo }}
                 </p>
+                <p class="card-text" style="position:absolute;left:20px;  top:100px;"><b>Precio de venta del dólar al momento de realizada la factura:</b>  $ {{ $USD }}</p>
                 <p class="card-text" style="position:absolute;left:20px;  top:80px;"><b>Notas:</b> </p>
 
                 <p class="card-text " style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord.
@@ -138,6 +142,8 @@
                 </p>
             </div>
         </div>
+
+
 
                  @php
                     $cant = count($productos);
