@@ -76,18 +76,19 @@ class CrearVale extends Component
         try {
 
             $listaProductos = DB::SELECT("
-        select
-        concat(A.producto_id,'-',A.seccion_id  ) as id,
-        concat('cod ',B.id ,' - ',B.nombre,' => Cantidad Disponible ',sum(A.cantidad_para_entregar)/C.unidad_venta ) as text       
-        
-        from venta_has_producto A
-          inner join producto B
-          on A.producto_id = B.id 
-          inner join unidad_medida_venta C
-          on A.unidad_medida_venta_id = C.id
-          where A.cantidad_para_entregar <>0 and A.factura_id = " . $request->idFactura . "        
-          group by A.producto_id, A.seccion_id, A.factura_id, A.cantidad, C.unidad_venta
-          limit 15
+            select
+            concat(A.producto_id,'-',A.seccion_id  ) as id,
+            concat('cod ',B.id ,' - ',B.nombre,' => Cantidad Disponible ',sum(A.cantidad_para_entregar)/C.unidad_venta ) as text       
+            
+            from venta_has_producto A
+              inner join producto B
+              on A.producto_id = B.id 
+              inner join unidad_medida_venta C
+              on A.unidad_medida_venta_id = C.id
+              where A.cantidad_para_entregar <>0 and A.factura_id = ".$request->idFactura."    
+              and (B.id like '%".$request->search."%' or B.nombre like '%".$request->search."%' )
+              group by A.producto_id, A.seccion_id, A.factura_id, A.cantidad, C.unidad_venta
+          
         "); //agregar group by por producto factura y seccion, agregar un and para omitir lote con 0 producto para entrega
 
 

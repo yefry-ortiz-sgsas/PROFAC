@@ -149,9 +149,9 @@
 
         var idBodega = document.getElementById('bodega');
         var idProducto = document.getElementById('producto');
-        console.log(idBodega.options[idBodega.selectedIndex].text, idProducto.options[idProducto.selectedIndex].text);
+        //console.log(idBodega.options[idBodega.selectedIndex].text, idProducto.options[idProducto.selectedIndex].text);
         $('#tbl_cardex').DataTable({
-            "order": [0, 'asc'],
+            "order": ['0', 'desc'],
             "paging": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -190,7 +190,7 @@
             "ajax": "/listado/cardex/"+idBodega.value+"/"+idProducto.value,
             "columns": [
                 {
-                    data: 'fechaIngreso'
+                    data: 'fechaIngreso', 
                 },
                 {
                     data: 'producto'
