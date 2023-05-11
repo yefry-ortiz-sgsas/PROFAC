@@ -134,7 +134,7 @@
                  @php
                     $cant = count($productos);
                 @endphp
-                <div class="" style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
+                 <div class="" style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
 
                     <div>
 
@@ -142,13 +142,16 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th>Producto</th>
-                                    <th>Bodega</th>
-                                    <th>Seccion</th>
+                                    <th>Nombre</th>
+                                    {{-- <th>Bodega</th>
+                                    <th>Seccion</th> --}}
                                     <th>Medida</th>
+                                    <th>Excento</th>
                                     <th>Precio </th>
+                                    <th>Precio $</th>
                                     <th>Cantidad</th>
                                     <th>Importe</th>
+                                    <th>Importe $</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,12 +160,15 @@
                                     <tr>
                                         <td>{{ $producto->codigo }}</td>
                                         <td>{{ $producto->descripcion }}</td>
-                                        <td>{{ $producto->bodega }}</td>
-                                        <td>{{ $producto->seccion }}</td>
-                                         <td>{{ $producto->medida }}</td>
+                                        {{-- <td>{{ $producto->bodega }}</td>
+                                        <td>{{ $producto->seccion }}</td> --}}
+                                        <td>{{ $producto->medida }}</td>
+                                        <td>{{ $producto->excento }}</td>
                                         <td>{{ $producto->precio }}</td>
+                                        <td>$ {{$producto->precioUSD}}</td>
                                         <td>{{ $producto->cantidad }}</td>
                                         <td>{{ $producto->importe }}</td>
+                                        <td>$ {{$producto->importeUSD}}</td>
                                     </tr>
                                 @endforeach
 

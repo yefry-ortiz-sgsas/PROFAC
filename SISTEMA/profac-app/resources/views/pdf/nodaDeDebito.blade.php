@@ -79,7 +79,7 @@
         <br><br><br>
 
         <br><br>
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:7rem;">
+        <div class="card " style="margin-left:44px;  margin-top:150px; width:45rem; height:7rem;">
 
             <div class="card-header">
 

@@ -34,7 +34,7 @@
         <img src="img/membrete/Loggo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
-        <div class="card border border-dark" style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
+        <div class="card " style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
                <b>Retención No. {{$data->cai_retencion}} </b>
               </div>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark" style="position:absolute;left:0px;  top:300px; width:45rem; height:5.5rem;">
+        <div class="card " style="position:absolute;left:0px;  top:300px; width:45rem; height:5.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Proveedor:</b> {{$data->nombre}}</p>
                 <p class="card-text" style="position:absolute;left:350px;  top:10px;"><b>Fecha:</b> {{$data->fecha}}</p>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark" style="position:absolute;left:0px;  top:420px; width:45rem; height:4rem;">
+        <div class="card " style="position:absolute;left:0px;  top:420px; width:45rem; height:4rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Linea</b></p>
                 <p class="card-text" style="position:absolute;left:150px;  top:10px;"><b>Descripción</b></p>
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark" style="position:absolute;left:0px;  top:520px; width:45rem; height:3rem;">
+        <div class="card" style="position:absolute;left:0px;  top:520px; width:45rem; height:3rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:50px;  top:10px;">"{{$numeroLetras}}"</p>
                 <p class="card-text" style="position:absolute;left:450px;  top:10px;"><b><h5>Valor Retenido: {{$data->monto_retencion}}</h5></b></p>

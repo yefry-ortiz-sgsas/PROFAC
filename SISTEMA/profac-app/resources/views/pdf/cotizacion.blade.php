@@ -123,7 +123,7 @@
         <img src="img/membrete/Loggo3.png" width="800rem"
         style="margin-left:3%; margin-top:-50px; position:absolute;"
          alt="">
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:100px; width:45rem; height:5.5rem;">
+        <div class="card" style="margin-left:44px;  margin-top:100px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Cotización  No.  {{$datos->codigo}}</b>
 
@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:6.5rem;">
+        <div class="card "   style="margin-left:44px; margin-top:10px; width:45rem; height:6.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$datos->nombre}}</p>
 
@@ -204,7 +204,7 @@
 
 
         <div style=" position: relative; margin-left:44px; page-break-inside: avoid; margin-top:10px;">
-            <div class="card border border-dark" style="position:absolute;left:0px;   width:26rem; height:15rem;">
+            <div class="card " style="position:absolute;left:0px;   width:26rem; height:15rem;">
                 <div class="card-body">
 
                     <p class="card-text" style="position:absolute;left:10px;  top:2px; font-size:14px;"><b>Vendedor: {{$datos->vendedor}}</b>
@@ -234,7 +234,7 @@
                 </div>
             </div>
 
-            <div class="card border border-dark"
+            <div class="card "
                 style="position:absolute;left:430px;   width:18rem; height:15rem;">
                 <div class="card-body">
                     <div>

@@ -69,7 +69,7 @@ $altura =20;
         <img src="img/membrete/Loggo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
+        <div class="card " style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
                 <b>Registro de Translado No. {{$datos->codigo}} </b>
 
@@ -78,7 +78,7 @@ $altura =20;
 
         </div>
 
-        <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:7rem;">
+        <div class="card"   style="margin-left:44px; margin-top:10px; width:45rem; height:7rem;">
             <div class="card-body">
 
                 <p class="card-text "  style="position:absolute;left:20px;  top:10px;"><b>Fecha de translado: </b>{{$datos->fecha}}
@@ -97,7 +97,7 @@ $altura =20;
             </div>
         </div>
 
-        <div class="card border " style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
+        <div class="card " style="position: relative; margin-left:44px; margin-top:10px; width:45rem; page-break-inside: auto;">
             <div >
 
 

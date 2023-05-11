@@ -77,7 +77,7 @@
     <div class="pruebaFondo">
         <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
 
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
+        <div class="card" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b> ACTA DE RECEPCIÓN </b>
                 <b style="position:absolute;right: 70px"> Factura No. {{ $cai->numero_factura }} </b>
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark" style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
+        <div class="card" style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente:
                     </b>{{ $cliente->nombre }}</p>
@@ -108,7 +108,7 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:60px;"><b>Correo:</b>
                     {{ $cliente->correo }}
                 </p>
-                <p class="card-text" style="position:absolute;left:20px;  top:80px;"><b>Notas:</b> </p>
+                {{-- <p class="card-text" style="position:absolute;left:20px;  top:80px;"><b>Notas:</b> </p> --}}
 
 {{--
                 <p class="card-text " style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord.
@@ -198,7 +198,7 @@
                 <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
 
 
-                    <div class="card {{-- border border-dark --}}" style="position:absolute;left:0px;  width:26rem; height:15rem;">
+                    <div class="card " style="position:absolute;left:0px;  width:26rem; height:15rem;">
                         <div class="card-body">
 
                             <p class="card-text" style="position:absolute;left:10px;  top:2px; font-size:14px;"><b>Vendedor:
@@ -251,7 +251,7 @@
                         </div>
                     </div>
 
-                    <div class="card border border-dark" style="position:absolute;left:430px;   width:18rem; height:15rem;">
+                    <div class="card" style="position:absolute;left:430px;   width:18rem; height:15rem;">
                         <div class="card-body">
                             <div>
                                 <p class="card-text " style="position:absolute; left:10px;  top:10px; font-size:16px;">Importe

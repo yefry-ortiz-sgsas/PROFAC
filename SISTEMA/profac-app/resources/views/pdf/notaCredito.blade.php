@@ -67,7 +67,7 @@
         <img src="img/membrete/Loggo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
+        <div class="card " style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Nota de Credito No. {{$cai->nota_credito_cai}}</b>
                 <b style="position:absolute;right: 10px" >Factura No. {{$cai->factura}}</b>
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <div class="card border border-dark"   style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
+        <div class="card "   style="margin-left:44px; margin-top:10px; width:45rem; height:10.5rem;">
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$cliente->nombre}}</p>
                 <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 9px; max-width:500px"><b>Dirección:</b> {{$cliente->direccion}}</p>
@@ -176,7 +176,7 @@
 
 
         <div style=" position: relative; margin-left:44px;">
-            <div class="card border border-dark" style="position:absolute;left:0px; margin-top:{{$altura}}px;   width:26rem; height:15rem;">
+            <div class="card" style="position:absolute;left:0px; margin-top:{{$altura}}px;   width:26rem; height:15rem;">
                 <div class="card-body">
 
                     <p class="card-text" style="position:absolute;left:10px;  top:2px; font-size:14px;"><b>Vendedor: </b>
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <div class="card border border-dark"
+            <div class="card "
                 style="position:absolute;left:430px; margin-top:{{$altura}}px;   width:18rem; height:15rem;">
                 <div class="card-body">
                     <div>

@@ -1261,7 +1261,7 @@ class FacturacionCorporativa extends Component
             FORMAT(isv/precio_dolar,2) as isvUSD,
             FORMAT(sub_total/precio_dolar,2) as sub_totalUSD,
             FORMAT(sub_total_grabado/precio_dolar,2) as sub_total_grabadoUSD,
-            FORMAT(sub_total_excento/precio_dolar,2) as sub_total_excentoUSD,
+            FORMAT(sub_total_excento/precio_dolar,2) as sub_total_excentoUSD
             from factura where factura.id = " . $idFactura
         );
 
@@ -1341,69 +1341,71 @@ class FacturacionCorporativa extends Component
             "
 
             select
-            *
-            from (
-            select
-                B.producto_id as codigo,
-                concat(C.nombre) as descripcion,
-                UPPER(J.nombre) as medida,
-                if(C.isv = 0, 'SI' , 'NO' ) as excento,
-                H.nombre as bodega,
-                REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(B.sub_total/B.cantidad,2) as precio,
-                FORMAT((B.sub_total/B.cantidad)/A.precio_dolar,2) as precioUSD,
-                FORMAT(sum(B.cantidad_s),2) as cantidad,
-                FORMAT(sum(B.sub_total_s),2) as importe,
-                FORMAT((sum(B.sub_total_s))/A.precio_dolar,2) as importeUSD
-
-            from factura A
-            inner join venta_has_producto B
-            on A.id = B.factura_id
-            inner join producto C
-            on B.producto_id = C.id
-            inner join unidad_medida_venta D
-            on B.unidad_medida_venta_id = D.id
-            inner join unidad_medida J
-            on J.id = D.unidad_medida_id
-            inner join recibido_bodega E
-            on B.lote = E.id
-            inner join seccion F
-            on E.seccion_id = F.id
-            inner join segmento G
-            on F.segmento_id = G.id
-            inner join bodega H
-            on G.bodega_id = H.id
-            where A.id=" . $idFactura . "
-            group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
-            order by B.indice asc
-            ) A
-
-
-            union
-
-            select
-            D.id,
-            D.nombre as descripcion,
-            F.nombre as medida,
+        *
+        from (
+        select
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
-            'N/A',
-            'N/A',
-            FORMAT(C.precio,2) as precio,
-            FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
+            H.nombre as bodega,
+            REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
+            FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(((B.sub_total/B.cantidad)/A.precio_dolar),2) as precioUSD,
+            FORMAT(sum(B.cantidad_s),2) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe,
+            FORMAT((sum(B.sub_total_s)/A.precio_dolar),2) as importeUSD
 
-            from factura A
-            inner join vale B
-            on A.id = B.factura_id
-            inner join espera_has_producto C
-            on B.id = C.vale_id
-            inner join producto D
-            on C.producto_id = D.id
-            inner join unidad_medida_venta E
-            on C.unidad_medida_venta_id = E.id
-            inner join unidad_medida F
-            on F.id = E.unidad_medida_id
-            where B.estado_id=1 and A.id = " . $idFactura
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id= " . $idFactura ."
+        group by codigo, descripcion, medida, bodega, seccion, precio,precioUSD, B.created_at,B.indice
+        order by B.indice asc
+        ) A
+
+
+        union
+
+        select
+        D.id,
+        D.nombre as descripcion,
+        F.nombre as medida,
+        if(C.isv = 0, 'SI' , 'NO' ) as excento,
+        'N/A',
+        'N/A',
+        FORMAT(C.precio,2) as precio,
+        FORMAT((C.precio/A.precio_dolar),2) as precioUSD2,
+        FORMAT(C.cantidad,2) as cantidad,
+        FORMAT(C.sub_total,2) as sub_total,
+        FORMAT((C.sub_total/A.precio_dolar),2) as subtotalUSD
+
+        from factura A
+        inner join vale B
+        on A.id = B.factura_id
+        inner join espera_has_producto C
+        on B.id = C.vale_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        where B.estado_id=1 and A.id = " . $idFactura
 
         );
 
@@ -1447,6 +1449,8 @@ class FacturacionCorporativa extends Component
 
     public function imprimirFacturaCoorporativaCopia($idFactura)
     {
+
+        $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
 
         $cai = DB::SELECTONE("
         select
@@ -1502,30 +1506,122 @@ class FacturacionCorporativa extends Component
         where id = " . $idFactura);
 
 
-        $importesConCentavos = DB::SELECTONE("
+        /* $importesConCentavos = DB::SELECTONE("
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
         FORMAT(sub_total_excento,2) as sub_total_excento
-        from factura where factura.id = " . $idFactura);
+        from factura where factura.id = " . $idFactura); */
+
+
+        //CON DOLARES
+        $importesConCentavos = DB::SELECTONE("
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento,
+            FORMAT(total/precio_dolar,2) as totalUSD,
+            FORMAT(isv/precio_dolar,2) as isvUSD,
+            FORMAT(sub_total/precio_dolar,2) as sub_totalUSD,
+            FORMAT(sub_total_grabado/precio_dolar,2) as sub_total_grabadoUSD,
+            FORMAT(sub_total_excento/precio_dolar,2) as sub_total_excentoUSD
+            from factura where factura.id = " . $idFactura
+        );
 
 
 
+        /* $productos = DB::SELECT(
+            "
+
+            select
+            *
+            from (
+            select
+                B.producto_id as codigo,
+                concat(C.nombre) as descripcion,
+                UPPER(J.nombre) as medida,
+                if(C.isv = 0, 'SI' , 'NO' ) as excento,
+                H.nombre as bodega,
+                REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
+                FORMAT(B.sub_total/B.cantidad,2) as precio,
+                FORMAT(sum(B.cantidad_s),2) as cantidad,
+                FORMAT(sum(B.sub_total_s),2) as importe
+
+            from factura A
+            inner join venta_has_producto B
+            on A.id = B.factura_id
+            inner join producto C
+            on B.producto_id = C.id
+            inner join unidad_medida_venta D
+            on B.unidad_medida_venta_id = D.id
+            inner join unidad_medida J
+            on J.id = D.unidad_medida_id
+            inner join recibido_bodega E
+            on B.lote = E.id
+            inner join seccion F
+            on E.seccion_id = F.id
+            inner join segmento G
+            on F.segmento_id = G.id
+            inner join bodega H
+            on G.bodega_id = H.id
+            where A.id=" . $idFactura . "
+            group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
+            order by B.indice asc
+            ) A
+
+
+            union
+
+            select
+            D.id,
+            D.nombre as descripcion,
+            F.nombre as medida,
+            if(C.isv = 0, 'SI' , 'NO' ) as excento,
+            'N/A',
+            'N/A',
+            FORMAT(C.precio,2) as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            FORMAT(C.sub_total,2) as sub_total
+
+            from factura A
+            inner join vale B
+            on A.id = B.factura_id
+            inner join espera_has_producto C
+            on B.id = C.vale_id
+            inner join producto D
+            on C.producto_id = D.id
+            inner join unidad_medida_venta E
+            on C.unidad_medida_venta_id = E.id
+            inner join unidad_medida F
+            on F.id = E.unidad_medida_id
+            where B.estado_id=1 and A.id = " . $idFactura
+
+        ); */
+
+
+        //CON DOLARES
         $productos = DB::SELECT(
             "
 
+            select
+        *
+        from (
         select
             B.producto_id as codigo,
             concat(C.nombre) as descripcion,
             UPPER(J.nombre) as medida,
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
-            concat(H.nombre,'-', REPLACE(F.descripcion,'Seccion','')) as bodega,
-            F.descripcion as seccion,
+            H.nombre as bodega,
+            REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
             FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(((B.sub_total/B.cantidad)/A.precio_dolar),2) as precioUSD,
             FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
+            FORMAT(sum(B.sub_total_s),2) as importe,
+            FORMAT((sum(B.sub_total_s)/A.precio_dolar),2) as importeUSD
 
         from factura A
         inner join venta_has_producto B
@@ -1544,8 +1640,11 @@ class FacturacionCorporativa extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=" . $idFactura . "
-        group by codigo, descripcion, medida, bodega, seccion, precio
+        where A.id= " . $idFactura ."
+        group by codigo, descripcion, medida, bodega, seccion, precio,precioUSD, B.created_at,B.indice
+        order by B.indice asc
+        ) A
+
 
         union
 
@@ -1554,11 +1653,14 @@ class FacturacionCorporativa extends Component
         D.nombre as descripcion,
         F.nombre as medida,
         if(C.isv = 0, 'SI' , 'NO' ) as excento,
-        'Pendiente',
-        'Pendiente',
+        'N/A',
+        'N/A',
         FORMAT(C.precio,2) as precio,
+        FORMAT((C.precio/A.precio_dolar),2) as precioUSD2,
         FORMAT(C.cantidad,2) as cantidad,
-        FORMAT(C.sub_total,2) as sub_total
+        FORMAT(C.sub_total,2) as sub_total,
+        FORMAT((C.sub_total/A.precio_dolar),2) as subtotalUSD
+
         from factura A
         inner join vale B
         on A.id = B.factura_id
@@ -1573,6 +1675,8 @@ class FacturacionCorporativa extends Component
         where B.estado_id=1 and A.id = " . $idFactura
 
         );
+
+
 
         // for ($i=0; $i < 15 ; $i++) {
         //     echo($productos[$i]);
@@ -1605,7 +1709,7 @@ class FacturacionCorporativa extends Component
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/facturaCopia', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/facturaCopia', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra', 'precioDolar'))->setPaper('letter');
 
         return $pdf->stream("factura_numero" . $cai->numero_factura . ".pdf");
     }
