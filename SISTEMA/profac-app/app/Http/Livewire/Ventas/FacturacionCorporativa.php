@@ -72,7 +72,6 @@ class FacturacionCorporativa extends Component
                     where estado_cliente_id = 1
 
                     and tipo_cliente_id=1
-                    and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
             }
@@ -1128,7 +1127,7 @@ class FacturacionCorporativa extends Component
                     "seccion_id" => $idSeccion,
                     "sub_total" => $subTotal,
                     "isv" => $isv,
-                    "total" => $total,                   
+                    "total" => $total,
                     "numero_unidades_resta_inventario" => $registroResta, //La cantidad de unidades que se resta por lote - esta canitdad es ingresada por el usuario - se **multipla** por la unidad de medida venta para convertir a unidad base y restar de la tabla recibido bodega **la cantidad que se resta por lote**
                     "unidades_nota_credito_resta_inventario" => $registroResta, // Este campo tiene el mismo valor que **numero_unidades_resta_inventario** - se utiliza para registrar las unidades a devolver en la nota de credito - resta las unidades y las devuelve a la tabla **recibido_bodega**
                     "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad ingresada por el usuario en la pantalla de factura - misma cantidad se **multiplica** por la unidad de venta - registra la cantidad total a restar en la seccion_id- se repite para el lote
