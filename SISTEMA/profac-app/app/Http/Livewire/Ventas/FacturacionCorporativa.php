@@ -577,7 +577,7 @@ class FacturacionCorporativa extends Component
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             DB::commit();
 
-
+            /* <a href="/crear/vale/lista/espera/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-list-check"></i> Crear Vale Tipo: 2</a> */
 
             /*  <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> */
             return response()->json([
@@ -585,7 +585,7 @@ class FacturacionCorporativa extends Component
                 'text' => '
                 <div class="d-flex justify-content-between">
                     <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/crear/vale/lista/espera/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-list-check"></i> Crear Vale Tipo: 2</a>
+
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',
@@ -2124,20 +2124,26 @@ class FacturacionCorporativa extends Component
 
 
         $importesConCentavos = DB::SELECTONE("
-        select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
-        from factura where factura.id = " . $idFactura);
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento,
+            FORMAT(total/precio_dolar,2) as totalUSD,
+            FORMAT(isv/precio_dolar,2) as isvUSD,
+            FORMAT(sub_total/precio_dolar,2) as sub_totalUSD,
+            FORMAT(sub_total_grabado/precio_dolar,2) as sub_total_grabadoUSD,
+            FORMAT(sub_total_excento/precio_dolar,2) as sub_total_excentoUSD
+            from factura where factura.id = " . $idFactura
+        );
 
 
 
         $productos = DB::SELECT(
             "
 
-        select
+            select
         *
         from (
         select
@@ -2148,8 +2154,10 @@ class FacturacionCorporativa extends Component
             H.nombre as bodega,
             REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
             FORMAT(B.sub_total/B.cantidad,2) as precio,
+            FORMAT(((B.sub_total/B.cantidad)/A.precio_dolar),2) as precioUSD,
             FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
+            FORMAT(sum(B.sub_total_s),2) as importe,
+            FORMAT((sum(B.sub_total_s)/A.precio_dolar),2) as importeUSD
 
         from factura A
         inner join venta_has_producto B
@@ -2168,8 +2176,8 @@ class FacturacionCorporativa extends Component
         on F.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where A.id=" . $idFactura . "
-        group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
+        where A.id= " . $idFactura ."
+        group by codigo, descripcion, medida, bodega, seccion, precio,precioUSD, B.created_at,B.indice
         order by B.indice asc
         ) A
 
@@ -2184,8 +2192,10 @@ class FacturacionCorporativa extends Component
         'N/A',
         'N/A',
         FORMAT(C.precio,2) as precio,
+        FORMAT((C.precio/A.precio_dolar),2) as precioUSD2,
         FORMAT(C.cantidad,2) as cantidad,
-        FORMAT(C.sub_total,2) as sub_total
+        FORMAT(C.sub_total,2) as sub_total,
+        FORMAT((C.sub_total/A.precio_dolar),2) as subtotalUSD
 
         from factura A
         inner join vale B

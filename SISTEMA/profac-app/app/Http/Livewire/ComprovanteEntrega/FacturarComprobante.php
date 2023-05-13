@@ -50,6 +50,8 @@ class FacturarComprobante extends FacturacionCorporativa
         A.fecha_emision,
         A.fecha_vencimineto,
         A.sub_total,
+        A.sub_total_grabado,
+        A.sub_total_excento,
         A.isv,
         A.total,
         A.cliente_id,
@@ -100,14 +102,14 @@ class FacturarComprobante extends FacturacionCorporativa
         B.seccion_id as seccion_id,
         B.precio_unidad,
         concat(E.nombre,' - ',D.unidad_venta  ) as unidad,
-        sum(B.cantidad_sin_entregar) as cantidad,
+        sum(B.cantidad_para_entregar) as cantidad,
         B.unidad_medida_venta_id,
         C.isv as isvTblProducto,
         B.resta_inventario_total,
 
-        B.precio_unidad * sum(B.cantidad_sin_entregar)  as sub_total,
-        B.precio_unidad * sum(B.cantidad_sin_entregar) * ( C.isv/100) as isv,
-        (B.precio_unidad * sum(B.cantidad_sin_entregar))  + (B.precio_unidad * sum(B.cantidad_sin_entregar) * ( C.isv/100)) as total
+        B.precio_unidad * sum(B.cantidad_para_entregar)  as sub_total,
+        B.precio_unidad * sum(B.cantidad_para_entregar) * ( C.isv/100) as isv,
+        (B.precio_unidad * sum(B.cantidad_para_entregar))  + (B.precio_unidad * sum(B.cantidad_para_entregar) * ( C.isv/100)) as total
 
         from comprovante_entrega A
         inner join comprovante_has_producto B
@@ -125,7 +127,7 @@ class FacturarComprobante extends FacturacionCorporativa
         inner join unidad_medida E
         on E.id = D.unidad_medida_id
         where A.id = ".$idComprobant."
-        and B.cantidad_sin_entregar <> 0
+        and B.cantidad_para_entregar <> 0
         group by producto_id, comprovante_id, nombre_producto, nombre_bodega, bodega_id, seccion_id, precio_unidad, unidad, cantidad, unidad_medida_venta_id, isvTblProducto,  B.resta_inventario_total
         ");
 
@@ -213,37 +215,38 @@ class FacturarComprobante extends FacturacionCorporativa
                     </div>
 
 
-                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                     <label for="subTotalMostrar' . $i . '" class="sr-only">Sub Total</label>
                     <input type="text" placeholder="Sub total producto" id="subTotalMostrar' . $i . '"
+                        value="' . $producto->sub_total . '"
                         name="subTotalMostrar' . $i . '" class="form-control"
-                        autocomplete="off" value="'.$producto->sub_total.'"
+                        autocomplete="off"
                         readonly >
 
-                    <input id="subTotal' . $i . '" name="subTotal' . $i . '" type="hidden" value="'.$producto->sub_total.'" required>
+                    <input id="subTotal' . $i . '" name="subTotal' . $i . '" type="hidden" value="' . $producto->sub_total . '" required>
                 </div>
 
 
-                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+
+                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                     <label for="isvProductoMostrar' . $i . '" class="sr-only">ISV</label>
-                    <input type="text" placeholder="ISV" id="isvProductoMostrar' . $i . '"
+                    <input type="text" value="' . $producto->isv . '" placeholder="ISV" id="isvProductoMostrar' . $i . '"
                         name="isvProductoMostrar' . $i . '" class="form-control"
-                        autocomplete="off" value="'.$producto->isv.'"
+                        autocomplete="off"
                         readonly >
 
-                        <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="'.$producto->isv.'" min="0" required>
+                        <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
                 </div>
-
 
 
                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                     <label for="totalMostrar' . $i . '" class="sr-only">Total</label>
-                    <input type="text" placeholder="Total del producto" id="totalMostrar' . $i . '"
-                        name="totalMostrar' . $i . '" class="form-control"  value="'.$producto->total.'"
+                    <input type="text"  value="' . $producto->total . '" placeholder="Total del producto" id="totalMostrar' . $i . '"
+                        name="totalMostrar' . $i . '" class="form-control"
                         autocomplete="off"
                         readonly >
 
-                        <input id="total' . $i . '" name="total' . $i . '" type="hidden" value="'.$producto->total.'" min="0" required>
+                        <input id="total' . $i . '" name="total' . $i . '" type="hidden"  value="' . $producto->total . '" required>
 
 
                 </div>
@@ -291,6 +294,7 @@ class FacturarComprobante extends FacturacionCorporativa
 
         ]);
 
+         //dd($request->all());
 
         if ($validator->fails()) {
             return response()->json([
@@ -351,9 +355,9 @@ class FacturarComprobante extends FacturacionCorporativa
 
             $resultado = DB::selectONE("
             select
-            if(sum(cantidad_sin_entregar) is null,0,sum(cantidad_sin_entregar)) as cantidad_disponoble
+            if(sum(cantidad_para_entregar) is null,0,sum(cantidad_para_entregar)) as cantidad_disponoble
             from comprovante_has_producto
-            where cantidad_sin_entregar <> 0
+            where cantidad_para_entregar <> 0
             and producto_id = ". $request->$keyIdProducto."
             and comprovante_id = ".$request->idComprobante."
             ");
@@ -428,6 +432,8 @@ class FacturarComprobante extends FacturacionCorporativa
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
+            $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai=$numeroCAI;
@@ -455,6 +461,7 @@ class FacturarComprobante extends FacturacionCorporativa
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->comprovante_entrega_id = $request->idComprobante;
+            $factura->precio_dolar = $precioDolar->valor;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -577,10 +584,10 @@ class FacturarComprobante extends FacturacionCorporativa
                 lote_id,
                 comprovante_id,
                 producto_id,
-                cantidad_sin_entregar
+                cantidad_para_entregar
                 from comprovante_has_producto
                 where
-                cantidad_sin_entregar <> 0 and
+                cantidad_para_entregar <> 0 and
                 producto_id = ".$idProducto." and
                 comprovante_id = ".$idComprobante." and
                 seccion_id = ".$idSeccion."
@@ -589,15 +596,14 @@ class FacturarComprobante extends FacturacionCorporativa
                 ");
 
 
-                if ($unidadesDisponibles->cantidad_sin_entregar == $unidadesRestar) {
+                if ($unidadesDisponibles->cantidad_para_entregar == $unidadesRestar) {
 
-                    $diferencia = $unidadesDisponibles->cantidad_sin_entregar - $unidadesRestar;
+                    $diferencia = $unidadesDisponibles->cantidad_para_entregar - $unidadesRestar;
 
                     ModelComprovanteProducto::where('comprovante_id','=', $unidadesDisponibles->comprovante_id)
                                       ->where('producto_id','=',  $unidadesDisponibles->producto_id)
                                       ->where('lote_id','=',  $unidadesDisponibles->lote_id)
-                                      ->update(['cantidad_sin_entregar' =>  $diferencia, 'updated_at'=>NOW()]);
-
+                                      ->update(['cantidad_para_entregar' =>  $diferencia, 'updated_at'=>NOW()]);
 
 
 
@@ -615,15 +621,15 @@ class FacturarComprobante extends FacturacionCorporativa
                     $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 2);
 
                     $cantidadSeccion = $registroResta / $unidad;
-                } else if ($unidadesDisponibles->cantidad_sin_entregar > $unidadesRestar) {
+                } else if ($unidadesDisponibles->cantidad_para_entregar > $unidadesRestar) {
 
-                    $diferencia = $unidadesDisponibles->cantidad_sin_entregar - $unidadesRestar;
+                    $diferencia = $unidadesDisponibles->cantidad_para_entregar - $unidadesRestar;
 
 
                     ModelComprovanteProducto::where('comprovante_id','=', $unidadesDisponibles->comprovante_id)
                                       ->where('producto_id','=',  $unidadesDisponibles->producto_id)
                                       ->where('lote_id','=',  $unidadesDisponibles->lote_id)
-                                      ->update(['cantidad_sin_entregar' =>  $diferencia, 'updated_at'=>NOW()]);
+                                      ->update(['cantidad_para_entregar' =>  $diferencia, 'updated_at'=>NOW()]);
 
                     ModelLogTranslados::where('comprovante_entrega_id','=', $unidadesDisponibles->comprovante_id)
                                     ->where('origen','=',  $unidadesDisponibles->lote_id)
@@ -637,22 +643,22 @@ class FacturarComprobante extends FacturacionCorporativa
                     $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 2);
 
                     $cantidadSeccion = $registroResta / $unidad;
-                } else if ($unidadesDisponibles->cantidad_sin_entregar < $unidadesRestar) {
+                } else if ($unidadesDisponibles->cantidad_para_entregar < $unidadesRestar) {
 
 
-                    $diferencia = $unidadesRestar - $unidadesDisponibles->cantidad_sin_entregar;
+                    $diferencia = $unidadesRestar - $unidadesDisponibles->cantidad_para_entregar;
 
 
                     ModelComprovanteProducto::where('comprovante_id','=', $unidadesDisponibles->comprovante_id)
                                       ->where('producto_id','=',  $unidadesDisponibles->producto_id)
                                       ->where('lote_id','=',  $unidadesDisponibles->lote_id)
-                                      ->update(['cantidad_sin_entregar' =>  0, 'updated_at'=>NOW()]);
+                                      ->update(['cantidad_para_entregar' =>  0, 'updated_at'=>NOW()]);
 
                     ModelLogTranslados::where('comprovante_entrega_id','=', $unidadesDisponibles->comprovante_id)
                                     ->where('origen','=',  $unidadesDisponibles->lote_id)
                                     ->update(['cantidad' =>  0, 'updated_at'=>NOW()]);
 
-                    $registroResta = $unidadesDisponibles->cantidad_sin_entregar;
+                    $registroResta = $unidadesDisponibles->cantidad_para_entregar;
                     $unidadesRestar = $diferencia;
 
                     $subTotalSecccionado = round(($precioUnidad * $registroResta), 2);
@@ -677,13 +683,14 @@ class FacturarComprobante extends FacturacionCorporativa
                     "precio_unidad" => $precio,
                     "cantidad" => $cantidad,
                     "cantidad_s" => $cantidadSeccion,
-                    "cantidad_sin_entregar" => $cantidad,
+                    "cantidad_para_entregar" => $cantidad,
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
+
                 array_push($this->arrayLogs, [
                     "origen" => $unidadesDisponibles->lote_id,
                     "factura_id" => $idFactura,
@@ -694,7 +701,6 @@ class FacturarComprobante extends FacturacionCorporativa
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
-
             };
 
 
@@ -776,9 +782,9 @@ class FacturarComprobante extends FacturacionCorporativa
 
                      $resultado = DB::selectONE("
                      select
-                     if(sum(cantidad_sin_entregar) is null,0,sum(cantidad_sin_entregar)) as cantidad_disponoble
+                     if(sum(cantidad_para_entregar) is null,0,sum(cantidad_para_entregar)) as cantidad_disponoble
                      from comprovante_has_producto
-                     where cantidad_sin_entregar <> 0
+                     where cantidad_para_entregar <> 0
                      and producto_id = ". $request->$keyIdProducto."
                      and comprovante_id = ".$request->idComprobante."
                      ");
@@ -850,6 +856,8 @@ class FacturarComprobante extends FacturacionCorporativa
                  $factura->nombre_cliente = $request->nombre_cliente_ventas;
                  $factura->rtn = $request->rtn_ventas;
                  $factura->sub_total = $request->subTotalGeneral;
+                 $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+                 $factura->sub_total_excento = $request->subTotalGeneralExcento;
                  $factura->isv = $request->isvGeneral;
                  $factura->total = $request->totalGeneral;
                  $factura->credito = $request->totalGeneral;
@@ -934,7 +942,7 @@ class FacturarComprobante extends FacturacionCorporativa
                     'icon' => "success",
                     'text' => '
                     <div class="d-flex justify-content-between">
-                        <a href="/comprobante/imprimir/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+                        <a href="/factura/cooporativo/' . $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
                         <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
                         <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                     </div>',

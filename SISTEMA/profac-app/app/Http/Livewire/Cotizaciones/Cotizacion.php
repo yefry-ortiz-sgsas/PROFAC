@@ -184,7 +184,7 @@ class Cotizacion extends Component
 
         ]);
 
-      
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -310,6 +310,8 @@ class Cotizacion extends Component
     public function imprimirCotizacion($idFactura)
     {
 
+        $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
+        //$floatdolar = (float)$precioDolar;
         $datos = DB::SELECTONE("
         select
         concat(YEAR(NOW()),'-',A.id) as codigo,
@@ -336,8 +338,10 @@ class Cotizacion extends Component
             C.nombre,
             C.descripcion,
             FORMAT(B.precio_unidad,2) as precio,
+            FORMAT(((B.sub_total/B.cantidad)/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as precioUSD,
             FORMAT(B.cantidad,2) as cantidad,
             FORMAT(B.sub_total,2) as importe,
+            FORMAT((B.sub_total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as importeUSD,
             J.nombre as medida
 
             from cotizacion A
@@ -360,7 +364,7 @@ class Cotizacion extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento     
+        sub_total_excento
         from cotizacion
         where id = ".$idFactura);
 
@@ -371,7 +375,12 @@ class Cotizacion extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT((total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as totalUSD,
+        FORMAT((isv/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as isvUSD,
+        FORMAT((sub_total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_totalUSD,
+        FORMAT((sub_total_grabado/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_total_grabadoUSD,
+        FORMAT((sub_total_excento/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_total_excentoUSD
         from cotizacion where id = ".$idFactura);
 
 
@@ -425,8 +434,10 @@ class Cotizacion extends Component
         F.descripcion as seccion,
         J.nombre as medida,
         FORMAT(B.precio_unidad,2) as precio,
+        FORMAT((B.precio_unidad/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as precioUSD,
         FORMAT(B.cantidad,2) as cantidad,
-        FORMAT(B.sub_total,2) as importe
+        FORMAT(B.sub_total,2) as importe,
+        FORMAT((B.sub_total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as importeUSD
         from cotizacion A
         inner join cotizacion_has_producto B
         on A.id = B.cotizacion_id
@@ -452,7 +463,7 @@ class Cotizacion extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento     
+        sub_total_excento
         from cotizacion
         where id = ".$idFactura);
 
@@ -463,7 +474,12 @@ class Cotizacion extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT((total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as totalUSD,
+        FORMAT((isv/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as isvUSD,
+        FORMAT((sub_total/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_totalUSD,
+        FORMAT((sub_total_grabado/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_total_grabadoUSD,
+        FORMAT((sub_total_excento/(SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1)),2) as sub_total_excentoUSD
         from cotizacion where id = ".$idFactura);
 
 
