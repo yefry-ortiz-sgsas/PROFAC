@@ -92,7 +92,7 @@
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
 
-                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisi贸n
+                                        <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
                                             :<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" id="fecha_emision"
                                             onchange="sumarDiasCredito()" name="fecha_emision"
@@ -347,7 +347,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-            <option value="${element.id}" >${element.descripcion}</option>
+            <option value="${element.id}" >${element.descripcion}</option>                                      
             `
                         });
 

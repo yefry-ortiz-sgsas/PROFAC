@@ -24,17 +24,17 @@ class ListarComprovantesAnulados extends Component
 
             $listadoComprobantesActivos = DB::SELECT("
         select
-        comprovante_entrega.id,
-        numero_comprovante,
-        nombre_cliente,
-        RTN,
+        comprovante_entrega.id, 
+        numero_comprovante, 
+        nombre_cliente, 
+        RTN, 
         fecha_emision,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,  
+        FORMAT(isv,2) as isv,  
         FORMAT(total,2) as total,
         name,
         comprovante_entrega.created_at as fecha_creacion
-        from comprovante_entrega
+        from comprovante_entrega 
         inner join users
         on comprovante_entrega.users_id = users.id
         where estado_id = 2
@@ -51,8 +51,8 @@ class ListarComprovantesAnulados extends Component
 
                     <li>
                     <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/' . $comprobante->id . '"> <i class="fa-solid fa-print text-info"></i> Imprimir Comprobante </a>
-                    </li>
-
+                    </li>             
+                   
                 </ul>
             </div>';
                 })
@@ -64,7 +64,7 @@ class ListarComprovantesAnulados extends Component
                 })
                 ->rawColumns(['opciones','estado'])
                 ->make(true);
-
+                
         } catch (QueryException $e) {
             return response()->json([
                 'icon' => 'error',

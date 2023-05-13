@@ -433,7 +433,6 @@ class FacturarComprobante extends FacturacionCorporativa
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
             $precioDolar = DB::SELECTONE("SELECT valor FROM cvDolar ORDER BY created_at DESC LIMIT 1 ");
-
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai=$numeroCAI;
@@ -441,6 +440,8 @@ class FacturarComprobante extends FacturacionCorporativa
             $factura->nombre_cliente = $request->nombre_cliente_ventas;
             $factura->rtn=$request->rtn_ventas;
             $factura->sub_total=$request->subTotalGeneral;
+            $factura->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $factura->sub_total_excento = $request->subTotalGeneralExcento;
             $factura->isv=$request->isvGeneral;
             $factura->total=$request->totalGeneral;
             $factura->credito=$request->totalGeneral;
