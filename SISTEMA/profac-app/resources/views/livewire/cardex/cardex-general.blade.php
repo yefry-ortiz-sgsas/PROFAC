@@ -99,7 +99,7 @@
         var fecha_final = document.getElementById('fecha_final').value;
 
         $('#tbl_cardex').DataTable({
-            "order": [0, 'asc'],
+            "order": ['0', 'desc'],
             "paging": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
