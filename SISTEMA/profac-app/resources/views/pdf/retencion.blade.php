@@ -31,15 +31,13 @@
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Loggo3.png" width="800rem"
-        style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt="">
+        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:6%; margin-top:-25px; position:absolute;"alt="">
         <div class="card " style="position:absolute;left:0px;  top:180px; width:45rem; height:5.5rem;">
             <div class="card-header">
                <b>Retención No. {{$data->cai_retencion}} </b>
               </div>
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario: 08019020234099</b></p>
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro tributario: 08019020234099</b></p>
                 <p class="card-text" style="position:absolute;left:433px;  top:50px;"><b>CAI: {{ $data->numeroCai }}</b></p>
                 <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión: {{$data->fecha_limite}}</b></p>
                 <p class="card-text" style="position:absolute;left:350px;  top:65px;"><b>Rango autorizado: {{$data->numero_inicial}} al {{$data->numero_final}}</b></p>

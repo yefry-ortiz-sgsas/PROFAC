@@ -75,7 +75,7 @@
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
+        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:6%; margin-top:-25px; position:absolute;"alt="">
 
         <div class="card" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
             <div class="card-header">
@@ -85,7 +85,7 @@
             </div>
 
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro tributario:
                     08019020234099</b></p>
                 <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>CAI:
                         {{ $cai->cai }}</b></p>
@@ -265,7 +265,7 @@
                             </div>
                             <div>
                                 <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe
-                                    Gravado: </p>
+                                    Grabado: </p>
                                 <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:14px;">L.
                                     {{ $importesConCentavos->sub_total_grabado }} | ${{  $importesConCentavos->sub_total_grabadoUSD  }}</p>
                             </div>

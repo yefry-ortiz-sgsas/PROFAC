@@ -64,9 +64,7 @@
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Loggo3.png" width="800rem"
-        style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt="">
+        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:6%; margin-top:-25px; position:absolute;"alt="">
         <div class="card " style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Nota de Credito No. {{$cai->nota_credito_cai}}</b>
@@ -74,7 +72,7 @@
             </div>
 
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro tributario:
                     08019020234099</b></p>
                 <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>CAI: {{$cai->cai}}
                         </b></p>
@@ -235,7 +233,7 @@
                         <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:16px;">0.00</p>
                     </div>
                     <div>
-                        <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe Gravado: </p>
+                        <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe Grabado: </p>
                         <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:16px;">0.00</p>
                     </div>
 

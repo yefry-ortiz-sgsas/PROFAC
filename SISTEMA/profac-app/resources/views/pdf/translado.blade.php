@@ -66,9 +66,7 @@ $altura =20;
 
 
     <div class="pruebaFondo">
-        <img src="img/membrete/Loggo3.png" width="800rem"
-        style="margin-left:3%; margin-top:25px; position:absolute;"
-         alt="">
+        <img src="img/membrete/Loggo3.png" width="800rem" style="margin-left:6%; margin-top:-25px; position:absolute;"alt="">
         <div class="card " style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
                 <b>Registro de Translado No. {{$datos->codigo}} </b>
