@@ -228,7 +228,7 @@ class Ajustes extends Component
                 on segmento.bodega_id = bodega.id
                 inner join unidad_medida C
                 on B.unidad_medida_compra_id = C.id
-                 where A.cantidad_disponible <> 0 and A.comentario = 'Ingreso de producto por ajuste' and bodega.id = ".$request->idBodega." and A.producto_id = ".$request->idProducto
+                 where A.cantidad_disponible <> 0 and bodega.id = ".$request->idBodega." and A.producto_id = ".$request->idProducto
 
 
         );

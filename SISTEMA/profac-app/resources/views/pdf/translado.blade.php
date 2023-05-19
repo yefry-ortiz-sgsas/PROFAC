@@ -115,6 +115,7 @@ $altura =20;
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($translados as $translado)
                     <tr>
                         <td>{{$translado->id}}</td>
                         <td>{{$translado->nombre}}</td>
@@ -124,6 +125,8 @@ $altura =20;
                         <td>{{strtoupper($translado->origen)}}</td>
                         <td>{{strtoupper($translado->destino)}}</td>
                       </tr>
+                    @endforeach
+
 
 
 

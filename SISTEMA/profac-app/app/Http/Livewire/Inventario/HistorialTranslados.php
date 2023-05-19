@@ -35,13 +35,16 @@ class HistorialTranslados extends Component
         
         $listado = DB::SELECT("
         select
-        A.id,
-        CONCAT(A.origen,A.destino,'-' ,A.id) as codigo,
+        D.id,
+        D.codigo,
         C.nombre,
         A.cantidad,
         name,
-        A.created_at
-        from log_translado A
+        D.created_at
+       
+        from translado D
+        inner join log_translado A
+        on D.id = A.translado_id
         inner join recibido_bodega B
         on A.origen = B.id
         inner join producto C
