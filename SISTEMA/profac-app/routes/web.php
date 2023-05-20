@@ -12,7 +12,7 @@ use App\Http\Livewire\Comisiones\ComisionesHistorico;
 
 /* ------------------------------/COMISIONES------------------------------------------- */
 
-use App\Http\Livewire\facturaDia\facturaDia;
+use App\Http\Livewire\FacturaDia\FacturaDia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -673,7 +673,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/debito/anular/{idNota}', [ListadoNotasDebitoND::class,'anularNota']);
 
-    Route::get('/facturaDia', facturaDia::class);
+    Route::get('/facturaDia', FacturaDia::class);
 
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 
