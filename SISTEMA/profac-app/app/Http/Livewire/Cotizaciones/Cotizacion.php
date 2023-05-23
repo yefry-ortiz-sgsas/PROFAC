@@ -478,7 +478,7 @@ class Cotizacion extends Component
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
         $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
-        return $pdf->stream("Proforma_NO_".$datos->codigo.".pdf");
+        return $pdf->stream("proforma_NO_".$datos->codigo.".pdf");
 
 
     }

@@ -6,52 +6,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    {{-- <style>
-        .color-red {
-            color: red;
-        }
 
-
-        p {
-            font-size: 12px;
-        }
-
-        body {
-            margin: -45px;
-            padding: 0px;
-            /* background-image: url('img/membrete/membrete2.jpg'); */
-
-            background-size: 200% 200%;
-            background-size: cover;
-
-            width: 115% !important;
-
-        }
-
-        table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        width: 100%;
-        border: 1px solid #ddd;
-        }
-        th, td {
-        text-align: left;
-        padding: 2px;
-
-        }
-
-        thead {
-            background-color: #f2f2f2
-        }
-
-        tr:nth-child(even){background-color: #f2f2f2}
-
-        .letra {
-            font-weight: 800;
-
-
-        }
-    </style> --}}
     <style>
         .color-red {
             color: red;
@@ -159,7 +114,7 @@
 
 
 
-                <p class="card-text" style="position:absolute;left:270px;  top:75px;"><b>Teléfono:</b> {{ $datos->telefono_empresa}}
+                <p class="card-text" style="position:absolute;left:300px;  top:75px;"><b>Teléfono:</b> {{ $datos->telefono_empresa}}
                 </p>
             </div>
         </div>
