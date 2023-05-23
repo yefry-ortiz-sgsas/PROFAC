@@ -184,7 +184,7 @@ class Cotizacion extends Component
 
         ]);
 
-      
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -360,7 +360,7 @@ class Cotizacion extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento     
+        sub_total_excento
         from cotizacion
         where id = ".$idFactura);
 
@@ -407,7 +407,7 @@ class Cotizacion extends Component
         time(A.created_at) as hora,
         A.fecha_vencimiento,
         B.rtn,
-        users.name
+        users.name as vendedor
 
         from cotizacion A
         inner join cliente B
@@ -452,7 +452,7 @@ class Cotizacion extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento     
+        sub_total_excento
         from cotizacion
         where id = ".$idFactura);
 
