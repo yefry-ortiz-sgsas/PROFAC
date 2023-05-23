@@ -90,11 +90,11 @@
 
         <div class="card "   style="margin-left:44px; margin-top:10px; width:45rem; height:6.5rem;">
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:10px;"><b>Cliente: </b>{{$datos->nombre}}</p>
+                <p class="card-text" style="position:absolute;left:20px;  top:10px; max-width:500px"><b>Cliente: </b>{{$datos->nombre}}</p>
 
                 <br>
                 <br>
-                <p class="card-text" style="position:absolute;left:20px;  top:29px;font-size: 11px; max-width:520px">
+                <p class="card-text" style="position:absolute;left:20px;  top:40px;font-size: 11px; max-width:500px">
                     <b>Dirección:</b> {{ $datos->direccion }}
                 </p>
                 <br>
@@ -157,7 +157,7 @@
 
 
 
-        <div style=" position: relative; margin-left:44px; page-break-inside: avoid; margin-top:10px;">
+        <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
             <div class="card " style="position:absolute;left:0px;   width:26rem; height:15rem;">
                 <div class="card-body">
 

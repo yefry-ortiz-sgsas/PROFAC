@@ -398,6 +398,7 @@ class Cotizacion extends Component
 
     public function imprimirProforma($idFactura)
     {
+
         $datos = DB::SELECTONE("
             select
             concat(YEAR(NOW()),'-',A.id) as codigo,
@@ -476,6 +477,7 @@ class Cotizacion extends Component
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
         $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
         return $pdf->stream("proforma_NO_".$datos->codigo.".pdf");
