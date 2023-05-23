@@ -41,11 +41,11 @@ class SinRestriccionPrecio extends Component
 
 
                 $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
-                    where estado_cliente_id = 1                                        
+                    where estado_cliente_id = 1
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
 
@@ -74,7 +74,7 @@ class SinRestriccionPrecio extends Component
 
 
         $subject = "Solicitud de autorización";
-        $for = ['cristian.zelaya@distribucionesvalencia.hn','gerencia@distribucionesvalencia.hn'];
+        $for = ['cristian.zelaya@distribucionesvalencia.hn'];
 
         Mail::send('email/solicitud',['codigo' => $codigo], function($msj) use($subject,$for){
             $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
