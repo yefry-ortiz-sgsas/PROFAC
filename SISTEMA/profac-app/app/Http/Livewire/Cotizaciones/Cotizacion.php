@@ -425,6 +425,8 @@ class Cotizacion extends Component
             C.id as codigo,
             C.nombre,
             C.descripcion,
+            H.nombre as bodega,
+            F.descripcion as seccion,
             FORMAT(B.precio_unidad,2) as precio,
             FORMAT(B.cantidad,2) as cantidad,
             FORMAT(B.sub_total,2) as importe,
@@ -439,6 +441,12 @@ class Cotizacion extends Component
             on B.unidad_medida_venta_id = D.id
             inner join unidad_medida J
             on J.id = D.unidad_medida_id
+            inner join seccion F
+            on B.seccion_id = F.id
+            inner join segmento G
+            on F.segmento_id = G.id
+            inner join bodega H
+            on G.bodega_id = H.id
             where A.id = ".$idFactura."
             order by B.indice asc
             "
