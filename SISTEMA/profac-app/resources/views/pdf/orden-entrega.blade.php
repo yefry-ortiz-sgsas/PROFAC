@@ -251,6 +251,7 @@
                     _______________________________________</p>
                 <p class="card-text" style="position:absolute;left:80px;  top:25px; ">{{$datos->nombre_cliente}}</p>
                 <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
+                <p class="card-text" style="position:absolute;left:460px;  top:-60px;">Original: Cliente, Copia obligado tributario emisor. </p>
             </div>
 
 
