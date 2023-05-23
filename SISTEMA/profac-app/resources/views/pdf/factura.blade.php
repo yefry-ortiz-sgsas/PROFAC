@@ -329,6 +329,7 @@
                         </div>
                     </div>
 
+
                     <div style="position:absolute; left:0px;   width:45rem; margin-top:300px">
                         <p class="card-text" style="position:absolute;left:20px;  top:10px;">
                             _______________________________________</p>
@@ -337,6 +338,7 @@
                         <p class="card-text" style="position:absolute;left:80px;  top:25px; max-width:250px;  ">
                             {{ strtoupper($cliente->nombre) }}</p>
                         <p class="card-text" style="position:absolute;left:495px;  top:25px;">GRUPO ALCA</p>
+                        <p class="card-text" style="position:absolute;left:460px;  top:-60px;">Original: Cliente, Copia obligado tributario emisor. </p>
                     </div>
 
                     @if ($cai->estado_venta_id == 2)
