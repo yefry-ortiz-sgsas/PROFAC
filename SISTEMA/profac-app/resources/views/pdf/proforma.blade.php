@@ -125,10 +125,10 @@
                 <table class="table" style="font-size: 11px; ">
                     <thead>
                         <tr>
-                            <th>Código</th>
+                            <th>Codigo</th>
                             <th>Producto</th>
                             <th>Bodega</th>
-                            <th>Sección</th>
+                            <th>Seccion</th>
                             <th>Medida</th>
                             <th>Precio </th>
                             <th>Cantidad</th>
@@ -142,9 +142,9 @@
                             <tr>
                                 <td>{{ $producto->codigo }}</td>
                                 <td>{{ $producto->nombre }}</td>
-                                <td>{{ $producto->nombre }}</td>
                                 <td>{{ $producto->bodega }}</td>
                                 <td>{{ $producto->seccion }}</td>
+                                <td>{{ $producto->medida }}</td>
                                 <td>{{ $producto->precio }}</td>
                                 <td>{{ $producto->cantidad }}</td>
                                 <td>{{ $producto->importe }}</td>
