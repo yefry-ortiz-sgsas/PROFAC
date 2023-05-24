@@ -92,7 +92,6 @@ class Cotizacion extends Component
             from cliente
                 where estado_cliente_id = 1
                 and tipo_cliente_id=1
-                and vendedor =" . Auth::user()->id . "
                 and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                     ");
         }
@@ -122,7 +121,6 @@ class Cotizacion extends Component
                     from cliente
                         where estado_cliente_id = 1
                         and tipo_cliente_id=2
-                        and vendedor =" . Auth::user()->id . "
                         and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                             ");
         }
