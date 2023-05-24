@@ -155,7 +155,7 @@
                                     <th>Bodega</th>
                                     <th>Seccion</th>
                                     <th>Medida</th>
-                                    <th>Excento</th>
+                                    <th>Exento</th>
                                     <th>Precio </th>
                                     <th>Cantidad</th>
                                     <th>Importe</th>
