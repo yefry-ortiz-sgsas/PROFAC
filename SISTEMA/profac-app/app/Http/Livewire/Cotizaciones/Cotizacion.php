@@ -110,7 +110,7 @@ class Cotizacion extends Component
                         nombre as text
                     from cliente
                         where estado_cliente_id = 1
-                        and tipo_cliente_id=2
+                        and tipo_cliente_id=2 or id = 1
                         and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                             ");
         } else {
@@ -120,7 +120,7 @@ class Cotizacion extends Component
                         nombre as text
                     from cliente
                         where estado_cliente_id = 1
-                        and tipo_cliente_id=2
+                        and tipo_cliente_id=2 or id = 1
                         and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                             ");
         }
