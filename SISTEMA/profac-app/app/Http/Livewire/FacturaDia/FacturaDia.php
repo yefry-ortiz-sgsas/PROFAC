@@ -38,7 +38,7 @@ class FacturaDia extends Component
             $consulta = DB::SELECT("
             select
             A.created_at as 'fecha',
-            DATE_FORMAT(A.created_at, '%m') as 'mes',
+            CASE DATE_FORMAT(A.created_at, '%m') WHEN '01' THEN 'ENERO' WHEN '02' THEN 'FEBRERO' WHEN '03' THEN 'MARZO' WHEN '04' THEN 'ABRIL' WHEN '05' THEN 'MAYO' WHEN '06' THEN 'JUNIO' WHEN '07' THEN 'JULIO' WHEN '08' THEN 'AGOSTO' WHEN '09' THEN 'SEPTIEMBRE' WHEN '10' THEN 'OCTUBRE' WHEN '11' THEN 'NOVIEMBRE' WHEN '12' THEN 'DICIEMBRE' END AS 'mes',
             A.numero_factura as 'factura',
             A.nombre_cliente as 'cliente',
             (select name from users where id = A.vendedor) as 'vendedor',
@@ -54,8 +54,8 @@ class FacturaDia extends Component
             inner join tipo_pago_venta C
             on A.tipo_pago_id = C.id
             where B.id = 1
-            and  DATE(A.created_at) <= '2023-05-20'
-            and DATE(A.created_at) >= '2023-05-13';
+            and  DATE(A.created_at) <= DATE_FORMAT('".$fecha_final."', '%d %M %Y')
+            and DATE(A.created_at) >= DATE_FORMAT('".$fecha_inicio."', '%d %M %Y');
 
                 ");
 
