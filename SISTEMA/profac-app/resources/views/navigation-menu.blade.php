@@ -654,6 +654,17 @@
                 </ul>
             </li>
             <li>
+                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                        style="color:#ffffff;">Facturación al día AUX</span>
+                    <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ><a href="/facturaDia" style="color:#ffffff;">Lista de
+                            Reporte</a>
+                    </li>
+                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                </ul>
+            </li>
+            <li>
                 <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
                         style="color:#ffffff;">Clientes</span>
                     <span class="fa arrow"></span></a>
