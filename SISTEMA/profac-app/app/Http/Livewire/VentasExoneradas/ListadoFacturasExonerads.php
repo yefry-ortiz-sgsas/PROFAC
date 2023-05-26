@@ -13,6 +13,7 @@ use DataTables;
 use Auth;
 use Validator;
 
+use App\Models\ModelCliente;
 use App\Models\ModelFactura;
 use App\Models\ModelLogEstadoFactura;
 use App\Models\ModelRecibirBodega;
@@ -225,6 +226,10 @@ class ListadoFacturasExonerads extends Component
          $compra = ModelFactura::find($request->idFactura);
          $compra->estado_venta_id = 2;
          $compra->save();
+
+         $cliente = ModelCliente::find($compra->cliente_id);
+         $cliente->credito = $cliente->credito + $compra->total;
+         $cliente->save();
 
          $logEstado = new ModelLogEstadoFactura;
          $logEstado->factura_id = $request->idFactura;
