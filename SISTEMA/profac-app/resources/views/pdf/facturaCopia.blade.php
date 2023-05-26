@@ -111,7 +111,7 @@
 
 
                 <p class="card-text " style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord.
-                        excenta</b>
+                        exenta</b>
                 </p>
                 <p class="card-text" style="position:absolute;left:250px;  top:120px;"><b>Constancia de registro
                         exonerado</b></p>
@@ -154,7 +154,7 @@
                                     <th>Bodega</th>
                                     <th>Seccion</th>
                                     <th>Medida</th>
-                                    <th>Excento</th>
+                                    <th>Exento</th>
                                     <th>Precio </th>
                                     <th>Cantidad</th>
                                     <th>Importe</th>
@@ -330,6 +330,7 @@
                         <p class="card-text" style="position:absolute;left:80px;  top:25px; max-width:250px;  ">
                             {{ strtoupper($cliente->nombre) }}</p>
                         <p class="card-text" style="position:absolute;left:495px;  top:25px;">DISTRIBUCIONES VALENCIA</p>
+                        <p class="card-text" style="position:absolute;left:460px;  top:-60px;">Original: Cliente, Copia obligado tributario emisor. </p>
                     </div>
 
                     @if ($cai->estado_venta_id == 2)

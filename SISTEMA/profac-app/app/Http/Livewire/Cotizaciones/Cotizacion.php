@@ -101,6 +101,7 @@ class Cotizacion extends Component
     }
 
 
+
     public function clientesEstatal(Request $request)
     {
 
@@ -184,7 +185,7 @@ class Cotizacion extends Component
 
         ]);
 
-      
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -311,24 +312,25 @@ class Cotizacion extends Component
     {
 
         $datos = DB::SELECTONE("
-        select
-        concat(YEAR(NOW()),'-',A.id) as codigo,
-        B.nombre,
-        B.direccion,
-        B.correo,
-        B.telefono_empresa,
-        A.fecha_emision,
-        time(A.created_at) as hora,
-        A.fecha_vencimiento,
-        B.rtn,
-        users.name,
-        (select name from users where id = A.vendedor) as vendedor
-        from cotizacion A
-        inner join cliente B
-        on A.cliente_id = B.id
-        inner join users
-        ON users.id = A.users_id
-        where A.id =".$idFactura);
+            select
+            concat(YEAR(NOW()),'-',A.id) as codigo,
+            B.nombre,
+            B.direccion,
+            B.correo,
+            B.telefono_empresa,
+            A.fecha_emision,
+            time(A.created_at) as hora,
+            A.fecha_vencimiento,
+            B.rtn,
+            users.name,
+            (select name from users where id = A.vendedor) as vendedor
+            from cotizacion A
+            inner join cliente B
+            on A.cliente_id = B.id
+            inner join users
+            ON users.id = A.users_id
+            where A.id =".$idFactura
+        );
 
         $productos = DB::SELECT("
             select
@@ -355,24 +357,26 @@ class Cotizacion extends Component
         );
 
         $importes = DB::SELECTONE("
-        select
-        total,
-        isv,
-        sub_total,
-        sub_total_grabado,
-        sub_total_excento     
-        from cotizacion
-        where id = ".$idFactura);
+            select
+            total,
+            isv,
+            sub_total,
+            sub_total_grabado,
+            sub_total_excento
+            from cotizacion
+            where id = ".$idFactura
+        );
 
 
         $importesConCentavos= DB::SELECTONE("
-        select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
-        from cotizacion where id = ".$idFactura);
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento
+            from cotizacion where id = ".$idFactura
+        );
 
 
         if( fmod($importes->total, 1) == 0.0 ){
@@ -388,7 +392,7 @@ class Cotizacion extends Component
 
         $pdf = PDF::loadView('/pdf/cotizacion',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
-        return $pdf->stream("factura_numero.pdf");
+        return $pdf->stream("Cotizacion_NO_".$datos->codigo.".pdf");
 
 
     }
@@ -397,74 +401,79 @@ class Cotizacion extends Component
     {
 
         $datos = DB::SELECTONE("
-        select
-        concat(YEAR(NOW()),'-',A.id) as codigo,
-        B.nombre,
-        B.direccion,
-        B.correo,
-        B.telefono_empresa,
-        A.fecha_emision,
-        time(A.created_at) as hora,
-        A.fecha_vencimiento,
-        B.rtn,
-        users.name
-
-        from cotizacion A
-        inner join cliente B
-        on A.cliente_id = B.id
-        inner join users
-        ON users.id = A.users_id
-        where A.id =".$idFactura);
+            select
+            concat(YEAR(NOW()),'-',A.id) as codigo,
+            B.nombre,
+            B.direccion,
+            B.correo,
+            B.telefono_empresa,
+            A.fecha_emision,
+            time(A.created_at) as hora,
+            A.fecha_vencimiento,
+            B.rtn,
+            users.name,
+            (select name from users where id = A.vendedor) as vendedor
+            from cotizacion A
+            inner join cliente B
+            on A.cliente_id = B.id
+            inner join users
+            ON users.id = A.users_id
+            where A.id =".$idFactura
+        );
 
         $productos = DB::SELECT("
-        select
-        C.id as codigo,
-        C.nombre,
-        C.descripcion,
-        H.nombre as bodega,
-        F.descripcion as seccion,
-        J.nombre as medida,
-        FORMAT(B.precio_unidad,2) as precio,
-        FORMAT(B.cantidad,2) as cantidad,
-        FORMAT(B.sub_total,2) as importe
-        from cotizacion A
-        inner join cotizacion_has_producto B
-        on A.id = B.cotizacion_id
-        inner join producto C
-        on B.producto_id = C.id
-        inner join unidad_medida_venta D
-        on B.unidad_medida_venta_id = D.id
-        inner join unidad_medida J
-        on J.id = D.unidad_medida_id
-        inner join seccion F
-        on B.seccion_id = F.id
-        inner join segmento G
-        on F.segmento_id = G.id
-        inner join bodega H
-        on G.bodega_id = H.id
-        where A.id = ".$idFactura."
-        order by B.indice asc"
+            select
+            C.id as codigo,
+            C.nombre,
+            C.descripcion,
+            H.nombre as bodega,
+            F.descripcion as seccion,
+            FORMAT(B.precio_unidad,2) as precio,
+            FORMAT(B.cantidad,2) as cantidad,
+            FORMAT(B.sub_total,2) as importe,
+            J.nombre as medida
+
+            from cotizacion A
+            inner join cotizacion_has_producto B
+            on A.id=B.cotizacion_id
+            inner join producto C
+            on B.producto_id = C.id
+            inner join unidad_medida_venta D
+            on B.unidad_medida_venta_id = D.id
+            inner join unidad_medida J
+            on J.id = D.unidad_medida_id
+            inner join seccion F
+            on B.seccion_id = F.id
+            inner join segmento G
+            on F.segmento_id = G.id
+            inner join bodega H
+            on G.bodega_id = H.id
+            where A.id = ".$idFactura."
+            order by B.indice asc
+            "
         );
 
         $importes = DB::SELECTONE("
-        select
-        total,
-        isv,
-        sub_total,
-        sub_total_grabado,
-        sub_total_excento     
-        from cotizacion
-        where id = ".$idFactura);
+            select
+            total,
+            isv,
+            sub_total,
+            sub_total_grabado,
+            sub_total_excento
+            from cotizacion
+            where id = ".$idFactura
+        );
 
 
         $importesConCentavos= DB::SELECTONE("
-        select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
-        from cotizacion where id = ".$idFactura);
+            select
+            FORMAT(total,2) as total,
+            FORMAT(isv,2) as isv,
+            FORMAT(sub_total,2) as sub_total,
+            FORMAT(sub_total_grabado,2) as sub_total_grabado,
+            FORMAT(sub_total_excento,2) as sub_total_excento
+            from cotizacion where id = ".$idFactura
+        );
 
 
         if( fmod($importes->total, 1) == 0.0 ){
@@ -477,9 +486,10 @@ class Cotizacion extends Component
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
         $pdf = PDF::loadView('/pdf/proforma',compact('datos','productos','importes','importesConCentavos','flagCentavos','numeroLetras'))->setPaper('letter');
 
-        return $pdf->stream("Proforma N.".$datos->codigo.".pdf");
+        return $pdf->stream("proforma_NO_".$datos->codigo.".pdf");
 
 
     }
