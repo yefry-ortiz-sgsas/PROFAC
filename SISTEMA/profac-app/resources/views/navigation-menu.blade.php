@@ -330,7 +330,7 @@
                     </li>
                     <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                            <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                            <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
@@ -675,9 +675,24 @@
                 </ul>
             </li>
 
-            <li>
+            {{--  <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito ND</a>
+                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
+                    </li>
+
+                </ul>
+            </li>  --}}
+            <li>
+                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                    <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
@@ -860,7 +875,7 @@
                     <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
                 </ul>
             </li>
-            <li>
+            {{--  <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
                     <span class="fa arrow"></span></a>
@@ -868,6 +883,21 @@
                 <ul class="nav nav-second-level">
 
                     <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
+                    </li>
+
+                </ul>
+            </li>  --}}
+            <li>
+                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                    <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito ND</a>
                     <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                     </li>
 
