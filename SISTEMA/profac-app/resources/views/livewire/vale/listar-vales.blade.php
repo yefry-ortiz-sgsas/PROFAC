@@ -177,7 +177,7 @@
 
 
 
-                    html: '<p>Una vez que ha sido anulado este vale, el producto registrado dejara de reflejarse en cardex como vale y se registrara su salida de bodega en la factura correspondiente.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
+                    html: '<p>Una vez que ha sido anulado este vale, el producto registrado dejara de reflejarse en cardex como vale y se registrara su salida de bodega en la factura.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
                     showDenyButton: false,
                     showCancelButton: false,
                     showDenyButton: true,
@@ -239,7 +239,7 @@
 
 
 
-                    html: '<p>Una vez que ha sido eliminado, el producto registrado dejara de reflejar su salida como vale y se registrara en la factura correspondiente. Adiferencia de anular, al eliminar el vale el producto vuleve a estar disponible para realizar nuevamente el vale</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioEliminar"     class="form-group form-control" data-parsley-required></textarea>',
+                    html: '<p>Si decide eliminar este vale, el producto registrado reflejara su salida en la factura, además el mismo estará disponible para realizar un nuevo vale.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioEliminar"     class="form-group form-control" data-parsley-required></textarea>',
                     showDenyButton: false,
                     showCancelButton: false,
                     showDenyButton: true,
