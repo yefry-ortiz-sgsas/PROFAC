@@ -416,6 +416,7 @@ class FacturacionEstatal extends Component
                 $dias = DB::SELECTONE("select dias_credito from cliente where id = " . $request->seleccionarCliente);
                 $diasCredito = $dias->dias_credito;
             }
+            
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
@@ -546,7 +547,7 @@ class FacturacionEstatal extends Component
 
             $precioUnidad = $subTotal / $unidadesRestarInv;
 
-            $unidadesRestar = $unidadesRestarInv;
+            $unidadesRestar = $unidadesRestarInv;  //es la cantidad ingresada por el usuario multiplicado por unidades de venta del producto
             $registroResta = 0;
             while (!($unidadesRestar <= 0)) {
 
@@ -617,18 +618,22 @@ class FacturacionEstatal extends Component
                     "factura_id" => $idFactura,
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
-                    "indice" =>$indice,
+                    "indice" => $indice,
                     "seccion_id" => $idSeccion,
-                    "numero_unidades_resta_inventario" => $registroResta,
+                    // "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
+                    "seccion_id" => $idSeccion,
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
-                    "resta_inventario_total" => $unidadesRestarInv,
-                    "unidad_medida_venta_id" => $idUnidadVenta,
-                    "precio_unidad" => $precio,
-                    "cantidad" => $cantidad,
-                    "cantidad_s" => $cantidadSeccion,
-                    "cantidad_para_entregar" => $registroResta,
+                    "numero_unidades_resta_inventario" => $registroResta, //La cantidad de unidades que se resta por lote - esta canitdad es ingresada por el usuario - se **multipla** por la unidad de medida venta para convertir a unidad base y restar de la tabla recibido bodega **la cantidad que se resta por lote**
+                    "unidades_nota_credito_resta_inventario" => $registroResta, // Este campo tiene el mismo valor que **numero_unidades_resta_inventario** - se utiliza para registrar las unidades a devolver en la nota de credito - resta las unidades y las devuelve a la tabla **recibido_bodega**
+                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad ingresada por el usuario en la pantalla de factura - misma cantidad se **multiplica** por la unidad de venta - registra la cantidad total a restar en la seccion_id- se repite para el lote
+                    "unidad_medida_venta_id" => $idUnidadVenta, //la unidad de medida que selecciono el usuario para la venta
+                    "precio_unidad" => $precio, // precio de venta ingresado por el usuario
+                    "cantidad" => $cantidad, //Es la cantidad escrita por el usuario en la pantalla de factura la cual se va restar a la seccion - esta cantidad no sufre ningun tipo de alteracion - se guardar tal cual la ingresa el usuario
+                    "cantidad_nota_credito"=> $cantidad, //Este campo contiene el mismo valor que el campo **cantidad** - es la cantidad ingresada por el usuario en la pantalla de factura - a este campo se le restan la cantidad a devolver en la nota de credito
+                    "cantidad_s" => $cantidadSeccion, //Es la cantidad que se resta por lote - esta cantidad se convierte de unidad base a la unidad de venta seleccionada en la pantalla de factura - al realizar esta convercion es posible obtener decimales como resultado.
+                    "cantidad_para_entregar" => $registroResta, //las unidades basica 1 disponible para vale
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,
@@ -646,6 +651,7 @@ class FacturacionEstatal extends Component
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
+
             };
 
             //dd($arrarVentasProducto);
