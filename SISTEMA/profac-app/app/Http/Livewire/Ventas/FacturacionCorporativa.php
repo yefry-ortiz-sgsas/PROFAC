@@ -1122,7 +1122,6 @@ class FacturacionCorporativa extends Component
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
                     "indice" => $indice,
-                    "seccion_id" => $idSeccion,
                     // "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
                     "seccion_id" => $idSeccion,
                     "sub_total" => $subTotal,
