@@ -48,9 +48,10 @@
             background-color: #f2f2f2
         }
 
-        tr:nth-child(even) {
+        /* tr:nth-child(even) {
             background-color: #f2f2f2
-        }
+            
+        } */
 
         .letra {
             font-weight: 800;
@@ -195,7 +196,7 @@
 
 
 
-                <div style=" position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
+                <div style="position: relative; margin-left:44px; margin-top:30px; width:26rem; height:20rem;">
 
 
                     <div class="card border border-dark" style="position:absolute;left:0px;  width:26rem; height:15rem;">
