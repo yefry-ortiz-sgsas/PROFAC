@@ -15,7 +15,7 @@ update factura set estado_venta_id=4
 where  estado_venta_id=1 and fecha_vencimiento < curdate() and pendiente_cobro >0
 
 
-
+///// prueba
 
 
 
