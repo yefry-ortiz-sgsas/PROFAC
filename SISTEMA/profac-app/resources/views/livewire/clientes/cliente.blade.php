@@ -290,7 +290,7 @@
                                 <div class="col-md-4">
                                     <label class="col-form-label focus-label">RTN</label>
                                     <input class="form-group form-control" required type="text" name="rtn_cliente_editar"
-                                        id="rtn_cliente_editar" data-parsley-required pattern="[0-9]{14}">
+                                        id="rtn_cliente_editar" data-parsley-required >
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label focus-label">Correo electrónico</label>
