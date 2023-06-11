@@ -35,7 +35,7 @@ class Proveedores extends Component
         $tipoPersonalidad = TipoPersonalidad::all();
 
 
-       
+
         return view('livewire.proveedores', compact("users","paises","categorias","retenciones","tipoPersonalidad"));
     }
 
@@ -46,8 +46,8 @@ class Proveedores extends Component
                 'nombre_prov' => 'required',
                 'direccion_prov' => 'required',
                 'contacto_prov' => 'required',
-                'telefono_prov' => 'required',               
-                'rtn_prov' => 'required',   
+                'telefono_prov' => 'required',
+                'rtn_prov' => 'required',
                 'municipio_prov' => 'required',
                 'giro_neg_prov' => 'required',
                 'categoria_prov' => 'required',
@@ -59,7 +59,7 @@ class Proveedores extends Component
                 'contacto_prov' => 'Contacto es requerido',
                 'telefono_prov' => 'Telefono es requerido',
                 'telefono_prov_2' => 'Telefono 2 es requerido',
-                'rtn_prov' => 'RTN es requerido',     
+                'rtn_prov' => 'RTN es requerido',
                 'municipio_prov' => 'Municipio es requerido',
                 'giro_neg_prov' => 'Giro es requerido',
                 'categoria_prov' => 'Categoria es requerido',
@@ -72,7 +72,7 @@ class Proveedores extends Component
                     'errors' => $validator->errors()
                 ], 422);
             }
-         
+
 
             try {
 
@@ -88,10 +88,10 @@ class Proveedores extends Component
                 $crearProveedores->correo_1=trim($request->correo_prov);
                 $crearProveedores->correo_2=trim($request->correo_prov_2);
                 $crearProveedores->rtn=trim($request->rtn_prov);
-                $crearProveedores->registrado_por=Auth::user()->id;              
+                $crearProveedores->registrado_por=Auth::user()->id;
                 $crearProveedores->municipio_id=$request->municipio_prov;
                 $crearProveedores->tipo_personalidad_id=$request->giro_neg_prov;
-                $crearProveedores->categoria_id=$request->categoria_prov;  
+                $crearProveedores->categoria_id=$request->categoria_prov;
                 $crearProveedores->estado_id=1;
                 $crearProveedores->save();
 
@@ -103,7 +103,7 @@ class Proveedores extends Component
                 }
 
 
-                
+
 
 
 
@@ -112,29 +112,29 @@ class Proveedores extends Component
                 DB::commit();
 
                 return response()->json([
-                    'message' => 'Creado con exito.',                   
-                ], 200); 
-               
+                    'message' => 'Creado con exito.',
+                ], 200);
+
             } catch (QueryException $e) {
 
-                DB::rollback(); 
-         
+                DB::rollback();
+
                 return response()->json([
                     'message' => 'Ha ocurrido un error.',
                     'errorTh' => $e,
-                 
-                  
-                ], 402);  
-                
+
+
+                ], 402);
+
             }
 
 
     }
 
     public function obtenerDepartamentos(Request $request){
-      
+
         try {
-           
+
             // $departamentos = Departamento::where('pais_id','=',$request['id'])
             //                 ->SELECT("id","UPPER(nombre)")
             //                 ->get();
@@ -152,14 +152,14 @@ class Proveedores extends Component
                 "message" => "Ha ocurrido un error al obtener los departamentos",
                 "error" => $e
             ],402);
-          
+
         }
     }
 
     public function obtenerMunicipios(Request $request){
-      
+
         try {
-           
+
             // $departamentos = Departamento::where('pais_id','=',$request['id'])
             //                 ->SELECT("id","UPPER(nombre)")
             //                 ->get();
@@ -177,7 +177,7 @@ class Proveedores extends Component
                 "message" => "Ha ocurrido un error al obtener los municipios",
                 "error" => $e
             ],402);
-          
+
         }
     }
 
@@ -193,15 +193,15 @@ class Proveedores extends Component
          correo_1,
          rtn,
          estado_id,
-         (select retenciones_id from retenciones_has_proveedores where (retenciones_has_proveedores.proveedores_id = proveedores.id and retenciones_id = 2)  ) as 'uno_porciento'    
-     from proveedores 
+         (select retenciones_id from retenciones_has_proveedores where (retenciones_has_proveedores.proveedores_id = proveedores.id and retenciones_id = 2)  ) as 'uno_porciento'
+     from proveedores
 
             ");
 
             return Datatables::of($listaProveedores)
             ->addColumn('opciones', function ($listaProveedores) {
-                   
-                    
+
+
                     if($listaProveedores->estado_id === 1){
 
                         return
@@ -216,7 +216,7 @@ class Proveedores extends Component
                                     Editar</a></li>
                             <li><a class="dropdown-item" href="#" onclick="desactivarProveedor('.$listaProveedores->id.')"> <i class="fa fa-times text-danger" aria-hidden="true"></i>
                                     Desactivar </a></li>
-        
+
                         </ul>
                     </div>
                         ';
@@ -226,7 +226,7 @@ class Proveedores extends Component
 
                         return
 
-                        
+
                         '
                         <div class="btn-group">
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
@@ -237,47 +237,47 @@ class Proveedores extends Component
                                     Editar</a></li>
                             <li><a class="dropdown-item" href="#" onclick="activarProveedor('.$listaProveedores->id.')"> <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
                                     Activar </a></li>
-        
+
                         </ul>
                     </div>
                         ';
 
                     }
-            
-                    
-                    
+
+
+
 
             })
             ->addColumn('retencion', function ($listaProveedores) {
                 if ($listaProveedores->uno_porciento) {
                     return '<td><span class="badge bg-primary">Retencion</span></td>';
                 } else {
-    
+
                     return '<td><span class="badge bg-danger">Sin Retencion</span></td>';
                 }
-    
+
                     })
             ->addColumn('estado', function ($listaProveedores) {
                 if ($listaProveedores->estado_id === 1) {
                     return '<td><span class="badge bg-primary">ACTIVO</span></td>';
                 } else {
-    
+
                     return '<td><span class="badge bg-danger">INACTIVO</span></td>';
                 }
-    
-                    })    
-           
-            ->rawColumns(['opciones','retencion','estado'])         
+
+                    })
+
+            ->rawColumns(['opciones','retencion','estado'])
             ->make(true);
 
 
         } catch (QueryException $e) {
-        
+
             return response()->json([
-                'message' => 'Ha ocurrido un error, por favor intente de nuevo.',               
+                'message' => 'Ha ocurrido un error, por favor intente de nuevo.',
                 'exception' => $e,
             ],402);
-            
+
         }
     }
 
@@ -288,8 +288,8 @@ class Proveedores extends Component
             $proveedorEstado = Modelproveedores::find($request['id']);
 
             if($proveedorEstado->estado_id === 1){
-                $proveedor = Modelproveedores::find($request['id']); 
-                $proveedor->estado_id = 2;            
+                $proveedor = Modelproveedores::find($request['id']);
+                $proveedor->estado_id = 2;
                 $proveedor->save();
 
                 return response()->json([
@@ -298,8 +298,8 @@ class Proveedores extends Component
 
             }else{
 
-                $proveedor = Modelproveedores::find($request['id']); 
-                $proveedor->estado_id = 1;            
+                $proveedor = Modelproveedores::find($request['id']);
+                $proveedor->estado_id = 1;
                 $proveedor->save();
 
                 return response()->json([
@@ -314,13 +314,13 @@ class Proveedores extends Component
 
 
 
-          
+
         } catch (QueryException $e) {
             return response()->json([
                 "message" => "Error al desactivar",
                 "error" => $e
             ],402);
-            
+
         }
 
 
@@ -332,11 +332,11 @@ class Proveedores extends Component
         try {
 
             $proveedor = Modelproveedores::find($request['id']);
-         
+
 
             $municipioProveedor =  Municipio::find( $proveedor->municipio_id);
             $departamentoProveedor = Departamento::find($municipioProveedor->departamento_id);
-            
+
 
             $municipioProveedorId = $proveedor->municipio_id;
             $departamentoProveedorId = $municipioProveedor->departamento_id;
@@ -365,13 +365,13 @@ class Proveedores extends Component
 
             ],200);
 
-            
+
         } catch (QueryException $e) {
             return response()->json([
                 "message" => "Error al obtener datos del proveedor",
                 "error" => $e
             ],402);
-          
+
         }
 
     }
@@ -384,12 +384,12 @@ class Proveedores extends Component
             'editar_nombre_prov' => 'required',
             'editar_direccion_prov' => 'required',
             'editar_contacto_prov' => 'required',
-            'editar_telefono_prov' => 'required',               
-            'editar_rtn_prov' => 'required',   
+            'editar_telefono_prov' => 'required',
+            'editar_rtn_prov' => 'required',
             'editar_municipio_prov' => 'required',
             'editar_giro_neg_prov' => 'required',
             'editar_categoria_prov' => 'required',
-            
+
         ], [
             'editar_codigo_prov' => 'Codigo es requerido',
             'editar_nombre_prov' => 'nombre es requerido',
@@ -397,11 +397,11 @@ class Proveedores extends Component
             'editar_contacto_prov' => 'Contacto es requerido',
             'editar_telefono_prov' => 'Telefono es requerido',
             'editar_telefono_prov_2' => 'Telefono 2 es requerido',
-            'editar_rtn_prov' => 'RTN es requerido',     
+            'editar_rtn_prov' => 'RTN es requerido',
             'editar_municipio_prov' => 'Municipio es requerido',
             'editar_giro_neg_prov' => 'Giro es requerido',
             'editar_categoria_prov' => 'Categoria es requerido',
-           
+
         ]);
 
         if ($validator->fails()) {
@@ -422,28 +422,28 @@ class Proveedores extends Component
                 $crearProveedores->correo_1=trim($request->editar_correo_prov);
                 $crearProveedores->correo_2=trim($request->editar_correo_prov_2);
                 $crearProveedores->rtn=trim($request->editar_rtn_prov);
-                $crearProveedores->registrado_por=Auth::user()->id;              
+                $crearProveedores->registrado_por=Auth::user()->id;
                 $crearProveedores->municipio_id=$request->editar_municipio_prov;
                 $crearProveedores->tipo_personalidad_id=$request->editar_giro_neg_prov;
-                $crearProveedores->categoria_id=$request->editar_categoria_prov;                 
+                $crearProveedores->categoria_id=$request->editar_categoria_prov;
                 $crearProveedores->save();
 
 
 
             return response()->json([
-                'message' => 'Editado con exito.',                   
-            ], 200); 
-           
+                'message' => 'Editado con exito.',
+            ], 200);
+
         } catch (QueryException $e) {
-          
-         
+
+
             return response()->json([
                 'message' => 'Ha ocurrido un error al editar el proveedor.',
                 'error' => $e,
-             
-              
-            ], 402);  
-           
+
+
+            ], 402);
+
         }
     }
 }
