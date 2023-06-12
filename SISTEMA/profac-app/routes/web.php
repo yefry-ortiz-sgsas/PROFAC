@@ -156,10 +156,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/inventario/retenciones/listar', [Retenciones::class, 'listarRetenciones']);
     Route::post('/proveedores/retencion/crear', [Retenciones::class, 'registrarRetencion']);
 
-    Route::post('/retencion/obtener', [Retenciones::class, 'obtenerRetencion']);
 
-    Route::post('/retencion/editar', [Retenciones::class, 'editarRetencion']);
-    Route::post('/retencion/eliminar', [Retenciones::class, 'eliminarRetencion']);
 
 
 
