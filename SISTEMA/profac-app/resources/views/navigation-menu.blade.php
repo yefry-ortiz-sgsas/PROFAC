@@ -616,6 +616,15 @@
             </li>
             {{-- Rol Axuliar Administrativo --}}
         @elseif (Auth::user()->rol_id == '5')
+
+        <li>
+            <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
+                    style="color:#ffffff;">Lista de Facturas</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+            </ul>
+        </li>
+
+
             <li>
                 <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
                         style="color:#ffffff;">Bodega</span>
