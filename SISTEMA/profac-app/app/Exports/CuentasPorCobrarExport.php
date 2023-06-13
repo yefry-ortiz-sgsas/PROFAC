@@ -49,9 +49,9 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
     {
         return [
             'Numero Factura',
+            'Correlativo',
             'ID Cliente',
             'Cliente',
-            'Correlativo',
             'Fecha Emision',
             'Fecha Vencimiento',
             'Cargo',
