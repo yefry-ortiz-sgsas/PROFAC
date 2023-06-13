@@ -53,6 +53,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>Numero Factura</th>
+                                        <th>Correlativo</th>
                                         <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Documento</th>
@@ -61,8 +62,8 @@
                                         <th>Cargo</th>
                                         <th>Credito</th>
                                         <th>Saldo</th>
-                                       
-                                        
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,6 +95,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>Numero Factura</th>
+                                        <th>Correlativo</th>
                                         <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Documento</th>
@@ -105,7 +107,7 @@
                                         <th>Interes Inicia</th>
                                         <th>Interes Diario</th>
                                         <th>Acumulado</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -140,7 +142,7 @@
                         page: params.page || 1
                     }
 
-                    
+
                     return query;
                 }
             }
@@ -154,8 +156,8 @@
         this.listarCuentasPorCobrar();
         this.listarCuentasPorCobrarInteres();
 
-    }    
-    
+    }
+
 
     function listarCuentasPorCobrar() {
 
@@ -198,6 +200,8 @@
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
                     "columns": [{
                             data: 'numero_factura'
+                        },{
+                            data: 'correlativo'
                         },
                         {
                             data: 'id_cliente'
@@ -210,7 +214,7 @@
                         },
                         {
                             data: 'fecha_emision'
-                        },                        
+                        },
                         {
                             data: 'fecha_vencimiento'
                         },
@@ -222,7 +226,7 @@
                         },
                         {
                             data: 'saldo'
-                        }   
+                        }
 
                     ]
 
@@ -273,6 +277,8 @@
                     "ajax": "/ventas/cuentas_por_cobrar/listar_intereses/"+idCliente,
                     "columns": [{
                             data: 'numero_factura'
+                        },{
+                            data: 'correlativo'
                         },
                         {
                             data: 'id_cliente'
@@ -285,7 +291,7 @@
                         },
                         {
                             data: 'fecha_emision'
-                        },                        
+                        },
                         {
                             data: 'fecha_vencimiento'
                         },
@@ -320,27 +326,27 @@
         var cliente = document.getElementById('cliente').value;
 
                 let htmlSelect1 = ''
-                
+
                 htmlSelect1 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> 
-                        
+                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a>
+
                                 `
 
                 document.getElementById('cuentas_excel').innerHTML = htmlSelect1;
 
                 //////////////////////////////////////////////////////////////////////////////
                 let htmlSelect2 = ''
-                
+
                 htmlSelect2 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> 
-                        
+                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a>
+
                                 `
 
                 document.getElementById('cuentas_excel_intereses').innerHTML = htmlSelect2;
-       
+
     }
 
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
