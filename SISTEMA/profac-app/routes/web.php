@@ -440,8 +440,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class, 'guardarNumOrdenCompra']);
     Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class, 'obtenerNumOrdenCompra']);
     Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class, 'editarNumOrdenCompra']);
-
     Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class, 'desactivarNumOrdenCompra']);
+
+
+
 
     //------------------------------------------------------------------Codigo Exoneracion--------------------------------------------------------------------------------//
 

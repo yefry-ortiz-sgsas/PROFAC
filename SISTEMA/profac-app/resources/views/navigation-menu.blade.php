@@ -19,7 +19,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('DISTRIBUCIONES VALENCIA') }}
+                        {{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -465,6 +465,9 @@
                             <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                             <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
                                     Cotizaciones</a></li>
+
+                            <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
+
                             <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
                             <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
@@ -566,6 +569,8 @@
                             <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                             <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
                                     Cotizaciones</a></li>
+
+                                    <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
 
 
 
@@ -776,6 +781,8 @@
                     </li>
                     <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a>
                     </li>
+
+                    <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
                     <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
 
 
@@ -970,6 +977,7 @@
                                         Cotizaciones</a></li>
 
 
+                                        <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
 
 
 
