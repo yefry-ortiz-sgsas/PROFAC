@@ -93,6 +93,8 @@ use App\Http\Livewire\NotaDebito\ListadoNotasDebitoND;
 use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -313,7 +315,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/ventas/coorporativo/orden/compra', NumOrdenCompraCoorporativo::class);
     Route::get('/coorporativo/ordenCompra/listar', [NumOrdenCompraCoorporativo::class,'listarNumOrdenCompraCoorporativo']);
     Route::get('/coorporativo/ordenCompra/clientes', [NumOrdenCompraCoorporativo::class,'listarClientesCoorporativo']);
-
 
     //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
