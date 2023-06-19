@@ -1326,7 +1326,7 @@ class FacturacionCorporativa extends Component
         where A.id =" . $idFactura);
 
         if (empty($ordenCompra->numero_orden)) {
-            $ordenCompra = ["numero_orden" => ""];
+            $ordenCompra = ["numero_orden" => " N/A"];
         } else {
             $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
@@ -1497,7 +1497,7 @@ class FacturacionCorporativa extends Component
         where A.id =" . $idFactura);
 
         if (empty($ordenCompra->numero_orden)) {
-            $ordenCompra = ["numero_orden" => ""];
+            $ordenCompra = ["numero_orden" => " N/A"];
         } else {
             $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
