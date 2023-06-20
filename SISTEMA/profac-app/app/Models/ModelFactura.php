@@ -30,7 +30,7 @@ class ModelFactura extends Model
         'monto_comision',
         'tipo_venta_id',
         'estado_factura_id',
-        'estado_editar',  
-        'codigo_exoneracion_id',  
+        'estado_editar',
+        'codigo_exoneracion_id',
     ];
 }
