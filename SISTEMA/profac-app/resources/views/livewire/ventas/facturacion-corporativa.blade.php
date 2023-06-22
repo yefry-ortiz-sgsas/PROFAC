@@ -135,6 +135,17 @@
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="ordenCompra" class="col-form-label focus-label">Seleccionar un número de
+                                        orden de compra:</label>
+                                    <select class="form-group form-control " name="ordenCompra" id="ordenCompra">
+                                        <option value="" selected disabled>--Seleccionar un número de compra--
+                                        </option>
+
+                                    </select>
+                                </div>
+
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">RTN:<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control" type="text" id="rtn_ventas" name="rtn_ventas"
@@ -182,10 +193,19 @@
                                 </div>
 
 
+
                             </div>
 
                             <div class="row">
+                            {{--      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label for="nota"
+                                            class="col-form-label focus-label">Nota:
+                                        </label>
+                                        <textarea class="form-control"  id="nota_comen" name="nota_comen" cols="60" rows="3" maxlength="200" ></textarea>
+                                    </div>
 
+                                </div>  --}}
 
 
                             </div>
@@ -1090,6 +1110,8 @@
                                 document.getElementById("nombre_cliente_ventas").value = data.nombre;
                                 document.getElementById("rtn_ventas").value = data.rtn;
                                 obtenerTipoPago();
+
+                                obtenerOrdenesCompra();
                                 diasCredito = data.dias_credito;
                             }
 
@@ -1241,6 +1263,29 @@
                     document.getElementById("fecha_vencimiento").value = suma;
 
                 }
+            }
+
+            function obtenerOrdenesCompra() {
+
+                let idCliente = document.getElementById('seleccionarCliente').value;
+
+                $('#ordenCompra').select2({
+                    ajax: {
+                        url: '/ventas/numero/orden',
+                        data: function(params) {
+                            var query = {
+                                idCliente: idCliente,
+                                search: params.term,
+                                type: 'public',
+                                page: params.page || 1
+                            }
+
+                            // Query parameters will be ?search=[term]&type=public
+
+                            return query;
+                        }
+                    }
+                });
             }
         </script>
     @endpush

@@ -284,7 +284,7 @@ class FacturacionCorporativa extends Component
 
     public function guardarVenta(Request $request)
     {
-
+        //dd($request);
         try {
 
 
@@ -492,6 +492,8 @@ class FacturacionCorporativa extends Component
                 $factura->estado_editar = 1;
                 $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
                 $factura->comprovante_entrega_id = $request->idComprobante;
+                $factura->numero_orden_compra_id=$request->ordenCompra;
+                //$factura->nota=$request->nota_comen;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -740,6 +742,7 @@ class FacturacionCorporativa extends Component
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->comprovante_entrega_id = $request->idComprobante;
+            //$factura->nota=$request->nota_comen;
             $factura->save();
 
             if ($turno->turno == 1) {
@@ -883,6 +886,7 @@ class FacturacionCorporativa extends Component
         $factura->estado_editar = 1;
         $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
         $factura->comprovante_entrega_id = $request->idComprobante;
+        //$factura->nota=$request->nota_comen;
         $factura->save();
 
 
@@ -1008,6 +1012,7 @@ class FacturacionCorporativa extends Component
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->comprovante_entrega_id = $request->idComprobante;
+            //$factura->nota=$request->nota_comen;
             $factura->save();
 
 
@@ -1325,7 +1330,7 @@ class FacturacionCorporativa extends Component
         where A.id =" . $idFactura);
 
         if (empty($ordenCompra->numero_orden)) {
-            $ordenCompra = ["numero_orden" => ""];
+            $ordenCompra = ["numero_orden" => " N/A"];
         } else {
             $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
@@ -1496,7 +1501,7 @@ class FacturacionCorporativa extends Component
         where A.id =" . $idFactura);
 
         if (empty($ordenCompra->numero_orden)) {
-            $ordenCompra = ["numero_orden" => ""];
+            $ordenCompra = ["numero_orden" => " N/A"];
         } else {
             $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
         }
@@ -1856,6 +1861,7 @@ class FacturacionCorporativa extends Component
             $factura->estado_editar = 1;
             $factura->codigo_autorizacion_id = $request->codigo_autorizacion;
             $factura->comprovante_entrega_id = $request->idComprobante;
+            $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->save();
 
 

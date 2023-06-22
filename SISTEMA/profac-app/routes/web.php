@@ -93,6 +93,8 @@ use App\Http\Livewire\NotaDebito\ListadoNotasDebitoND;
 use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -314,7 +316,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/coorporativo/ordenCompra/listar', [NumOrdenCompraCoorporativo::class,'listarNumOrdenCompraCoorporativo']);
     Route::get('/coorporativo/ordenCompra/clientes', [NumOrdenCompraCoorporativo::class,'listarClientesCoorporativo']);
 
-
     //---------------------------------------------------------------------VENTAS ESTATAL--------------------------------------------------------------------------------//
 
 
@@ -440,8 +441,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/estatal/ordenes/guardar', [NumOrdenCompra::class, 'guardarNumOrdenCompra']);
     Route::post('/estatal/ordenes/datos', [NumOrdenCompra::class, 'obtenerNumOrdenCompra']);
     Route::post('/estatal/ordenes/editar', [NumOrdenCompra::class, 'editarNumOrdenCompra']);
-
     Route::post('/estatal/ordenes/desactivar', [NumOrdenCompra::class, 'desactivarNumOrdenCompra']);
+
+
+
 
     //------------------------------------------------------------------Codigo Exoneracion--------------------------------------------------------------------------------//
 
