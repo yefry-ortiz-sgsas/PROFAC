@@ -576,6 +576,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/comprovante/clientes/lista', [CrearComprovante::class, 'clientesObtener']);
     Route::post('/comprovante/guardar/orden', [CrearComprovante::class, 'guardarComprovante']);
     Route::get('/comprobante/imprimir/{idComprobante}', [CrearComprovante::class, 'imprimirComprobanteEntrega']);
+    Route::get('/comprobante/imprimir/copia/{idComprobante}', [CrearComprovante::class, 'imprimirComprobanteEntregaCopia']);
     Route::get('/comprovante/entrega/listado', ListarComprovantes::class);
     Route::get('/comprovante/entrega/listado/activos', [ListarComprovantes::class, 'listarComprovantesActivos']);
     Route::get('/comprovante/entrega/anulados', ListarComprovantesAnulados::class);

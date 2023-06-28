@@ -75,7 +75,7 @@
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:5.5rem;">
             <div class="card-header">
                 <b>Comprobante de Entrega No. {{$datos->numero_comprovante}}</b>
-                <p style="position:absolute;left:630px; font-size:15px; "><b>*Original*</b></p>
+                <p style="position:absolute;left:630px; font-size:15px; "><b>*Copia*</b></p>
             </div>
             {{--  <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Número de Factura: {{$datos->cai}}</b></p>
