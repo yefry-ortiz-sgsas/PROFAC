@@ -225,7 +225,7 @@
                             <p class="card-text" style="position:absolute;left:10px;  top:143px; font-size:11px">6. el cliente
                                 debera realizar el pago de la factura a su fecha de vencimiento, en caso de incumplimiento de
                                 pago,
-                                este se compromete a aceptar otros procesos de cobrosm a la vez renuncia a su domicilio para
+                                este se compromete a aceptar otros procesos de cobros a la vez renuncia a su domicilio para
                                 efectos
                                 legales y somete a la jurisdicción de tegucigalpa municipio del distrito central.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:205px; font-size:11px">7. las entregas
@@ -291,13 +291,13 @@
 
                             <p class="card-text" style="position:absolute; left:10px;  top:130px; font-size:16px;">Impuesto
                                 sobre
-                                venta:</p>
+                                venta 15%:</p>
                             <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:16px;">L.
                                 {{ $importesConCentavos->isv }}</p>
 
                             <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:16px;">Impuesto
                                 sobre
-                                bebida:</p>
+                                bebida 18%:</p>
                             <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:16px;">L. 0.00
                             </p>
 
