@@ -45,7 +45,7 @@ class FacturaDia extends Component
             A.nombre_cliente as 'cliente',
             (select name from users where id = A.vendedor) as 'vendedor',
             format(A.sub_total,2) as 'subtotal',
-            format(A.isv,2) as 'imp_venta',
+            IF(A.sub_total = A.total, 0.00, format(A.isv,2)) as 'imp_venta',
             format(A.total,2) as 'total',
             CASE A.estado_factura_id WHEN 1 THEN 'GOBIERNO' WHEN 2 THEN 'CORPORATIVO' END AS 'tipo'
 

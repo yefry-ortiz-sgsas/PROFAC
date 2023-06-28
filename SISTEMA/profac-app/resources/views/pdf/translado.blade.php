@@ -73,7 +73,7 @@ $altura =20;
          alt="">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
-                <b>Registro de Translado No. {{$datos->codigo}} </b>
+                <b>Registro de Traslado No. {{$datos->codigo}} </b>
 
             </div>
 
@@ -87,7 +87,7 @@ $altura =20;
                 </p>
                 <p class="card-text" style="position:absolute;left:390px;  top:10px;"><b>Realizado por: </b>{{$datos->name}} </p>
 
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b>{{$datos->descripcion}}</p>
+                {{--  <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b>{{$datos->descripcion}}</p>  --}}
 
 
 

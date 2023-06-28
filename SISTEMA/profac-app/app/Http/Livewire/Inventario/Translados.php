@@ -134,8 +134,8 @@ class Translados extends Component
         inner join compra
         on A.compra_id = compra.id
         where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto."
-        
-        union 
+
+        union
 
         select
         A.id as 'idRecibido',
@@ -160,10 +160,10 @@ class Translados extends Component
         on B.id = C.producto_id
         inner join unidad_medida D
         on C.unidad_medida_id = D.id
-      
+
         where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and A.compra_id is null and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
 
-        
+
         );
 
         return Datatables::of($listaProductos)
@@ -191,18 +191,18 @@ class Translados extends Component
     }
 
     public function ejectarTranslado(Request $request){
-     
-       try {       
+
+       try {
 
         $contadorTranslados = 0;
-      
 
-        $arrayTemporal = $request->arregloIdInputs;            
+
+        $arrayTemporal = $request->arregloIdInputs;
         $arregloIdInputs  = explode(',', $arrayTemporal);
 
         $flagError = false;
-       
-     
+
+
         $text2 = "<p>Los siguientes productos exceden la cantidad disponible para translado: <p><ul>";
 
         DB::beginTransaction();
@@ -244,7 +244,7 @@ class Translados extends Component
                 $transladarBodega->estado_recibido = 4;
                 $transladarBodega->recibido_por = Auth::user()->id;
                 $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id;
-                $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;    
+                $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;
                 $transladarBodega->save();
 
 
@@ -296,8 +296,8 @@ class Translados extends Component
                  "contadorTranslados" => $contadorTranslados
              ], 200);
         }
-        
-                  
+
+
 
 
        } catch (QueryException $e) {
@@ -313,7 +313,7 @@ class Translados extends Component
 
     public function productoGeneralBodega($numeroFilas){
         try {
-        
+
             // $idBodega = DB::SELECTONE("
             //     select
             //         bodega.id
@@ -336,7 +336,7 @@ class Translados extends Component
          bodega.nombre as bodega,
          seccion.id as 'idSeccion',
          seccion.descripcion,
-         A.created_at 
+         A.created_at
        from log_translado Z
          inner join recibido_bodega A
          on Z.destino = A.id
@@ -352,9 +352,9 @@ class Translados extends Component
          on B.unidad_medida_compra_id = C.id
          inner join compra
          on A.compra_id = compra.id
-         where  A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and Z.descripcion ='Translado de bodega' 
-         order by Z.id desc 
-         limit ".$numeroFilas 
+         where  A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and Z.descripcion ='Translado de bodega'
+         order by Z.id desc
+         limit ".$numeroFilas
          );
 
          return Datatables::of($listaProductos)
@@ -374,12 +374,12 @@ class Translados extends Component
         $translados = DB::SELECT("
         select
         C.id,
-       
+
                C.nombre,
                C.descripcion,
                H.nombre as medida,
                CONCAT(F.nombre,' - ',D.descripcion)as origen,
-       
+
                (        select
                CONCAT(E.nombre,' - ',C.descripcion)
                from translado F
@@ -393,8 +393,8 @@ class Translados extends Component
                on D.id = C.segmento_id
                inner join bodega E
                on E.id = D.bodega_id
-               where A.descripcion ='Translado de bodega' and B.id = AA.destino and F.id = ".$idTranslado.") as destino,               
-               AA.cantidad          
+               where A.descripcion ='Translado de bodega' and B.id = AA.destino and F.id = ".$idTranslado.") as destino,
+               AA.cantidad
                from translado I
                inner join log_translado AA
                on I.id = AA.translado_id
@@ -428,7 +428,7 @@ class Translados extends Component
 
         $pdf = PDF::loadView('/pdf/translado',compact('translados','datos'))->setPaper('letter');
 
-        return $pdf->stream("Ajuste numero.pdf");
+        return $pdf->stream("traslado.pdf");
 
      }
 }
