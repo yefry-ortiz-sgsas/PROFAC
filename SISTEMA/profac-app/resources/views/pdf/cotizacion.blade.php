@@ -230,14 +230,14 @@
 
                     <p class="card-text" style="position:absolute; left:10px;  top:130px; font-size:14px;">Impuesto
                         sobre
-                        venta 15%:</p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:14px;">L.
+                        venta 15%: </p>
+                    <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:14px;"> L.
                         {{ $importesConCentavos->isv }} </p>
 
                     <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:14px;">Impuesto
                         sobre
-                        bebida 18%:</p>
-                    <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:14px;">L. 0.00
+                        bebida 18%: </p>
+                    <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:14px;"> L. 0.00
                     </p>
 
                     <p class="card-text" style="position:absolute; left:10px;  top:185px; font-size:14px;"><b>Total a
