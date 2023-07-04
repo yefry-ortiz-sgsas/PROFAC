@@ -203,9 +203,16 @@
                     </div>
                     <div>
                         <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe
-                            Grabado: </p>
+                            Gravado 15%: </p>
                         <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:14px;">
                             L. {{ $importesConCentavos->sub_total_grabado }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe
+                            Gravado 18%: </p>
+                        <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:14px;">
+                            L. 0.00
                         </p>
                     </div>
 
@@ -240,7 +247,7 @@
 
                     <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:14px;">Impuesto
                         sobre
-                        bebida 18%: </p>
+                        venta 18%: </p>
                     <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:14px;"> L. 0.00
                     </p>
 

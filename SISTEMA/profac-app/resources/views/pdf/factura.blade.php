@@ -213,7 +213,7 @@
                                 cheque
                                 devuelto se cobra 750 lempiras.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:51px; font-size:11px">2. toda cuenta
-                                vencida pagara el 3.5% de interés mensual.</p>
+                                vencida pagara el 3.25% de interés mensual.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:63px; font-size:11px">3. el único
                                 comprobante de pago de ésta factura es el emitido por distribuciones valencia.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:95px; font-size:11px">4 no se aceptan
@@ -255,22 +255,29 @@
                     <div class="card border border-dark" style="position:absolute;left:430px;   width:18rem; height:15rem;">
                         <div class="card-body">
                             <div>
-                                <p class="card-text " style="position:absolute; left:10px;  top:10px; font-size:16px;">Importe
+                                <p class="card-text " style="position:absolute; left:10px;  top:10px; font-size:14px;">Importe
                                     exonerado:</p>
-                                <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:16px;">L.
+                                <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:14px;">L.
                                     0.00</p>
                             </div>
                             <div>
-                                <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:16px;">Importe
-                                    Gravado: </p>
-                                <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:16px;">L.
+                                <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe
+                                    Gravado 15%: </p>
+                                <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:14px;">L.
                                     {{ $importesConCentavos->sub_total_grabado }}</p>
                             </div>
 
                             <div>
-                                <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:16px;">Importe
+                                <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:14px;">Importe
+                                    Gravado 18%: </p>
+                                <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:14px;"> L.
+                                    0.00</p>
+                            </div>
+
+                            <div>
+                                <p class="card-text" style="position:absolute; left:10px;  top:64px; font-size:14px;">Importe
                                     Exento: </p>
-                                <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:16px;">L. {{ $importesConCentavos->sub_total_excento }}
+                                <p class="card-text" style="position:absolute; right:10px;  top:64px; font-size:14px;">L. {{ $importesConCentavos->sub_total_excento }}
                                 </p>
                             </div>
 
@@ -279,31 +286,31 @@
                             </p>
                             <p class="card-text" style="position:absolute; left:200px;  top:65px; font-size:16px;">1200.00</p> --}}
 
-                            <p class="card-text" style="position:absolute; left:10px;  top:85px; font-size:14px;">Desc. y
+                            <p class="card-text" style="position:absolute; left:10px;  top:90px; font-size:14px;">Desc. y
                                 Rebajas:
                             </p>
-                            <p class="card-text" style="position:absolute; right:10px;  top:85px; font-size:14px;">L. 0.00</p>
+                            <p class="card-text" style="position:absolute; right:10px;  top:90px; font-size:14px;">L. 0.00</p>
 
-                            <p class="card-text" style="position:absolute; left:10px;  top:105px; font-size:14px;">Sub Total:
+                            <p class="card-text" style="position:absolute; left:10px;  top:110px; font-size:14px;">Sub Total:
                             </p>
-                            <p class="card-text" style="position:absolute; right:10px;  top:105px; font-size:14px;">L.
+                            <p class="card-text" style="position:absolute; right:10px;  top:110px; font-size:14px;">L.
                                 {{ $importesConCentavos->sub_total }}</p>
 
-                            <p class="card-text" style="position:absolute; left:10px;  top:130px; font-size:14px;">Impuesto
+                            <p class="card-text" style="position:absolute; left:10px;  top:135px; font-size:14px;">Impuesto
                                 sobre
                                 venta 15%: </p>
-                            <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:14px;"> L.
+                            <p class="card-text" style="position:absolute; right:10px;  top:135px; font-size:14px;"> L.
                                 {{ $importesConCentavos->isv }}</p>
 
-                            <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:14px;">Impuesto
+                            <p class="card-text" style="position:absolute; left:10px;  top:153px; font-size:14px;">Impuesto
                                 sobre
-                                bebida 18%: </p>
-                            <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:14px;"> L. 0.00
+                                venta 18%: </p>
+                            <p class="card-text" style="position:absolute; right:10px;  top:153px; font-size:14px;"> L. 0.00
                             </p>
 
-                            <p class="card-text" style="position:absolute; left:10px;  top:185px; font-size:16px;"><b>Total a
+                            <p class="card-text" style="position:absolute; left:10px;  top:190px; font-size:16px;"><b>Total a
                                     Pagar: </b></p>
-                            <p class="card-text" style="position:absolute; right:10px;  top:185px; font-size:16px;">
+                            <p class="card-text" style="position:absolute; right:10px;  top:190px; font-size:16px;">
                                 <b>L. {{ $importesConCentavos->total }}</b>
                             </p>
                         </div>

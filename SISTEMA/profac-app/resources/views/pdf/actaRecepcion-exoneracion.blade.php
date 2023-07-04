@@ -211,7 +211,7 @@
                             <p class="card-text" style="position:absolute;left:10px;  top:40px; font-size:11px;">1. por cada cheque
                                 devuelto se cobra 750 lempiras.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:51px; font-size:11px">2. toda cuenta
-                                vencida pagara el 3.5% de interés mensual.</p>
+                                vencida pagara el 3.25% de interés mensual.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:63px; font-size:11px">3. el único
                                 comprobante de pago de ésta factura es el emitido por distribuciones valencia.</p>
                             <p class="card-text" style="position:absolute;left:10px;  top:95px; font-size:11px">4 no se aceptan
@@ -251,13 +251,17 @@
                                 <p class="card-text" style="position:absolute;  right:10px;  top:10px; font-size:14px;">{{$importesConCentavos->sub_total}}</p>
                             </div>
                             <div>
-                                <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe Gravado: </p>
+                                <p class="card-text" style="position:absolute; left:10px;  top:28px; font-size:14px;">Importe Gravado 15%: </p>
                                 <p class="card-text" style="position:absolute; right:10px;  top:28px; font-size:14px;">0.00</p>
+                            </div>
+                            <div>
+                                <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:14px;">Importe Gravado 18%: </p>
+                                <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:14px;">0.00</p>
                             </div>
 
                             <div>
-                                <p class="card-text" style="position:absolute; left:10px;  top:46px; font-size:14px;">Importe Exento:  </p>
-                                <p class="card-text" style="position:absolute; right:10px;  top:46px; font-size:14px;">0.00</p>
+                                <p class="card-text" style="position:absolute; left:10px;  top:64px; font-size:14px;">Importe Exento:  </p>
+                                <p class="card-text" style="position:absolute; right:10px;  top:64px; font-size:14px;">0.00</p>
                             </div>
 
 
@@ -277,7 +281,7 @@
                             <p class="card-text" style="position:absolute; right:10px;  top:130px; font-size:14px;"> L.0.00</p>
 
                             <p class="card-text" style="position:absolute; left:10px;  top:148px; font-size:14px;">Impuesto sobre
-                                bebida 18%: </p>
+                                venta 18%: </p>
                             <p class="card-text" style="position:absolute; right:10px;  top:148px; font-size:14px;"> L.0.00</p>
 
                             <p class="card-text" style="position:absolute; left:10px;  top:185px; font-size:16px;"><b>Total a
