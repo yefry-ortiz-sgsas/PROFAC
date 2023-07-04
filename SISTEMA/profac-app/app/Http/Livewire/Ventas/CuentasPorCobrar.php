@@ -45,7 +45,9 @@ class CuentasPorCobrar extends Component
     public function listarCuentasPorCobrar($id){
         try{
 
-            $cuentas = DB::SELECT("select
+            $cuentas = DB::unprepared("
+
+select
             factura.numero_factura as numero_factura,
             factura.cai as correlativo,
             cliente_id as id_cliente,
@@ -55,10 +57,14 @@ class CuentasPorCobrar extends Component
             factura.fecha_vencimiento as 'fecha_vencimiento',
             factura.total as 'cargo',
             (factura.total-factura.pendiente_cobro) as 'credito',
-            factura.pendiente_cobro as saldo
+            (select IF(SUM(nota_credito.total) <> 0, SUM(nota_credito.total), 0.00) from nota_credito where nota_credito.factura_id = factura.id) as notaCredito,
+            (select IF(SUM(notadebito.monto_asignado) <> 0, SUM(notadebito.monto_asignado), 0.00) from notadebito where notadebito.factura_id = factura.id) as notaDebito,
+            factura.pendiente_cobro as saldo,
+            @acumulado := @acumulado + SUM(factura.pendiente_cobro) AS 'Acumulado'
             from factura
             inner join cliente on (factura.cliente_id = cliente.id)
-            where cliente_id = '". $id."' and factura.pendiente_cobro <> 0");
+            where cliente_id = ".$id." and factura.pendiente_cobro <> 0
+            group by factura.id ;");
 
         return Datatables::of($cuentas)
                 ->addColumn('opciones', function ($cuenta) {

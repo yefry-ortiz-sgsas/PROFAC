@@ -61,7 +61,10 @@
                                         <th>Fecha Vencimiento</th>
                                         <th>Cargo</th>
                                         <th>Credito</th>
+                                        <th>Notas Crédito</th>
+                                        <th>Notas Débito</th>
                                         <th>Saldo</th>
+                                        <th>Acumulado</th>
 
 
                                     </tr>
@@ -225,8 +228,18 @@
                             data: 'credito'
                         },
                         {
+                            data: 'notaCredito'
+                        },
+                        {
+                            data: 'notaDebito'
+                        },
+                        {
                             data: 'saldo'
+                        },
+                        {
+                            data: 'Acumulado'
                         }
+
 
                     ]
 
