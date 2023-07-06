@@ -69,7 +69,7 @@ class ListadoNotaCredito extends Component
             on A.motivo_nota_credito_id = B.id
             inner join users
             on A.users_id = users.id
-            where A.estado_nota_dec = 1 and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
+            where A.estado_nota_dec = 2 and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
 
             return Datatables::of($listado)
@@ -188,8 +188,8 @@ class ListadoNotaCredito extends Component
             sub_total_excento
             from factura
             where id = " . $idFactura);
-    
-    
+
+
             $importesConCentavos = DB::SELECTONE("
             select
             FORMAT(total,2) as total,
@@ -198,7 +198,7 @@ class ListadoNotaCredito extends Component
             FORMAT(sub_total_grabado,2) as sub_total_grabado,
             FORMAT(sub_total_excento,2) as sub_total_excento
             from factura where factura.id = " . $idFactura);
-    
+
 
 
 
@@ -323,8 +323,8 @@ class ListadoNotaCredito extends Component
             sub_total_excento
             from nota_credito
             where id = " . $idNota);
-    
-    
+
+
             $importesConCentavos = DB::SELECTONE("
             select
             FORMAT(total,2) as total,
@@ -365,9 +365,9 @@ class ListadoNotaCredito extends Component
         on FF.segmento_id = G.id
         inner join bodega H
         on G.bodega_id = H.id
-        where B.estado_nota_id=1 and B.id = ".$idNota."               
+        where B.estado_nota_id=1 and B.id = ".$idNota."
         group by  codigo ,descripcion, medida,bodega, seccion, precio, cantidad,sub_total,C.indice
-        ) A 
+        ) A
         order by A.indice asc
                 "
             );
@@ -390,7 +390,7 @@ class ListadoNotaCredito extends Component
 
 
 
- 
+
 
 
     }

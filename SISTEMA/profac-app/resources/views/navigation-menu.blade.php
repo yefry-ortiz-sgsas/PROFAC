@@ -330,7 +330,7 @@
                     </li>
                     <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                            <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
+                            <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
@@ -706,7 +706,7 @@
             </li>  --}}
             <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
+                    <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
@@ -906,7 +906,7 @@
             </li>  --}}
             <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota de Credito +</span>
+                    <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">

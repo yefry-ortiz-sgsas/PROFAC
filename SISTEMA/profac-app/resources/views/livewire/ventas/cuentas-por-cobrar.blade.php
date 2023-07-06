@@ -54,7 +54,6 @@
                                     <tr>
                                         <th>Numero Factura</th>
                                         <th>Correlativo</th>
-                                        <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Documento</th>
                                         <th>Fecha Emision</th>
@@ -205,9 +204,6 @@
                             data: 'numero_factura'
                         },{
                             data: 'correlativo'
-                        },
-                        {
-                            data: 'id_cliente'
                         },
                         {
                             data: 'cliente'

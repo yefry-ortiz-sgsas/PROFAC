@@ -51,7 +51,7 @@ class ListadoNotasND extends Component
             on A.motivo_nota_credito_id = B.id
             inner join users
             on A.users_id = users.id
-            where A.estado_nota_dec = 2 and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
+            where A.estado_nota_dec = 1 and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
 
             return Datatables::of($listado)
