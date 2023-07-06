@@ -919,6 +919,18 @@
 
                 </ul>
             </li>
+
+            <li>
+                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                        style="color:#ffffff;">Nota de Débito</span>
+                    <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Coorporativo</a></li>
+                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Gobierno</a></li>
+                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                </ul>
+            </li>
             <li>
                 <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                         style="color:#ffffff;">Facturación al día AUX</span>
