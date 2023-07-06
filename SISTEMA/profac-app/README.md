@@ -79,6 +79,6 @@ BEGIN
             @acumulado := @acumulado + factura.pendiente_cobro AS 'Acumulado'
             from factura
             inner join cliente on (factura.cliente_id = cliente.id)
-            where cliente_id = idcliente and factura.pendiente_cobro <> 0;
+            where factura.estado_venta_id <> 2 and cliente_id = idcliente and factura.pendiente_cobro <> 0;
 END$$
 DELIMITER ;
