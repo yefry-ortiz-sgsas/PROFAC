@@ -371,7 +371,7 @@ class NotaDebito extends Component
 
             return Datatables::of($listanotaDebito)
             ->addColumn('estado', function ($listanotaDebito) {
-                $ESTADO = DB::SELECTONE("select estado_id from notaDebito where id = ".$listanotaDebito->id);
+                $ESTADO = DB::SELECTONE("select estado_id from notadebito where id = ".$listanotaDebito->id);
                 if( $ESTADO->estado_id == 1){
 
                     return
