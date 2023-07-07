@@ -123,7 +123,7 @@ class VentasExoneradas extends Component
             ], 406);
         }
 
-        if ($request->restriccion == 1) {
+        /* if ($request->restriccion == 1) {
             $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
 
             if ($facturaVencida) {
@@ -134,7 +134,7 @@ class VentasExoneradas extends Component
 
                 ], 401);
             }
-        }
+        } */
 
 
 
@@ -850,20 +850,33 @@ class VentasExoneradas extends Component
 
 
         );
-
-        $ordenCompra = DB::SELECTONE("
+        $ordenCompraExiste = DB::SELECTONE("
         select
-        B.numero_orden
+        count(*) as 'existe'
         from factura A
         inner join numero_orden_compra B
         on A.numero_orden_compra_id = B.id
         where A.id =" . $idFactura);
 
-        if (empty($ordenCompra->numero_orden)) {
-            $ordenCompra = ["numero_orden" => " N/A"];
-        } else {
-            $ordenCompra = ["numero_orden" => $ordenCompra->numero_orden];
+        if ($ordenCompraExiste->existe > 0) {
+            $ordenCompra = DB::SELECTONE("
+            select
+            B.numero_orden
+            from factura A
+            inner join numero_orden_compra B
+            on A.numero_orden_compra_id = B.id
+            where A.id =" . $idFactura);
+
+
+
+        }else{
+            $ordenCompra = DB::SELECTONE("
+            select
+            'N/A' as numero_orden
+            from factura
+            where id =" . $idFactura);
         }
+
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
 
@@ -877,7 +890,10 @@ class VentasExoneradas extends Component
         $formatter = new NumeroALetras();
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/facturacopia-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+
+
+
+        $pdf = PDF::loadView('/pdf/facturacopia-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos', 'ordenCompra'))->setPaper('letter');
 
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
