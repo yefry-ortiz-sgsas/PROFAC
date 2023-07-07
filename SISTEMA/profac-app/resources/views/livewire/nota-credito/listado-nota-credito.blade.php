@@ -68,17 +68,19 @@
                             <table id="tbl_listar_ajustes" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                    
+
                                         <th>Codigo</th>
-                                        <th>Registro N°</th>                                        
+                                        <th>Registro N°</th>
+                                        <th>Cliente</th>
                                         <th>Motivo</th>
+                                        <th>Comentario</th>
                                         <th>Sub Total</th>
                                         <th>ISV</th>
                                         <th>Total</th>
                                         <th>Fecha</th>
-                                        <th>Registrado por:</th>                                        
+                                        <th>Registrado por:</th>
                                         <th>Opciones</th>
-                                      
+
 
                                     </tr>
                                 </thead>
@@ -142,7 +144,13 @@
                             data: 'numero_nota'
                         },
                         {
+                            data: 'cliente'
+                        },
+                        {
                             data: 'motivo'
+                        },
+                        {
+                            data: 'comentario'
                         },
                         {
                             data: 'sub_total'
@@ -171,7 +179,7 @@
 
 
             }
-            
+
 
             function ajustesPorfecha(){
                 let inicio = document.getElementById('fechaInicio').value;
@@ -191,7 +199,7 @@
                 //$('#tbl_listar_ventas_dos').DataTable().ajax.reload();
             }
 
-           
+
 
 
         </script>

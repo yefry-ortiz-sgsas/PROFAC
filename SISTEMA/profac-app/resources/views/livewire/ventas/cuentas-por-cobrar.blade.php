@@ -53,9 +53,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>Numero Factura</th>
-                                        <th>Correlativo</th>
                                         <th>Cliente</th>
-                                        <th>Documento</th>
                                         <th>Fecha Emision</th>
                                         <th>Fecha Vencimiento</th>
                                         <th>Cargo</th>
@@ -202,14 +200,9 @@
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
                     "columns": [{
                             data: 'numero_factura'
-                        },{
-                            data: 'correlativo'
                         },
                         {
                             data: 'cliente'
-                        },
-                        {
-                            data: 'documento'
                         },
                         {
                             data: 'fecha_emision'
