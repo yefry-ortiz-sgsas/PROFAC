@@ -104,6 +104,7 @@
                                         <th>Fecha de Nacimiento</th>
                                         <th>tipo</th>
                                         <th>Fecha Ingreso</th>
+                                        <th>Opciones</th>
 
                                     </tr>
                                 </thead>
@@ -237,6 +238,9 @@
                     {
                         data: 'fecha_registro'
                     },
+                    {
+                        data: 'opciones'
+                    }
 
                 ]
 

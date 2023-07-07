@@ -49,7 +49,28 @@ class ListarUsuarios extends Component
             ");
 
             return Datatables::of($listaUsuarios)
+            ->addColumn('opciones', function ($nota) {
 
+                return
+
+                '
+
+                <div class="btn-group">
+                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                    más</button>
+                <ul class="dropdown-menu" x-placement="bottom-start"
+                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                    <li><a class="dropdown-item" href="#" "> <i class="fa fa-pencil m-r-5 text-warning"></i>
+                            Editar Rol</a></li>
+                    <li><a class="dropdown-item" href="#" "> <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                            Dar de baja </a></li>
+
+                </ul>
+            </div>
+
+
+                ';
+            })->rawColumns(['opciones'])
 
             ->make(true);
 
