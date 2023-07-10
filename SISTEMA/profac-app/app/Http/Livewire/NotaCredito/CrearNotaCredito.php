@@ -225,7 +225,7 @@ class CrearNotaCredito extends Component
 
         $arregloIdInputs = $request->arregloIdInputs;
 
-        
+
 
         /***VERIFICA LA EXISTENCIA DEL PRODUCTO EN LA FACTURA PARA REALIZAR LA DEVOLUCION - SI NO ENCUENTRA CANTIDAD DISPONIBLE, NO REALIZAR LA NOTA DE CREDITO */
         for ($i=0; $i < count($arregloIdInputs) ; $i++) {
@@ -264,11 +264,11 @@ class CrearNotaCredito extends Component
 
         $factura = DB::SELECTONE("select estado_factura_id from factura where id = ". $request->idFactura);
 
-        
+
 
         if ($factura->estado_factura_id == 1 ) {
            $estado = 1;
-      
+
             $cai = DB::SELECTONE("select
                             id,
                             numero_inicial,
@@ -283,7 +283,7 @@ class CrearNotaCredito extends Component
         } elseif($factura->estado_factura_id == 2) {
 
             $estado = 2;
-           
+
             $cai = DB::SELECTONE("select
                             id,
                             numero_inicial,
@@ -341,11 +341,17 @@ class CrearNotaCredito extends Component
         $notaCredito->cai = $numeroCAI;
         $notaCredito->numero_secuencia_cai = $numeroSecuencia;
         $notaCredito->fecha = now();
-        $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
+        /* $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
         $notaCredito->sub_total_grabado = round($request->subTotalGeneralGrabadoCredito,2);
         $notaCredito->sub_total_excento = round($request->subTotalGeneralExcentoCredito,2);
         $notaCredito->isv = round($request->isvGeneralCredito,2);
-        $notaCredito->total = round($request->totalGeneralCredito,2);
+        $notaCredito->total = round($request->totalGeneralCredito,2); */
+
+        $notaCredito->sub_total = $request->subTotalGeneralCredito;
+        $notaCredito->sub_total_grabado = $request->subTotalGeneralGrabadoCredito;
+        $notaCredito->sub_total_excento = $request->subTotalGeneralExcentoCredito;
+        $notaCredito->isv =$request->isvGeneralCredito;
+        $notaCredito->total = $request->totalGeneralCredito;
         $notaCredito->factura_id = $request->idFactura;
         $notaCredito->cai_id = $cai->id;
         $notaCredito->motivo_nota_credito_id = $request->motivo_nota;
@@ -391,7 +397,7 @@ class CrearNotaCredito extends Component
             $productoNota->precio_unidad = $precio;
             $productoNota->sub_total = $subTotal;
             $productoNota->isv =  $isv;
-            $productoNota->total = $total; 
+            $productoNota->total = $total;
             $productoNota->unidad_medida_venta_id = $idUnidadMedida;
             $productoNota->save();
 
