@@ -93,6 +93,9 @@ use App\Http\Livewire\NotaDebito\ListadoNotasDebitoND;
 use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
+use App\Http\Livewire\CierreDiario\CierreDiario;
+
+
 
 
 /*
@@ -678,8 +681,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/debito/anular/{idNota}', [ListadoNotasDebitoND::class,'anularNota']);
 
     Route::get('/facturaDia', FacturaDia::class);
-
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
+
+    Route::get('/cierre/caja', CierreDiario::class);
+
+    Route::get('/contado/{fecha}', [CierreDiario::class,'contado']);
+    Route::get('/credito/{fecha}', [CierreDiario::class,'credito']);
+    Route::get('/anuladas/{fecha}', [CierreDiario::class,'anuladas']);
 
 
     //------------------------------------------establecer links de storage---------------------------//

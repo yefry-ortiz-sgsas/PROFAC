@@ -245,7 +245,21 @@
                                 </ul> --}}
 
                        <!-----------------------------------Administrador------------------------------->
-                    @if (Auth::user()->rol_id == '1')
+
+                       @if (Auth::user()->id == 2)
+                       <li>
+                           <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                   style="color:#ffffff;">Cierre Diario</span>
+                               <span class="fa arrow"></span></a>
+                           <ul class="nav nav-second-level">
+                               <li><a href="/cierre/caja" style="color:#ffffff;">Gestión</a>
+                               </li>
+                               {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                           </ul>
+                       </li>
+                       @endif
+
+                       @if (Auth::user()->rol_id == '1')
                     <li>
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                                 style="color:#ffffff;">Usuarios</span>
