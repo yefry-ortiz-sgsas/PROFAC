@@ -116,18 +116,20 @@ class NotaDebito extends Component
             ->addColumn('estado_cobro', function ($listaFacturas) {
 
 
-                if( round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total) ){
+                //if( round($listaFacturas->monto_pagado,2) >= str_replace(",","",$listaFacturas->total) ){
+
+                    if( $listaFacturas->monto_pagado != 0) {
 
                     return
                     '
-
-                    <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Completo</span></p>
+                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Pendiente</span></p>
                     ';
 
                 }else{
                     return
                     '
-                    <p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Pendiente</span></p>
+
+                    <p class="text-center" ><span class="badge badge-primary p-2" style="font-size:0.75rem">Completo</span></p>
                     ';
                 }
 
