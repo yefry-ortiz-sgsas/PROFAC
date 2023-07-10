@@ -73,11 +73,13 @@ class ListadoNotaCredito extends Component
             on A.users_id = users.id
             inner join factura fa on fa.id = A.factura_id
             inner join cliente cli on cli.id = fa.cliente_id
-            where A.estado_nota_dec = 1
-            and cli.tipo_cliente_id = 2
+            where
+
+            cli.tipo_cliente_id = 2
             and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
             //dd($listado);
+            /* A.estado_nota_dec = 1 */
             return Datatables::of($listado)
             ->addColumn('opciones', function ($nota) {
 

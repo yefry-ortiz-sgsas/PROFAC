@@ -53,8 +53,15 @@ class ListadoNotasDebito extends Component
             from notadebito
             inner join factura
             on notadebito.factura_id = factura.id
-            where estado_nota_dec = 1 and factura.tipo_venta_id = 1 and notadebito.created_at >= '".$fechaInicio."' and notadebito.created_at <= '".$fechaFinal."'"
+            inner join cliente cli on cli.id = factura.cliente_id
+            where
+            cli.tipo_cliente_id = 1
+            and notadebito.created_at >= '".$fechaInicio."' and notadebito.created_at <= '".$fechaFinal."'"
             );
+
+           /*  estado_nota_dec = 1
+
+            and factura.tipo_venta_id = 1 */
 
             return Datatables::of($listanotaDebito)
             ->addColumn('estado', function ($listanotaDebito) {
