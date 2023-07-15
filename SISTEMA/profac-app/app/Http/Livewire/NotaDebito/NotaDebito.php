@@ -315,8 +315,16 @@ class NotaDebito extends Component
         $NotaDebito->users_registra_id = Auth::user()->id;
         $NotaDebito->save();
 
+        /* SE AGREGA LA FUNCION DE SUMAR EL MONTO DE NOTA DE DEBITO A LA FACTURA */
+        /*
+                $facturaTotal = DB::SELECTONE("select total from factura where id = ". $request->factura_id);
 
+                $totalFacturaMasnDebito = $request->monto_ + $facturaTotal->total;
 
+                DB::table('factura')->where('id',$request->factura_id)->update(array('total'=>$totalFacturaMasnDebito));
+        */
+
+        /* ============================================================================ */
 
 
         if ($factura->estado_factura_id == 1 ) {

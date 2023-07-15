@@ -52,7 +52,7 @@
                             <table id="tbl_cuentas_por_cobrar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Numero Factura</th>
+                                        <th>No. Factura</th>
                                         <th>Cliente</th>
                                         <th>Fecha Emision</th>
                                         <th>Fecha Vencimiento</th>
@@ -199,7 +199,7 @@
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
                     "columns": [{
-                            data: 'numero_factura'
+                            data: 'correlativo'
                         },
                         {
                             data: 'cliente'

@@ -72,6 +72,7 @@
                                         <th>Codigo</th>
                                         <th>Registro N°</th>
                                         <th>Cliente</th>
+                                        <th>No. Factura</th>
                                         <th>Motivo</th>
                                         <th>Comentario</th>
                                         <th>Sub Total</th>
@@ -145,6 +146,9 @@
                         },
                         {
                             data: 'cliente'
+                        },
+                        {
+                            data: 'factura'
                         },
                         {
                             data: 'motivo'

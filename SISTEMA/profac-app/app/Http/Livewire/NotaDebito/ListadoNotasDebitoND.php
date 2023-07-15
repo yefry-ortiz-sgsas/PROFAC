@@ -41,7 +41,8 @@ class ListadoNotasDebitoND extends Component
             select
             notadebito.id
             ,factura_id
-            ,factura.numero_factura
+            ,factura.cai
+            ,cli.nombre as cliente
             ,monto_asignado
             ,fechaEmision
             ,motivoDescripcion
@@ -53,6 +54,7 @@ class ListadoNotasDebitoND extends Component
             from notadebito
             inner join factura
             on notadebito.factura_id = factura.id
+            inner join cliente cli on cli.id = factura.cliente_id
             where
             cli.tipo_cliente_id = 2
             and notadebito.created_at >= '".$fechaInicio."' and notadebito.created_at <= '".$fechaFinal."' "

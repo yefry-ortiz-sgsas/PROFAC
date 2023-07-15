@@ -70,6 +70,7 @@
                                         <th>Nota de débito</th>
                                         <th>Monto Asignado</th>
                                         <th>Código de Factura</th>
+                                        <th>Cliente</th>
                                         <th>Fecha de Emisión</th>
 
                                         <th>Registrado por</th>
@@ -128,7 +129,10 @@
                         data: 'monto_asignado'
                     },
                     {
-                        data: 'numero_factura'
+                        data: 'cai'
+                    },
+                    {
+                        data: 'cliente'
                     },
                     {
                         data: 'fechaEmision'

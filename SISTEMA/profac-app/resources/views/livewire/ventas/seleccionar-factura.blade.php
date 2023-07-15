@@ -7,7 +7,7 @@
             <h2>Listado De Facturas </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">
-                    <a>Coorporativo</a>
+                    <a>Clientes A</a>
                 </li>
 
                 <li class="breadcrumb-item">
@@ -177,7 +177,7 @@
 
                 var plainArray = table.column(2).data().toArray();
                 var plainArray2 = table.column(0).data().toArray();
-                
+
 
                 const formData = new FormData();
 
@@ -282,7 +282,7 @@
 
 
                 for (let i = 0; i < plainArray.length; i++) {
-                    formData.append('arregloCAI[]', plainArray[i]); 
+                    formData.append('arregloCAI[]', plainArray[i]);
                     formData.append('arregloCAIID[]', plainArray2[i]);
                 }
 
@@ -333,7 +333,7 @@
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         guardarEstado()
-                    } 
+                    }
                 })
             }
         </script>

@@ -112,7 +112,7 @@
                     </thead>
                         <tr>
                             <td>POR FACTURA NO. {{ $cliente->cai }} </td>
-                            <td>L - </td>
+                            <td></td>
                             <td></td>
                         </tr>
                         <tr>

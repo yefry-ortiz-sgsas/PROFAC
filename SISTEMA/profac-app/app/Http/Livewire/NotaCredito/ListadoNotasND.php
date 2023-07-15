@@ -41,6 +41,7 @@ class ListadoNotasND extends Component
             A.id as codigo,
             A.numero_nota,
             cli.nombre as cliente,
+            fa.cai as factura,
             B.descripcion as motivo,
             A.comentario,
             format(A.sub_total,2) as sub_total,

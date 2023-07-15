@@ -41,7 +41,8 @@ class ListadoNotasDebito extends Component
             select
             notadebito.id
             ,factura_id
-            ,factura.numero_factura
+            ,factura.cai
+            ,cli.nombre as cliente
             ,monto_asignado
             ,fechaEmision
             ,motivoDescripcion

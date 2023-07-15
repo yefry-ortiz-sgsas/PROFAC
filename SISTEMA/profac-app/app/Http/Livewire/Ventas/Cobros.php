@@ -118,7 +118,7 @@ class Cobros extends Component
 
             $file = $request->file('img_pago');
             if($file != NULL){
-                
+
             $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
             $path = public_path() . '/documentos_ventas';
             $file->move($path, $name);

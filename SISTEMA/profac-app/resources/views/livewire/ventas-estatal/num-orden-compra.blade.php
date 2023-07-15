@@ -104,13 +104,13 @@
             <h2>Orden Compra </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Gobierno</a>
+                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Clientes B</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Listar</a>
                 </li>
 
-                
+
             </ol>
         </div>
 
@@ -120,7 +120,7 @@
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_orden_compra_crear"><i class="fa fa-plus"></i> Añadir Numero Orden Compra</a>
             </div>
-            
+
         </div>
 
 
@@ -138,7 +138,7 @@
                                         <th>Cod</th>
                                         <th>Numero Orden Compra</th>
                                         <th>Cliente</th>
-                                        <th>Registrado Por</th>                                                                               
+                                        <th>Registrado Por</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -161,7 +161,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Gobierno</h3>
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Clientes B</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -170,7 +170,7 @@
                         <div class="modal-body">
                             <form id="crearNumOrdenCompraForm" name="crearNumOrdenCompraForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                
+
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -186,7 +186,7 @@
                                         </select>
                                     </div>
 
-                                    
+
                                 </div>
                             </form>
 
@@ -212,7 +212,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarNumOrdenCompraForm" name="editarNumOrdenCompraForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -227,16 +227,16 @@
                                             <div class="col-md-12">
                                                 <label for="cliente_editar" class="col-form-label focus-label">Seleccionar Cliente:<span class="text-danger">*</span></label>
                                                 <select id="cliente_editar" name="cliente_editar" class="form-group form-control" required data-parsley-required >
-                                                    
+
                                                 </select>
-                                            </div>  
-        
+                                            </div>
+
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarNumOrdenCompraForm" class="btn btn-primary">Editar
@@ -275,7 +275,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearNumOrdenCompraForm', function(event) {
             event.preventDefault();
             guardarNumOrdenCompra();
@@ -285,14 +285,14 @@
                 $('#modalSpinnerLoading').modal('show');
 
                 var data = new FormData($('#crearNumOrdenCompraForm').get(0));
-                
+
                 axios.post("/estatal/ordenes/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearNumOrdenCompraForm').parsley().reset();
-                        
+
                         document.getElementById("crearNumOrdenCompraForm").reset();
                         $('#modal_orden_compra_crear').modal('hide');
 
@@ -366,7 +366,7 @@
                         },
                         {
                             data: 'nombre'
-                        },                        
+                        },
                         {
                             data: 'name'
                         },
@@ -386,13 +386,13 @@
                 let data = {id:id}
                 axios.post('/estatal/ordenes/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('numero_orden_editar').value = datos.numero_orden;
                     document.getElementById('cliente_editar').innerHTML = `<option value="${datos.cliente_id}">${datos.nombre}</option>`;
                     document.getElementById('idNumOrden').value = datos.id;
-                                      
+
                     $('#modal_orden_compra_editar').modal('show');
                 })
                 .catch( err=>{
@@ -424,9 +424,9 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
 
             function obtenerClientesEditar() {
@@ -445,24 +445,24 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
 
             function editarNumOrdenCompra(){
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarNumOrdenCompraForm').get(0));
-                
-            
+
+
                 axios.post('/estatal/ordenes/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarNumOrdenCompraForm').parsley().reset();
-                    
+
                     document.getElementById("editarNumOrdenCompraForm").reset();
                     $('#modal_orden_compra_editar').modal('hide');
 
@@ -480,7 +480,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_orden_compra_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
