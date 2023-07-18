@@ -7,7 +7,7 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h2>Notas de debito gobierno</h2>
+                    <h2>Notas de debito Clientes <b>B</b></h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a>Listado </a>

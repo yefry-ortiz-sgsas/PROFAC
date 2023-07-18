@@ -274,7 +274,7 @@ class CrearNotaCredito extends Component
                             numero_inicial,
                             numero_final,
                             cantidad_otorgada,
-                            numero_actual as 'numero_actual',
+                            serie as 'numero_actual',
                             if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
                             cantidad_no_utilizada
                             from cai
@@ -289,7 +289,7 @@ class CrearNotaCredito extends Component
                             numero_inicial,
                             numero_final,
                             cantidad_otorgada,
-                            serie as 'numero_actual',
+                            numero_actual as 'numero_actual',
                             if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
                             cantidad_no_utilizada
                             from cai

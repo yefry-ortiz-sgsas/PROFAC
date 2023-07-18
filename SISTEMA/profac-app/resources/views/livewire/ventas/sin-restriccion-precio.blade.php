@@ -3,8 +3,8 @@
         <style>
             /* #divProductos  input {
                 font-size: 0.8rem;
-                
-                
+
+
               } */
 
 
@@ -54,7 +54,7 @@
             <h2>Ventas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Cliente Corporativo</a>
+                    <a>Clientes <b>A</b></a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Sin restricción de precio </a>
@@ -245,13 +245,13 @@
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
                                         {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
-                
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
-                                           
+
+                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
+
                                                 <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-                                                  
-                                           
-                
+
+
+
                                         </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner ">
 
@@ -546,7 +546,7 @@
             $( document ).ready(function() {
                 $('#modal_solicitar_codigo').modal('show')
             });
-            
+
             var numeroInputs = 0;
             var arregloIdInputs = [];
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
@@ -708,7 +708,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
+                            <option value="${element.id}" >${element.descripcion}</option>
                             `
                         });
 
@@ -744,7 +744,7 @@
                         if (imagenes.length == 0) {
 
                             console.log("entro")
-                            htmlImagenes += `                                                
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
                             </div>`
@@ -758,13 +758,13 @@
                             imagenes.forEach(element => {
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
@@ -835,8 +835,8 @@
                                 title: 'Advertencia!',
                                 html: `
                             <p class="text-left">
-                                La sección de bodega y producto ha sido agregada anteriormente.<br><br> 
-                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                La sección de bodega y producto ha sido agregada anteriormente.<br><br>
+                                Por favor verificar la sección de bodega y producto sea distinto a los ya existentes en la lista de venta.<br><br>
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para la venta.
                             </p>`
                             })
@@ -886,12 +886,12 @@
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
                                                         <input type="text" placeholder="Nombre del producto" id="nombre${numeroInputs}"
-                                                            name="nombre${numeroInputs}" class="form-control" 
+                                                            name="nombre${numeroInputs}" class="form-control"
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            readonly 
+                                                            readonly
                                                             value='${producto.nombre}'
-                                                            
+
                                                             >
                                                     </div>
                                                 </div>
@@ -899,10 +899,10 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">cantidad</label>
                                                 <input type="text" value="${bodega}" placeholder="bodega-seccion" id="bodega${numeroInputs}"
-                                                    name="bodega${numeroInputs}" class="form-control" 
+                                                    name="bodega${numeroInputs}" class="form-control"
                                                     autocomplete="off"  readonly  >
                                             </div>
-                                    
+
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
@@ -920,12 +920,12 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">unidad</label>
                                                 <select class="form-control" name="unidad${numeroInputs}" id="unidad${numeroInputs}"
-                                                    data-parsley-required style="height:35.7px;" 
+                                                    data-parsley-required style="height:35.7px;"
                                                     onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
-                                                            ${htmlSelectUnidades} 
-                                                </select> 
-                                             
-                                                
+                                                            ${htmlSelectUnidades}
+                                                </select>
+
+
                                             </div>
 
 
@@ -934,27 +934,27 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="subTotalMostrar${numeroInputs}" class="sr-only">Sub Total</label>
                                                 <input type="text" placeholder="Sub total producto" id="subTotalMostrar${numeroInputs}"
-                                                    name="subTotalMostrar${numeroInputs}" class="form-control" 
+                                                    name="subTotalMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
-                                                 
+
                                                 <input id="subTotal${numeroInputs}" name="subTotal${numeroInputs}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="isvProductoMostrar${numeroInputs}" class="sr-only">ISV</label>
                                                 <input type="text" placeholder="ISV" id="isvProductoMostrar${numeroInputs}"
-                                                    name="isvProductoMostrar${numeroInputs}" class="form-control"  
+                                                    name="isvProductoMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
 
-                                                    <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>   
+                                                    <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="totalMostrar${numeroInputs}" class="sr-only">Total</label>
                                                 <input type="text" placeholder="Total del producto" id="totalMostrar${numeroInputs}"
-                                                    name="totalMostrar${numeroInputs}" class="form-control"   
+                                                    name="totalMostrar${numeroInputs}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
 
@@ -968,8 +968,8 @@
                                             <input id="restaInventario${numeroInputs}" name="restaInventario${numeroInputs}" type="hidden" value="">
                                             <input id="isv${numeroInputs}" name="isv${numeroInputs}" type="hidden" value="${producto.isv}">
 
-                                           
-                                    
+
+
                         </div>
                         `;
 

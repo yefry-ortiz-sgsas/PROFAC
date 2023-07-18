@@ -101,7 +101,7 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Orden Compra </h2>
+            <h2>Orden Compra Clientes <b>B</b></h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_orden_compra_crear">Clientes B</a>
