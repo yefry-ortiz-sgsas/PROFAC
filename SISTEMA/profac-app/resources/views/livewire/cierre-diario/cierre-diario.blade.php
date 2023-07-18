@@ -1,4 +1,11 @@
 <div>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <h2>CIERRE DIARIO DE CAJA</h2>
@@ -136,6 +143,19 @@
                                 <tbody>
 
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>FECHA</th>
+                                        <th>MES</th>
+                                        <th>FACTURA</th>
+                                        <th>CLIENTE</th>
+                                        <th>VENDENDOR</th>
+                                        <th>SUBTOTAL</th>
+                                        <th>IMPUESTO DE VENTA</th>
+                                        <th>TOTAL</th>
+                                        <th>TIPO</th>
+                                    </tr>
+                                </tfoot>
                             </table>
 
                         </div>
@@ -332,7 +352,7 @@
             "order": ['0', 'desc'],
             "paging": true,
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
             },
             pageLength: 10,
             responsive: true,
@@ -375,7 +395,32 @@
                 {
                     data: 'tipo'
                 },
-            ]
+            ],initComplete: function () {
+                var r = $('#tbl_anuladas tfoot tr');
+                r.find('th').each(function(){
+                  $(this).css('padding', 8);
+                });
+                $('#tbl_anuladas thead').append(r);
+                $('#search_0').css('text-align', 'center');
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+            }
 
 
         });
