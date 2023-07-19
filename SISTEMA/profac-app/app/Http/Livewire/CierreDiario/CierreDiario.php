@@ -38,42 +38,27 @@ class CierreDiario extends Component
 
             $consulta = DB::SELECT("
                 select
-                A.created_at as 'fecha',
-                (CASE DATE_FORMAT(A.created_at, '%m') WHEN '01' THEN 'ENERO' WHEN '02' THEN 'FEBRERO' WHEN '03' THEN 'MARZO' WHEN '04' THEN 'ABRIL' WHEN '05' THEN 'MAYO' WHEN '06' THEN 'JUNIO' WHEN '07' THEN 'JULIO' WHEN '08' THEN 'AGOSTO' WHEN '09' THEN 'SEPTIEMBRE' WHEN '10' THEN 'OCTUBRE' WHEN '11' THEN 'NOVIEMBRE' WHEN '12' THEN 'DICIEMBRE' END) AS 'mes',
-                A.cai as 'factura',
-                A.nombre_cliente as 'cliente',
-                (select name from users where id = A.vendedor) as 'vendedor',
-                format(A.sub_total,2) as 'subtotal',
-                IF(A.sub_total = A.total, 0.00, format(A.isv,2)) as 'imp_venta',
-                format(A.total,2) as 'total',
-                A.estado_factura_id as tip
-
-
+                    A.created_at as 'fecha',
+                    A.cai as 'factura',
+                    A.nombre_cliente as 'cliente',
+                    (select name from users where id = A.vendedor) as 'vendedor',
+                    A.sub_total as 'subtotal',
+                    IF(A.sub_total = A.total, 0.00,A.isv) as 'imp_venta',
+                    A.total as 'total',
+                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                    'CONTADO' AS 'tipoFactura'
                 from factura A
-                inner join estado_venta B
-                on A.estado_venta_id = B.id
-                inner join tipo_pago_venta C
-                on A.tipo_pago_id = C.id
-                where B.id = 1 and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+                    inner join estado_venta B on A.estado_venta_id = B.id
+                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+                where
+                    B.id = 1
+                    and C.id = 1
+                    and A.estado_venta_id = 1
+                    and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                 ");
 
-
-
-
-
-
-
             return Datatables::of($consulta)
-            ->addColumn('tipo', function ($consulta) {
-                if ($consulta->tip === 1) {
-                    return '<td><span class="badge bg-primary">GOBIERNO</span></td>';
-                } else {
-
-                    return '<td><span class="badge bg-info">COORPORATIVO</span></td>';
-                }
-
-            })
-            ->rawColumns(['tipo'])
+            ->rawColumns([])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -92,44 +77,30 @@ class CierreDiario extends Component
     public function credito($fecha){
         try {
 
-                //dd($fecha);
-
             $consulta = DB::SELECT("
-            select
-            A.created_at as 'fecha',
-            (CASE DATE_FORMAT(A.created_at, '%m') WHEN '01' THEN 'ENERO' WHEN '02' THEN 'FEBRERO' WHEN '03' THEN 'MARZO' WHEN '04' THEN 'ABRIL' WHEN '05' THEN 'MAYO' WHEN '06' THEN 'JUNIO' WHEN '07' THEN 'JULIO' WHEN '08' THEN 'AGOSTO' WHEN '09' THEN 'SEPTIEMBRE' WHEN '10' THEN 'OCTUBRE' WHEN '11' THEN 'NOVIEMBRE' WHEN '12' THEN 'DICIEMBRE' END) AS 'mes',
-            A.cai as 'factura',
-            A.nombre_cliente as 'cliente',
-            (select name from users where id = A.vendedor) as 'vendedor',
-            format(A.sub_total,2) as 'subtotal',
-            IF(A.sub_total = A.total, 0.00, format(A.isv,2)) as 'imp_venta',
-            format(A.total,2) as 'total',
-            A.estado_factura_id as tip
-
-
-            from factura A
-            inner join estado_venta B
-            on A.estado_venta_id = B.id
-            inner join tipo_pago_venta C
-            on A.tipo_pago_id = C.id
-            where B.id = 1 and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+                select
+                    A.created_at as 'fecha',
+                    A.cai as 'factura',
+                    A.nombre_cliente as 'cliente',
+                    (select name from users where id = A.vendedor) as 'vendedor',
+                    A.sub_total as 'subtotal',
+                    IF(A.sub_total = A.total, 0.00, A.isv) as 'imp_venta',
+                    A.total as 'total',
+                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                    'CREDITO' AS 'tipoFactura'
+                from factura A
+                    inner join estado_venta B on A.estado_venta_id = B.id
+                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+                where
+                    B.id = 1
+                    and C.id = 2
+                    and A.estado_venta_id = 1
+                    and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                 ");
 
 
-
-
-
             return Datatables::of($consulta)
-            ->addColumn('tipo', function ($consulta) {
-                if ($consulta->tip === 1) {
-                    return '<td><span class="badge bg-primary">GOBIERNO</span></td>';
-                } else {
-
-                    return '<td><span class="badge bg-info">COORPORATIVO</span></td>';
-                }
-
-            })
-            ->rawColumns(['tipo'])
+            ->rawColumns([])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -145,44 +116,30 @@ class CierreDiario extends Component
     public function anuladas($fecha){
         try {
 
-                //dd($fecha);
-
             $consulta = DB::SELECT("
-            select
-            A.created_at as 'fecha',
-            (CASE DATE_FORMAT(A.created_at, '%m') WHEN '01' THEN 'ENERO' WHEN '02' THEN 'FEBRERO' WHEN '03' THEN 'MARZO' WHEN '04' THEN 'ABRIL' WHEN '05' THEN 'MAYO' WHEN '06' THEN 'JUNIO' WHEN '07' THEN 'JULIO' WHEN '08' THEN 'AGOSTO' WHEN '09' THEN 'SEPTIEMBRE' WHEN '10' THEN 'OCTUBRE' WHEN '11' THEN 'NOVIEMBRE' WHEN '12' THEN 'DICIEMBRE' END) AS 'mes',
-            A.cai as 'factura',
-            A.nombre_cliente as 'cliente',
-            (select name from users where id = A.vendedor) as 'vendedor',
-            format(A.sub_total,2) as 'subtotal',
-            IF(A.sub_total = A.total, 0.00, format(A.isv,2)) as 'imp_venta',
-            format(A.total,2) as 'total',
-            A.estado_factura_id as tip
-
-
-            from factura A
-            inner join estado_venta B
-            on A.estado_venta_id = B.id
-            inner join tipo_pago_venta C
-            on A.tipo_pago_id = C.id
-            where B.id = 1 and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+                select
+                    A.created_at as 'fecha',
+                    A.cai as 'factura',
+                    A.nombre_cliente as 'cliente',
+                    (select name from users where id = A.vendedor) as 'vendedor',
+                    A.sub_total as 'subtotal',
+                    IF(A.sub_total = A.total, 0.00, A.isv) as 'imp_venta',
+                    format(A.total,2) as 'total',
+                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                    'ANULADAS' AS 'tipoFactura'
+                from factura A
+                    inner join estado_venta B on A.estado_venta_id = B.id
+                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+                where
+                    B.id = 1
+                    and A.estado_venta_id = 2
+                    and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                 ");
 
 
 
-
-
             return Datatables::of($consulta)
-            ->addColumn('tipo', function ($consulta) {
-                if ($consulta->tip === 1) {
-                    return '<td><span class="badge bg-primary">GOBIERNO</span></td>';
-                } else {
-
-                    return '<td><span class="badge bg-info">COORPORATIVO</span></td>';
-                }
-
-            })
-            ->rawColumns(['tipo'])
+            ->rawColumns([])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -193,5 +150,56 @@ class CierreDiario extends Component
 
         }
 
+    }
+
+    public function cargaTotales($fecha){
+
+
+
+        $anuladoTotal = DB::SELECTONE("
+            select
+                IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotal'
+            from factura A
+                inner join estado_venta B on A.estado_venta_id = B.id
+                inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+            where
+                B.id = 1
+                and A.estado_venta_id = 2
+                and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+        ");
+
+        $creditoTotal = DB::SELECTONE("
+                select
+                    IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotal'
+                from factura A
+                    inner join estado_venta B on A.estado_venta_id = B.id
+                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+                where
+                    B.id = 1
+                    and C.id = 2
+                    and A.estado_venta_id = 1
+                    and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+                ");
+
+        $contadoTotal = DB::SELECTONE("
+                select
+                    IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotal'
+                from factura A
+                    inner join estado_venta B on A.estado_venta_id = B.id
+                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+                where
+                    B.id = 1
+                    and C.id = 1
+                    and A.estado_venta_id = 1
+                    and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
+                ");
+
+
+
+        return response()->json([
+            'totalContado' => $contadoTotal->sumaTotal,
+            'totalCredito' => $creditoTotal->sumaTotal,
+            'totalAnulado' => $anuladoTotal->sumaTotal,
+        ], 200);
     }
 }

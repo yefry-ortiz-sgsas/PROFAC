@@ -6,6 +6,7 @@
             box-sizing: border-box;
         }
     </style>
+
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
              <nav aria-label="breadcrumb">
@@ -23,9 +24,28 @@
 
 
 
-    <div class="alert alert-warning" role="alert">
-        <p> <b>Nota: </b> Se requiere de selección de fecha para mostrar la información.</p>
+
+    <br>
+
+    <div id="baner1" class="alert alert-secondary" role="alert">
+        <h4 class="alert-heading">Cierre de caja.</h4>
+        <h2 class="mb-0"> <b>Nota: </b> Se requiere de selección de fecha para mostrar la información.</h2>
     </div>
+
+
+    <div id="baner2" style="display: none;" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Cierre de caja.</h4>
+        <h2 class="mb-0"> Revisión de facturas en la fecha seleccionada.</h2>
+    </div>
+
+    <div id="baner3" style="display: none;" class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Cierre de caja.</h4>
+        <h2 class="mb-0"> La caja para esta fecha, está cerrada.</h2>
+    </div>
+
+<input type="text" id="totalContado" name="totalContado">
+
+
     <div class="wrapper wrapper-content animated fadeInRight pb-0">
         <div class="row">
             <div class="col-lg-12">
@@ -37,10 +57,15 @@
                             <div class="col-6 col-sm-6 col-md-6 ">
                                 <label for="fecha" class="col-form-label focus-label">Fecha a revisar:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" type="date" id="fecha" name="fecha" value="{{date('Y-m-01')}}">
+                                <button class="btn btn-primary btn-lg btn-block" onclick="cargaConsulta()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                             </div>
 
+                            <div class="col-6 col-sm-6 col-md-6 ">
+                                <button class="btn btn-dark btn-lg btn-block" onclick="cargaConsulta()"><i class="fa-solid fa-paper-plane text-white"></i> Cerrar caja para esta fecha</button>
+                            </div>
+
+
                         </div>
-                        <button class="btn btn-primary" onclick="cargaConsulta()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -49,8 +74,8 @@
 
 
 
-    <div class="alert alert-primary" role="alert">
-        <p> <b>Nota: </b> FACTURAS DE CONTADO.</p>
+    <div class="alert alert-success" role="alert">
+        <h4> <b>Nota: </b> FACTURAS DE CONTADO.</h4>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -59,7 +84,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_contado" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_contado" class="table table-striped table-bordered table-hover border border-success">
                                 <thead class="">
                                     <tr>
                                        {{--   <th>FECHA</th>
@@ -100,8 +125,8 @@
     </div>
 
 
-    <div class="alert alert-primary" role="alert">
-        <p> <b>Nota: </b> FACTURAS DE CREDITO.</p>
+    <div class="alert alert-warning" role="alert">
+        <h4> <b>Nota: </b> FACTURAS DE CREDITO.</h4>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -109,7 +134,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_credito" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_credito" class="table table-striped table-bordered table-hover border border-warning">
                                 <thead class="">
                                     <tr>
                                         {{--  <th>FECHA</th>
@@ -149,8 +174,8 @@
         </div>
     </div>
 
-    <div class="alert alert-primary" role="alert">
-        <p> <b>Nota: </b> FACTURAS ANULADAS.</p>
+    <div class="alert alert-danger" role="alert">
+        <h4> <b>Nota: </b> FACTURAS ANULADAS.</h4>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -159,7 +184,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_anuladas" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_anuladas" class="table table-striped table-bordered table-hover border border-danger">
                                 <thead class="">
                                     <tr>
                                         {{--  <th>FECHA</th>
@@ -203,79 +228,17 @@
 @push('scripts')
 
 <script>
-
-   {{--   function cargaConsulta(){
-
-        $("#tbl_contado").dataTable().fnDestroy();
-        $("#tbl_credito").dataTable().fnDestroy();
-        $("#tbl_anuladas").dataTable().fnDestroy();
-
-        var fecha = document.getElementById('fecha').value;
-
-        $('#tbl_contado').DataTable({
-            "order": ['0', 'desc'],
-            "paging": true,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-            },
-            pageLength: 10,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-
-                {
-                    extend: 'excel',
-                    title: 'Facuracion_dia',
-                    className:'btn btn-success'
-                }
-            ],
-            "ajax": "/contado/"+fecha+",
-            "columns": [
-                {
-                    data: 'fecha'
-                },
-                {
-                    data: 'mes'
-                },
-                {
-                    data: 'factura'
-                },
-                {
-                    data: 'cliente'
-                },
-                {
-                    data: 'vendedor'
-                },
-                {
-                    data: 'subtotal'
-                },
-
-                {
-                    data: 'imp_venta'
-                },
-                {
-                    data: 'total'
-                },
-                {
-                    data: 'tipo'
-                },
-            ]
-
-
-        });
-
-
-    }  --}}
-
-
+    {{--  $('#prueba2').hide();  --}}
 
     function cargaConsulta(){
-
+        $('#baner1').css('display','none');
         $("#tbl_contado").dataTable().fnDestroy();
         $("#tbl_credito").dataTable().fnDestroy();
         $("#tbl_anuladas").dataTable().fnDestroy();
 
         var fecha = document.getElementById('fecha').value;
+
+        /*LLENADO DE LAS DISTINTAS TABLAS*/
 
         $('#tbl_contado').DataTable({
             "paging": true,
@@ -321,7 +284,18 @@
                     data: 'total'
                 },
                 {
-                    data: 'tipo'
+                    data: 'tipo',
+                    render: function (data, type, row) {
+
+
+                        if(data === 'CLIENTE B'){
+                            return "<span class='badge badge-primary'>"+data+"</span>";
+                        }else if(data === 'CLIENTE A'){
+                            return "<span class='badge badge-info'>"+data+"</span>";
+                        }
+
+
+                    }
                 },
             ],initComplete: function () {
                 var r = $('#tbl_contado tfoot tr');
@@ -348,6 +322,10 @@
                             }
                         });
                     });
+
+
+
+
             }
 
 
@@ -397,7 +375,18 @@
                     data: 'total'
                 },
                 {
-                    data: 'tipo'
+                    data: 'tipo',
+                    render: function (data, type, row) {
+
+
+                        if(data === 'CLIENTE B'){
+                            return "<span class='badge badge-primary'>"+data+"</span>";
+                        }else if(data === 'CLIENTE A'){
+                            return "<span class='badge badge-info'>"+data+"</span>";
+                        }
+
+
+                    }
                 },
             ],initComplete: function () {
                 var r = $('#tbl_credito tfoot tr');
@@ -473,7 +462,18 @@
                     data: 'total'
                 },
                 {
-                    data: 'tipo'
+                    data: 'tipo',
+                    render: function (data, type, row) {
+
+
+                        if(data === 'CLIENTE B'){
+                            return "<span class='badge badge-primary'>"+data+"</span>";
+                        }else if(data === 'CLIENTE A'){
+                            return "<span class='badge badge-info'>"+data+"</span>";
+                        }
+
+
+                    }
                 },
             ],initComplete: function () {
                 var r = $('#tbl_anuladas tfoot tr');
@@ -504,8 +504,43 @@
 
 
         });
+
+        /*====================================*/
+
+
+
+        cargarTotales();
+
+
+
+    }
+
+    function cargarTotales(){
+
+        var fecha1 = document.getElementById('fecha').value;
+
+        axios.get("/carga/totales/"+fecha1)
+        .then(response => {
+
+            console.log(response.data);
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            $('#modal_usuario_crear').modal('hide');
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        });
     }
 </script>
+
+
+
 
 @endpush
 
