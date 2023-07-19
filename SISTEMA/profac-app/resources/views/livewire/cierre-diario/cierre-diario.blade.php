@@ -26,12 +26,10 @@
 
 
     <br>
-
     <div id="baner1" class="alert alert-secondary" role="alert">
         <h4 class="alert-heading">Cierre de caja.</h4>
         <h2 class="mb-0"> <b>Nota: </b> Se requiere de selección de fecha para mostrar la información.</h2>
     </div>
-
 
     <div id="baner2" style="display: none;" class="alert alert-success" role="alert">
         <h4 class="alert-heading">Cierre de caja.</h4>
@@ -42,9 +40,6 @@
         <h4 class="alert-heading">Cierre de caja.</h4>
         <h2 class="mb-0"> La caja para esta fecha, está cerrada.</h2>
     </div>
-
-<input type="text" id="totalContado" name="totalContado">
-
 
     <div class="wrapper wrapper-content animated fadeInRight pb-0">
         <div class="row">
@@ -61,7 +56,7 @@
                             </div>
 
                             <div class="col-6 col-sm-6 col-md-6 ">
-                                <button class="btn btn-dark btn-lg btn-block" onclick="cargaConsulta()"><i class="fa-solid fa-paper-plane text-white"></i> Cerrar caja para esta fecha</button>
+                                <button class="btn btn-dark btn-lg btn-block" onclick="cerrarCaja()"><i class="fa-solid fa-paper-plane text-white"></i> Cerrar caja para esta fecha</button>
                             </div>
 
 
@@ -72,13 +67,17 @@
         </div>
     </div>
 
-
-
-    <div class="alert alert-success" role="alert">
-        <h4> <b>Nota: </b> FACTURAS DE CONTADO.</h4>
-    </div>
-
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="alert alert-success" role="alert">
+            <h5> <b>Nota: </b> FACTURAS DE CONTADO.</h5>
+
+        </div>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Total Lps.</span>
+            </div>
+            <input value="0.00"  style="font-size: 18px" type="text"  id="totalContado" name="totalContado"  disabled class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -123,12 +122,16 @@
             </div>
         </div>
     </div>
-
-
-    <div class="alert alert-warning" role="alert">
-        <h4> <b>Nota: </b> FACTURAS DE CREDITO.</h4>
-    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="alert alert-warning" role="alert">
+            <h5> <b>Nota: </b> FACTURAS DE CREDITO.</h5>
+        </div>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Total Lps.</span>
+            </div>
+            <input value="0.00"  style="font-size: 18px" type="text"  id="totalCredito" name="totalCredito"  disabled class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -174,11 +177,18 @@
         </div>
     </div>
 
-    <div class="alert alert-danger" role="alert">
-        <h4> <b>Nota: </b> FACTURAS ANULADAS.</h4>
-    </div>
+
 
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="alert alert-danger" role="alert">
+            <h5> <b>Nota: </b> FACTURAS ANULADAS.</h5>
+        </div>
+        <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Total Lps.</span>
+            </div>
+            <input value="0.00"  style="font-size: 18px" type="text"  id="totalAnuladas" name="totalAnuladas"  disabled class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -521,8 +531,20 @@
 
         axios.get("/carga/totales/"+fecha1)
         .then(response => {
+            /* totalContado
+            totalCredito
+            totalAnuladas
 
-            console.log(response.data);
+            'totalContado' => $contadoTotal->sumaTotal,
+            'totalCredito' => $creditoTotal->sumaTotal,
+            'totalAnulado' => $anuladoTotal->sumaTotal,
+
+            console.log(response.data.totalContado);*/
+
+
+            $('#totalContado').val(response.data.totalContado);
+            $('#totalCredito').val(response.data.totalCredito);
+            $('#totalAnuladas').val(response.data.totalAnulado);
 
         })
         .catch(err => {
