@@ -8,22 +8,24 @@
     </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <h2>CIERRE DIARIO DE CAJA</h2>
-
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="index.html">/ CONSULTA DE FACTURAS</a>
-                </li>
-
-
-            </ol>
+             <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a>Módulo Contable</a></li>
+          <li class="breadcrumb-item"><a>Cierre de caja</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Diario</li>
+        </ol>
+      </nav>
         </div>
 
     </div>
 
 
-    <p> <b>Nota: </b> Se requiere de selección de fecha para mostrar la información.</p>
 
+
+
+    <div class="alert alert-warning" role="alert">
+        <p> <b>Nota: </b> Se requiere de selección de fecha para mostrar la información.</p>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight pb-0">
         <div class="row">
             <div class="col-lg-12">
@@ -47,7 +49,9 @@
 
 
 
-    <p> <b>Nota: </b> FACTURAS DE CONTADO.</p>
+    <div class="alert alert-primary" role="alert">
+        <p> <b>Nota: </b> FACTURAS DE CONTADO.</p>
+    </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -58,8 +62,8 @@
                             <table id="tbl_contado" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>MES</th>
+                                       {{--   <th>FECHA</th>
+                                        <th>MES</th>  --}}
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -72,8 +76,8 @@
                                 <tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>FECHA</th>
-                                            <th>MES</th>
+                                            {{--  <th>FECHA</th>
+                                            <th>MES</th>  --}}
                                             <th>FACTURA</th>
                                             <th>CLIENTE</th>
                                             <th>VENDENDOR</th>
@@ -96,8 +100,9 @@
     </div>
 
 
-    <p> <b>Nota: </b> FACTURAS DE CREDITO.</p>
-
+    <div class="alert alert-primary" role="alert">
+        <p> <b>Nota: </b> FACTURAS DE CREDITO.</p>
+    </div>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
@@ -107,8 +112,8 @@
                             <table id="tbl_credito" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>MES</th>
+                                        {{--  <th>FECHA</th>
+                                        <th>MES</th>  --}}
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -121,8 +126,8 @@
                                 <tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>FECHA</th>
-                                            <th>MES</th>
+                                            {{--  <th>FECHA</th>
+                                            <th>MES</th>  --}}
                                             <th>FACTURA</th>
                                             <th>CLIENTE</th>
                                             <th>VENDENDOR</th>
@@ -144,7 +149,9 @@
         </div>
     </div>
 
-    <p> <b>Nota: </b> FACTURAS ANULADAS.</p>
+    <div class="alert alert-primary" role="alert">
+        <p> <b>Nota: </b> FACTURAS ANULADAS.</p>
+    </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -155,8 +162,8 @@
                             <table id="tbl_anuladas" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>MES</th>
+                                        {{--  <th>FECHA</th>
+                                        <th>MES</th>  --}}
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -171,8 +178,8 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>MES</th>
+                                       {{--   <th>FECHA</th>
+                                        <th>MES</th>  --}}
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -271,7 +278,6 @@
         var fecha = document.getElementById('fecha').value;
 
         $('#tbl_contado').DataTable({
-            "order": ['0', 'desc'],
             "paging": true,
             "language": {
                 "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
@@ -289,12 +295,12 @@
             ],
             "ajax": "/contado/"+fecha,
             "columns": [
-                {
+                /*{
                     data: 'fecha'
                 },
                 {
                     data: 'mes'
-                },
+                },*/
                 {
                     data: 'factura'
                 },
@@ -348,7 +354,6 @@
         });
 
         $('#tbl_credito').DataTable({
-            "order": ['0', 'desc'],
             "paging": true,
             "language": {
                 "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
@@ -366,12 +371,12 @@
             ],
             "ajax": "/credito/"+fecha,
             "columns": [
-                {
+                /*{
                     data: 'fecha'
                 },
                 {
                     data: 'mes'
-                },
+                },*/
                 {
                     data: 'factura'
                 },
@@ -425,7 +430,6 @@
         });
 
         $('#tbl_anuladas').DataTable({
-            "order": ['0', 'desc'],
             "paging": true,
             "language": {
                 "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
@@ -443,12 +447,12 @@
             ],
             "ajax": "/anuladas/"+fecha,
             "columns": [
-                {
+                /*{
                     data: 'fecha'
                 },
                 {
                     data: 'mes'
-                },
+                },*/
                 {
                     data: 'factura'
                 },

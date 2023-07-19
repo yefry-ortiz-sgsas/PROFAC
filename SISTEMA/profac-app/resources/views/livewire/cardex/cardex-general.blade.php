@@ -1,4 +1,11 @@
 <div>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <h2>Cardex General</h2>
@@ -68,7 +75,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <tfoot>
+                                        <tr>
+                                            <th>Fecha de gestion</th>
+                                            <th>Producto</th>
+                                            <th>Codigo de producto</th>
+                                            <th>Factura</th>
+                                            <th>Ajuste</th>
+                                            <th>Compra</th>
+                                            <th>Comprobante de entrega</th>
+                                            <th>Vale Tipo 1</th>
+                                            <th>Vale Tipo 2</th>
+                                            <th>Nota de credito</th>
+                                            <th>Descripcion</th>
+                                            <th>Origen</th>
+                                            <th>Destino</th>
+                                            <th>Cantidad</th>
+                                            <th>Usuario</th>
+                                        </tr>
+                                    </tfoot>
                                 </tbody>
                             </table>
 
@@ -89,7 +114,7 @@
 <script>
 
 
- 
+
 
     function cargaCardex(){
 
@@ -99,7 +124,6 @@
         var fecha_final = document.getElementById('fecha_final').value;
 
         $('#tbl_cardex').DataTable({
-            "order": ['0', 'desc'],
             "paging": false,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -184,7 +208,32 @@
                 {
                     data: 'usuario'
                 },
-            ]
+            ],initComplete: function () {
+                var r = $('#tbl_cardex tfoot tr');
+                r.find('th').each(function(){
+                  $(this).css('padding', 8);
+                });
+                $('#tbl_cardex thead').append(r);
+                $('#search_0').css('text-align', 'center');
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+            }
 
 
         });
