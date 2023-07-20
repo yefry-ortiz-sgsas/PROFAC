@@ -252,7 +252,9 @@
                                    style="color:#ffffff;">Cierre Diario</span>
                                <span class="fa arrow"></span></a>
                            <ul class="nav nav-second-level">
-                               <li><a href="/cierre/caja" style="color:#ffffff;">Gestión</a>
+                               <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a>
+                                <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a>
+
                                </li>
                                {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                            </ul>

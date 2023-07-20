@@ -95,6 +95,9 @@ use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 use App\Http\Livewire\CierreDiario\CierreDiario;
 
+use App\Http\Livewire\CierreDiario\HistoricoCierres;
+
+
 
 
 
@@ -684,11 +687,22 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 
     Route::get('/cierre/caja', CierreDiario::class);
+    Route::get('/cierre/historico', HistoricoCierres::class);
+    Route::get('/cargar/historico', [HistoricoCierres::class,'listadoHistorico']);
+
+
+
 
     Route::get('/contado/{fecha}', [CierreDiario::class,'contado']);
     Route::get('/credito/{fecha}', [CierreDiario::class,'credito']);
     Route::get('/anuladas/{fecha}', [CierreDiario::class,'anuladas']);
     Route::get('/carga/totales/{fecha}', [CierreDiario::class,'cargaTotales']);
+
+    Route::post('/cierre/guardar/{fecha}', [CierreDiario::class,'guardarCierre']);
+
+
+
+
 
 
 

@@ -48,17 +48,11 @@
                     <div class="ibox-content">
                         <div class="row">
 
-
-                            <div class="col-6 col-sm-6 col-md-6 ">
+                            <div class="col-12 col-sm-12 col-md-12">
                                 <label for="fecha" class="col-form-label focus-label">Fecha a revisar:<span class="text-danger">*</span></label>
                                 <input class="form-group form-control" type="date" id="fecha" name="fecha" value="{{date('Y-m-01')}}">
                                 <button class="btn btn-primary btn-lg btn-block" onclick="cargaConsulta()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
                             </div>
-
-                            <div class="col-6 col-sm-6 col-md-6 ">
-                                <button class="btn btn-dark btn-lg btn-block" onclick="cerrarCaja()"><i class="fa-solid fa-paper-plane text-white"></i> Cerrar caja para esta fecha</button>
-                            </div>
-
 
                         </div>
                     </div>
@@ -177,8 +171,6 @@
         </div>
     </div>
 
-
-
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="alert alert-danger" role="alert">
             <h5> <b>Nota: </b> FACTURAS ANULADAS.</h5>
@@ -233,15 +225,71 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div class="wrapper wrapper-content animated fadeInRight" id="divcierre">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h3>Datos extras de cierre de caja <i class="fa-solid fa-cart-shopping"></i></h3>
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-control" id="cerrarCaja" name="cerrarCaja" >
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1"> <b>Detalle un comentario sobre el cierre</b></label>
+                                    <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="row">
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="exampleFormControlTextarea1"> <b>Total Facturas de Contado</b></label>
+                                        <input type="text" readonly class="form-control" id="inputTotalContado" name="inputTotalContado" >
+                                    </div>
+
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="exampleFormControlTextarea1"> <b>Total Facturas de Credito</b></label>
+                                        <input type="text" readonly class="form-control" id="inputTotalCredito" name="inputTotalCredito" >
+                                    </div>
+
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                        <label for="exampleFormControlTextarea1"> <b>Total Facturas anuladas</b></label>
+                                        <input type="text" readonly class="form-control" id="inputTotalAnulado" name="inputTotalAnulado" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <button id="btn_cierreCaja" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs"><strong>Realizar Cierre</strong></button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 @push('scripts')
 
 <script>
-    {{--  $('#prueba2').hide();  --}}
+
+    $('#divcierre').css('display','none');
+    $('#divcierre').hide();
+    $('#btn_cierreCaja').css('display','none');
+
+    $('#btn_cierreCaja').hide();
 
     function cargaConsulta(){
         $('#baner1').css('display','none');
+
         $("#tbl_contado").dataTable().fnDestroy();
         $("#tbl_credito").dataTable().fnDestroy();
         $("#tbl_anuladas").dataTable().fnDestroy();
@@ -531,25 +579,33 @@
 
         axios.get("/carga/totales/"+fecha1)
         .then(response => {
-            /* totalContado
-            totalCredito
-            totalAnuladas
-
-            'totalContado' => $contadoTotal->sumaTotal,
-            'totalCredito' => $creditoTotal->sumaTotal,
-            'totalAnulado' => $anuladoTotal->sumaTotal,
-
-            console.log(response.data.totalContado);*/
-
 
             $('#totalContado').val(response.data.totalContado);
             $('#totalCredito').val(response.data.totalCredito);
             $('#totalAnuladas').val(response.data.totalAnulado);
 
+            $('#inputTotalContado').val(response.data.totalContado);
+            $('#inputTotalCredito').val(response.data.totalCredito);
+            $('#inputTotalAnulado').val(response.data.totalAnulado);
+
+            var existencia = response.data.banderaCierre;
+
+            if(existencia === 0){
+
+                $('#baner2').css('display','block');
+                $('#divcierre').css('display','block');
+                $('#divcierre').show();
+                $('#btn_cierreCaja').css('display','block');
+                $('#btn_cierreCaja').show();
+            }else{
+
+                $('#baner3').css('display','block');
+            }
+
+
         })
         .catch(err => {
             let data = err.response.data;
-            $('#modal_usuario_crear').modal('hide');
             Swal.fire({
                 icon: data.icon,
                 title: data.title,
@@ -559,6 +615,44 @@
 
         });
     }
+
+    $(document).on('submit', '#cerrarCaja', function(event) {
+
+        $('#divcierre').css('display','none');
+        $('#divcierre').hide();
+        $('#btn_cierreCaja').css('display','none');
+        $('#btn_cierreCaja').hide();
+        event.preventDefault();
+        guardarCierre();
+    });
+
+    function guardarCierre(){
+        var fechaFacturas = document.getElementById('fecha').value;
+        var data = new FormData($('#cerrarCaja').get(0));
+
+        axios.post("/cierre/guardar/"+fechaFacturas, data)
+            .then(response => {
+                $('#cerrarCaja').parsley().reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado el cierre de caja con exito."
+                });
+                location. reload()
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
 </script>
 
 
