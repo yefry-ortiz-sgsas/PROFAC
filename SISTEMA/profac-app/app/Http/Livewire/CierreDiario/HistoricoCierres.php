@@ -5,6 +5,8 @@ namespace App\Http\Livewire\CierreDiario;
 use Livewire\Component;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\File;
+
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use DataTables;
@@ -27,6 +29,8 @@ use App\Models\User;
 use App\Models\CierreDiario as ModelCierreDiario;
 use App\Models\bitacoraCierre;
 
+use App\Exports\CierreExport;
+
 class HistoricoCierres extends Component
 {
     public function render()
@@ -37,29 +41,55 @@ class HistoricoCierres extends Component
     public function listadoHistorico(){
         try {
 
-            //dd($fecha);
+                //dd($fecha);
 
-        $consulta = DB::SELECT("
-            select
-                id, fechaCierre, user_cierre_id,comentario, estado_cierre,totalContado,totalCredito,totalAnulado, created_at
-            from bitacoraCierre
-            where bitacoraCierre.estado_cierre = 1;
-            ");
+            $consulta = DB::SELECT("
+                select
+                    bitacoraCierre.id,
+                    bitacoraCierre.fechaCierre,
+                    users.name as 'user_cierre_id',
+                    bitacoraCierre.comentario,
+                    bitacoraCierre.estado_cierre,
+                    bitacoraCierre.totalContado,
+                    bitacoraCierre.totalCredito,
+                    bitacoraCierre.totalAnulado,
+                    bitacoraCierre.created_at
+                from bitacoraCierre
+                inner join users on users.id = bitacoraCierre.user_cierre_id
+                where bitacoraCierre.estado_cierre = 1;
+                ");
 
         return Datatables::of($consulta)
         ->addColumn('acciones', function($consulta){
-                return '<a><i class="fas fa-receipt"></i> Prueba</a>';
+                return '<a class="btn btn-success" href="/cajaChica/excel/'.$consulta->id.'"> Reporte <i class="fa-solid fa-file-excel"></i></a>';
 
         })
         ->rawColumns(['acciones'])
         ->make(true);
 
-    } catch (QueryException $e) {
-        return response()->json([
-            'message' => 'Ha ocurrido un error al listar el reporte solicitado.',
-            'errorTh' => $e,
-        ], 402);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar el reporte solicitado.',
+                'errorTh' => $e,
+            ], 402);
 
+        }
     }
+
+    public function export($bitacoraCierre){
+        try {
+            //ModelCierreDiario::query()->where('bitacoraCierre_id','=',$bitacoraCierre)
+            return Excel::download(new CierreExport($bitacoraCierre), 'Bitacora-'.$bitacoraCierre.'.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+
+                'error' => $e,
+                "text" => "Ha ocurrido un error al generar el reporte de la bitacora #".$bitacoraCierre,
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
+
     }
 }

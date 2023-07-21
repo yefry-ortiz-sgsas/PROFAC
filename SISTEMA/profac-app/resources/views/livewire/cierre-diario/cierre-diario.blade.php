@@ -290,6 +290,10 @@
     function cargaConsulta(){
         $('#baner1').css('display','none');
 
+        $('#baner2').css('display','none');
+
+        $('#baner3').css('display','none');
+
         $("#tbl_contado").dataTable().fnDestroy();
         $("#tbl_credito").dataTable().fnDestroy();
         $("#tbl_anuladas").dataTable().fnDestroy();

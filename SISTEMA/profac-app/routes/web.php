@@ -690,6 +690,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/cierre/historico', HistoricoCierres::class);
     Route::get('/cargar/historico', [HistoricoCierres::class,'listadoHistorico']);
 
+    Route::get('/cajaChica/excel/{bitacoraCierre}', [HistoricoCierres::class, 'export']);
 
 
 

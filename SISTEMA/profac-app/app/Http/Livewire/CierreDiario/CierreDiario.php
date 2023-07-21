@@ -324,6 +324,8 @@ class CierreDiario extends Component
 
                             $fcontado->user_cierre_id = Auth::user()->id ;
                             $fcontado->estado_cierre = 1 ;
+                            $fcontado->nombre_userCierre = Auth::user()->name ;
+                            $fcontado->estadoDescripcion = 'CERRADO' ;
                             $fcontado->fecha = TRIM($value->fecha) ;
                             $fcontado->factura= TRIM($value->factura) ;
                             $fcontado->cliente = TRIM($value->cliente) ;
@@ -343,6 +345,8 @@ class CierreDiario extends Component
                         $fcredito = new ModelCierreDiario;
                             $fcredito->user_cierre_id = Auth::user()->id ;
                             $fcredito->estado_cierre = 1 ;
+                            $fcontado->nombre_userCierre = Auth::user()->name ;
+                            $fcontado->estadoDescripcion = 'CERRADO' ;
                             $fcredito->fecha = TRIM($valuecredito->fecha) ;
                             $fcredito->factura= TRIM($valuecredito->factura) ;
                             $fcredito->cliente = TRIM($valuecredito->cliente) ;
@@ -363,6 +367,8 @@ class CierreDiario extends Component
 
                             $fanuladas->user_cierre_id = Auth::user()->id ;
                             $fanuladas->estado_cierre = 1 ;
+                            $fcontado->nombre_userCierre = Auth::user()->name ;
+                            $fcontado->estadoDescripcion = 'CERRADO' ;
                             $fanuladas->fecha = TRIM($valueanuladas->fecha) ;
                             $fanuladas->factura= TRIM($valueanuladas->factura) ;
                             $fanuladas->cliente = TRIM($valueanuladas->cliente) ;

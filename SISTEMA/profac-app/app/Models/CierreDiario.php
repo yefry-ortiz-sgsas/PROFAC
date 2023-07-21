@@ -10,5 +10,5 @@ class CierreDiario extends Model
     use HasFactory;
     protected $table = 'cierrecaja';
     protected $primaryKey = 'id';
-    protected $fillable = ['user_cierre_id', 'estado_cierre','fecha', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipo','tipoFactura'];
+    protected $fillable = ['user_cierre_id','nombre_userCierre', 'estado_cierre','estadoDescripcion','fecha', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipo','tipoFactura'];
 }
