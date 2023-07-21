@@ -47,18 +47,18 @@ class HistoricoCierres extends Component
 
             $consulta = DB::SELECT("
                 select
-                    bitacoraCierre.id,
-                    bitacoraCierre.fechaCierre,
+                    bitacoracierre.id,
+                    bitacoracierre.fechaCierre,
                     users.name as 'user_cierre_id',
-                    bitacoraCierre.comentario,
-                    bitacoraCierre.estado_cierre,
-                    bitacoraCierre.totalContado,
-                    bitacoraCierre.totalCredito,
-                    bitacoraCierre.totalAnulado,
-                    bitacoraCierre.created_at
-                from bitacoraCierre
-                inner join users on users.id = bitacoraCierre.user_cierre_id
-                where bitacoraCierre.estado_cierre = 1;
+                    bitacoracierre.comentario,
+                    bitacoracierre.estado_cierre,
+                    bitacoracierre.totalContado,
+                    bitacoracierre.totalCredito,
+                    bitacoracierre.totalAnulado,
+                    bitacoracierre.created_at
+                from bitacoracierre
+                inner join users on users.id = bitacoracierre.user_cierre_id
+                where bitacoracierre.estado_cierre = 1;
                 ");
 
         return Datatables::of($consulta)

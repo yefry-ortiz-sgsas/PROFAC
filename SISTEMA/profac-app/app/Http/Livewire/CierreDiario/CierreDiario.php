@@ -201,10 +201,10 @@ class CierreDiario extends Component
         $existencia = DB::SELECTONE("
                 select
                     count(*) as existe
-                from bitacoraCierre
+                from bitacoracierre
                 where
-                    DATE(bitacoraCierre.fechaCierre) = DATE_FORMAT('".$fecha."', '%Y-%m-%d')
-                    AND bitacoraCierre.estado_cierre = 1;
+                    DATE(bitacoracierre.fechaCierre) = DATE_FORMAT('".$fecha."', '%Y-%m-%d')
+                    AND bitacoracierre.estado_cierre = 1;
                 "
         );
 
@@ -224,10 +224,10 @@ class CierreDiario extends Component
             $existencia = DB::SELECTONE("
                 select
                     count(*) as existe
-                from bitacoraCierre
+                from bitacoracierre
                 where
-                    DATE(bitacoraCierre.fechaCierre) = DATE_FORMAT('".$fecha."', '%Y-%m-%d')
-                    AND bitacoraCierre.estado_cierre = 1;
+                    DATE(bitacoracierre.fechaCierre) = DATE_FORMAT('".$fecha."', '%Y-%m-%d')
+                    AND bitacoracierre.estado_cierre = 1;
                 "
             );
 
