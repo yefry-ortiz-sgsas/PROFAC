@@ -1,4 +1,11 @@
 <div>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <h2>Cierre de caja</h2>
@@ -11,9 +18,31 @@
 
             </ol>
         </div>
-
+       {{--   /cajaChica/excel/general  --}}
     </div>
+{{--      <div class="wrapper wrapper-content animated fadeInRight pb-0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="row">
+
+                            <div class="col-12 col-sm-12 col-md-12">
+                                <label for="fecha" class="col-form-label focus-label">Precione para descargar un reporte de cierre de caja completo, sin filtros<span class="text-danger">*</span></label>
+
+                                <a href="/cajaChica/excel/general" class="btn btn-info"><i class="fa fa-plus"></i> Solicitar Reporte</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  --}}
     <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="alert alert-info" role="alert">
+            <h5> <b>Nota: Se enlista los cierres de cajas realizados, con su respectivo reporte independiente.</h5>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">

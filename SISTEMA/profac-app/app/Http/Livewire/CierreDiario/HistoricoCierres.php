@@ -30,6 +30,8 @@ use App\Models\CierreDiario as ModelCierreDiario;
 use App\Models\bitacoraCierre;
 
 use App\Exports\CierreExport;
+use App\Exports\CierreExportGeneral;
+
 
 class HistoricoCierres extends Component
 {
@@ -78,7 +80,6 @@ class HistoricoCierres extends Component
 
     public function export($bitacoraCierre){
         try {
-            //ModelCierreDiario::query()->where('bitacoraCierre_id','=',$bitacoraCierre)
             return Excel::download(new CierreExport($bitacoraCierre), 'Bitacora-'.$bitacoraCierre.'.xlsx');
 
         } catch (QueryException $e) {
@@ -86,6 +87,22 @@ class HistoricoCierres extends Component
 
                 'error' => $e,
                 "text" => "Ha ocurrido un error al generar el reporte de la bitacora #".$bitacoraCierre,
+                "icon" => "error",
+                "title"=>"Error!"
+            ],402);
+        }
+
+    }
+
+    public function exportGeneral(){
+        try {
+            return Excel::download(new CierreExportGeneral, 'Bitacora-General.xlsx');
+
+        } catch (QueryException $e) {
+            return response()->json([
+
+                'error' => $e,
+                "text" => "Ha ocurrido un error al generar el reporte de la bitacora general",
                 "icon" => "error",
                 "title"=>"Error!"
             ],402);

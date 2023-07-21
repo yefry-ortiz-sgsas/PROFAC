@@ -10,18 +10,16 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 
-class CierreExport implements FromCollection, WithHeadings, ShouldAutoSize
+class CierreExportGeneral implements FromCollection, WithHeadings, ShouldAutoSize
 {
-    public function __construct($bitacoraCierre)
-    {
-        $this->bitacoraCierre = $bitacoraCierre;
-    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'created_at')->where('bitacoraCierre_id',$this->bitacoraCierre)->get();
+        return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'created_at')->get();
+        //return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'created_at')->where('estado_cierre',1)->get();
     }
 
     public function headings(): array
@@ -41,6 +39,4 @@ class CierreExport implements FromCollection, WithHeadings, ShouldAutoSize
             'FECHA DEL REGISTRO',
         ];
     }
-
-
 }

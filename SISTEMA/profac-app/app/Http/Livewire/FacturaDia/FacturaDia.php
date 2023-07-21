@@ -47,7 +47,7 @@ class FacturaDia extends Component
             format(A.sub_total,2) as 'subtotal',
             IF(A.sub_total = A.total, 0.00, format(A.isv,2)) as 'imp_venta',
             format(A.total,2) as 'total',
-            CASE A.estado_factura_id WHEN 1 THEN 'GOBIERNO' WHEN 2 THEN 'CORPORATIVO' END AS 'tipo'
+            CASE A.estado_factura_id WHEN 1 THEN 'CLIENTE B' WHEN 2 THEN 'CLIENTE A' END AS 'tipo'
 
 
             from factura A
