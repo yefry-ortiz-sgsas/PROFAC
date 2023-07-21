@@ -241,7 +241,8 @@ class CierreDiario extends Component
             }
 
             if ($existencia->existe === 0) {
-
+                $userName1 = Auth::user()->name;
+                $estadoDescripcion1 = 'CERRADO';
 
                 DB::beginTransaction();
 
@@ -319,13 +320,15 @@ class CierreDiario extends Component
                             and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                     ");
 
+
+
                     foreach ($contado as $value) {
                         $fcontado = new ModelCierreDiario;
 
                             $fcontado->user_cierre_id = Auth::user()->id ;
                             $fcontado->estado_cierre = 1 ;
-                            $fcontado->nombre_userCierre = Auth::user()->name ;
-                            $fcontado->estadoDescripcion = 'CERRADO' ;
+                            $fcontado->nombre_userCierre = TRIM($userName1) ;
+                            $fcontado->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fcontado->fecha = TRIM($value->fecha) ;
                             $fcontado->factura= TRIM($value->factura) ;
                             $fcontado->cliente = TRIM($value->cliente) ;
@@ -339,14 +342,15 @@ class CierreDiario extends Component
 
                         $fcontado->save();
 
-                    }
+                    };
 
                     foreach ($credito as $valuecredito) {
+
                         $fcredito = new ModelCierreDiario;
                             $fcredito->user_cierre_id = Auth::user()->id ;
                             $fcredito->estado_cierre = 1 ;
-                            $fcontado->nombre_userCierre = Auth::user()->name ;
-                            $fcontado->estadoDescripcion = 'CERRADO' ;
+                            $fcredito->nombre_userCierre = TRIM($userName1) ;
+                            $fcredito->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fcredito->fecha = TRIM($valuecredito->fecha) ;
                             $fcredito->factura= TRIM($valuecredito->factura) ;
                             $fcredito->cliente = TRIM($valuecredito->cliente) ;
@@ -356,19 +360,18 @@ class CierreDiario extends Component
                             $fcredito->total = TRIM($valuecredito->total) ;
                             $fcredito->tipo = TRIM($valuecredito->tipo) ;
                             $fcredito->tipoFactura = TRIM($valuecredito->tipoFactura) ;
-                            $fcredito->bitacoraCierre_id = $fbitacoraCierre->id ;
-
+                            $fcredito->bitacoraCierre_id =  $fbitacoraCierre->id ;
                         $fcredito->save();
 
-                    }
+                    };
 
                     foreach ($anuladas as $valueanuladas) {
                         $fanuladas = new ModelCierreDiario;
 
                             $fanuladas->user_cierre_id = Auth::user()->id ;
                             $fanuladas->estado_cierre = 1 ;
-                            $fcontado->nombre_userCierre = Auth::user()->name ;
-                            $fcontado->estadoDescripcion = 'CERRADO' ;
+                            $fanuladas->nombre_userCierre = TRIM($userName1) ;
+                            $fanuladas->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fanuladas->fecha = TRIM($valueanuladas->fecha) ;
                             $fanuladas->factura= TRIM($valueanuladas->factura) ;
                             $fanuladas->cliente = TRIM($valueanuladas->cliente) ;
@@ -382,7 +385,8 @@ class CierreDiario extends Component
 
                         $fanuladas->save();
 
-                    }
+
+                    };
 
                 DB::commit();
                 return response()->json([
