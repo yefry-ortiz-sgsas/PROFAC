@@ -26,6 +26,8 @@ use App\Models\User;
 
 use App\Models\CierreDiario as ModelCierreDiario;
 use App\Models\bitacoraCierre;
+use App\Models\tipo_cobro_cierre;
+
 
 class CierreDiario extends Component
 {
@@ -39,28 +41,48 @@ class CierreDiario extends Component
                 //dd($fecha);
 
             $consulta = DB::SELECT("
-                select
-                    A.created_at as 'fecha',
-                    A.cai as 'factura',
-                    A.nombre_cliente as 'cliente',
-                    (select name from users where id = A.vendedor) as 'vendedor',
-                    A.sub_total as 'subtotal',
-                    IF(A.sub_total = A.total, 0.00,A.isv) as 'imp_venta',
-                    A.total as 'total',
-                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
-                    'CONTADO' AS 'tipoFactura'
-                from factura A
-                    inner join estado_venta B on A.estado_venta_id = B.id
-                    inner join tipo_pago_venta C on A.tipo_pago_id = C.id
-                where
-                    B.id = 1
-                    and C.id = 1
-                    and A.estado_venta_id = 1
+            select
+            A.created_at as 'fecha',
+            A.cai as 'factura',
+            A.nombre_cliente as 'cliente',
+            (select name from users where id = A.vendedor) as 'vendedor',
+            A.sub_total as 'subtotal',
+            IF(A.sub_total = A.total, 0.00,A.isv) as 'imp_venta',
+            A.total as 'total',
+            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+            'CONTADO' AS 'tipoFactura',
+           IF(
+               (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.cai AND estado = 1)
+             ) as 'PagoMediante'
+        from factura A
+            inner join estado_venta B on A.estado_venta_id = B.id
+            inner join tipo_pago_venta C on A.tipo_pago_id = C.id
+        where
+            B.id = 1
+            and C.id = 1
+            and A.estado_venta_id = 1
                     and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                 ");
 
             return Datatables::of($consulta)
-            ->rawColumns([])
+            ->addColumn('acciones', function ($consulta) {
+                $comillas = "'";
+                //dd($consulta->factura);
+                    return
+
+                    '<div class="btn-group">
+                        <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                            más</button>
+                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                            <li>
+                                <a class="dropdown-item" onclick="cargarInputFactura('.$comillas.''.$consulta->factura.''.$comillas.')" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Ver Desglose </a>
+                            </li>
+
+                        </ul>
+                    </div>';
+            })
+            ->rawColumns(['acciones'])
             ->make(true);
 
         } catch (QueryException $e) {
@@ -396,6 +418,59 @@ class CierreDiario extends Component
                 ],200);
             }
 
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al realizar la transacción.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+    }
+
+    public function guardarTipoCobro(Request $request){
+
+
+        $factura = "'".$request->inputFactura."'";
+        //$select = "'".$request->selectTipoCierre."'";
+        try {
+
+
+             $existencia = DB::SELECTONE("
+                    select
+                        count(*) as existe
+                    from tipo_cobro_cierre
+                    where
+                        factura = ".$factura
+                );
+                //dd($existencia);
+                if ($existencia->existe > 0) {
+                    DB::table('tipo_cobro_cierre')
+                    ->where('factura', $request->inputFactura)
+                    ->update(['textoCobro' => $request->selectTipoCierre]);
+
+                    return response()->json([
+                        "icon" => "success",
+                        "text" => "Actualizó con éxito el tipo de cobro!",
+                        "title"=>"Exito!"
+                    ],200);
+                }else{
+                    $tipoCierre = new tipo_cobro_cierre;
+                    $tipoCierre->textoCobro = TRIM($request->selectTipoCierre);
+                    $tipoCierre->fecha = TRIM($request->fechaCierreC);
+                    $tipoCierre->factura = TRIM($request->inputFactura);
+                    $tipoCierre->estado= 1 ;
+                    $tipoCierre->user_registra_id = Auth::user()->id ;
+                    $tipoCierre->save();
+                    return response()->json([
+                        "icon" => "success",
+                        "text" => "Inserto con éxito el tipo de cobro!",
+                        "title"=>"Exito!"
+                    ],200);
+                }
+
+            DB::commit();
         } catch (QueryException $e) {
             DB::rollback();
             return response()->json([

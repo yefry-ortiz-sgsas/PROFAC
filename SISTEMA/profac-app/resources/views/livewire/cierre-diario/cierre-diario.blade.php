@@ -6,10 +6,70 @@
             box-sizing: border-box;
         }
     </style>
+    <div class="modal" id="modalCobro" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Seleccione un tipo de pago:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formtipoCobro" name="formtipoCobro" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Fecha de cierre:</b></label>
+                                                <input type="text" readonly class="form-control" id="fechaCierreC" name="fechaCierreC" >
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>No. Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="inputFactura" name="inputFactura" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Seleccione un tipo de cobro</b></label>
+
+                                                 <select id="selectTipoCierre" name="selectTipoCierre" class="form-control form-select form-select-lg">
+
+                                                   <option class="form-control"  selected >Seleccione método de cobro</option>
+                                                   <option class="form-control" value="EFECTIVO">EFECTIVO</option>
+                                                   <option class="form-control"  value="TRANSFERENCIA BANCARIA">TRANSFERENCIA BANCARIA</option>
+                                                   <option class="form-control" value="CHEQUE">CHEQUE</option>
+                                                 </select>
+                                            </div>
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_cobroCierre" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Registrar tipo de Cobro
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
              <nav aria-label="breadcrumb">
+
+
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a>Módulo Contable</a></li>
           <li class="breadcrumb-item"><a>Cierre de caja</a></li>
@@ -89,6 +149,8 @@
                                         <th>IMPUESTO DE VENTA</th>
                                         <th>TOTAL</th>
                                         <th>TIPO</th>
+                                        <th>DOCUMENTO DE PAGO</th>
+                                        <th>ACCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,6 +165,8 @@
                                             <th>IMPUESTO DE VENTA</th>
                                             <th>TOTAL</th>
                                             <th>TIPO</th>
+                                            <th>DOCUMENTO DE PAGO</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                     </tfoot>
 
@@ -359,6 +423,24 @@
 
                     }
                 },
+                {
+                    data: 'PagoMediante',
+                    render: function (data, type, row) {
+
+
+                        if(data === 'SIN ASIGNAR'){
+                            return "<span class='badge badge-warning'>"+data+"</span>";
+                        }else {
+                            return "<span class='badge badge-success'>"+data+"</span>";
+                        }
+
+
+                    }
+                },
+                {
+                    data: 'acciones'
+                },
+
             ],initComplete: function () {
                 var r = $('#tbl_contado tfoot tr');
                 r.find('th').each(function(){
@@ -655,6 +737,69 @@
             console.error(err);
 
         })
+    }
+
+    function cargarInputFactura(factura){
+       // $('#myModalExito').modal('show'); // abrir
+        //$('#myModalExito').modal('hide'); // cerrar
+
+        var fechaFacturas1 = document.getElementById('fecha').value;
+        //console.log(factura);
+        $('#fechaCierreC').val(fechaFacturas1);
+        $('#inputFactura').val(factura);
+        $('#modalCobro').modal('show');
+
+    }
+
+    $(document).on('submit', '#formtipoCobro', function(event) {
+        event.preventDefault();
+        guardarTipoCobro();
+    });
+
+    function guardarTipoCobro(){
+
+       let factura = document.getElementById('inputFactura').value;
+        var data = new FormData($('#formtipoCobro').get(0));
+        //console.log(data);
+        //$('#formtipoCobro').parsley().reset();
+        document.getElementById("fechaCierreC").value = "";
+        document.getElementById("inputFactura").value = "";
+        const limpiar = () => {
+            for (let i = document.querySelector("#selectTipoCierre").options.length; i >= 0; i--) {
+                document.querySelector("#selectTipoCierre").remove(i);
+            }
+          };
+        $('#modalCobro').modal('hide');
+
+        axios.post("/registro/tipoC", data)
+            .then(response => {
+
+                $('#tbl_contado').DataTable().ajax.reload();
+
+                let data = response.data;
+                /*Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Se ha registrado el tipo de cobro para la factura # "+factura
+                });*/
+                Swal.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: data.text
+                })
+
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        });
     }
 
 </script>

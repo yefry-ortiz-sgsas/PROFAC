@@ -696,12 +696,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 
 
+
     Route::get('/contado/{fecha}', [CierreDiario::class,'contado']);
     Route::get('/credito/{fecha}', [CierreDiario::class,'credito']);
     Route::get('/anuladas/{fecha}', [CierreDiario::class,'anuladas']);
     Route::get('/carga/totales/{fecha}', [CierreDiario::class,'cargaTotales']);
 
     Route::post('/cierre/guardar/{fecha}', [CierreDiario::class,'guardarCierre']);
+    Route::post('/registro/tipoC', [CierreDiario::class,'guardarTipoCobro']);
 
 
 
