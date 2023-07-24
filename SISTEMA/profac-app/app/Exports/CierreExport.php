@@ -21,7 +21,7 @@ class CierreExport implements FromCollection, WithHeadings, ShouldAutoSize
     */
     public function collection()
     {
-        return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'created_at')->where('bitacoraCierre_id',$this->bitacoraCierre)->get();
+        return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'textoCobro','created_at')->where('bitacoraCierre_id',$this->bitacoraCierre)->get();
     }
 
     public function headings(): array
@@ -38,6 +38,7 @@ class CierreExport implements FromCollection, WithHeadings, ShouldAutoSize
             'TOTAL FACTURADO',
             'CALIDAD DE FACTURA',
             'TIPO DE CLIENTE',
+            'PAGO POR',
             'FECHA DEL REGISTRO',
         ];
     }

@@ -290,7 +290,10 @@ class CierreDiario extends Component
                             IF(A.sub_total = A.total, 0.00,A.isv) as 'imp_venta',
                             A.total as 'total',
                             (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
-                            'CONTADO' AS 'tipoFactura'
+                            'CONTADO' AS 'tipoFactura',
+                        IF(
+                            (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.cai AND estado = 1)
+                            ) as 'PagoMediante'
                         from factura A
                             inner join estado_venta B on A.estado_venta_id = B.id
                             inner join tipo_pago_venta C on A.tipo_pago_id = C.id
@@ -361,6 +364,8 @@ class CierreDiario extends Component
                             $fcontado->tipo = TRIM($value->tipo) ;
                             $fcontado->tipoFactura = TRIM($value->tipoFactura) ;
                             $fcontado->bitacoraCierre_id =  $fbitacoraCierre->id ;
+                            $fcontado->textoCobro =  TRIM($value->PagoMediante) ;
+
 
                         $fcontado->save();
 
