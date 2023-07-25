@@ -7,7 +7,8 @@
             <h2>Listado De Facturas </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">
-                    <a>Clientes A</a>
+                    {{--  <a>Clientes A</a>  --}}
+                    <a>Clientes B</a>
                 </li>
 
                 <li class="breadcrumb-item">

@@ -101,10 +101,12 @@
     @endpush
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Orden Compra Clientes <b>B</b></h2>
+            {{--  <h2>Orden Compra Clientes <b>B</b></h2>  --}}
+            <h2>Orden Compra Clientes <b>A</b></h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Clientes B</a>
+                    {{--  <a data-toggle="modal" data-target="#modal_orden_compra_crear">Clientes B</a>  --}}
+                    <a data-toggle="modal" data-target="#modal_orden_compra_crear">Clientes A</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Listar</a>
@@ -161,7 +163,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Clientes B</h3>
+                            {{--  <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Clientes B</h3>  --}}
+                            <h3 class="modal-title" id="exampleModalLabel">Registro de Numero Orden Compra - Clientes A</h3>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

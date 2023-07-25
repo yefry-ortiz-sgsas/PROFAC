@@ -54,7 +54,8 @@
             <h2>Ventas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Clientes <b>A</b></a>
+                    {{--  <a>Clientes <b>A</b></a>  --}}
+                    <a>Clientes <b>B</b></a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Sin restricción de precio </a>

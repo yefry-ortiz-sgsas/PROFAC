@@ -104,7 +104,8 @@
             <h2>Orden de compra </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Clientes A</a>
+                    {{--  <a>Clientes A</a>  --}}
+                    <a>Clientes B</a>
                 </li>
                 <li class="breadcrumb-item">
                     <a>Listar</a>

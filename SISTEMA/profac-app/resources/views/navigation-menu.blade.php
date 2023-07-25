@@ -352,8 +352,8 @@
                         <ul class="nav nav-second-level">
 
                             <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
+                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
+                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
                             <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                             </li>
 
@@ -365,8 +365,8 @@
                             <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                            <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                            <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
+                            <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
+                            <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
                     </li>
@@ -477,8 +477,9 @@
 
                     {{--  VENTAS COORPORATIVO  --}}
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Ventas Clientes A</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
@@ -509,14 +510,15 @@
                     {{--  VENTAS GOBIERNO  --}}
 
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Ventas Clientes B</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
                             <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
-                                    SR/Clientes B</a></li>
+                                    SR/Clientes A</a></li>
                             <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
                             <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
                             <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
@@ -582,8 +584,9 @@
                 @elseif (Auth::user()->rol_id == '2')
                     {{--  VENTAS COORPORATIVO  --}}
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Ventas Clientes A</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
@@ -612,13 +615,14 @@
             {{--  VENTAS GOBIERNO  --}}
 
             <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Ventas Clientes B</span>
+                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
+                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
                     <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes B</a>
+                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
                     </li>
                     <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
                     <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
@@ -740,8 +744,8 @@
                 <ul class="nav nav-second-level">
 
                     <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
                     <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                     </li>
 
@@ -753,8 +757,8 @@
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
+                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
+                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
                     {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                 </ul>
             </li>
@@ -795,8 +799,9 @@
 
             {{--  VENTAS COORPORATIVO  --}}
             <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Ventas Clientes A</span>
+                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
@@ -824,13 +829,14 @@
             {{--  VENTAS GOBIERNO  --}}
 
             <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Ventas Clientes B</span>
+                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
+                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
                     <span class="fa arrow"></span></a>
 
                 <ul class="nav nav-second-level">
                     <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes B</a>
+                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
                     </li>
                     <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
                     <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
@@ -940,8 +946,8 @@
                 <ul class="nav nav-second-level">
 
                     <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
+                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
+                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
                     <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
                     </li>
 
@@ -954,8 +960,8 @@
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
+                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
+                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
                     {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                 </ul>
             </li>
@@ -1012,7 +1018,7 @@
                 </li>
                   {{--  VENTAS COORPORATIVO  --}}
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span><span class="fa arrow"></span></a>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span><span class="fa arrow"></span></a>
 
                             <ul class="nav nav-second-level">
                                 <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
@@ -1041,13 +1047,13 @@
                 {{--  VENTAS GOBIERNO  --}}
                 <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas Clientes B</span>
+                            style="color:#ffffff;">Ventas Clientes A</span>
                         <span class="fa arrow"></span></a>
 
                     <ul class="nav nav-second-level">
                         <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
                         <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
-                                SR/Clientes B</a></li>
+                                SR/Clientes A</a></li>
                         <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
                         <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
                         <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones

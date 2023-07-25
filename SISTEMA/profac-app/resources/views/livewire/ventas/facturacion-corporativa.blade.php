@@ -54,7 +54,9 @@
             <h2>Ventas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Clientes <b>A</b></a>
+                    {{--  <a>Clientes <b>A</b></a>  --}}
+                    <a>Clientes <b>B</b></a>
+
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>

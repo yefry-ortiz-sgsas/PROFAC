@@ -49,7 +49,7 @@ class CierreDiario extends Component
             FORMAT(A.sub_total,4) as 'subtotal',
             IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00,FORMAT(A.isv,4)) as 'imp_venta',
             FORMAT(A.total,4) as 'total',
-            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
             'CONTADO' AS 'tipoFactura',
            IF(
                (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.cai AND estado = 1)
@@ -110,7 +110,7 @@ class CierreDiario extends Component
                     FORMAT(A.sub_total,4) as 'subtotal',
                     IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
                     FORMAT(A.total,4) as 'total',
-                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'CREDITO' AS 'tipoFactura'
                 from factura A
                     inner join estado_venta B on A.estado_venta_id = B.id
@@ -149,7 +149,7 @@ class CierreDiario extends Component
                     FORMAT(A.sub_total,4) as 'subtotal',
                     IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
                     FORMAT(A.total,4) as 'total',
-                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                    (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'ANULADAS' AS 'tipoFactura'
                 from factura A
                     inner join estado_venta B on A.estado_venta_id = B.id
@@ -289,7 +289,7 @@ class CierreDiario extends Component
                             FORMAT(A.sub_total,4) as 'subtotal',
                             IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00,FORMAT(A.isv,4)) as 'imp_venta',
                             FORMAT(A.total,4) as 'total',
-                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                             'CONTADO' AS 'tipoFactura',
                         IF(
                             (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.cai AND estado = 1)
@@ -314,7 +314,7 @@ class CierreDiario extends Component
                             FORMAT(A.sub_total,4) as 'subtotal',
                             IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
                             FORMAT(A.total,4) as 'total',
-                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                             'CREDITO' AS 'tipoFactura'
                         from factura A
                             inner join estado_venta B on A.estado_venta_id = B.id
@@ -336,7 +336,7 @@ class CierreDiario extends Component
                             FORMAT(A.sub_total,4) as 'subtotal',
                             IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
                             FORMAT(A.total,4) as 'total',
-                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END) AS 'tipo',
+                            (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                             'ANULADAS' AS 'tipoFactura'
                         from factura A
                             inner join estado_venta B on A.estado_venta_id = B.id
