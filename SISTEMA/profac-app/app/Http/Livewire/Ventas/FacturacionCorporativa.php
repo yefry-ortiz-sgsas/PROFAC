@@ -1242,11 +1242,11 @@ class FacturacionCorporativa extends Component
         /* CAMBIO 20230725 FORMAT(total,2) as total:FORMAT(isv,2) as isv:FORMAT(sub_total,2) as sub_total,:FORMAT(sub_total_grabado,2) as sub_total_grabado:FORMAT(sub_total_excento,2) as sub_total_excento*/
         $importesConCentavos = DB::SELECTONE("
         select
-        TRUNCATE(total,2) as total,
-        TRUNCATE(isv,2) as isv,
-        TRUNCATE(sub_total,2) as sub_total,
-        TRUNCATE(sub_total_grabado,2) as sub_total_grabado,
-        TRUNCATE(sub_total_excento,2) as sub_total_excento
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
         from factura where factura.id = " . $idFactura);
 
 
@@ -1348,7 +1348,7 @@ class FacturacionCorporativa extends Component
         /*CAMBIO 20230725 $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');*/
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
-        $numeroLetras = $formatter->toMoney($importes->total, 4, 'LEMPIRAS', 'CENTAVOS');
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra'))->setPaper('letter');
 
