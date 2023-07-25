@@ -37,7 +37,6 @@
 
                                                  <select id="selectTipoCierre" name="selectTipoCierre" class="form-control form-select form-select-lg">
 
-                                                   <option class="form-control"  selected >Seleccione método de cobro</option>
                                                    <option class="form-control" value="EFECTIVO">EFECTIVO</option>
                                                    <option class="form-control"  value="TRANSFERENCIA BANCARIA">TRANSFERENCIA BANCARIA</option>
                                                    <option class="form-control" value="CHEQUE">CHEQUE</option>
@@ -739,7 +738,7 @@
         })
     }
 
-    function cargarInputFactura(factura){
+    function cargarInputFactura(factura, PagoMediante){
        // $('#myModalExito').modal('show'); // abrir
         //$('#myModalExito').modal('hide'); // cerrar
 
@@ -747,6 +746,12 @@
         //console.log(factura);
         $('#fechaCierreC').val(fechaFacturas1);
         $('#inputFactura').val(factura);
+
+        obj = document.getElementById("selectTipoCierre");
+        newSel = '<option class="form-control"  selected  value="'+PagoMediante+'">'+PagoMediante+' - Actuál</option><option class="form-control" value="EFECTIVO">EFECTIVO</option><option class="form-control"  value="TRANSFERENCIA BANCARIA">TRANSFERENCIA BANCARIA</option><option class="form-control" value="CHEQUE">CHEQUE</option>';
+        obj.innerHTML = newSel;
+
+
         $('#modalCobro').modal('show');
 
     }

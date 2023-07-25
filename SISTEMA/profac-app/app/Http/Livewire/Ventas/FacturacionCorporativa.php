@@ -257,14 +257,14 @@ class FacturacionCorporativa extends Component
             on A.unidad_medida_id = B.id
             where A.estado_id = 1 and A.producto_id = " . $request->idProducto
             );
-
+            /* CAMBIO 20230725 FORMAT(ultimo_costo_compra,2):FORMAT(precio_base,2)*/
             $producto = DB::SELECTONE("
             select
             id,
             concat(id,' - ',nombre) as nombre,
             isv,
-            FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
-            FORMAT(precio_base,2) as precio_base
+            FORMAT(ultimo_costo_compra,4) as ultimo_costo_compra,
+            FORMAT(precio_base,4) as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
@@ -1082,9 +1082,10 @@ class FacturacionCorporativa extends Component
                     $registroResta = $unidadesRestar;
                     $unidadesRestar = $diferencia;
 
-                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 2);
-                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 2);
-                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 2);
+                    /* CAMBIO 20230725 round(($precioUnidad * $registroResta), 2):round(($subTotalSecccionado * ($ivsProducto / 100)), 2):round(($isvSecccionado + $subTotalSecccionado), 2)*/
+                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 4);
+                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 4);
+                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 4);
 
                     $cantidadSeccion = $registroResta / $unidad;
                 } else if ($unidadesDisponibles->cantidad_disponible > $unidadesRestar) {
@@ -1098,10 +1099,10 @@ class FacturacionCorporativa extends Component
 
                     $registroResta = $unidadesRestar;
                     $unidadesRestar = 0;
-
-                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 2);
-                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 2);
-                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 2);
+                    /* CAMBIO 20230725 round(($precioUnidad * $registroResta), 2):round(($subTotalSecccionado * ($ivsProducto / 100)), 2):round(($isvSecccionado + $subTotalSecccionado), 2)*/
+                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 4);
+                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 4);
+                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 4);
 
                     $cantidadSeccion = $registroResta / $unidad;
                 } else if ($unidadesDisponibles->cantidad_disponible < $unidadesRestar) {
@@ -1114,9 +1115,11 @@ class FacturacionCorporativa extends Component
                     $registroResta = $unidadesDisponibles->cantidad_disponible;
                     $unidadesRestar = $diferencia;
 
-                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 2);
-                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 2);
-                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 2);
+                    /* CAMBIO 20230725 round(($precioUnidad * $registroResta), 2):round(($subTotalSecccionado * ($ivsProducto / 100)), 2):round(($isvSecccionado + $subTotalSecccionado), 2)*/
+
+                    $subTotalSecccionado = round(($precioUnidad * $registroResta), 4);
+                    $isvSecccionado = round(($subTotalSecccionado * ($ivsProducto / 100)), 4);
+                    $totalSecccionado = round(($isvSecccionado + $subTotalSecccionado), 4);
 
                     $cantidadSeccion = $registroResta / $unidad;
                 };
@@ -1236,17 +1239,18 @@ class FacturacionCorporativa extends Component
         from factura
         where id = " . $idFactura);
 
-
+        /* CAMBIO 20230725 FORMAT(total,2) as total:FORMAT(isv,2) as isv:FORMAT(sub_total,2) as sub_total,:FORMAT(sub_total_grabado,2) as sub_total_grabado:FORMAT(sub_total_excento,2) as sub_total_excento*/
         $importesConCentavos = DB::SELECTONE("
         select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(total,4) as total,
+        FORMAT(isv,4) as isv,
+        FORMAT(sub_total,4) as sub_total,
+        FORMAT(sub_total_grabado,4) as sub_total_grabado,
+        FORMAT(sub_total_excento,4) as sub_total_excento
         from factura where factura.id = " . $idFactura);
 
 
+        /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
 
         $productos = DB::SELECT(
             "
@@ -1261,9 +1265,9 @@ class FacturacionCorporativa extends Component
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
             H.nombre as bodega,
             REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-            FORMAT(B.sub_total/B.cantidad,2) as precio,
-            FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
+            FORMAT(B.sub_total/B.cantidad,4) as precio,
+            FORMAT(sum(B.cantidad_s),4) as cantidad,
+            FORMAT(sum(B.sub_total_s),4) as importe
 
         from factura A
         inner join venta_has_producto B
@@ -1297,9 +1301,9 @@ class FacturacionCorporativa extends Component
         if(C.isv = 0, 'SI' , 'NO' ) as excento,
         'N/A',
         'N/A',
-        FORMAT(C.precio,2) as precio,
-        FORMAT(C.cantidad,2) as cantidad,
-        FORMAT(C.sub_total,2) as sub_total
+        FORMAT(C.precio,4) as precio,
+        FORMAT(C.cantidad,4) as cantidad,
+        FORMAT(C.sub_total,4) as sub_total
 
         from factura A
         inner join vale B
@@ -1341,10 +1345,10 @@ class FacturacionCorporativa extends Component
         } else {
             $flagCentavos = true;
         }
-
+        /*CAMBIO 20230725 $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');*/
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
-        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+        $numeroLetras = $formatter->toMoney($importes->total, 4, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/factura', compact('cai', 'cliente', 'importes', 'productos', 'numeroLetras', 'importesConCentavos', 'flagCentavos', 'ordenCompra'))->setPaper('letter');
 
