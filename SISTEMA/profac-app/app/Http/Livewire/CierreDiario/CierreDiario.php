@@ -182,7 +182,7 @@ class CierreDiario extends Component
 
         $anuladoTotal = DB::SELECTONE("
             select
-                IF(SUM(FORMAT(A.total,4)) IS NULL, 0.00, SUM(FORMAT(A.total,4))) as 'sumaTotalanulado'
+                IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotalanulado'
             from factura A
                 inner join estado_venta B on A.estado_venta_id = B.id
                 inner join tipo_pago_venta C on A.tipo_pago_id = C.id
@@ -194,7 +194,7 @@ class CierreDiario extends Component
 
         $creditoTotal = DB::SELECTONE("
                 select
-                    IF(SUM(FORMAT(A.total,4)) IS NULL, 0.00, SUM(FORMAT(A.total,4))) as 'sumaTotalcredito'
+                    IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotalcredito'
                 from factura A
                     inner join estado_venta B on A.estado_venta_id = B.id
                     inner join tipo_pago_venta C on A.tipo_pago_id = C.id
@@ -208,7 +208,7 @@ class CierreDiario extends Component
 
         $contadoTotal = DB::SELECTONE("
                 select
-                    IF(SUM(FORMAT(A.total,4)) IS NULL, 0.00, SUM(FORMAT(A.total,4))) as 'sumaTotalcontado'
+                    IF(SUM(A.total) IS NULL, 0.00, SUM(A.total)) as 'sumaTotalcontado'
                 from factura A
                     inner join estado_venta B on A.estado_venta_id = B.id
                     inner join tipo_pago_venta C on A.tipo_pago_id = C.id
@@ -233,9 +233,9 @@ class CierreDiario extends Component
 
 
         return response()->json([
-            'totalContado' => $contadoTotal->sumaTotalcontado,
-            'totalCredito' => $creditoTotal->sumaTotalcredito,
-            'totalAnulado' => $anuladoTotal->sumaTotalanulado,
+            'totalContado' => number_format($contadoTotal->sumaTotalcontado, 4, '.', ''),
+            'totalCredito' => number_format($creditoTotal->sumaTotalcredito, 4, '.', ''),
+            'totalAnulado' => number_format($anuladoTotal->sumaTotalanulado, 4, '.', ''),
             'banderaCierre'=> $existencia->existe
         ], 200);
     }
