@@ -1242,11 +1242,11 @@ class FacturacionCorporativa extends Component
         /* CAMBIO 20230725 FORMAT(total,2) as total:FORMAT(isv,2) as isv:FORMAT(sub_total,2) as sub_total,:FORMAT(sub_total_grabado,2) as sub_total_grabado:FORMAT(sub_total_excento,2) as sub_total_excento*/
         $importesConCentavos = DB::SELECTONE("
         select
-        FORMAT(total,4) as total,
-        FORMAT(isv,4) as isv,
-        FORMAT(sub_total,4) as sub_total,
-        FORMAT(sub_total_grabado,4) as sub_total_grabado,
-        FORMAT(sub_total_excento,4) as sub_total_excento
+        TRUNCATE(total,2) as total,
+        TRUNCATE(isv,2) as isv,
+        TRUNCATE(sub_total,2) as sub_total,
+        TRUNCATE(sub_total_grabado,2) as sub_total_grabado,
+        TRUNCATE(sub_total_excento,2) as sub_total_excento
         from factura where factura.id = " . $idFactura);
 
 
