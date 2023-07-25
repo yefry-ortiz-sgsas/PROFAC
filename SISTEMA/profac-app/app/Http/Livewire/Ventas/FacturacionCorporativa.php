@@ -1265,9 +1265,9 @@ class FacturacionCorporativa extends Component
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
             H.nombre as bodega,
             REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-            B.sub_total/B.cantidad as precio,
+            TRUNCATE(B.sub_total/B.cantidad, 2) as precio,
             sum(B.cantidad_s) as cantidad,
-            sum(B.sub_total_s) as importe
+            TRUNCATE(sum(B.sub_total_s),2) as importe
 
         from factura A
         inner join venta_has_producto B
@@ -1301,9 +1301,9 @@ class FacturacionCorporativa extends Component
         if(C.isv = 0, 'SI' , 'NO' ) as excento,
         'N/A',
         'N/A',
-        FORMAT(C.precio,4) as precio,
-        FORMAT(C.cantidad,4) as cantidad,
-        FORMAT(C.sub_total,4) as sub_total
+        TRUNCATE(C.precio,2) as precio,
+        FORMAT(C.cantidad,2) as cantidad,
+        TRUNCATE(C.sub_total,4) as sub_total
 
         from factura A
         inner join vale B

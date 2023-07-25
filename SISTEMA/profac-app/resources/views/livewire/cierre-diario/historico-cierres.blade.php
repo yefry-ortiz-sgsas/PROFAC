@@ -59,7 +59,7 @@
                                         <th>Estado de cierre</th>
                                         <th>Monto Total Contado</th>
                                         <th>Monto Total Credito</th>
-                                        <th>Monto Total Anulado</th>
+                                        <th>Monto Total Acumulado</th>
                                         <th>Fecha del registro</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -74,7 +74,7 @@
                                             <th>Estado de cierre</th>
                                             <th>Monto Total Contado</th>
                                             <th>Monto Total Credito</th>
-                                            <th>Monto Total Anulado</th>
+                                            <th>Monto Total Acumulado</th>
                                             <th>Fecha del registro</th>
                                             <th>Acciones</th>
                                         </tr>

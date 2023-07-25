@@ -319,7 +319,7 @@
                                     </div>
 
                                     <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                        <label for="exampleFormControlTextarea1"> <b>Total Facturas anuladas</b></label>
+                                        <label for="exampleFormControlTextarea1" style="font-size: 14px;"> <b>Total Facturado</b></label>
                                         <input type="text" readonly class="form-control" id="inputTotalAnulado" name="inputTotalAnulado" >
                                     </div>
                                 </div>
@@ -668,6 +668,9 @@
             $('#totalContado').val(response.data.totalContado);
             $('#totalCredito').val(response.data.totalCredito);
             $('#totalAnuladas').val(response.data.totalAnulado);
+
+
+
 
             $('#inputTotalContado').val(response.data.totalContado);
             $('#inputTotalCredito').val(response.data.totalCredito);
