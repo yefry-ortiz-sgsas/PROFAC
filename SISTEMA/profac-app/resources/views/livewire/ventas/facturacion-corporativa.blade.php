@@ -943,9 +943,9 @@
                 if (valorInputPrecio && valorInputCantidad) {
 
                     /* CAMBIO 20230725 toFixed(3)*/
-                    let subTotal = valorInputPrecio.toFixed(4) * (valorInputCantidad * valorSelectUnidad);
-                    let isv = subTotal * (isvProducto.toFixed(4) / 100);
-                    let total = subTotal + subTotal.toFixed(4) * (isvProducto.toFixed(4) / 100);
+                    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                    let isv = subTotal * (isvProducto / 100);
+                    let total = subTotal + subTotal * (isvProducto.toFixed(4) / 100);
                     /* CAMBIO 20230725 toFixed(3):minimumFractionDigits: 2*/
                     document.getElementById('total' + id).value = total.toFixed(4);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
