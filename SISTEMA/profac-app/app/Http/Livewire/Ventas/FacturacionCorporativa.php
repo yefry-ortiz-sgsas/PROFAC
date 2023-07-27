@@ -1303,7 +1303,7 @@ class FacturacionCorporativa extends Component
         'N/A',
         TRUNCATE(C.precio,2) as precio,
         FORMAT(C.cantidad,2) as cantidad,
-        TRUNCATE(C.sub_total,4) as sub_total
+        TRUNCATE(C.sub_total,2) as sub_total
 
         from factura A
         inner join vale B
