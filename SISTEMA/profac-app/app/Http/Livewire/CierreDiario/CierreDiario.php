@@ -233,9 +233,9 @@ class CierreDiario extends Component
 
         $totalFacturado = $contadoTotal->sumaTotalcontado +$creditoTotal->sumaTotalcredito;
         return response()->json([
-            'totalContado' => number_format($contadoTotal->sumaTotalcontado, 4, '.', ''),
-            'totalCredito' => number_format($creditoTotal->sumaTotalcredito, 4, '.', ''),
-            'totalAnulado' => number_format($totalFacturado, 4, '.', ''),
+            'totalContado' => number_format($contadoTotal->sumaTotalcontado, 2, '.', ','),
+            'totalCredito' => number_format($creditoTotal->sumaTotalcredito, 2, '.', ','),
+            'totalAnulado' => number_format($totalFacturado, 2, '.', ','),
             'banderaCierre'=> $existencia->existe
         ], 200);
     }

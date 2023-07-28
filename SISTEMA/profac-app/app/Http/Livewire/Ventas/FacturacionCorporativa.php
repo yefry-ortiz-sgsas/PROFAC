@@ -1265,9 +1265,9 @@ class FacturacionCorporativa extends Component
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
             H.nombre as bodega,
             REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-            TRUNCATE(B.sub_total/B.cantidad, 2) as precio,
+            FORMAT(B.sub_total/B.cantidad, 2) as precio,
             sum(B.cantidad_s) as cantidad,
-            TRUNCATE(sum(B.sub_total_s),2) as importe
+            FORMAT(sum(B.sub_total_s),2) as importe
 
         from factura A
         inner join venta_has_producto B
@@ -1301,9 +1301,9 @@ class FacturacionCorporativa extends Component
         if(C.isv = 0, 'SI' , 'NO' ) as excento,
         'N/A',
         'N/A',
-        TRUNCATE(C.precio,2) as precio,
+        FORMAT(C.precio,2) as precio,
         FORMAT(C.cantidad,2) as cantidad,
-        TRUNCATE(C.sub_total,2) as sub_total
+        FORMAT(C.sub_total,2) as sub_total
 
         from factura A
         inner join vale B
@@ -1411,7 +1411,7 @@ class FacturacionCorporativa extends Component
         from factura
         where id = " . $idFactura);
 
-
+        /* CAMBIO 20230725 FORMAT(total,2) as total:FORMAT(isv,2) as isv:FORMAT(sub_total,2) as sub_total,:FORMAT(sub_total_grabado,2) as sub_total_grabado:FORMAT(sub_total_excento,2) as sub_total_excento*/
         $importesConCentavos = DB::SELECTONE("
         select
         FORMAT(total,2) as total,
@@ -1422,72 +1422,73 @@ class FacturacionCorporativa extends Component
         from factura where factura.id = " . $idFactura);
 
 
+        /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
 
         $productos = DB::SELECT(
             "
 
-                select
-                *
-                from (
-                select
-                    B.producto_id as codigo,
-                    concat(C.nombre) as descripcion,
-                    UPPER(J.nombre) as medida,
-                    if(C.isv = 0, 'SI' , 'NO' ) as excento,
-                    H.nombre as bodega,
-                    REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                    FORMAT(B.sub_total/B.cantidad,2) as precio,
-                    FORMAT(sum(B.cantidad_s),2) as cantidad,
-                    FORMAT(sum(B.sub_total_s),2) as importe
+        select
+        *
+        from (
+        select
+            B.producto_id as codigo,
+            concat(C.nombre) as descripcion,
+            UPPER(J.nombre) as medida,
+            if(C.isv = 0, 'SI' , 'NO' ) as excento,
+            H.nombre as bodega,
+            REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
+            FORMAT(B.sub_total/B.cantidad, 2) as precio,
+            sum(B.cantidad_s) as cantidad,
+            FORMAT(sum(B.sub_total_s),2) as importe
 
-                from factura A
-                inner join venta_has_producto B
-                on A.id = B.factura_id
-                inner join producto C
-                on B.producto_id = C.id
-                inner join unidad_medida_venta D
-                on B.unidad_medida_venta_id = D.id
-                inner join unidad_medida J
-                on J.id = D.unidad_medida_id
-                inner join recibido_bodega E
-                on B.lote = E.id
-                inner join seccion F
-                on E.seccion_id = F.id
-                inner join segmento G
-                on F.segmento_id = G.id
-                inner join bodega H
-                on G.bodega_id = H.id
-                where A.id=" . $idFactura . "
-                group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
-                order by B.indice asc
-                ) A
+        from factura A
+        inner join venta_has_producto B
+        on A.id = B.factura_id
+        inner join producto C
+        on B.producto_id = C.id
+        inner join unidad_medida_venta D
+        on B.unidad_medida_venta_id = D.id
+        inner join unidad_medida J
+        on J.id = D.unidad_medida_id
+        inner join recibido_bodega E
+        on B.lote = E.id
+        inner join seccion F
+        on E.seccion_id = F.id
+        inner join segmento G
+        on F.segmento_id = G.id
+        inner join bodega H
+        on G.bodega_id = H.id
+        where A.id=" . $idFactura . "
+        group by codigo, descripcion, medida, bodega, seccion, precio,  B.created_at,B.indice
+        order by B.indice asc
+        ) A
 
 
-                union
+        union
 
-                select
-                D.id,
-                D.nombre as descripcion,
-                F.nombre as medida,
-                if(C.isv = 0, 'SI' , 'NO' ) as excento,
-                'N/A',
-                'N/A',
-                FORMAT(C.precio,2) as precio,
-                FORMAT(C.cantidad,2) as cantidad,
-                FORMAT(C.sub_total,2) as sub_total
+        select
+        D.id,
+        D.nombre as descripcion,
+        F.nombre as medida,
+        if(C.isv = 0, 'SI' , 'NO' ) as excento,
+        'N/A',
+        'N/A',
+        FORMAT(C.precio,2) as precio,
+        FORMAT(C.cantidad,2) as cantidad,
+        FORMAT(C.sub_total,2) as sub_total
 
-                from factura A
-                inner join vale B
-                on A.id = B.factura_id
-                inner join espera_has_producto C
-                on B.id = C.vale_id
-                inner join producto D
-                on C.producto_id = D.id
-                inner join unidad_medida_venta E
-                on C.unidad_medida_venta_id = E.id
-                inner join unidad_medida F
-                on F.id = E.unidad_medida_id
-                where B.estado_id=1 and A.id = " . $idFactura
+        from factura A
+        inner join vale B
+        on A.id = B.factura_id
+        inner join espera_has_producto C
+        on B.id = C.vale_id
+        inner join producto D
+        on C.producto_id = D.id
+        inner join unidad_medida_venta E
+        on C.unidad_medida_venta_id = E.id
+        inner join unidad_medida F
+        on F.id = E.unidad_medida_id
+        where B.estado_id=1 and A.id = " . $idFactura
 
         );
         // for ($i=0; $i < 15 ; $i++) {
@@ -1516,7 +1517,7 @@ class FacturacionCorporativa extends Component
         } else {
             $flagCentavos = true;
         }
-
+        /*CAMBIO 20230725 $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');*/
         $formatter = new NumeroALetras();
         $formatter->apocope = true;
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');

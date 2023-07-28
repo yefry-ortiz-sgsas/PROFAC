@@ -345,6 +345,22 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Boleta de Compra</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
+                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
+                            </li>
+
+
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                             <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                             <span class="fa arrow"></span></a>
@@ -456,6 +472,8 @@
                         </ul>
                     </li>
 
+
+
                     <li>
                         <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Vale</span>
@@ -468,40 +486,6 @@
                             </li> --}}
                             <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
                             </li>
-
-
-                        </ul>
-                    </li>
-
-
-
-                    {{--  VENTAS COORPORATIVO  --}}
-                    <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
-                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                            </li>
-                            <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                            <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                    ND</a></li>
-                            <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
-                                    Anuladas</a></li>
-                            <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                    Cotizaciones</a></li>
-
-                            <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
-
-                            <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
-                            </li>
-
 
 
                         </ul>
@@ -520,7 +504,7 @@
                             <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
                                     SR/Clientes A</a></li>
                             <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
                             <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
                                 </a></li>
                             <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas
@@ -533,6 +517,40 @@
 
                         </ul>
                     </li>
+
+                    {{--  VENTAS COORPORATIVO  --}}
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
+                            </li>
+                            {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
+                            <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
+                                    Clientes B</a></li>
+                            <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
+                                    Anuladas</a></li>
+                            <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                            <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
+                                    Cotizaciones</a></li>
+
+                            <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
+
+                            <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
+
+                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
+                            </li>
+
+
+
+                        </ul>
+                    </li>
+
+
                     {{--   vENTAS EXONERADAS  --}}
                     <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
@@ -625,7 +643,7 @@
                     <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
                     </li>
                     <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                    <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas</a></li>
+                    <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
                     <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
                     <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
                     </li>
@@ -721,6 +739,23 @@
                 </ul>
             </li>
 
+            <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Boleta de Compra</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+
+                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                    </li> --}}
+                    <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
+                    </li>
+
+
+                </ul>
+            </li>
+
             {{--  <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
@@ -797,6 +832,32 @@
                 </ul>
             </li>
 
+                        {{--  VENTAS GOBIERNO  --}}
+
+                        <li>
+                            <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                                {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
+                                <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                                <span class="fa arrow"></span></a>
+
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
+                                </li>
+                                <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
+                                <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
+                                <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
+                                </li>
+                                <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+
+
+
+
+
+                            </ul>
+                        </li>
+
             {{--  VENTAS COORPORATIVO  --}}
             <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
@@ -808,8 +869,8 @@
                     <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                     <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
                     <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                    <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
-                    <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas ND</a></li>
+                    {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
+                    <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas Clientes B</a></li>
                     <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a>
                     </li>
                     <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a>
@@ -826,31 +887,7 @@
             </ul>
             </li>
 
-            {{--  VENTAS GOBIERNO  --}}
 
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
-                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
-                    </li>
-                    <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                    <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                    <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
-                    <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
-                    </li>
-                    <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
-
-
-
-
-                </ul>
-            </li>
             {{--   vENTAS EXONERADAS  --}}
             <li>
                 <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
@@ -939,6 +976,22 @@
                 </ul>
             </li>  --}}
             <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Boleta de Compra</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+
+                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                    </li> --}}
+                    <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
+                    </li>
+
+
+                </ul>
+            </li>
+            <li>
                 <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                     <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                     <span class="fa arrow"></span></a>
@@ -1016,6 +1069,31 @@
 
                     </ul>
                 </li>
+
+                {{--  VENTAS GOBIERNO  --}}
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                            <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
+                                    SR/Clientes A</a></li>
+                            <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
+                            <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
+                                </a></li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas
+                                </a></li>
+                            <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+
+
+
+
+
+                        </ul>
+                    </li>
                   {{--  VENTAS COORPORATIVO  --}}
                     <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span><span class="fa arrow"></span></a>
@@ -1024,9 +1102,9 @@
                                 <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
                                 <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
                                 </li>
-                                <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>
+                                {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
                                 <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                        ND</a></li>
+                                        Clientes B</a></li>
                                 <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
                                         Anuladas</a></li>
                                 <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
@@ -1044,30 +1122,6 @@
                     </li>
 
 
-                {{--  VENTAS GOBIERNO  --}}
-                <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas Clientes A</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
-                                SR/Clientes A</a></li>
-                        <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                        <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
-                            </a></li>
-                        <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas
-                            </a></li>
-                        <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
-
-
-
-
-                    </ul>
-                </li>
                 {{--   vENTAS EXONERADAS  --}}
                 <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"

@@ -55,7 +55,10 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     {{--  <a>Clientes <b>A</b></a>  --}}
-                    <a>Clientes <b>B</b></a>
+                    {{--  <a>Clientes <b>B</b></a>  --}}
+                    <div class="alert alert-info" role="alert">
+                        Clientes <b>B</b>
+                    </div>
 
                 </li>
                 {{-- <li class="breadcrumb-item">

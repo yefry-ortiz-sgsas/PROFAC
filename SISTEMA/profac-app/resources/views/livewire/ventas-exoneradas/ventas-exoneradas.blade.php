@@ -35,7 +35,9 @@
             <h2>Ventas Exoneradas</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Cliente exonerado</a>
+                    <div class="alert alert-info" role="alert">
+                        Clientes <b>Exonerado</b>
+                    </div>
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -868,15 +870,15 @@ if (valorInputPrecio && valorInputCantidad) {
     let isv = subTotal * (isvProducto / 100);
     let total = subTotal;
 
-    document.getElementById('total' + id).value = total.toFixed(3);
-    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(total)
+    document.getElementById('total' + id).value = total.toFixed(4);
+    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(total)
 
-    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
-    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotal)
+    document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
+    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(subTotal)
 
 
-    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
-    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(isv)
+    document.getElementById('isvProducto' + id).value = isv.toFixed(4);
+    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(isv)
 
 
     idRestaInventario.value = valorInputCantidad*valorSelectUnidad;
@@ -914,14 +916,14 @@ for (let i = 0; i < arregloIdInputs.length; i++) {
 
 }
 
-document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
-document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(subTotalGeneralValor)
+document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(4);
+document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(subTotalGeneralValor)
 
-document.getElementById('isvGeneral').value = totalISV.toFixed(3);
-document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalISV)
+document.getElementById('isvGeneral').value = totalISV.toFixed(4);
+document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(totalISV)
 
-document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
-document.getElementById('totalGeneralMostrar').value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 2,}).format(totalGeneralValor)
+document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(4);
+document.getElementById('totalGeneralMostrar').value =  new Intl.NumberFormat('es-HN',{style: 'currency', currency: 'HNL', minimumFractionDigits: 4,}).format(totalGeneralValor)
 
 
 

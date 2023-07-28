@@ -131,6 +131,7 @@
                             <th>Seccion</th>
                             <th>Medida</th>
                             <th>Precio </th>
+                            <th>Exento</th>
                             <th>Cantidad</th>
                             <th>Importe</th>
                         </tr>
@@ -146,6 +147,7 @@
                                 <td>{{ $producto->seccion }}</td>
                                 <td>{{ $producto->medida }}</td>
                                 <td>{{ $producto->precio }}</td>
+                                <td>{{ $producto->excento }}</td>
                                 <td>{{ $producto->cantidad }}</td>
                                 <td>{{ $producto->importe }}</td>
                             </tr>
