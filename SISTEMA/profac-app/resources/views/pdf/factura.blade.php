@@ -109,15 +109,15 @@
                 <p class="card-text" style="position:absolute;left:20px;  top:60px;"><b>Correo:</b>
                     {{ $cliente->correo }}
                 </p>
-                <p class="card-text" style="position:absolute;left:20px;  top:80px;"><b>Notas:</b> </p>
+                <p class="card-text" style="position:absolute;left:20px;  top:75px; max-width:680px"><b>Notas:</b>{{ $cai->comentario }} </p>
 
 
-                <p class="card-text " style="position:absolute;left:20px;  top:120px;"><b>Correlativo de Ord.
+                <p class="card-text " style="position:absolute;left:20px;  top:125px;"><b>Correlativo de Ord.
                         exenta</b>
                 </p>
-                <p class="card-text" style="position:absolute;left:250px;  top:120px;"><b>Constancia de registro
+                <p class="card-text" style="position:absolute;left:250px;  top:125px;"><b>Constancia de registro
                         exonerado</b></p>
-                <p class="card-text" style="position:absolute;left:500px;  top:120px;"><b>Identificativo del registro de
+                <p class="card-text" style="position:absolute;left:500px;  top:125px;"><b>Identificativo del registro de
                         la SAG</b></p>
 
 
@@ -138,6 +138,8 @@
                 <p class="card-text" style="position:absolute;left:270px;  top:60px;"><b>Teléfono:</b>
                     {{ $cliente->telefono_empresa }}
                 </p>
+
+
             </div>
         </div>
 

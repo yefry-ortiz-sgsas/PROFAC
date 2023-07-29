@@ -268,6 +268,7 @@ class VentasExoneradas extends Component
             $factura->estado_editar = 1;
             $factura->sub_total_grabado = 0;
             $factura->numero_orden_compra_id=$request->ordenCompra;
+            $factura->comentario=$request->nota_comen;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -566,6 +567,7 @@ class VentasExoneradas extends Component
         A.numero_factura as numero,
         A.estado_factura_id as estado_factura,
         B.cai,
+        A.comentario,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
         B.numero_final,
@@ -736,6 +738,7 @@ class VentasExoneradas extends Component
         A.numero_factura as numero,
         A.estado_factura_id as estado_factura,
         B.cai,
+        A.comentario,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
         B.numero_final,
