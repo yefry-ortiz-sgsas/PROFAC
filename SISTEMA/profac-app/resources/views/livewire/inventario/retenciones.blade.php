@@ -67,7 +67,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="retencionCreacionForm" name="retencionCreacionForm" data-parsley-validate>
-                    
+
                         <div class="row" id="row_datos">
                             <div class="col-md-12">
                                 <label for="nombre_retencion" class="col-form-label focus-label">Descripción:</label>
@@ -79,7 +79,7 @@
                                 <input class="form-control" required type="number" id="valor_retencion" name="valor_retencion"
                                     data-parsley-required>
                             </div>
-                        
+
                             <div class="col-md-12">
                                 <label for="tipo_retencion" class="col-form-label focus-label">Tipo de Retencion</label>
                                 <select class="form-group form-control" name="tipo_retencion" id="tipo_retencion">
@@ -87,12 +87,12 @@
                                     @foreach ($listaRetenciones as $retencion)
                                     <option value="{{ $retencion->id }}">{{ $retencion->nombre }}</option>
                                     @endforeach
-                            
-                                                          
+
+
 
                                 </select>
                             </div>
-                        
+
                         </div>
                     </form>
                     <button class="btn btn-sm btn-primary float-left m-t-n-xs"
@@ -108,14 +108,14 @@
 
 
 
-    
+
     @push('scripts')
-    
-    <script>   
-        
+
+    <script>
+
         $(document).ready(function() {
             console.log("entro")
-            $('#tbl_retenciones').DataTable({    
+            $('#tbl_retenciones').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
@@ -148,7 +148,7 @@
                                 .css('font-size', 'inherit');
                         }
                     }
-                ],           
+                ],
                 "ajax": "/inventario/retenciones/listar",
                 "columns": [
                     {
@@ -172,14 +172,14 @@
                     {
                         data: 'opciones'
                     },
-                    
-  
+
+
                 ]
 
 
             });
-        }) 
-        
+        })
+
         $(document).on('submit', '#retencionCreacionForm', function(event) {
 
             event.preventDefault();
@@ -205,11 +205,43 @@
                     $('#tbl_retenciones').DataTable().ajax.reload();
 
             })
-        } 
-        
-        
+        }
 
-        
+
+
+
     </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

@@ -49,7 +49,7 @@
 
             </ol>
         </div>
-        
+
         @if (Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5')
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem" mr-auto>
@@ -61,8 +61,8 @@
             <a href="#" class="btn add-btn btn-info" data-toggle="modal" data-target="#modal_foto_producto"><i class="fa fa-plus"></i>Subir Fotografía</a>
         </div>
         @endif
-            
-       
+
+
 
 
     </div>
@@ -95,7 +95,7 @@
                             @php
                             $comillas = '"';
                             @endphp
-        
+
 
                             @foreach ($imagenes as $imagen)
                             @if ($imagen->contador == 1)
@@ -658,7 +658,7 @@
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
-                  
+
                     pageLength: 10,
                     responsive: true,
                     "ajax": "/detalle/producto/unidad/"+idProducto_edit,
@@ -973,3 +973,35 @@ var categoria_produ = document.getElementById('categoria_producto_edit').value;
 
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

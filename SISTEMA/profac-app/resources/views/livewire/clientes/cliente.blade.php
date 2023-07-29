@@ -2,31 +2,31 @@
     @push('styles')
 
 
-       
+
         <style>
             @media (max-width: 600px) {
                 .ancho-imagen {
                     max-width: 200px;
                 }
                 }
-    
+
              @media (min-width: 601px ) and (max-width:900px){
                 .ancho-imagen {
                     max-width: 300px;
                 }
-                }  
-            
+                }
+
                 @media (min-width: 901px) {
                 .ancho-imagen {
                     max-width: 300px;
                 }
-                }  
-          </style>      
-    
+                }
+          </style>
 
-    
-    
-    
+
+
+
+
 
     @endpush
 
@@ -71,7 +71,7 @@
                                         <th>Dirreción</th>
                                         <th>Teléfono</th>
                                         <th>Correo</th>
-                                        <th>RTN</th>                                       
+                                        <th>RTN</th>
                                         <th>Estado</th>
                                         <th>Registrado Por:</th>
                                         <th>Fecha </th>
@@ -107,7 +107,7 @@
                         <form id="clientesCreacionForm" name="clientesCreacionForm" data-parsley-validate>
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                             <div class="row" id="row_datos">
-     
+
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Nombre del cliente<span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente" name="nombre_cliente"
@@ -117,7 +117,7 @@
                                     <label class="col-form-label focus-label">Dirección<span class="text-danger">*</span></label>
                                     <textarea name="direccion_cliente" placeholder="Escriba aquí..." required id="direccion_cliente" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required maxlength="142"></textarea>
-                                </div>                                
+                                </div>
                                 <div class="col-md-6">
                                     <label class="col-form-label focus-label">Credito Disponible<span class="text-danger">*</span></label>
                                     <input data-type="currency"  id="credito" name="credito" type="text"  step="any" class="form-group form-control" data-parsley-required>
@@ -163,7 +163,7 @@
                                     <input class="form-group form-control"  type="text" name="telefono[]"
                                         id="telefono[]" pattern="[0-9]{8}">
                                 </div>
- 
+
 
                                 <div class="col-md-6">
                                     <label class="col-form-label focus-label">Longitud</label>
@@ -183,7 +183,7 @@
 
                                     </select>
                                 </div>
-                              
+
 
 
                                 <div class="col-md-4">
@@ -225,7 +225,7 @@
                                     <select class="form-group form-control" name="vendedor_cliente" id="vendedor_cliente"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione una opción---</option>
-                            
+
                                     </select>
                                 </div>
                                 <div class="col-md-5">
@@ -261,10 +261,10 @@
                     </div>
                     <div class="modal-body">
                         <form id="clientesCreacionForm_editar" name="clientesCreacionForm" data-parsley-validate>
-                            
+
                             <div class="row" id="row_datos">
                                 <input id="idCliente" name="idCliente" type="hidden" >
-     
+
                                 <div class="col-md-12">
                                     <label class="col-form-label focus-label">Nombre del cliente</label>
                                     <input class="form-control" required type="text" id="nombre_cliente_editar" name="nombre_cliente_editar"
@@ -274,7 +274,7 @@
                                     <label class="col-form-label focus-label">Dirección</label>
                                     <textarea name="direccion_cliente_editar" placeholder="Escriba aquí..." required id="direccion_cliente_editar" cols="30" rows="3"
                                         class="form-group form-control" data-parsley-required maxlength="142"></textarea>
-                                </div>                                
+                                </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label focus-label">Credito Inicial</label>
                                     <input  id="credito_inicial_editar" name="credito_inicial_editar" type="number" step="any" class="form-group form-control" data-parsley-required>
@@ -324,7 +324,7 @@
                                     <input class="form-group form-control"  type="text" name="telefono_2_editar"
                                         id="telefono_2_editar" pattern="[0-9]{8}">
                                 </div>
- 
+
 
                                 <div class="col-md-6">
                                     <label class="col-form-label focus-label">Longitud</label>
@@ -344,7 +344,7 @@
 
                                     </select>
                                 </div>
-                              
+
 
 
                                 <div class="col-md-4">
@@ -389,13 +389,13 @@
                                         @foreach ($clientes as $cliente)
                                         <option value="{{$cliente->id}}" >{{$cliente->name}}</option>
                                         @endforeach
-                            
+
                                     </select>
                                 </div>
 
                             </div>
                         </form>
-                   
+
                         <button id="btn_crear_cliente_editar" type="submit" class="btn btn-primary  mt-4"
                             form="clientesCreacionForm_editar"><strong>Editar
                                Cliente</strong></button>
@@ -405,7 +405,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!---MODAL PARA EDITAR FOTOGRAFIA----->
         <div id="modal_fotografia_editar" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered ">
@@ -433,20 +433,20 @@
                         </form>
 
 
-  
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default  " data-dismiss="modal">Cerrar</button>
                         <button id="btn_img_editar" type="submit" class="btn btn-primary  "
                             form="form_img_edit"><strong>
                                Cambiar Imagen</strong></button>
-                    </div>    
-            
-                       
+                    </div>
+
+
 
                 </div>
             </div>
-        </div>                
+        </div>
 
 @push('scripts')
 <script>
@@ -484,7 +484,7 @@ $(document).ready(function() {
         });
 
         function listarClientes(){
-            // 
+            //
 
             $('#tbl_ClientesLista').DataTable({
                 "order": [0, 'desc'],
@@ -492,7 +492,7 @@ $(document).ready(function() {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
                 pageLength: 10,
-                responsive: true,  
+                responsive: true,
                 "ajax": "/clientes/listar",
                 "columns": [{
                         data: 'idCliente'
@@ -524,7 +524,7 @@ $(document).ready(function() {
                     {
                         data: 'opciones'
                     },
-     
+
                 ]
 
 
@@ -532,7 +532,7 @@ $(document).ready(function() {
         }
 
         function obtenerpaiss() {
-                  
+
             axios.get('/cliente/pais')
                 .then(function(response) {
 
@@ -543,7 +543,7 @@ $(document).ready(function() {
 
                         html +=
                             `
-                    <option value="${ pais.id }">${pais.nombre}</option>   
+                    <option value="${ pais.id }">${pais.nombre}</option>
                    `
                     });
 
@@ -569,7 +569,7 @@ $(document).ready(function() {
         function obtenerDepartamentos(){
             document.getElementById('departamento_cliente').innerHTML="<option selected disabled>---Seleccionar un depto---</option>";
             document.getElementById('municipio_cliente').innerHTML="<option selected disabled>---Seleccionar un depto---</option>";
-           
+
             let id = document.getElementById('pais_cliente').value;
            // console.log(id)
 
@@ -583,7 +583,7 @@ $(document).ready(function() {
 
                     html +=
                         `
-                <option value="${ departamento.id }">${departamento.nombre}</option>   
+                <option value="${ departamento.id }">${departamento.nombre}</option>
                 `
                 });
 
@@ -617,7 +617,7 @@ $(document).ready(function() {
 
                 html +=
                     `
-            <option value="${ municipio.id }">${municipio.nombre}</option>   
+            <option value="${ municipio.id }">${municipio.nombre}</option>
             `
             });
 
@@ -639,7 +639,7 @@ $(document).ready(function() {
         }
 
         function tipoPersonalidad(){
-           
+
 
             axios.get('/cliente/tipo/personalidad')
             .then(function(response) {
@@ -650,7 +650,7 @@ $(document).ready(function() {
 
                 html +=
                     `
-            <option value="${ tipo.id }">${tipo.nombre}</option>   
+            <option value="${ tipo.id }">${tipo.nombre}</option>
             `
             });
 
@@ -674,7 +674,7 @@ $(document).ready(function() {
         //
 
         function tipoCliente(){
-           
+
 
            axios.get('/cliente/tipo/cliente')
            .then(function(response) {
@@ -685,7 +685,7 @@ $(document).ready(function() {
 
                html +=
                    `
-           <option value="${ tipo.id }">${tipo.descripcion}</option>   
+           <option value="${ tipo.id }">${tipo.descripcion}</option>
            `
            });
 
@@ -707,7 +707,7 @@ $(document).ready(function() {
        }
 
        function vendedor(){
-           
+
 
            axios.get('/cliente/lista/vendedores')
            .then(function(response) {
@@ -718,7 +718,7 @@ $(document).ready(function() {
 
                html +=
                    `
-           <option value="${ vendedor.id }">${vendedor.name}</option>   
+           <option value="${ vendedor.id }">${vendedor.name}</option>
            `
            });
 
@@ -751,32 +751,32 @@ $(document).ready(function() {
         let telefono2 = document.getElementsByName('telefono[]');
 
         //console.log(contacto2[1].value , telefono2[1].value)
-        
+
         if( contacto2[1].value  && telefono2[1].value  ){
-            
+
                 var data = new FormData($('#clientesCreacionForm').get(0));
-                
-                
+
+
 
                 axios.post('/cliente/registrar',data)
                 .then( response => {
                     let data = response.data;
 
-                   
-                    $('#modal_clientes_crear').modal('hide');                   
-                    document.getElementById("clientesCreacionForm").reset();                   
-                    $('#clientesCreacionForm').parsley().reset(); 
-                    $('#tbl_ClientesLista').DataTable().ajax.reload();       
+
+                    $('#modal_clientes_crear').modal('hide');
+                    document.getElementById("clientesCreacionForm").reset();
+                    $('#clientesCreacionForm').parsley().reset();
+                    $('#tbl_ClientesLista').DataTable().ajax.reload();
                     $imagenPrevisualizacion.src = '';
                     document.getElementById('btn_crear_cliente').disabled=false;
-                   
+
 
                     Swal.fire({
                         icon: data.icon,
                         title: data.title,
                         text: data.text,
                     })
-                    
+
 
                 })
                 .catch( err => {
@@ -797,12 +797,12 @@ $(document).ready(function() {
 
             axios.post('/cliente/registrar',data)
             .then( response => {
-                let data = response.data;                   
+                let data = response.data;
                 $('#modal_clientes_crear').modal('hide');
-                
-                document.getElementById("clientesCreacionForm").reset();                   
-                $('#clientesCreacionForm').parsley().reset(); 
-                $('#tbl_ClientesLista').DataTable().ajax.reload();   
+
+                document.getElementById("clientesCreacionForm").reset();
+                $('#clientesCreacionForm').parsley().reset();
+                $('#tbl_ClientesLista').DataTable().ajax.reload();
                 $imagenPrevisualizacion.src='';
                 Swal.fire({
                     icon: data.icon,
@@ -810,7 +810,7 @@ $(document).ready(function() {
                     text: data.text,
                 })
                 document.getElementById('btn_crear_cliente').disabled=false;
-                
+
 
             })
             .catch( err => {
@@ -837,10 +837,10 @@ $(document).ready(function() {
 
         document.getElementById('btn_crear_cliente').disabled=false;
 
-      }  
+      }
 
-/*---------------------------------------------------------------Editar Cliente----------------------------------------------------------------------------------------------------------------*/  
-/*---------------------------------------------------------------Editar Cliente----------------------------------------------------------------------------------------------------------------*/     
+/*---------------------------------------------------------------Editar Cliente----------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------Editar Cliente----------------------------------------------------------------------------------------------------------------*/
            // /cliente/registrar
 
     function modalEditarCliente(id){
@@ -851,7 +851,7 @@ $(document).ready(function() {
         axios.post("/clientes/datos/editar", {id:id})
         .then( response => {
 
-            document.getElementById("clientesCreacionForm_editar").reset();  
+            document.getElementById("clientesCreacionForm_editar").reset();
 
             let datosCliente = response.data.datosCliente;
             let datosContacto = response.data.datosContacto;
@@ -879,35 +879,35 @@ $(document).ready(function() {
                 if(datosUbicacion.idPais == pais.id ){
                     htmlSelectPais +=
                     `
-                    <option value="${ pais.id }" selected>${pais.nombre}</option>   
+                    <option value="${ pais.id }" selected>${pais.nombre}</option>
                     `
-                    
+
 
                 }else{
                     htmlSelectPais +=
                     `
-                    <option value="${ pais.id }">${pais.nombre}</option>   
+                    <option value="${ pais.id }">${pais.nombre}</option>
                     `
-                    
+
 
                 }
             });
-            
+
             /*----------------------------------------------------------*/
             deptos.forEach(depto => {
                 if(datosUbicacion.idDepto == depto.id ){
                     htmlSelectDepto +=
                     `
-                    <option value="${ depto.id }" selected>${depto.nombre}</option>   
+                    <option value="${ depto.id }" selected>${depto.nombre}</option>
                     `
-                    
+
 
                 }else{
                     htmlSelectDepto +=
                     `
-                    <option value="${ depto.id }">${depto.nombre}</option>   
+                    <option value="${ depto.id }">${depto.nombre}</option>
                     `
-                    
+
 
                 }
             });
@@ -916,16 +916,16 @@ $(document).ready(function() {
                 if(datosUbicacion.idMunicipio == municipio.id ){
                     htmlSelectMunicipio +=
                     `
-                    <option value="${ municipio.id }" selected>${municipio.nombre}</option>   
+                    <option value="${ municipio.id }" selected>${municipio.nombre}</option>
                     `
-                    
+
 
                 }else{
                     htmlSelectMunicipio +=
                     `
-                    <option value="${ municipio.id }">${municipio.nombre}</option>   
+                    <option value="${ municipio.id }">${municipio.nombre}</option>
                     `
-                    
+
 
                 }
             });
@@ -935,16 +935,16 @@ $(document).ready(function() {
                 if(datosCliente.tipo_personalidad_id == personalidad.id ){
                     htmlSelectTipoPersonalidad +=
                     `
-                    <option value="${ personalidad.id }" selected>${personalidad.nombre}</option>   
+                    <option value="${ personalidad.id }" selected>${personalidad.nombre}</option>
                     `
-                    
+
 
                 }else{
                     htmlSelectTipoPersonalidad +=
                     `
-                    <option value="${ personalidad.id }">${personalidad.nombre}</option>   
+                    <option value="${ personalidad.id }">${personalidad.nombre}</option>
                     `
-                    
+
 
                 }
             });
@@ -954,38 +954,38 @@ $(document).ready(function() {
                 if(datosCliente.tipo_cliente_id == cliente.id ){
                     htmlSelectTipoCliente +=
                     `
-                    <option value="${ cliente.id }" selected>${cliente.descripcion}</option>   
+                    <option value="${ cliente.id }" selected>${cliente.descripcion}</option>
                     `
-                    
+
 
                 }else{
                     htmlSelectTipoCliente +=
                     `
-                    <option value="${ cliente.id }">${cliente.descripcion}</option>   
+                    <option value="${ cliente.id }">${cliente.descripcion}</option>
                     `
-                    
+
 
                 }
             });
-            
+
             /*-------------------------------------------------------------*/
             vendedores.forEach(vendedor => {
                 if(datosCliente.vendedor == vendedor.id ){
                     htmlSelectVendedor +=
                     `
-                    <option value="${ vendedor.id }" selected>${vendedor.name}</option>   
-                    `                   
+                    <option value="${ vendedor.id }" selected>${vendedor.name}</option>
+                    `
 
                 }else{
                     htmlSelectVendedor +=
                     `
-                    <option value="${ vendedor.id }">${vendedor.name}</option>   
+                    <option value="${ vendedor.id }">${vendedor.name}</option>
                     `
-                    
+
 
                 }
-            });            
-            
+            });
+
             document.getElementById('idCliente').value = datosCliente.id;
 
             document.getElementById('nombre_cliente_editar').value =datosCliente.nombre;
@@ -1001,7 +1001,7 @@ $(document).ready(function() {
             document.getElementById('contacto_1_editar').value = datosContacto[0].nombre;
             document.getElementById('telefono_1_editar').value =datosContacto[0].telefono;
 
-            
+
             if(longitudArrayContactos>1){
                 document.getElementById('contacto_2_editar').value =datosContacto[1].nombre;
                 document.getElementById('telefono_2_editar').value =datosContacto[1].telefono;
@@ -1019,12 +1019,12 @@ $(document).ready(function() {
             document.getElementById("categoria_cliente_editar").innerHTML=htmlSelectTipoCliente;
             document.getElementById("vendedor_cliente_editar").innerHTML=htmlSelectVendedor;
 
-            
 
-            
+
+
             $('#modal_clientes_editar').modal('show');
 
-            
+
 
         })
         .catch(err=>{
@@ -1040,7 +1040,7 @@ $(document).ready(function() {
 
         document.getElementById('departamento_cliente_editar').innerHTML="<option selected disabled>---Seleccionar un depto---</option>";
         document.getElementById('municipio_cliente_editar').innerHTML="<option selected disabled>---Seleccionar un depto---</option>";
-           
+
            let id = document.getElementById('pais_cliente_editar').value;
           // console.log(id)
 
@@ -1054,7 +1054,7 @@ $(document).ready(function() {
 
                    html +=
                        `
-               <option value="${ departamento.id }">${departamento.nombre}</option>   
+               <option value="${ departamento.id }">${departamento.nombre}</option>
                `
                });
 
@@ -1077,7 +1077,7 @@ $(document).ready(function() {
        }
 
        function obtenerMunicipiosEditar(){
-           
+
            let id = document.getElementById('departamento_cliente_editar').value;
 
 
@@ -1090,7 +1090,7 @@ $(document).ready(function() {
 
                html +=
                    `
-           <option value="${ municipio.id }">${municipio.nombre}</option>   
+           <option value="${ municipio.id }">${municipio.nombre}</option>
            `
            });
 
@@ -1120,10 +1120,10 @@ $(document).ready(function() {
         let contacto2 = document.getElementsByName('contacto_2_editar');
         let telefono2 = document.getElementsByName('telefono_2_editar');
 
-        
+
 
         if( contacto2.value  && telefono2.value  ){
-            
+
                 var data = new FormData($('#clientesCreacionForm_editar').get(0));
                 document.getElementById('btn_crear_cliente_editar').disabled=true;
 
@@ -1131,15 +1131,15 @@ $(document).ready(function() {
                 .then( response => {
                     let data = response.data;
 
-                   
+
                     $('#modal_clientes_editar').modal('hide');
                     document.getElementById('btn_crear_cliente_editar').disabled=false;
-                    document.getElementById("clientesCreacionForm_editar").reset();                   
-                    $('#clientesCreacionForm_editar').parsley().reset(); 
-                    $('#tbl_ClientesLista').DataTable().ajax.reload();       
+                    document.getElementById("clientesCreacionForm_editar").reset();
+                    $('#clientesCreacionForm_editar').parsley().reset();
+                    $('#tbl_ClientesLista').DataTable().ajax.reload();
 
-                    
-                   
+
+
 
                     Swal.fire({
                         icon: data.icon,
@@ -1167,12 +1167,12 @@ $(document).ready(function() {
 
             axios.post('/clientes/editar',data)
             .then( response => {
-                let data = response.data;                   
+                let data = response.data;
                 $('#modal_clientes_editar').modal('hide');
                 document.getElementById('btn_crear_cliente_editar').disabled=false;
-                document.getElementById("clientesCreacionForm_editar").reset();                   
-                $('#clientesCreacionForm_editar').parsley().reset(); 
-                $('#tbl_ClientesLista').DataTable().ajax.reload();   
+                document.getElementById("clientesCreacionForm_editar").reset();
+                $('#clientesCreacionForm_editar').parsley().reset();
+                $('#tbl_ClientesLista').DataTable().ajax.reload();
 
                 Swal.fire({
                     icon: data.icon,
@@ -1207,7 +1207,7 @@ $(document).ready(function() {
 
        function modalEditarFotografia(idCliente){
            document.getElementById('clienteId').value=idCliente;
-          
+
           axios.post("/clientes/imagen",{idCliente:idCliente})
           .then(response=>{
 
@@ -1254,7 +1254,7 @@ $(document).ready(function() {
         // Y a la fuente de la imagen le ponemos el objectURL
         $imagenPrevisualizacion_editar.src = objectURL_editar;
         });
-        
+
 
 
         $(document).on('submit', '#form_img_edit', function(event) {
@@ -1270,19 +1270,19 @@ $(document).ready(function() {
                 let data = response.data;
                 $('#modal_fotografia_editar').modal('hide');
                 document.getElementById('btn_img_editar').disabled = false;
-                document.getElementById("form_img_edit").reset();                   
-                $('#form_img_edit').parsley().reset(); 
-              
+                document.getElementById("form_img_edit").reset();
+                $('#form_img_edit').parsley().reset();
+
                 Swal.fire({
                         icon: data.icon,
                         title: data.title,
                         text: data.text,
                     })
-                $('#tbl_ClientesLista').DataTable().ajax.reload();      
+                $('#tbl_ClientesLista').DataTable().ajax.reload();
 
             })
             .catch(err=>{
-               
+
                 let data = err.response.data;
                 $('#modal_fotografia_editar').modal('hide');
                 document.getElementById('btn_img_editar').disabled = false;
@@ -1294,7 +1294,7 @@ $(document).ready(function() {
 
             })
         }
-       
+
         function desactivarClienteModal(id){
 
             Swal.fire({
@@ -1302,7 +1302,7 @@ $(document).ready(function() {
             text:'Si desactiva este cliente, no podra realizar ventas para el mismo.',
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: 'Si, Desactivar',           
+            confirmButtonText: 'Si, Desactivar',
             cancelButtonText: 'Cancelar',
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
@@ -1324,7 +1324,7 @@ $(document).ready(function() {
                         title: data.title,
                         text: data.text,
                     })
-                $('#tbl_ClientesLista').DataTable().ajax.reload();      
+                $('#tbl_ClientesLista').DataTable().ajax.reload();
 
             })
             .catch(err=>{
@@ -1350,7 +1350,7 @@ $(document).ready(function() {
                         title: data.title,
                         text: data.text,
                     })
-                $('#tbl_ClientesLista').DataTable().ajax.reload();      
+                $('#tbl_ClientesLista').DataTable().ajax.reload();
             })
             .catch(err=>{
                 console.log(err);
@@ -1367,7 +1367,7 @@ $(document).ready(function() {
     keyup: function() {
       formatCurrency($(this));
     },
-    blur: function() { 
+    blur: function() {
       formatCurrency($(this), "blur");
     }
 });
@@ -1382,19 +1382,19 @@ function formatNumber(n) {
 function formatCurrency(input, blur) {
   // appends $ to value, validates decimal side
   // and puts cursor back in right position.
-  
+
   // get input value
   var input_val = input.val();
-  
+
   // don't validate empty input
   if (input_val === "") { return; }
-  
+
   // original length
   var original_len = input_val.length;
 
-  // initial caret position 
+  // initial caret position
   var caret_pos = input.prop("selectionStart");
-    
+
   // check for decimal
   if (input_val.indexOf(".") >= 0) {
 
@@ -1412,12 +1412,12 @@ function formatCurrency(input, blur) {
 
     // validate right side
     right_side = formatNumber(right_side);
-    
+
     // On blur make sure 2 numbers after decimal
     if (blur === "blur") {
       right_side += "00";
     }
-    
+
     // Limit decimal to only 2 digits
     right_side = right_side.substring(0, 2);
 
@@ -1430,13 +1430,13 @@ function formatCurrency(input, blur) {
     // remove all non-digits
     input_val = formatNumber(input_val);
     input_val = input_val;
-    
+
     // final formatting
     if (blur === "blur") {
       input_val += ".00";
     }
   }
-  
+
   // send updated string to input
   input.val(input_val);
 
@@ -1450,3 +1450,35 @@ function formatCurrency(input, blur) {
 @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

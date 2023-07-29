@@ -650,7 +650,7 @@
                     .then(response => {
 
                         let data = response.data.datosFactura;
-              
+
 
                         document.getElementById('codigo_factura').value = data.id;
                         document.getElementById('fecha').value = data.fecha_emision;
@@ -953,14 +953,14 @@
                 let sub_totalGrabadoInput = document.getElementById("subTotalGeneralGrabadoCredito").value;
                 let sub_totalExcentoInput = document.getElementById("subTotalGeneralExcentoCredito").value;
 
-                if(isv >0){                   
+                if(isv >0){
                 sub_totalGrabadoInput = (+sub_totalGrabadoInput) + (+subTotal);
                 document.getElementById("subTotalGeneralGrabadoCredito").value = sub_totalGrabadoInput;
                 }
 
 
-              
-                if (isv == 0) {                    
+
+                if (isv == 0) {
                     sub_totalExcentoInput = (+sub_totalExcentoInput) + (+subTotal);
                     document.getElementById("subTotalGeneralExcentoCredito").value = sub_totalExcentoInput;
                 }
@@ -1063,7 +1063,7 @@
                 sub_totalInput = (+sub_totalInput) - (+subtotal);
                 document.getElementById("subTotalGeneralCredito").value = sub_totalInput;
 
-                let sub_totalGrabadoInput = document.getElementById("subTotalGeneralGrabadoCredito").value;                
+                let sub_totalGrabadoInput = document.getElementById("subTotalGeneralGrabadoCredito").value;
                 if(isv > 0){
                 sub_totalGrabadoInput = (+sub_totalGrabadoInput) - (+subtotal);
                 document.getElementById("subTotalGeneralGrabadoCredito").value = sub_totalGrabadoInput;
@@ -1077,7 +1077,7 @@
                 document.getElementById("subTotalGeneralExcentoCredito").value = sub_totalExcentoInput;
                 }
 
-                
+
 
 
 
@@ -1183,9 +1183,9 @@
                             html: data.text,
 
                         })
- 
 
-   
+
+
 
 
                         return;
@@ -1212,3 +1212,35 @@
     @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

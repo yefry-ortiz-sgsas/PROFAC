@@ -3,8 +3,8 @@
         <style>
             /* #divProductos  input {
                 font-size: 0.8rem;
-                
-                
+
+
               } */
 
 
@@ -128,13 +128,13 @@
 
                             <div id="carouselProductoVale" class="carousel slide mt-2" data-ride="carousel">
                                 {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
-            
-                                        <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
-                                
+
+                                        <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
+
                                         <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-                                        
-                                
-            
+
+
+
                                 </ol> --}}
                                 <div id="bloqueImagenesVale" class="carousel-inner ">
 
@@ -401,7 +401,7 @@
 
                         if (imagenes.length == 0) {
 
-                            htmlImagenes += `                                                
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
                             </div>`
@@ -415,13 +415,13 @@
                             imagenes.forEach(element => {
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  img-size" src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}"  >
                             </div>`
@@ -488,8 +488,8 @@
                                 title: 'Advertencia!',
                                 html: `
                             <p class="text-left">
-                                El producto ha sido agregado anteriormente.<br><br> 
-                                Por favor verificar que el producto sea distinto a los ya existentes en la lista de venta.<br><br> 
+                                El producto ha sido agregado anteriormente.<br><br>
+                                Por favor verificar que el producto sea distinto a los ya existentes en la lista de venta.<br><br>
                                 De ser necesario aumentar la cantidad de producto en la lista de productos seleccionados para el vale.
                             </p>`
                             })
@@ -539,18 +539,18 @@
                                                     <div style="width:100%">
                                                         <label for="nombreVP${numeroInputsVP}" class="sr-only">Nombre del producto</label>
                                                         <input type="text" placeholder="Nombre del producto" id="nombreVP${numeroInputsVP}"
-                                                            name="nombreVP${numeroInputsVP}" class="form-control" 
+                                                            name="nombreVP${numeroInputsVP}" class="form-control"
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            readonly 
+                                                            readonly
                                                             value='${producto.nombre}'
-                                                            
+
                                                             >
                                                     </div>
                                                 </div>
                                             </div>
 
-                                    
+
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precioVP${numeroInputsVP}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precioVP${numeroInputsVP}"
@@ -568,12 +568,12 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="" class="sr-only">unidad</label>
                                                 <select class="form-control" name="unidadVP${numeroInputsVP}" id="unidadVP${numeroInputsVP}"
-                                                    data-parsley-required style="height:35.7px;" 
+                                                    data-parsley-required style="height:35.7px;"
                                                     onchange="calcularTotalesVP(precioVP${numeroInputsVP},cantidadVP${numeroInputsVP},${producto.isv},unidadVP${numeroInputsVP},${numeroInputsVP},restaInventarioVP${numeroInputsVP})">
-                                                            ${htmlSelectUnidades} 
-                                                </select> 
-                                            
-                                                
+                                                            ${htmlSelectUnidades}
+                                                </select>
+
+
                                             </div>
 
 
@@ -582,27 +582,27 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="subTotalMostrarVP${numeroInputsVP}" class="sr-only">Sub Total</label>
                                                 <input type="text" placeholder="Sub total producto" id="subTotalMostrarVP${numeroInputsVP}"
-                                                    name="subTotalMostrarVP${numeroInputsVP}" class="form-control"  
+                                                    name="subTotalMostrarVP${numeroInputsVP}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
-                                                
+
                                                 <input id="subTotalVP${numeroInputsVP}" name="subTotalVP${numeroInputsVP}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="isvProductoMostrarVP${numeroInputsVP}" class="sr-only">ISV</label>
                                                 <input type="text" placeholder="ISV" id="isvProductoMostrarVP${numeroInputsVP}"
-                                                    name="isvProductoMostrarVP${numeroInputsVP}" class="form-control"  
+                                                    name="isvProductoMostrarVP${numeroInputsVP}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
 
-                                                    <input id="isvProductoVP${numeroInputsVP}" name="isvProductoVP${numeroInputsVP}" type="hidden" value="" required>   
+                                                    <input id="isvProductoVP${numeroInputsVP}" name="isvProductoVP${numeroInputsVP}" type="hidden" value="" required>
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="totalMostrarVP${numeroInputsVP}" class="sr-only">Total</label>
                                                 <input type="text" placeholder="Total del producto" id="totalMostrarVP${numeroInputsVP}"
-                                                    name="totalMostrarVP${numeroInputsVP}" class="form-control"   
+                                                    name="totalMostrarVP${numeroInputsVP}" class="form-control"
                                                     autocomplete="off"
                                                     readonly >
 
@@ -611,12 +611,12 @@
 
                                             </div>
 
-                                        
+
                                             <input id="restaInventarioVP${numeroInputsVP}" name="restaInventarioVP${numeroInputsVP}" type="hidden" value="" required>
                                             <input id="isvVP${numeroInputsVP}" name="isvVP${numeroInputsVP}" type="hidden" value="${producto.isv}">
 
-                                        
-                                    
+
+
                         </div>
                         `;
 
@@ -829,9 +829,9 @@
                 data.append("arregloIdInputsVP", text);
 
                 const formDataObj = {};
-              
+
                     data.forEach((value, key) => (formDataObj[key] = value));
-                    
+
 
                     const options = {
                         headers: {"content-type": "application/json"}
@@ -913,3 +913,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

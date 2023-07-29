@@ -11,13 +11,13 @@
             .ancho-imagen {
                 max-width: 300px;
             }
-            }  
-        
+            }
+
             @media (min-width: 901px) {
             .ancho-imagen {
                 max-width: 300px;
             }
-            }  
+            }
 
             /* a {
                 pointer-events: none;
@@ -122,10 +122,10 @@
             </div>
         </div>
         @endif
-       
 
 
-      
+
+
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -170,7 +170,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                    
+
                             <div class="modal-body">
                                 <form id="crearProductoForm" name="crearProductoForm" data-parsley-validate>
                                     {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -180,7 +180,7 @@
                                             <input class="form-control" required type="text" id="nombre_producto" name="nombre_producto"
                                                 data-parsley-required>
                                         </div>
-      
+
                                         <div class="col-md-12">
                                             <label for="descripcion_producto" class="col-form-label focus-label">Descripción  del producto:<span class="text-danger">*</span></label>
                                             <textarea  placeholder="Escriba aquí..." required id="descripcion_producto" name ="descripcion_producto" cols="30" rows="3"
@@ -189,15 +189,15 @@
                                         <div class="col-md-4">
                                             <label for="isv_producto" class="col-form-label focus-label">ISV en %:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="isv_producto" id="isv_producto" data-parsley-required>
-                                              
+
                                                 <option value="0">Excento de impuestos</option>
                                                 <option value="15" selected>15% de ISV</option>
                                                 <option value="18">18% de ISV</option>
-                                                
-                                                        
-            
+
+
+
                                             </select>
-                                            
+
                                         </div>
                                         <div class="col-md-4">
                                             <label for="cod_barra_producto" class="col-form-label focus-label">Codigo de barra:</label>
@@ -214,13 +214,13 @@
                                             <input class="form-group form-control" min="0" type="number" name="precioBase" id="precioBase"
                                                 data-parsley-required step="any">
                                         </div>
-        
+
                                         <div class="col-md-4">
                                             <label for="costo_promedio" class="col-form-label focus-label">Costo de compra promedio:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control" min="0" type="number" name="costo_promedio" id="costo_promedio"
                                                 data-parsley-required step="any">
                                         </div>
-                                        
+
                                         <div class="col-md-4">
                                             <label for="ultimo_costo_compra" class="col-form-label focus-label">Ultimo costo de compra:<span class="text-danger">*</span></label>
                                             <input class="form-group form-control" min="0" type="number" name="ultimo_costo_compra" id="ultimo_costo_compra"
@@ -244,8 +244,8 @@
                                                 @foreach ($marcas as $marca)
                                                 <option value="{{ $marca->id }}">{{ $marca->nombre }}</option>
                                                 @endforeach
-           
-            
+
+
                                             </select>
                                         </div>
 
@@ -257,8 +257,8 @@
                                                 @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->descripcion }}</option>
                                                 @endforeach
-           
-            
+
+
                                             </select>
                                         </div>
 
@@ -272,13 +272,13 @@
                                             </select>
                                         </div>
 
-                                        
+
                                         <div class="text-center col-md-12 mt-2">
                                             <p class="font-weight-bold text-center">Unidades De Medida Para Compra y Venta</p>
                                             <hr>
                                         </div>
-                                        
-                                        
+
+
                                         <div class="col-md-6">
                                             <label for="unidad_producto" class="col-form-label focus-label">Seleccione la unidad de medida para compra:<span class="text-danger">*</span></label>
                                             <select class="form-group form-control" name="unidad_producto" id="unidad_producto"
@@ -287,7 +287,7 @@
                                                 @foreach ($unidades as $unidad)
                                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
                                                 @endforeach
-            
+
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -305,7 +305,7 @@
                                                 @foreach ($unidades as $unidad)
                                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
                                                 @endforeach
-            
+
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -322,7 +322,7 @@
                                                 @foreach ($unidades as $unidad)
                                                 <option value="{{ $unidad->id }}">{{ $unidad->nombre }}-{{ $unidad->simbolo }}</option>
                                                 @endforeach
-            
+
                                             </select>
                                         </div>
                                         <div class="col-md-6">
@@ -331,15 +331,15 @@
                                                 id="unidades_venta2" step="any" >
                                         </div> --}}
 
-                                        
 
-      
-                                        
-            
+
+
+
+
                                         <div class="col-md-5">
-                                            <label for="foto_producto" class="col-form-label focus-label">Fotografía: </label>                                         
+                                            <label for="foto_producto" class="col-form-label focus-label">Fotografía: </label>
                                             <input  class="" type="file" id="foto_producto" name="foto_producto" accept="image/png, image/gif, image/jpeg" multiple>
-                                            
+
                                         </div>
                                         <div class=" col-md-7">
                                             <img id="imagenPrevisualizacion" class="ancho-imagen">
@@ -349,7 +349,7 @@
                                 </form>
 
                             </div>
-                        
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             <button type="submit" form="crearProductoForm" class="btn btn-primary" >Guardar producto</button>
@@ -362,7 +362,7 @@
         </div>
 
 
-  
+
   <!-- Modal -->
   <div class="modal" id="modalSpinnerLoading" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="modalSpinnerLoadingTitle" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
@@ -385,7 +385,7 @@
 
     </div>
     @push('scripts')
-            
+
         <script>
 
         const $foto_producto = document.querySelector("#foto_producto"),
@@ -426,23 +426,23 @@
             }
 
             axios.post("/producto/registrar", data)
-            .then( response => {              
+            .then( response => {
                 $('#modalSpinnerLoading').modal('hide');
 
 
-                $('#crearProductoForm').parsley().reset();               
+                $('#crearProductoForm').parsley().reset();
                 img = document.getElementById('imagenPrevisualizacion');
                 img.src = "";
                 document.getElementById("crearProductoForm").reset();
                 $('#modal_producto_crear').modal('hide');
-               
+
                 $('#tbl_productosListar').DataTable().ajax.reload();
 
-           
-              
 
-                
-                    
+
+
+
+
 
                     Swal.fire({
                         icon: 'success',
@@ -519,7 +519,7 @@
                     {
                         data: 'disponibilidad'
                     }
-  
+
                 ]
 
 
@@ -537,13 +537,13 @@
               axios.get("/producto/sub_categoria/listar/"+categoria_produ)
               .then( response=>{
                   let data = response.data.sub_categorias;
-  
+
                   let htmlSelect = '<option disabled selected>--Seleccione una Subcategoria--</option>'
-  
+
                   data.forEach(element => {
                       htmlSelect += `<option value="${element.id}">${element.descripcion}</option>`
                   });
-  
+
                   document.getElementById('sub_categoria_producto').innerHTML = htmlSelect;
               })
               .catch(err=>{
@@ -551,13 +551,45 @@
                   Swal.fire({
                   icon: 'error',
                   title: 'Error!',
-                  text: 'Ha ocurrido un error',                
+                  text: 'Ha ocurrido un error',
                   })
               })
           }
         ///////////////////////////////////////////////////////////////////
-    
+
         </script>
-    
+
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

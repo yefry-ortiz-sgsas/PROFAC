@@ -1894,6 +1894,7 @@ class FacturacionCorporativa extends Component
         A.estado_factura_id as estado_factura,
         A.estado_venta_id,
         B.cai,
+        A.comentario,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
         B.numero_final,

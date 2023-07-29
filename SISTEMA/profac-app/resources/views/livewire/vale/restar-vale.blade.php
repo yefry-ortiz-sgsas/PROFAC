@@ -39,10 +39,10 @@
                                         <th>Sub total</th>
                                         <th>ISV</th>
                                         <th>Total</th>
-                                        <th>Estado</th>                                   
+                                        <th>Estado</th>
                                         <th>Registrado por</th>
-                                        <th>Fecha de Registro</th>                                     
-                                        <th>Opciones</th>                                        
+                                        <th>Fecha de Registro</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,8 +88,8 @@
                         </div>
 
 
-             
-    
+
+
 
                     </form>
                 </div>
@@ -110,10 +110,10 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                
+
                 pageLength: 10,
                 responsive: true,
-              
+
 
                 "ajax": "/vale/restar/lista",
                 "columns": [
@@ -148,7 +148,7 @@
                     {
                         data: 'opciones'
                     }
-  
+
                 ]
 
 
@@ -156,26 +156,26 @@
             })
 
         function anularVale(idVale){
-             
+
             Swal.fire({
             title: '¿Está seguro de anular este vale?',
-           
+
             html: '<p>Una vez sea anulado el vale, el producto listado en el mismo será restado del inventario automaticamente.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: 'Si, Anular vale', 
-            confirmButtonColor:'#18A689',           
+            confirmButtonText: 'Si, Anular vale',
+            confirmButtonColor:'#18A689',
             cancelButtonText: `Cancelar`,
             }).then((result) => {
                 let motivo = document.getElementById("comentarioAnular").value
-                
+
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
 
                 //Swal.fire('Saved!', '', 'success')
                 this.anularValeGuardar(idVale,motivo);
 
-            } 
+            }
             })
         }
 
@@ -187,18 +187,18 @@
 
                 let data = response.data;
                 Swal.fire({
-                            confirmButtonColor:'#18A689', 
+                            confirmButtonColor:'#18A689',
                             icon: data.icon,
                             title: data.title,
                             html: data.text,
                         });
-                        $('#tbl_listar_vales').DataTable().ajax.reload();        
+                        $('#tbl_listar_vales').DataTable().ajax.reload();
 
             })
             .catch( err => {
 
                 Swal.fire({
-                            confirmButtonColor:'#18A689', 
+                            confirmButtonColor:'#18A689',
                             icon: 'error',
                             title: 'Error!',
                             html: 'Ha ocurrido un error al anular el vale.',
@@ -255,7 +255,7 @@
                         })
 
                     })
-              
+
         }
 
         function comentarios(idVale){
@@ -277,9 +277,41 @@
                             text: 'Ha ocurrido un error al obtener las notas y comentarios.',
                         })
             })
-          
+
         }
 
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

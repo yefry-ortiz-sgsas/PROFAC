@@ -18,17 +18,17 @@
                         <li class="breadcrumb-item">
                             <a>Parametros de venta</a>
                         </li>
-        
-        
+
+
                     </ol>
                 </div>
                 <div>
                     <button onclick="actualizarDatos()" class="btn btn-primary mt-3"><i class="fa-solid fa-arrow-rotate-right"></i> Actualizar datos</button>
                 </div>
-    
+
             </div>
 
-           
+
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 d-flex align-items-center">
                                 <div>
-                                    <input id="btn_check" name="btn_check" type="checkbox" class="js-switch" 
+                                    <input id="btn_check" name="btn_check" type="checkbox" class="js-switch"
                                         onchange="estadoBoton()"  />
                                     <p id="estadoBoton">Encendido</p>
                                 </div>
@@ -102,33 +102,33 @@
     @push('scripts')
         <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
         <script>
-    
-            
+
+
             $( function(){
                 convertirSwitechs();
-                getData();   
-           
+                getData();
+
                 obtenerDatosCompra();
                 graficoVentaMesActaul();
                 graficoVentaMesAnterior();
-               
+
             });
 
             function actualizarDatos(){
-                
+
                 this.obtenerDatosCompra();
                 this.graficoVentaMesActaul();
                 this.graficoVentaMesAnterior();
             }
-            
-            
+
+
             //['#FEBC3B','#26E7A6']
             function getData(){
                 axios.get('/configuracion/datos')
                 .then( response =>{
                     let datos = response.data.datos;
-                  
-                   
+
+
                     if(datos.st == 1){
                         let element=document.getElementById('btn_check');
                         element.click()
@@ -142,9 +142,9 @@
                 } else {
                     text.innerHTML = 'Apagado'
                 }
-                     
-            
-                  
+
+
+
                 })
                 .catch(err=>{
                     console.log(err);
@@ -152,7 +152,7 @@
             }
 
             function obtenerDatosCompra(){
-                
+
                 axios.get('/configuracion/datos/compra')
                 .then( response=>{
 
@@ -181,7 +181,7 @@
                         bar: {
                             columnWidth: '25%',
                             borderRadius: 10,
-                         
+
                             distributed: true,
                             dataLabels: {
                                 position: 'top', // top, center, bottom
@@ -224,7 +224,7 @@
                         labels: {
                             show: true,
                             formatter: function(val) {
-                               
+
                                 return val + " Lps";
                             }
                         }
@@ -233,7 +233,7 @@
                     title: {
                         text: 'Comparación de compras',
                         floating: false,
-                     
+
                         align: 'center',
                         margin:10,
                         style: {
@@ -338,7 +338,7 @@
                     title: {
                         text:titulo ,
                         floating: true,
-                      
+
                         align: 'center',
                         style: {
                             color: '#444'
@@ -354,7 +354,7 @@
                     console.log(err.response.data)
                 })
 
-              
+
             }
 
 
@@ -438,7 +438,7 @@
                     title: {
                         text: mesNombre,
                         floating: true,
-                  
+
                         align: 'center',
                         style: {
                             color: '#444'
@@ -456,7 +456,7 @@
                     console.log(err.response.data);
                 })
 
-               
+
             }
 
 
@@ -478,14 +478,14 @@
             }
 
             function estadoBoton() {
-               
+
                 let clickCheckbox = document.querySelector('.js-switch')
                 let estado = 0;
 
                 if (clickCheckbox.checked) {
                  estado=1;
                 } else {
-                 estado =0;   
+                 estado =0;
                 }
 
                 document.querySelector('.js-switch').addEventListener('click', function() {
@@ -506,10 +506,42 @@
                             text: "Ha ocurrido un error"
                         })
                 })
-                   
-                
+
+
 
             }
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

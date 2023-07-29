@@ -69,20 +69,20 @@
                             </div>
 
                             <div class="row mt-4">
-                                 
+
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <label class="col-form-label" for="numero_factura"
                                        >Número de factura<span class="text-danger">*</span></label>
-                                        
+
                                     <input class="form-control" type="text" id="numero_factura" name="numero_factura"
                                     data-parsley-required placeholder="N° Factura">
                                 </div>
-                                
+
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     <label class="col-form-label" for="cai"
                                         >Codigo CAI<span class="text-danger">*</span></label>
-                                        
+
                                     <input class="form-control" type="text" id="cai" name="cai"
                                     data-parsley-required placeholder="Codigo CAI">
                                 </div>
@@ -173,13 +173,13 @@
 
                                     <div id="carouselProducto" class="carousel slide" data-ride="carousel">
                                         {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
-                
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>                        
-                                           
+
+                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
+
                                                 <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-                                                  
-                                           
-                
+
+
+
                                         </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner ">
 
@@ -369,7 +369,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-                            <option value="${element.id}" >${element.descripcion}</option>                                      
+                            <option value="${element.id}" >${element.descripcion}</option>
                             `
                         });
 
@@ -439,7 +439,7 @@
                         if (imagenes.length == 0) {
 
                            // console.log("entro")
-                            htmlImagenes += `                                                
+                            htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+'noimage.png'}" alt="noimage.png" style="width: 100%; height:20rem" >
                             </div>`
@@ -460,13 +460,13 @@
 
 
                                 if (element.contador == 1) {
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:20rem" >
                             </div>`
                                 } else {
 
-                                    htmlImagenes += `                                                
+                                    htmlImagenes += `
                             <div class="carousel-item  " >
                                 <img class="d-block  " src="${public_path+'/'+element.url_img}" alt="imagen ${element.contador}" style="width: 100%; height:20rem" >
                             </div>`
@@ -497,12 +497,12 @@
             }
 
             function agregarProductoCarrito() {
-              
-               
+
+
                 let id = document.getElementById('seleccionarProdcuto').value;
 
                 let idBuscarProducto = idProductoArray.find(element => element == id);
-                
+
                 if(idBuscarProducto){
                     Swal.fire({
                             icon: 'warning',
@@ -535,16 +535,16 @@
                                                     <div style="width:100%">
                                                         <label for="nombre${numeroInputs}" class="sr-only">Nombre del producto</label>
                                                         <input type="text" placeholder="Nombre del producto" id="nombre${numeroInputs}"
-                                                            name="nombre${numeroInputs}" class="form-control" 
+                                                            name="nombre${numeroInputs}" class="form-control"
                                                             data-parsley-required "
                                                             autocomplete="off"
-                                                            readonly 
+                                                            readonly
                                                             value='${producto.nombre}'
                                                             >
                                                     </div>
                                                 </div>
                                             </div>
-                                    
+
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
@@ -569,7 +569,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                                                 <label for="vencimiento${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="date" placeholder="Fecha de vencimiento" id="vencimiento${numeroInputs}"
-                                                    name="vencimiento${numeroInputs}" class="form-control" min="0" 
+                                                    name="vencimiento${numeroInputs}" class="form-control" min="0"
                                                     autocomplete="off" >
                                             </div>
 
@@ -597,10 +597,10 @@
                                                     readonly >
                                             </div>
 
-                                            <input id="unidadesCompra${numeroInputs}" name="unidadesCompra${numeroInputs}" type="hidden" value="${producto.unidadad_compra}"> 
+                                            <input id="unidadesCompra${numeroInputs}" name="unidadesCompra${numeroInputs}" type="hidden" value="${producto.unidadad_compra}">
                                             <input id="medidaCompraId${numeroInputs}" name="medidaCompraId${numeroInputs}" type="hidden" value="${producto.unidad_medida_compra_id}">
 
-                                    
+
                         </div>
                         `;
 
@@ -608,9 +608,9 @@
                         idProductoArray .splice(producto.id,0,producto.id);
 
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                        
-                                
-                        
+
+
+
                         return;
 
                     })
@@ -640,7 +640,7 @@
                 var myIndex2 = idProductoArray.indexOf(idProducto);
                 if (myIndex2 !== -1) {
                     idProductoArray.splice(myIndex2, 1);
-                  
+
                 }
 
                 console.log(idProductoArray);
@@ -808,9 +808,9 @@
                 data.append("arregloIdInputs", text);
 
                 const formDataObj = {};
-              
+
                     data.forEach((value, key) => (formDataObj[key] = value));
-                    
+
 
                     const options = {
                         headers: {"content-type": "application/json"}
@@ -833,7 +833,7 @@
                         // for (let i = 0; i < arregloIdInputs.length; i++) {
                         //     const element = document.getElementById(arregloIdInputs[i]);
                         //      element.remove();
-                         
+
                         //     console.log(i,arregloIdInputs[i])
                         // }
 
@@ -843,7 +843,7 @@
                         document.getElementById("crear_compra").reset();
                         $('#crear_compra').parsley().reset();
 
-                       
+
 
                         var element2 = document.getElementById('botonAdd');
                             element2.classList.add("d-none");
@@ -867,3 +867,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

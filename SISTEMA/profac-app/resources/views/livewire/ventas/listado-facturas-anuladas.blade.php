@@ -38,7 +38,7 @@
                                         <th>Vendedor</th>
                                         <th>Fecha Registro</th>
                                         <th>Opciones</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,7 +84,7 @@
 
                                     <div class="col-md-12">
                                         <label for="motivo" class="col-form-label focus-label">Motivo:<span class="text-danger">*</span></label>
-                                         <textarea class="form-control" required name="motivo" id="motivo"  rows="4" readonly></textarea>   
+                                         <textarea class="form-control" required name="motivo" id="motivo"  rows="4" readonly></textarea>
                                     </div>
 
                                     <div class="col-md-12">
@@ -93,7 +93,7 @@
                                             name="usuario" data-parsley-required readonly>
                                     </div>
 
-      
+
 
 
 
@@ -105,8 +105,8 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                           
-                                
+
+
                         </div>
                     </div>
                 </div>
@@ -120,13 +120,13 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                
+
                 pageLength: 10,
                 responsive: true,
-              
+
 
                 "ajax": "/ventas/anulado/listado",
-                "ajax":{ 
+                "ajax":{
                     'url':"/ventas/anulado/listado",
                     'data' : {'idTipo' : {{$idTipoVenta}} },
                     'type' : 'post',
@@ -176,11 +176,11 @@
                     {
                         data: 'fecha_registro',
                     },
-   
+
                     {
                         data: 'opciones'
                     }
-  
+
                 ]
 
 
@@ -188,13 +188,13 @@
             })
 
         function anularVentaConfirmar(idFactura){
-             
+
             Swal.fire({
             title: '¿Está seguro de anular esta factura?',
             text:'Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.',
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: 'Si, Anular Compra',            
+            confirmButtonText: 'Si, Anular Compra',
             cancelButtonText: `Cancelar`,
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
@@ -203,7 +203,7 @@
                 //Swal.fire('Saved!', '', 'success')
                 anularVenta(idFactura);
 
-            } 
+            }
             })
         }
 
@@ -219,7 +219,7 @@
                             title: data.title,
                             html: data.text,
                         });
-                        $('#tbl_listar_compras').DataTable().ajax.reload();        
+                        $('#tbl_listar_compras').DataTable().ajax.reload();
 
             })
             .catch( err => {
@@ -240,8 +240,8 @@
                 let data = response.data.datos;
                 document.getElementById('codigo').value = data.codigo_factura
                 document.getElementById('cai').value = data.cai
-                document.getElementById('motivo').value = data.motivo 
-                document.getElementById('usuario').value = data.usuario 
+                document.getElementById('motivo').value = data.motivo
+                document.getElementById('usuario').value = data.usuario
                 $('#modal_detalle_anular').modal('show')
             })
             .catch( err=>{
@@ -252,3 +252,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

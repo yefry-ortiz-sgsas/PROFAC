@@ -3,7 +3,7 @@
         <style>
 
 
-            
+
         </style>
     @endpush
 
@@ -55,7 +55,7 @@
                                         <th>Registrado por:</th>
                                         <th>Registrado en sistema:</th>
                                         <th>Evidencia</th>
-                                        <th>Eliminar Pago</th>                                          
+                                        <th>Eliminar Pago</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -86,12 +86,12 @@
                         <form id="form_registro_pago" name="form_registro_pago" data-parsley-validate>
 
                             <input type="hidden" id="compraId" name="compraId">
-                     
+
                             <div class="row" >
-                                
+
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <label class="col-form-label focus-label">Numero de Factura:<span class="text-danger">*</span></label>
-                                    <input class="form-control" required type="text"  id="numero_factura" name="numero_factura" readonly 
+                                    <input class="form-control" required type="text"  id="numero_factura" name="numero_factura" readonly
                                       value="{{$datosCompra->numero_factura}}"  data-parsley-required>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -125,29 +125,29 @@
                             form="form_registro_pago" >
                             <strong>Registrar Pago
                                 </strong>
-                               
+
                             </button>
                     </div>
-    
+
                 </div>
             </div>
         </div>
-   
+
     @push('scripts')
 
-    
+
     <script>
         var idCompra = {{$id}};
         var retencionEstado = 0;//cero no aplica retencion , 1 aplica retencion
 
         //window.onload=datosCompra;
-        
+
 
         $(document).ready(
             function() {
 
-            datosCompra();    
-          
+            datosCompra();
+
             $('#tbl_listar_pagos').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -186,16 +186,16 @@
                                 {
                                     data: 'opciones'
                                 },
-                    
+
                             ]
 
 
-            });              
-        
+            });
+
         }
-       
+
         );
-    
+
 
         $(document).on('submit', '#form_registro_pago', function(event) {
         event.preventDefault();
@@ -207,7 +207,7 @@
         function registrarPago(){
 
             document.getElementById('btn_registro_pago').disabled = true;
-            
+
 
             document.getElementById("compraId").value=idCompra;
             var data = new FormData($('#form_registro_pago').get(0));
@@ -220,18 +220,18 @@
 
                 if(data.icon == "success"){
                     document.getElementById('form_registro_pago').reset();
-                   
+
                    $('#form_registro_pago').parsley().reset();
-                   $('#modal_registro_pagos').modal('hide')  
-   
+                   $('#modal_registro_pagos').modal('hide')
+
                    Swal.fire({
                    icon: data.icon,
                    title: data.title,
                    text: data.text,
                    })
-   
+
                    datosCompra();
-                   $('#tbl_listar_pagos').DataTable().ajax.reload();  
+                   $('#tbl_listar_pagos').DataTable().ajax.reload();
                    document.getElementById('btn_registro_pago').disabled = false;
                 }
 
@@ -242,13 +242,13 @@
                    })
 
                    document.getElementById('form_registro_pago').reset();
-                   
+
                    $('#form_registro_pago').parsley().reset();
-                   $('#modal_registro_pagos').modal('hide')  
+                   $('#modal_registro_pagos').modal('hide')
                    document.getElementById('btn_registro_pago').disabled = false;
                    return;
 
-   
+
 
             })
             .catch( err =>{
@@ -262,7 +262,7 @@
                 console.log(err);
 
             })
-            
+
 
         }
 
@@ -272,7 +272,7 @@
 
                 let data = response.data.compra;
 
-            document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.debito); 
+            document.getElementById("debitoCompra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.debito);
             document.getElementById("totalComra").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.total);
             document.getElementById("retencion").innerHTML = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'Lps' }).format(data.monto_retencion);
 
@@ -304,13 +304,13 @@
             showDenyButton: false,
             showCancelButton: true,
             confirmButtonText: 'Si, eliminar',
-            
+
             cancelButtonText: `Cancelar`,
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 eliminarPago(idPago);
-            } 
+            }
             })
 
         }
@@ -327,7 +327,7 @@
                 })
 
                 datosCompra();
-                   $('#tbl_listar_pagos').DataTable().ajax.reload();  
+                   $('#tbl_listar_pagos').DataTable().ajax.reload();
 
             })
             .catch(err=>{
@@ -351,7 +351,7 @@
 
                 let data = response.data.numero_pagos;
 
-                
+
                 if(data.numero_pagos == 0){
                     Swal.fire({
                             title: "Retencion del 1%",
@@ -366,12 +366,12 @@
                             if (result.isConfirmed) {
                                 Swal.fire('La retencion sera aplicada a esta compra!', '', 'success')
                                 retencionEstado = 1;
-                                this.registrarPago(); 
-                              
+                                this.registrarPago();
+
                             } else if (result.isDenied) {
                                 Swal.fire('¡No se aplicara retencion a esta compra!', '', 'info')
                                 retencionEstado = 0;
-                                this.registrarPago();                               
+                                this.registrarPago();
                             }
                         })
 
@@ -392,3 +392,35 @@
     </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

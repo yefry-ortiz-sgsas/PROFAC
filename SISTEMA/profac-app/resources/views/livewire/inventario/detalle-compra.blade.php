@@ -5,7 +5,7 @@
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
             <h2>Datlle de Compra</h2>
-            <ol class="breadcrumb"> 
+            <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a>Detalle de compra</a>
                 </li>
@@ -16,8 +16,8 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3><i class="fa-solid fa-list-check"></i> Informacion de compra</h3>
@@ -25,15 +25,15 @@
                     <div class="ibox-content"
                         style="height: 18.5rem;  display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo de compra: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo de compra:
                                 </strong> {{$detalleCompra->id}} </small></p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura:
                                 </strong> {{$detalleCompra->numero_factura}} </small></p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de Orden: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de Orden:
                                     </strong> {{$detalleCompra->numero_orden}} </small></p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:
                             </strong> {{$detalleCompra->fecha_emision}} </small></p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de recepción programada: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de recepción programada:
                             </strong> {{$detalleCompra->fecha_recepcion}} </small></p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Proveedor: </strong>
                                 {{$detalleCompra->nombre}}</small></p>
@@ -41,46 +41,46 @@
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro: </strong>{{$detalleCompra->fecha_registro}}</small></p>
 
                         </div>
-    
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
-    
-    
+
+
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3><i class="fa-solid fa-sack-dollar"></i> Importes</h3>
-    
+
                     </div>
                     <div class="ibox-content "
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de compra: </strong> {{$detalleCompra->descripcion}}</small></p>    
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de compra: </strong> {{$detalleCompra->descripcion}}</small></p>
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total de compra </strong> {{ number_format($detalleCompra->total,2)}} Lps.</small></p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub-total de compra: 
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub-total de compra:
                             </strong> {{number_format($detalleCompra->sub_total,2)}} Lps.</small></p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV de compra: </strong> {{ number_format($detalleCompra->isv_compra,2)}} Lps.</small></p>     
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Retención: </strong> {{ number_format($detalleCompra->monto_retencion,2)}} Lps.</small></p>  
-   
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Debito de compra: </strong> {{ number_format($detalleCompra->debito,2)}} Lps.</small></p>    
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV de compra: </strong> {{ number_format($detalleCompra->isv_compra,2)}} Lps.</small></p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Retención: </strong> {{ number_format($detalleCompra->monto_retencion,2)}} Lps.</small></p>
+
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Debito de compra: </strong> {{ number_format($detalleCompra->debito,2)}} Lps.</small></p>
                         {{-- @foreach ($precios as $precio)
                             <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio
                                     {{ $precio->contador }} de venta :</strong> {{ $precio->precio }} Lps</small></p>
                         @endforeach
      --}}
-    
-    
-    
+
+
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
     </div>
@@ -108,15 +108,15 @@
                                         <th>Total</th>
                                         <th>Fecha de vencimiento</th>
                                         <th>Estado en bodega</th>
-                                        
+
 
                                     </tr>
-                                </thead>  
-                                <tbody>                                   
-    
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
-    
+
                         </div>
 
 
@@ -145,15 +145,15 @@
                                         <th>Monto Lps.</th>
                                         <th>Fecha</th>
                                         <th>Registrado por:</th>
-                                        <th>Registrado en sistema:</th>                                      
-                                       
+                                        <th>Registrado en sistema:</th>
+
                                     </tr>
-                                </thead>  
-                                <tbody>                                   
-    
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
-    
+
                         </div>
 
                         <div class="d-flex d-flex justify-content-between mt-4" >
@@ -177,15 +177,15 @@
     <script>
 
         //var listaProductos = {!! json_encode($listaCompra) !!}; metodo antiguo
-        var listaProductos = @json($listaCompra); 
+        var listaProductos = @json($listaCompra);
        var listaPagos = @json($listaPagos);
-      
-        
 
-        
+
+
+
 
         $(document).ready(function() {
-        
+
             $('#tbl_productos_compra').DataTable( {
                 "language": {
                             "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -210,13 +210,13 @@
 
             $('#tbl_pagos_lista').DataTable( {
                 "language": {
-                            
+
                             "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json",
                             "zeroRecords": "Ningun pago registrado para esta compra!",
-                            
+
                         },
                 pageLength: 10,
-                
+
                 responsive: false,
                 "data": listaPagos,
                 "columns": [
@@ -240,3 +240,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>
