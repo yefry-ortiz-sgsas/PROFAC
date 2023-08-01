@@ -277,9 +277,11 @@
                         }
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar_intereses/"+idCliente,
-                    "columns": [{
+                    "columns": [
+                        {
                             data: 'numero_factura'
-                        },{
+                        },
+                        {
                             data: 'correlativo'
                         },
                         {
