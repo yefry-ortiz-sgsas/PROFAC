@@ -31,6 +31,10 @@
                                                 <label for="exampleFormControlTextarea1"> <b>No. Factura:</b></label>
                                                 <input type="text" readonly class="form-control" id="inputFactura" name="inputFactura" >
                                             </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>No. Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="inputFacturaCodigo" name="inputFacturaCodigo" >
+                                            </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Seleccione un tipo de cobro</b></label>
@@ -141,6 +145,7 @@
                                     <tr>
                                        {{--   <th>FECHA</th>
                                         <th>MES</th>  --}}
+                                        <th>CODIGO FACTURA</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -157,6 +162,7 @@
                                         <tr>
                                             {{--  <th>FECHA</th>
                                             <th>MES</th>  --}}
+                                            <th>CODIGO FACTURA</th>
                                             <th>FACTURA</th>
                                             <th>CLIENTE</th>
                                             <th>VENDENDOR</th>
@@ -199,6 +205,7 @@
                                     <tr>
                                         {{--  <th>FECHA</th>
                                         <th>MES</th>  --}}
+                                        <th>CODIGO FACTURA</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -213,6 +220,7 @@
                                         <tr>
                                             {{--  <th>FECHA</th>
                                             <th>MES</th>  --}}
+                                            <th>CODIGO FACTURA</th>
                                             <th>FACTURA</th>
                                             <th>CLIENTE</th>
                                             <th>VENDENDOR</th>
@@ -254,6 +262,7 @@
                                     <tr>
                                         {{--  <th>FECHA</th>
                                         <th>MES</th>  --}}
+                                        <th>CODIGO FACTURA</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -270,6 +279,7 @@
                                     <tr>
                                        {{--   <th>FECHA</th>
                                         <th>MES</th>  --}}
+                                        <th>CODIGO FACTURA</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
                                         <th>VENDENDOR</th>
@@ -390,6 +400,9 @@
                     data: 'mes'
                 },*/
                 {
+                    data: 'codigofactura'
+                },
+                {
                     data: 'factura'
                 },
                 {
@@ -499,6 +512,9 @@
                     data: 'mes'
                 },*/
                 {
+                    data: 'codigofactura'
+                },
+                {
                     data: 'factura'
                 },
                 {
@@ -585,6 +601,9 @@
                 {
                     data: 'mes'
                 },*/
+                {
+                    data: 'codigofactura'
+                },
                 {
                     data: 'factura'
                 },
@@ -741,7 +760,7 @@
         })
     }
 
-    function cargarInputFactura(factura, PagoMediante){
+    function cargarInputFactura(codigofactura,factura, PagoMediante){
        // $('#myModalExito').modal('show'); // abrir
         //$('#myModalExito').modal('hide'); // cerrar
 
@@ -749,6 +768,7 @@
         //console.log(factura);
         $('#fechaCierreC').val(fechaFacturas1);
         $('#inputFactura').val(factura);
+        $('#inputFacturaCodigo').val(codigofactura);
 
         obj = document.getElementById("selectTipoCierre");
         newSel = '<option class="form-control"  selected  value="'+PagoMediante+'">'+PagoMediante+' - Actuál</option><option class="form-control" value="EFECTIVO">EFECTIVO</option><option class="form-control"  value="TRANSFERENCIA BANCARIA">TRANSFERENCIA BANCARIA</option><option class="form-control" value="CHEQUE">CHEQUE</option>';
@@ -767,11 +787,15 @@
     function guardarTipoCobro(){
 
        let factura = document.getElementById('inputFactura').value;
+
+       let codigofactura = document.getElementById('inputFacturaCodigo').value;
         var data = new FormData($('#formtipoCobro').get(0));
         //console.log(data);
         //$('#formtipoCobro').parsley().reset();
         document.getElementById("fechaCierreC").value = "";
         document.getElementById("inputFactura").value = "";
+
+        document.getElementById("inputFacturaCodigo").value = "";
         const limpiar = () => {
             for (let i = document.querySelector("#selectTipoCierre").options.length; i >= 0; i--) {
                 document.querySelector("#selectTipoCierre").remove(i);
