@@ -37,6 +37,7 @@
                                         <th>Total en Lps.</th>
                                         <th>Estado</th>
                                         <th>Registrado Por:</th>
+                                        <th>Motivo de anulación</th>
                                         <th>Fecha de registro</th>
                                         <th>Opciones</th>
 
@@ -95,6 +96,9 @@
                     },
                     {
                         data: 'name'
+                    },
+                    {
+                        data:'comentarioAnulado'
                     },
                     {
                         data:'fecha_creacion'

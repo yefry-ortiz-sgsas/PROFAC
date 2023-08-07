@@ -21,7 +21,7 @@ class ListarVales extends Component
     public function MostrarlistarVales(){
        try {
 
-        $listaVales = DB::SELECT("        
+        $listaVales = DB::SELECT("
         select
         @i := @i + 1 as contador,
          vale.id,
@@ -34,12 +34,12 @@ class ListarVales extends Component
          format(vale.total,2) as total,
          vale.estado_id,
          name,
-         vale.created_at              
+         vale.created_at
        from vale
        inner join factura
        on vale.factura_id = factura.id
        inner join users
-       on vale.users_id = users.id  
+       on vale.users_id = users.id
 
        cross join (select @i := 0) r
        where  YEAR(vale.created_at) = YEAR(NOW())
@@ -56,9 +56,11 @@ class ListarVales extends Component
                         más</button>
                     <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
                     <li>
-                    <a class="dropdown-item" href="/imprimir/entrega/'.$vale->id.'"> <i class="fa-solid  fa-print text-success"></i> Imprimir Entrega</a>
-                </li>
-                       
+                        <a class="dropdown-item" href="/imprimir/entrega/'.$vale->id.'"> <i class="fa-solid  fa-print text-success"></i> Imprimir Entrega Original</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/imprimir/entrega/'.$vale->id.'"> <i class="fa-solid  fa-print text-success"></i> Imprimir Entrega Copia</a>
+                    </li>
 
                     </ul>
                 </div>';
@@ -86,17 +88,17 @@ class ListarVales extends Component
                 </div>';
             }
 
-            
+
         })
         ->addColumn('estado_entrega', function ($vale) {
-           
+
 
             if($vale->estado_id == 1){
 
                 return
                 '
                 <p class="text-center"><span class="badge badge-warning p-2" style="font-size:0.75rem">Pendiente</span></p>
-               
+
                 ';
 
             }else if($vale->estado_id == 2){
@@ -119,7 +121,7 @@ class ListarVales extends Component
         'icon' => '',
         'text' => '',
         'title' => '',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
