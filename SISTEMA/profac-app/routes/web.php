@@ -493,7 +493,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/nota/credito/listado', ListadoNotaCredito::class);
     Route::post('/nota/credito/listar', [ListadoNotaCredito::class, 'listadoNotaCredito']);
-    Route::get('/nota/credito/imprimir/{idNota}', [ListadoNotaCredito::class, 'imprimirFacturaCoorporativa2']);
+    Route::get('/nota/credito/imprimir/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoOriginal']);
+    Route::get('/nota/credito/imprimir/copia/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoCopia']);
 
 
 
@@ -591,6 +592,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/orden/entrega/guardar/factura', [FacturarComprobante::class, 'facturarComprobanteCoorporativo']);
     Route::post('/orden/entrega/estatal/factura', [FacturarComprobante::class, 'facturarComprobanteEstatal']);
     Route::get('/comprobante/entrega/anular/{idComprobante}', [ListarComprovantes::class, 'anularComprobante']);
+    Route::post('/comprobante/entrega/anular', [ListarComprovantes::class, 'anularComprobante']);
 
     Route::get('/ventas/sin/restriccion/gobierno', SinRestriccionGobierno::class);
 
@@ -675,6 +677,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/debito/notad/guardar', [NotaDebito::class, 'guardarNotaDebito']);
     Route::get('/debito/lista/notas', [NotaDebito::class, 'listarnotasDebito']);
     Route::get('/debito/imprimir/{idFactura}', [NotaDebito::class, 'descargarNota']);
+    Route::get('/debito/imprimir/copia/{idFactura}', [NotaDebito::class, 'descargarNotaCopia']);
     Route::get('/nota/debito/lista', ListadoNotasDebito::class);
     Route::get('/listado/nota/debito/corporativo/{fechaInicio}/{fechaFinal}', [ListadoNotasDebito::class,'listarnotasDebito']);
 

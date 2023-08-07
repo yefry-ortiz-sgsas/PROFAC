@@ -458,6 +458,47 @@ class NotaDebito extends Component
             return $pdf->stream("nota_debito_" . $notaDebito->factura_id.".pdf");
 
     }
+    public function descargarNotaCopia($idFactura){
+
+        $notaDebito = DB::SELECTONE("
+            select
+                id
+                ,factura_id
+                ,monto_asignado
+                ,fechaEmision
+                ,motivoDescripcion
+                ,cai_ndebito
+                ,numeroCai
+                ,correlativoND
+                ,(select name from users where id = notadebito.users_registra_id) as 'user'
+                ,created_at
+                ,estado_id
+            from notadebito
+            where notadebito.factura_id = ".$idFactura
+        );
+
+        $cai = DB::SELECTONE("select
+            *
+        from cai
+        where tipo_documento_fiscal_id = 4 and estado_id = 1 and id = ".$notaDebito->cai_ndebito);
+
+
+        $cliente = DB::SELECTONE("select nombre_cliente, cai, estado_factura_id, numero_factura   from factura where id = ".$idFactura);
+
+        $formatter = new NumeroALetras();
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($notaDebito->monto_asignado, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $montoConCentavos= DB::SELECTONE("
+        select
+            FORMAT(monto_asignado,2) as total
+        from notadebito where factura_id = ".$idFactura);
+
+        $pdf = PDF::loadView('/pdf/nodaDeDebito_copia', compact('numeroLetras','notaDebito', 'cliente', 'cai', 'montoConCentavos'))->setPaper('letter');
+
+        return $pdf->stream("nota_debito_" . $notaDebito->factura_id.".pdf");
+
+}
 
     public function anularNotaDebito($idNota){
         try {

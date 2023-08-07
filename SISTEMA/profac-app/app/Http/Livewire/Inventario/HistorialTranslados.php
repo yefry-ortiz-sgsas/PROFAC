@@ -15,7 +15,7 @@ class HistorialTranslados extends Component
 {
     public function render()
     {
-        
+
         $fechaActual = date('n');
         $resta = $fechaActual - 2;
         if($resta<=0){
@@ -32,16 +32,16 @@ class HistorialTranslados extends Component
 
     public function historialTranslados(Request $request){
        try {
-        
+
         $listado = DB::SELECT("
         select
         D.id,
         D.codigo,
         C.nombre,
         A.cantidad,
-        name,
+        users.name,
         D.created_at
-       
+
         from translado D
         inner join log_translado A
         on D.id = A.translado_id
@@ -60,27 +60,27 @@ class HistorialTranslados extends Component
             return
 
             '<div class="text-center">
-    
+
             <a href="/translado/imprimir/'.$translado->id.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir</a>
-     
-     
-                
+
+
+
             </div>';
         })
 
         ->rawColumns(['opciones',])
         ->make(true);
-     
+
        } catch (QueryException $e) {
        return response()->json([
         'icon' => '',
         'text' => '',
         'title' => '',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
     }
 
-    
+
 }

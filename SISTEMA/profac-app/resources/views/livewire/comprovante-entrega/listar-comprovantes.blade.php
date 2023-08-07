@@ -111,10 +111,40 @@
             })
 
 
+            function anularComprobanteConfirmar(idComprobante){
+
+                Swal.fire({
+                title: '¿Está seguro de anular este comprobante?',
 
 
-        function anularComprobante(idComprobante){
-                   axios.get('/comprobante/entrega/anular/'+idComprobante)
+                    // --------------^-- define html element with id
+                html: ' <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarion"     class="form-group form-control" data-parsley-required></textarea>',
+                showDenyButton: false,
+                showCancelButton: false,
+                showDenyButton:true,
+                confirmButtonText: 'Si, Anular Comprobante',
+                denyButtonText: `Cancelar`,
+                confirmButtonColor:'#19A689',
+                denyButtonColor:'#676A6C',
+                }).then((result) => {
+
+                    let motivo = document.getElementById("comentarion").value
+
+                if (result.isConfirmed && motivo ) {
+
+
+                    anularComprobante(idComprobante,motivo);
+
+                }else if(result.isDenied){
+                    Swal.close()
+                }else{
+                    Swal.close()
+                }
+                })
+            }
+
+        function anularComprobante(idComprobante,motivo){
+                   axios.post('/comprobante/entrega/anular', {'idComprobante':idComprobante,'motivo':motivo})
                    .then(response=>{
                     let data = response.data;
                         Swal.fire({

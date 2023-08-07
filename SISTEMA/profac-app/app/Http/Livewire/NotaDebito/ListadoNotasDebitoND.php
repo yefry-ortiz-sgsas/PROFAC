@@ -85,10 +85,21 @@ class ListadoNotasDebitoND extends Component
            })
            ->addColumn('file', function ($listanotaDebito) {
 
-                    return
-                    '
-                        <a class="btn btn-success" href="/debito/imprimir/'.$listanotaDebito->factura_id.'" > Ver <i class="fa-solid fa-file-pdf"></i></a>
-                    ';
+            return
+
+            '<div class="btn-group">
+            <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                más</button>
+                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                    <li><a class="dropdown-item" href="/debito/imprimir/'.$listanotaDebito->factura_id.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Orginal</a></li>
+
+                    <li><a class="dropdown-item" href="/debito/imprimir/copia/'.$listanotaDebito->factura_id.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Copia</a></li>
+
+                </ul>
+
+
+            </div>';
 
             })
             ->addColumn('acciones', function ($listanotaDebito) {

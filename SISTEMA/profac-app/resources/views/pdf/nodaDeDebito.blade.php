@@ -76,6 +76,8 @@
         <img src="img/membrete/Logo3.png" width="800rem"
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
+
+        <b style="position:absolute;right: 100px; top:50px;" >*Original*</b>
         <br><br><br>
 
         <br><br>

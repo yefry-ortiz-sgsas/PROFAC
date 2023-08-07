@@ -143,7 +143,7 @@
                             data: 'codigo'
                         },
                         {
-                            data: 'numero_nota'
+                            data: 'cai'
                         },
                         {
                             data: 'cliente'

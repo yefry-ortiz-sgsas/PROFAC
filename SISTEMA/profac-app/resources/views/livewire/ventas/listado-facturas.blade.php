@@ -130,7 +130,7 @@
             title: '¿Está seguro de anular esta factura?',
 
 
-  // --------------^-- define html element with id
+                // --------------^-- define html element with id
             html: '<p>Una vez que ha sido anulada la factura el producto registrado en la misma sera devuelto al inventario.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentario"     class="form-group form-control" data-parsley-required></textarea>',
             showDenyButton: false,
             showCancelButton: false,

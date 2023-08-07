@@ -414,17 +414,19 @@ class Translados extends Component
                on G.unidad_medida_id = H.id
                where AA.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and I.id = ".$idTranslado);
 
+
+               //dd($idTranslado);
         $datos = DB::SELECTONE("
         select
         CONCAT(A.origen,A.destino,'-' ,A.id) as codigo,
-        DATE_FORMAT(A.created_at,'%d/%m/%Y') as fecha,
+        DATE_FORMAT(tr.created_at,'%d/%m/%Y') as fecha,
         B.name,
         A.descripcion
 
         from log_translado A
-        inner join users B
-        on A.users_id = B.id
-        where A.id = ".$idTranslado);
+        inner join translado tr on A.translado_id = tr.id
+        inner join users B on A.users_id = B.id
+        where tr.id = ".$idTranslado);
 
         $pdf = PDF::loadView('/pdf/translado',compact('translados','datos'))->setPaper('letter');
 
