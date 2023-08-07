@@ -549,7 +549,7 @@ class RestarVale extends Component
        isv,
        sub_total,
        sub_total_grabado,
-       sub_total_excento     
+       sub_total_excento
        from factura
         where id = ".$idVale);
 
@@ -610,6 +610,123 @@ class RestarVale extends Component
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/vale', compact( 'vale','cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+
+        return $pdf->stream("vale_numero" .$vale->numero_vale.".pdf");
+
+
+    }
+
+    public function imprimirValeCopia($idVale)
+    {
+
+        $vale = DB::SELECTONE("
+        select
+        A.id,
+        A.numero_vale,
+        A.sub_total,
+        A.isv,
+        A.total,
+        A.estado_id as estado_id_vale,
+        B.numero_factura,
+        B.cai,
+        B.cliente_id,
+        DATE(A.created_at) as fecha_emision,
+        TIME(A.created_at) as hora,
+        A.estado_id,
+        C.name,
+        B.estado_factura_id as estado_factura,
+        B.numero_factura,
+        B.estado_venta_id
+        from vale A
+        inner join factura B
+        on A.factura_id = B.id
+        inner join users C
+        on A.users_id = C.id
+        where A.id =".$idVale
+        );
+
+       $cliente = DB::SELECTONE("
+       select
+        factura.nombre_cliente as nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$vale->cliente_id);
+
+       $importes = DB::SELECTONE("
+       select
+       total,
+       isv,
+       sub_total,
+       sub_total_grabado,
+       sub_total_excento
+       from factura
+        where id = ".$idVale);
+
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+            from vale where id = ".$idVale);
+
+
+            $productos = DB::SELECT("
+            select
+            B.id as codigo,
+            B.nombre as descripcion,
+            D.nombre as medida,
+            A.precio,
+            A.cantidad,
+            A.sub_total as importe
+            from espera_has_producto A
+            inner join producto B
+            on A.producto_id = B.id
+            inner join unidad_medida_venta C
+            on A.unidad_medida_venta_id = C.id
+            inner join unidad_medida D
+            on C.unidad_medida_id = D.id
+            where A.vale_id =".$idVale."
+            order by  A.index asc
+            ");
+
+        $ordenCompra = DB::SELECTONE("
+        select
+        B.numero_orden
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =".$idVale);
+
+        if(empty($ordenCompra->numero_orden)){
+            $ordenCompra=["numero_orden"=>""];
+        }else{
+            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        }
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+
+        }else{
+            $flagCentavos = true;
+        }
+
+        $formatter = new NumeroALetras();
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/vale_copia', compact( 'vale','cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
 
         return $pdf->stream("vale_numero" .$vale->numero_vale.".pdf");
 

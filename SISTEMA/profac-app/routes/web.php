@@ -623,6 +623,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/vale/restar/lista/eliminar', [RestarVale::class, 'eliminarVale']);
     Route::get('/vale/comentarios/{id}', [RestarVale::class, 'mostrarNotas']);
     Route::get('/vale/imprimir/{id}', [RestarVale::class, 'imprimirVale']);
+    Route::get('/vale/imprimir/{id}', [RestarVale::class, 'imprimirValeCopia']);
+
+
 
     Route::get('/vale/listado/facturas', ListadoFacturasVale::class);
     Route::get('/vale/listado/facturas/obtener', [ListadoFacturasVale::class, 'listarFacturasVale']);
