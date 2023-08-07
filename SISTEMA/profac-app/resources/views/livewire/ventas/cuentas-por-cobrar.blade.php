@@ -53,6 +53,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>No. Factura</th>
+                                        <th>Orden de Compra</th>
                                         <th>Cliente</th>
                                         <th>Fecha Emision</th>
                                         <th>Fecha Vencimiento</th>
@@ -200,6 +201,9 @@
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
                     "columns": [{
                             data: 'correlativo'
+                        },
+                        {
+                            data: 'numOrden'
                         },
                         {
                             data: 'cliente'

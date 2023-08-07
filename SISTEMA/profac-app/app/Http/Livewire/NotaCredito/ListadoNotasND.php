@@ -39,7 +39,7 @@ class ListadoNotasND extends Component
             $listado = DB::SELECT("
             select
             A.id as codigo,
-            A.numero_nota,
+            A.cai,
             cli.nombre as cliente,
             fa.cai as factura,
             B.descripcion as motivo,
@@ -57,6 +57,7 @@ class ListadoNotasND extends Component
             where
 
             cli.tipo_cliente_id = 1
+            and fa.estado_venta_id <> 2
             and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
 

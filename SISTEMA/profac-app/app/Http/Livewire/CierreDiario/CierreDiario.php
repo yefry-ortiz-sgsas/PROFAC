@@ -44,12 +44,23 @@ class CierreDiario extends Component
                     select
                     A.created_at as 'fecha',
                     A.id as 'codigofactura',
+                    (
+                        IF  (
+                             (
+                                SELECT COUNT(*) FROM numero_orden_compra WHERE id = A.numero_orden_compra_id
+                             ) = 0
+                             , 'N/A'
+                             ,(SELECT numero_orden FROM numero_orden_compra WHERE id = A.numero_orden_compra_id)
+
+                            )
+
+                        ) as 'numOrden',
                     A.cai as 'factura',
                     A.nombre_cliente as 'cliente',
                     (select name from users where id = A.vendedor) as 'vendedor',
-                    FORMAT(A.sub_total,4) as 'subtotal',
-                    IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00,FORMAT(A.isv,4)) as 'imp_venta',
-                    FORMAT(A.total,4) as 'total',
+                    FORMAT(A.sub_total,2) as 'subtotal',
+                    IF(FORMAT(A.sub_total,2) = FORMAT(A.total,2), 0.00,FORMAT(A.isv,2)) as 'imp_venta',
+                    FORMAT(A.total,2) as 'total',
                     (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'CONTADO' AS 'tipoFactura',
                 IF(
@@ -109,8 +120,8 @@ class CierreDiario extends Component
                     A.cai as 'factura',
                     A.nombre_cliente as 'cliente',
                     (select name from users where id = A.vendedor) as 'vendedor',
-                    FORMAT(A.sub_total,4) as 'subtotal',
-                    IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
+                    FORMAT(A.sub_total,2) as 'subtotal',
+                    IF(FORMAT(A.sub_total,2) = FORMAT(A.total,2), 0.00, FORMAT(A.isv,2)) as 'imp_venta',
                     FORMAT(A.total,4) as 'total',
                     (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'CREDITO' AS 'tipoFactura'
@@ -149,8 +160,8 @@ class CierreDiario extends Component
                     A.cai as 'factura',
                     A.nombre_cliente as 'cliente',
                     (select name from users where id = A.vendedor) as 'vendedor',
-                    FORMAT(A.sub_total,4) as 'subtotal',
-                    IF(FORMAT(A.sub_total,4) = FORMAT(A.total,4), 0.00, FORMAT(A.isv,4)) as 'imp_venta',
+                    FORMAT(A.sub_total,2) as 'subtotal',
+                    IF(FORMAT(A.sub_total,2) = FORMAT(A.total,2), 0.00, FORMAT(A.isv,2)) as 'imp_venta',
                     FORMAT(A.total,4) as 'total',
                     (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'ANULADAS' AS 'tipoFactura'
