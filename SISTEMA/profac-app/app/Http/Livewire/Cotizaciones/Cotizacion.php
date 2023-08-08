@@ -223,7 +223,6 @@ class Cotizacion extends Component
             $cotizacion->save();
 
 
-
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
                 $keyRestaInventario = "restaInventario" . $arrayInputs[$i];
@@ -284,6 +283,7 @@ class Cotizacion extends Component
 
             };
 
+            //dd($arrayProductos);
         ModelCotizacionProducto::insert($arrayProductos);
 
 
