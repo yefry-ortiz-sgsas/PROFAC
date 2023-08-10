@@ -262,11 +262,12 @@ class CrearNotaCredito extends Component
 
         $numeroNota = DB::SELECTONE("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from nota_credito");
 
-        $factura = DB::SELECTONE("select estado_factura_id from factura where id = ". $request->idFactura);
+        $facturaClienteId = DB::SELECTONE("select cliente_id from factura where id = ". $request->idFactura);
+            //tipo_cliente 1 = B y 2 = A
+        $tipoCliente = DB::SELECTONE("select tipo_cliente_id from cliente where id = ". $facturaClienteId->cliente_id);
 
-
-
-        if ($factura->estado_factura_id == 1 ) {
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        if ($tipoCliente->tipo_cliente_id == 1 ) {
            $estado = 1;
 
             $cai = DB::SELECTONE("select
@@ -280,7 +281,8 @@ class CrearNotaCredito extends Component
                             from cai
                             where tipo_documento_fiscal_id = 3 and estado_id = 1");
 
-        } elseif($factura->estado_factura_id == 2) {
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        } elseif($tipoCliente->tipo_cliente_id == 2) {
 
             $estado = 2;
 
@@ -434,12 +436,15 @@ class CrearNotaCredito extends Component
 
 
 
-        if ($factura->estado_factura_id == 1 ) {
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        if ($tipoCliente->tipo_cliente_id == 2 ) {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->numero_actual = $caiUpdated->numero_actual + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
             $caiUpdated->save();
-        } else {
+
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        } elseif($tipoCliente->tipo_cliente_id == 1 ) {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->serie = $caiUpdated->serie + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;

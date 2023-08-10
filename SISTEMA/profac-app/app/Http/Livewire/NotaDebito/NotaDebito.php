@@ -243,11 +243,14 @@ class NotaDebito extends Component
 
        try {
 
+            // dd($request);
 
+        $facturaClienteId = DB::SELECTONE("select cliente_id from factura where id = ". $request->factura_id);
+            //tipo_cliente 1 = B y 2 = A
+        $tipoCliente = DB::SELECTONE("select tipo_cliente_id from cliente where id = ". $facturaClienteId->cliente_id);
 
-        $factura = DB::SELECTONE("select estado_factura_id from factura where id = ". $request->factura_id);
-
-        if ($factura->estado_factura_id == 1 ) {
+            //tipo_cliente 1 = B-coorporativo-noDeclara-serie y 2 = A-estatal-Sideclara-numeroActual
+        if ($tipoCliente->tipo_cliente_id == 2 ) {
             $estado = 1;
 
              $cai = DB::SELECTONE("select
@@ -261,7 +264,7 @@ class NotaDebito extends Component
                              from cai
                              where tipo_documento_fiscal_id = 4 and estado_id = 1");
 
-         } elseif($factura->estado_factura_id == 2) {
+         } elseif($tipoCliente->tipo_cliente_id == 1) {
 
              $estado = 2;
 
@@ -327,17 +330,18 @@ class NotaDebito extends Component
         /* ============================================================================ */
 
 
-        if ($factura->estado_factura_id == 1 ) {
+        if ($tipoCliente->tipo_cliente_id == 2 ) {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->numero_actual = $caiUpdated->numero_actual + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
             $caiUpdated->save();
-        } else {
+        }  elseif($tipoCliente->tipo_cliente_id == 1 )  {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->serie = $caiUpdated->serie + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
             $caiUpdated->save();
         }
+
 
         DB::commit();
        return response()->json([
