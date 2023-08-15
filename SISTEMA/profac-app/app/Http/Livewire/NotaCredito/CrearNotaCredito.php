@@ -267,7 +267,7 @@ class CrearNotaCredito extends Component
         $tipoCliente = DB::SELECTONE("select tipo_cliente_id from cliente where id = ". $facturaClienteId->cliente_id);
 
             //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
-        if ($tipoCliente->tipo_cliente_id == 1 ) {
+        if ($tipoCliente->tipo_cliente_id === 1 ) {
            $estado = 1;
 
             $cai = DB::SELECTONE("select
@@ -282,7 +282,7 @@ class CrearNotaCredito extends Component
                             where tipo_documento_fiscal_id = 3 and estado_id = 1");
 
             //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
-        } elseif($tipoCliente->tipo_cliente_id == 2) {
+        } elseif($tipoCliente->tipo_cliente_id === 2) {
 
             $estado = 2;
 
@@ -437,14 +437,14 @@ class CrearNotaCredito extends Component
 
 
             //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
-        if ($tipoCliente->tipo_cliente_id == 2 ) {
+        if ($tipoCliente->tipo_cliente_id === 2 ) {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->numero_actual = $caiUpdated->numero_actual + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
             $caiUpdated->save();
 
             //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
-        } elseif($tipoCliente->tipo_cliente_id == 1 ) {
+        } elseif($tipoCliente->tipo_cliente_id === 1 ) {
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->serie = $caiUpdated->serie + 1;
             $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
