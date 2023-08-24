@@ -64,7 +64,7 @@ class CierreDiario extends Component
                     (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                     'CONTADO' AS 'tipoFactura',
                 IF(
-                    (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.id AND estado = 1)
+                    (select COUNT(*) from tipo_cobro_cierre where idfactura = A.id) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where idfactura = A.id AND estado = 1)
                     ) as 'PagoMediante'
                 from factura A
                     inner join estado_venta B on A.estado_venta_id = B.id
@@ -76,6 +76,7 @@ class CierreDiario extends Component
                             and DATE(A.created_at) = DATE_FORMAT('".$fecha."', '%Y-%m-%d');
                 ");
 
+               // dd($consulta);
             return Datatables::of($consulta)
             ->addColumn('acciones', function ($consulta) {
                 $comillas = "'";
@@ -307,7 +308,7 @@ class CierreDiario extends Component
                             (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                             'CONTADO' AS 'tipoFactura',
                         IF(
-                            (select COUNT(*) from tipo_cobro_cierre where factura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where factura = A.id AND estado = 1)
+                            (select COUNT(*) from tipo_cobro_cierre where idfactura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where idfactura = A.id AND estado = 1)
                             ) as 'PagoMediante'
                         from factura A
                             inner join estado_venta B on A.estado_venta_id = B.id
