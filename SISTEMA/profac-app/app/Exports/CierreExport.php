@@ -21,6 +21,7 @@ class CierreExport implements FromCollection, WithHeadings, ShouldAutoSize
     */
     public function collection()
     {
+
         return CierreDiario::select('fecha','nombre_userCierre','estadoDescripcion', 'factura','cliente','vendedor','subtotal','imp_venta','total','tipoFactura','tipo', 'textoCobro','created_at')->where('bitacoraCierre_id',$this->bitacoraCierre)->get();
     }
 
