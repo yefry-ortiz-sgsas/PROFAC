@@ -1,12 +1,12 @@
 SISTEMA/profac-app/storage/logs/laravel.log
 SISTEMA/profac-app/storage/logs/laravel.log
-SISTEMA/profac-app/node_modules
-SISTEMA/profac-app/vendor
-SISTEMA/profac-app/public/documentos_ventas
+SISTEMA/profac-app/node_modules/
+SISTEMA/profac-app/vendor/
+SISTEMA/profac-app/public/documentos_ventas/
 
-SISTEMA/profac-app/node_modules
-SISTEMA/profac-apppublic/hot
-SISTEMA/profac-app/public/storage
+SISTEMA/profac-app/node_modules/
+SISTEMA/profac-app/public/hot/
+SISTEMA/profac-app/public/storage/
 SISTEMA/profac-app/storage/*.key
 
 SISTEMA/profac-app/.env
@@ -17,6 +17,7 @@ SISTEMA/profac-app/Homestead.json
 SISTEMA/profac-app/Homestead.yaml
 SISTEMA/profac-app/npm-debug.log
 SISTEMA/profac-app/yarn-error.log
+
 /.idea
 /.vscode
 
