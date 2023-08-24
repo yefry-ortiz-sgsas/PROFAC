@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelCotizacionProducto extends Model
 {
     use HasFactory;
-    protected $table = 'cotizacion_has_producto';    
+    protected $table = 'cotizacion_has_producto';
 
     protected $fillable = [
     'cotizacion_id',
@@ -21,6 +21,6 @@ class ModelCotizacionProducto extends Model
     'total',
     'seccion_id',
     'unidad_medida_venta_id',
-   
+
     ];
 }

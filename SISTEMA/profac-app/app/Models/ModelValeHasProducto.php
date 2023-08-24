@@ -21,7 +21,7 @@ class ModelValeHasProducto extends Model
         'sub_total',
         'isv',
         'total', 
-        'cantidad_sin_entregar'
+        'cantidad_para_entregar'
 
     ];
 }

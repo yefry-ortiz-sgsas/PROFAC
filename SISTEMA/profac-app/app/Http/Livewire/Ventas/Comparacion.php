@@ -177,17 +177,34 @@ class Comparacion extends Component
     public function cambioEstadoND($idFactura){
        try {
 
+   
+
+
         $cai = DB::SELECTONE("select cai, cai_id from factura where  estado_factura_id = 1  and id = ".$idFactura);
 
-        if(!empty($cai->cai)){
-            $idFacturaND = DB::SELECTONE("select id from factura where  estado_factura_id=2 and  cai='".$cai->cai."' and cai_id = ".$cai->cai_id); 
-                if(!empty($idFacturaND->id)){
-                    $Product_Update = ModelFactura::where("id", "=",$idFacturaND->id)->update(["estado_factura_id" => '1']);
-                }
-        } 
+        $idFacturaND = DB::selectone("select id, cai, cai_id from factura where estado_factura_id = 2 and estado_venta_id = 1 and cai = '".$cai->cai."' and cai_id = ". $cai->cai_id);
+
+        if(empty($idFacturaND)){
+            return response()->json([
+                "text"=>"Acción no permitida.",
+                "title"=>"Advertencia!",
+                "icon"=>"warning",
+               ],200);
+        }
 
 
-        $Product_Update = ModelFactura::where("id", "=",$idFactura)->update(["estado_factura_id" => '2']);
+
+
+     
+
+
+
+            ModelFactura::where("id", "=",$idFacturaND->id)->update(["estado_factura_id" => '1']);
+            ModelFactura::where("id", "=",$idFactura)->update(["estado_factura_id" => '2']);
+
+
+
+
 
 
        return response()->json([
@@ -209,7 +226,7 @@ class Comparacion extends Component
     public function cambioEstadoDC($idFactura){
         try {
 
-        $caiverificar = DB::SELECTONE("select cai, cai_id from factura where estado_factura_id = 2 and id = ".$idFactura); 
+        $cai = DB::SELECTONE("select cai, cai_id from factura where estado_factura_id = 2 and id = ".$idFactura); 
         
         $contraParte = DB::select("
         select 
@@ -217,7 +234,7 @@ class Comparacion extends Component
         from factura A
         inner join cliente B
         on A.cliente_id = B.id
-        where A.estado_factura_id = 1 and A.estado_venta_id=1 and B.tipo_cliente_id=2 and A.cai ='".$caiverificar->cai."' and cai_id =".$caiverificar->cai_id
+        where A.estado_factura_id = 1 and A.estado_venta_id=1 and B.tipo_cliente_id=2 and A.cai ='".$cai->cai."' and cai_id =".$cai->cai_id
         );
 
         if(!empty($contraParte)){        
@@ -228,21 +245,19 @@ class Comparacion extends Component
            ],200);
 
         }
+        
+        
 
+
+
+        $idFacturaDC = DB::SELECTONE("select id from factura where  estado_factura_id=1  and estado_venta_id = 1  and  cai='".$cai->cai."' and cai_id = ".$cai->cai_id); 
+        if(!empty($idFacturaDC->id)){
+            ModelFactura::where("id", "=",$idFacturaDC->id)->update(["estado_factura_id" => '2']);
+            ModelFactura::where("id", "=",$idFactura)->update(["estado_factura_id" => '1']);
+        }
+        
 
          
-        $cai = DB::SELECTONE("select cai, cai_id from factura where  estado_factura_id = 2  and id = ".$idFactura);
-
-
-
-        if(!empty($cai->cai)){
-            $idFacturaDC = DB::SELECTONE("select id from factura where  estado_factura_id=1 and  cai='".$cai->cai."' and cai_id = ".$cai->cai_id); 
-                if(!empty($idFacturaDC->id)){
-                    $Product_Update = ModelFactura::where("id", "=",$idFacturaDC->id)->update(["estado_factura_id" => '2']);
-                }
-        }        
-
-         $Product_Update = ModelFactura::where("id", "=",$idFactura)->update(["estado_factura_id" => '1']);
  
  
         return response()->json([

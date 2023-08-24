@@ -76,18 +76,19 @@ class CrearVale extends Component
         try {
 
             $listaProductos = DB::SELECT("
-        select
-        concat(A.producto_id,'-',A.seccion_id  ) as id,
-        concat('cod ',B.id ,' - ',B.nombre,' => Cantidad Disponible ',sum(A.cantidad_para_entregar)/C.unidad_venta ) as text       
-        
-        from venta_has_producto A
-          inner join producto B
-          on A.producto_id = B.id 
-          inner join unidad_medida_venta C
-          on A.unidad_medida_venta_id = C.id
-          where A.cantidad_para_entregar <>0 and A.factura_id = " . $request->idFactura . "        
-          group by A.producto_id, A.seccion_id, A.factura_id, A.cantidad, C.unidad_venta
-          limit 15
+            select
+            concat(A.producto_id,'-',A.seccion_id  ) as id,
+            concat('cod ',B.id ,' - ',B.nombre,' => Cantidad Disponible ',sum(A.cantidad_para_entregar)/C.unidad_venta ) as text       
+            
+            from venta_has_producto A
+              inner join producto B
+              on A.producto_id = B.id 
+              inner join unidad_medida_venta C
+              on A.unidad_medida_venta_id = C.id
+              where A.cantidad_para_entregar <>0 and A.factura_id = ".$request->idFactura."    
+              and (B.id like '%".$request->search."%' or B.nombre like '%".$request->search."%' )
+              group by A.producto_id, A.seccion_id, A.factura_id, A.cantidad, C.unidad_venta
+          
         "); //agregar group by por producto factura y seccion, agregar un and para omitir lote con 0 producto para entrega
 
 
@@ -290,6 +291,8 @@ class CrearVale extends Component
             $vale = new ModelVale;
             $vale->numero_vale = $numero_vale;
             $vale->sub_total = $request->subTotalGeneral;
+            $vale->sub_total_grabado = $request->subTotalGeneralGrabado;
+            $vale->sub_total_excento = $request->subTotalGeneralExcento;
             $vale->isv = $request->isvGeneral;
             $vale->total = $request->totalGeneral;
             $vale->factura_id = $request->idFactura;
@@ -514,7 +517,7 @@ class CrearVale extends Component
                 'total_s' => $totalSecccionado,
 
 
-                'cantidad_sin_entregar' => $cantidad,
+                'cantidad_para_entregar' => $cantidad,
 
 
                 'resta_inventario_total' => $restaInventario, //el total de unidades a restar de la factura
@@ -752,9 +755,9 @@ class CrearVale extends Component
             A.producto_id,
             B.nombre,
             D.nombre as unidad,
-            A.cantidad_sin_entregar as cantidad,
-            FORMAT(A.sub_total/A.cantidad_sin_entregar,2) as precio,
-            FORMAT(A.sub_total,2) sub_total
+            A.cantidad_para_entregar as cantidad,
+            FORMAT(sum(A.sub_total/A.cantidad_para_entregar),2) as precio,
+            FORMAT(sum(A.sub_total),2) sub_total
         from vale_has_producto A
             inner join producto B
             on A.producto_id = B.id
@@ -763,23 +766,27 @@ class CrearVale extends Component
             inner join unidad_medida D
             on C.unidad_medida_id = D.id
             where vale_id = ".$idEntrega."
-        group by A.producto_id, B.nombre, D.nombre, A.cantidad_sin_entregar, A.sub_total
+        group by A.producto_id, B.nombre, D.nombre, A.cantidad_para_entregar
         ");
 
         $importes = DB::SELECTONE("
         select
-            format(sub_total,2) as sub_total,
-            format(isv,2) as isv,
-            format(total,2) as total
+        format(sub_total_grabado,2) as sub_total_grabado,
+        format(sub_total_excento,2) as sub_total_excento,
+        format(sub_total,2) as sub_total,
+        format(isv,2) as isv,
+        format(total,2) as total        
         from vale
         where id =".$idEntrega 
     );
 
     $importesSinCentavos = DB::SELECTONE("
     select
-        sub_total as sub_total,
-        isv as isv,
-        total as total
+        sub_total,
+        sub_total_grabado,
+        sub_total_excento,
+        isv,
+        total 
     from vale
     where id =".$idEntrega 
 );

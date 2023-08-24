@@ -21,21 +21,26 @@ class ListadoAjustes extends Component
     {
         $fechaActual = date('n');
         $resta = $fechaActual - 2;
+        $anio = date("Y");
+
         if($resta<=0){
             $resta=12;
+            $anio = $anio - 1;
         }
 
         if($resta<10){
             $resta = '0'.$resta;
         }
 
-        $fechaInicio = date('Y').'-'.$resta.'-01';
+        $fechaInicio = $anio.'-'.$resta.'-01';
        
         return view('livewire.inventario.listado-ajustes',compact('fechaInicio'));
     }
 
     public function listarAjustes(Request $request){
+   
         try{
+         
         $listado = DB::SELECT("
         select
         ajuste.id as codigo,
@@ -52,6 +57,8 @@ class ListadoAjustes extends Component
         on ajuste.tipo_ajuste_id = tipo_ajuste.id
         where fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
         );
+
+        
 
         return Datatables::of($listado)
         ->addColumn('opciones', function ($ajuste) {

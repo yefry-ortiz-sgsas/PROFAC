@@ -71,7 +71,8 @@ class ListadoFacturasAnuladas extends Component
                 users.name as creado_por,
                 (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
                 factura.estado_venta_id,
-                factura.tipo_venta_id
+                factura.tipo_venta_id,
+                factura.created_at as fecha_registro
             from factura
                 inner join cliente
                 on factura.cliente_id = cliente.id

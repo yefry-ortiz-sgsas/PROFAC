@@ -36,7 +36,7 @@ class RestarVale extends Component
        try {
 
         $listaVales = DB::SELECT("
-        select 
+        select
 
         A.id,
         A.numero_vale,
@@ -48,15 +48,17 @@ class RestarVale extends Component
         A.factura_id,
         A.created_at,
         D.name,
-        A.estado_id 
+        A.estado_id
         from vale A
-       
+
         inner join factura C
         on A.factura_id = C.id
         inner join users D
         on A.users_id = D.id
-        
-       
+        INNER join espera_has_producto E
+        on A.id = E.vale_id
+
+
         order by A.created_at desc
 
         ");
@@ -72,20 +74,20 @@ class RestarVale extends Component
 
                     <li>
                     <a class="dropdown-item" target="_blank"  onclick="anularVale('.$vale->id.')"> <i class="fa-solid fa-ban text-info"></i> Anular Vale </a>
-                    </li>  
+                    </li>
 
                     <li>
                     <a class="dropdown-item" target="_blank"  href="/vale/imprimir/'.$vale->id.'"> <i class="fa-solid fa-file-invoice text-success"></i> Imprimir Vale </a>
-                    </li>  
+                    </li>
 
                     <li>
                     <a class="dropdown-item" target="_blank"   onclick="eliminarVale('.$vale->id.')"> <i class="fa-regular fa-trash-can text-danger"></i> Eliminar Vale </a>
-                    </li>  
+                    </li>
 
                     <li>
                     <a class="dropdown-item" target="_blank"  onclick="comentarios('.$vale->id.')"> <i class="fa-solid fa-file-invoice text-info"></i> Ver notas y comentarios </a>
-                    </li> 
-                                        
+                    </li>
+
                 </ul>
             </div>';
                     }else if($vale->estado_id == 2 || $vale->estado_id == 5){
@@ -94,37 +96,37 @@ class RestarVale extends Component
                 <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
                     más</button>
                 <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
- 
+
 
                 <li>
                 <a class="dropdown-item" target="_blank"  href="/vale/imprimir/'.$vale->id.'"> <i class="fa-solid fa-file-invoice text-success"></i> Imprimir Vale </a>
-                </li>  
+                </li>
 
                     <li>
                     <a class="dropdown-item" target="_blank"  onclick="comentarios('.$vale->id.')"> <i class="fa-solid fa-file-invoice text-info"></i> Ver notas y comentarios </a>
-                    </li> 
+                    </li>
 
 
-                                        
+
                 </ul>
             </div>';
                     }
 
-                    
+
                 })
                 ->addColumn('estado', function ($vale) {
 
                     if($vale->estado_id==1){
                         return '<p class="text-center"><span class="badge badge-warning p-2" style="font-size:0.75rem">Pendiente</span></p>';
                     }else if($vale->estado_id==2){
-                       
+
                        return  '<p class="text-center"><span class="badge badge-primary p-2" style="font-size:0.75rem">Anulado</span></p>';
                     }else{
 
                         return  '<p class="text-center"><span class="badge badge-danger p-2" style="font-size:0.75rem">Eliminado</span></p>';
                     }
-                   
-                       
+
+
                 })
                 ->rawColumns(['opciones','estado'])
                 ->make(true);
@@ -146,7 +148,7 @@ class RestarVale extends Component
            try {
             DB::beginTransaction();
             $listaProductos = DB::SELECT("
-            select 
+            select
                 B.resta_inventario_total,
                 B.producto_id,
                 B.unidad_medida_venta_id as idUnidadVenta,
@@ -155,7 +157,7 @@ class RestarVale extends Component
                 B.sub_total,
                 B.isv,
                 B.total,
-                C.isv as ivsProducto,             
+                C.isv as ivsProducto,
                 D.unidad_venta,
                 E.id as idFactura,
                 C.nombre
@@ -176,12 +178,12 @@ class RestarVale extends Component
 
             foreach($listaProductos as $producto){
                 $resultado = DB::SELECTONE("
-                select 
+                select
                 if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
                 from recibido_bodega
                 where cantidad_disponible <> 0
                 and producto_id = " .$producto->producto_id);
-    
+
                     if ($producto->resta_inventario_total > $resultado->cantidad_disponoble) {
                         $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>Cod." . $producto->producto_id ." - "."$producto->nombre  </b>.";
                         $flag = true;
@@ -210,8 +212,8 @@ class RestarVale extends Component
                     $producto->isv,
                     $producto->total,
                     $producto->ivsProducto,
-                    $producto->unidad_venta                
-                );    
+                    $producto->unidad_venta
+                );
             }
 
 
@@ -236,7 +238,7 @@ class RestarVale extends Component
             'icon' => '',
             'text' => '',
             'title' => '',
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e,
            ],402);
            }
@@ -244,7 +246,7 @@ class RestarVale extends Component
 
     public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
     {
-    
+
 
             $precioUnidad = $subTotal / $unidadesRestarInv;
 
@@ -253,13 +255,13 @@ class RestarVale extends Component
             while (!($unidadesRestar <= 0)) {
 
                 $unidadesDisponibles = DB::SELECTONE("
-                        select 
+                        select
                             id,
                             cantidad_disponible,
                             seccion_id
-                        from recibido_bodega 
-                        where                       
-                            producto_id = " . $idProducto . " and 
+                        from recibido_bodega
+                        where
+                            producto_id = " . $idProducto . " and
                             cantidad_disponible <> 0
                             order by created_at asc
                         limit 1
@@ -321,14 +323,14 @@ class RestarVale extends Component
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
                     "seccion_id" => $unidadesDisponibles->seccion_id,
-                    "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base 
+                    "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
-                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad que ingresa el usuario para la venta 
+                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad que ingresa el usuario para la venta
                     "unidad_medida_venta_id" => $idUnidadVenta, //la unidad de medida que selecciono el usuario para la venta
                     "precio_unidad" => $precio, // precio de venta ingresado por el usuario
-                    "cantidad" => $cantidad, //cantidad ingresada por el usuario 
+                    "cantidad" => $cantidad, //cantidad ingresada por el usuario
                     "cantidad_s" => $cantidadSeccion, //la unidad que se resta del inventario  pero convertida a la unidad de venta seleccionada por el usuario
                     "cantidad_para_entregar" => $registroResta, //las unidades basica 1 disponible para vale
                     "sub_total_s" => $subTotalSecccionado,
@@ -350,10 +352,10 @@ class RestarVale extends Component
                 ]);
             };
 
-            //dd($arrarVentasProducto);   
-            //ModelVentaProducto::created($arrarVentasProducto);  
-            //ModelVentaProducto::insert($arrarVentasProducto);  
-            //DB::table('venta_has_producto')->insert($arrarVentasProducto); 
+            //dd($arrarVentasProducto);
+            //ModelVentaProducto::created($arrarVentasProducto);
+            //ModelVentaProducto::insert($arrarVentasProducto);
+            //DB::table('venta_has_producto')->insert($arrarVentasProducto);
 
 
             return;
@@ -369,13 +371,13 @@ class RestarVale extends Component
         $vale->comentario_eliminar = $request->motivo;
         $vale->save();
 
-        $factura = ModelFactura::find($vale->factura_id);        
+        $factura = ModelFactura::find($vale->factura_id);
         $factura->total = ROUND($factura->total - $vale->total,2);
         $factura->isv = ROUND($factura->isv -  $vale->isv,2);
         $factura->sub_total = ROUND($factura->sub_total - $vale->sub_total,2);
         $factura->pendiente_cobro = ROUND($factura->pendiente_cobro - $vale->total,2);
 
-      
+
 
         if($factura->tipo_pago_id == 2){
             $factura->credito = ROUND(($factura->credito - $vale->total),2);
@@ -394,7 +396,7 @@ class RestarVale extends Component
         }
 
         $factura->save();
-       
+
 
 
         DB::commit();
@@ -409,7 +411,7 @@ class RestarVale extends Component
         'icon' => 'error',
         'text' => 'Ha ocurrido un error al eliminar el vale.',
         'title' => 'Error!',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
@@ -417,7 +419,7 @@ class RestarVale extends Component
 
     public function mostrarNotas($idVale){
        try {
-        
+
         $notas = DB::SELECTONE("select notas, comentario_anular, comentario_eliminar from vale where id=".$idVale);
 
        return response()->json([
@@ -432,7 +434,7 @@ class RestarVale extends Component
         'icon' => 'error',
         'text' => 'Ha ocurrido un error al obtener los comentarios.',
         'title' => 'Error!',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
@@ -440,27 +442,27 @@ class RestarVale extends Component
 
     public function comprobarVales(){
        try {
-            
+
         $flagVale = false;
         $valesArray =[];
 
         $valesAnuladosLista = DB::SELECT("select
         id,
-        numero_vale 
+        numero_vale
         from vale
-        where estado_id = 1 
+        where estado_id = 1
         order by id ASC");
 
 
 
-            for ($i=0; $i < count($valesAnuladosLista) ; $i++) { 
+            for ($i=0; $i < count($valesAnuladosLista) ; $i++) {
                 $flagVale = true;
 
                 /*OBTIENE LOS PRODUCTOS DEL VALE */
                 $productos = DB::SELECT("select producto_id, resta_inventario_total from espera_has_producto where vale_id =".$valesAnuladosLista[$i]->id);
 
                 /*COMPRUEBA LA EXISTENCIA EN INVENTARIOS DE LOS PRODUCTOS CONTENIDOS EN EL VALE*/
-                for ($j=0; $j <  count($productos) ; $j++) { 
+                for ($j=0; $j <  count($productos) ; $j++) {
                     $disponible = DB::SELECTONE("select sum(cantidad_disponible) as cantidad_disponible from recibido_bodega where cantidad_disponible <> 0 and producto_id = ".$productos[$j]->producto_id);
 
                     /*SI UN PRODUCTO NO CUENTA CON EXISTENCIA SUFICIENTE EN INVENTARIO EL VALE NO SE PUEDE ANULAR */
@@ -476,7 +478,7 @@ class RestarVale extends Component
                 }
 
             }
-            
+
 
 
             return;
@@ -490,18 +492,18 @@ class RestarVale extends Component
         'icon' => '',
         'text' => '',
         'title' => '',
-        'message' => 'Ha ocurrido un error', 
+        'message' => 'Ha ocurrido un error',
         'error' => $e,
        ],402);
        }
     }
 
-    
+
     public function imprimirVale($idVale)
     {
 
         $vale = DB::SELECTONE("
-        select 
+        select
         A.id,
         A.numero_vale,
         A.sub_total,
@@ -522,12 +524,12 @@ class RestarVale extends Component
         inner join factura B
         on A.factura_id = B.id
         inner join users C
-        on A.users_id = C.id    
-        where A.id =".$idVale       
+        on A.users_id = C.id
+        where A.id =".$idVale
         );
 
        $cliente = DB::SELECTONE("
-       select        
+       select
         factura.nombre_cliente as nombre,
         cliente.direccion,
         cliente.correo,
@@ -543,21 +545,24 @@ class RestarVale extends Component
 
        $importes = DB::SELECTONE("
        select
-        total,
-        FORMAT(total,2) as total2,
-        isv,
-        sub_total
-        from vale
+       total,
+       isv,
+       sub_total,
+       sub_total_grabado,
+       sub_total_excento
+       from factura
         where id = ".$idVale);
-   
 
-        $importesConCentavos= DB::SELECTONE("        
-            select
-            FORMAT(total,2) as total,
-            FORMAT(isv,2) as isv,
-            FORMAT(sub_total,2) as sub_total
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
             from vale where id = ".$idVale);
-        
+
 
             $productos = DB::SELECT("
             select
@@ -574,7 +579,9 @@ class RestarVale extends Component
             on A.unidad_medida_venta_id = C.id
             inner join unidad_medida D
             on C.unidad_medida_id = D.id
-            where A.vale_id =".$idVale);
+            where A.vale_id =".$idVale."
+            order by  A.index asc
+            ");
 
         $ordenCompra = DB::SELECTONE("
         select
@@ -593,7 +600,7 @@ class RestarVale extends Component
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
-          
+
         }else{
             $flagCentavos = true;
         }
@@ -603,9 +610,126 @@ class RestarVale extends Component
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
         $pdf = PDF::loadView('/pdf/vale', compact( 'vale','cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
-       
+
         return $pdf->stream("vale_numero" .$vale->numero_vale.".pdf");
 
-       
+
+    }
+
+    public function imprimirValeCopia($idVale)
+    {
+
+        $vale = DB::SELECTONE("
+        select
+        A.id,
+        A.numero_vale,
+        A.sub_total,
+        A.isv,
+        A.total,
+        A.estado_id as estado_id_vale,
+        B.numero_factura,
+        B.cai,
+        B.cliente_id,
+        DATE(A.created_at) as fecha_emision,
+        TIME(A.created_at) as hora,
+        A.estado_id,
+        C.name,
+        B.estado_factura_id as estado_factura,
+        B.numero_factura,
+        B.estado_venta_id
+        from vale A
+        inner join factura B
+        on A.factura_id = B.id
+        inner join users C
+        on A.users_id = C.id
+        where A.id =".$idVale
+        );
+
+       $cliente = DB::SELECTONE("
+       select
+        factura.nombre_cliente as nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$vale->cliente_id);
+
+       $importes = DB::SELECTONE("
+       select
+       total,
+       isv,
+       sub_total,
+       sub_total_grabado,
+       sub_total_excento
+       from factura
+        where id = ".$idVale);
+
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+            from vale where id = ".$idVale);
+
+
+            $productos = DB::SELECT("
+            select
+            B.id as codigo,
+            B.nombre as descripcion,
+            D.nombre as medida,
+            A.precio,
+            A.cantidad,
+            A.sub_total as importe
+            from espera_has_producto A
+            inner join producto B
+            on A.producto_id = B.id
+            inner join unidad_medida_venta C
+            on A.unidad_medida_venta_id = C.id
+            inner join unidad_medida D
+            on C.unidad_medida_id = D.id
+            where A.vale_id =".$idVale."
+            order by  A.index asc
+            ");
+
+        $ordenCompra = DB::SELECTONE("
+        select
+        B.numero_orden
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =".$idVale);
+
+        if(empty($ordenCompra->numero_orden)){
+            $ordenCompra=["numero_orden"=>""];
+        }else{
+            $ordenCompra=["numero_orden"=>$ordenCompra->numero_orden];
+        }
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+
+        }else{
+            $flagCentavos = true;
+        }
+
+        $formatter = new NumeroALetras();
+        $formatter->apocope = true;
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/vale_copia', compact( 'vale','cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos','ordenCompra'))->setPaper('letter');
+
+        return $pdf->stream("vale_numero" .$vale->numero_vale.".pdf");
+
+
     }
 }

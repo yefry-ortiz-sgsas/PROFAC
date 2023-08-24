@@ -7,11 +7,12 @@
             <h2>Listado De Facturas </h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">
-                    <a>Coorporativo</a>
+                    {{--  <a>Clientes A</a>  --}}
+                    <a>Clientes B</a>
                 </li>
 
                 <li class="breadcrumb-item">
-                    <a>Estatal</a>
+                    {{--  <a>Estatal</a>  --}}
                 </li>
 
             </ol>
@@ -177,7 +178,7 @@
 
                 var plainArray = table.column(2).data().toArray();
                 var plainArray2 = table.column(0).data().toArray();
-                
+
 
                 const formData = new FormData();
 
@@ -282,7 +283,7 @@
 
 
                 for (let i = 0; i < plainArray.length; i++) {
-                    formData.append('arregloCAI[]', plainArray[i]); 
+                    formData.append('arregloCAI[]', plainArray[i]);
                     formData.append('arregloCAIID[]', plainArray2[i]);
                 }
 
@@ -333,9 +334,41 @@
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         guardarEstado()
-                    } 
+                    }
                 })
             }
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

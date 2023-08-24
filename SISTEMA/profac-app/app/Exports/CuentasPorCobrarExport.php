@@ -38,8 +38,8 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
     public function collection()
     {
        return DB::table('factura')
-                ->join('cliente', 'factura.cliente_id', '=', 'cliente.id')            
-                ->select('factura.numero_factura as numero_factura', 'factura.cliente_id','factura.nombre_cliente', 'factura.fecha_emision','factura.fecha_vencimiento', 'factura.total', DB::raw('factura.total-factura.pendiente_cobro'), 'factura.pendiente_cobro')  
+                ->join('cliente', 'factura.cliente_id', '=', 'cliente.id')
+                ->select('factura.numero_factura as numero_factura','factura.cai as correlativo,', 'factura.cliente_id','factura.nombre_cliente', 'factura.fecha_emision','factura.fecha_vencimiento', 'factura.total', DB::raw('factura.total-factura.pendiente_cobro'), 'factura.pendiente_cobro')
                 ->where('factura.pendiente_cobro', '<>', 0)
                 ->where('factura.cliente_id', '=', $this->cliente)
                 ->get();
@@ -49,15 +49,15 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
     {
         return [
             'Numero Factura',
+            'Correlativo',
             'ID Cliente',
             'Cliente',
-            
             'Fecha Emision',
             'Fecha Vencimiento',
             'Cargo',
             'Credito',
             'Saldo',
-            
+
         ];
     }
 
@@ -74,7 +74,7 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
             'C'  => ['font' => ['size' => 16]],
         ];*/
 
-        
+
           $sheet->getStyle('A1:I1')->getFont()->setBold(true);
           $sheet->getStyle('A1:I1')->getFont()->getColor()->setARGB('FFFFFF');
           $sheet->getStyle('A1:I1')->getFill()->setFillType(Fill::FILL_SOLID);
@@ -82,7 +82,7 @@ class CuentasPorCobrarExport implements FromCollection, WithHeadings, ShouldAuto
           $sheet->getStyle('A1:I1')->getBorders()->getAllBorders()->setBorderStyle('thin');
 
           return ;
-        
+
     }
 
 

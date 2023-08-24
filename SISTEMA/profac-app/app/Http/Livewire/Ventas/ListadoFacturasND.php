@@ -44,7 +44,8 @@ class ListadoFacturasND extends Component
                 factura.credito,
                 users.name as creado_por,
                 (select if(sum(monto) is null,0,sum(monto)) from pago_venta where estado_venta_id = 1   and factura_id = factura.id ) as monto_pagado,
-                factura.estado_venta_id
+                factura.estado_venta_id,
+                factura.created_at as fecha_registro
             
             from factura
                 inner join cliente
@@ -80,8 +81,16 @@ class ListadoFacturasND extends Component
                             </li>
                             
                             <li>
-                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura </a>
-                            </li>    
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Original </a>
+                            </li>   
+                            
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/factura/cooporativoCopia/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Factura Copia </a>
+                            </li>
+
+                            <li>
+                            <a class="dropdown-item" target="_blank"  href="/facturaCoor/actaRec/'.$listaFacturas->id.'"> <i class="fa-solid fa-print text-info"></i> Imprimir Acta de Recepción </a>
+                            </li>
     
                             <li>
                             <a class="dropdown-item"  onclick="anularVentaConfirmar('.$listaFacturas->id.')" > <i class="fa-solid fa-ban text-danger"></i> Anular Factura </a>

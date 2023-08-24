@@ -18,7 +18,7 @@ use App\Models\ModelComprovanteEntrega;
 use App\Models\ModelLogTranslados;
 class ListarComprovantes extends Component
 {
-    
+
     public function render()
     {
         return view('livewire.comprovante-entrega.listar-comprovantes');
@@ -30,17 +30,17 @@ class ListarComprovantes extends Component
 
             $listadoComprobantesActivos = DB::SELECT("
         select
-        comprovante_entrega.id, 
-        numero_comprovante, 
-        nombre_cliente, 
-        RTN, 
+        comprovante_entrega.id,
+        numero_comprovante,
+        nombre_cliente,
+        RTN,
         fecha_emision,
-        FORMAT(sub_total,2) as sub_total,  
-        FORMAT(isv,2) as isv,  
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(isv,2) as isv,
         FORMAT(total,2) as total,
         name,
         comprovante_entrega.created_at as fecha_creacion
-        from comprovante_entrega 
+        from comprovante_entrega
         inner join users
         on comprovante_entrega.users_id = users.id
         where estado_id = 1
@@ -57,25 +57,30 @@ class ListarComprovantes extends Component
 
                     <li>
                     <a class="dropdown-item" target="_blank"  href="/orden/entrega/facturar/' . $comprobante->id . '"> <i class="fa-solid fa-file-invoice text-info"></i> Facturar Comprobante </a>
-                    </li>  
-                    
+                    </li>
+
                     <li>
-                    <a class="dropdown-item" target="_blank"  href="/comprobante/imprimir/' . $comprobante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante </a>
-                    </li>  
-                    
+                    <a class="dropdown-item" target="_blank"  href="/comprobante/imprimir/' . $comprobante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante Original</a>
+                    </li>
+
+
                     <li>
-                    <a class="dropdown-item" href="#" onclick="anularComprobante('.$comprobante->id.')"> <i class="fa-solid fa-ban text-danger"></i> Anular Comprobante </a>
+                    <a class="dropdown-item" target="_blank"  href="/comprobante/imprimir/copia/' . $comprobante->id . '"> <i class="fa-solid fa-print text-success"></i> Imprimir Comprobante Copia</a>
+                    </li>
+
+                    <li>
+                    <a class="dropdown-item" href="#" onclick="anularComprobanteConfirmar('.$comprobante->id.')"> <i class="fa-solid fa-ban text-danger"></i> Anular Comprobante </a>
                     </li>
 
 
 
-                    
+
                 </ul>
             </div>';
                 })
                 ->addColumn('estado', function ($comprobante) {
 
-                    
+
                     return
                         '<p class="text-center"><span class="badge badge-primary p-2" style="font-size:0.75rem">Activo</span></p>';
                 })
@@ -92,32 +97,34 @@ class ListarComprovantes extends Component
         }
     }
 
-    public function anularComprobante($idComprobante){
+    public function anularComprobante(Request $request){
+
+        //dd($request);
            try {
             DB::beginTransaction();
             $arrayLogs=[];
 
             $listaProductos = DB::SELECT("
-            select 
+            select
             B.lote_id,
             B.numero_unidades_resta_inventario,
             B.producto_id,
             B.unidad_medida_venta_id
             from comprovante_entrega A
-            inner join comprovante_has_producto B 
+            inner join comprovante_has_producto B
             on A.id = B.comprovante_id
-            where A.estado_id = 1 and A.id = ".$idComprobante
+            where A.estado_id = 1 and A.id = ".$request->idComprobante
             );
 
             foreach ($listaProductos as $producto){
                 $lote = ModelRecibirBodega::find($producto->lote_id);
                 $lote->cantidad_disponible = $lote->cantidad_disponible + $producto->numero_unidades_resta_inventario;
-                $lote->save();   
-                
+                $lote->save();
+
                 array_push($arrayLogs, [
                     "origen" => $producto->lote_id,
                     "destino" => $producto->lote_id,
-                    "comprovante_entrega_id" => $idComprobante,
+                    "comprovante_entrega_id" => $request->idComprobante,
                     "cantidad" => $producto->numero_unidades_resta_inventario,
                     "unidad_medida_venta_id" => $producto->unidad_medida_venta_id,
                     "users_id" => Auth::user()->id,
@@ -125,13 +132,14 @@ class ListarComprovantes extends Component
                     "created_at" => now(),
                     "updated_at" => now(),
                 ]);
-                
+
             }
 
             ModelLogTranslados::insert($arrayLogs);
 
-            $comprobante = ModelComprovanteEntrega::find($idComprobante);
+            $comprobante = ModelComprovanteEntrega::find($request->idComprobante);
             $comprobante->estado_id = 2;
+            $comprobante->comentarioAnulado = 'Anulado por '.Auth::user()->name.' Motivo: '.$request->motivo;
             $comprobante->save();
 
 
@@ -147,7 +155,7 @@ class ListarComprovantes extends Component
             'icon' => 'error',
             'text' => 'Ha ocurrido un error al anular el comprobante',
             'title' => 'Error',
-            'message' => 'Ha ocurrido un error', 
+            'message' => 'Ha ocurrido un error',
             'error' => $e,
            ],402);
            }

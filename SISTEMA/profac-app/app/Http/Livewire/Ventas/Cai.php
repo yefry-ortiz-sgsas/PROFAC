@@ -121,16 +121,16 @@ class Cai extends Component
             from factura
             where estado_venta_id = 1 and estado_editar=1");
             //dd($verifica);
-            if (empty($verifica)) {
+            // if (empty($verifica)) {
 
-            } else {
-                return response()->json([
-                    'icon'=>'error',
-                    'title'=>'Error!',
-                    'text'=>'Aún hay facturas pendientes de cierre.',
-                    'message' => 'Ha ocurrido un error'
-                   ],200);
-            }
+            // } else {
+            //     return response()->json([
+            //         'icon'=>'error',
+            //         'title'=>'Error!',
+            //         'text'=>'Aún hay facturas pendientes de cierre.',
+            //         'message' => 'Ha ocurrido un error'
+            //        ],402);
+            // }
 
 
             //////////////////////Establecer el Cai activo a inactivo///////////////////

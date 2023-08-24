@@ -49,7 +49,7 @@
 
                                     <label for="selectProducto" class="col-form-label focus-label">Seleccionar
                                         Producto:</label>
-                                    <select id="selectProducto" class="form-group form-control" style="" 
+                                    <select id="selectProducto" class="form-group form-control" style=""
                                         data-parsley-required disabled >
                                         <option value="" selected disabled>--Seleccionar un producto por codigo ó
                                             nombre--</option>
@@ -197,10 +197,10 @@
                             <div class="ibox-title">
                                 <h3>Listado de productos a transaladar</h3>
                             </div>
-                             <div class="ibox-content">                          
+                             <div class="ibox-content">
                                 <div class="table-responsive">
                                     <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="guardar_translados"   name="guardar_translados" data-parsley-validate>
-                                        
+
                                     </form>
                                     <table id="tbl_translados_productos"
                                         class="table table-striped table-bordered table-hover">
@@ -215,16 +215,16 @@
                                                 <th>Uniad de medida</th>
                                             </tr>
                                         </thead>
-                                       
+
                                         <tbody id="cuerpoListaProducto">
-                                          
-                                            
-                                           
+
+
+
                                         </tbody>
-                                       
+
                                     </table>
-                                    
-                                    <button id="btn_guardar_translado" type="submit" form="guardar_translados"   class="btn btn-primary btn-lg mb-4 mt-3" >Guardar Translado</button>                           
+
+                                    <button id="btn_guardar_translado" type="submit" form="guardar_translados"   class="btn btn-primary btn-lg mb-4 mt-3" >Guardar Translado</button>
                                 </div>
                             </div>
                     </div>
@@ -264,8 +264,8 @@
 
                                     </tbody>
                                 </table>
-                                <button onclick="limpiar()" type="button" class="btn btn-warning btn-lg mb-4 mt-3" >Limpiar</button>                           
-                            
+                                <button onclick="limpiar()" type="button" class="btn btn-warning btn-lg mb-4 mt-3" >Limpiar</button>
+
                             </div>
                         </div>
                     </div>
@@ -645,7 +645,7 @@
                                                      <button class="btn btn-danger text-center" type="button" onclick="eliminarInput(${contador},${productoSeccion})"><i
                                                             class="fa-regular fa-rectangle-xmark"></i>
                                                     </button>
-                                            </dt>    
+                                            </dt>
                                             <td>
                                                 <input id="producto${contador}" name="producto${contador}" type="text" value="${idProducto}" disabled class="form-control" required form="guardar_translados">
                                             </td>
@@ -656,7 +656,7 @@
                                             </td>
 
                                             <td>
-                                                <input id="nombreSegmento${contador}" name="nombreSegmento${contador}" type="text" value="${segmentoNombre}" disabled class="form-control" required form="guardar_translados"> 
+                                                <input id="nombreSegmento${contador}" name="nombreSegmento${contador}" type="text" value="${segmentoNombre}" disabled class="form-control" required form="guardar_translados">
                                                 <input id="idSegmento${contador}" name="idSegmento${contador}" type="hidden" value="${segmentoId}" disabled form="guardar_translados">
                                             </td>
 
@@ -673,7 +673,7 @@
                                                 <input id="unidadMedida${contador}" name="unidadMedida${contador}" type="text" value="${medidaNombre}" disabled class="form-control" form="guardar_translados">
                                                 <input id="unidadMedidaId${contador}" name="unidadMedidaId${contador}" type="hidden" value="${medidaId}" readonly form="guardar_translados">
                                                 <input id="idRecibido${contador}" name="idRecibido${contador}" type="hidden" value="${idRecibido}" readonly form="guardar_translados">
-                                                
+
                                             </td>
 
                                         </tr>
@@ -687,14 +687,14 @@
             $('#recibirProducto').parsley().reset();
 
             arrayInputs.push(contador);
-          
+
             contador++;
             return;
         }
 
         function listadoBodegaDestino(contadorTranslados) {
 
-           
+
           let   contador = contadorTranslados;
 
             // console.log(idSeccion);
@@ -707,7 +707,7 @@
                 pageLength: 10,
                 responsive: true,
                 "ajax": "/translado/destino/lista/"+contador,
-                
+
                 "columns": [{
                         data: 'idProducto'
                     },
@@ -742,7 +742,7 @@
            const element = document.getElementById("tr" + id);
             element.remove();
 
-        
+
 
             var myIndex = arrayInputs.indexOf(id);
             if (myIndex !== -1) {
@@ -752,13 +752,13 @@
 
             productoSeccion = ''+productoSeccion;
             var myIndex2 = idRecibidoArray.indexOf(productoSeccion);
-         
+
             if (myIndex2 !== -1) {
                 idRecibidoArray.splice(myIndex2, 1);
 
             }
 
-            
+
         }
 
 
@@ -775,19 +775,29 @@
 
             var dataForm = new FormData($('#guardar_translados').get(0));
 
-            let longitudArreglo = arrayInputs.length;
-            for (var i = 0; i < longitudArreglo; i++) {
+            // let longitudArreglo = arrayInputs.length;
+            // for (var i = 0; i < longitudArreglo; i++) {
+            //     dataForm.append("arregloIdInputs[]", arrayInputs[i]);
+            // }
 
-
-
-                dataForm.append("arregloIdInputs[]", arrayInputs[i]);
-
-            }
 
             let table = $('#tbl_translados_destino').DataTable();
             table.destroy();
 
-            axios.post('/translado/producto/bodega', dataForm)
+
+                let text = arrayInputs.toString();
+                dataForm.append("arregloIdInputs", text);
+
+                const formDataObj = {};
+
+                dataForm.forEach((value, key) => (formDataObj[key] = value));
+
+
+                    const options = {
+                        headers: {"content-type": "application/json"}
+                    }
+
+            axios.post('/translado/producto/bodega', formDataObj,options)
                 .then(response => {
 
                     let data = response.data;
@@ -809,8 +819,8 @@
                     table1.destroy();
 
 
-                    
-                 
+
+
 
                     //document.getElementById('destino').class
                     document.getElementById('destino').classList.remove('d-none');
@@ -825,12 +835,13 @@
                 })
                 .catch(err => {
                     //console.log(err)
+
                     document.getElementById("btn_guardar_translado").disabled = false;
                     console.log(err);
                     $('#modal_transladar_producto').modal('hide')
                     document.getElementById('btn_recibir_bodega').disabled = false;
 
-                   
+
                     Swal.fire({
                         icon: "error",
                         title: "Error",
@@ -845,3 +856,35 @@
 @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

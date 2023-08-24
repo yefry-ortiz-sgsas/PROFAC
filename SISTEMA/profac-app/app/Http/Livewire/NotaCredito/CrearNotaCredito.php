@@ -39,7 +39,7 @@ class CrearNotaCredito extends Component
 
     public function obtenerFactura(Request $request){
 
-        $clientes = DB::SELECT("select id, cai as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and cai like '%".$request->search."%' limit 15");
+        $clientes = DB::SELECT("select id, concat('cor: ',cai,' _ cod: ',numero_factura) as text from factura where estado_venta_id = 1 and cliente_id = ".$request->idCliente." and (cai like '%".$request->search."%' or numero_factura like '%".$request->search."%' ) limit 15");
 
         return response()->json([
             "results"=>$clientes,
@@ -62,8 +62,11 @@ class CrearNotaCredito extends Component
         (select name from users where id = factura.users_id) as facturador,
         factura.created_at as fechaRegistro,
         sub_total,
+        sub_total_grabado,
+        sub_total_excento,
         total,
         isv
+
 
         from factura
         inner join tipo_pago_venta B
@@ -93,7 +96,7 @@ class CrearNotaCredito extends Component
             C.nombre,
             concat(F.nombre,' - ',D.descripcion ) as bodega,
             format(B.precio_unidad,2) as precio_unidad,
-            B.cantidad,
+            B.cantidad_nota_credito as cantidad,
             concat(H.nombre,' - ', G.unidad_venta ) as unidad_medida,
             format(B.sub_total,2) as sub_total,
             format(B.isv,2) as isv,
@@ -115,7 +118,7 @@ class CrearNotaCredito extends Component
             inner join unidad_medida H
             on H.id = G.unidad_medida_id
         where A.id =".$request->idFactura."
-        group by B.seccion_id,  B.factura_id, B.producto_id,  C.nombre,  B.cantidad,  H.nombre, unidad_medida, C.isv, B.precio_unidad, B.sub_total,B.isv,B.total
+        group by B.seccion_id,  B.factura_id, B.producto_id,  C.nombre,  B.cantidad_nota_credito,  H.nombre, unidad_medida, C.isv, B.precio_unidad, B.sub_total,B.isv,B.total
         "
         );
 
@@ -156,7 +159,7 @@ class CrearNotaCredito extends Component
             D.descripcion as seccion,
 
             B.precio_unidad,
-            B.cantidad,
+            B.cantidad_nota_credito as cantidad,
             H.nombre as unidad_medida,
             B.unidad_medida_venta_id as idUnidadVenta ,
             G.unidad_venta,
@@ -223,6 +226,7 @@ class CrearNotaCredito extends Component
         $arregloIdInputs = $request->arregloIdInputs;
 
 
+
         /***VERIFICA LA EXISTENCIA DEL PRODUCTO EN LA FACTURA PARA REALIZAR LA DEVOLUCION - SI NO ENCUENTRA CANTIDAD DISPONIBLE, NO REALIZAR LA NOTA DE CREDITO */
         for ($i=0; $i < count($arregloIdInputs) ; $i++) {
 
@@ -237,7 +241,7 @@ class CrearNotaCredito extends Component
             $nombreProducto = $request->$keyNombreProducto;
 
 
-            $cantidadDisponible = DB::SELECTONE("select sum(numero_unidades_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
+            $cantidadDisponible = DB::SELECTONE("select sum(unidades_nota_credito_resta_inventario) as cantidad from venta_has_producto where factura_id=".$request->idFactura." and producto_id= ".$idProducto." and seccion_id = ".$idSeccion);
 
             if($cantidad  > $cantidadDisponible){
                 $flagError = true;
@@ -258,19 +262,41 @@ class CrearNotaCredito extends Component
 
         $numeroNota = DB::SELECTONE("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from nota_credito");
 
-        $cai = DB::SELECTONE("
-        select
-            id,
-            numero_inicial,
-            numero_final,
-            cantidad_otorgada,
-            numero_actual,
-            serie,
-            if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
-            cantidad_no_utilizada
-        from cai
-        where tipo_documento_fiscal_id = 3 and estado_id = 1
-        ");
+        $facturaClienteId = DB::SELECTONE("select cliente_id from factura where id = ". $request->idFactura);
+            //tipo_cliente 1 = B y 2 = A
+        $tipoCliente = DB::SELECTONE("select tipo_cliente_id from cliente where id = ". $facturaClienteId->cliente_id);
+
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        if ($tipoCliente->tipo_cliente_id === 1 ) {
+           $estado = 1;
+
+            $cai = DB::SELECTONE("select
+                            id,
+                            numero_inicial,
+                            numero_final,
+                            cantidad_otorgada,
+                            serie as 'numero_actual',
+                            if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
+                            cantidad_no_utilizada
+                            from cai
+                            where tipo_documento_fiscal_id = 3 and estado_id = 1");
+
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        } elseif($tipoCliente->tipo_cliente_id === 2) {
+
+            $estado = 2;
+
+            $cai = DB::SELECTONE("select
+                            id,
+                            numero_inicial,
+                            numero_final,
+                            cantidad_otorgada,
+                            numero_actual as 'numero_actual',
+                            if( DATE(NOW()) > fecha_limite_emision ,'TRUE','FALSE') as fecha_limite_emision,
+                            cantidad_no_utilizada
+                            from cai
+                            where tipo_documento_fiscal_id = 3 and estado_id = 1");
+        }
 
         if(empty($cai)){
 
@@ -317,14 +343,23 @@ class CrearNotaCredito extends Component
         $notaCredito->cai = $numeroCAI;
         $notaCredito->numero_secuencia_cai = $numeroSecuencia;
         $notaCredito->fecha = now();
-        $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
+        /* $notaCredito->sub_total = round($request->subTotalGeneralCredito,2);
+        $notaCredito->sub_total_grabado = round($request->subTotalGeneralGrabadoCredito,2);
+        $notaCredito->sub_total_excento = round($request->subTotalGeneralExcentoCredito,2);
         $notaCredito->isv = round($request->isvGeneralCredito,2);
-        $notaCredito->total = round($request->totalGeneralCredito,2);
+        $notaCredito->total = round($request->totalGeneralCredito,2); */
+
+        $notaCredito->sub_total = $request->subTotalGeneralCredito;
+        $notaCredito->sub_total_grabado = $request->subTotalGeneralGrabadoCredito;
+        $notaCredito->sub_total_excento = $request->subTotalGeneralExcentoCredito;
+        $notaCredito->isv =$request->isvGeneralCredito;
+        $notaCredito->total = $request->totalGeneralCredito;
         $notaCredito->factura_id = $request->idFactura;
         $notaCredito->cai_id = $cai->id;
         $notaCredito->motivo_nota_credito_id = $request->motivo_nota;
         $notaCredito->users_id = Auth::user()->id;
         $notaCredito->estado_nota_id = 1;
+        $notaCredito->estado_nota_dec = $estado;
         $notaCredito->comentario = $request->comentario;
         $notaCredito->save();
 
@@ -358,12 +393,13 @@ class CrearNotaCredito extends Component
             $productoNota = new ModelNotaCreditoProducto();
             $productoNota->nota_credito_id = $notaCredito->id;
             $productoNota->producto_id = $idProducto;
+            $productoNota->seccion_id = $idSeccion;
+            $productoNota->indice = $arregloIdInputs[$i];
             $productoNota->cantidad = $cantidad;
             $productoNota->precio_unidad = $precio;
             $productoNota->sub_total = $subTotal;
             $productoNota->isv =  $isv;
             $productoNota->total = $total;
-            $productoNota->seccion_id = $idSeccion;
             $productoNota->unidad_medida_venta_id = $idUnidadMedida;
             $productoNota->save();
 
@@ -399,11 +435,21 @@ class CrearNotaCredito extends Component
 
 
 
-        $caiUpdated =  ModelCAI::find($cai->id);
-        $caiUpdated->numero_actual=$numeroSecuencia+1;
-        $caiUpdated->serie=$numeroSecuencia+1;
-        $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
-        $caiUpdated->save();
+
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        if ($tipoCliente->tipo_cliente_id === 2 ) {
+            $caiUpdated =  ModelCAI::find($cai->id);
+            $caiUpdated->numero_actual = $caiUpdated->numero_actual + 1;
+            $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
+            $caiUpdated->save();
+
+            //tipo_cliente 1 = B-coorporativo-noDeclara y 2 = A-estatal-Sideclara
+        } elseif($tipoCliente->tipo_cliente_id === 1 ) {
+            $caiUpdated =  ModelCAI::find($cai->id);
+            $caiUpdated->serie = $caiUpdated->serie + 1;
+            $caiUpdated->cantidad_no_utilizada=  $caiUpdated->cantidad_no_utilizada - 1;
+            $caiUpdated->save();
+        }
 
 
 
@@ -414,6 +460,7 @@ class CrearNotaCredito extends Component
         'icon' => 'success',
         'text' => 'Nota de credito creada correctamente.',
         'title' => 'Exito!',
+        'idNota'=> $notaCredito->id
        ],200);
        } catch (QueryException $e) {
         DB::rollback();
@@ -435,19 +482,19 @@ class CrearNotaCredito extends Component
         $lotes = DB::SELECT("
         select
         lote,
-        numero_unidades_resta_inventario as unidadesLote,
+        unidades_nota_credito_resta_inventario as unidadesLote,
         unidad_medida_venta_id,
         resta_inventario_total,
-        cantidad
+        cantidad_nota_credito
         from venta_has_producto
         where factura_id=".$idFactura." and producto_id=".$idProducto." and seccion_id=".$idSeccion
-    );
+        );
 
-    // if($idProducto==1943 && $idSeccion==137){
-    //     DB::rollBack();
+        // if($idProducto==1943 && $idSeccion==137){
+        //     DB::rollBack();
 
-    //     dd($lotes,$i );
-    // }
+        //     dd($lotes,$i );
+        // }
 
         while($cantidadSeccionRestar > 0){
 
@@ -484,9 +531,13 @@ class CrearNotaCredito extends Component
             ->where('seccion_id', $idSeccion)
             ->where('lote', $lote->lote)
             ->update([
-                'numero_unidades_resta_inventario' => $cantidadLoteRestarUpdate,
+                //'numero_unidades_resta_inventario' => $cantidadLoteRestarUpdate,
+                //'cantidad_para_entregar' => $cantidadLoteRestarUpdate,
+                //'cantidad_s' => ($cantidadLoteRestarUpdate/$unidadVenta)
+
+                'unidades_nota_credito_resta_inventario' => $cantidadLoteRestarUpdate,
                 'cantidad_para_entregar' => $cantidadLoteRestarUpdate,
-                'cantidad_s' => ($cantidadLoteRestarUpdate/$unidadVenta)
+                // 'cantidad_nota_credito'=>$cantidadLoteRestarUpdate/$unidadVenta
             ]);
 
 
@@ -529,10 +580,78 @@ class CrearNotaCredito extends Component
         ->where('seccion_id', $idSeccion)
         ->update([
             'resta_inventario_total' => ($lotes[0]->resta_inventario_total - $cantidadBaseSeccion),
-            'cantidad' => $lotes[0]->cantidad - $cantidadIngresadaUsuario
+            'cantidad_nota_credito' => $lotes[0]->cantidad_nota_credito - $cantidadIngresadaUsuario
         ]);
 
         return;
 
     }
+
+    // public function anularNotaCredio(Request $request){
+    //     $arrayLog = [];
+    //     try {
+    //     DB::beginTransaction();
+
+
+
+
+
+    //      $estadoVenta = DB::SELECTONE("select estado_nota_id from nota_credito where id =".$request->idNotaCredito );
+
+    //      if($estadoVenta->estado_venta_id == 2 ){
+    //         return response()->json([
+    //             "text" =>"<p  class='text-left'>Esta nota de credito no puede ser anulada, dado que ha sido anulada anteriormente.</p>",
+    //             "icon" => "warning",
+    //             "title" => "Advertencia!",
+    //         ],402);
+    //      }
+
+    //      $compra = ModelNotaCredito::find($request->idNotaCredito);
+    //      $compra->estado_nota_id = 2;
+    //      $compra->save();
+
+
+
+    //      $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario,unidad_medida_venta_id from venta_has_producto where factura_id = ".$request->idFactura);
+
+    //      foreach ($lotes as $lote) {
+    //             $recibidoBodega = ModelRecibirBodega::find($lote->lote);
+    //             $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->numero_unidades_resta_inventario;
+    //             $recibidoBodega->save();
+
+    //             array_push($arrayLog,[
+    //                 'origen'=>$lote->lote,
+    //                 'destino'=>$lote->lote,
+    //                 'factura_id'=>$request->idFactura,
+    //                 'cantidad'=>$lote->numero_unidades_resta_inventario,
+    //                 "unidad_medida_venta_id"=>$lote->unidad_medida_venta_id,
+    //                 "users_id"=> Auth::user()->id,
+    //                 "descripcion"=>"Factura Anulada",
+    //                 "created_at"=>now(),
+    //                 "updated_at"=>now(),
+    //             ]);
+
+    //         };
+
+    //         ModelLogTranslados::insert($arrayLog);
+
+
+
+
+    //      DB::commit();
+    //     return response()->json([
+    //         "text" =>"Factura anulada con exito",
+    //         "icon" => "success",
+    //         "title" => "Exito",
+    //     ],200);
+    //     } catch (QueryException $e) {
+
+    //     DB::rollback();
+    //     return response()->json([
+    //         'message' => 'Ha ocurrido un error',
+    //         'error' => $e
+    //     ], 402);
+    //     }
+
+    //  }
 }

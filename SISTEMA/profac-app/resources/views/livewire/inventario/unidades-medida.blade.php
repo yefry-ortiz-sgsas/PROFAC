@@ -135,7 +135,7 @@
                                     <tr>
                                         <th>Cod</th>
                                         <th>Nombre</th>
-                                        <th>Simbolo</th>                                        
+                                        <th>Simbolo</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -210,7 +210,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarProductoForm" name="editarProductoForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -222,22 +222,22 @@
                                                 <input class="form-control" required type="text" id="nombre_producto_editar"
                                                     name="nombre_producto_editar" data-parsley-required>
                                             </div>
-        
+
                                             <div class="col-md-12">
                                                 <label for="simbolo_producto_editar" class="col-form-label focus-label">Simbolo de la
                                                     Unidad:</label>
                                                 <input class="form-control" required type="text" id="simbolo_producto_editar"
                                                     name="simbolo_producto_editar" data-parsley-required>
                                             </div>
-        
-        
-        
-                                            
+
+
+
+
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarProductoForm" class="btn btn-primary">Editar
@@ -262,7 +262,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearUnidadForm', function(event) {
             event.preventDefault();
             guardarUnidad();
@@ -279,7 +279,7 @@
 
 
                         $('#crearUnidadForm').parsley().reset();
-                        
+
                         document.getElementById("crearUnidadForm").reset();
                         $('#modal_producto_crear').modal('hide');
 
@@ -350,7 +350,7 @@
                         },
                         {
                             data: 'nombre'
-                        },                        
+                        },
                         {
                             data: 'simbolo'
                         },
@@ -369,13 +369,13 @@
                 let data = {id:id}
                 axios.post('/inventario/unidades/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('nombre_producto_editar').value = datos.nombre;
                     document.getElementById('simbolo_producto_editar').value = datos.simbolo;
                     document.getElementById('idUnidad').value = datos.id;
-                                      
+
                     $('#modal_producto_editar').modal('show');
                 })
                 .catch( err=>{
@@ -394,15 +394,15 @@
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarProductoForm').get(0));
-                
-            
+
+
                 axios.post('/inventario/unidades/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarProductoForm').parsley().reset();
-                    
+
                     document.getElementById("editarProductoForm").reset();
                     $('#modal_producto_editar').modal('hide');
 
@@ -420,7 +420,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_producto_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -436,3 +436,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

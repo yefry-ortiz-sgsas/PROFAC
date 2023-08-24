@@ -48,7 +48,7 @@
                                         <th>Fecha de Registro</th>
                                         <th>Anular</th>
                                         <th>Opciones</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,19 +77,19 @@
                 <div class="modal-body">
                     <form id="exportarExcelForm" name="exportarExcelForm" data-parsley-validate>
                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                        
+
                         <div class="row" id="row_datos">
-                            
+
                             <div class="col-md-12">
                                 <label for="compras_mes" class="col-form-label focus-label">Seleccione el Mes:<span class="text-danger">*</span></label>
-                                <input required type="month" id="compras_mes" name="compras_mes"  data-parsley-required onchange="insertarBotonExportar()"> 
+                                <input required type="month" id="compras_mes" name="compras_mes"  data-parsley-required onchange="insertarBotonExportar()">
                             </div>
                             <div class="col-md-12">
                                 <div class="d-flex justify-content-center mt-2" id="exportar">
                                 <!--///////////////////////Aqui se insertará el boton cuando se selecione un Mes///////////////////-->
                                 </div>
                             </div>
-                            
+
                         </div>
                     </form>
                 </div>
@@ -110,10 +110,10 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                 },
-                
+
                 pageLength: 10,
                 responsive: true,
-              
+
 
                 "ajax": "/producto/compras/listar",
                 "columns": [{
@@ -152,7 +152,7 @@
                     {
                         data: 'opciones'
                     }
-  
+
                 ]
 
 
@@ -160,13 +160,13 @@
             })
 
         function anularCompra(idCompra){
-             
+
             Swal.fire({
             title: '¿Está seguro de anular esta compra?',
             text:'Una vez que ha sido anulada la compra no se podrá recibir el producto en bodega.',
             showDenyButton: false,
             showCancelButton: true,
-            confirmButtonText: 'Si, Anular Compra',            
+            confirmButtonText: 'Si, Anular Compra',
             cancelButtonText: `Cancelar`,
             }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
@@ -175,7 +175,7 @@
                 //Swal.fire('Saved!', '', 'success')
                 this.anularCompraGuardar(idCompra);
 
-            } 
+            }
             })
         }
 
@@ -191,7 +191,7 @@
                             title: data.title,
                             text: data.text,
                         });
-                        $('#tbl_listar_compras').DataTable().ajax.reload();        
+                        $('#tbl_listar_compras').DataTable().ajax.reload();
 
             })
             .catch( err => {
@@ -207,20 +207,20 @@
         }
 
         function insertarBotonExportar(){
-            
+
             try {
                 var compras_mes = document.getElementById('compras_mes').value;
 
                 let htmlSelect = ''
-                
-                htmlSelect =   ` 
+
+                htmlSelect =   `
                         <a href="/compras/excel_mes/${compras_mes}" class="btn add-btn btn-primary"><i class="fa fa-plus "></i> Exportar Excel</a>
                                 `
 
                 document.getElementById('exportar').innerHTML = htmlSelect;
-                
+
             } catch (error) {
-                
+
             }
 
         }
@@ -228,3 +228,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

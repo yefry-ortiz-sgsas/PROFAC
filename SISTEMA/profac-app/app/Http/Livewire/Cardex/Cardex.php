@@ -70,128 +70,51 @@ class Cardex extends Component
         //dd($idBodega, $idProducto);
         try {
 
-            $listaCardex = DB::SELECT("
-
-            select
-            log_translado.created_at as 'fechaIngreso',
-            producto.nombre as 'producto',
-            producto.id as 'codigoProducto',
-            log_translado.factura_id as 'factura',
-            (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
-            log_translado.ajuste_id as 'ajuste' ,
-            (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
-            concat(log_translado.descripcion,' (+)') as 'descripcion',
-            concat (bodega.nombre,' ',seccion2.descripcion) as origen,
-              concat(
-              (select
-              bodega.nombre
-              from seccion
-              inner join segmento
-              on segmento.id = seccion.segmento_id
-              inner join bodega
-              ON bodega.id = segmento.bodega_id
-              where seccion.id = log_translado.destino
-              ),
-              ' '
-              ,
-              (
-              select
-              seccion.descripcion
-              from seccion
-              inner join segmento
-              on segmento.id = seccion.segmento_id
-              inner join bodega
-              ON bodega.id = segmento.bodega_id
-              where seccion.id = log_translado.destino
-              )
-              ) as destino,
-
-            log_translado.cantidad as 'cantidad',
-            users.name as  'usuario'
-        from log_translado
-            inner join recibido_bodega on (recibido_bodega.id = log_translado.destino)
-
-            inner join producto on (recibido_bodega.producto_id = producto.id)
-            inner join seccion as seccion2 on (seccion2.id = recibido_bodega.seccion_id)
-            inner join segmento on (segmento.id = seccion2.segmento_id)
-            inner join bodega on (bodega.id = segmento.bodega_id)
-            inner join users on (users.id = log_translado.users_id)
-    where log_translado.descripcion='Translado de bodega' and bodega.id = ".$idBodega." and producto.id =".$idProducto."
-    
-union     
-
-            select
-            log_translado.created_at as 'fechaIngreso',
-            producto.nombre as 'producto',
-            producto.id as 'codigoProducto',
-            log_translado.factura_id as 'factura',
-            (select factura.numero_factura from factura where id = log_translado.factura_id) as 'factura_cod',
-            log_translado.ajuste_id as 'ajuste' ,
-            (SELECT DISTINCT compra_has_producto.compra_id  FROM compra_has_producto WHERE compra_has_producto.compra_id = log_translado.compra_id) as 'detalleCompra',
-            log_translado.descripcion  as 'descripcion',
-            concat (bodega.nombre,' ',seccion2.descripcion) as origen,
-              concat(
-              (select
-              bodega.nombre
-              from seccion
-              inner join segmento
-              on segmento.id = seccion.segmento_id
-              inner join bodega
-              ON bodega.id = segmento.bodega_id
-              where seccion.id = log_translado.destino
-              ),
-              ' '
-              ,
-              (
-              select
-              seccion.descripcion
-              from seccion
-              inner join segmento
-              on segmento.id = seccion.segmento_id
-              inner join bodega
-              ON bodega.id = segmento.bodega_id
-              where seccion.id = log_translado.destino
-              )
-              ) as destino,
-
-            log_translado.cantidad as 'cantidad',
-            users.name as  'usuario'
-        from log_translado
-            inner join recibido_bodega on (recibido_bodega.id = log_translado.origen)
-
-            inner join producto on (recibido_bodega.producto_id = producto.id)
-            inner join seccion as seccion2 on (seccion2.id = recibido_bodega.seccion_id)
-            inner join segmento on (segmento.id = seccion2.segmento_id)
-            inner join bodega on (bodega.id = segmento.bodega_id)
-            inner join users on (users.id = log_translado.users_id)
-    where bodega.id = ".$idBodega." and producto.id =".$idProducto
+            $listaCardex = DB::SELECT("CALL obtrCardex(".$idBodega.",". $idProducto.")");
 
             
-            );
 
             return Datatables::of($listaCardex)
             ->addColumn('doc_factura', function($elemento){
                 if($elemento->factura != null){
                     return '<a target="_blank" href="/detalle/venta/'.$elemento->factura.'"><i class="fas fa-receipt"></i> FACTURA # '.$elemento->factura_cod.'</a>';
-                }else{
-                    return '<a ><i class="fas fa-receipt"></i> N/A FACTURA</a>';
                 }
             })
             ->addColumn('doc_ajuste', function($elemento){
                 if($elemento->ajuste != null){
-                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE #'.$elemento->ajuste.'</a>';
-                }else{
-                    return '<a ><i class="fas fa-receipt"></i> N/A AJUSTE</a>';
+                    return '<a target="_blank" href="/ajustes/imprimir/ajuste/'.$elemento->ajuste.'"><i class="fas fa-receipt"></i> VER DETALLE DE AJUSTE #'.$elemento->ajuste_cod.'</a>';
                 }
             })
             ->addColumn('detalleCompra', function($elemento){
                 if($elemento->detalleCompra != null){
                     return '<a target="_blank" href="/producto/compras/detalle/'.$elemento->detalleCompra.'"><i class="fas fa-receipt"></i> DETALLE DE COMPRA </a>';
-                }else{
-                    return '<a ><i class="fas fa-receipt"></i> N/A DETALLE DE COMPRA</a>';
                 }
             })
-            ->rawColumns(['doc_factura','doc_ajuste', 'detalleCompra'])
+
+            ->addColumn('comprobante_entrega', function($elemento){
+                if($elemento->comprobante != null){
+                    return '<a target="_blank" href="/comprobante/imprimir/'.$elemento->comprobante.'"><i class="fas fa-receipt"></i> COMPROBANTE DE ENTREGA #'.$elemento->comprobante_cod.' </a>';
+                }
+            })
+
+            ->addColumn('vale_tipo_1', function($elemento){
+                if($elemento->vale_tipo_1 != null){
+                    return '<a target="_blank" href="/imprimir/entrega/'.$elemento->vale_tipo_1.'"><i class="fas fa-receipt"></i> VALE TIPO 1 #'.$elemento->vale_tipo_1_cod.' </a>';
+                }
+            })
+
+            ->addColumn('vale_tipo_2', function($elemento){
+                if($elemento->vale_tipo_2 != null){
+                    return '<a target="_blank" href="/vale/imprimir/'.$elemento->vale_tipo_2.'"><i class="fas fa-receipt"></i> VALE TIPO 2 #'.$elemento->vale_tipo_2_cod.' </a>';
+                }
+            })
+
+            ->addColumn('nota_credito', function($elemento){
+                if($elemento->nota_credito != null){
+                    return '<a target="_blank" href="/nota/credito/imprimir/'.$elemento->nota_credito.'"><i class="fas fa-receipt"></i> NOTA DE CREDITO #'.$elemento->nota_credito_cod.' </a>';
+                }
+            })
+            ->rawColumns(['doc_factura','doc_ajuste', 'detalleCompra','comprobante_entrega','vale_tipo_1','vale_tipo_2','nota_credito'])
             ->make(true);
 
         } catch (QueryException $e) {

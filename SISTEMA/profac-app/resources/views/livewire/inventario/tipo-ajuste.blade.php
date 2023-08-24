@@ -109,7 +109,7 @@
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_tipo_ajuste_crear">Tipo de Ajuste</a>
                 </li>
-                
+
             </ol>
         </div>
 
@@ -119,7 +119,7 @@
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_tipo_ajuste_crear"><i class="fa fa-plus"></i> Añadir Tipo de Ajuste</a>
             </div>
-            
+
         </div>
 
 
@@ -168,7 +168,7 @@
                         <div class="modal-body">
                             <form id="crearTipoAjusteForm" name="crearTipoAjusteForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                
+
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -177,7 +177,7 @@
                                             name="nombre" data-parsley-required>
                                     </div>
 
-                                    
+
                                 </div>
                             </form>
 
@@ -203,7 +203,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarTipoAjusteForm" name="editarTipoAjusteForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -213,14 +213,14 @@
                                             <div class="col-md-12">
                                                 <label for="nombre_editar" class="col-form-label focus-label">Tipo de Ajuste:<span class="text-danger">*</span></label>
                                                 <input class="form-control" required type="text" id="nombre_editar" name="nombre_editar" data-parsley-required>
-                                            </div> 
-        
+                                            </div>
+
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarTipoAjusteForm" class="btn btn-primary">Editar
@@ -259,7 +259,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearTipoAjusteForm', function(event) {
             event.preventDefault();
             guardarTipoAjuste();
@@ -269,14 +269,14 @@
                 $('#modalSpinnerLoading').modal('show');
 
                 var data = new FormData($('#crearTipoAjusteForm').get(0));
-                
+
                 axios.post("/inventario/tipoajuste/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearTipoAjusteForm').parsley().reset();
-                        
+
                         document.getElementById("crearTipoAjusteForm").reset();
                         $('#modal_tipo_ajuste_crear').modal('hide');
 
@@ -350,7 +350,7 @@
                         },
                         {
                             data: 'name'
-                        },                        
+                        },
                         {
                             data: 'opciones'
                         }
@@ -366,12 +366,12 @@
                 let data = {id:id}
                 axios.post('/inventario/tipoajuste/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('nombre_editar').value = datos.nombre;
                     document.getElementById('idAjuste').value = datos.id;
-                                      
+
                     $('#modal_tipo_ajuste_editar').modal('show');
                 })
                 .catch( err=>{
@@ -390,15 +390,15 @@
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarTipoAjusteForm').get(0));
-                
-            
+
+
                 axios.post('/inventario/tipoajuste/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarTipoAjusteForm').parsley().reset();
-                    
+
                     document.getElementById("editarTipoAjusteForm").reset();
                     $('#modal_tipo_ajuste_editar').modal('hide');
 
@@ -416,7 +416,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_tipo_ajuste_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -443,3 +443,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

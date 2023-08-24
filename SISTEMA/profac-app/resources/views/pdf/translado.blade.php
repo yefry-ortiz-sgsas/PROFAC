@@ -18,8 +18,8 @@
         body {
             margin: -45px;
             padding: 0px;
-            background-image: url('img/membrete/membrete2.jpg');
-            
+            /* background-image: url('img/membrete/membrete2.jpg'); */
+
             background-size: 200% 200%;
             background-size: cover;
 
@@ -28,7 +28,7 @@
         }
 
         table {
-        font-size: 12px;    
+        font-size: 12px;
         border-collapse: collapse;
         border-spacing: 0;
         width: 100%;
@@ -37,18 +37,20 @@
         th, td {
         text-align: left;
         padding: 2px;
-       
+
         }
 
         thead {
             background-color: #f2f2f2
         }
 
-        tr:nth-child(even){background-color: #f2f2f2}
+        tr:nth-child(even){
+            background-color: #f2f2f2
+        }
 
         .letra {
             font-weight: 800;
-           
+
 
         }
     </style>
@@ -66,11 +68,14 @@ $altura =20;
 
 
     <div class="pruebaFondo">
+        <img src="img/membrete/Logo3.png" width="800rem"
+        style="margin-left:3%; margin-top:25px; position:absolute;"
+         alt="">
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:4rem;">
             <div class="card-header">
-                <b>Registro de Translado No. {{$datos->codigo}} </b>
-               
-            </div> 
+                <b>Registro de Traslado No. {{$datos->codigo}} </b>
+
+            </div>
 
 
         </div>
@@ -80,10 +85,10 @@ $altura =20;
 
                 <p class="card-text "  style="position:absolute;left:20px;  top:10px;"><b>Fecha de translado: </b>{{$datos->fecha}}
                 </p>
-                <p class="card-text" style="position:absolute;left:390px;  top:10px;"><b>Realizado por: </b>{{$datos->name}} </p>                
+                <p class="card-text" style="position:absolute;left:390px;  top:10px;"><b>Realizado por: </b>{{$datos->name}} </p>
 
-                <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b>{{$datos->descripcion}}</p> 
-                
+                {{--  <p class="card-text" style="position:absolute;left:20px;  top:70px;"><b>Comentario: </b>{{$datos->descripcion}}</p>  --}}
+
 
 
 
@@ -101,46 +106,49 @@ $altura =20;
                 <table  class="" style=" ">
                     <thead>
                     <tr>
-                      <th>Código</th>                      
-                      <th>Producto</th>   
-                                   
+                      <th>Código</th>
+                      <th>Producto</th>
+
                       <th>Cantidad</th>
-                      <th>Medida</th>                      
+                      <th>Medida</th>
                       <th>Origen</th>
                       <th>Destino</th>
-                     
+
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($translados as $translado)
                     <tr>
                         <td>{{$translado->id}}</td>
                         <td>{{$translado->nombre}}</td>
-                      
+
                         <td>{{$translado->cantidad}}</td>
                         <td>{{$translado->medida}}</td>
                         <td>{{strtoupper($translado->origen)}}</td>
                         <td>{{strtoupper($translado->destino)}}</td>
                       </tr>
-                    
-               
+                    @endforeach
 
-                </tbody>      
+
+
+
+                </tbody>
                   </table>
             </div>
         </div>
 
 
 
-        
 
-            
-   
 
-        
-      
+
+
+
+
+
         <div style=" position: relative; margin-left:44px;">
 
-    
+
 
 
             <div style="position:absolute;left:0px;  margin-top:{{$altura2}}px;  width:45rem;">
@@ -158,7 +166,7 @@ $altura =20;
 
 
 
-           
+
 
 
 

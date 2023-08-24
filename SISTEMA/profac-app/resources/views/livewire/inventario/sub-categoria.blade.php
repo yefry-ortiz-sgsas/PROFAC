@@ -109,7 +109,7 @@
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_sub_categoria_crear">Sub-Categoria</a>
                 </li>
-                
+
             </ol>
         </div>
 
@@ -119,7 +119,7 @@
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_sub_categoria_crear"><i class="fa fa-plus"></i> Añadir Sub-Categoria</a>
             </div>
-            
+
         </div>
 
 
@@ -137,7 +137,7 @@
 
                                         <th>ID</th>
                                         <th>Descripcion</th>
-                                        <th>Categoria</th>                                                               
+                                        <th>Categoria</th>
                                         <th>Opciones</th>
 
                                     </tr>
@@ -169,7 +169,7 @@
                         <div class="modal-body">
                             <form id="crearSubCategoriaForm" name="crearSubCategoriaForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                
+
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -185,7 +185,7 @@
                                         </select>
                                     </div>
 
-                                                                        
+
                                 </div>
                             </form>
 
@@ -211,7 +211,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarSubCategoriaForm" name="editarSubCategoriaForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -221,20 +221,20 @@
                                             <div class="col-md-12">
                                                 <label for="descripcion_sub_categoria_editar" class="col-form-label focus-label">Descripcion:<span class="text-danger">*</span></label>
                                                 <input class="form-control" required type="text" id="descripcion_sub_categoria_editar" name="descripcion_sub_categoria_editar" data-parsley-required>
-                                            </div>  
-                                            
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <label for="categoria_producto_id_editar" class="col-form-label focus-label">Seleccionar Categoria:<span class="text-danger">*</span></label>
                                                 <select id="categoria_producto_id_editar" name="categoria_producto_id_editar" class="form-group form-control" required data-parsley-required >
-                                                    
+
                                                 </select>
                                             </div>
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarSubCategoriaForm" class="btn btn-primary">Editar
@@ -273,7 +273,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearSubCategoriaForm', function(event) {
             event.preventDefault();
             guardarSubCategoria();
@@ -283,14 +283,14 @@
                 $('#modalSpinnerLoading').modal('show');
 
                 var data = new FormData($('#crearSubCategoriaForm').get(0));
-                
+
                 axios.post("/sub_categoria/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearSubCategoriaForm').parsley().reset();
-                        
+
                         document.getElementById("crearSubCategoriaForm").reset();
                         $('#modal_sub_categoria_crear').modal('hide');
 
@@ -381,14 +381,14 @@
                 let data = {id:id}
                 axios.post('/sub_categoria/datos',data)
                 .then( response =>{
-                        
+
                     document.getElementById("categoria_producto_id_editar").innerHTML= '';
-                  
+
                     let datos = response.data.datos;
 
-                    document.getElementById('descripcion_sub_categoria_editar').value = datos.descripcion;                    
+                    document.getElementById('descripcion_sub_categoria_editar').value = datos.descripcion;
                     document.getElementById('idSubCategoria').value = datos.id;
-                                      
+
                     $('#modal_sub_categoria_editar').modal('show');
                 })
                 .catch( err=>{
@@ -421,9 +421,9 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
 
             function obtenerCategoriasEditar() {
@@ -442,9 +442,9 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
             //////////////////////////////////////////////
 
@@ -452,15 +452,15 @@
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarSubCategoriaForm').get(0));
-                
-            
+
+
                 axios.post('/sub_categoria/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarSubCategoriaForm').parsley().reset();
-                    
+
                     document.getElementById("editarSubCategoriaForm").reset();
                     $('#modal_sub_categoria_editar').modal('hide');
 
@@ -478,7 +478,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_sub_categoria_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -495,3 +495,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

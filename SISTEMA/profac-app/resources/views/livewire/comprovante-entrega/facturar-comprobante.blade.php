@@ -36,8 +36,8 @@
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta"
                             name="crear_venta" data-parsley-validate>
 
-                            <input name="restriccion" id ="restriccion" type="hidden" value="1">
-                            <input name="idComprobante" id="idComprobante" type="hidden" value="{{$idComprobante}}">
+                            <input name="restriccion" id="restriccion" type="hidden" value="1">
+                            <input name="idComprobante" id="idComprobante" type="hidden" value="{{ $idComprobante }}">
 
                             <div class="row  mt-4 mb-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -115,81 +115,7 @@
 
 
                             </div>
-                            {{-- 
-                            <div class="row mt-4">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                 
-                                        
-                                            <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
-                                            <select id="seleccionarProducto" name="seleccionarProducto" class="form-group form-control" style=""
-                                                 onchange="obtenerImagenes()">
-                                                <option value="" selected disabled>--Seleccione un producto--</option>
-                                            </select>
-                                    
 
-
-
-                                </div>
-
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                   
-                                        <label for="bodega" class="col-form-label focus-label">Seleccionar bodega:</label>
-                                        <select id="bodega" name="bodega" class="form-group form-control" style=""
-                                            onchange="prueba()"  disabled 
-                                        >
-                                            <option value="" selected disabled>--Seleccione un producto--</option>
-                                        </select>
-                                    </div>
-  
-
-
-                            </div>
-
-                            
-                            <div class="row">
-
-
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4" >
-                                    <div class="text-center">
-                                        <a id="detalleProducto" href="" class="font-bold h3  d-none text-success" style="" target="_blank"> <i class="fa-solid fa-circle-info"></i> Ver Detalles De Producto </a>
-                                    </div>
-
-
-                                    <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
-      
-                                        <div id="bloqueImagenes" class="carousel-inner " >
-
-
-
-
-
-
-                                        </div>
-                                        <a class="carousel-control-prev" href="#carouselProducto" role="button"
-                                            data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselProducto" role="button"
-                                            data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 " >
-                                    <div id="botonAdd"     class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-4 text-center d-none">
-                                        <button type="button" class="btn-rounded btn btn-success p-3"
-                                        style="font-weight: 900; " onclick="agregarProductoCarrito()">Añadir
-                                        Producto a venta <i class="fa-solid fa-cart-plus"></i> </button>
-
-                                    </div>
-                                </div>    
-
-                            </div> --}}
 
                             <hr>
 
@@ -282,10 +208,44 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
-                                        name="subTotalGeneralMostrar" value=""
-                                        class="form-control" data-parsley-required autocomplete="off" readonly>
+                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
 
-                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
+                                        Grabado L.<span class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
+                                        name="subTotalGeneralGrabadoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off" readonly>
+
+                                    <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
+                                        value="" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="subTotalGeneralExcentoMostrar">Sub Total
+                                        Excento L.<span class="text-danger">*</span></label>
+                                </div>
+
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
+                                        name="subTotalGeneralExcentoMostrar" class="form-control"
+                                        data-parsley-required autocomplete="off" readonly>
+
+                                    <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
                                         value="" required>
                                 </div>
                             </div>
@@ -298,11 +258,10 @@
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text" value="" placeholder="ISV "
-                                        id="isvGeneralMostrar" name="isvGeneralMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" readonly>
-                                    <input id="isvGeneral" name="isvGeneral" type="hidden"
-                                        value="" required>
+                                    <input type="text" placeholder="ISV " id="isvGeneralMostrar"
+                                        name="isvGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
                                 </div>
                             </div>
 
@@ -314,12 +273,12 @@
                                 </div>
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
-                                    <input type="text" placeholder="Total" value=""
-                                        id="totalGeneralMostrar" name="totalGeneralMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" readonly>
+                                    <input type="text" placeholder="Total  " id="totalGeneralMostrar"
+                                        name="totalGeneralMostrar" class="form-control" data-parsley-required
+                                        autocomplete="off" readonly>
 
-                                    <input id="totalGeneral" name="totalGeneral" type="hidden"
-                                        value="" required>
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
+                                        required>
                                 </div>
                             </div>
 
@@ -341,6 +300,7 @@
 
     @push('scripts')
         <script>
+            var arregloIdInputs = [];
             var numeroInputs = {{ $numeroInputs }};
             var arregloIdInputs = {{ json_encode($arrayInputs) }};
             var diasCredito = {{ $comprobante->dias_credito }};
@@ -355,6 +315,8 @@
                 obtenerTipoPago();
                 totalesGenerales();
             });
+
+            calcularTotalesInicioPagina()
 
             $('#vendedor').select2({
                 ajax: {
@@ -385,7 +347,7 @@
                         tipoDePago.forEach(element => {
 
                             htmlPagos += `
-            <option value="${element.id}" >${element.descripcion}</option>                                      
+            <option value="${element.id}" >${element.descripcion}</option>
             `
                         });
 
@@ -441,7 +403,7 @@
                     this.totalesGenerales();
                 }
 
-               
+
 
             }
 
@@ -496,52 +458,87 @@
 
             function totalesGenerales() {
 
-                //console.log(arregloIdInputs);
+             //console.log(arregloIdInputs);
 
-                if (numeroInputs == 0) {
-                    return;
-                }
-
-
-
-                let totalGeneralValor = new Number(0);
-                let totalISV = new Number(0);
-                let subTotalGeneralValor = new Number(0);
-
-
-                for (let i = 0; i < arregloIdInputs.length; i++) {
-                    subTotalGeneralValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
-                    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-                    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
-
-                }
-
-                document.getElementById('subTotalGeneral').value = subTotalGeneralValor.toFixed(3);
-                document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                    style: 'currency',
-                    currency: 'HNL',
-                    minimumFractionDigits: 2,
-                }).format(subTotalGeneralValor)
-
-                document.getElementById('isvGeneral').value = totalISV.toFixed(3);
-                document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                    style: 'currency',
-                    currency: 'HNL',
-                    minimumFractionDigits: 2,
-                }).format(totalISV)
-
-                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
-                document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                    style: 'currency',
-                    currency: 'HNL',
-                    minimumFractionDigits: 2,
-                }).format(totalGeneralValor)
+             if (numeroInputs == 0) {
+                        return;
+                    }
 
 
 
+                    let totalGeneralValor = new Number(0);
+                    let totalISV = new Number(0);
+                    let subTotalGeneralGrabadoValor = new Number(0);
+                    let subTotalGeneralExcentoValor = new Number(0);
+                    let subTotalGeneral = new Number(0);
+                    let subTotalFila = 0;
+                    let isvFila = 0;
+
+                    for (let i = 0; i < arregloIdInputs.length; i++) {
+
+                        subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                        isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+
+                        ;
+
+                        if (isvFila == 0) {
+                            subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                                .value);
+                        } else if (subTotalFila > 0) {
+                            subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                                .value);
+                        }
+
+                        subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
 
 
-                return 0;
+                        totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+                        totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
+
+                    }
+
+
+
+                    document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
+                    document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(subTotalGeneral)
+
+                    document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                    document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(subTotalGeneralGrabadoValor)
+
+                    document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                    document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(subTotalGeneralExcentoValor)
+
+                    document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                    document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(totalISV)
+
+                    document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                    document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(totalGeneralValor)
+
+
+
+
+
+                    return 0;
 
 
             }
@@ -601,7 +598,7 @@
 
 
                         if (data.idFactura == 0) {
-                          
+
 
                             Swal.fire({
                                 icon: data.icon,
@@ -667,8 +664,104 @@
                     })
             }
 
+            function calcularTotalesInicioPagina() {
 
+                let arrayInputs = this.arregloIdInputs;
+
+
+                let valorInputPrecio = 0;
+                let valorInputCantidad = 0;
+                let valorSelectUnidad = 0;
+                let isvProducto = 0;
+
+                let subTotal = 0;
+                let isv = 0;
+                let total = 0;
+
+                arrayInputs.forEach(id => {
+                    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
+                    valorInputPrecio = document.getElementById('precio' + id).value;
+                    valorInputCantidad = document.getElementById('cantidad' + id).value;
+                    valorSelectUnidad = document.getElementById('unidad' + id).value;
+                    isvProducto = document.getElementById("isv" + id).value;
+
+                    if (valorInputPrecio && valorInputCantidad) {
+
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + subTotal * (isvProducto / 100);
+
+                        document.getElementById('total' + id).value = total.toFixed(3);
+                        document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(total)
+
+                        document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                        document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 2,
+                        }).format(subTotal)
+
+
+                        document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                            'es-HN', {
+                                style: 'currency',
+                                currency: 'HNL',
+                                minimumFractionDigits: 2,
+                            }).format(isv)
+
+
+
+                        this.totalesGenerales();
+
+                    }
+
+                });
+
+
+
+                this.totalesGenerales();
+                return 0;
+
+
+            }
         </script>
     @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

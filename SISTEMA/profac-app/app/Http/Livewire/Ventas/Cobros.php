@@ -117,9 +117,14 @@ class Cobros extends Component
             DB::beginTransaction();
 
             $file = $request->file('img_pago');
+            if($file != NULL){
+
             $name = 'IMG_'. time()."-". '.' . $file->getClientOriginalExtension();
             $path = public_path() . '/documentos_ventas';
             $file->move($path, $name);
+            }else{
+                $name = '';
+            }
 
                 if($request->metoPago ==1 ){
                     $registroPago = new ModelpagoVenta;

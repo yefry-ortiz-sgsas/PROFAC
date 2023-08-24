@@ -96,7 +96,7 @@
                 <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_codigo_exoneracion_crear">Codigo Exoneración</a>
                 </li>
-                
+
             </ol>
         </div>
 
@@ -106,7 +106,7 @@
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_codigo_exoneracion_crear"><i class="fa fa-plus"></i> Añadir Codigo Exoneración</a>
             </div>
-            
+
         </div>
 
 
@@ -123,6 +123,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Codigo</th>
+                                        <th>Correlativo de Exoneración</th>
                                         <th>Cliente</th>
                                         <th>Opciones</th>
 
@@ -155,7 +156,7 @@
                         <div class="modal-body">
                             <form id="crearCodigoExoneracionForm" name="crearCodigoExoneracionForm" data-parsley-validate>
                                 {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
-                                
+
                                 <div class="row" id="row_datos">
 
                                     <div class="col-md-12">
@@ -165,13 +166,20 @@
                                     </div>
 
                                     <div class="col-md-12">
+                                        <label for="codigo" class="col-form-label focus-label">Correlativo de Ord. excenta:<span class="text-danger">*</span></label>
+                                        <input class="form-control" required type="text" id="corrOrd"
+                                            name="corrOrd" >
+                                    </div>
+
+
+                                    <div class="col-md-12">
                                         <label for="cliente" class="col-form-label focus-label">Seleccionar Cliente:<span class="text-danger">*</span></label>
                                         <select id="cliente" name="cliente" class="form-group form-control" required data-parsley-required >
                                             <option selected disabled>--Seleccionar un cliente--</option>
                                         </select>
                                     </div>
 
-                                    
+
                                 </div>
                             </form>
 
@@ -197,7 +205,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
+
                                 <div class="modal-body">
                                     <form id="editarCodigoExoneracionForm" name="editarCodigoExoneracionForm" data-parsley-validate>
                                         {{-- <input type="hidden" name="_token" value="{!! csrf_token() !!}"> --}}
@@ -210,18 +218,23 @@
                                             </div>
 
                                             <div class="col-md-12">
+                                                <label for="codigo_editar" class="col-form-label focus-label">Correlativo Exoneración:<span class="text-danger">*</span></label>
+                                                <input class="form-control" required type="text" id="corrOrd_editar" name="corrOrd_editar">
+                                            </div>
+
+                                            <div class="col-md-12">
                                                 <label for="cliente_editar" class="col-form-label focus-label">Seleccionar Cliente:<span class="text-danger">*</span></label>
                                                 <select id="cliente_editar" name="cliente_editar" class="form-group form-control" required data-parsley-required >
-                                                    
+
                                                 </select>
-                                            </div>  
-        
+                                            </div>
+
 
                                         </div>
                                     </form>
-        
+
                                 </div>
-        
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                                     <button type="submit" form="editarCodigoExoneracionForm" class="btn btn-primary">Editar
@@ -260,7 +273,7 @@
     </div>
     @push('scripts')
         <script>
-         
+
          $(document).on('submit', '#crearCodigoExoneracionForm', function(event) {
             event.preventDefault();
             guardarCodigoExonerado();
@@ -270,14 +283,14 @@
                 $('#modalSpinnerLoading').modal('show');
 
                 var data = new FormData($('#crearCodigoExoneracionForm').get(0));
-                
+
                 axios.post("/estatal/exonerado/guardar", data)
                     .then(response => {
                         $('#modalSpinnerLoading').modal('hide');
 
 
                         $('#crearCodigoExoneracionForm').parsley().reset();
-                        
+
                         document.getElementById("crearCodigoExoneracionForm").reset();
                         $('#modal_codigo_exoneracion_crear').modal('hide');
 
@@ -350,8 +363,11 @@
                             data: 'codigo'
                         },
                         {
+                            data: 'corrOrd'
+                        },
+                        {
                             data: 'nombre'
-                        },                        
+                        },
                         {
                             data: 'opciones'
                         }
@@ -368,13 +384,14 @@
                 let data = {id:id}
                 axios.post('/estatal/exonerado/datos',data)
                 .then( response =>{
-                  
+
                     let datos = response.data.datos;
 
                     document.getElementById('codigo_editar').value = datos.codigo;
+                    document.getElementById('corrOrd_editar').value = datos.corrOrd;
                     document.getElementById('cliente_editar').innerHTML = `<option value="${datos.cliente_id}">${datos.nombre}</option>`;
                     document.getElementById('idCodigo').value = datos.id;
-                                      
+
                     $('#modal_codigo_exoneracion_editar').modal('show');
                 })
                 .catch( err=>{
@@ -406,9 +423,9 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
 
             function obtenerClientesEditar() {
@@ -427,24 +444,24 @@
                     Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Ha ocurrido un error',                
+                    text: 'Ha ocurrido un error',
                     })
-                })   
+                })
             }
 
             function editarCodigoExonerado(){
 
                 $('#modalSpinnerLoading').modal('show');
                 var data = new FormData($('#editarCodigoExoneracionForm').get(0));
-                
-            
+
+
                 axios.post('/estatal/exonerado/editar',data)
                 .then( response =>{
                     $('#modalSpinnerLoading').modal('hide');
 
 
                     $('#editarCodigoExoneracionForm').parsley().reset();
-                    
+
                     document.getElementById("editarCodigoExoneracionForm").reset();
                     $('#modal_codigo_exoneracion_editar').modal('hide');
 
@@ -462,7 +479,7 @@
                     let data = err.response.data;
                         $('#modalSpinnerLoading').modal('hide');
                         $('#modal_codigo_exoneracion_editar').modal('hide');
-                        
+
                         Swal.fire({
                             icon: data.icon,
                             title: data.title,
@@ -489,3 +506,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

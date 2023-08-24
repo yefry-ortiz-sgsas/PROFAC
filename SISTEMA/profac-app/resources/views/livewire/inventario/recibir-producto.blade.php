@@ -14,7 +14,7 @@
             .aling-button {
                 justify-content: flex-start !important;
             }
-         
+
             }
 
         </style>
@@ -22,10 +22,10 @@
     {{-- The whole world belongs to you. --}}
 
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
-      
-            <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9		
+
+            <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9
             ">
-               
+
                     <h2>Recibir Producto En Bodega</h2>
 
                     <ol class="breadcrumb">
@@ -38,7 +38,7 @@
                         <li class="breadcrumb-item">
                             <a>Incidencias</a>
                         </li>
-    
+
                     </ol>
 
             </div>
@@ -47,11 +47,11 @@
                     {{-- <a class="" style="display: block" href="/inventario/compras/incidencias/{{$idCompra}}"><p class="" ><span class="badge badge-primary p-2" style="font-size:0.95rem;"><i class="fa-solid fa-eye"></i> Ver incidencias</span></p></a> --}}
                     <button class="btn btn-w-m btn-primary "> <a style="font-size:0.95rem; color:white" href="/inventario/compras/incidencias/{{$idCompra}}"><i class="fa-solid fa-eye"></i> Ver Incidencias</a> </button>
                 </div>
-                
-               
+
+
             </div>
     </div>
-   
+
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -109,7 +109,7 @@
                 <div class="ibox ">
                     <div class="ibox-title ">
                         <h3>Detalle De Recepcion En Bodega</h3>
-                        
+
                     </div>
                     <div class="ibox-content">
 
@@ -202,7 +202,7 @@
                                     </select>
                                 </div>
 
-                                
+
 
 
 
@@ -413,9 +413,9 @@
             var idProducto = null;
             var idRecibido = null;
 
-          
+
             window.onload = listarBodegasExcedente;
-           
+
 
             $(document).ready(function() {
 
@@ -690,7 +690,7 @@
                         document.getElementById("btn_recibir_bodega").disabled = false;
                         $('#modalRecibirProducto').modal('hide');
                         //console.log(err.response.data);
-                       
+
                         let data = err.response.data;
                         Swal.fire({
                             icon: data.icon,
@@ -943,7 +943,7 @@
 
                     })
                     .catch(err => {
-                       
+
                             let data = err.response.data;
 
                             console.log(err)
@@ -964,3 +964,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

@@ -14,7 +14,7 @@ use PDF;
 use App\Models\modelBodega;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelLogTranslados;
-
+use App\Models\ModelTranslado;
 use Livewire\Component;
 
 class Translados extends Component
@@ -133,7 +133,37 @@ class Translados extends Component
         on C.unidad_medida_id = D.id
         inner join compra
         on A.compra_id = compra.id
-        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto."
+
+        union
+
+        select
+        A.id as 'idRecibido',
+        B.id as 'idProducto',
+        B.nombre,
+        UPPER(D.nombre) as 'simbolo',
+        A.cantidad_disponible,
+        bodega.nombre as bodega,
+        seccion.id as 'idSeccion',
+        seccion.descripcion,
+        A.created_at
+    from recibido_bodega A
+        inner join producto B
+        on A.producto_id = B.id
+        inner join seccion
+        on A.seccion_id = seccion.id
+        inner join segmento
+        on seccion.segmento_id = segmento.id
+        inner join bodega
+        on segmento.bodega_id = bodega.id
+        inner join unidad_medida_venta C
+        on B.id = C.producto_id
+        inner join unidad_medida D
+        on C.unidad_medida_id = D.id
+
+        where C.unidad_venta_defecto = 1 and A.cantidad_disponible <> 0 and A.compra_id is null and bodega.id = ".$idBodega." and A.producto_id = ".$idProducto
+
+
         );
 
         return Datatables::of($listaProductos)
@@ -161,37 +191,25 @@ class Translados extends Component
     }
 
     public function ejectarTranslado(Request $request){
-     
-       try {       
+
+       try {
 
         $contadorTranslados = 0;
-        // $validator = Validator::make($request->all(), [
 
-        //     'idRecibido' => 'required',
-        //     'cantidad' => 'required'
 
-        // ], [
-
-        //     'idRecibido' => 'codigo de recibido es necesario.',
-        //     'cantidad' => 'la cantidad de producto a transladar es requerida'
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         "text" => "Ha ocurrido un error al realizar el transpaso de producto, uno o mas campos faltantes.",
-        //         "icon" => "error",
-        //         "title"=>"Error!"
-        //     ], 402);
-        // }
-
-        $arregloIdInputs = $request->arregloIdInputs;
+        $arrayTemporal = $request->arregloIdInputs;
+        $arregloIdInputs  = explode(',', $arrayTemporal);
 
         $flagError = false;
-       
-     
+
+
         $text2 = "<p>Los siguientes productos exceden la cantidad disponible para translado: <p><ul>";
 
         DB::beginTransaction();
+
+        $trasladoID = new ModelTranslado();
+        $trasladoID->save();
+        $IDtraslado = $trasladoID->id;
 
         for ($i = 0; $i < count($arregloIdInputs); $i++) {
 
@@ -226,19 +244,18 @@ class Translados extends Component
                 $transladarBodega->estado_recibido = 4;
                 $transladarBodega->recibido_por = Auth::user()->id;
                 $transladarBodega->unidad_compra_id = $productoEnBodega->unidad_compra_id;
-                $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;    
+                $transladarBodega->unidades_compra = $productoEnBodega->unidades_compra;
                 $transladarBodega->save();
 
 
                 $logTranslados = new ModelLogTranslados;
                 $logTranslados->origen = $productoEnBodega->id ;
                 $logTranslados->destino = $transladarBodega->id;
-
                 $logTranslados->cantidad = $unidadesTraslado;
                 $logTranslados->unidad_medida_venta_id =  $unidadMedidaId;
-
                 $logTranslados->users_id= Auth::user()->id;
                 $logTranslados->descripcion="Translado de bodega";
+                $logTranslados->translado_id= $IDtraslado;
                 $logTranslados->save();
 
 
@@ -254,6 +271,10 @@ class Translados extends Component
 
 
         }
+
+        $updateCodeTrasnlado = ModelTranslado::find($IDtraslado);
+        $updateCodeTrasnlado->codigo = date('Y')."-".$IDtraslado;
+        $updateCodeTrasnlado->save();
 
         DB::commit();
 
@@ -275,8 +296,8 @@ class Translados extends Component
                  "contadorTranslados" => $contadorTranslados
              ], 200);
         }
-        
-                  
+
+
 
 
        } catch (QueryException $e) {
@@ -292,7 +313,7 @@ class Translados extends Component
 
     public function productoGeneralBodega($numeroFilas){
         try {
-        
+
             // $idBodega = DB::SELECTONE("
             //     select
             //         bodega.id
@@ -315,7 +336,7 @@ class Translados extends Component
          bodega.nombre as bodega,
          seccion.id as 'idSeccion',
          seccion.descripcion,
-         A.created_at 
+         A.created_at
        from log_translado Z
          inner join recibido_bodega A
          on Z.destino = A.id
@@ -331,9 +352,9 @@ class Translados extends Component
          on B.unidad_medida_compra_id = C.id
          inner join compra
          on A.compra_id = compra.id
-         where  A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and Z.descripcion ='Translado de bodega' 
-         order by Z.id desc 
-         limit ".$numeroFilas 
+         where  A.cantidad_disponible <> 0 and compra.estado_compra_id = 1 and Z.descripcion ='Translado de bodega'
+         order by Z.id desc
+         limit ".$numeroFilas
          );
 
          return Datatables::of($listaProductos)
@@ -350,61 +371,66 @@ class Translados extends Component
 
     public function imprimirTranslado($idTranslado){
 
-        $translado = DB::SELECTONE("
+        $translados = DB::SELECT("
         select
         C.id,
 
-        C.nombre,
-        C.descripcion,
-        H.nombre as medida,
-        CONCAT(F.nombre,' - ',D.descripcion)as origen,
+               C.nombre,
+               C.descripcion,
+               H.nombre as medida,
+               CONCAT(F.nombre,' - ',D.descripcion)as origen,
 
-        (select
-        CONCAT(E.nombre,' - ',C.descripcion)
-        from log_translado A
-        inner join recibido_bodega B
-        on A.destino = B.id
-        inner join seccion C
-        on B.seccion_id = C.id
-        inner join segmento D
-        on D.id = C.segmento_id
-        inner join bodega E
-        on E.id = D.bodega_id
-        where A.descripcion ='Translado de bodega' and A.id = ".$idTranslado.") as destino,
-        A.cantidad
+               (        select
+               CONCAT(E.nombre,' - ',C.descripcion)
+               from translado F
+               inner join log_translado A
+               on F.id = A.translado_id
+               inner join recibido_bodega B
+               on A.destino = B.id
+               inner join seccion C
+               on B.seccion_id = C.id
+               inner join segmento D
+               on D.id = C.segmento_id
+               inner join bodega E
+               on E.id = D.bodega_id
+               where A.descripcion ='Translado de bodega' and B.id = AA.destino and F.id = ".$idTranslado.") as destino,
+               AA.cantidad
+               from translado I
+               inner join log_translado AA
+               on I.id = AA.translado_id
+               inner join recibido_bodega B
+               on AA.origen = B.id
+               inner join producto C
+               on B.producto_id = C.id
+               inner join seccion D
+               on D.id = B.seccion_id
+               inner join segmento E
+               on E.id = D.segmento_id
+               inner join bodega F
+               on F.id = E.bodega_id
+               inner join unidad_medida_venta G
+               on C.id = G.producto_id
+               inner join unidad_medida H
+               on G.unidad_medida_id = H.id
+               where AA.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and I.id = ".$idTranslado);
 
-        from log_translado A
-        inner join recibido_bodega B
-        on A.origen = B.id
-        inner join producto C
-        on B.producto_id = C.id
-        inner join seccion D
-        on D.id = B.seccion_id
-        inner join segmento E
-        on E.id = D.segmento_id
-        inner join bodega F
-        on F.id = E.bodega_id
-        inner join unidad_medida_venta G
-        on C.id = G.producto_id
-        inner join unidad_medida H
-        on G.unidad_medida_id = H.id
-        where A.descripcion ='Translado de bodega' and G.unidad_venta_defecto = 1  and A.id = ".$idTranslado);
 
+               //dd($idTranslado);
         $datos = DB::SELECTONE("
         select
         CONCAT(A.origen,A.destino,'-' ,A.id) as codigo,
-        DATE_FORMAT(A.created_at,'%d/%m/%Y') as fecha,
+        DATE_FORMAT(tr.created_at,'%d/%m/%Y') as fecha,
         B.name,
         A.descripcion
 
         from log_translado A
-        inner join users B
-        on A.users_id = B.id
-        where A.id = ".$idTranslado);
+        inner join translado tr on A.translado_id = tr.id
+        inner join users B on A.users_id = B.id
+        where tr.id = ".$idTranslado);
 
-        $pdf = PDF::loadView('/pdf/translado',compact('translado','datos'))->setPaper('letter');
+        $pdf = PDF::loadView('/pdf/translado',compact('translados','datos'))->setPaper('letter');
 
-        return $pdf->stream("Ajuste numero.pdf");
+        return $pdf->stream("traslado.pdf");
 
      }
 }

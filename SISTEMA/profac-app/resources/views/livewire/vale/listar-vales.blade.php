@@ -177,7 +177,7 @@
 
 
 
-                    html: '<p>Una vez que ha sido anulado este vale, el producto registrado dejara de reflejarse en cardex como vale y se registrara su salida de bodega en la factura correspondiente.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
+                    html: '<p>Una vez que ha sido anulado este vale, el producto registrado dejara de reflejarse en cardex como vale y se registrara su salida de bodega en la factura.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioAnular"     class="form-group form-control" data-parsley-required></textarea>',
                     showDenyButton: false,
                     showCancelButton: false,
                     showDenyButton: true,
@@ -239,7 +239,7 @@
 
 
 
-                    html: '<p>Una vez que ha sido eliminado, el producto registrado dejara de reflejar su salida como vale y se registrara en la factura correspondiente. Adiferencia de anular, al eliminar el vale el producto vuleve a estar disponible para realizar nuevamente el vale</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioEliminar"     class="form-group form-control" data-parsley-required></textarea>',
+                    html: '<p>Si decide eliminar este vale, el producto registrado reflejara su salida en la factura, además el mismo estará disponible para realizar un nuevo vale.</p> <textarea rows="4" placeholder="Es obligatorio describir el motivo." required id="comentarioEliminar"     class="form-group form-control" data-parsley-required></textarea>',
                     showDenyButton: false,
                     showCancelButton: false,
                     showDenyButton: true,
@@ -296,3 +296,35 @@
         </script>
     @endpush
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

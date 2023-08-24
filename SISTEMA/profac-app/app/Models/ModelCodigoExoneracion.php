@@ -11,6 +11,6 @@ class ModelCodigoExoneracion extends Model
 
     protected $table = 'codigo_exoneracion';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'codigo','estado_id','cliente_id'];
+    protected $fillable = ['id', 'codigo','estado_id','corrOrd','cliente_id'];
 
 }

@@ -16,7 +16,8 @@ class ModelLogTranslados extends Model
         'destino',
         'cantidad',
         'users_id',
-        'nota_credito_id'
+        'nota_credito_id',
+        'translado_id'
 
     ];
 }

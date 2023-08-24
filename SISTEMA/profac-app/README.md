@@ -24,7 +24,7 @@ para configurar la hora de forma global independiente de la hora del sistema.
 configurar:
 Paso1)
 En el archivo .env agregar la variable
-APP_TIMEZONE="America/Tegucigalpa"
+APP_TIMEZONE='America/Tegucigalpa'
 
 paso2)
 config/app.php
@@ -54,3 +54,35 @@ Reemplazar el motodo boot
         
     }
 /////////////////////////////////////////////////////////////////////////////////////////
+
+EJECUTAR SIEMPRE CUENTAS POR COBRAR SP
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `cuentasx2`(IN idcliente INT)
+BEGIN
+
+	SET @acumulado = 0;
+
+select
+            factura.numero_factura as numero_factura,
+            factura.cai as correlativo,
+            #cliente_id as id_cliente,
+            factura.nombre_cliente as 'cliente',
+            factura.numero_factura as 'documento',
+            factura.fecha_emision as 'fecha_emision',
+            factura.fecha_vencimiento as 'fecha_vencimiento',
+            factura.total as 'cargo',
+            (factura.total-factura.pendiente_cobro) as 'credito',
+            (select IF(SUM(nota_credito.total) <> 0, SUM(nota_credito.total), 0.00) from nota_credito where nota_credito.factura_id = factura.id) as notaCredito,
+            (select IF(SUM(notadebito.monto_asignado) <> 0, SUM(notadebito.monto_asignado), 0.00) from notadebito where notadebito.factura_id = factura.id) as notaDebito,
+            
+            
+            (factura.pendiente_cobro - (select IF(SUM(nota_credito.total) <> 0, SUM(nota_credito.total), 0.00) from nota_credito where nota_credito.factura_id = factura.id) + (select IF(SUM(notadebito.monto_asignado) <> 0, SUM(notadebito.monto_asignado), 0.00) from notadebito where notadebito.factura_id = factura.id) )
+            
+            as saldo,
+            @acumulado := @acumulado + (factura.pendiente_cobro - (select IF(SUM(nota_credito.total) <> 0, SUM(nota_credito.total), 0.00) from nota_credito where nota_credito.factura_id = factura.id) + (select IF(SUM(notadebito.monto_asignado) <> 0, SUM(notadebito.monto_asignado), 0.00) from notadebito where notadebito.factura_id = factura.id) ) AS 'Acumulado'
+            from factura
+            inner join cliente on (factura.cliente_id = cliente.id)
+            where factura.estado_venta_id <> 2 and cliente_id = idcliente and factura.pendiente_cobro <> 0;
+END$$
+DELIMITER ;

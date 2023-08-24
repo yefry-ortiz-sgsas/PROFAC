@@ -15,6 +15,8 @@ class ModelFactura extends Model
         'cai',
         'rtn',
         'sub_total',
+        'sub_total_grabado',
+        'sub_total_excento',
         'isv',
         'total',
         'fecha_emision',
@@ -28,7 +30,9 @@ class ModelFactura extends Model
         'monto_comision',
         'tipo_venta_id',
         'estado_factura_id',
-        'estado_editar',  
-        'codigo_exoneracion_id',  
+        'estado_editar',
+        'codigo_exoneracion_id',
+        'comprovante_entrega_id',
+        'comentario',
     ];
 }

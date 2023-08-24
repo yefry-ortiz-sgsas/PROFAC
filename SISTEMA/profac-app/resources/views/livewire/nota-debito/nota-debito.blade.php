@@ -129,6 +129,46 @@
                     </div>
                 </div></div>
 
+                <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
+                    <div style="margin-top: 1.5rem">
+                        <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
+                            data-target="#modal_monto_crear"><i class="fa fa-plus"></i>Registrar Monto de Nota de Débito</a>
+                    </div>
+                </div>
+
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <div class="table-responsive">
+                                        <table id="tbl_listar_monto_debito" class="table table-striped table-bordered table-hover">
+                                            <thead class="">
+                                                <tr>
+
+                                                    <th>Código Monto</th>
+                                                    <th>Monto</th>
+                                                    <th>Registrado por</th>
+                                                    <th>Fecha creación</th>
+                                                    <th>Estado</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <label for=""><b>Nota:<b> Lista de facturas. Se enlistan todas las facturas activas para realizarse una nota de débito.
+                Para revisar una lista separada de notas coorporativas y de gobierno, ingrese al menú y encontrará un enlace específico para cada una.
+            </label>
 
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row">
@@ -141,8 +181,6 @@
                                             <tr>
 
                                                 <th>N° Factura</th>
-                                                <th>Correlativo</th>
-                                                <th>CAI</th>
                                                 <th>Fecha de Emision</th>
                                                 <th>Cliente</th>
                                                 <th>Tipo de Pago</th>
@@ -172,43 +210,7 @@
 
             <hr>
 
-            <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
-                <div style="margin-top: 1.5rem">
-                    <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
-                        data-target="#modal_monto_crear"><i class="fa fa-plus"></i>Registrar Monto de Nota de Débito</a>
-                </div>
-            </div>
 
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox ">
-                            <div class="ibox-content">
-                                <div class="table-responsive">
-                                    <table id="tbl_listar_monto_debito" class="table table-striped table-bordered table-hover">
-                                        <thead class="">
-                                            <tr>
-
-                                                <th>Código Monto</th>
-                                                <th>Monto</th>
-                                                <th>Descripción</th>
-                                                <th>Registrado por</th>
-                                                <th>Fecha creación</th>
-                                                <th>Estado</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <hr>
             <label for=""><b>Nota:<b> Se enlistan todas las notas de débito generadas y listas para descargar sus pdf</label>
@@ -255,15 +257,15 @@
 @push('scripts')
 
 <script>
-    $(document).on('submit', '#montoAddForm', function(event) {
-        event.preventDefault();
-        guardarMonto();
-    });
+        $(document).on('submit', '#montoAddForm', function(event) {
+            event.preventDefault();
+            guardarMonto();
+        });
 
-    $(document).on('submit', '#ndAddForm', function(event) {
-        event.preventDefault();
-        guardarNotaDebito();
-    });
+        $(document).on('submit', '#ndAddForm', function(event) {
+            event.preventDefault();
+            guardarNotaDebito();
+        });
 
         function guardarMonto() {
             $('#modalSpinnerLoading').modal('show');
@@ -280,7 +282,7 @@
                     $('#modal_monto_crear').modal('hide');
                     $('#modalSpinnerLoading').modal('hide');
                     $('#tbl_listar_monto_debito').DataTable().ajax.reload();
-
+                    $('#tbl_listar_facturas').DataTable().ajax.reload();
 
                     Swal.fire({
                         icon: 'success',
@@ -336,7 +338,7 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
-                        text: "Noda de débito creada Creado con exito."
+                        text: "Noda de débito creada realizada con éxito."
                     })
 
                 })
@@ -374,12 +376,6 @@
                 "columns": [
                     {
                         data: 'numero_factura'
-                    },
-                    {
-                        data: 'correlativo'
-                    },
-                    {
-                        data: 'cai'
                     },
                     {
                         data: 'fecha_emision'
@@ -437,9 +433,6 @@
                     },
                     {
                         data: 'monto'
-                    },
-                    {
-                        data: 'descripcion'
                     },
                     {
                         data: 'user'
@@ -517,3 +510,35 @@
 
 @endpush
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

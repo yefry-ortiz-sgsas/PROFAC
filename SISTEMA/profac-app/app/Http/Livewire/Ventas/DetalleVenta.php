@@ -23,13 +23,16 @@ class DetalleVenta extends Component
 
     {
       $idFactura = $this->idVenta;
-        $detalleVenta=DB::SELECTONE("select 
+        $detalleVenta=DB::SELECTONE("
+        select 
         A.id,
         A.numero_factura,
         A.cai,
         A.nombre_cliente,
         A.rtn,
         A.sub_total,
+        A.sub_total_grabado,
+        A.sub_total_excento,
         A.isv,
         A.total,
         A.fecha_emision,
@@ -91,7 +94,7 @@ class DetalleVenta extends Component
         C.nombre,  
         E.nombre as unidad,
         B.precio_unidad,
-        B.cantidad,  
+        sum(B.cantidad) as cantidad,  
         sum(B.numero_unidades_resta_inventario )as unidades_vendidas,  
         sum(B.sub_total_s) as sub_total,
         sum(B.isv_s) as isv,

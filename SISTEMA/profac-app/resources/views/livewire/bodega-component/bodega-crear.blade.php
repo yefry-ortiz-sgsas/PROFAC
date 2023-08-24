@@ -34,7 +34,7 @@
                 <div class="ibox-content">
                     <form id="bodegaCreacion" data-parsley-validate autocomplete="off">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                        
+
                         <div class="row">
 
                             <div class="col-sm-12 ">
@@ -77,7 +77,7 @@
                                         @foreach ($paises as $pais)
                                             <option value="{{ $pais->id }}">{{ $pais->nombre }}</option>
                                         @endforeach
-    
+
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -85,7 +85,7 @@
                                     <select class="form-group form-control" name="depto_bodega" id="depto_bodega"
                                         onchange="obtenerMunicipios()">
                                         <option selected disabled>---Seleccione un Departamento---</option>
-    
+
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -93,7 +93,7 @@
                                     <select class="form-group form-control" name="municipio_bodega" id="municipio_bodega"
                                         data-parsley-required>
                                         <option selected disabled>---Seleccione un municipio---</option>
-    
+
                                     </select>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                             <div class="col-sm-12 border-top mt-2 mb-4">
                                 <div class="d-flex justify-content-between   align-items-center ">
 
-                                    <h4 class="mt-4"><i class="fa-solid fa-crop"></i> Segmentación de bodega<span class="text-danger">*</span> 
+                                    <h4 class="mt-4"><i class="fa-solid fa-crop"></i> Segmentación de bodega<span class="text-danger">*</span>
                                     </h4>
 
 
@@ -212,3 +212,35 @@
     @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

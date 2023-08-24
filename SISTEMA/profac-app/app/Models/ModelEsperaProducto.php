@@ -15,6 +15,7 @@ class ModelEsperaProducto extends Model
     protected $fillable = [
     'vale_id',
     'producto_id',
+    'index',
     'cantidad',
     'cantidad_pendiente',
     'precio',

@@ -10,13 +10,13 @@
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
             <h2>Detalle de Venta</h2>
-            <ol class="breadcrumb"> 
+            <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a>Detalle de Venta</a>
                 </li>
             </ol>
         </div>
-        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">          
+        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 2rem">
                 <a href="/factura/cooporativo/{{ $detalleVenta->id }}" target="_blank" class="btn add-btn btn-success" ><i
                         class="fa fa-plus"></i> Imprimir Factura</a>
@@ -27,8 +27,8 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-list-check "></i> Informacion de venta</h3>
@@ -36,16 +36,16 @@
                     <div class="ibox-content"
                         style="height: 18.5rem;  display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo: 
+                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo:
                                 </strong> {{$detalleVenta->id}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura:
                                 </strong> {{$detalleVenta->numero_factura}}  </p>
 
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Cliente: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Cliente:
                             </strong> {{$detalleVenta->nombre_cliente}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> RTN: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> RTN:
                             </strong> {{$detalleVenta->rtn}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:</strong> {{$detalleVenta->fecha_emision}} 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:</strong> {{$detalleVenta->fecha_emision}}
                                 </p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de vencimiento:</strong> {{$detalleVenta->fecha_vencimiento}}</p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Estado de Factura: </strong> {{$detalleVenta->estado_venta}}</p>
@@ -53,39 +53,41 @@
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta facturada por: </strong> {{$nombre->name}}</p>
                             <p class="mt-2 "> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro : </strong> {{$detalleVenta->created_at}}</p>
                         </div>
-    
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
-    
-    
+
+
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-sack-dollar"></i> Importes</h3>
-    
+
                     </div>
                     <div class="ibox-content "
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de pago </strong> {{$detalleVenta->tipo_pago}}  </p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                       
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Comision del vendedor: </strong> {{$detalleVenta->monto_comision}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>
 
-    
-    
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Grabado: </strong> {{$detalleVenta->sub_total_grabado}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Excento: </strong> {{$detalleVenta->sub_total_excento}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>
+
+
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
     </div>
@@ -93,8 +95,8 @@
     <div class="row mt-2">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-list-check "></i> Informacion de venta</h3>
@@ -102,16 +104,16 @@
                     <div class="ibox-content"
                         style="height: 18.5rem;  display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo: 
+                            <p class=" mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Codigo:
                                 </strong> {{$detalleVenta->id}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Número de factura:
                                 </strong> {{$detalleVenta->numero_factura}}  </p>
 
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Cliente: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Cliente:
                             </strong> {{$detalleVenta->nombre_cliente}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> RTN: 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> RTN:
                             </strong> {{$detalleVenta->rtn}} </p>
-                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:</strong> {{$detalleVenta->fecha_emision}} 
+                            <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de emisión:</strong> {{$detalleVenta->fecha_emision}}
                                 </p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de vencimiento:</strong> {{$detalleVenta->fecha_vencimiento}}</p>
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Estado de Factura: </strong> {{$detalleVenta->estado_venta}}</p>
@@ -119,68 +121,69 @@
                             <p class="mt-2 mb-2"> <strong> <i class="fa-solid fa-caret-right"></i> Venta facturada por: </strong> {{$nombre->name}}</p>
                             <p class="mt-2 "> <strong> <i class="fa-solid fa-caret-right"></i> Fecha de registro: </strong> {{$detalleVenta->created_at}}</p>
                         </div>
-    
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
-    
-    
+
+
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-                
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-file-invoice"></i> Datos de Facturacion</h3>
-    
+
                     </div>
                     <div class="ibox-content "
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
-                          
-                        
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número de Factura CAI: 
-                            </strong> {{$detalleVenta->cai}}  </p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número de inicio: </strong> {{$detalleVenta->numero_inicial}} </p>     
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número final: </strong> {{$detalleVenta->numero_final}} </p>  
-   
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha limite de emision: </strong> {{$detalleVenta->fecha_limite_emision}} </p>  
-                    
 
-    
-    
+
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número de Factura CAI:
+                            </strong> {{$detalleVenta->cai}}  </p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número de inicio: </strong> {{$detalleVenta->numero_inicial}} </p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Número final: </strong> {{$detalleVenta->numero_final}} </p>
+
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Fecha limite de emision: </strong> {{$detalleVenta->fecha_limite_emision}} </p>
+
+
+
+
                     </div>
                 </div>
-    
-    
+
+
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
             <div class="wrapper wrapper-content animated fadeInRight">
-    
-    
+
+
                 <div class="ibox mb-0">
                     <div class="ibox-title">
                         <h3 class="text-success"><i class="fa-solid fa-sack-dollar"></i> Importes</h3>
-    
+
                     </div>
                     <div class="ibox-content "
                         style="height: 18.5rem; display: flex; flex-direction: column; justify-content: space-between;  ">
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de pago </strong> {{$detalleVenta->tipo_pago}}  </p>
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>                       
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Comision del vendedor: </strong> {{$detalleVenta->monto_comision}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>  
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>  
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Tipo de cliente: </strong> {{$detalleVenta->tipo_venta}} </p>
 
-    
-    
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total: </strong> {{$detalleVenta->sub_total}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Grabado: </strong> {{$detalleVenta->sub_total_grabado}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Sub total Excento: </strong> {{$detalleVenta->sub_total_excento}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> ISV: </strong> {{$detalleVenta->isv}} Lps.</p>
+                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Total: </strong> {{$detalleVenta->total}} Lps.</p>
+
+
+
                     </div>
                 </div>
-    
-    
+
             </div>
         </div>
     </div>
@@ -200,7 +203,7 @@
                             <table id="tbl_lista_venta" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                       
+
                                         <th>ID Producto</th>
                                         <th>Nombre</th>
                                         <th>Unidad</th>
@@ -210,16 +213,16 @@
                                         <th>Sub total Lps</th>
                                         <th>ISV Lps</th>
                                         <th>Total Lps</th>
-                                        
-                                        
+
+
 
                                     </tr>
-                                </thead>  
-                                <tbody>                                   
-    
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
-    
+
                         </div>
 
 
@@ -251,18 +254,18 @@
                                         <th>Cantidad</th>
                                         <th>Dirección</th>
                                         <th>Bodega</th>
-                                    
+
                                         <th>Sección</th>
-                                        
-                                        
+
+
 
                                     </tr>
-                                </thead>  
-                                <tbody>                                   
-    
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
-    
+
                         </div>
 
 
@@ -285,19 +288,19 @@
                                 <thead class="">
                                     <tr>
                                         <th>N°</th>
-                                        <th>N° Factura</th>                                        
+                                        <th>N° Factura</th>
                                         <th>Monto Lps.</th>
                                         <th>Fecha</th>
                                         <th>Registrado por:</th>
-                                        <th>Registrado en sistema:</th>                                      
-                                       
+                                        <th>Registrado en sistema:</th>
+
                                     </tr>
-                                </thead>  
-                                <tbody>                                   
-    
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
-    
+
                         </div>
 
                         <div class="d-flex d-flex justify-content-between mt-4" >
@@ -320,26 +323,26 @@
 
     <script>
         var idFactura = {{$detalleVenta->id}} ;
-        var caiGlobal = {{$detalleVenta->cai}} 
-        
+        var caiGlobal = {{$detalleVenta->cai}}
+
         $(document).ready(function() {
 
-                $('#tbl_lista_venta').DataTable({                
+                $('#tbl_lista_venta').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
                     pageLength: 10,
-                    responsive: true,          
+                    responsive: true,
                     "ajax": "/lista/productos/factura/"+idFactura,
-                    "columns": [     
-   
+                    "columns": [
+
                         {
                             data: 'idProducto'
                         },
                         {
                             data: 'nombre'
-                        },                    
-          
+                        },
+
                         {
                             data: 'unidad'
                         },
@@ -358,18 +361,18 @@
                         {
                             data: 'isv'
                         },
-    
+
                         {
                             data: 'total'
                         },
-    
+
                     ]
 
 
                 });
 
 
-                $('#tbl_ubicacion_producto').DataTable({                
+                $('#tbl_ubicacion_producto').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
@@ -404,19 +407,19 @@
                                 .css('font-size', 'inherit');
                         }
                     }
-                    ],          
+                    ],
                     "ajax": "/lista/ubicacion/producto/"+idFactura,
-                    "columns": [  
+                    "columns": [
                         {
                             data: 'numero_factura'
-                        },       
+                        },
                         {
                             data: 'idProducto'
                         },
                         {
                             data: 'producto'
-                        },                    
-          
+                        },
+
                         {
                             data: 'marca'
                         },
@@ -436,34 +439,34 @@
                             data: 'bodega'
                         },
 
-    
+
                         {
                             data: 'seccion'
                         },
-    
+
                     ]
 
 
                 });
 
-                $('#tbl_pagos_venta_lista').DataTable({                
+                $('#tbl_pagos_venta_lista').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
                     pageLength: 10,
-                    responsive: true,          
+                    responsive: true,
                     "ajax": "/lista/pagos/venta/"+idFactura,
-                    "columns": [  
+                    "columns": [
                         {
                             data: 'contador'
                         },
                         {
                             data: 'numero_factura'
-                        },                 
+                        },
                         {
                             data: 'monto'
                         },
-       
+
                         {
                             data: 'fecha'
                         },
@@ -473,8 +476,8 @@
                         {
                             data: 'created_at'
                         },
-                       
-    
+
+
                     ]
 
 
@@ -486,3 +489,35 @@
     @endpush
 </div>
 
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

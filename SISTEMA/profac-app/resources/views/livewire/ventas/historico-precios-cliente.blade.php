@@ -1,4 +1,11 @@
 <div>
+    <style>
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+    </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <h2>Historico de Precios</h2>
@@ -72,7 +79,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <tfoot>
+                                        <tr>
+                                            <th>Numero Factura</th>
+                                            <th>CAI</th>
+                                            <th>Fecha Emision</th>
+                                            <th>Cliente</th>
+                                            <th>Producto</th>
+                                            <th>Descripcion</th>
+                                            <th>Unidad Medida</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio Unidad</th>
+                                            <th>Sub-Total</th>
+                                            <th>ISV</th>
+                                            <th>Total</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </tfoot>
                                 </tbody>
                             </table>
 
@@ -84,15 +107,15 @@
         </div>
     </div>
 
-       
+
 
 </div>
 @push('scripts')
 
 <script>
 
-    
-     
+
+
          $('#cliente').select2({
              ajax: {
                  url: '/ventas/historico_precios/clientes',
@@ -101,7 +124,7 @@
                          search: params.term,
                          type: 'public',
                          page: params.page || 1
-                     }                
+                     }
                      return query;
                  }
              }
@@ -117,12 +140,12 @@
                         page: params.page || 1
                     }
 
-                    
+
                     return query;
                 }
             }
         });
-        
+
         $(document).ready(function() {
 
      })
@@ -139,7 +162,7 @@
     //                     page: params.page || 1
     //                 }
 
-                    
+
     //                 return query;
     //             }
     //         }
@@ -212,7 +235,7 @@
                         },
                         {
                             data: 'producto'
-                        },                        
+                        },
                         {
                             data: 'descripcion'
                         },
@@ -238,7 +261,32 @@
                             data: 'opciones'
                         }
 
-                    ]
+                    ],initComplete: function () {
+                        var r = $('#tbl_historico_precios tfoot tr');
+                        r.find('th').each(function(){
+                          $(this).css('padding', 8);
+                        });
+                        $('#tbl_historico_precios thead').append(r);
+                        $('#search_0').css('text-align', 'center');
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                let column = this;
+                                let title = column.footer().textContent;
+
+                                // Create input element
+                                let input = document.createElement('input');
+                                input.placeholder = title;
+                                column.footer().replaceChildren(input);
+
+                                // Event listener for user input
+                                input.addEventListener('keyup', () => {
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value).draw();
+                                    }
+                                });
+                            });
+                    }
 
 
                 });
@@ -248,3 +296,4 @@
 </script>
 
 @endpush
+v

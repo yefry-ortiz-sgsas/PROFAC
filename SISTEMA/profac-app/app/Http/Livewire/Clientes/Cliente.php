@@ -41,7 +41,7 @@ class Cliente extends Component
         $listaPais = DB::SELECT("select id, nombre from pais");
 
         return response()->json([
-            'listaPais' => $listaPais 
+            'listaPais' => $listaPais
         ],200);
 
     }
@@ -53,7 +53,7 @@ class Cliente extends Component
         );
 
         return response()->json([
-            'listaDeptos' => $listaDeptos 
+            'listaDeptos' => $listaDeptos
         ],200);
 
     }
@@ -65,7 +65,7 @@ class Cliente extends Component
 
         return response()->json([
             'listaMunicipios' => $listaMunicipios
-        ],200);        
+        ],200);
     }
 
     public function tipoPersonalidad(){
@@ -75,7 +75,7 @@ class Cliente extends Component
 
         return response()->json([
             'tipoPersonalidad' => $tipoPersonalidad
-        ],200);     
+        ],200);
     }
 
     public function tipoCliente(){
@@ -85,7 +85,7 @@ class Cliente extends Component
 
         return response()->json([
             'tipoCliente' => $tipoCliente
-        ],200);     
+        ],200);
     }
 
     public function listaVendedores(){
@@ -95,38 +95,38 @@ class Cliente extends Component
 
         return response()->json([
             'vendedor' => $vendedor
-        ],200);   
+        ],200);
     }
 
     public function guardarCliente(Request $request){
        try {
-    
-       DB::beginTransaction(); 
+
+       DB::beginTransaction();
 
         //dd($request->all());
         //dd(str_replace(",","",$request->credito));
 
         if ($request->file('foto_cliente') <> null) {
             $estado_img =1;
-           
-            $archivo = $request->file('foto_cliente');  
+
+            $archivo = $request->file('foto_cliente');
             $name = 'IMG_'. time().".". $archivo->getClientOriginalExtension();
-            $path = public_path() . '/img_cliente';                      
-            $archivo->move($path, $name);  
-            
+            $path = public_path() . '/img_cliente';
+            $archivo->move($path, $name);
+
             $nombreCliente = str_replace("'"," ",$request->nombre_cliente);
             $nombreCliente = str_replace('"'," ",$nombreCliente);
             $nombreCliente = str_replace('´'," ",$nombreCliente);
-           
+
             $cliente = new ModelCliente;
             $cliente->nombre = TRIM($nombreCliente) ;
             $cliente->direccion = TRIM($request->direccion_cliente) ;
             $cliente->telefono_empresa = trim($request->telefono_cliente) ;
             $cliente->rtn = TRIM($request->rtn_cliente);
-            $cliente->correo = TRIM($request->correo_cliente) ; 
+            $cliente->correo = TRIM($request->correo_cliente) ;
             $cliente->url_imagen = $name;
             $cliente->credito_inicial = str_replace(",","",$request->credito);
-            $cliente->credito = str_replace(",","",$request->credito); 
+            $cliente->credito = str_replace(",","",$request->credito);
             $cliente->dias_credito=$request->dias_credito;
             $cliente->latitud =TRIM($request->latitud_cliente);
             $cliente->longitud =TRIM($request->longitud_cliente);
@@ -136,15 +136,15 @@ class Cliente extends Component
             $cliente->vendedor = $request->vendedor_cliente ;
             $cliente->users_id = Auth::user()->id;
             $cliente->estado_cliente_id = 1;
-            $cliente->municipio_id = $request->municipio_cliente; 
+            $cliente->municipio_id = $request->municipio_cliente;
             $cliente->save();
 
 
             $contactos = $request->contacto;
             $telefonos = $request->telefono;
 
-            
-            for ($i=0; $i < count($contactos) ; $i++) { 
+
+            for ($i=0; $i < count($contactos) ; $i++) {
                 if( is_null($contactos[$i]) || is_null($telefonos[$i]) ){
                     continue;
                 }
@@ -154,8 +154,8 @@ class Cliente extends Component
                 $contaco->cliente_id = $cliente->id;
                 $contaco->estado_id = 1;
                 $contaco->save();
-                
-            }                  
+
+            }
 
         }else{
             $estado_img =2;
@@ -169,8 +169,8 @@ class Cliente extends Component
                 $cliente->direccion = TRIM($request->direccion_cliente) ;
                 $cliente->telefono_empresa = TRIM($request->telefono_cliente) ;
                 $cliente->rtn = TRIM($request->rtn_cliente);
-                $cliente->correo = TRIM($request->correo_cliente) ;  
-                $cliente->credito_inicial = str_replace(",","",$request->credito);  
+                $cliente->correo = TRIM($request->correo_cliente) ;
+                $cliente->credito_inicial = str_replace(",","",$request->credito);
                 $cliente->credito = str_replace(",","",$request->credito);
                 $cliente->dias_credito=TRIM($request->dias_credito);
                 $cliente->latitud =TRIM($request->latitud_cliente);
@@ -180,8 +180,8 @@ class Cliente extends Component
                 $cliente->categoria_id = $request->categoria_cliente ;
                 $cliente->vendedor = $request->vendedor_cliente ;
                 $cliente->users_id = Auth::user()->id;
-                $cliente->estado_cliente_id = 1; 
-                $cliente->municipio_id = $request->municipio_cliente; 
+                $cliente->estado_cliente_id = 1;
+                $cliente->municipio_id = $request->municipio_cliente;
 
                 $cliente->save();
 
@@ -189,8 +189,8 @@ class Cliente extends Component
                 $contactos = $request->contacto;
                 $telefonos = $request->telefono;
 
-            
-                for ($i=0; $i < count($contactos) ; $i++) { 
+
+                for ($i=0; $i < count($contactos) ; $i++) {
 
                  if( is_null($contactos[$i]) || is_null($telefonos[$i]) ){
                     continue;
@@ -203,8 +203,8 @@ class Cliente extends Component
                 $contaco->save();
 
 
-                
-            }                  
+
+            }
 
         }
 
@@ -212,16 +212,16 @@ class Cliente extends Component
         return response()->json([
             "icon" => "success",
             "text" => "Registro de pago realizo con exito!",
-            "title"=>"Exito!"            
+            "title"=>"Exito!"
         ],200);
 
        } catch (QueryException $e) {
-        DB::rollback(); 
+        DB::rollback();
 
         if($estado_img == 1){
             $carpetaPublic = public_path();
-            $path = $carpetaPublic.'/img_cliente/'.$name;  
-            File::delete($path); 
+            $path = $carpetaPublic.'/img_cliente/'.$name;
+            File::delete($path);
         }
 
 
@@ -229,11 +229,11 @@ class Cliente extends Component
             "icon" => "error",
             "text" => "Ha ocurrido un error al registrar el cliente",
             "title"=>"Error!",
-            "error" => $e            
+            "error" => $e
         ],402);
        }
     }
-    
+
     public function listarClientes(){
        try {
 
@@ -250,7 +250,7 @@ class Cliente extends Component
                 cliente.estado_cliente_id,
                 cliente.created_at
             from cliente
-            inner join estado_cliente        
+            inner join estado_cliente
             on estado_cliente.id = cliente.estado_cliente_id
             inner join users
             on users.id = cliente.users_id
@@ -268,14 +268,14 @@ class Cliente extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                             <li>
-                                <a class="dropdown-item" onclick="modalEditarCliente('.$cliente->idCliente.')" > <i class="fa fa-pencil m-r-5 text-warning"></i> Editar Cliente </a> 
+                                <a class="dropdown-item" onclick="modalEditarCliente('.$cliente->idCliente.')" > <i class="fa fa-pencil m-r-5 text-warning"></i> Editar Cliente </a>
                                 <a class="dropdown-item" onclick="modalEditarFotografia('.$cliente->idCliente.')" > <i class="fa-solid fa-camera  m-r-5 text-success"></i> Cambiar Fotografia del cliente </a>
                                 <a class="dropdown-item" onclick="desactivarClienteModal('.$cliente->idCliente.')" > <i class="fa fa-times text-danger" aria-hidden="true"></i> Desactivar Cliente </a>
-                               
+
                             </li>
 
-                      
-    
+
+
                         </ul>
                     </div>';
                 }else{
@@ -286,37 +286,37 @@ class Cliente extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                             <li>
-                                <a class="dropdown-item" onclick="modalEditarCliente('.$cliente->idCliente.')" > <i class="fa fa-pencil m-r-5 text-warning"></i> Editar Cliente </a> 
+                                <a class="dropdown-item" onclick="modalEditarCliente('.$cliente->idCliente.')" > <i class="fa fa-pencil m-r-5 text-warning"></i> Editar Cliente </a>
                                 <a class="dropdown-item" onclick="modalEditarFotografia('.$cliente->idCliente.')" > <i class="fa-solid fa-camera  m-r-5 text-success"></i> Cambiar Fotografia del cliente </a>
                                 <a class="dropdown-item" onclick="activarCliente('.$cliente->idCliente.')" > <i class="fa fa-check-circle text-info" aria-hidden="true"></i> Activar Cliente </a>
-                               
+
                             </li>
 
-                      
-    
+
+
                         </ul>
                     </div>';
-                    
-                }            
-                         
+
+                }
+
 
             })
             ->addColumn('estado', function ($cliente) {
                 if ($cliente->estado_cliente_id === 1) {
                     return '<td><span class="badge bg-primary">ACTIVO</span></td>';
                 } else {
-    
+
                     return '<td><span class="badge bg-danger">INACTIVO</span></td>';
                 }
-    
-            })  
+
+            })
             ->rawColumns(['opciones','estado'])
             ->make(true);
 
 
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -326,7 +326,7 @@ class Cliente extends Component
        try {
 
         $datosCliente = DB::SELECTONE("
-        select 
+        select
             id,
             nombre,
             direccion,
@@ -363,7 +363,7 @@ class Cliente extends Component
         );
 
         $datosUbicacion = DB::SELECTONE("
-        select 
+        select
             C.id as 'idPais',
             A.id as 'idDepto',
             B.id as 'idMunicipio'
@@ -396,7 +396,7 @@ class Cliente extends Component
        ],200);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e
        ],402);
        }
@@ -417,9 +417,9 @@ class Cliente extends Component
         $cliente->telefono_empresa = trim($request->telefono_cliente_editar);
         $cliente->rtn = trim($request->rtn_cliente_editar);
         $cliente->correo = trim($request->correo_cliente_editar);
-        $cliente->credito_inicial = trim($request->credito_inicial_editar);        
+        $cliente->credito_inicial = trim($request->credito_inicial_editar);
         $cliente->credito = trim($request->credito_editar);
-        $cliente->dias_credito = trim($request->dias_credito_editar);  
+        $cliente->dias_credito = trim($request->dias_credito_editar);
         $cliente->latitud = trim($request->latitud_cliente_editar);
         $cliente->longitud = trim($request->longitud_cliente_editar);
         $cliente->tipo_cliente_id = $request->categoria_cliente_editar;
@@ -428,10 +428,10 @@ class Cliente extends Component
         $cliente->vendedor = $request->vendedor_cliente_editar;
         $cliente->users_id = Auth::user()->id;
         $cliente->estado_cliente_id = 1;
-        $cliente->municipio_id = $request->municipio_cliente_editar; 
+        $cliente->municipio_id = $request->municipio_cliente_editar;
         $cliente->save();
 
-        ModelContacto::where('cliente_id','=', $request->idCliente)       
+        ModelContacto::where('cliente_id','=', $request->idCliente)
         ->update(['estado_id' => 2]);
 
         $contaco = new ModelContacto;
@@ -466,7 +466,7 @@ class Cliente extends Component
         $credito->users_id = Auth::user()->id;
         $credito->cliente_id = $request->idCliente;
         $credito->save();
-        
+
 
 
 
@@ -478,9 +478,9 @@ class Cliente extends Component
             "title"=>"Exito!"
         ], 200);
        } catch (QueryException $e) {
-            DB::rollback(); 
+            DB::rollback();
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e,
            "text" => "Ha ocurrido un error, al editar el cliente.",
            "icon" => "error",
@@ -498,7 +498,7 @@ class Cliente extends Component
         return response()->json([
             "img"=>$cliente->url_imagen,
         ],200);
-        
+
 
     }
 
@@ -507,50 +507,50 @@ class Cliente extends Component
 
         if ($request->file('foto_cliente_editar') <> null) {
             //dd("llego");
-            $archivo = $request->file('foto_cliente_editar');  
+            $archivo = $request->file('foto_cliente_editar');
             $nameFile = $archivo->getClientOriginalName();
 
 
                 if($nameFile <> "noimage.png"){
                     $name = 'IMG_'. time().".". $archivo->getClientOriginalExtension();
-                    $path = public_path() . '/img_cliente';                      
-                    $archivo->move($path, $name); 
+                    $path = public_path() . '/img_cliente';
+                    $archivo->move($path, $name);
 
                     $cliente =  ModelCliente::find($request->clienteId);
-                    $imgEliminar = $cliente->url_imagen;                  
+                    $imgEliminar = $cliente->url_imagen;
                     $cliente->url_imagen =  $name;
                     $cliente->save();
 
                     $carpetaPublic = public_path();
-                    $path = $carpetaPublic.'/img_cliente/'. $imgEliminar;  
+                    $path = $carpetaPublic.'/img_cliente/'. $imgEliminar;
                     File::delete($path);
 
 
 
                 }
-           
-           
-           
-   
+
+
+
+
         }else{
             return response()->json([
                 "text" => "No ha seleccionado ninguna imagen.",
                 "icon" => "warning",
                 "title"=>"Advertencia!"
-            ], 200); 
-        }    
+            ], 200);
+        }
 
 
         return response()->json([
             "text" => "Cliente editado con éxito.",
             "icon" => "success",
             "title"=>"Exito!"
-        ], 200); 
+        ], 200);
        return response()->json([
        ]);
        } catch (QueryException $e) {
        return response()->json([
-           'message' => 'Ha ocurrido un error', 
+           'message' => 'Ha ocurrido un error',
            'error' => $e,
            "text" => "Ha ocurrido un error.",
            "icon" => "error",
@@ -570,7 +570,7 @@ class Cliente extends Component
                     ],402);
                 }
 
-                $cliente =  ModelCliente::find($request->clienteId);                 
+                $cliente =  ModelCliente::find($request->clienteId);
                 $cliente->estado_cliente_id =  2;
                 $cliente->save();
 
@@ -581,7 +581,7 @@ class Cliente extends Component
             ],200);
        } catch (QueryException $e) {
             return response()->json([
-                'message' => 'Ha ocurrido un error', 
+                'message' => 'Ha ocurrido un error',
                 'error' => $e,
                 "text" => "Ha ocurrido un error.",
                 "icon" => "error",
@@ -593,7 +593,7 @@ class Cliente extends Component
 
     public function activarCliente(Request $request){
         try {
-                $cliente =  ModelCliente::find($request->clienteId);                 
+                $cliente =  ModelCliente::find($request->clienteId);
                 $cliente->estado_cliente_id =  1;
                 $cliente->save();
 
@@ -604,7 +604,7 @@ class Cliente extends Component
             ],200);
        } catch (QueryException $e) {
             return response()->json([
-             
+
                 'error' => $e,
                 "text" => "Ha ocurrido un error.",
                 "icon" => "error",
@@ -616,12 +616,12 @@ class Cliente extends Component
 
     public function export(){
         try {
-            
+
             return Excel::download(new ClientesExport, 'DatosClientes.xlsx');
 
         } catch (QueryException $e) {
             return response()->json([
-             
+
                 'error' => $e,
                 "text" => "Ha ocurrido un error.",
                 "icon" => "error",
@@ -631,5 +631,5 @@ class Cliente extends Component
 
     }
 
-    
+
 }

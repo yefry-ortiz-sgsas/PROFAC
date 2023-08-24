@@ -25,10 +25,10 @@ use App\Models\ModelCodigoExoneracion;
 class VentasExoneradas extends Component
 {
 
-    
+
     public $arrayProductos = [];
     public $arrayLogs = [];
-    
+
     public function render()
     {
         return view('livewire.ventas-exoneradas.ventas-exoneradas');
@@ -39,29 +39,29 @@ class VentasExoneradas extends Component
         try {
             if (Auth::user()->rol_id == 1 or Auth::user()->rol_id == 3) {
                 $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and id<>1                                 
+                    and id<>1
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
-       
+
             }else{
                 $listaClientes = DB::SELECT("
-                select 
+                select
                     id,
                     nombre as text
                 from cliente
                     where estado_cliente_id = 1
-                    and id<>1     
-                    and vendedor =" . Auth::user()->id . "                            
+                    and id<>1
+                    and vendedor =" . Auth::user()->id . "
                     and  (id LIKE '%" . $request->search . "%' or nombre Like '%" . $request->search . "%') limit 15
                         ");
 
             }
-                
+
 
 
 
@@ -101,7 +101,7 @@ class VentasExoneradas extends Component
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
             'tipoPagoVenta' => 'required',
-            'bodega' => 'required',            
+            'bodega' => 'required',
             'restriccion' => 'required',
             'tipo_venta_id'=>'required|integer|between:3,3',
             'codigo'=>'required'
@@ -110,7 +110,8 @@ class VentasExoneradas extends Component
 
         ]);
 
-        // dd($request->all());
+
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -122,7 +123,7 @@ class VentasExoneradas extends Component
             ], 406);
         }
 
-        if ($request->restriccion == 1) {
+        /* if ($request->restriccion == 1) {
             $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
 
             if ($facturaVencida) {
@@ -133,47 +134,26 @@ class VentasExoneradas extends Component
 
                 ], 401);
             }
-        }
+        } */
 
-        // $codigo = DB::SELECT("
-        // select 
-        // id 
-        // from factura 
-        // where tipo_venta_id = 3 and estado_venta_id = 1 and 
-        // cliente_id = ".$request->seleccionarCliente." and
-        // UPPER(REPLACE(codigo_exoneracion,' ','')) = UPPER(REPLACE('".$request->codigo_exoneracion."',' ',''))
-        // ");
 
-        // if (!empty($codigo)) {
-          
 
-        //     if ($facturaVencida) {
-        //         return response()->json([
-        //             'icon' => 'warning',
-        //             'title' => 'Advertencia!',
-        //             'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con una factura con este mismo código de exoneración. No se puede emitir factura para dicho número de orden de  exoneración.',
-
-        //         ], 401);
-        //     }
-        // }
-
-        if ($request->tipoPagoVenta == 2) {
+        /*if ($request->tipoPagoVenta == 2) {
             $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
 
             if ($comprobarCredito) {
                 return response()->json([
                     'icon' => 'warning',
                     'title' => 'Advertencia!',
-                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con crédito suficiente . Por el momento no se puede emitir factura a este cliente.',
+                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con cr��dito suficiente . Por el momento no se puede emitir factura a este cliente.',
 
                 ], 401);
             }
-        }
+        }*/
 
-        //dd($request->all());
-        $arrayInputs = [];
-        $arrayInputs = $request->arregloIdInputs;     
-        
+
+        $arrayTemporal = $request->arregloIdInputs;
+        $arrayInputs = explode(',', $arrayTemporal);
         $mensaje = "";
         $flag = false;
 
@@ -186,7 +166,7 @@ class VentasExoneradas extends Component
             $keyNombre = "nombre" . $arrayInputs[$j];
             $keyBodega = "bodega" . $arrayInputs[$j];
 
-            $resultado = DB::selectONE("select 
+            $resultado = DB::selectONE("select
             if(sum(cantidad_disponible) is null,0,sum(cantidad_disponible)) as cantidad_disponoble
             from recibido_bodega
             where cantidad_disponible <> 0
@@ -194,7 +174,7 @@ class VentasExoneradas extends Component
             and seccion_id = " . $request->$keyIdSeccion);
 
             if ($request->$keyRestaInventario > $resultado->cantidad_disponoble) {
-                $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con sección :<b>" . $request->$keyBodega . "</b><br><br>";
+                $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con secci��n :<b>" . $request->$keyBodega . "</b><br><br>";
                 $flag = true;
             }
         }
@@ -222,7 +202,7 @@ class VentasExoneradas extends Component
                     numero_final,
                     cantidad_otorgada,
                     numero_actual
-                    from cai 
+                    from cai
                     where tipo_documento_fiscal_id = 1 and estado_id = 1");
 
             $arrayNumeroFinal = explode('-', $cai->numero_final);
@@ -233,7 +213,7 @@ class VentasExoneradas extends Component
                 return response()->json([
                     "title" => "Advertencia",
                     "icon" => "warning",
-                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
+                    "text" => "La factura no puede proceder, debido que ha alcanzadado el n��mero maximo de facturacion otorgado.",
                 ], 401);
             }
 
@@ -280,12 +260,15 @@ class VentasExoneradas extends Component
             $factura->vendedor = $request->vendedor;
             $factura->monto_comision = $montoComision;
             $factura->tipo_venta_id = 3; // exonerado
-            $factura->estado_factura_id = 1; // se presenta     
+            $factura->estado_factura_id = 1; // se presenta
             $factura->users_id = Auth::user()->id;
             $factura->comision_estado_pagado = 0;
             $factura->pendiente_cobro = $request->totalGeneral;
             $factura->codigo_exoneracion_id = $request->codigo;
             $factura->estado_editar = 1;
+            $factura->sub_total_grabado = 0;
+            $factura->numero_orden_compra_id=$request->ordenCompra;
+            $factura->comentario=$request->nota_comen;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -293,14 +276,16 @@ class VentasExoneradas extends Component
             $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
             $caiUpdated->save();
 
-            DB::INSERT("INSERT INTO listado(
-                     numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
-                    ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
+            //Tabla de listado
+
+            // DB::INSERT("INSERT INTO listado(
+            //          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
+            //         ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
 
 
 
 
-            $codigoExoneracion = ModelCodigoExoneracion::find($request->codigo);    
+            $codigoExoneracion = ModelCodigoExoneracion::find($request->codigo);
             $codigoExoneracion->estado_id = 2;
             $codigoExoneracion->save();
 
@@ -339,7 +324,7 @@ class VentasExoneradas extends Component
 
                 //dd($factura);
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $factura->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$arrayInputs[$i]);
             };
 
             if ($request->tipoPagoVenta == 2) { //si el tipo de pago es credito
@@ -360,14 +345,15 @@ class VentasExoneradas extends Component
                 'text' =>  '
                 <div class="d-flex justify-content-between">
                     <a href="/exonerado/factura/'. $factura->id . '" target="_blank" class="btn btn-sm btn-success"><i class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
-                    <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a>
+                    <!-- <a href="/venta/cobro/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-coins"></i> Realizar Pago</a> -->
+                    <a href="/crear/vale/lista/espera/' . $factura->id . '" target="_blank" class="btn btn-sm btn-warning"><i class="fa-solid fa-list-check"></i> Crear Vale Tipo: 2</a>
                     <a href="/detalle/venta/' . $factura->id . '" target="_blank" class="btn btn-sm btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Detalle de Factura</a>
                 </div>',
                 'title' => 'Exito!',
                 'idFactura' => $factura->id,
                 'numeroVenta' => $numeroVenta->numero
 
-            ], 200);
+            ], 200,array('Content-Type'=>'application/json; charset=utf-8' ));
         } catch (QueryException $e) {
             DB::rollback();
 
@@ -382,23 +368,23 @@ class VentasExoneradas extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
     {
         try {
 
             $precioUnidad = $subTotal / $unidadesRestarInv;
 
-            $unidadesRestar = $unidadesRestarInv;
+            $unidadesRestar = $unidadesRestarInv; //es la cantidad ingresada por el usuario multiplicado por unidades de venta del producto
             $registroResta = 0;
             while (!($unidadesRestar <= 0)) {
 
                 $unidadesDisponibles = DB::SELECTONE("
-                        select 
+                        select
                             id,
                             cantidad_disponible
                         from recibido_bodega
-                            where seccion_id = " . $idSeccion . " and 
-                            producto_id = " . $idProducto . " and 
+                            where seccion_id = " . $idSeccion . " and
+                            producto_id = " . $idProducto . " and
                             cantidad_disponible <>0
                             order by created_at asc
                         limit 1
@@ -459,17 +445,21 @@ class VentasExoneradas extends Component
                     "factura_id" => $idFactura,
                     "producto_id" => $idProducto,
                     "lote" => $unidadesDisponibles->id,
+                    "indice" => $indice,
+                    // "numero_unidades_resta_inventario" => $registroResta, //el numero de unidades que se va restar del inventario pero en unidad base
                     "seccion_id" => $idSeccion,
-                    "numero_unidades_resta_inventario" => $registroResta,
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
-                    "resta_inventario_total" => $unidadesRestarInv,
-                    "unidad_medida_venta_id" => $idUnidadVenta,
-                    "precio_unidad" => $precio,
-                    "cantidad" => $cantidad,
-                    "cantidad_s" => $cantidadSeccion,
-                    "cantidad_para_entregar" => $registroResta,
+                    "numero_unidades_resta_inventario" => $registroResta, //La cantidad de unidades que se resta por lote - esta canitdad es ingresada por el usuario - se **multipla** por la unidad de medida venta para convertir a unidad base y restar de la tabla recibido bodega **la cantidad que se resta por lote**
+                    "unidades_nota_credito_resta_inventario" => $registroResta, // Este campo tiene el mismo valor que **numero_unidades_resta_inventario** - se utiliza para registrar las unidades a devolver en la nota de credito - resta las unidades y las devuelve a la tabla **recibido_bodega**
+                    "resta_inventario_total" => $unidadesRestarInv, //Es la cantidad ingresada por el usuario en la pantalla de factura - misma cantidad se **multiplica** por la unidad de venta - registra la cantidad total a restar en la seccion_id- se repite para el lote
+                    "unidad_medida_venta_id" => $idUnidadVenta, //la unidad de medida que selecciono el usuario para la venta
+                    "precio_unidad" => $precio, // precio de venta ingresado por el usuario
+                    "cantidad" => $cantidad, //Es la cantidad escrita por el usuario en la pantalla de factura la cual se va restar a la seccion - esta cantidad no sufre ningun tipo de alteracion - se guardar tal cual la ingresa el usuario
+                    "cantidad_nota_credito"=> $cantidad, //Este campo contiene el mismo valor que el campo **cantidad** - es la cantidad ingresada por el usuario en la pantalla de factura - a este campo se le restan la cantidad a devolver en la nota de credito
+                    "cantidad_s" => $cantidadSeccion, //Es la cantidad que se resta por lote - esta cantidad se convierte de unidad base a la unidad de venta seleccionada en la pantalla de factura - al realizar esta convercion es posible obtener decimales como resultado.
+                    "cantidad_para_entregar" => $registroResta, //las unidades basica 1 disponible para vale
                     "sub_total_s" => $subTotalSecccionado,
                     "isv_s" => $isvSecccionado,
                     "total_s" => $totalSecccionado,
@@ -481,7 +471,7 @@ class VentasExoneradas extends Component
                     "origen" => $unidadesDisponibles->id,
                     "factura_id" => $idFactura,
                     "cantidad" => $registroResta,
-                    "unidad_medida_venta_id"=> $idUnidadVenta,
+                    "unidad_medida_venta_id" => $idUnidadVenta,
                     "users_id" => Auth::user()->id,
                     "descripcion" => "Venta de producto",
                     "created_at" => now(),
@@ -489,10 +479,10 @@ class VentasExoneradas extends Component
                 ]);
             };
 
-            //dd($arrarVentasProducto);   
-            //ModelVentaProducto::created($arrarVentasProducto);  
-            //ModelVentaProducto::insert($arrarVentasProducto);  
-            //DB::table('venta_has_producto')->insert($arrarVentasProducto); 
+            //dd($arrarVentasProducto);
+            //ModelVentaProducto::created($arrarVentasProducto);
+            //ModelVentaProducto::insert($arrarVentasProducto);
+            //DB::table('venta_has_producto')->insert($arrarVentasProducto);
 
 
             return;
@@ -531,11 +521,11 @@ class VentasExoneradas extends Component
         $facturasVencidas = DB::SELECT(
             "
             select
-            id       
-            from factura 
-            where   
-            pendiente_cobro > 0 
-            and fecha_vencimiento < curdate() 
+            id
+            from factura
+            where
+            pendiente_cobro > 0
+            and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
         );
@@ -558,7 +548,7 @@ class VentasExoneradas extends Component
         $cliente->save();
 
         $logCredito = new logCredito;
-        $logCredito->descripcion = 'Reducción  de credito por factura.';
+        $logCredito->descripcion = 'Reduccion  de credito por factura.';
         $logCredito->monto = $totalFactura;
         $logCredito->factura_id = $idFactura;
         $logCredito->cliente_id = $idCliente;
@@ -572,21 +562,24 @@ class VentasExoneradas extends Component
     {
 
         $cai = DB::SELECTONE("
-        select 
+        select
         A.cai as numero_factura,
         A.numero_factura as numero,
         A.estado_factura_id as estado_factura,
         B.cai,
+        A.comentario,
         DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
         B.numero_inicial,
         B.numero_final,
-        C.descripcion,       
+        C.descripcion,
         DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
-        TIME(A.created_at) as hora,        
+        TIME(A.created_at) as hora,
         DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
         name,
         D.id as factura,
-        E.codigo as codigo_exoneracion
+        E.codigo as codigo_exoneracion,
+        E.corrOrd as correlativoexo,
+        A.estado_venta_id
        from factura A
        inner join cai B
        on A.cai_id = B.id
@@ -601,7 +594,7 @@ class VentasExoneradas extends Component
        where A.id = ".$idFactura);
 
        $cliente = DB::SELECTONE("
-       select        
+       select
         cliente.nombre,
         cliente.direccion,
         cliente.correo,
@@ -623,7 +616,7 @@ class VentasExoneradas extends Component
         from factura
         where id = ".$idFactura);
 
-        $importesConCentavos= DB::SELECTONE("        
+        $importesConCentavos= DB::SELECTONE("
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
@@ -631,84 +624,433 @@ class VentasExoneradas extends Component
         from factura where factura.id = ".$idFactura);
 
        $productos = DB::SELECT("
-       select 
-            B.producto_id as codigo,
-            concat(C.nombre) as descripcion,
-            UPPER(J.nombre) as medida,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            FORMAT(B.sub_total/B.cantidad,2) as precio,
-            FORMAT(sum(B.cantidad_s),2) as cantidad,
-            FORMAT(sum(B.sub_total_s),2) as importe
+            select
+                    B.producto_id as codigo,
+                    concat(C.nombre) as descripcion,
+                    UPPER(J.nombre) as medida,
+                    H.nombre as bodega,
+                    F.descripcion as seccion,
+                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
 
-        from factura A
-        inner join venta_has_producto B
-        on A.id = B.factura_id
-        inner join producto C
-        on B.producto_id = C.id
-        inner join unidad_medida_venta D
-        on B.unidad_medida_venta_id = D.id
-        inner join unidad_medida J
-        on J.id = D.unidad_medida_id
-        inner join recibido_bodega E
-        on B.lote = E.id
-        inner join seccion F
-        on E.seccion_id = F.id
-        inner join segmento G
-        on F.segmento_id = G.id
-        inner join bodega H
-        on G.bodega_id = H.id
-        where A.id=".$idFactura."
-        group by codigo, descripcion, medida, bodega, seccion, precio
-        
-        union
+                from factura A
+                inner join venta_has_producto B
+                on A.id = B.factura_id
+                inner join producto C
+                on B.producto_id = C.id
+                inner join unidad_medida_venta D
+                on B.unidad_medida_venta_id = D.id
+                inner join unidad_medida J
+                on J.id = D.unidad_medida_id
+                inner join recibido_bodega E
+                on B.lote = E.id
+                inner join seccion F
+                on E.seccion_id = F.id
+                inner join segmento G
+                on F.segmento_id = G.id
+                inner join bodega H
+                on G.bodega_id = H.id
+                where A.id=".$idFactura."
+                group by codigo, descripcion, medida, bodega, seccion, precio
 
-        select
-            D.id,
-            D.nombre as descripcion,
-            F.nombre as medida,
-            'Pendiente',
-            'Pendiente',
-            FORMAT(C.precio,2) as precio,
-            FORMAT(C.cantidad,2) as cantidad,
-            FORMAT(C.sub_total,2) as sub_total
-        from factura A
-        inner join vale B
-        on A.id = B.factura_id
-        inner join espera_has_producto C
-        on B.id = C.vale_id
-        inner join producto D
-        on C.producto_id = D.id
-        inner join unidad_medida_venta E
-        on C.unidad_medida_venta_id = E.id
-        inner join unidad_medida F
-        on F.id = E.unidad_medida_id
-        where B.estado_id=1 and A.id = ".$idFactura
-        
-        
-        
-        
+                union
+
+                select
+                    D.id,
+                    D.nombre as descripcion,
+                    F.nombre as medida,
+                    'Pendiente',
+                    'Pendiente',
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
+                    C.cantidad as cantidad,
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
+                from factura A
+                inner join vale B
+                on A.id = B.factura_id
+                inner join espera_has_producto C
+                on B.id = C.vale_id
+                inner join producto D
+                on C.producto_id = D.id
+                inner join unidad_medida_venta E
+                on C.unidad_medida_venta_id = E.id
+                inner join unidad_medida F
+                on F.id = E.unidad_medida_id
+                where B.estado_id=1 and A.id = ".$idFactura
+
+
+
+
         );
 
+        $ordenCompraExiste = DB::SELECTONE("
+        select
+        count(*) as 'existe'
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =" . $idFactura);
+
+        if ($ordenCompraExiste->existe > 0) {
+            $ordenCompra = DB::SELECTONE("
+            select
+            B.numero_orden
+            from factura A
+            inner join numero_orden_compra B
+            on A.numero_orden_compra_id = B.id
+            where A.id =" . $idFactura);
+
+
+
+        }else{
+            $ordenCompra = DB::SELECTONE("
+            select
+            'N/A' as numero_orden
+            from factura
+            where id =" . $idFactura);
+        }
 
         if( fmod($importes->total, 1) == 0.0 ){
             $flagCentavos = false;
-          
+
         }else{
             $flagCentavos = true;
         }
 
 
 
-     
+
         $formatter = new NumeroALetras();
         $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
 
-        $pdf = PDF::loadView('/pdf/factura-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
-        
+        $pdf = PDF::loadView('/pdf/factura-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos', 'ordenCompra'))->setPaper('letter');
+
         return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
 
-        
+
+    }
+
+    public function imprimirFacturaExoneradaCopia($idFactura)
+    {
+
+        $cai = DB::SELECTONE("
+        select
+        A.cai as numero_factura,
+        A.numero_factura as numero,
+        A.estado_factura_id as estado_factura,
+        B.cai,
+        A.comentario,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura,
+        E.codigo as codigo_exoneracion,
+        E.corrOrd as correlativoexo,
+        A.estado_venta_id
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       inner join codigo_exoneracion E
+       on A.codigo_exoneracion_id = E.id
+       where A.id = ".$idFactura);
+
+       $cliente = DB::SELECTONE("
+       select
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total
+        from factura where factura.id = ".$idFactura);
+
+        $productos = DB::SELECT("
+            select
+                    B.producto_id as codigo,
+                    concat(C.nombre) as descripcion,
+                    UPPER(J.nombre) as medida,
+                    H.nombre as bodega,
+                    F.descripcion as seccion,
+                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
+
+                from factura A
+                inner join venta_has_producto B
+                on A.id = B.factura_id
+                inner join producto C
+                on B.producto_id = C.id
+                inner join unidad_medida_venta D
+                on B.unidad_medida_venta_id = D.id
+                inner join unidad_medida J
+                on J.id = D.unidad_medida_id
+                inner join recibido_bodega E
+                on B.lote = E.id
+                inner join seccion F
+                on E.seccion_id = F.id
+                inner join segmento G
+                on F.segmento_id = G.id
+                inner join bodega H
+                on G.bodega_id = H.id
+                where A.id=".$idFactura."
+                group by codigo, descripcion, medida, bodega, seccion, precio
+
+                union
+
+                select
+                    D.id,
+                    D.nombre as descripcion,
+                    F.nombre as medida,
+                    'Pendiente',
+                    'Pendiente',
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
+                    C.cantidad as cantidad,
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
+                from factura A
+                inner join vale B
+                on A.id = B.factura_id
+                inner join espera_has_producto C
+                on B.id = C.vale_id
+                inner join producto D
+                on C.producto_id = D.id
+                inner join unidad_medida_venta E
+                on C.unidad_medida_venta_id = E.id
+                inner join unidad_medida F
+                on F.id = E.unidad_medida_id
+                where B.estado_id=1 and A.id = ".$idFactura
+
+
+
+
+        );
+
+        $ordenCompraExiste = DB::SELECTONE("
+        select
+        count(*) as 'existe'
+        from factura A
+        inner join numero_orden_compra B
+        on A.numero_orden_compra_id = B.id
+        where A.id =" . $idFactura);
+
+        if ($ordenCompraExiste->existe > 0) {
+            $ordenCompra = DB::SELECTONE("
+            select
+            B.numero_orden
+            from factura A
+            inner join numero_orden_compra B
+            on A.numero_orden_compra_id = B.id
+            where A.id =" . $idFactura);
+
+
+
+        }else{
+            $ordenCompra = DB::SELECTONE("
+            select
+            'N/A' as numero_orden
+            from factura
+            where id =" . $idFactura);
+        }
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+
+        }else{
+            $flagCentavos = true;
+        }
+
+
+
+
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+
+
+
+        $pdf = PDF::loadView('/pdf/facturacopia-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos', 'ordenCompra'))->setPaper('letter');
+
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
+
+
+    }
+
+
+    public function imprimirActarepExonerada($idFactura)
+    {
+
+        $cai = DB::SELECTONE("
+        select
+        A.cai as numero_factura,
+        A.numero_factura as numero,
+        A.estado_factura_id as estado_factura,
+        B.cai,
+        A.comentario,
+        DATE_FORMAT(B.fecha_limite_emision,'%d/%m/%Y' ) as fecha_limite_emision,
+        B.numero_inicial,
+        B.numero_final,
+        C.descripcion,
+        DATE_FORMAT(A.fecha_emision,'%d/%m/%Y' ) as  fecha_emision,
+        TIME(A.created_at) as hora,
+        DATE_FORMAT(A.fecha_vencimiento,'%d/%m/%Y' ) as fecha_vencimiento,
+        name,
+        D.id as factura,
+        E.codigo as codigo_exoneracion,
+        E.corrOrd as correlativoexo,
+        A.estado_venta_id
+       from factura A
+       inner join cai B
+       on A.cai_id = B.id
+       inner join tipo_pago_venta C
+       on A.tipo_pago_id = C.id
+       inner join users
+       on A.vendedor = users.id
+       inner join estado_factura D
+       on A.estado_factura_id = D.id
+       inner join codigo_exoneracion E
+       on A.codigo_exoneracion_id = E.id
+       where A.id = ".$idFactura);
+
+       $cliente = DB::SELECTONE("
+       select
+        cliente.nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$idFactura);
+
+       $importes = DB::SELECTONE("
+       select
+        total,
+        isv,
+        sub_total
+        from factura
+        where id = ".$idFactura);
+
+        $importesConCentavos= DB::SELECTONE("
+        select
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total
+        from factura where factura.id = ".$idFactura);
+
+        $productos = DB::SELECT("
+            select
+                    B.producto_id as codigo,
+                    concat(C.nombre) as descripcion,
+                    UPPER(J.nombre) as medida,
+                    H.nombre as bodega,
+                    F.descripcion as seccion,
+                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
+
+                from factura A
+                inner join venta_has_producto B
+                on A.id = B.factura_id
+                inner join producto C
+                on B.producto_id = C.id
+                inner join unidad_medida_venta D
+                on B.unidad_medida_venta_id = D.id
+                inner join unidad_medida J
+                on J.id = D.unidad_medida_id
+                inner join recibido_bodega E
+                on B.lote = E.id
+                inner join seccion F
+                on E.seccion_id = F.id
+                inner join segmento G
+                on F.segmento_id = G.id
+                inner join bodega H
+                on G.bodega_id = H.id
+                where A.id=".$idFactura."
+                group by codigo, descripcion, medida, bodega, seccion, precio
+
+                union
+
+                select
+                    D.id,
+                    D.nombre as descripcion,
+                    F.nombre as medida,
+                    'Pendiente',
+                    'Pendiente',
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
+                    C.cantidad as cantidad,
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
+                from factura A
+                inner join vale B
+                on A.id = B.factura_id
+                inner join espera_has_producto C
+                on B.id = C.vale_id
+                inner join producto D
+                on C.producto_id = D.id
+                inner join unidad_medida_venta E
+                on C.unidad_medida_venta_id = E.id
+                inner join unidad_medida F
+                on F.id = E.unidad_medida_id
+                where B.estado_id=1 and A.id = ".$idFactura
+
+
+
+
+        );
+
+
+
+        if( fmod($importes->total, 1) == 0.0 ){
+            $flagCentavos = false;
+
+        }else{
+            $flagCentavos = true;
+        }
+
+
+
+
+        $formatter = new NumeroALetras();
+        $numeroLetras = $formatter->toMoney($importes->total, 2, 'LEMPIRAS', 'CENTAVOS');
+
+        $pdf = PDF::loadView('/pdf/actaRecepcion-exoneracion', compact('cai', 'cliente','importes','productos','numeroLetras','importesConCentavos','flagCentavos'))->setPaper('letter');
+
+        return $pdf->stream("factura_numero" . $cai->numero_factura.".pdf");
+
+
     }
 }
 

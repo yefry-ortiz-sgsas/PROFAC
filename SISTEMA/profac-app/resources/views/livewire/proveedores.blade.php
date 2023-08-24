@@ -264,7 +264,7 @@
                                 <select class="form-group form-control" name="editar_pais_prov" id="editar_pais_prov"
                                     onchange="editarObtenerDepartamentos()">
                                     <option selected disabled>---Seleccione un país---</option>
-                                  
+
 
                                 </select>
                             </div>
@@ -289,7 +289,7 @@
                                 <select class="form-group form-control" name="editar_giro_neg_prov" id="editar_giro_neg_prov"
                                     data-parsley-required>
                                     <option disabled selected>---Seleccione una opción---</option>
-                                  
+
 
                                 </select>
                             </div>
@@ -298,7 +298,7 @@
                                 <select class="form-group form-control" name="editar_categoria_prov" id="editar_categoria_prov"
                                     data-parsley-required>
                                     <option selected disabled>---Seleccione una opción---</option>
-                                 
+
                                 </select>
                             </div>
 
@@ -351,7 +351,7 @@
 
                         html +=
                             `
-                    <option value="${ departamento.id }">${departamento.nombre}</option>   
+                    <option value="${ departamento.id }">${departamento.nombre}</option>
                    `
                     });
 
@@ -393,7 +393,7 @@
 
                         html +=
                             `
-                    <option value="${ municipio.id }">${municipio.nombre}</option>   
+                    <option value="${ municipio.id }">${municipio.nombre}</option>
                    `
                     });
 
@@ -516,11 +516,11 @@
                         title: 'Exito!',
                         text: "Proveedor creado con exito."
                     })
-                    $('#proveedorCreacionForm').parsley().reset(); 
+                    $('#proveedorCreacionForm').parsley().reset();
                     $('#tbl_proveedoresListar').DataTable().ajax.reload();
 
-                    
-                  
+
+
 
 
 
@@ -624,21 +624,21 @@
                 let paisProveedor = response.data.paisProveedor;
                 let departamentoProveedor = response.data.departamentoProveedorId;
                 let municipioProveedor = response.data.municipioProveedorId;
-                
+
 
                 let paises = response.data.paises;
                 let departamentos = response.data.departamentos;
                 let municipios = response.data.municipios;
                 let tipoPersonalidad = response.data.tipoPersonalidad;
                 let categorias = response.data.categoria;
-                
+
 
                 let htmlSelectPais ="";
                 let htmlSelectDepto = "";
                 let htmlSelectMunicipio = "";
                 let htmlPersonalidad ="";
                 let htmlCategoria ="";
-                
+
 
                 document.getElementById("idProveedor").value = proveedor.id;
                 document.getElementById("editar_codigo_prov").value = proveedor.codigo;
@@ -651,35 +651,35 @@
                 document.getElementById("editar_correo_prov_2").value = proveedor.correo_2;
                 document.getElementById("editar_rtn_prov").value = proveedor.rtn;
 
-                
+
                 paises.forEach( pais =>{
                     if(pais.id === paisProveedor ){
 
                         htmlSelectPais += `
-                        <option value="${ pais.id }" selected>${pais.nombre}</option>   
+                        <option value="${ pais.id }" selected>${pais.nombre}</option>
                         `
                     }else{
                         htmlSelectPais += `
-                        <option value="${ pais.id }">${pais.nombre}</option>   
+                        <option value="${ pais.id }">${pais.nombre}</option>
                         `
                     }
-                    
+
                 });
 
-               
+
 
                 departamentos.forEach( departamento =>{
                     if(departamento.id === departamentoProveedor ){
 
                         htmlSelectDepto += `
-                        <option value="${ departamento.id }" selected>${departamento.nombre}</option>   
+                        <option value="${ departamento.id }" selected>${departamento.nombre}</option>
                         `
                     }else{
                         htmlSelectDepto += `
-                        <option value="${ departamento.id }">${departamento.nombre}</option>   
+                        <option value="${ departamento.id }">${departamento.nombre}</option>
                         `
                     }
-                    
+
                 });
 
                 municipios.forEach( municipio =>{
@@ -691,7 +691,7 @@
                         `
 
                     }else{
-                        
+
                         htmlSelectMunicipio += `
                         <option value="${ municipio.id }">${municipio.nombre}</option>
                         `
@@ -745,7 +745,7 @@
 
 
 
-                
+
 
 
 
@@ -758,14 +758,14 @@
 
             });
 
-           
+
         }
 
         function editarObtenerDepartamentos() {
-           
+
             var id = document.getElementById("editar_pais_prov").value;
 
-            
+
             //console.log(id)
             ///proveedores/obeter/departamento
             let datos = {
@@ -782,7 +782,7 @@
 
                         html +=
                             `
-                    <option value="${ departamento.id }">${departamento.nombre}</option>   
+                    <option value="${ departamento.id }">${departamento.nombre}</option>
                    `
                     });
 
@@ -824,7 +824,7 @@
 
                         html +=
                             `
-                    <option value="${ municipio.id }">${municipio.nombre}</option>   
+                    <option value="${ municipio.id }">${municipio.nombre}</option>
                    `
                     });
 
@@ -865,7 +865,7 @@
                     })
 
                     $('#tbl_proveedoresListar').DataTable().ajax.reload();
-                    $('#proveedorEditarForm').parsley().reset(); 
+                    $('#proveedorEditarForm').parsley().reset();
 
 
             })
@@ -885,3 +885,35 @@
 @endpush
 
 </div>
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>

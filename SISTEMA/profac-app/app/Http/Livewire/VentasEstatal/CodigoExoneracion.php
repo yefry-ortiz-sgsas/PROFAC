@@ -26,8 +26,8 @@ class CodigoExoneracion extends Component
 
         $codigos = DB::table('codigo_exoneracion')
                                 ->join('cliente', 'codigo_exoneracion.cliente_id', '=', 'cliente.id')
-                                ->select('codigo_exoneracion.id', 'codigo_exoneracion.codigo','cliente.nombre','estado_id')
-                               
+                                ->select('codigo_exoneracion.id', 'codigo_exoneracion.codigo','codigo_exoneracion.corrOrd','cliente.nombre','estado_id')
+
                                 ->get();
 
         return Datatables::of($codigos)
@@ -45,7 +45,7 @@ class CodigoExoneracion extends Component
 
                                 <li>
                                     <a class="dropdown-item" onclick="datosCodigoExonerado('.$codigo->id.')" >
-                                        <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar 
+                                        <i class="fa-solid fa-arrows-to-eye text-info"></i> Editar
                                     </a>
                                 </li>
                                 <li>
@@ -58,7 +58,7 @@ class CodigoExoneracion extends Component
                         </div>
                             ';
 
-                
+
                     }else{
                         return
 
@@ -75,10 +75,10 @@ class CodigoExoneracion extends Component
                 </div>
                     ';
                 }
-            })            
-                
-                    
-            
+            })
+
+
+
 
                 ->rawColumns(['opciones'])
                 ->make(true);
@@ -94,171 +94,173 @@ class CodigoExoneracion extends Component
 
     public function listarClientes(){
         try {
- 
+
          $clientes = DB::SELECT("select id, nombre from cliente order by nombre asc");
- 
+
         return response()->json([
          "clientes"=>$clientes,
         ],200);
         } catch (QueryException $e) {
         return response()->json([
-         'message' => 'Ha ocurrido un error', 
+         'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);
         }
     }
 
     public function guardarCodigoExoneracion(Request $request){
-      
+
         try {
             $validator = Validator::make($request->all(), [
                 'codigo' => 'required',
                 'cliente' => 'required',
-                                  
+
             ], [
                 'codigo' => 'Codigo es requerido',
-                'cliente' => 'Cliente es requerido'                
-               
+                'cliente' => 'Cliente es requerido'
+
             ]);
 
- 
+
             if ($validator->fails()) {
                 return response()->json([
                     'icon'=>'error',
                     'title'=>'Error',
-                    'text'=>'Ha ocurrido un error, todos los campos son obligatorios.',              
+                    'text'=>'Ha ocurrido un error, todos los campos son obligatorios.',
                     'errors' => $validator->errors()
                 ], 402);
             }
 
-        
+
 
             $codigo_exonerado = new ModelCodigoExoneracion;
-                
+
             $codigo_exonerado->codigo = $request->codigo;
             $codigo_exonerado->cliente_id = $request->cliente;
+            $codigo_exonerado->corrOrd = $request->corrOrd;
             $codigo_exonerado->estado_id= 1;
-                        
+
             $codigo_exonerado->save();
- 
-             
+
+
             return response()->json([
                  'icon'=>'success',
                  'title'=>'Exito!',
                  'text'=>'Numero guardado con exito.'
             ],200);
-  
+
         } catch (QueryException $e) {
-  
+
         return response()->json([
          'icon'=>'error',
          'title'=>'Error!',
          'text'=>'Ha ocurrido un error, intente de nuevo.',
-         'message' => 'Ha ocurrido un error', 
+         'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);
         }
- 
+
     }
 
     public function obtenerCodigoExoneracion( Request $request){
         try {
- 
-        $datos = DB::SELECTONE("select 
+
+        $datos = DB::SELECTONE("select
                     codigo_exoneracion.id,
                     codigo_exoneracion.codigo,
                     codigo_exoneracion.cliente_id,
+                    codigo_exoneracion.corrOrd,
                     cliente.nombre
                     from codigo_exoneracion
                     inner join cliente
                     on codigo_exoneracion.cliente_id = cliente.id where codigo_exoneracion.id=".$request->id );
- 
+
         return response()->json([
          "datos"=>$datos,
         ],200);
         } catch (QueryException $e) {
         return response()->json([
-         'message' => 'Ha ocurrido un error', 
+         'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);
         }
     }
 
     public function editarCodigoExoneracion(Request $request){
-      
+
         try {
             $validator = Validator::make($request->all(), [
                 'idCodigo' => 'required',
                 'codigo_editar' => 'required',
                 'cliente_editar' => 'required',
-                                  
+
             ], [
                 'idCodigo' => 'ID es requerido',
                 'codigo_editar' => 'Numero es requerido',
-                'cliente_editar' => 'Cliente es requerido'                
-               
+                'cliente_editar' => 'Cliente es requerido'
+
             ]);
 
- 
+
             if ($validator->fails()) {
                 return response()->json([
                     'icon'=>'error',
                     'title'=>'Error',
-                    'text'=>'Ha ocurrido un error, todos los campos son obligatorios.',              
+                    'text'=>'Ha ocurrido un error, todos los campos son obligatorios.',
                     'errors' => $validator->errors()
                 ], 402);
             }
 
-        
+
             $codigo_update =  ModelCodigoExoneracion::find($request->idCodigo);
-                
+
             $codigo_update->codigo = $request->codigo_editar;
-            $codigo_update->cliente_id = $request->cliente_editar;           
-                                   
+            $codigo_update->cliente_id = $request->cliente_editar;
+
             $codigo_update->update();
- 
-            
+
+
             return response()->json([
                  'icon'=>'success',
                  'title'=>'Exito!',
                  'text'=>'Codigo actualizado con exito.'
             ],200);
-  
+
         } catch (QueryException $e) {
-  
+
         return response()->json([
          'icon'=>'error',
          'title'=>'Error!',
          'text'=>'Ha ocurrido un error, intente de nuevo.',
-         'message' => 'Ha ocurrido un error', 
+         'message' => 'Ha ocurrido un error',
          'error' => $e
         ],402);
         }
- 
+
     }
 
     public function desactivarCodigoExoneracion( Request $request){
         try {
- 
+
             $codigo_off =  ModelCodigoExoneracion::find($request->id);
-                
-            $codigo_off->estado_id = 2;           
-                                   
+
+            $codigo_off->estado_id = 2;
+
             $codigo_off->update();
-             
+
             return response()->json([
                 'icon'=>'success',
                 'title'=>'Exito!',
                 'text'=>'Numero Orden desactivado con exito.'
            ],200);
- 
+
         } catch (QueryException $e) {
             return response()->json([
-             'message' => 'Ha ocurrido un error', 
+             'message' => 'Ha ocurrido un error',
              'error' => $e
             ],402);
         }
     }
 
-    
+
 }

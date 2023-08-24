@@ -52,17 +52,19 @@
                             <table id="tbl_cuentas_por_cobrar" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>Numero Factura</th>
-                                        <th>ID Cliente</th>
+                                        <th>No. Factura</th>
+                                        <th>Orden de Compra</th>
                                         <th>Cliente</th>
-                                        <th>Documento</th>
                                         <th>Fecha Emision</th>
                                         <th>Fecha Vencimiento</th>
                                         <th>Cargo</th>
                                         <th>Credito</th>
+                                        <th>Notas Crédito</th>
+                                        <th>Notas Débito</th>
                                         <th>Saldo</th>
-                                       
-                                        
+                                        <th>Acumulado</th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,6 +96,7 @@
                                 <thead class="">
                                     <tr>
                                         <th>Numero Factura</th>
+                                        <th>Correlativo</th>
                                         <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Documento</th>
@@ -105,7 +108,7 @@
                                         <th>Interes Inicia</th>
                                         <th>Interes Diario</th>
                                         <th>Acumulado</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -140,7 +143,7 @@
                         page: params.page || 1
                     }
 
-                    
+
                     return query;
                 }
             }
@@ -154,8 +157,8 @@
         this.listarCuentasPorCobrar();
         this.listarCuentasPorCobrarInteres();
 
-    }    
-    
+    }
+
 
     function listarCuentasPorCobrar() {
 
@@ -197,20 +200,17 @@
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
                     "columns": [{
-                            data: 'numero_factura'
+                            data: 'correlativo'
                         },
                         {
-                            data: 'id_cliente'
+                            data: 'numOrden'
                         },
                         {
                             data: 'cliente'
                         },
                         {
-                            data: 'documento'
-                        },
-                        {
                             data: 'fecha_emision'
-                        },                        
+                        },
                         {
                             data: 'fecha_vencimiento'
                         },
@@ -221,8 +221,18 @@
                             data: 'credito'
                         },
                         {
+                            data: 'notaCredito'
+                        },
+                        {
+                            data: 'notaDebito'
+                        },
+                        {
                             data: 'saldo'
-                        }   
+                        },
+                        {
+                            data: 'Acumulado'
+                        }
+
 
                     ]
 
@@ -271,8 +281,12 @@
                         }
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar_intereses/"+idCliente,
-                    "columns": [{
+                    "columns": [
+                        {
                             data: 'numero_factura'
+                        },
+                        {
+                            data: 'correlativo'
                         },
                         {
                             data: 'id_cliente'
@@ -285,7 +299,7 @@
                         },
                         {
                             data: 'fecha_emision'
-                        },                        
+                        },
                         {
                             data: 'fecha_vencimiento'
                         },
@@ -320,28 +334,60 @@
         var cliente = document.getElementById('cliente').value;
 
                 let htmlSelect1 = ''
-                
+
                 htmlSelect1 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> 
-                        
+                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a>
+
                                 `
 
                 document.getElementById('cuentas_excel').innerHTML = htmlSelect1;
 
                 //////////////////////////////////////////////////////////////////////////////
                 let htmlSelect2 = ''
-                
+
                 htmlSelect2 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> 
-                        
+                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a>
+
                                 `
 
                 document.getElementById('cuentas_excel_intereses').innerHTML = htmlSelect2;
-       
+
     }
 
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
 @endpush
+<?php
+    date_default_timezone_set('America/Tegucigalpa');
+    $act_fecha=date("Y-m-d");
+    $act_hora=date("H:i:s");
+    $mes=date("m");
+    $year=date("Y");
+    $datetim=$act_fecha." ".$act_hora;
+?>
+<script>
+    function mostrarHora() {
+        var fecha = new Date(); // Obtener la fecha y hora actual
+        var hora = fecha.getHours();
+        var minutos = fecha.getMinutes();
+        var segundos = fecha.getSeconds();
+
+        // A単adir un 0 delante si los minutos o segundos son menores a 10
+        minutos = minutos < 10 ? "0" + minutos : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        // Mostrar la hora actual en el elemento con el id "reloj"
+        document.getElementById("reloj").innerHTML = hora + ":" + minutos + ":" + segundos;
+    }
+    // Actualizar el reloj cada segundo
+    setInterval(mostrarHora, 1000);
+</script>
+<div class="float-right">
+    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+</div>
+<div>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+</div>
+<p id="reloj"></p>
