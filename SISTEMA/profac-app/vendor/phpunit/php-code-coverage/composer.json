@@ -17,8 +17,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-        "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy"
+        "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues"
     },
     "config": {
         "platform": {
@@ -47,8 +46,8 @@
         "phpunit/phpunit": "^9.3"
     },
     "suggest": {
-        "ext-pcov": "PHP extension that provides line coverage",
-        "ext-xdebug": "PHP extension that provides line coverage as well as branch and path coverage"
+        "ext-pcov": "*",
+        "ext-xdebug": "*"
     },
     "autoload": {
         "classmap": [

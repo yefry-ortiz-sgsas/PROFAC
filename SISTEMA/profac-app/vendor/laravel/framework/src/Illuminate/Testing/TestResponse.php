@@ -894,7 +894,7 @@ class TestResponse implements ArrayAccess
     /**
      * Assert that the given key is a JSON array.
      *
-     * @param  string|null  $key
+     * @param $key
      * @return $this
      */
     public function assertJsonIsArray($key = null)
@@ -915,7 +915,7 @@ class TestResponse implements ArrayAccess
     /**
      * Assert that the given key is a JSON object.
      *
-     * @param  string|null  $key
+     * @param $key
      * @return $this
      */
     public function assertJsonIsObject($key = null)
