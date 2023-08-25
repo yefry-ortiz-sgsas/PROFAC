@@ -571,8 +571,10 @@ if (! function_exists('now')) {
      * @param  \DateTimeZone|string|null  $tz
      * @return \Illuminate\Support\Carbon
      */
-    function now($tz = null)
+    function now($tz = 'America/Tegucigalpa')
     {
+        $tz = 'America/Tegucigalpa';
+     
         return Date::now($tz);
     }
 }
@@ -914,8 +916,9 @@ if (! function_exists('today')) {
      * @param  \DateTimeZone|string|null  $tz
      * @return \Illuminate\Support\Carbon
      */
-    function today($tz = null)
+    function today($tz = 'America/Tegucigalpa')
     {
+        $tz = 'America/Tegucigalpa';
         return Date::today($tz);
     }
 }
