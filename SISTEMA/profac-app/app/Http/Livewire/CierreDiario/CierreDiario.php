@@ -308,7 +308,11 @@ class CierreDiario extends Component
                             (CASE A.estado_factura_id WHEN '1' THEN 'CLIENTE A' WHEN '2' THEN 'CLIENTE B' END) AS 'tipo',
                             'CONTADO' AS 'tipoFactura',
                         IF(
+<<<<<<< HEAD
                             (select COUNT(*) from tipo_cobro_cierre where idfactura = A.cai) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where idfactura = A.id AND estado = 1)
+=======
+                            (select COUNT(*) from tipo_cobro_cierre where idfactura = A.id) = 0, 'SIN ASIGNAR', (select tipo_cobro_cierre.textoCobro from tipo_cobro_cierre where idfactura = A.id AND estado = 1)
+>>>>>>> yef-dev2
                             ) as 'PagoMediante'
                         from factura A
                             inner join estado_venta B on A.estado_venta_id = B.id
@@ -375,6 +379,7 @@ class CierreDiario extends Component
                             $fcontado->nombre_userCierre = TRIM($userName1) ;
                             $fcontado->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fcontado->fecha = TRIM($value->fecha) ;
+                            $fcontado->idfactura= TRIM($value->codigofactura) ;
                             $fcontado->factura= TRIM($value->factura) ;
                             $fcontado->cliente = TRIM($value->cliente) ;
                             $fcontado->vendedor = TRIM($value->vendedor) ;
@@ -399,6 +404,7 @@ class CierreDiario extends Component
                             $fcredito->nombre_userCierre = TRIM($userName1) ;
                             $fcredito->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fcredito->fecha = TRIM($valuecredito->fecha) ;
+                            $fcontado->idfactura= TRIM($valuecredito->codigofactura) ;
                             $fcredito->factura= TRIM($valuecredito->factura) ;
                             $fcredito->cliente = TRIM($valuecredito->cliente) ;
                             $fcredito->vendedor = TRIM($valuecredito->vendedor) ;
@@ -420,6 +426,7 @@ class CierreDiario extends Component
                             $fanuladas->nombre_userCierre = TRIM($userName1) ;
                             $fanuladas->estadoDescripcion = TRIM($estadoDescripcion1) ;
                             $fanuladas->fecha = TRIM($valueanuladas->fecha) ;
+                            $fcontado->idfactura= TRIM($valueanuladas->codigofactura) ;
                             $fanuladas->factura= TRIM($valueanuladas->factura) ;
                             $fanuladas->cliente = TRIM($valueanuladas->cliente) ;
                             $fanuladas->vendedor = TRIM($valueanuladas->vendedor) ;

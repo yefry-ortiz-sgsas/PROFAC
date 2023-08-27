@@ -19,7 +19,11 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+<<<<<<< HEAD
                        <b> {{ __('DISTRIBUCIONES VALENCIA - PRODUCCIÓN V-2.2.2.2') }}</b>
+=======
+                       <b>{{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO') }}</b>
+>>>>>>> yef-dev2
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -395,6 +399,15 @@
                                     Reporte</a>
                             </li>
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Reportes</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li ><a href="/reporte/comision" style="color:#ffffff;">R. Comisiones</a></li>
                         </ul>
                     </li>
                     <li>
