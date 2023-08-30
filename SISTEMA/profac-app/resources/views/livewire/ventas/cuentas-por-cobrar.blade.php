@@ -63,6 +63,7 @@
                                         <th>Notas Débito</th>
                                         <th>Saldo</th>
                                         <th>Acumulado</th>
+                                        <th>Acciones</th>
 
 
                                     </tr>
@@ -199,7 +200,9 @@
                         }
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
-                    "columns": [{
+                    "columns": [
+
+                        {
                             data: 'correlativo'
                         },
                         {
@@ -231,6 +234,9 @@
                         },
                         {
                             data: 'Acumulado'
+                        },
+                        {
+                            data: 'opciones'
                         }
 
 

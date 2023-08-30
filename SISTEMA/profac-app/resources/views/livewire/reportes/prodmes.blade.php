@@ -60,33 +60,53 @@
                                 <thead class="">
                                     <tr>
                                         <th>FECHA</th>
-                                        <th>MES</th>
+                                        <th>FECHA VENCIMIENTO</th>
+                                        <th>CRÉDITO/CONTADO</th>
+                                        <th>TIPO CLIENTE (AoB)</th>
+                                        <th>VENDEDOR</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
-                                        <th>VENDENDOR</th>
-                                        <th>SUBTOTAL</th>
-                                        <th>IMPUESTO DE VENTA</th>
-                                        <th>TOTAL</th>
-                                        <th>TIPO</th>
+                                        <th>CÓDIGO</th>
+                                        <th>PRODUCTO</th>
+                                        <th>PRECIO PRODUCTO</th>
+                                        <th>CANTIDAD</th>
+                                        <th>SUB TOTAL PRODUCTO</th>
+                                        <th>ISV</th>
+                                        <th>TOTAL PRODUCTO</th>
+                                        <th>SUB TOTAL FACTURA</th>
+                                        <th>TOTAL FACTURA</th>
+                                        <th>SUB TOTAL DIFERENCIA</th>
+                                        <th>CONTADO 1.75%</th>
+                                        <th>CREDITO 1.5%</th>
+                                        <th>COMISION OTROS PRUEBA</th>
                                     </tr>
                                 </thead>
-                                <tbody>                                <tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>FECHA</th>
-                                        <th>MES</th>
-                                        <th>FACTURA</th>
-                                        <th>CLIENTE</th>
-                                        <th>VENDENDOR</th>
-                                        <th>SUBTOTAL</th>
-                                        <th>IMPUESTO DE VENTA</th>
-                                        <th>TOTAL</th>
-                                        <th>TIPO</th>
-                                        </tr>
-                                    </tfoot>
 
                                 </tbody>
-
+                                <tfoot>
+                                    <tr>
+                                        <th>FECHA</th>
+                                        <th>FECHA VENCIMIENTO</th>
+                                        <th>CRÉDITO/CONTADO</th>
+                                        <th>TIPO CLIENTE (AoB)</th>
+                                        <th>VENDEDOR</th>
+                                        <th>FACTURA</th>
+                                        <th>CLIENTE</th>
+                                        <th>CÓDIGO</th>
+                                        <th>PRODUCTO</th>
+                                        <th>PRECIO PRODUCTO</th>
+                                        <th>CANTIDAD</th>
+                                        <th>SUB TOTAL PRODUCTO</th>
+                                        <th>ISV</th>
+                                        <th>TOTAL PRODUCTO</th>
+                                        <th>SUB TOTAL FACTURA</th>
+                                        <th>TOTAL FACTURA</th>
+                                        <th>SUB TOTAL DIFERENCIA</th>
+                                        <th>CONTADO 1.75%</th>
+                                        <th>CREDITO 1.5%</th>
+                                        <th>COMISION OTROS PRUEBA</th>
+                                    </tr>
+                                </tfoot>
                                 </tbody>
                             </table>
 
@@ -129,40 +149,32 @@
 
                 {
                     extend: 'excel',
-                    title: 'Facuracion_dia',
+                    title: 'COMISIONES',
                     className:'btn btn-success'
                 }
             ],
             "ajax": "/consultaComision/"+fecha_inicio+"/"+fecha_final,
             "columns": [
-                {
-                    data: 'fecha'
-                },
-                {
-                    data: 'mes'
-                },
-                {
-                    data: 'factura'
-                },
-                {
-                    data: 'cliente'
-                },
-                {
-                    data: 'vendedor'
-                },
-                {
-                    data: 'subtotal'
-                },
-
-                {
-                    data: 'imp_venta'
-                },
-                {
-                    data: 'total'
-                },
-                {
-                    data: 'tipo'
-                },
+                {data: 'FECHA'},
+                {data: 'FECHA VENCIMIENTO'},
+                {data: 'CRÉDITO/CONTADO'},
+                {data: 'TIPO CLIENTE (AoB)'},
+                {data: 'VENDEDOR'},
+                {data: 'FACTURA'},
+                {data: 'CLIENTE'},
+                {data: 'CÓDIGO'},
+                {data: 'PRODUCTO'},
+				{data: 'PRECIO PRODUCTO'},
+                {data: 'CANTIDAD'},
+                {data: 'SUB TOTAL PRODUCTO'},
+                {data: 'ISV'},
+				{data: 'TOTAL PRODUCTO'},
+                {data: 'SUB TOTAL FACTURA'},
+                {data: 'TOTAL FACTURA'},
+                {data: 'SUB TOTAL DIFERENCIA'},
+                {data: 'CONTADO 1.75%'},
+                {data: 'CREDITO 1.5%'},
+                {data: 'COMISION OTROS PRUEBA'}
             ],initComplete: function () {
                 var r = $('#tbl_facdia tfoot tr');
                 r.find('th').each(function(){
