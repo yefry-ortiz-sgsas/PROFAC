@@ -41,9 +41,9 @@
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="mb-2"  id="cuentas_excel">
+{{--          <div class="mb-2"  id="cuentas_excel">
             <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
-        </div>
+        </div>  --}}
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -172,19 +172,18 @@
                     pageLength: 10,
                     responsive: true,
                     dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [{
-                            extend: 'copy'
-                        },
+                    buttons: [
                         {
                             extend: 'csv'
                         },
                         {
                             extend: 'excel',
-                            title: 'ExampleFile'
+                            title: 'ESTADO-DE-CUENTA'
+                            ClassName: 'btn btn-outline-success'
                         },
                         {
                             extend: 'pdf',
-                            title: 'ExampleFile'
+                            title: 'ESTADO-DE-CUENTA'
                         },
 
                         {
