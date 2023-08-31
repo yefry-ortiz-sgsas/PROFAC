@@ -357,8 +357,20 @@
                             <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
                             </li>
 
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Compras Locales</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
                             <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
                             </li>
+
+
 
                         </ul>
                     </li>
@@ -763,6 +775,19 @@
                     </li> --}}
                     <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
                     </li>
+
+
+
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Compras Locales</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
                     <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
                     </li>
 
@@ -1003,8 +1028,20 @@
                     <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
                     </li>
 
+
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Compras Locales</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
                     <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
                     </li>
+
 
 
                 </ul>
