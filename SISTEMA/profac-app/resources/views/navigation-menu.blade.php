@@ -357,6 +357,8 @@
                             <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
                             </li>
 
+                            <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
+                            </li>
 
                         </ul>
                     </li>
@@ -761,6 +763,9 @@
                     </li> --}}
                     <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
                     </li>
+                    <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
+                    </li>
+
 
 
                 </ul>
@@ -996,6 +1001,9 @@
                     {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
                     </li> --}}
                     <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
+                    </li>
+
+                    <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
                     </li>
 
 
