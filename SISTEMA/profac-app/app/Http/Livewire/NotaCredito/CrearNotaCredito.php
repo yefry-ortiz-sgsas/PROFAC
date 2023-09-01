@@ -19,6 +19,7 @@ use App\Models\ModelNotaCreditoProducto;
 use App\Models\ModelLogTranslados;
 use App\Models\ModelRecibirBodega;
 use App\Models\ModelCAI;
+use App\Http\Controllers\CAI\Notificaciones;
 
 class CrearNotaCredito extends Component
 {
@@ -337,6 +338,9 @@ class CrearNotaCredito extends Component
         $arrayCai = explode('-',$cai->numero_final);
         $cuartoSegmentoCAI = sprintf("%'.08d", $numeroSecuencia);
         $numeroCAI = $arrayCai[0].'-'.$arrayCai[1].'-'.$arrayCai[2].'-'.$cuartoSegmentoCAI;
+
+        $validarCAI = new Notificaciones();
+        $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 4);
 
         $notaCredito = new ModelNotaCredito();
         $notaCredito->numero_nota =$numeroNota->numero;

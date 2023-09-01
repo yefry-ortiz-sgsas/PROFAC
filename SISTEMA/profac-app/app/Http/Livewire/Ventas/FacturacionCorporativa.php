@@ -25,6 +25,7 @@ use App\Models\ModelLista;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\User;
+use App\Http\Controllers\CAI\Notificaciones;
 
 class FacturacionCorporativa extends Component
 {
@@ -463,6 +464,11 @@ class FacturacionCorporativa extends Component
 
                 $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
+                
+                $validarCAI = new Notificaciones();
+                $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
+
                 $factura = new ModelFactura;
                 $factura->numero_factura = $numeroVenta->numero;
                 $factura->cai = $numeroCAI;
@@ -713,6 +719,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -857,6 +868,11 @@ class FacturacionCorporativa extends Component
         }
 
         $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+        
+        $validarCAI = new Notificaciones();
+        $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
         $factura = new ModelFactura;
         $factura->numero_factura = $numeroVenta->numero;
         $factura->cai = $numeroCAI;
@@ -983,6 +999,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -1612,6 +1633,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$listado->secuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -1840,6 +1866,10 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;

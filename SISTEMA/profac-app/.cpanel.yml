@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/distrnnf@distribucionesvalencia.hn/public_html/profac-app/public
-    - /bin/cp -R * $DEPLOYPATH

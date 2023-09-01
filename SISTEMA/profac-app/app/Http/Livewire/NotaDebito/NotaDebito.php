@@ -25,6 +25,7 @@ use App\Models\ModelLista;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\User;
+use App\Http\Controllers\CAI\Notificaciones;
 
 class NotaDebito extends Component
 {
@@ -301,6 +302,8 @@ class NotaDebito extends Component
 
         /* GUARDANDO LO DE LA NOTA DE DÉBITO */
 
+        $validarCAI = new Notificaciones();
+        $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 5);
 
         DB::beginTransaction();
 
