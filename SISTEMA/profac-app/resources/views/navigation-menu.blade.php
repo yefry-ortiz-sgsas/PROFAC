@@ -19,7 +19,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                       <b> {{ __('DISTRIBUCIONES VALENCIA - PRODUCCIÓN V-2.2.2.2') }}</b>
+                       <b>{{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO') }}</b>
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -361,6 +361,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Compras Locales</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+                            <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
+                            </li>
+
+
+
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
                             <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
                             <span class="fa arrow"></span></a>
@@ -399,6 +413,16 @@
                                     Reporte</a>
                             </li>
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Reportes</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li ><a href="/reporte/comision" style="color:#ffffff;">R. Comisiones</a></li>
                         </ul>
                     </li>
                     <li>
@@ -554,17 +578,17 @@
                                 <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
                                 <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
                                         Cotizaciones</a></li>
-            
+
                                 <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a>
                                 </li>
-            
-            
-            
+
+
+
                                 <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de
                                         Facturas</a>
                                 </li>
                             </ul>
-                    </li>        
+                    </li>
 
 
            {{--   vENTAS EXONERADAS  --}}
@@ -770,6 +794,22 @@
                     <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de
                             Boleta</a>
                     </li>
+
+
+
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Compras Locales</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
+                    </li>
+
 
 
                 </ul>
@@ -1014,6 +1054,21 @@
                     </li>
 
 
+
+                </ul>
+            </li>
+            <li>
+                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                        style="color:#ffffff;">Compras Locales</span>
+                    <span class="fa arrow"></span></a>
+
+                <ul class="nav nav-second-level">
+
+                    <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a>
+                    </li>
+
+
+
                 </ul>
             </li>
             <li>
@@ -1166,7 +1221,7 @@
                 </ul>
             </li>
             @endif
-            
+
             @if (Auth::user()->rol_id == '3' || Auth::user()->rol_id == '1')
                 <li>
                     <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
