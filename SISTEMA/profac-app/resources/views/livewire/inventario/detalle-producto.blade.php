@@ -203,19 +203,21 @@
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio base de venta:
                             </strong> {{ $producto->precio_base }} Lps.</small></p>
 
-                        @foreach ($precios as $precio)
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio
-                                {{ $precio->contador }} de venta :</strong> {{ $precio->precio }} Lps</small></p>
-                        @endforeach
-
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Costo Promedio:
-                        </strong> {{ $producto->costo_promedio }} Lps.</small></p>
-
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Ultimo Costo de compra:
-                        </strong> {{ $producto->ultimo_costo_compra }} Lps.</small></p>
 
 
 
+
+                        @if (Auth::user()->rol_id != '2' && Auth::user()->rol_id != '3')
+                            @foreach ($precios as $precio)
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio
+                                    {{ $precio->contador }} de venta :</strong> {{ $precio->precio }} Lps</small></p>
+                            @endforeach
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Costo Promedio:
+                            </strong> {{ $producto->costo_promedio }} Lps.</small></p>
+
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Ultimo Costo de compra:
+                            </strong> {{ $producto->ultimo_costo_compra }} Lps.</small></p>
+                        @endif
 
                     </div>
                 </div>
