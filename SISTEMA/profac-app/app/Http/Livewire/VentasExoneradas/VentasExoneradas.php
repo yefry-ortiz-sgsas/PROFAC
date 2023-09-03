@@ -21,6 +21,7 @@ use App\Models\ModelLogTranslados;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\ModelCodigoExoneracion;
+use App\Http\Controllers\CAI\Notificaciones;
 
 class VentasExoneradas extends Component
 {
@@ -240,6 +241,10 @@ class VentasExoneradas extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+            
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 3);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;

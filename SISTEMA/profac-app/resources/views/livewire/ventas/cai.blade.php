@@ -104,51 +104,57 @@
             }
         </style>
     @endpush
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>CAI </h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a>Listar</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_cai_crear_facturacion">Facturación</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_cai_crear_credito">Crédito</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_cai_crear_debito">Débito</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a data-toggle="modal" data-target="#modal_cai_crear_devolucion">Crédito</a>
-                </li>
-
-            </ol>
+    <div class=" wrapper border-bottom white-bg page-heading">
+        <div class="row">
+            <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
+                <h2>CAI </h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a>Listar</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a data-toggle="modal" data-target="#modal_cai_crear_facturacion">Facturación</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a data-toggle="modal" data-target="#modal_cai_crear_credito">Crédito</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a data-toggle="modal" data-target="#modal_cai_crear_debito">Débito</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a data-toggle="modal" data-target="#modal_cai_crear_devolucion">Crédito</a>
+                    </li>
+    
+                </ol>
+            </div> 
         </div>
-
-
-        <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
-            <div style="margin-top: 1.5rem">
+   
+        <hr>
+        <div class="d-flex justify-content-around mt-2">
+    
+            <div style="">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_cai_crear_facturacion"><i class="fa fa-plus"></i> Añadir CAI Facturación</a>
             </div>
-            <div style="margin-top: 1.5rem">
+            <div style="">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_cai_crear_credito"><i class="fa fa-plus"></i> Añadir CAI Nota Crédito</a>
             </div>
-            <div style="margin-top: 1.5rem">
+            <div style="">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_cai_crear_debito"><i class="fa fa-plus"></i> Añadir CAI Nota Débito</a>
             </div>
-            <div style="margin-top: 1.5rem">
+            <div style="">
                 <a href="#" class="btn add-btn btn-primary" data-toggle="modal"
                     data-target="#modal_cai_crear_devolucion"><i class="fa fa-plus"></i> Añadir CAI Devolución Crédito</a>
             </div>
+    
         </div>
 
-
     </div>
+   
+
+
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">

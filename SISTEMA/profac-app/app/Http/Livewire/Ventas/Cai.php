@@ -13,6 +13,7 @@ use Throwable;
 use DataTables;
 use App\Models\ModelCAI;
 
+
 class Cai extends Component
 {
     public function render()
@@ -180,7 +181,7 @@ class Cai extends Component
             $cai->serie = (string)((int)($numero_inicial_set)); //ltrim($request->numero_inicial, '0');
             $cai->cantidad_no_utilizada = $cantidad_no_utilizada_set;
             $cai->numero_inicial = $request->numero_inicial;
-            $cai->numero_final = $request->numero_final;
+            $cai->numero_final = $arrayCai[3];
             ////////////////////////Numero Base//////////////////////////////////////////
             $cai->numero_base = $numero_base;
             /////////////////////////////////////////////////////////////////////////////
@@ -281,6 +282,43 @@ class Cai extends Component
             ////////////////////////////////////////////////////////////////////////
 
             $cai_update =  ModelCAI::find($request->idCAI);
+          
+           
+            
+
+            switch ($cai_update->tipo_documento_fiscal_id) {
+                case 1:
+                    $consultaFacturas = DB::SELECTONE("select count(id) as contador from factura where cai_id = ".$request->idCAI);
+                    if($consultaFacturas->contador > 0){
+                        return response()->json([
+                            'icon'=>'error',
+                            'title'=>'Error!',
+                            'text'=>'Ya exiten documentos con este número de cai.'
+                       ],401);
+                    }
+                    
+                    break;
+                case 3:
+                    $contadorNotaCredito = DB::SELECTONE("select count(id) as contador from nota_credito where cai_id =".$request->idCAI);
+                    if($contadorNotaCredito->contador > 0){
+                        return response()->json([
+                            'icon'=>'error',
+                            'title'=>'Error!',
+                            'text'=>'Ya exiten documentos con este número de cai.'
+                       ],401);
+                    }
+                    break;
+                case 4:
+                    $contadorNotaDebito = DB::SELECTONE("select count(id) as contador  from notadebito where cai_ndebito =".$request->idCAI);
+                    if($contadorNotaDebito->contador > 0){
+                        return response()->json([
+                            'icon'=>'error',
+                            'title'=>'Error!',
+                            'text'=>'Ya exiten documentos con este número de cai.'
+                       ],401);
+                    }
+                    break;
+            }
 
             $cai_update->cai = $request->cai_editar;
             $cai_update->punto_de_emision = $request->punto_emision_editar;
@@ -289,8 +327,8 @@ class Cai extends Component
             $cai_update->cantidad_no_utilizada = $cantidad_no_utilizada_set_update;
             $cai_update->numero_inicial = $request->numero_inicial_editar;
             $cai_update->numero_final = $request->numero_final_editar;
-            $cai_update->numero_actual = (string)((int)($numero_inicial_set));// ltrim($numero_inicial_set, '0');
-            $cai_update->serie = (string)((int)($numero_inicial_set)); //ltrim($numero_inicial_set, '0');
+            $cai_update->numero_actual = (string)((int)($numero_inicial_set));
+            $cai_update->serie = (string)((int)($numero_inicial_set)); 
             /////////////////////////////////Numero Base/////////////////////////////
             $arrayCai = explode('-', $request->numero_final_editar);
             $numero_base= $arrayCai[0] . '-' . $arrayCai[1] . '-' . $arrayCai[2];

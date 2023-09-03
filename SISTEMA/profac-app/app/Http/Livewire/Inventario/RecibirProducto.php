@@ -758,7 +758,7 @@ class RecibirProducto extends Component
 
 
              Mail::send('email/vales-disponibles',['valesArray' => $valesArray], function($msj) use($subject,$for){
-                 $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
+                 $msj->from(env('MAIL_FROM_ADRESS'),"Soporte Técnico Distribuciones Valencia ");
                  $msj->subject($subject);
                  $msj->to($for);
              });

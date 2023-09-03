@@ -1175,7 +1175,7 @@
 
                         setTimeout(function(){
                             location.reload()
-                        }, 3000)
+                        }, 40000)
 
                         Swal.fire({
                             icon: data.icon,
