@@ -524,13 +524,42 @@
                             <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
                             <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
                         </ul>
-                    </li>                    <li>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Compras Locales</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Orden de compra local</a></li>
                         </ul>
                     </li>
-                    {{-- <li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Boleta de Compra</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-clipboard-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Declaraciones </span>
                             <span class="fa arrow"></span></a>
@@ -544,7 +573,7 @@
 
 
                         </ul>
-                    </li> --}}
+                    </li>
                     <li>
                         <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Cardex</span><span class="fa arrow"></span></a>
 
@@ -594,7 +623,7 @@
                 @endif
 
                 @if (Auth::user()->rol_id == '7' or Auth::user()->rol_id == '1')
-                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auditoria y logistica</span>
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auditoria y logistica</span></a>
 
                     <li>
                         <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span><span class="fa arrow"></span></a>
@@ -617,8 +646,7 @@
 
                         <ul class="nav nav-second-level">
                             <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo de productos</a>
-                            </li>
+                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo de productos</a></li>
                             <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a>
                             </li>
                             <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
@@ -651,6 +679,34 @@
                         <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Compras Locales</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Orden de compra local</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Vale</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a></li>
                         </ul>
                     </li>
                     <li>
@@ -689,7 +745,7 @@
                 @endif
 
                 @if (Auth::user()->rol_id == '8' or Auth::user()->rol_id == '1')
-                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">RRHH</span>
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">RRHH</span></a>
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
                     </li>
@@ -719,6 +775,25 @@
                             <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a></li>
 
                         </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            </ul>
                     </li>
                     <li>
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
