@@ -1025,26 +1025,26 @@
                     let isv = subTotal * (isvProducto / 100);
                     let total = subTotal + subTotal * (isvProducto / 100);
 
-                    document.getElementById('total' + id).value = total.toFixed(3);
+                    document.getElementById('total' + id).value = total.toFixed(4);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
-                        minimumFractionDigits: 3,
+                        minimumFractionDigits: 4,
                     }).format(total)
 
-                    document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                    document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
                     document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
-                        minimumFractionDigits: 3,
+                        minimumFractionDigits: 4,
                     }).format(subTotal)
 
 
-                    document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                    document.getElementById('isvProducto' + id).value = isv.toFixed(4);
                     document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
-                        minimumFractionDigits: 3,
+                        minimumFractionDigits: 4,
                     }).format(isv)
 
 
@@ -1104,39 +1104,39 @@
 
 
 
-                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(3);
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 4,
                 }).format(subTotalGeneral)
 
-                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(3);
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(4);
                 document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 4,
                 }).format(subTotalGeneralGrabadoValor)
 
-                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(3);
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(4);
                 document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 4,
                 }).format(subTotalGeneralExcentoValor)
 
-                document.getElementById('isvGeneral').value = totalISV.toFixed(3);
+                document.getElementById('isvGeneral').value = totalISV.toFixed(4);
                 document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 4,
                 }).format(totalISV)
 
-                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(3);
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(4);
                 document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 4,
                 }).format(totalGeneralValor)
 
 

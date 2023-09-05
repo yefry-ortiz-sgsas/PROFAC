@@ -41,9 +41,9 @@
 
 
     <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="mb-2"  id="cuentas_excel">
+        {{--  <div class="mb-2"  id="cuentas_excel">
             <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
-        </div>
+        </div>  --}}
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -63,6 +63,7 @@
                                         <th>Notas Débito</th>
                                         <th>Saldo</th>
                                         <th>Acumulado</th>
+                                        <th>Acciones</th>
 
 
                                     </tr>
@@ -129,7 +130,6 @@
 
 </div>
 @push('scripts')
-
 <script>
 
 
@@ -170,20 +170,28 @@
                     },
                     pageLength: 10,
                     responsive: true,
-                    dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [{
-                            extend: 'copy'
-                        },
-                        {
-                            extend: 'csv'
-                        },
+                    dom: "Bfrtip",
+                    buttons: [
                         {
                             extend: 'excel',
-                            title: 'ExampleFile'
-                        },
-                        {
-                            extend: 'pdf',
-                            title: 'ExampleFile'
+                            title: 'ESTADO-CUENTA-'+idCliente,
+                            className: 'btn btn-success',
+                            excelStyles: {
+                                cells: "1",
+                                style: {
+                                    font:{
+                                        name:'Arial',
+                                        size: "16",
+                                        color: 'FFFFFF',
+                                        b: true
+                                    },
+                                    fill:{
+                                        pattern: {
+                                            color: 'ff7961'
+                                        }
+                                    }
+                                }
+                            }
                         },
 
                         {
@@ -199,7 +207,9 @@
                         }
                     ],
                     "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
-                    "columns": [{
+                    "columns": [
+
+                        {
                             data: 'correlativo'
                         },
                         {
@@ -231,6 +241,9 @@
                         },
                         {
                             data: 'Acumulado'
+                        },
+                        {
+                            data: 'opciones'
                         }
 
 

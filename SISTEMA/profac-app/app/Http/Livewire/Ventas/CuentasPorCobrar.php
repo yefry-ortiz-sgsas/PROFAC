@@ -63,7 +63,11 @@ class CuentasPorCobrar extends Component
 
 
                     <li>
-                    <a class="dropdown-item"   ><i class="fa-solid fa-xmark text-danger"></i> Desactivar </a>
+                        <a class="dropdown-item" href="/detalle/venta/'.$cuenta->codigoFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
                     </li>
 
                 </ul>
