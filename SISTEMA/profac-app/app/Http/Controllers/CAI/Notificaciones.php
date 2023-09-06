@@ -34,7 +34,8 @@ class Notificaciones extends Controller
     
 
     if($numDisponibles <= $parametrosMail->numero_alerta){
-        $correosDB = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
+      //   $correosDB = DB::SELECT("select email from users where rol_id = 1 or rol_id = 5");
+           $correosDB = DB::SELECT("select email from users where id in(5,10,55)");
              $correos =[];
 
              

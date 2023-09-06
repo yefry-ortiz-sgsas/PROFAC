@@ -546,17 +546,7 @@ class FacturacionEstatal extends Component
                 'mensajeError'=>$e
             ], 402);
             
-        } finally{
-            DB::rollback();
-            return response()->json([
-                'error' => 'Ha ocurrido un error al realizar la factura.',
-                'icon' => "error",
-                'text' => 'Ha ocurrido un error.',
-                'title' => 'Error!',
-                'idFactura' => "",
-                'mensajeError'=>""
-            ], 402);
-        }
+        } 
     }
 
     public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
