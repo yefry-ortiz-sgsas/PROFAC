@@ -24,6 +24,8 @@ use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\ModelNumOrdenCompra;
 use App\Http\Controllers\CAI\Notificaciones;
+use Exception;
+
 class FacturacionEstatal extends Component
 {
     public function render()
@@ -540,8 +542,19 @@ class FacturacionEstatal extends Component
                 'icon' => "error",
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
-                'idFactura' => $factura->id,
+                'idFactura' => "",
                 'mensajeError'=>$e
+            ], 402);
+            
+        } finally{
+            DB::rollback();
+            return response()->json([
+                'error' => 'Ha ocurrido un error al realizar la factura.',
+                'icon' => "error",
+                'text' => 'Ha ocurrido un error.',
+                'title' => 'Error!',
+                'idFactura' => "",
+                'mensajeError'=>""
             ], 402);
         }
     }
