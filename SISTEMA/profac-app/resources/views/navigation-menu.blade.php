@@ -382,7 +382,7 @@
                 @endif
 
                 @if (Auth::user()->rol_id == '4' or Auth::user()->rol_id == '1')
-                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Contabilidad</span>
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Contabilidad</span></a>
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
                     </li>
@@ -460,7 +460,7 @@
                 @endif
 
                 @if (Auth::user()->rol_id == '5' or Auth::user()->rol_id == '1')
-                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auxiliar Administrativo</span>
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auxiliar Administrativo</span></a>
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
                     </li>
