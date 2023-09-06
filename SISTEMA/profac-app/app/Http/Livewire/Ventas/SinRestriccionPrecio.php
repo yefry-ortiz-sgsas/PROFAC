@@ -77,7 +77,7 @@ class SinRestriccionPrecio extends Component
         $for = ['cristian.zelaya@distribucionesvalencia.hn'];
 
         Mail::send('email/solicitud',['codigo' => $codigo], function($msj) use($subject,$for){
-            $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
+            $msj->from(env('MAIL_FROM_ADRESS'),"Soporte Técnico Distribuciones Valencia ");
             $msj->subject($subject);
             $msj->to($for);
         });

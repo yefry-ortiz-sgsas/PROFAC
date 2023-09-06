@@ -23,6 +23,8 @@ use App\Models\ModelLogTranslados;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\ModelNumOrdenCompra;
+use App\Http\Controllers\CAI\Notificaciones;
+use Exception;
 
 class FacturacionEstatal extends Component
 {
@@ -317,7 +319,7 @@ class FacturacionEstatal extends Component
                 return response()->json([
                     'icon' => 'warning',
                     'title' => 'Advertencia!',
-                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con cr茅dito suficiente . Por el momento no se puede emitir factura a este cliente.',
+                    'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', no cuenta con crédito suficiente . Por el momento no se puede emitir factura a este cliente.',
 
                 ], 401);
             }
@@ -350,7 +352,7 @@ class FacturacionEstatal extends Component
             and seccion_id = " . $request->$keyIdSeccion);
 
             if ($request->$keyRestaInventario > $resultado->cantidad_disponoble) {
-                $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con secci贸n :<b>" . $request->$keyBodega . "</b><br><br>";
+                $mensaje = $mensaje . "Unidades insuficientes para el producto: <b>" . $request->$keyNombre . "</b> en la bodega con sección :<b>" . $request->$keyBodega . "</b><br><br>";
                 $flag = true;
             }
         }
@@ -389,7 +391,7 @@ class FacturacionEstatal extends Component
                 return response()->json([
                     "title" => "Advertencia",
                     "icon" => "warning",
-                    "text" => "La factura no puede proceder, debido que ha alcanzadado el n煤mero maximo de facturacion otorgado.",
+                    "text" => "La factura no puede proceder, debido que ha alcanzadado el número maximo de facturacion otorgado.",
                 ], 401);
             }
 
@@ -418,6 +420,10 @@ class FacturacionEstatal extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 2);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -536,10 +542,11 @@ class FacturacionEstatal extends Component
                 'icon' => "error",
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
-                'idFactura' => $factura->id,
+                'idFactura' => "",
                 'mensajeError'=>$e
             ], 402);
-        }
+            
+        } 
     }
 
     public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)
@@ -724,7 +731,7 @@ class FacturacionEstatal extends Component
         $cliente->save();
 
         $logCredito = new logCredito;
-        $logCredito->descripcion = 'Reducci贸n  de credito por factura.';
+        $logCredito->descripcion = 'Reducción  de credito por factura.';
         $logCredito->monto = $totalFactura;
         $logCredito->factura_id = $idFactura;
         $logCredito->cliente_id = $idCliente;
