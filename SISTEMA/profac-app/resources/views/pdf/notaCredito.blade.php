@@ -76,7 +76,7 @@
             </div>
 
             <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Reistro tributario:
+                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro tributario:
                         08011986138652</b></p>
                 <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>CAI: {{$cai->cai}}
                         </b></p>
