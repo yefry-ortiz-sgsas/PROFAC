@@ -30,9 +30,16 @@
                                 </select>
                             </div>
 
+                            <div class="col-6 col-sm-6 col-md-6 ">
+                                <label for="cliente" class="alert alert-warning"> <b>Estado de cuenta</b> <span class="text-danger"></span></label>
+                                <a class="btn btn-primary btn-block" href=""><i class="fa-solid fa-paper-plane text-white"></i> Visualizar </a>
+                            </div>
+
+
 
                         </div>
                         <button class="btn btn-primary mt-2" onclick=" llamarTablas(), mostrarExports()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+
                     </div>
                 </div>
             </div>
@@ -252,6 +259,7 @@
 
                 });
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////
 

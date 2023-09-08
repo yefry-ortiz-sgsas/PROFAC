@@ -146,54 +146,45 @@
                  @php
                     $cant = count($productos);
                 @endphp
-                <div class="" style="position: relative; margin-left:44px; margin-top:10px; width:45rem">
-
-                    <div>
-
-                        <table class="" style="font-size: 10px; ">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Producto</th>
-                                    <th>Bodega</th>
-                                    <th>Seccion</th>
-                                    <th>Medida</th>
-                                    <th>Exento</th>
-                                    <th>Precio </th>
-                                    <th>Cantidad</th>
-                                    <th>Importe</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach ($productos as $producto)
-                                    <tr>
-                                        <td>{{ $producto->codigo }}</td>
-                                        <td>{{ $producto->descripcion }}</td>
-                                        <td>{{ $producto->bodega }}</td>
-                                        <td>{{ $producto->seccion }}</td>
-                                         <td>{{ $producto->medida }}</td>
-                                        <td>{{ $producto->excento }}</td>
-                                        <td>{{ $producto->precio }}</td>
-                                        <td>{{ $producto->cantidad }}</td>
-                                        <td>{{ $producto->importe }}</td>
-                                    </tr>
-                                @endforeach
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    {{--  <div class="mb-2"  id="cuentas_excel">
+                        <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
+                    </div>  --}}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <div class="table-responsive">
+                                        <table id="tbl_cuentas_por_cobrar" class="table table-striped table-bordered table-hover">
+                                            <thead class="">
+                                                <tr>
+                                                    <th>No. Factura</th>
+                                                    <th>Orden de Compra</th>
+                                                    <th>Cliente</th>
+                                                    <th>Fecha Emision</th>
+                                                    <th>Fecha Vencimiento</th>
+                                                    <th>Cargo</th>
+                                                    <th>Credito</th>
+                                                    <th>Notas Crédito</th>
+                                                    <th>Notas Débito</th>
+                                                    <th>Saldo</th>
+                                                    <th>Acumulado</th>
+                                                    <th>Acciones</th>
 
 
-                                @php
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                    $altura = 50;
-                                    $altura2 = 450;
-                                @endphp
+                                            </tbody>
+                                        </table>
 
-                            </tbody>
+                                    </div>
 
-
-                        </table>
-
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
 
 
