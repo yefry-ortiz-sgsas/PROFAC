@@ -69,9 +69,11 @@
 </head>
 
 <body>
+    @php
+        $fecha_actual = date("Y-m-d");
+    @endphp
 
-
-    < class="pruebaFondo">
+    <div class="pruebaFondo">
         <img src="img/membrete/Logo3.png" width="900rem" style="margin-left:13%; margin-top:-25px; position:absolute;"alt="">
 
         <div class="card border border-dark" style="margin-left:72px;  margin-top:105px; width:60rem; height:4rem;">
@@ -80,7 +82,7 @@
 
             </div>
             <p class="card-text" style="position:absolute;left:20px;  top:40px;"><b>Cliente:{{ $estadoCuenta[0]->cliente}}</b></p>
-            <p class="card-text" style="position:absolute;left:825px;  top:40px;"><b>Fecha: {{ $fecha_actual = date("Y-m-d"); }}</b></p>
+            <p class="card-text" style="position:absolute;left:825px;  top:40px;"><b>Fecha: {{ $fecha_actual  }}</b></p>
         </div>
 
 
