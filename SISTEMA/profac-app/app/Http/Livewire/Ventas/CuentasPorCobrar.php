@@ -11,6 +11,7 @@ use Auth;
 use Validator;
 use DataTables;
 use Throwable;
+use PDF;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
@@ -178,6 +179,14 @@ class CuentasPorCobrar extends Component
                 "title"=>"Error!"
             ],402);
         }
+    }
+
+    public function imprimirEstadoCuenta($idClientepdf){
+        $estadoCuenta = DB::select("CALL cuentasx2('".$idClientepdf."');");
+        // dd($estadoCuenta[0]->cliente);
+        $pdf = PDF::loadView('/pdf/estadocuenta', compact('estadoCuenta'))->setPaper('letter')->setPaper("A4", "landscape");
+
+        return $pdf->stream("estado_cuenta.pdf");
     }
 
 

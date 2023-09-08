@@ -30,9 +30,9 @@
                                 </select>
                             </div>
 
-                            <div class="col-6 col-sm-6 col-md-6 ">
+                            <div class="col-6 col-sm-6 col-md-6 " id="btnEC" name="btnEC" style="display: none">
                                 <label for="cliente" class="alert alert-warning"> <b>Estado de cuenta</b> <span class="text-danger"></span></label>
-                                <a class="btn btn-primary btn-block" href=""><i class="fa-solid fa-paper-plane text-white"></i> Visualizar </a>
+                                <button class="btn btn-primary btn-block" onclick="pdfEstadoCuenta()"><i class="fa-solid fa-paper-plane text-white"></i> Visualizar </button>
                             </div>
 
 
@@ -138,7 +138,11 @@
 </div>
 @push('scripts')
 <script>
-
+        $('#btnEC').css('display','none');
+        $('#btnEC').hide();
+        {{--  $('#divcierre').hide();  --}}
+        {{--  $('#btn_cierreCaja').css('display','none');  --}}
+        {{--  $('#btn_cierreCaja').hide();  --}}
 
         $('#cliente').select2({
             ajax: {
@@ -166,6 +170,11 @@
 
     }
 
+    function pdfEstadoCuenta(){
+
+        var idClientepdf = document.getElementById('cliente').value;
+        window.open('/estadoCuenta/imprimir/'+idClientepdf, '_blank');
+    }
 
     function listarCuentasPorCobrar() {
 
@@ -258,6 +267,8 @@
 
 
                 });
+                $('#btnEC').css('display','block');
+                $('#btnEC').show();
     }
 
 
