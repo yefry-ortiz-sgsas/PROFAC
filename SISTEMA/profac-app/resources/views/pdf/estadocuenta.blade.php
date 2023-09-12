@@ -113,12 +113,12 @@
                                             <td style="text-align: center">{{ $valor->numOrden }}</td>
                                             <td style="text-align: center">{{ $valor->fecha_emision }}</td>
                                             <td style="text-align: center">{{ $valor->fecha_vencimiento }}</td>
-                                             <td style="text-align: center"> L. {{ $valor->cargo }}</td>
-                                            <td style="text-align: center"> L. {{ $valor->credito }}</td>
-                                            <td style="text-align: center"> L. {{ $valor->notaCredito }}</td>
-                                            <td style="text-align: center"> L. {{ $valor->notaDebito }}</td>
-                                            <td style="text-align: center"> L. {{ $valor->saldo }}</td>
-                                            <td style="text-align: center"> L. {{ $valor->Acumulado }}</td>
+                                             <td style="text-align: center"> L. {{ number_format($valor->cargo, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->credito, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->notaCredito, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->notaDebito, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->saldo, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->Acumulado, 2, ',') }}</td>
                                         </tr>
                                     @endforeach
 
