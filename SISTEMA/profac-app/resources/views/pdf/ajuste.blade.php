@@ -125,7 +125,7 @@ $altura =20;
                         <td>{{$producto->seccion}}</td>
                         <td>{{$producto->medida}}</td>
                         <td>{{$producto->precio_producto}}</td>
-                        <td>{{$producto->cantidad}}</td>
+                        <td>{{$producto->cantidad}} ({{$producto->aritmetica}})</td>
                         <td>{{$producto->total}}</td>
                     </tr>
 
