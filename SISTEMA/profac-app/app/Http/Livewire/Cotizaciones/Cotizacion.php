@@ -174,7 +174,6 @@ class Cotizacion extends Component
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
-
             'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
@@ -220,6 +219,8 @@ class Cotizacion extends Component
             $cotizacion->users_id = Auth::user()->id;
             $cotizacion->arregloIdInputs = json_encode($request->arregloIdInputs);
             $cotizacion->numeroInputs = $request->numeroInputs;
+            $cotizacion->porc_descuento = $request->porDescuento;
+            $cotizacion->monto_descuento = $request->porDescuentoCalculado;
             $cotizacion->save();
 
 
