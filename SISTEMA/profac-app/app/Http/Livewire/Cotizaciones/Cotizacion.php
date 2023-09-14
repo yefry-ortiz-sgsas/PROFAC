@@ -360,6 +360,7 @@ class Cotizacion extends Component
 
         $importes = DB::SELECTONE("
             select
+            porc_descuento,
             total,
             isv,
             sub_total,
@@ -372,6 +373,7 @@ class Cotizacion extends Component
 
         $importesConCentavos= DB::SELECTONE("
             select
+            FORMAT(monto_descuento,2) as monto_descuento,
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
             FORMAT(sub_total,2) as sub_total,
@@ -423,41 +425,36 @@ class Cotizacion extends Component
             where A.id =".$idFactura
         );
 
-        $productos = DB::SELECT("
-            select
-            C.id as codigo,
-            C.nombre,
-            C.descripcion,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            if(C.isv = 0, 'SI' , 'NO' ) as excento,
-            FORMAT(B.precio_unidad,2) as precio,
-            FORMAT(B.cantidad,2) as cantidad,
-            FORMAT(B.sub_total,2) as importe,
-            J.nombre as medida
+            $productos = DB::SELECT("
+                select
+                C.id as codigo,
+                C.nombre,
+                C.descripcion,
+                H.nombre as bodega,
+                F.descripcion as seccion,
+                if(C.isv = 0, 'SI' , 'NO' ) as excento,
+                FORMAT(B.precio_unidad,2) as precio,
+                FORMAT(B.cantidad,2) as cantidad,
+                FORMAT(B.sub_total,2) as importe,
+                J.nombre as medida
 
-            from cotizacion A
-            inner join cotizacion_has_producto B
-            on A.id=B.cotizacion_id
-            inner join producto C
-            on B.producto_id = C.id
-            inner join unidad_medida_venta D
-            on B.unidad_medida_venta_id = D.id
-            inner join unidad_medida J
-            on J.id = D.unidad_medida_id
-            inner join seccion F
-            on B.seccion_id = F.id
-            inner join segmento G
-            on F.segmento_id = G.id
-            inner join bodega H
-            on G.bodega_id = H.id
-            where A.id = ".$idFactura."
-            order by B.indice asc
-            "
-        );
+                from cotizacion A
+                    inner join cotizacion_has_producto B on A.id=B.cotizacion_id
+                    inner join producto C on B.producto_id = C.id
+                    inner join unidad_medida_venta D on B.unidad_medida_venta_id = D.id
+                    inner join unidad_medida J on J.id = D.unidad_medida_id
+                    inner join seccion F on B.seccion_id = F.id
+                    inner join segmento G on F.segmento_id = G.id
+                    inner join bodega H on G.bodega_id = H.id
+                where A.id = ".$idFactura."
+                order by B.indice asc
+                "
+            );
 
-        $importes = DB::SELECTONE("
+
+            $importes = DB::SELECTONE("
             select
+            porc_descuento,
             total,
             isv,
             sub_total,
@@ -470,6 +467,7 @@ class Cotizacion extends Component
 
         $importesConCentavos= DB::SELECTONE("
             select
+            FORMAT(monto_descuento,2) as monto_descuento,
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
             FORMAT(sub_total,2) as sub_total,

@@ -56,9 +56,9 @@
                 <li class="breadcrumb-item">
 
                     @if ($cotizacion->tipo_venta_id == 1)
-                        <a>Cliente Corporativo</a>
+                        <a>Cliente B</a>
                     @elseif($cotizacion->tipo_venta_id == 2)
-                        <a>Cliente Estatal</a>
+                        <a>Cliente A</a>
                     @else
                         <a>Cliente Exonerado</a>
                     @endif
