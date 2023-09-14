@@ -100,8 +100,6 @@ class Cotizacion extends Component
         return $listaClientes;
     }
 
-
-
     public function clientesEstatal(Request $request)
     {
 
@@ -494,7 +492,6 @@ class Cotizacion extends Component
 
 
     }
-
 
     public function listarBodegas(Request $request)
     {
