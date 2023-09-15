@@ -464,7 +464,7 @@ class FacturacionCorporativa extends Component
 
                 $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
-                
+
                 $validarCAI = new Notificaciones();
                 $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
 
@@ -500,6 +500,8 @@ class FacturacionCorporativa extends Component
                 $factura->comprovante_entrega_id = $request->idComprobante;
                 $factura->numero_orden_compra_id=$request->ordenCompra;
                 $factura->comentario=$request->nota_comen;
+                $factura->porc_descuento =$request->porDescuento;
+                $factura->monto_descuento=$request->porDescuentoCalculado;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -720,7 +722,7 @@ class FacturacionCorporativa extends Component
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
-            
+
             $validarCAI = new Notificaciones();
             $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
 
@@ -869,7 +871,7 @@ class FacturacionCorporativa extends Component
 
         $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
-        
+
         $validarCAI = new Notificaciones();
         $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
 
@@ -1000,7 +1002,7 @@ class FacturacionCorporativa extends Component
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
-            
+
             $validarCAI = new Notificaciones();
             $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
 
@@ -1634,7 +1636,7 @@ class FacturacionCorporativa extends Component
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
-            
+
             $validarCAI = new Notificaciones();
             $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$listado->secuencia, 1);
 
@@ -1901,6 +1903,8 @@ class FacturacionCorporativa extends Component
             $factura->comprovante_entrega_id = $request->idComprobante;
             $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->comentario=$request->nota_comen;
+            $factura->porc_descuento =$request->porDescuento;
+            $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
 

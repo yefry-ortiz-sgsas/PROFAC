@@ -925,6 +925,7 @@
                     if (valorInputPrecio && valorInputCantidad) {
                         var descuento = $('#porDescuento').val();
 
+
                         if (descuento > 0){
                              subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento/100);
@@ -1029,7 +1030,6 @@
                     totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
                 }
-
 
                 document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
