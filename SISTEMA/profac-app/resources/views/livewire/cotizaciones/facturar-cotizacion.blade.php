@@ -398,7 +398,6 @@
                                         data-parsley-required autocomplete="off" readonly>
                                 </div>
                             </div>
-
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
@@ -1167,7 +1166,7 @@
 
                     $('#porDescuentoCalculado').val(acumularDescuento);
 
-                    document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                        document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
                         minimumFractionDigits: 4,

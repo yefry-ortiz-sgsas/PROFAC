@@ -163,7 +163,7 @@
 
                                         <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado %
                                             :<span class="text-danger">*</span></label>
-                                        <input class="form-control" oninput="validarDescuento()" type="number" min="0" max="15" value="0" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required >
+                                        <input class="form-control" oninput="validarDescuento()" onchange="calcularTotalesInicioPagina()" type="number" min="0" max="15" value="0" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required >
                                         <p id="mensajeError" style="color: red;"></p>
 
                                         <input type="hidden" id="porDescuentoCalculado" name="porDescuentoCalculado">
@@ -913,7 +913,100 @@
             function myRound(num, dec) {
                 var exp = Math.pow(10, dec || 2); // 2 decimales por defecto
                 return parseInt(num * exp, 10) / exp;
-              }
+            }
+
+            function calcularTotalesInicioPagina() {
+
+                let arrayInputs = this.arregloIdInputs;
+
+
+                let valorInputPrecio = 0;
+                let valorInputCantidad = 0;
+                let valorSelectUnidad =0;
+                let isvProducto = 0;
+
+                let subTotal = 0;
+                let isv =0;
+                let total = 0;
+                var descuentoCalculado = 0;
+
+                arrayInputs.forEach(id => {
+                    // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
+                        valorInputPrecio = document.getElementById('precio' + id).value;
+                        valorInputCantidad = document.getElementById('cantidad' + id).value;
+                        valorSelectUnidad = document.getElementById('unidad' + id).value;
+                        isvProducto = document.getElementById("isv"+id).value;
+
+                            if (valorInputPrecio && valorInputCantidad) {
+
+                                //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                                //isv = subTotal * (isvProducto / 100);
+                                // total = subTotal + subTotal * (isvProducto / 100);
+
+                                var descuento = $('#porDescuento').val();
+
+
+                                if (descuento > 0){
+                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                                    descuentoCalculado = subTotal * (descuento/100);
+
+                                    //$('#porDescuentoCalculado').val(descuentoCalculado);
+                                    $('#acumuladoDescuento'+id).val(descuentoCalculado);
+
+
+                                     subTotal = subTotal - descuentoCalculado;
+
+                                     isv = subTotal * (isvProducto / 100);
+                                     total = subTotal + (subTotal * (isvProducto / 100));
+
+
+                                }else{
+                                    $('#porDescuentoCalculado').val(0);
+                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                                     isv = subTotal * (isvProducto / 100);
+                                     total = subTotal + subTotal * (isvProducto / 100);
+
+                                }
+
+                                document.getElementById('total' + id).value = total.toFixed(4);
+                                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                                    style: 'currency',
+                                    currency: 'HNL',
+                                    minimumFractionDigits: 4,
+                                }).format(total)
+
+                                document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
+                                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                                    style: 'currency',
+                                    currency: 'HNL',
+                                    minimumFractionDigits: 4,
+                                }).format(subTotal)
+
+
+                                document.getElementById('isvProducto' + id).value = isv.toFixed(4);
+                                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                                    'es-HN', {
+                                        style: 'currency',
+                                        currency: 'HNL',
+                                        minimumFractionDigits: 4,
+                                    }).format(isv)
+
+
+
+                                this.totalesGenerales();
+
+                            }
+
+                        });
+
+
+
+                    this.totalesGenerales();
+                    return 0;
+
+
+                }
+
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 

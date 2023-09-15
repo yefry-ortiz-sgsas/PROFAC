@@ -94,7 +94,8 @@ class FacturarCotizacion extends Component
         B.ultimo_costo_compra,
         format(B.precio_base,2) as precio_base,
         B.isv as isvTblProducto,
-        C.arregloIdInputs
+        C.arregloIdInputs,
+        A.monto_descProducto
         from cotizacion_has_producto A
         inner join producto B
         on A.producto_id = B.id
@@ -216,7 +217,8 @@ class FacturarCotizacion extends Component
                         readonly >
 
                         <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
-                </div>
+                        <input type="hidden" id="acumuladoDescuento'.$i.'" name="acumuladoDescuento'.$i.'" value="' . $producto->monto_descProducto . '" >
+                        </div>
 
 
                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">

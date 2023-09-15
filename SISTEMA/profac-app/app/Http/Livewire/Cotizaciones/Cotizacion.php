@@ -239,6 +239,7 @@ class Cotizacion extends Component
 
                 $keyNombreProducto = 'nombre'.$arrayInputs[$i];
                 $keyBodegaNombre = 'bodega'.$arrayInputs[$i];
+                $keymonto_descProducto = 'acumuladoDescuento'.$arrayInputs[$i];
 
 
 
@@ -257,6 +258,7 @@ class Cotizacion extends Component
                 $ivsProductoAsignado = $request->$keyIsvAsigando;
                 $nombreProducto = $request->$keyNombreProducto;
                 $nombreBodega = $request->$keyBodegaNombre;
+                $monto_descProducto = $request->$keymonto_descProducto;
 
 
                 array_push($arrayProductos,[
@@ -275,6 +277,7 @@ class Cotizacion extends Component
                 'resta_inventario'=>$restaInventario,
                 'isv_producto'=>$ivsProductoAsignado,
                 'unidad_medida_venta_id'=>$idUnidadVenta,
+                'monto_descProducto'=>$monto_descProducto,
                 'created_at'=>now(),
                 'updated_at'=>now()
 
