@@ -1259,7 +1259,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1270,12 +1272,14 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
 
 
         /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
-
+        // linea cambiada FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
         $productos = DB::SELECT(
             "
 
@@ -1289,7 +1293,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -1432,7 +1436,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1443,7 +1449,9 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
 
 
@@ -1462,7 +1470,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -1971,7 +1979,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1982,8 +1992,13 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
+
+
+
 
 
 
@@ -2000,7 +2015,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 

@@ -1050,13 +1050,10 @@
                 let total = 0;
 
                 var descuentoCalculado = 0;
+
                 console.log(valorInputCantidad,isvProducto);
 
                 if (valorInputPrecio && valorInputCantidad) {
-
-
-
-
 
                     var descuento = $('#porDescuento').val();
 
