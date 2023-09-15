@@ -884,6 +884,7 @@
                                                     readonly >
 
                                                     <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>
+                                                    <input type="hidden" id="acumuladoDescuento${numeroInputs}" name="acumuladoDescuento${numeroInputs}" >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -972,11 +973,13 @@
 
                                 var descuento = $('#porDescuento').val();
 
+
                                 if (descuento > 0){
                                      subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                                     descuentoCalculado = subTotal * (descuento/100);
 
-                                    $('#porDescuentoCalculado').val(descuentoCalculado);
+                                    //$('#porDescuentoCalculado').val(descuentoCalculado);
+                                    $('#acumuladoDescuento'+id).val(descuentoCalculado);
 
 
                                      subTotal = subTotal - descuentoCalculado;
@@ -1019,11 +1022,6 @@
 
 
                                 this.totalesGenerales();
-                                document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
-                                    style: 'currency',
-                                    currency: 'HNL',
-                                    minimumFractionDigits: 4,
-                                }).format(descuentoCalculado)
 
                             }
 
@@ -1057,11 +1055,13 @@
 
                     var descuento = $('#porDescuento').val();
 
+
                     if (descuento > 0){
                          subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                         descuentoCalculado = subTotal * (descuento/100);
 
-                        $('#porDescuentoCalculado').val(descuentoCalculado);
+                        //$('#porDescuentoCalculado').val(descuentoCalculado);
+                        $('#acumuladoDescuento'+id).val(descuentoCalculado);
 
 
                          subTotal = subTotal - descuentoCalculado;
@@ -1104,11 +1104,7 @@
                     idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
                     this.totalesGenerales();
 
-                    document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(descuentoCalculado)
+
 
 
                 }
@@ -1137,6 +1133,7 @@
                     let subTotalGeneral = new Number(0);
                     let subTotalFila = 0;
                     let isvFila = 0;
+                    let acumularDescuento = new Number(0);
 
                     for (let i = 0; i < arregloIdInputs.length; i++) {
 
@@ -1159,9 +1156,22 @@
                         totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
                         totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
+                        acumularDescuento += new Number($('#acumuladoDescuento'+arregloIdInputs[i]).val());
+                        console.log($('#acumuladoDescuento'+arregloIdInputs[i]).val());
+
                     }
 
 
+                    console.log('Aqui muestro el acumulado');
+                    console.log(acumularDescuento);
+
+                    $('#porDescuentoCalculado').val(acumularDescuento);
+
+                    document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 4,
+                    }).format(acumularDescuento)
 
                     document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                     document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {

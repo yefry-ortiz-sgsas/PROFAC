@@ -1042,6 +1042,7 @@
                 console.log('Aqui muestro el acumulado');
                 console.log(acumularDescuento);
 
+                $('#porDescuentoCalculado').val(acumularDescuento);
 
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
