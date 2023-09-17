@@ -339,7 +339,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class, 'guardarVenta']);
     Route::get('/ventas/numero/orden', [FacturacionEstatal::class, 'obtenerOrdenCompra']);
 
-    Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class, 'guardarVenta']);
 
 
     Route::get('/facturas/estatal', ListadoFacturaEstatal::class);

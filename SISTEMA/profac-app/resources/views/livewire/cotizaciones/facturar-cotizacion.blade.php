@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-                            font-size: 0.8rem;
+                                    font-size: 0.8rem;
 
 
-                          } */
+                                  } */
 
 
             .img-size {
@@ -152,17 +152,25 @@
 
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <div class="form-group">
-
-                                        <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado %
-                                            :<span class="text-danger">*</span></label>
-                                        <input class="form-control" oninput="validarDescuento()" type="number" min="0" max="15" value="{{ $cotizacion->porc_descuento }}" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required>
-                                        <p id="mensajeError" style="color: red;" ></p>
-
-                                        <input type="hidden" value="{{ $cotizacion->porc_descuento }}" id="porDescuentoCalculado" name="porDescuentoCalculado">
+                                <div class="row mt-4">
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <div class="form-group">
+    
+                                            <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado
+                                                %
+                                                :<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="number" min="0" max="15"
+                                                value="{{ $cotizacion->porc_descuento }}" minlength="1" maxlength="2"
+                                                id="porDescuento" name="porDescuento" data-parsley-required
+                                                onchange="calcularTotalesInicioPagina()">
+    
+                                            <p id="mensajeError" style="color: red;"></p>
+    
+    
+                                        </div>
                                     </div>
                                 </div>
+
 
 
 
@@ -213,10 +221,9 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
-                                        <label for="nota"
-                                            class="col-form-label focus-label">Nota:
+                                        <label for="nota" class="col-form-label focus-label">Nota:
                                         </label>
-                                        <textarea class="form-control"  id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250" ></textarea>
+                                        <textarea class="form-control" id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250"></textarea>
                                     </div>
 
                                 </div>
@@ -390,14 +397,20 @@
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="descuentoMostrar">Descuento L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="descuentoMostrar">Descuento L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Descuento aplicado" id="descuentoMostrar"
-                                        name="descuentoMostrar" class="form-control" value="{{ $cotizacion->monto_descuento }}"
-                                        data-parsley-required autocomplete="off" readonly>
+                                        name="descuentoMostrar" class="form-control"
+                                        value="{{ $cotizacion->monto_descuento }}" data-parsley-required
+                                        autocomplete="off" readonly>
+
+                                    <input type="hidden" value="{{ $cotizacion->monto_descuento }}"
+                                        id="porDescuentoCalculado" name="porDescuentoCalculado">
                                 </div>
                             </div>
+                            
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
@@ -531,7 +544,7 @@
 
             calcularTotalesInicioPagina();
 
-            function validarDescuento(){
+function validarDescuento(){
                 const numeroInput = document.getElementById('porDescuento');
                 const mensajeError = document.getElementById('mensajeError');
                 const numero = parseFloat(numeroInput.value);
@@ -949,92 +962,84 @@
 
                 let valorInputPrecio = 0;
                 let valorInputCantidad = 0;
-                let valorSelectUnidad =0;
+                let valorSelectUnidad = 0;
                 let isvProducto = 0;
 
                 let subTotal = 0;
-                let isv =0;
+                let isv = 0;
                 let total = 0;
                 var descuentoCalculado = 0;
 
                 arrayInputs.forEach(id => {
                     // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
-                        valorInputPrecio = document.getElementById('precio' + id).value;
-                        valorInputCantidad = document.getElementById('cantidad' + id).value;
-                        valorSelectUnidad = document.getElementById('unidad' + id).value;
-                        isvProducto = document.getElementById("isv"+id).value;
+                    valorInputPrecio = document.getElementById('precio' + id).value;
+                    valorInputCantidad = document.getElementById('cantidad' + id).value;
+                    valorSelectUnidad = document.getElementById('unidad' + id).value;
+                    isvProducto = document.getElementById("isv" + id).value;
 
-                            if (valorInputPrecio && valorInputCantidad) {
+                    if (valorInputPrecio && valorInputCantidad) {
 
-                                //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                //isv = subTotal * (isvProducto / 100);
-                                // total = subTotal + subTotal * (isvProducto / 100);
+                        //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        //isv = subTotal * (isvProducto / 100);
+                        // total = subTotal + subTotal * (isvProducto / 100);
 
-                                var descuento = $('#porDescuento').val();
-
-
-                                if (descuento > 0){
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                    descuentoCalculado = subTotal * (descuento/100);
-
-                                    //$('#porDescuentoCalculado').val(descuentoCalculado);
-                                    $('#acumuladoDescuento'+id).val(descuentoCalculado);
+                        let descuento = document.getElementById('porDescuento').value;
 
 
-                                     subTotal = subTotal - descuentoCalculado;
+                        if (descuento > 0) {
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            descuentoCalculado = subTotal * (descuento / 100);
+                            subTotal = subTotal - descuentoCalculado;
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + (subTotal * (isvProducto / 100));
+                        } else {
+                            descuentoCalculado = 0;
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + subTotal * (isvProducto / 100);
 
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + (subTotal * (isvProducto / 100));
-
-
-                                }else{
-                                    $('#porDescuentoCalculado').val(0);
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + subTotal * (isvProducto / 100);
-
-                                }
-
-                                document.getElementById('total' + id).value = total.toFixed(4);
-                                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                                    style: 'currency',
-                                    currency: 'HNL',
-                                    minimumFractionDigits: 4,
-                                }).format(total)
-
-                                document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
-                                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                                    style: 'currency',
-                                    currency: 'HNL',
-                                    minimumFractionDigits: 4,
-                                }).format(subTotal)
-
-
-                                document.getElementById('isvProducto' + id).value = isv.toFixed(4);
-                                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
-                                    'es-HN', {
-                                        style: 'currency',
-                                        currency: 'HNL',
-                                        minimumFractionDigits: 4,
-                                    }).format(isv)
+                        }
 
 
 
-                                this.totalesGenerales();
+                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado;
 
-                            }
+                        document.getElementById('total' + id).value = total.toFixed(4);
+                        document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 4,
+                        }).format(total)
 
-                        });
+                        document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
+                        document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 4,
+                        }).format(subTotal)
+
+
+                        document.getElementById('isvProducto' + id).value = isv.toFixed(4);
+                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                            'es-HN', {
+                                style: 'currency',
+                                currency: 'HNL',
+                                minimumFractionDigits: 4,
+                            }).format(isv)
+
+                    }
+
+                });
 
 
 
-                    this.totalesGenerales();
-                    return 0;
+                this.totalesGenerales();
+                return 0;
 
 
-                }
+            }
 
-                function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
+            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
 
@@ -1046,36 +1051,28 @@
                 let isv = 0;
                 let total = 0;
 
-                var descuentoCalculado = 0;
+                let descuentoCalculado = 0;
 
-                console.log(valorInputCantidad,isvProducto);
 
                 if (valorInputPrecio && valorInputCantidad) {
 
-                    var descuento = $('#porDescuento').val();
+                    let descuento = document.getElementById('porDescuento').value;
 
 
-                    if (descuento > 0){
-                         subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                        descuentoCalculado = subTotal * (descuento/100);
-
-                        //$('#porDescuentoCalculado').val(descuentoCalculado);
-                        $('#acumuladoDescuento'+id).val(descuentoCalculado);
-
-
-                         subTotal = subTotal - descuentoCalculado;
-
-                         isv = subTotal * (isvProducto / 100);
-                         total = subTotal + (subTotal * (isvProducto / 100));
-
-
-                    }else{
-                        $('#porDescuentoCalculado').val(0);
-                         subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                         isv = subTotal * (isvProducto / 100);
-                         total = subTotal + subTotal * (isvProducto / 100);
-
+                    if (descuento > 0) {
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        descuentoCalculado = subTotal * (descuento / 100);
+                        subTotal = subTotal - descuentoCalculado;
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + (subTotal * (isvProducto / 100));
+                    } else {
+                        descuentoCalculado = 0
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + subTotal * (isvProducto / 100);
                     }
+
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado
 
                     document.getElementById('total' + id).value = total.toFixed(4);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1113,350 +1110,345 @@
 
 
 
+            }
+
+            function totalesGenerales() {
+
+                //console.log(arregloIdInputs);
+
+                if (numeroInputs == 0) {
+                    return;
                 }
 
-                function totalesGenerales() {
 
-                    //console.log(arregloIdInputs);
 
-                    if (numeroInputs == 0) {
-                        return;
+                let totalGeneralValor = new Number(0);
+                let totalISV = new Number(0);
+                let subTotalGeneralGrabadoValor = new Number(0);
+                let subTotalGeneralExcentoValor = new Number(0);
+                let subTotalGeneral = new Number(0);
+                let subTotalFila = 0;
+                let isvFila = 0;
+                let acumularDescuento = new Number(0);
+
+                for (let i = 0; i < arregloIdInputs.length; i++) {
+
+                    subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
+                    isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+
+                    if (isvFila == 0) {
+                        subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
+                    } else if (subTotalFila > 0) {
+                        subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
+                            .value);
                     }
 
+                    subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
 
 
-                    let totalGeneralValor = new Number(0);
-                    let totalISV = new Number(0);
-                    let subTotalGeneralGrabadoValor = new Number(0);
-                    let subTotalGeneralExcentoValor = new Number(0);
-                    let subTotalGeneral = new Number(0);
-                    let subTotalFila = 0;
-                    let isvFila = 0;
-                    let acumularDescuento = new Number(0);
+                    totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
+                    totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
-                    for (let i = 0; i < arregloIdInputs.length; i++) {
-
-                        subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
-                        isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-
-                        ;
-
-                        if (isvFila == 0) {
-                            subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
-                                .value);
-                        } else if (subTotalFila > 0) {
-                            subTotalGeneralGrabadoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
-                                .value);
-                        }
-
-                        subTotalGeneral += new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
-
-
-                        totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-                        totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
-
-                        acumularDescuento += new Number($('#acumuladoDescuento'+arregloIdInputs[i]).val());
-                        console.log($('#acumuladoDescuento'+arregloIdInputs[i]).val());
-
-                    }
-
-
-                    console.log('Aqui muestro el acumulado');
-                    console.log(acumularDescuento);
-
-                    $('#porDescuentoCalculado').val(acumularDescuento);
-
-                        document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(acumularDescuento)
-
-                    document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
-                    document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(subTotalGeneral)
-
-                    document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(4);
-                    document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(subTotalGeneralGrabadoValor)
-
-                    document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(4);
-                    document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(subTotalGeneralExcentoValor)
-
-                    document.getElementById('isvGeneral').value = totalISV.toFixed(4);
-                    document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(totalISV)
-
-                    document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(4);
-                    document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
-                        style: 'currency',
-                        currency: 'HNL',
-                        minimumFractionDigits: 4,
-                    }).format(totalGeneralValor)
-
-
-
-
-
-                    return 0;
-
-
-                }
-
-                function validarFechaPago() {
-
-                    let tipoPago;
-
-                    tipoPago = document.getElementById('tipoPagoVenta').value;
-
-                    if (tipoPago == 2) {
-
-                        // document.getElementById('fecha_vencimiento').value = "empty";
-                        document.getElementById('fecha_vencimiento').readOnly = false;
-                        this.sumarDiasCredito();
-
-                    } else {
-                        document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
-
-                        document.getElementById('fecha_vencimiento').readOnly = true;
-
-                    }
-
-                    return 0;
-
-
-                }
-
-                function obtenerDatosCliente() {
-                    let idCliente = document.getElementById("seleccionarCliente").value;
-                    axios.post("/ventas/datos/cliente", {
-                            id: idCliente
-                        })
-                        .then(
-                            response => {
-
-                                let data = response.data.datos;
-
-                                if (data.id == 1) {
-                                    document.getElementById("nombre_cliente_ventas").readOnly = false;
-                                    document.getElementById("nombre_cliente_ventas").value = '';
-
-                                    document.getElementById("rtn_ventas").readOnly = false;
-                                    document.getElementById("rtn_ventas").value = '';
-                                    let selectBox = document.getElementById("tipoPagoVenta");
-                                    selectBox.remove(2);
-
-                                } else {
-                                    document.getElementById("nombre_cliente_ventas").readOnly = true;
-                                    document.getElementById("rtn_ventas").readOnly = true;
-
-                                    document.getElementById("nombre_cliente_ventas").value = data.nombre;
-                                    document.getElementById("rtn_ventas").value = data.rtn;
-                                    obtenerTipoPago();
-                                    diasCredito = data.dias_credito;
-                                }
-
-
-
-                            }
-                        )
-                        .catch(err => {
-
-                            console.log(err);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error...',
-                                text: "Ha ocurrido un error al obtener los datos del cliente"
-                            })
-
-
-                        })
+                    acumularDescuento += new Number(document.getElementById('acumuladoDescuento' + arregloIdInputs[i]).value);
 
                 }
 
 
-                $(document).on('submit', '#crear_venta',
-                    function(event) {
-                        event.preventDefault();
-                        guardarVenta();
-                    });
 
-                function guardarVenta() {
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento
 
-                    document.getElementById("guardar_cotizacion_btn").disabled = true;
+                document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(acumularDescuento)
 
-                    var data = new FormData($('#crear_venta').get(0));
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
+                document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(subTotalGeneral)
 
-                    let longitudArreglo = arregloIdInputs.length;
-                    for (var i = 0; i < longitudArreglo; i++) {
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(4);
+                document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(subTotalGeneralGrabadoValor)
 
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(4);
+                document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(subTotalGeneralExcentoValor)
 
-                        let name = "unidad" + arregloIdInputs[i];
-                        let nameForm = "idUnidadVenta" + arregloIdInputs[i];
+                document.getElementById('isvGeneral').value = totalISV.toFixed(4);
+                document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(totalISV)
 
-                        let e = document.getElementById(name);
-
-                        let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
-
-
-                        data.append(nameForm, idUnidadVenta)
-
-                    }
-                    data.append("numeroInputs", numeroInputs);
-
-                    let text = arregloIdInputs.toString();
-                    data.append("arregloIdInputs", text);
-                    const formDataObj = {};
-                    data.forEach((value, key) => (formDataObj[key] = value));
-
-                    const options = {
-                        headers: {
-                            "content-type": "application/json"
-                        }
-                    }
-
-
-
-                    axios.post(urlGuardarVenta, formDataObj, options)
-                        .then(response => {
-                            let data = response.data;
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(4);
+                document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 4,
+                }).format(totalGeneralValor)
 
 
 
-                            if (data.idFactura == 0) {
 
 
-                                Swal.fire({
-                                    icon: data.icon,
-                                    title: data.title,
-                                    html: data.text,
-                                })
-                                document.getElementById("guardar_cotizacion_btn").disabled = false;
-                                return;
+                return 0;
 
+
+            }
+
+            function validarFechaPago() {
+
+                let tipoPago;
+
+                tipoPago = document.getElementById('tipoPagoVenta').value;
+
+                if (tipoPago == 2) {
+
+                    // document.getElementById('fecha_vencimiento').value = "empty";
+                    document.getElementById('fecha_vencimiento').readOnly = false;
+                    this.sumarDiasCredito();
+
+                } else {
+                    document.getElementById('fecha_vencimiento').value = "{{ date('Y-m-d') }}";
+
+                    document.getElementById('fecha_vencimiento').readOnly = true;
+
+                }
+
+                return 0;
+
+
+            }
+
+            function obtenerDatosCliente() {
+                let idCliente = document.getElementById("seleccionarCliente").value;
+                axios.post("/ventas/datos/cliente", {
+                        id: idCliente
+                    })
+                    .then(
+                        response => {
+
+                            let data = response.data.datos;
+
+                            if (data.id == 1) {
+                                document.getElementById("nombre_cliente_ventas").readOnly = false;
+                                document.getElementById("nombre_cliente_ventas").value = '';
+
+                                document.getElementById("rtn_ventas").readOnly = false;
+                                document.getElementById("rtn_ventas").value = '';
+                                let selectBox = document.getElementById("tipoPagoVenta");
+                                selectBox.remove(2);
+
+                            } else {
+                                document.getElementById("nombre_cliente_ventas").readOnly = true;
+                                document.getElementById("rtn_ventas").readOnly = true;
+
+                                document.getElementById("nombre_cliente_ventas").value = data.nombre;
+                                document.getElementById("rtn_ventas").value = data.rtn;
+                                obtenerTipoPago();
+                                diasCredito = data.dias_credito;
                             }
 
-                            Swal.fire({
-                                confirmButtonText: 'Cerrar',
-                                confirmButtonColor: '#5A6268',
-                                icon: data.icon,
-                                title: data.title,
-                                html: data.text
-                            })
 
 
-                            document.getElementById('bloqueImagenes').innerHTML = '';
-                            document.getElementById('divProductos').innerHTML = '';
-
-                            document.getElementById("crear_venta").reset();
-                            $('#crear_venta').parsley().reset();
-
-                            var element = document.getElementById('detalleProducto');
-                            element.classList.add("d-none");
-                            element.href = "";
-
-                            document.getElementById("seleccionarCliente").innerHTML =
-                                '<option value="" selected disabled>--Seleccionar un cliente--</option>';
-
-                            document.getElementById('seleccionarProducto').innerHTML =
-                                '<option value="" selected disabled>--Seleccione un producto--</option>';
-                            document.getElementById('bodega').innerHTML =
-                                '<option value="" selected disabled>--Seleccione un producto--</option>';
-                            document.getElementById("bodega").disabled = true;
-
-
-                            document.getElementById("subTotalGeneralMostrar").value="";
-                            document.getElementById("subTotalGeneral").value="";
-                            document.getElementById("subTotalGeneralGrabadoMostrar").value="";
-                            document.getElementById("subTotalGeneralGrabado").value="";
-                            document.getElementById("subTotalGeneralExcentoMostrar").value="";
-                            document.getElementById("subTotalGeneralExcento").value="";
-                            document.getElementById("isvGeneralMostrar").value="";
-                            document.getElementById("isvGeneral").value="";
-                            document.getElementById("totalGeneralMostrar").value="";
-                            document.getElementById("totalGeneral").value="";
-
-                            let element2 = document.getElementById('detalleProducto');
-                            element2.classList.add("d-none");
-
-
-                            arregloIdInputs = [];
-                            numeroInputs = 0;
-                            retencionEstado = false;
-
-
-
-                            document.getElementById("guardar_cotizacion_btn").disabled = false;
-
-                        })
-                        .catch(err => {
-                            document.getElementById("guardar_cotizacion_btn").disabled = false;
-                            let data = err.response.data;
-                            console.log(err);
-                            Swal.fire({
-                                icon: data.icon,
-                                title: data.title,
-                                text: data.text
-                            })
-                        })
-                }
-
-                function sumarDiasCredito() {
-                    tipoPago = document.getElementById('tipoPagoVenta').value;
-
-                    if (tipoPago == 2) {
-
-                        let fechaEmision = document.getElementById("fecha_emision").value;
-                        let date = new Date(fechaEmision);
-                        date.setDate(date.getDate() + diasCredito);
-                        let suma = date.toISOString().split('T')[0];
-                        //console.log( diasCredito);
-
-                        document.getElementById("fecha_vencimiento").value = suma;
-
-                    }
-                }
-                let idCliente = document.getElementById('seleccionarCliente').value;
-                $('#ordenCompra').select2({
-                    ajax: {
-                        url: '/ventas/numero/orden',
-                        data: function(params) {
-                            var query = {
-                                idCliente: idCliente,
-                                search: params.term,
-                                type: 'public',
-                                page: params.page || 1
-                            }
-
-                            // Query parameters will be ?search=[term]&type=public
-
-                            return query;
                         }
-                    }
+                    )
+                    .catch(err => {
+
+                        console.log(err);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error...',
+                            text: "Ha ocurrido un error al obtener los datos del cliente"
+                        })
+
+
+                    })
+
+            }
+
+
+            $(document).on('submit', '#crear_venta',
+                function(event) {
+                    event.preventDefault();
+                    guardarVenta();
                 });
+
+            function guardarVenta() {
+
+                document.getElementById("guardar_cotizacion_btn").disabled = true;
+
+                var data = new FormData($('#crear_venta').get(0));
+
+                let longitudArreglo = arregloIdInputs.length;
+                for (var i = 0; i < longitudArreglo; i++) {
+
+
+                    let name = "unidad" + arregloIdInputs[i];
+                    let nameForm = "idUnidadVenta" + arregloIdInputs[i];
+
+                    let e = document.getElementById(name);
+
+                    let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
+
+
+                    data.append(nameForm, idUnidadVenta)
+
+                }
+                data.append("numeroInputs", numeroInputs);
+
+                let text = arregloIdInputs.toString();
+                data.append("arregloIdInputs", text);
+                const formDataObj = {};
+                data.forEach((value, key) => (formDataObj[key] = value));
+
+                const options = {
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                }
+
+
+
+                axios.post(urlGuardarVenta, formDataObj, options)
+                    .then(response => {
+                        let data = response.data;
+
+
+
+                        if (data.idFactura == 0) {
+
+
+                            Swal.fire({
+                                icon: data.icon,
+                                title: data.title,
+                                html: data.text,
+                            })
+                            document.getElementById("guardar_cotizacion_btn").disabled = false;
+                            return;
+
+                        }
+
+                        Swal.fire({
+                            confirmButtonText: 'Cerrar',
+                            confirmButtonColor: '#5A6268',
+                            icon: data.icon,
+                            title: data.title,
+                            html: data.text
+                        })
+
+
+                        document.getElementById('bloqueImagenes').innerHTML = '';
+                        document.getElementById('divProductos').innerHTML = '';
+
+                        document.getElementById("crear_venta").reset();
+                        $('#crear_venta').parsley().reset();
+
+                        var element = document.getElementById('detalleProducto');
+                        element.classList.add("d-none");
+                        element.href = "";
+
+                        document.getElementById("seleccionarCliente").innerHTML =
+                            '<option value="" selected disabled>--Seleccionar un cliente--</option>';
+
+                        document.getElementById('seleccionarProducto').innerHTML =
+                            '<option value="" selected disabled>--Seleccione un producto--</option>';
+                        document.getElementById('bodega').innerHTML =
+                            '<option value="" selected disabled>--Seleccione un producto--</option>';
+                        document.getElementById("bodega").disabled = true;
+
+
+                        document.getElementById("subTotalGeneralMostrar").value = "";
+                        document.getElementById("subTotalGeneral").value = "";
+                        document.getElementById("subTotalGeneralGrabadoMostrar").value = "";
+                        document.getElementById("subTotalGeneralGrabado").value = "";
+                        document.getElementById("subTotalGeneralExcentoMostrar").value = "";
+                        document.getElementById("subTotalGeneralExcento").value = "";
+                        document.getElementById("isvGeneralMostrar").value = "";
+                        document.getElementById("isvGeneral").value = "";
+                        document.getElementById("totalGeneralMostrar").value = "";
+                        document.getElementById("totalGeneral").value = "";
+
+                        let element2 = document.getElementById('detalleProducto');
+                        element2.classList.add("d-none");
+
+
+                        arregloIdInputs = [];
+                        numeroInputs = 0;
+                        retencionEstado = false;
+
+
+
+                        document.getElementById("guardar_cotizacion_btn").disabled = false;
+
+                    })
+                    .catch(err => {
+                        document.getElementById("guardar_cotizacion_btn").disabled = false;
+                        let data = err.response.data;
+                        console.log(err);
+                        Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text
+                        })
+                    })
+            }
+
+            function sumarDiasCredito() {
+                tipoPago = document.getElementById('tipoPagoVenta').value;
+
+                if (tipoPago == 2) {
+
+                    let fechaEmision = document.getElementById("fecha_emision").value;
+                    let date = new Date(fechaEmision);
+                    date.setDate(date.getDate() + diasCredito);
+                    let suma = date.toISOString().split('T')[0];
+                    //console.log( diasCredito);
+
+                    document.getElementById("fecha_vencimiento").value = suma;
+
+                }
+            }
+            let idCliente = document.getElementById('seleccionarCliente').value;
+            $('#ordenCompra').select2({
+                ajax: {
+                    url: '/ventas/numero/orden',
+                    data: function(params) {
+                        var query = {
+                            idCliente: idCliente,
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+
+                        return query;
+                    }
+                }
+            });
         </script>
     @endpush
 </div>
 <?php
-    date_default_timezone_set('America/Tegucigalpa');
-    $act_fecha=date("Y-m-d");
-    $act_hora=date("H:i:s");
-    $mes=date("m");
-    $year=date("Y");
-    $datetim=$act_fecha." ".$act_hora;
+date_default_timezone_set('America/Tegucigalpa');
+$act_fecha = date('Y-m-d');
+$act_hora = date('H:i:s');
+$mes = date('m');
+$year = date('Y');
+$datetim = $act_fecha . ' ' . $act_hora;
 ?>
 <script>
     function mostrarHora() {
@@ -1476,9 +1468,9 @@
     setInterval(mostrarHora, 1000);
 </script>
 <div class="float-right">
-    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+    <?php echo "$act_fecha"; ?> <strong id="reloj"></strong>
 </div>
 <div>
-    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year"; ?>
 </div>
 <p id="reloj"></p>

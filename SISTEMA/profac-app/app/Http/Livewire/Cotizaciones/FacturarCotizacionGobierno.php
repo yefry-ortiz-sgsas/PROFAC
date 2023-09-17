@@ -91,7 +91,8 @@ class FacturarCotizacionGobierno extends Component
         format(B.ultimo_costo_compra,2) as ultimo_costo_compra,
         format(B.precio_base,2) as precio_base,
         B.isv as isvTblProducto,
-        C.arregloIdInputs
+        C.arregloIdInputs,
+        A.monto_descProducto
         from cotizacion_has_producto A
         inner join producto B
         on A.producto_id = B.id
@@ -204,14 +205,16 @@ class FacturarCotizacionGobierno extends Component
 
 
 
-                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+            <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
                 <label for="isvProductoMostrar' . $i . '" class="sr-only">ISV</label>
                 <input type="text" value="' . $producto->isv . '" placeholder="ISV" id="isvProductoMostrar' . $i . '"
                     name="isvProductoMostrar' . $i . '" class="form-control"
                     autocomplete="off"
                     readonly >
 
-                    <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
+                    <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>                
+                    <input type="hidden" id="acumuladoDescuento'.$i.'" name="acumuladoDescuento'.$i.'" value="' . $producto->monto_descProducto . '" >
+                  
             </div>
 
 
