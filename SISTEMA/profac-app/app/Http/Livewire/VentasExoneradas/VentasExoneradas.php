@@ -241,7 +241,7 @@ class VentasExoneradas extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
-            
+
             $validarCAI = new Notificaciones();
             $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 3);
 
@@ -274,6 +274,8 @@ class VentasExoneradas extends Component
             $factura->sub_total_grabado = 0;
             $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->comentario=$request->nota_comen;
+            $factura->porc_descuento =$request->porDescuento;
+            $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -613,20 +615,24 @@ class VentasExoneradas extends Component
         on factura.cliente_id = cliente.id
         where factura.id = ".$idFactura);
 
-       $importes = DB::SELECTONE("
-       select
-        total,
-        isv,
-        sub_total
-        from factura
-        where id = ".$idFactura);
-
-        $importesConCentavos= DB::SELECTONE("
+        $importes = DB::SELECTONE("
         select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total
-        from factura where factura.id = ".$idFactura);
+         total,
+         isv,
+         sub_total,
+         porc_descuento,
+         monto_descuento
+         from factura
+         where id = ".$idFactura);
+
+         $importesConCentavos= DB::SELECTONE("
+         select
+         FORMAT(total,2) as total,
+         FORMAT(isv,2) as isv,
+         FORMAT(sub_total,2) as sub_total,
+         FORMAT(porc_descuento,2) as porc_descuento,
+         FORMAT(monto_descuento,2) as monto_descuento
+         from factura where factura.id = ".$idFactura);
 
        $productos = DB::SELECT("
             select
@@ -789,7 +795,9 @@ class VentasExoneradas extends Component
        select
         total,
         isv,
-        sub_total
+        sub_total,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = ".$idFactura);
 
@@ -797,7 +805,9 @@ class VentasExoneradas extends Component
         select
         FORMAT(total,2) as total,
         FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = ".$idFactura);
 
         $productos = DB::SELECT("
@@ -807,7 +817,7 @@ class VentasExoneradas extends Component
                     UPPER(J.nombre) as medida,
                     H.nombre as bodega,
                     F.descripcion as seccion,
-                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(TRUNCATE(B.precio_unidad,2),2) as precio,
                     FORMAT(sum(B.cantidad_s),2) as cantidad,
                     FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -983,7 +993,7 @@ class VentasExoneradas extends Component
                     UPPER(J.nombre) as medida,
                     H.nombre as bodega,
                     F.descripcion as seccion,
-                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(TRUNCATE(B.precio_unidad,2),2) as precio,
                     FORMAT(sum(B.cantidad_s),2) as cantidad,
                     FORMAT(sum(B.sub_total_s),2) as importe
 

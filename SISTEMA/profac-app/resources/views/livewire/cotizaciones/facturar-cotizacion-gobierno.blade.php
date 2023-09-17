@@ -143,6 +143,28 @@
 
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="form-group">
+
+                                        <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado
+                                            %
+                                            :<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="number" min="0" max="15"
+                                            value="{{ $cotizacion->porc_descuento }}" minlength="1" maxlength="2"
+                                            id="porDescuento" name="porDescuento" data-parsley-required
+                                            onchange="calcularTotalesInicioPagina()">
+
+                                        <p id="mensajeError" style="color: red;"></p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="row mt-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:</label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
@@ -185,10 +207,9 @@
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
-                                        <label for="nota"
-                                            class="col-form-label focus-label">Nota:
+                                        <label for="nota" class="col-form-label focus-label">Nota:
                                         </label>
-                                        <textarea class="form-control"  id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250" ></textarea>
+                                        <textarea class="form-control" id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250"></textarea>
                                     </div>
 
                                 </div>
@@ -371,6 +392,23 @@
                             </div>
 
                             <hr>
+
+                            <div class="row">
+
+                                <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
+                                    <label class="col-form-label" for="descuentoMostrar">Descuento L.<span
+                                            class="text-danger">*</span></label>
+                                </div>
+                                <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                                    <input type="text" placeholder="Descuento aplicado" id="descuentoMostrar"
+                                        name="descuentoMostrar" class="form-control"
+                                        value="{{ $cotizacion->monto_descuento }}" data-parsley-required
+                                        autocomplete="off" readonly>
+
+                                    <input type="hidden" value="{{ $cotizacion->monto_descuento }}"
+                                        id="porDescuentoCalculado" name="porDescuentoCalculado">
+                                </div>
+                            </div>
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
@@ -512,6 +550,21 @@
 
 
             calcularTotalesInicioPagina();
+
+            function validarDescuento() {
+                const numeroInput = document.getElementById('porDescuento');
+                const mensajeError = document.getElementById('mensajeError');
+                const numero = parseFloat(numeroInput.value);
+
+                if (isNaN(numero) || numero < 0 || numero > 15) {
+                    mensajeError.textContent = 'Este campo solo admite un valor entre 0 a 15';
+                    numeroInput.value = '';
+                } else {
+                    mensajeError.textContent = '';
+                }
+
+
+            }
 
 
             $('#vendedor').select2({
@@ -854,6 +907,7 @@
                                                     readonly >
 
                                                     <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>
+                                                    <input type="hidden" id="acumuladoDescuento${numeroInputs}" name="acumuladoDescuento${numeroInputs}" value="" >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -925,6 +979,8 @@
                 let isv = 0;
                 let total = 0;
 
+                let descuentoCalculado = 0;
+
                 arrayInputs.forEach(id => {
                     // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
                     valorInputPrecio = document.getElementById('precio' + id).value;
@@ -934,9 +990,28 @@
 
                     if (valorInputPrecio && valorInputCantidad) {
 
-                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                        isv = subTotal * (isvProducto / 100);
-                        total = subTotal + subTotal * (isvProducto / 100);
+                        //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        //isv = subTotal * (isvProducto / 100);
+                        //total = subTotal + subTotal * (isvProducto / 100);
+
+
+                        let descuento = document.getElementById('porDescuento').value;
+
+
+                        if (descuento > 0) {
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            descuentoCalculado = subTotal * (descuento / 100);
+                            subTotal = subTotal - descuentoCalculado;
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + (subTotal * (isvProducto / 100));
+                        } else {
+                            descuentoCalculado = 0;
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + subTotal * (isvProducto / 100);
+
+                        }
+                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado;
 
                         document.getElementById('total' + id).value = total.toFixed(3);
                         document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -964,6 +1039,12 @@
 
 
                         this.totalesGenerales();
+                        document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                            style: 'currency',
+                            currency: 'HNL',
+                            minimumFractionDigits: 4,
+                        }).format(descuentoCalculado)
+
 
                     }
 
@@ -985,11 +1066,31 @@
                 valorInputCantidad = idCantidad.value;
                 valorSelectUnidad = idUnidad.value;
 
+                let descuentoCalculado = 0;
+
                 if (valorInputPrecio && valorInputCantidad) {
 
-                    let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                    let isv = subTotal * (isvProducto / 100);
-                    let total = subTotal + subTotal * (isvProducto / 100);
+                    //let subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                    //let isv = subTotal * (isvProducto / 100);
+                    //let total = subTotal + subTotal * (isvProducto / 100);
+
+                    let descuento = document.getElementById('porDescuento').value;
+
+                    if (descuento > 0) {
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        descuentoCalculado = subTotal * (descuento / 100);
+                        subTotal = subTotal - descuentoCalculado;
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + (subTotal * (isvProducto / 100));
+                    } else {
+                        descuentoCalculado = 0
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + subTotal * (isvProducto / 100);
+                    }
+
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado
+
 
                     document.getElementById('total' + id).value = total.toFixed(4);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1018,6 +1119,12 @@
                     this.totalesGenerales();
 
 
+                    document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 4,
+                    }).format(descuentoCalculado)
+
 
                 }
 
@@ -1043,13 +1150,12 @@
                 let subTotalGeneral = new Number(0);
                 let subTotalFila = 0;
                 let isvFila = 0;
+                let acumularDescuento = new Number(0);
 
                 for (let i = 0; i < arregloIdInputs.length; i++) {
 
                     subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
                     isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-
-                    ;
 
                     if (isvFila == 0) {
                         subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
@@ -1064,10 +1170,10 @@
 
                     totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
                     totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
-
+                    acumularDescuento += new Number(document.getElementById('acumuladoDescuento' + arregloIdInputs[i]).value);
                 }
 
-
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento;
 
                 document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
@@ -1364,12 +1470,12 @@
     @endpush
 </div>
 <?php
-    date_default_timezone_set('America/Tegucigalpa');
-    $act_fecha=date("Y-m-d");
-    $act_hora=date("H:i:s");
-    $mes=date("m");
-    $year=date("Y");
-    $datetim=$act_fecha." ".$act_hora;
+date_default_timezone_set('America/Tegucigalpa');
+$act_fecha = date('Y-m-d');
+$act_hora = date('H:i:s');
+$mes = date('m');
+$year = date('Y');
+$datetim = $act_fecha . ' ' . $act_hora;
 ?>
 <script>
     function mostrarHora() {
@@ -1389,9 +1495,9 @@
     setInterval(mostrarHora, 1000);
 </script>
 <div class="float-right">
-    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+    <?php echo "$act_fecha"; ?> <strong id="reloj"></strong>
 </div>
 <div>
-    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year"; ?>
 </div>
 <p id="reloj"></p>
