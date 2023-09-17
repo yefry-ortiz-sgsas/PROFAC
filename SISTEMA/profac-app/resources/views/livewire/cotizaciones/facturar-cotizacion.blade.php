@@ -152,10 +152,9 @@
 
                                 </div>
 
-                                <div class="row mt-4">
+                              
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group">
-    
+                                        <div class="form-group">    
                                             <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado
                                                 %
                                                 :<span class="text-danger">*</span></label>
@@ -169,7 +168,7 @@
     
                                         </div>
                                     </div>
-                                </div>
+                              
 
 
 

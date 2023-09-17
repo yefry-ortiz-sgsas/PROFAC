@@ -955,14 +955,14 @@
                 element.remove();
 
 
-                console.log(arregloIdInputs);
+               
                 var myIndex = arregloIdInputs.indexOf(id);
                 if (myIndex !== -1) {
                     arregloIdInputs.splice(myIndex, 1);
                     this.totalesGenerales();
                 }
 
-                console.log(arregloIdInputs);
+             
             }
 
             function calcularTotalesInicioPagina() {
@@ -1135,7 +1135,6 @@
 
             function totalesGenerales() {
 
-                //console.log(arregloIdInputs);
 
                 if (numeroInputs == 0) {
                     return;
