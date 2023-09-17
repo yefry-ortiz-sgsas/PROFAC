@@ -77,20 +77,21 @@
         style="margin-left:3%; margin-top:25px; position:absolute;"
          alt="">
 
-        <b style="position:absolute;right: 100px; top:50px;" >*Copia*</b>
+        <b style="position:absolute;right: 100px; top:50px;" >*copia*</b>
         <br><br><br>
 
         <br><br>
         <div class="card border border-dark" style="margin-left:44px;  margin-top:150px; width:45rem; height:7rem;">
-
-            <div class="card-header">
-
-            <p class="card-text" style="position:absolute;left:20px;  top:0px;"><b>CAI: {{ $cai->cai }} </b></p>
-            <p class="card-text" style="position:absolute;left:20px;  top:15px;"><b>Fecha Emisión Cai: {{ $cai->fecha_limite_emision }} </b></p>
-            <br>
             <b style="margin-left:160px; ">NOTA DE DÉBITO No. {{$notaDebito->numeroCai}}</b>
 
-            </div>
+
+                    <p class="card-text" style="position:absolute;left:20px;  top:30px;"><b>Registro tributario:
+                            08011986138652</b></p>
+                    <p class="card-text" style="position:absolute;left:420px;  top:30px;"><b>CAI: {{$cai->cai}}
+                            </b></p>
+                    <p class="card-text" style="position:absolute;left:20px;  top:45px;"><b>Fecha límite de emisión: {{$cai->fecha_limite_emision}} </b></p>
+                    <p class="card-text" style="position:absolute;left:340px;  top:45px;"><b>Rango autorizado: {{$cai->numero_inicial}} - {{$cai->numero_final}}</b></p>
+
             <div class="card-body">
                 <p class="card-text" style="position:absolute;left:20px;  top:73px;"><b>Cliente: {{ $cliente->nombre_cliente }} </b></p>
 

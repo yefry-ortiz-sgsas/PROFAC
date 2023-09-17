@@ -196,6 +196,8 @@
                                             name="fecha_vencimiento" value="" data-parsley-required
                                             min="{{ date('Y-m-d') }}" readonly>
                                     </div>
+                                    <input type="hidden" id="porDescuento" name="porDescuento" value="0">
+                                    <input type="hidden" id="porDescuentoCalculado" name="porDescuentoCalculado" value="0">
                                 </div>
 
                                {{--   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">

@@ -453,6 +453,8 @@ class FacturacionEstatal extends Component
             $factura->estado_editar = 1;
             $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->comentario=$request->nota_comen;
+            $factura->porc_descuento =$request->porDescuento;
+            $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -545,8 +547,8 @@ class FacturacionEstatal extends Component
                 'idFactura' => "",
                 'mensajeError'=>$e
             ], 402);
-            
-        } 
+
+        }
     }
 
     public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idFactura, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad, $indice)

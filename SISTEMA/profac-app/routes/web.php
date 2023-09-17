@@ -546,6 +546,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/cuentas/cobrar/lista', [listadoCuentasCobrar::class, 'listarFacturasCobrar']);
     Route::get('/ventas/cuentas_por_cobrar', CuentasPorCobrar::class);
     Route::get('/ventas/cuentas_por_cobrar/clientes', [CuentasPorCobrar::class, 'listarClientes']);
+    Route::get('/estadoCuenta/imprimir/{idClientepdf}', [CuentasPorCobrar::class, 'imprimirEstadoCuenta']);
 
     Route::get('/ventas/cuentas_por_cobrar/listar/{id}', [CuentasPorCobrar::class, 'listarCuentasPorCobrar']);
     Route::get('/ventas/cuentas_por_cobrar/listar_intereses/{id}', [CuentasPorCobrar::class, 'listarCuentasPorCobrarInteres']);

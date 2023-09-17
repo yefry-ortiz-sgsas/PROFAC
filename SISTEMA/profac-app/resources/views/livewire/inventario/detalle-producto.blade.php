@@ -50,7 +50,7 @@
             </ol>
         </div>
 
-        @if (Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5')
+        @if (Auth::user()->rol_id == '1' || Auth::user()->rol_id == '5' || Auth::user()->rol_id == '7')
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 1.5rem" mr-auto>
                 <a href="#" class="btn add-btn btn-warning" data-toggle="modal" data-target="#modal_producto_editar"><i class="fa fa-plus"></i>Editar Producto</a>
@@ -203,19 +203,21 @@
                         <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio base de venta:
                             </strong> {{ $producto->precio_base }} Lps.</small></p>
 
-                        @foreach ($precios as $precio)
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio
-                                {{ $precio->contador }} de venta :</strong> {{ $precio->precio }} Lps</small></p>
-                        @endforeach
-
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Costo Promedio:
-                        </strong> {{ $producto->costo_promedio }} Lps.</small></p>
-
-                        <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Ultimo Costo de compra:
-                        </strong> {{ $producto->ultimo_costo_compra }} Lps.</small></p>
 
 
 
+
+                        @if (Auth::user()->rol_id != '2' && Auth::user()->rol_id != '3')
+                            @foreach ($precios as $precio)
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Precio
+                                    {{ $precio->contador }} de venta :</strong> {{ $precio->precio }} Lps</small></p>
+                            @endforeach
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Costo Promedio:
+                            </strong> {{ $producto->costo_promedio }} Lps.</small></p>
+
+                            <p class="mt-2 mb-2 d-block"> <strong> <i class="fa-solid fa-caret-right"></i> Ultimo Costo de compra:
+                            </strong> {{ $producto->ultimo_costo_compra }} Lps.</small></p>
+                        @endif
 
                     </div>
                 </div>

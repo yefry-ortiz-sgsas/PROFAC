@@ -100,8 +100,6 @@ class Cotizacion extends Component
         return $listaClientes;
     }
 
-
-
     public function clientesEstatal(Request $request)
     {
 
@@ -174,7 +172,6 @@ class Cotizacion extends Component
             'subTotalGeneral' => 'required',
             'isvGeneral' => 'required',
             'totalGeneral' => 'required',
-
             'numeroInputs' => 'required',
             'seleccionarCliente' => 'required',
             'nombre_cliente_ventas' => 'required',
@@ -220,6 +217,8 @@ class Cotizacion extends Component
             $cotizacion->users_id = Auth::user()->id;
             $cotizacion->arregloIdInputs = json_encode($request->arregloIdInputs);
             $cotizacion->numeroInputs = $request->numeroInputs;
+            $cotizacion->porc_descuento = $request->porDescuento;
+            $cotizacion->monto_descuento = $request->porDescuentoCalculado;
             $cotizacion->save();
 
 
@@ -240,6 +239,7 @@ class Cotizacion extends Component
 
                 $keyNombreProducto = 'nombre'.$arrayInputs[$i];
                 $keyBodegaNombre = 'bodega'.$arrayInputs[$i];
+                $keymonto_descProducto = 'acumuladoDescuento'.$arrayInputs[$i];
 
 
 
@@ -258,6 +258,7 @@ class Cotizacion extends Component
                 $ivsProductoAsignado = $request->$keyIsvAsigando;
                 $nombreProducto = $request->$keyNombreProducto;
                 $nombreBodega = $request->$keyBodegaNombre;
+                $monto_descProducto = $request->$keymonto_descProducto;
 
 
                 array_push($arrayProductos,[
@@ -276,6 +277,7 @@ class Cotizacion extends Component
                 'resta_inventario'=>$restaInventario,
                 'isv_producto'=>$ivsProductoAsignado,
                 'unidad_medida_venta_id'=>$idUnidadVenta,
+                'monto_descProducto'=>$monto_descProducto,
                 'created_at'=>now(),
                 'updated_at'=>now()
 
@@ -359,6 +361,7 @@ class Cotizacion extends Component
 
         $importes = DB::SELECTONE("
             select
+            porc_descuento,
             total,
             isv,
             sub_total,
@@ -371,6 +374,7 @@ class Cotizacion extends Component
 
         $importesConCentavos= DB::SELECTONE("
             select
+            FORMAT(monto_descuento,2) as monto_descuento,
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
             FORMAT(sub_total,2) as sub_total,
@@ -422,41 +426,36 @@ class Cotizacion extends Component
             where A.id =".$idFactura
         );
 
-        $productos = DB::SELECT("
-            select
-            C.id as codigo,
-            C.nombre,
-            C.descripcion,
-            H.nombre as bodega,
-            F.descripcion as seccion,
-            if(C.isv = 0, 'SI' , 'NO' ) as excento,
-            FORMAT(B.precio_unidad,2) as precio,
-            FORMAT(B.cantidad,2) as cantidad,
-            FORMAT(B.sub_total,2) as importe,
-            J.nombre as medida
+            $productos = DB::SELECT("
+                select
+                C.id as codigo,
+                C.nombre,
+                C.descripcion,
+                H.nombre as bodega,
+                F.descripcion as seccion,
+                if(C.isv = 0, 'SI' , 'NO' ) as excento,
+                FORMAT(B.precio_unidad,2) as precio,
+                FORMAT(B.cantidad,2) as cantidad,
+                FORMAT(B.sub_total,2) as importe,
+                J.nombre as medida
 
-            from cotizacion A
-            inner join cotizacion_has_producto B
-            on A.id=B.cotizacion_id
-            inner join producto C
-            on B.producto_id = C.id
-            inner join unidad_medida_venta D
-            on B.unidad_medida_venta_id = D.id
-            inner join unidad_medida J
-            on J.id = D.unidad_medida_id
-            inner join seccion F
-            on B.seccion_id = F.id
-            inner join segmento G
-            on F.segmento_id = G.id
-            inner join bodega H
-            on G.bodega_id = H.id
-            where A.id = ".$idFactura."
-            order by B.indice asc
-            "
-        );
+                from cotizacion A
+                    inner join cotizacion_has_producto B on A.id=B.cotizacion_id
+                    inner join producto C on B.producto_id = C.id
+                    inner join unidad_medida_venta D on B.unidad_medida_venta_id = D.id
+                    inner join unidad_medida J on J.id = D.unidad_medida_id
+                    inner join seccion F on B.seccion_id = F.id
+                    inner join segmento G on F.segmento_id = G.id
+                    inner join bodega H on G.bodega_id = H.id
+                where A.id = ".$idFactura."
+                order by B.indice asc
+                "
+            );
 
-        $importes = DB::SELECTONE("
+
+            $importes = DB::SELECTONE("
             select
+            porc_descuento,
             total,
             isv,
             sub_total,
@@ -469,6 +468,7 @@ class Cotizacion extends Component
 
         $importesConCentavos= DB::SELECTONE("
             select
+            FORMAT(monto_descuento,2) as monto_descuento,
             FORMAT(total,2) as total,
             FORMAT(isv,2) as isv,
             FORMAT(sub_total,2) as sub_total,
@@ -495,7 +495,6 @@ class Cotizacion extends Component
 
 
     }
-
 
     public function listarBodegas(Request $request)
     {
