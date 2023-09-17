@@ -651,7 +651,7 @@
 
                         if (imagenes.length == 0) {
 
-                            console.log("entro")
+                          
                             htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
@@ -881,7 +881,7 @@
 
                         arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                        console.log(arregloIdInputs, numeroInputs)
+                 
 
                         return;
 
@@ -1127,13 +1127,10 @@
 
 
                     acumularDescuento += new Number($('#acumuladoDescuento'+arregloIdInputs[i]).val());
-                    console.log($('#acumuladoDescuento'+arregloIdInputs[i]).val());
-
+                 
                 }
 
 
-                console.log('Aqui muestro el acumulado');
-                console.log(acumularDescuento);
 
                 $('#porDescuentoCalculado').val(acumularDescuento);
 
@@ -1309,7 +1306,7 @@
 
 
                         if (data.idFactura == 0) {
-                            console.log("entro")
+                           
 
                             Swal.fire({
                                 icon: data.icon,
