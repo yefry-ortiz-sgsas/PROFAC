@@ -651,7 +651,7 @@
 
                         if (imagenes.length == 0) {
 
-                          
+
                             htmlImagenes += `
                             <div class="carousel-item active " >
                                 <img  class="d-block  img-size" src="${public_path+'/'+'noimage.png'}" alt="noimage.png"  >
@@ -881,7 +881,7 @@
 
                         arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
                         document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
-                 
+
 
                         return;
 
@@ -946,7 +946,7 @@
                                 var descuento = $('#porDescuento').val();
 
 
-                                if (descuento > 0){
+                                if (descuento >= 0){
                                      subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                                     descuentoCalculado = subTotal * (descuento/100);
 
@@ -1023,7 +1023,7 @@
                         var descuento = $('#porDescuento').val();
 
 
-                        if (descuento > 0){
+                        if (descuento >= 0){
                              subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento/100);
 
@@ -1127,7 +1127,7 @@
 
 
                     acumularDescuento += new Number($('#acumuladoDescuento'+arregloIdInputs[i]).val());
-                 
+
                 }
 
 
@@ -1306,7 +1306,7 @@
 
 
                         if (data.idFactura == 0) {
-                           
+
 
                             Swal.fire({
                                 icon: data.icon,

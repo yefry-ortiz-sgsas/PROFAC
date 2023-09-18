@@ -152,9 +152,9 @@
 
                                 </div>
 
-                              
+
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <div class="form-group">    
+                                        <div class="form-group">
                                             <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado
                                                 %
                                                 :<span class="text-danger">*</span></label>
@@ -162,13 +162,13 @@
                                                 value="{{ $cotizacion->porc_descuento }}" minlength="1" maxlength="2"
                                                 id="porDescuento" name="porDescuento" data-parsley-required
                                                 onchange="calcularTotalesInicioPagina()">
-    
+
                                             <p id="mensajeError" style="color: red;"></p>
-    
-    
+
+
                                         </div>
                                     </div>
-                              
+
 
 
 
@@ -409,7 +409,7 @@
                                         id="porDescuentoCalculado" name="porDescuentoCalculado">
                                 </div>
                             </div>
-                            
+
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
@@ -985,7 +985,7 @@ function validarDescuento(){
                         let descuento = document.getElementById('porDescuento').value;
 
 
-                        if (descuento > 0) {
+                        if (descuento >= 0) {
                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento / 100);
                             subTotal = subTotal - descuentoCalculado;
@@ -1058,7 +1058,7 @@ function validarDescuento(){
                     let descuento = document.getElementById('porDescuento').value;
 
 
-                    if (descuento > 0) {
+                    if (descuento >= 0) {
                         subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                         descuentoCalculado = subTotal * (descuento / 100);
                         subTotal = subTotal - descuentoCalculado;
