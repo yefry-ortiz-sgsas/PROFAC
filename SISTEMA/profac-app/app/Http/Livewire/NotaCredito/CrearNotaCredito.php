@@ -421,6 +421,7 @@ class CrearNotaCredito extends Component
             $keyCantidad = "cantidad".$arregloIdInputs[$i];
 
             $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
+            
             $keySubTotal = "subTotal".$arregloIdInputs[$i];
             $keyISV = "isv".$arregloIdInputs[$i];
             $keyTotal = "total".$arregloIdInputs[$i];
