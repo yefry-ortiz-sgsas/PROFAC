@@ -955,14 +955,14 @@
                 element.remove();
 
 
-               
+
                 var myIndex = arregloIdInputs.indexOf(id);
                 if (myIndex !== -1) {
                     arregloIdInputs.splice(myIndex, 1);
                     this.totalesGenerales();
                 }
 
-             
+
             }
 
             function calcularTotalesInicioPagina() {
@@ -998,7 +998,7 @@
                         let descuento = document.getElementById('porDescuento').value;
 
 
-                        if (descuento > 0) {
+                        if (descuento >= 0) {
                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento / 100);
                             subTotal = subTotal - descuentoCalculado;
@@ -1076,7 +1076,7 @@
 
                     let descuento = document.getElementById('porDescuento').value;
 
-                    if (descuento > 0) {
+                    if (descuento >= 0) {
                         subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                         descuentoCalculado = subTotal * (descuento / 100);
                         subTotal = subTotal - descuentoCalculado;

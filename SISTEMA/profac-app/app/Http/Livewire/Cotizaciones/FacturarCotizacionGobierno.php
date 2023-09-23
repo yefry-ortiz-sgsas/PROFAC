@@ -78,7 +78,7 @@ class FacturarCotizacionGobierno extends Component
         A.producto_id,
         A.nombre_producto,
         A.nombre_bodega,
-        FORMAT(A.precio_unidad,2) as precio_unidad,
+        A.precio_unidad as precio_unidad,
         A.cantidad,
         A.sub_total,
         A.isv,
@@ -88,8 +88,8 @@ class FacturarCotizacionGobierno extends Component
         A.resta_inventario,
         A.isv_producto,
         A.unidad_medida_venta_id,
-        format(B.ultimo_costo_compra,2) as ultimo_costo_compra,
-        format(B.precio_base,2) as precio_base,
+        B.ultimo_costo_compra as ultimo_costo_compra,
+        B.precio_base as precio_base,
         B.isv as isvTblProducto,
         C.arregloIdInputs,
         A.monto_descProducto
@@ -212,9 +212,9 @@ class FacturarCotizacionGobierno extends Component
                     autocomplete="off"
                     readonly >
 
-                    <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>                
+                    <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
                     <input type="hidden" id="acumuladoDescuento'.$i.'" name="acumuladoDescuento'.$i.'" value="' . $producto->monto_descProducto . '" >
-                  
+
             </div>
 
 

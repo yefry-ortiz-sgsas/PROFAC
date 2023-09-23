@@ -81,7 +81,7 @@ class FacturarCotizacion extends Component
         A.producto_id,
         A.nombre_producto,
         A.nombre_bodega,
-        FORMAT(A.precio_unidad,2) as precio_unidad,
+        A.precio_unidad as precio_unidad,
         A.cantidad,
         A.sub_total,
         A.isv,
@@ -92,7 +92,7 @@ class FacturarCotizacion extends Component
         A.isv_producto,
         A.unidad_medida_venta_id,
         B.ultimo_costo_compra,
-        format(B.precio_base,2) as precio_base,
+        B.precio_base as precio_base,
         B.isv as isvTblProducto,
         C.arregloIdInputs,
         A.monto_descProducto
