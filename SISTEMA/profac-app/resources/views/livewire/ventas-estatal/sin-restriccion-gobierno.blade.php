@@ -222,6 +222,19 @@
                             </div>
 
                             <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label for="nota"
+                                            class="col-form-label focus-label">Nota:
+                                        </label>
+                                        <textarea class="form-control"  id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250" ></textarea>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="row">
 
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-4">
@@ -563,9 +576,9 @@
 
     @push('scripts')
         <script>
-            $(document).ready(function() {
+            /*$(document).ready(function() {
                 $('#modal_solicitar_codigo').modal('show')
-            });
+            });*/
 
             var numeroInputs = 0;
             var arregloIdInputs = [];
