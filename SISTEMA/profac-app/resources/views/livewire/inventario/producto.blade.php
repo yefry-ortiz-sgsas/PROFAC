@@ -140,9 +140,9 @@
                                         <th>Cod</th>
                                         <th>Nombre</th>
                                         <th>Descripcion</th>
+                                        <th>Cod. Barra</th>
                                         <th>ISV</th>
-                                        <th>Cateogria</th>
-                                        <th>Unidad De Medida Compra</th>
+                                        <th>Cateogria</th>                                       
                                         <th>Existencia</th>
                                         <th>Disponibilidad</th>
                                     </tr>
@@ -438,21 +438,34 @@
 
                 $('#tbl_productosListar').DataTable().ajax.reload();
 
-
-
-
-
-
-
                     Swal.fire({
                         icon: 'success',
                         title: 'Exito!',
-                        text: "Producto creado con exito."
+                        text: "Producto creado con éxito."
                     })
 
             })
             .catch( err =>{
+                $('#modalSpinnerLoading').modal('hide');
+                $('#modal_producto_crear').modal('hide');
+
                 console.error(err);
+                let data = err.response.data;
+                if(data.icon){
+                    Swal.fire({
+                            icon: data.icon,
+                            title: data.title,
+                            text: data.text,
+                        })
+
+                }else{
+                    Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: "Ha ocurrido un error.",
+                        })
+
+                }
 
             })
 
@@ -505,14 +518,15 @@
                         data: 'descripcion'
                     },
                     {
+                        data: 'codigo_barra'
+                    },
+                    {
                         data: 'ISV'
                     },
                     {
                         data: 'categoria'
                     },
-                    {
-                        data: 'unidad_medida'
-                    },
+
                     {
                         data: 'existencia'
                     },
