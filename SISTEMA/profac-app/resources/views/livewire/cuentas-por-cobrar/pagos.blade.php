@@ -1,11 +1,11 @@
 <div>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <h2>Cuentas por Cobrar</h2>
+            <h2>Aplicación de Pagos</h2>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Aplicacion de Pagos / Cuentas Por Cobrar</a>
+                    <a href="index.html">/ Cuentas Por Cobrar</a>
                 </li>
 
 
@@ -146,7 +146,7 @@
 
         $('#cliente').select2({
             ajax: {
-                url: '/ventas/cuentas_por_cobrar/clientes',
+                url: '/cuentas_por_cobrar/pagos/clientes',
                 data: function(params) {
                     var query = {
                         search: params.term,
@@ -173,7 +173,7 @@
     function pdfEstadoCuenta(){
 
         var idClientepdf = document.getElementById('cliente').value;
-        window.open('/estadoCuenta/imprimir/'+idClientepdf, '_blank');
+        window.open('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/'+idClientepdf, '_blank');
     }
 
     function listarCuentasPorCobrar() {
@@ -222,7 +222,7 @@
                             }
                         }
                     ],
-                    "ajax": "/ventas/cuentas_por_cobrar/listar/"+idCliente,
+                    "ajax": "/cuentas_por_cobrar/pagos/listar/"+idCliente,
                     "columns": [
 
                         {
@@ -368,7 +368,7 @@
                 let htmlSelect1 = ''
 
                 htmlSelect1 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a>
+                        <a href="/cuentas_por_cobrar/pagos/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a>
 
                                 `
 
@@ -378,7 +378,7 @@
                 let htmlSelect2 = ''
 
                 htmlSelect2 =   `
-                        <a href="/ventas/cuentas_por_cobrar/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a>
+                        <a href="/cuentas_por_cobrar/pagos/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a>
 
                                 `
 

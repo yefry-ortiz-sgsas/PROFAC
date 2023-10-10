@@ -576,9 +576,9 @@
 
     @push('scripts')
         <script>
-            /*$(document).ready(function() {
+            $(document).ready(function() {
                 $('#modal_solicitar_codigo').modal('show')
-            });*/
+            });
 
             var numeroInputs = 0;
             var arregloIdInputs = [];

@@ -79,6 +79,9 @@ use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
+use App\Http\Livewire\CuentasPorCobrar\Pagos;
+
+
 use App\Http\Livewire\Vale\CrearVale;
 use App\Http\Livewire\Vale\ListarVales;
 use App\Http\Livewire\Vale\FacturarVale;
@@ -552,6 +555,23 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/ventas/cuentas_por_cobrar/excel_cuentas/{cliente}', [CuentasPorCobrar::class, 'exportCuentasPorCobrar']);
     Route::get('/ventas/cuentas_por_cobrar/excel_intereses/{cliente}', [CuentasPorCobrar::class, 'exportCuentasPorCobrarInteres']);
+
+
+
+
+
+
+    /////////////////////////////APLICACION DE PAGOS/////////////////////////////////
+    Route::get('/cuentas_por_cobrar/pagos', Pagos::class);
+    Route::get('/cuentas_por_cobrar/pagos/clientes', [Pagos::class, 'listarClientes']);
+    Route::get('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
+
+    Route::get('/cuentas_por_cobrar/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
+    Route::get('/cuentas_por_cobrar/pagos/listar_intereses/{id}', [Pagos::class, 'listarCuentasPorCobrarInteres']);
+
+    Route::get('/cuentas_por_cobrar/pagos/excel_cuentas/{cliente}', [Pagos::class, 'exportCuentasPorCobrar']);
+    Route::get('/cuentas_por_cobrar/pagos/excel_intereses/{cliente}', [Pagos::class, 'exportCuentasPorCobrarInteres']);
+    /////////////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////HISTORICO DE PRECIOS//////////////////////////////////////////
 
