@@ -971,20 +971,24 @@ class VentasExoneradas extends Component
         on factura.cliente_id = cliente.id
         where factura.id = ".$idFactura);
 
-       $importes = DB::SELECTONE("
-       select
-        total,
-        isv,
-        sub_total
-        from factura
-        where id = ".$idFactura);
-
-        $importesConCentavos= DB::SELECTONE("
+        $importes = DB::SELECTONE("
         select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total
-        from factura where factura.id = ".$idFactura);
+         total,
+         isv,
+         sub_total,
+         porc_descuento,
+         monto_descuento
+         from factura
+         where id = ".$idFactura);
+
+         $importesConCentavos= DB::SELECTONE("
+         select
+         FORMAT(total,2) as total,
+         FORMAT(isv,2) as isv,
+         FORMAT(sub_total,2) as sub_total,
+         FORMAT(porc_descuento,2) as porc_descuento,
+         FORMAT(monto_descuento,2) as monto_descuento
+         from factura where factura.id = ".$idFactura);
 
         $productos = DB::SELECT("
             select
