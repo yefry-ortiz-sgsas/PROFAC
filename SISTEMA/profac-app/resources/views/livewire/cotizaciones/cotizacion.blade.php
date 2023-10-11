@@ -166,7 +166,7 @@
                                         <input class="form-control" oninput="validarDescuento()" onchange="calcularTotalesInicioPagina()" type="number" min="0" max="15" value="0" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required >
                                         <p id="mensajeError" style="color: red;"></p>
 
-                                        <input type="hidden" id="porDescuentoCalculado" name="porDescuentoCalculado">
+                                        
                                     </div>
                                 </div>
 
@@ -381,7 +381,7 @@
                                         name="descuentoMostrar" class="form-control"
                                         data-parsley-required autocomplete="off" readonly>
 
-
+                                        <input type="hidden" id="descuentoGeneral" name="descuentoGeneral" required>
 
                                 </div>
                             </div>
@@ -950,7 +950,7 @@
                                      subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                                     descuentoCalculado = subTotal * (descuento/100);
 
-                                    //$('#porDescuentoCalculado').val(descuentoCalculado);
+                                  
                                     $('#acumuladoDescuento'+id).val(descuentoCalculado);
 
 
@@ -961,7 +961,7 @@
 
 
                                 }else{
-                                    $('#porDescuentoCalculado').val(0);
+                                    $('#descuentoGeneral').val(0);
                                      subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                                      isv = subTotal * (isvProducto / 100);
                                      total = subTotal + subTotal * (isvProducto / 100);
@@ -1027,7 +1027,7 @@
                              subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento/100);
 
-                            //$('#porDescuentoCalculado').val(descuentoCalculado);
+                            //$('#descuentoGeneral').val(descuentoCalculado);
                             $('#acumuladoDescuento'+id).val(descuentoCalculado);
 
 
@@ -1038,7 +1038,7 @@
 
 
                         }else{
-                            $('#porDescuentoCalculado').val(0);
+                            $('#descuentoGeneral').val(0);
                              subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                              isv = subTotal * (isvProducto / 100);
                              total = subTotal + subTotal * (isvProducto / 100);
@@ -1132,7 +1132,7 @@
 
 
 
-                $('#porDescuentoCalculado').val(acumularDescuento);
+                $('#descuentoGeneral').val(acumularDescuento);
 
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
