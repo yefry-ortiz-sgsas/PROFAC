@@ -8,7 +8,7 @@
                     <a href="index.html">/ Cuentas Por Cobrar</a>
                 </li>
 
-
+  
             </ol>
         </div>
 
