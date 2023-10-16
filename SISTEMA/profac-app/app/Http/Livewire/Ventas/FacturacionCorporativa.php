@@ -325,9 +325,8 @@ class FacturacionCorporativa extends Component
 
 
 
-            if ($request->restriccion == 1) {
+            /* if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
-                // DD($facturaVencida);
                 if ($facturaVencida) {
                     return response()->json([
                         'icon' => 'warning',
@@ -336,11 +335,11 @@ class FacturacionCorporativa extends Component
 
                     ], 401);
                 }
-            }
+            } */
 
 
 
-            if ($request->tipoPagoVenta == 2) {
+            /* if ($request->tipoPagoVenta == 2) {
                 $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
 
                 if ($comprobarCredito) {
@@ -351,7 +350,7 @@ class FacturacionCorporativa extends Component
 
                     ], 401);
                 }
-            }
+            } */
 
 
 
