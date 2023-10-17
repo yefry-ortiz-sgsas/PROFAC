@@ -365,6 +365,14 @@ class CrearNotaCredito extends Component
         $notaCredito->estado_nota_id = 1;
         $notaCredito->estado_nota_dec = $estado;
         $notaCredito->comentario = $request->comentario;
+
+        /*Se agregan los nuevos campos en la nota de credito*/
+        $notaCredito->estado_rebajado = 2;
+        $notaCredito->user_registra_rebaja = 0;
+        $notaCredito->comentario_rebajado = 'N/A';
+        $notaCredito->fecha_rebajado = NULL;
+
+
         $notaCredito->save();
 
 
