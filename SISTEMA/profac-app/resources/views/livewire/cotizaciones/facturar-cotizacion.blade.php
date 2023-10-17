@@ -524,7 +524,7 @@
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
-            var diasCredito = 0;
+            var diasCredito = {{$cotizacion->dias_credito}};
 
 
 
@@ -1412,7 +1412,7 @@ function validarDescuento(){
                     let date = new Date(fechaEmision);
                     date.setDate(date.getDate() + diasCredito);
                     let suma = date.toISOString().split('T')[0];
-                    //console.log( diasCredito);
+                    // console.log( diasCredito);
 
                     document.getElementById("fecha_vencimiento").value = suma;
 

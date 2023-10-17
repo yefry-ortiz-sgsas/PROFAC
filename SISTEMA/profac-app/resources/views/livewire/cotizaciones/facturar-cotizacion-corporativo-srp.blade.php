@@ -2,10 +2,10 @@
     @push('styles')
         <style>
             /* #divProductos  input {
-            font-size: 0.8rem;
+                                    font-size: 0.8rem;
 
 
-          } */
+                                  } */
 
 
             .img-size {
@@ -51,13 +51,13 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Cotización</h2>
+            <h2>Facturar Cotización SRP</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
 
-                    @if ($tipoCotizacion == 1)
+                    @if ($cotizacion->tipo_venta_id == 1)
                         <a>Cliente B</a>
-                    @elseif($tipoCotizacion == 2)
+                    @elseif($cotizacion->tipo_venta_id == 2)
                         <a>Cliente A</a>
                     @else
                         <a>Cliente Exonerado</a>
@@ -86,14 +86,33 @@
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h3>Datos de cotización <i class="fa-solid fa-cart-shopping"></i></h3>
+                        <h3>Datos de compra <i class="fa-solid fa-cart-shopping"></i></h3>
                     </div>
                     <div class="ibox-content">
                         <form onkeydown="return event.key != 'Enter';" autocomplete="off" id="crear_venta"
                             name="crear_venta" data-parsley-validate>
 
 
-                            <input type="hidden" id="tipo_venta_id" name="tipo_venta_id" value="{{ $tipoCotizacion }}">
+                            <input type="hidden" id="tipo_venta_id" name="tipo_venta_id"
+                                value="{{ $cotizacion->tipo_venta_id }}">
+
+                            <input type="hidden" id="restriccion" name="restriccion" value="2">
+                            <input name="idComprobante" id="idComprobante" type="hidden" value="">
+
+
+                            <input type="hidden" id="codigo_autorizacion" name="codigo_autorizacion" value="" required>
+
+
+                            <div class="row  mt-4 mb-4">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="vendedor">Seleccionar Vendedor:<span class="text-danger">*</span>
+                                    </label>
+                                    <select name="vendedor" id="vendedor" class="form-group form-control" required>
+                                        <option value="" selected disabled>--Seleccionar un vendedor--</option>
+                                    </select>
+
+                                </div>
+                            </div>
 
 
 
@@ -102,9 +121,10 @@
                                     <label for="seleccionarCliente" class="col-form-label focus-label">Seleccionar
                                         Cliente:<span class="text-danger">*</span> </label>
                                     <select id="seleccionarCliente" name="seleccionarCliente"
-                                        class="form-group form-control" style="" data-parsley-required
+                                        class="form-group form-control"  readonly style="" data-parsley-required
                                         onchange="obtenerDatosCliente()">
-                                        <option value="" selected disabled>--Seleccionar un cliente--</option>
+                                        <option value="{{ $cotizacion->cliente_id }}" selected>
+                                            {{ $cotizacion->nombre_cliente }}</option>
                                     </select>
                                 </div>
 
@@ -112,17 +132,45 @@
                                     <label class="col-form-label focus-label">Nombre del cliente:<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente_ventas"
-                                        name="nombre_cliente_ventas" data-parsley-required readonly>
+                                        name="nombre_cliente_ventas" value="{{ $cotizacion->nombre_cliente }}"
+                                        data-parsley-required readonly>
 
                                 </div>
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <label for="ordenCompra" class="col-form-label focus-label">Seleccionar un número de
+                                        orden de compra:</label>
+                                    <select class="form-group form-control " name="ordenCompra" id="ordenCompra">
+                                        <option value="" selected disabled>--Seleccionar un número de compra--
+                                        </option>
+
+                                    </select>
+                                </div>
+
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label class="col-form-label focus-label">RTN:<span
                                             class="text-danger">*</span></label>
                                     <input class="form-control" type="text" id="rtn_ventas" name="rtn_ventas"
-                                        readonly>
+                                        value="{{ $cotizacion->RTN }}" readonly>
 
                                 </div>
+
+
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        <div class="form-group">
+                                            <label for="porDescuento" class="col-form-label focus-label">Descuento aplicado
+                                                %
+                                                :<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="number" min="0" max="15"
+                                                value="{{ $cotizacion->porc_descuento }}" minlength="1" maxlength="2"
+                                                id="porDescuento" name="porDescuento" data-parsley-required
+                                                onchange="calcularTotalesInicioPagina()">
+
+                                            <p id="mensajeError" style="color: red;"></p>
+                                        </div>
+                                    </div>
+
 
 
 
@@ -131,20 +179,13 @@
                             </div>
 
                             <div class="row mt-4">
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: none;">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
                                         pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
-                                        onchange="validarFechaPago()">
+                                        data-parsley-required onchange="validarFechaPago()">
                                     </select>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label for="vendedor">Seleccionar Vendedor:<span class="text-danger"></span> </label>
-                                    <select name="vendedor" id="vendedor" class="form-group form-control" data-parsley-required>
-                                      <option value="" selected disabled>--Seleccionar un vendedor--</option>
-                                    </select>
-
-                              </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
@@ -158,25 +199,15 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <div class="form-group">
-
-                                        <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado %
-                                            :<span class="text-danger">*</span></label>
-                                        <input class="form-control" oninput="validarDescuento()" onchange="calcularTotalesInicioPagina()" type="number" min="0" max="15" value="0" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required >
-                                        <p id="mensajeError" style="color: red;"></p>
-
-                                        
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="display: none;">
                                     <div class="form-group">
                                         <label for="fecha_vencimiento"
                                             class="col-form-label focus-label text-warning">Fecha de vencimiento:
                                         </label>
                                         <input class="form-control" type="date" id="fecha_vencimiento"
-                                            name="fecha_vencimiento" value="" min="{{ date('Y-m-d') }}" readonly>
+                                            name="fecha_vencimiento" value="" data-parsley-required
+                                            min="{{ date('Y-m-d') }}" readonly>
                                     </div>
                                 </div>
 
@@ -188,32 +219,44 @@
 
 
                             </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="form-group">
+                                        <label for="nota" class="col-form-label focus-label">Nota:
+                                        </label>
+                                        <textarea class="form-control" id="nota_comen" name="nota_comen" cols="30" rows="3" maxlength="250"></textarea>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
 
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
 
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar
-                                            Producto:<span class="text-danger">*</span></label>
-                                        <select id="seleccionarProducto" name="seleccionarProducto"
-                                            class="form-group form-control" style="" onchange="obtenerImagenes()">
-                                            <option value="" selected disabled>--Seleccione un producto--</option>
-                                        </select>
-                                    </div>
+
+                                    <label for="seleccionarProducto" class="col-form-label focus-label">Seleccionar
+                                        Producto:<span class="text-danger">*</span></label>
+                                    <select id="seleccionarProducto" name="seleccionarProducto"
+                                        class="form-group form-control" style="" onchange="obtenerImagenes()">
+                                        <option value="" selected disabled>--Seleccione un producto--</option>
+                                    </select>
+
 
 
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <label for="bodega" class="col-form-label focus-label">Seleccionar
-                                            bodega:<span class="text-danger">*</span></label>
-                                        <select id="bodega" name="bodega" class="form-group form-control"
-                                            style="" onchange="prueba()" disabled>
-                                            <option value="" selected disabled>--Seleccione un producto--</option>
-                                        </select>
-                                    </div>
+
+                                    <label for="bodega" class="col-form-label focus-label">Seleccionar
+                                        bodega:</label>
+                                    <select id="bodega" name="bodega" class="form-group form-control"
+                                        style="" onchange="prueba()" disabled>
+                                        <option value="" selected disabled>--Seleccione un producto--</option>
+                                    </select>
+
 
                                 </div>
 
@@ -232,15 +275,7 @@
 
 
                                     <div id="carouselProducto" class="carousel slide mt-2" data-ride="carousel">
-                                        {{-- <ol  id="carousel_imagenes_producto" class="carousel-indicators">
 
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class="active"></li>
-
-                                                <li data-target="#carouselProducto" data-slide-to="{{ $i }}" class=""></li>
-
-
-
-                                        </ol> --}}
                                         <div id="bloqueImagenes" class="carousel-inner ">
 
 
@@ -326,12 +361,7 @@
 
 
                                     </div>
-                                    {{--
-                                    <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
-                                        <label class="sr-only">Seccion</label>
-                                        <input type="text" placeholder="Seccion" class="form-control"
-                                            min="1" autocomplete="off" disabled>
-                                    </div> --}}
+
 
 
                                     <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -359,35 +389,30 @@
                             </div>
 
                             <div id="divProductos">
-
+                                {!! $htmlProductos !!}
                             </div>
 
 
-
-
-
-
-
-
-
                             <hr>
+
                             <div class="row">
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
-                                    <label class="col-form-label" for="descuentoMostrar">Descuento L.<span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="descuentoMostrar">Descuento L.<span
+                                            class="text-danger">*</span></label>
                                 </div>
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Descuento aplicado" id="descuentoMostrar"
                                         name="descuentoMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" readonly>
+                                        value="{{ $cotizacion->monto_descuento }}" data-parsley-required
+                                        autocomplete="off" readonly>
 
-                                        <input type="hidden" id="descuentoGeneral" name="descuentoGeneral" required>
-
+                                    <input type="hidden" value="{{ $cotizacion->monto_descuento }}"
+                                        id="porDescuentoCalculado" name="porDescuentoCalculado">
                                 </div>
                             </div>
 
                             <div class="row">
-
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
                                     <label class="col-form-label" for="subTotalGeneralMostrar">Sub Total L.<span
@@ -396,17 +421,15 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralMostrar"
-                                        name="subTotalGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" readonly>
+                                        value="{{ $cotizacion->sub_total }}" name="subTotalGeneralMostrar"
+                                        class="form-control" data-parsley-required autocomplete="off" readonly>
 
-                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden" value=""
-                                        required>
+                                    <input id="subTotalGeneral" name="subTotalGeneral" type="hidden"
+                                        value="{{ $cotizacion->sub_total }}" required>
                                 </div>
                             </div>
 
                             <div class="row">
-
-
 
                                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-1 col-xl-1">
                                     <label class="col-form-label" for="subTotalGeneralGrabadoMostrar">Sub Total
@@ -416,10 +439,11 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralGrabadoMostrar"
                                         name="subTotalGeneralGrabadoMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" readonly>
+                                        data-parsley-required autocomplete="off"
+                                        value="{{ $cotizacion->sub_total_grabado }}" readonly>
 
                                     <input id="subTotalGeneralGrabado" name="subTotalGeneralGrabado" type="hidden"
-                                        value="" required>
+                                        value="{{ $cotizacion->sub_total_grabado }}" required>
                                 </div>
                             </div>
 
@@ -433,10 +457,11 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Sub total " id="subTotalGeneralExcentoMostrar"
                                         name="subTotalGeneralExcentoMostrar" class="form-control"
-                                        data-parsley-required autocomplete="off" readonly>
+                                        data-parsley-required autocomplete="off"
+                                        value="{{ $cotizacion->sub_total_excento }}" readonly>
 
                                     <input id="subTotalGeneralExcento" name="subTotalGeneralExcento" type="hidden"
-                                        value="" required>
+                                        value="{{ $cotizacion->sub_total_excento }}" required>
                                 </div>
                             </div>
 
@@ -449,9 +474,10 @@
 
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="ISV " id="isvGeneralMostrar"
-                                        name="isvGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" readonly>
-                                    <input id="isvGeneral" name="isvGeneral" type="hidden" value="" required>
+                                        name="isvGeneralMostrar" class="form-control" value="{{ $cotizacion->isv }}"
+                                        data-parsley-required autocomplete="off" readonly>
+                                    <input id="isvGeneral" name="isvGeneral" type="hidden"
+                                        value="{{ $cotizacion->isv }}" required>
                                 </div>
                             </div>
 
@@ -465,18 +491,18 @@
                                 <div class="form-group col-12 col-sm-12 col-md-3 col-lg-2 col-xl-2">
                                     <input type="text" placeholder="Total  " id="totalGeneralMostrar"
                                         name="totalGeneralMostrar" class="form-control" data-parsley-required
-                                        autocomplete="off" readonly>
+                                        autocomplete="off" value="{{ $cotizacion->total }}" readonly>
 
-                                    <input id="totalGeneral" name="totalGeneral" type="hidden" value=""
-                                        required>
+                                    <input id="totalGeneral" name="totalGeneral" type="hidden"
+                                        value="{{ $cotizacion->total }}" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button id="guardar_cotizacion_btn"
+                                    <button id="guardar_cotizacion_btn" name="guardar_cotizacion_btn"
                                         class="btn  btn-primary float-left m-t-n-xs"><strong>
-                                            Guardar Cotizacion</strong></button>
+                                            Realizar Factura</strong></button>
                                 </div>
                             </div>
 
@@ -488,21 +514,102 @@
             </div>
         </div>
 
+                <!-- Modal Solictar codigo -->
+
+                <div class="modal fade" id="modal_solicitar_codigo" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">Solicitar código</h3>
+    
+                        </div>
+    
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <button class="btn btn-primary  btn-large-dim" type="button"
+                                    onclick="solicitarCodigo()"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+    
+                            <div id="div_imprimir" class="text-center mt-2 d-none">
+                                <a id="btn_imprimir" target="_blank" class="btn add-btn btn-success text-white"><i
+                                        class="fa-solid fa-file-invoice"></i> Imprimir Factura</a>
+    
+                            </div>
+    
+                        </div>
+    
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+    
+                        </div>
+    
+    
+                    </div>
+                </div>
+            </div>
+    
+    
+            <!-- Modal Ingresar codigo -->
+            <div class="modal fade" id="modalPermiso" data-backdrop="static" tabindex="1" role="dialog"
+                aria-labelledby="modalPermisoTitle">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="1">Ingresar código</h3>
+    
+                        </div>
+                        <div class="modal-body">
+                            <form id="verificarCodigoForm" autocomplete="off" data-parsley-validate>
+
+    
+                                <label for="codigo" class="col-form-label focus-label">Código de autorización:<span
+                                        class="text-danger">*</span></label>
+                                <input class="form-control" required type="text" id="codigo" name="codigo"
+                                    data-parsley-required>
+    
+                            </form>
+                            <span id="mensajeCodigo" class="text-danger d-none">Código incorrecto</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="history.back()">Salir</button>
+                            <button type="submit" form="verificarCodigoForm" class="btn btn-primary">Verificar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
     </div>
 
 
     @push('scripts')
         <script>
-            var numeroInputs = 0;
             var arregloIdInputs = [];
+            var numeroInputs = {{ $cotizacion->numeroInputs }};
+            var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
+            var urlGuardarVenta = "{{ $urlGuardarVenta }}";
 
             window.onload = obtenerTipoPago;
             var public_path = "{{ asset('catalogo/') }}";
-            var diasCredito = 0;
-            
-            //validando que no escriban un numero que no este entre 0 y 15
+            var diasCredito = {{$cotizacion->dias_credito}};
+  
+
+
+            const searchRegExp = /\"/g;
+            arregloIdInputsTemporal = arregloIdInputsTemporal.replace(searchRegExp, '')
+            arregloIdInputs = arregloIdInputsTemporal.split(",");
+
+            for (let z = 0; z < arregloIdInputs.length; z++) {
+                arregloIdInputs[z] = parseInt(arregloIdInputs[z]);
+
+            }
+
+
+
+            calcularTotalesInicioPagina();
+
             function validarDescuento(){
                 const numeroInput = document.getElementById('porDescuento');
                 const mensajeError = document.getElementById('mensajeError');
@@ -514,35 +621,16 @@
                 } else {
                     mensajeError.textContent = '';
                 }
+
+
             }
 
             $('#vendedor').select2({
-                ajax:{
-                    url:'/ventas/corporativo/vendedores',
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            type: 'public',
-                            page: params.page || 1
-                        }
-
-                        // Query parameters will be ?search=[term]&type=public
-                        return query;
-                    }
-
-                }
-            });
-
-
-
-
-            $('#seleccionarCliente').select2({
                 ajax: {
-                    url: '/cotizacion/clientes',
+                    url: '/ventas/corporativo/vendedores',
                     data: function(params) {
                         var query = {
                             search: params.term,
-                            tipoCotizacion: {{ $tipoCotizacion }},
                             type: 'public',
                             page: params.page || 1
                         }
@@ -550,11 +638,25 @@
                         // Query parameters will be ?search=[term]&type=public
                         return query;
                     }
+
                 }
             });
 
+            // $('#seleccionarCliente').select2({
+            //     ajax: {
+            //         url: '/cotizacion/clientes',
+            //         data: function(params) {
+            //             var query = {
+            //                 search: params.term,
+            //                 tipoCotizacion: {{ $cotizacion->tipo_venta_id }},
+            //                 type: 'public',
+            //                 page: params.page || 1
+            //             }
 
-
+            //             return query;
+            //         }
+            //     }
+            // });
 
             $('#seleccionarProducto').select2({
                 ajax: {
@@ -566,7 +668,7 @@
                             page: params.page || 1
                         }
 
-                        // Query parameters will be ?search=[term]&type=public
+
 
                         return query;
                     }
@@ -586,7 +688,7 @@
                 let idProducto = id;
                 $('#bodega').select2({
                     ajax: {
-                        url: '/cotizacion/listar/bodegas/' + idProducto,
+                        url: '/ventas/listar/bodegas/' + idProducto,
                         data: function(params) {
                             var query = {
                                 search: params.term,
@@ -595,7 +697,6 @@
                                 idProducto: idProducto
                             }
 
-                            // Query parameters will be ?search=[term]&type=public
                             return query;
                         }
                     }
@@ -605,6 +706,8 @@
 
 
             function obtenerTipoPago() {
+
+
 
                 axios.get('/ventas/tipo/pago')
                     .then(response => {
@@ -635,6 +738,47 @@
                         })
                     })
 
+                    $('#modal_solicitar_codigo').modal('show')
+
+            }
+
+            function solicitarCodigo() {
+                axios.get('/ventas/solicitud/codigo')
+                    .then(response => {
+                        $("#modal_solicitar_codigo").removeClass("fade").modal("hide");
+                        $("#modalPermiso").modal("show").addClass("fade");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+
+            $(document).on('submit', '#verificarCodigoForm', function(event) {
+                event.preventDefault();
+                ocultarModalVerificar();
+            });
+
+            function ocultarModalVerificar() {
+                let codigo = document.getElementById('codigo').value;
+                axios.post('/ventas/verificar/codigo', {
+                        codigo: codigo
+                    })
+                    .then(response => {
+
+                        let data = response.data;
+                        if (data.estado == 1) {
+                            $("#modalPermiso").removeClass("fade").modal("hide");
+                            document.getElementById('mensajeCodigo').classList.add('d-none')
+                            document.getElementById('codigo_autorizacion').value = data.idAutorizacion;
+                            
+                        } else {
+                            document.getElementById('mensajeCodigo').classList.remove('d-none')
+                            document.getElementById('codigo_autorizacion').value = '';
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             }
 
             function obtenerImagenes() {
@@ -756,7 +900,11 @@
                         let arrayUnidades = response.data.unidades;
 
 
-                        numeroInputs += 1;
+                        let ultimoElemento = arregloIdInputs[arregloIdInputs.length - 1];
+
+
+                        numeroInputs = parseInt(ultimoElemento) + 1;
+
 
                         //     let arraySecciones  = response.data.secciones;
                         // htmlSelectSeccion ="<option selected disabled>--seccion--</option>";
@@ -845,7 +993,6 @@
                                                     readonly >
 
                                                 <input id="subTotal${numeroInputs}" name="subTotal${numeroInputs}" type="hidden" value="" required>
-                                                <input type="hidden" id="acumuladoDescuento${numeroInputs}" name="acumuladoDescuento${numeroInputs}" >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -856,6 +1003,7 @@
                                                     readonly >
 
                                                     <input id="isvProducto${numeroInputs}" name="isvProducto${numeroInputs}" type="hidden" value="" required>
+                                                    <input type="hidden" id="acumuladoDescuento${numeroInputs}" name="acumuladoDescuento${numeroInputs}" >
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -880,9 +1028,9 @@
                         </div>
                         `;
 
-                        arregloIdInputs.splice(numeroInputs, 0, numeroInputs);
-                        document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
 
+                        arregloIdInputs.push(numeroInputs);
+                        document.getElementById('divProductos').insertAdjacentHTML('beforeend', html);
 
                         return;
 
@@ -910,10 +1058,8 @@
                     this.totalesGenerales();
                 }
 
-            }
-            function myRound(num, dec) {
-                var exp = Math.pow(10, dec || 2); // 2 decimales por defecto
-                return parseInt(num * exp, 10) / exp;
+
+
             }
 
             function calcularTotalesInicioPagina() {
@@ -923,129 +1069,47 @@
 
                 let valorInputPrecio = 0;
                 let valorInputCantidad = 0;
-                let valorSelectUnidad =0;
+                let valorSelectUnidad = 0;
                 let isvProducto = 0;
 
                 let subTotal = 0;
-                let isv =0;
+                let isv = 0;
                 let total = 0;
                 var descuentoCalculado = 0;
 
                 arrayInputs.forEach(id => {
                     // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
-                        valorInputPrecio = document.getElementById('precio' + id).value;
-                        valorInputCantidad = document.getElementById('cantidad' + id).value;
-                        valorSelectUnidad = document.getElementById('unidad' + id).value;
-                        isvProducto = document.getElementById("isv"+id).value;
-
-                            if (valorInputPrecio && valorInputCantidad) {
-
-                                //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                //isv = subTotal * (isvProducto / 100);
-                                // total = subTotal + subTotal * (isvProducto / 100);
-
-                                var descuento = $('#porDescuento').val();
-
-
-                                if (descuento >= 0){
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                    descuentoCalculado = subTotal * (descuento/100);
-
-                                  
-                                    $('#acumuladoDescuento'+id).val(descuentoCalculado);
-
-
-                                     subTotal = subTotal - descuentoCalculado;
-
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + (subTotal * (isvProducto / 100));
-
-
-                                }else{
-                                    $('#descuentoGeneral').val(0);
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + subTotal * (isvProducto / 100);
-
-                                }
-
-                                document.getElementById('total' + id).value = total.toFixed(4);
-                                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                                    style: 'currency',
-                                    currency: 'HNL',
-                                    minimumFractionDigits: 4,
-                                }).format(total)
-
-                                document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
-                                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                                    style: 'currency',
-                                    currency: 'HNL',
-                                    minimumFractionDigits: 4,
-                                }).format(subTotal)
-
-
-                                document.getElementById('isvProducto' + id).value = isv.toFixed(4);
-                                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
-                                    'es-HN', {
-                                        style: 'currency',
-                                        currency: 'HNL',
-                                        minimumFractionDigits: 4,
-                                    }).format(isv)
-
-
-
-                                this.totalesGenerales();
-
-                            }
-
-                        });
-
-
-
-                    this.totalesGenerales();
-                    return 0;
-
-
-                }
-
-            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
-
-
-                    valorInputPrecio = idPrecio.value;
-                    valorInputCantidad = idCantidad.value;
-                    valorSelectUnidad = idUnidad.value;
-                    let subTotal = 0;
-                    let isv = 0;
-                    let total =0;
-
-                    var descuentoCalculado = 0;
+                    valorInputPrecio = document.getElementById('precio' + id).value;
+                    valorInputCantidad = document.getElementById('cantidad' + id).value;
+                    valorSelectUnidad = document.getElementById('unidad' + id).value;
+                    isvProducto = document.getElementById("isv" + id).value;
 
                     if (valorInputPrecio && valorInputCantidad) {
-                        var descuento = $('#porDescuento').val();
+
+                        //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        //isv = subTotal * (isvProducto / 100);
+                        // total = subTotal + subTotal * (isvProducto / 100);
+
+                        let descuento = document.getElementById('porDescuento').value;
 
 
-                        if (descuento >= 0){
-                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                            descuentoCalculado = subTotal * (descuento/100);
-
-                            //$('#descuentoGeneral').val(descuentoCalculado);
-                            $('#acumuladoDescuento'+id).val(descuentoCalculado);
-
-
-                             subTotal = subTotal - descuentoCalculado;
-
-                             isv = subTotal * (isvProducto / 100);
-                             total = subTotal + (subTotal * (isvProducto / 100));
-
-
-                        }else{
-                            $('#descuentoGeneral').val(0);
-                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                             isv = subTotal * (isvProducto / 100);
-                             total = subTotal + subTotal * (isvProducto / 100);
+                        if (descuento >= 0) {
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            descuentoCalculado = subTotal * (descuento / 100);
+                            subTotal = subTotal - descuentoCalculado;
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + (subTotal * (isvProducto / 100));
+                        } else {
+                            descuentoCalculado = 0;
+                            subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                            isv = subTotal * (isvProducto / 100);
+                            total = subTotal + subTotal * (isvProducto / 100);
 
                         }
 
+
+
+                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado;
 
                         document.getElementById('total' + id).value = total.toFixed(4);
                         document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1063,24 +1127,94 @@
 
 
                         document.getElementById('isvProducto' + id).value = isv.toFixed(4);
-                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                            style: 'currency',
-                            currency: 'HNL',
-                            minimumFractionDigits: 4,
-                        }).format(isv)
-
-
-                        idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
-                        this.totalesGenerales();
-
-
-
-
+                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                            'es-HN', {
+                                style: 'currency',
+                                currency: 'HNL',
+                                minimumFractionDigits: 4,
+                            }).format(isv)
 
                     }
 
+                });
+
+
+
+                this.totalesGenerales();
+                return 0;
+
+
+            }
+
+            function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
+
+
+
+                valorInputPrecio = idPrecio.value;
+                valorInputCantidad = idCantidad.value;
+                valorSelectUnidad = idUnidad.value;
+
+                let subTotal = 0;
+                let isv = 0;
+                let total = 0;
+
+                let descuentoCalculado = 0;
+
+
+                if (valorInputPrecio && valorInputCantidad) {
+
+                    let descuento = document.getElementById('porDescuento').value;
+
+
+                    if (descuento >= 0) {
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        descuentoCalculado = subTotal * (descuento / 100);
+                        subTotal = subTotal - descuentoCalculado;
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + (subTotal * (isvProducto / 100));
+                    } else {
+                        descuentoCalculado = 0
+                        subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                        isv = subTotal * (isvProducto / 100);
+                        total = subTotal + subTotal * (isvProducto / 100);
+                    }
+
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado
+
+                    document.getElementById('total' + id).value = total.toFixed(4);
+                    document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 4,
+                    }).format(total)
+
+                    document.getElementById('subTotal' + id).value = subTotal.toFixed(4);
+                    document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 4,
+                    }).format(subTotal)
+
+
+                    document.getElementById('isvProducto' + id).value = isv.toFixed(4);
+                    document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 4,
+                    }).format(isv)
+
+
+                    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
+                    this.totalesGenerales();
+
+
+
+
+                }
+
 
                 return 0;
+
 
 
             }
@@ -1104,13 +1238,10 @@
                 let isvFila = 0;
                 let acumularDescuento = new Number(0);
 
-
                 for (let i = 0; i < arregloIdInputs.length; i++) {
 
                     subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
                     isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
-
-                    ;
 
                     if (isvFila == 0) {
                         subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
@@ -1126,14 +1257,13 @@
                     totalISV += new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
                     totalGeneralValor += new Number(document.getElementById('total' + arregloIdInputs[i]).value);
 
-
-                    acumularDescuento += new Number($('#acumuladoDescuento'+arregloIdInputs[i]).val());
+                    acumularDescuento += new Number(document.getElementById('acumuladoDescuento' + arregloIdInputs[i]).value);
 
                 }
 
 
 
-                $('#descuentoGeneral').val(acumularDescuento);
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento
 
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
@@ -1261,10 +1391,7 @@
                 function(event) {
                     event.preventDefault();
                     guardarVenta();
-            });
-
-
-
+                });
 
             function guardarVenta() {
 
@@ -1280,6 +1407,7 @@
                     let nameForm = "idUnidadVenta" + arregloIdInputs[i];
 
                     let e = document.getElementById(name);
+
                     let idUnidadVenta = e.options[e.selectedIndex].getAttribute("data-id");
 
 
@@ -1300,7 +1428,8 @@
                 }
 
 
-                axios.post('/guardar/cotizacion', formDataObj, options)
+
+                axios.post(urlGuardarVenta, formDataObj, options)
                     .then(response => {
                         let data = response.data;
 
@@ -1347,7 +1476,18 @@
                             '<option value="" selected disabled>--Seleccione un producto--</option>';
                         document.getElementById("bodega").disabled = true;
 
-
+                        document.getElementById("descuentoMostrar").value="";
+                        document.getElementById("porDescuentoCalculado").value="";
+                        document.getElementById("subTotalGeneralMostrar").value = "";
+                        document.getElementById("subTotalGeneral").value = "";
+                        document.getElementById("subTotalGeneralGrabadoMostrar").value = "";
+                        document.getElementById("subTotalGeneralGrabado").value = "";
+                        document.getElementById("subTotalGeneralExcentoMostrar").value = "";
+                        document.getElementById("subTotalGeneralExcento").value = "";
+                        document.getElementById("isvGeneralMostrar").value = "";
+                        document.getElementById("isvGeneral").value = "";
+                        document.getElementById("totalGeneralMostrar").value = "";
+                        document.getElementById("totalGeneral").value = "";
 
                         let element2 = document.getElementById('detalleProducto');
                         element2.classList.add("d-none");
@@ -1356,9 +1496,9 @@
                         arregloIdInputs = [];
                         numeroInputs = 0;
                         retencionEstado = false;
+                        document.getElementById("guardar_cotizacion_btn").remove();
 
-
-                        document.getElementById("guardar_cotizacion_btn").disabled = false;
+                        desactivarCodigo()
 
                     })
                     .catch(err => {
@@ -1373,31 +1513,72 @@
                     })
             }
 
+            function desactivarCodigo() {
+                //console.log(idAutorizacion);
+                let idAutorizacion = document.getElementById('codigo_autorizacion').value;
+                axios.post('/ventas/autorizacion/desactivar', {
+                        'idAutorizacion': idAutorizacion
+                    })
+                    .then(response => {
+
+                       
+                        return;
+                    })
+                    .catch(err => {
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Ha ocurrido un error al desactivar el codigo de autorizacion'
+                        })
+                    })
+
+            }
+
             function sumarDiasCredito() {
                 tipoPago = document.getElementById('tipoPagoVenta').value;
-
+               
                 if (tipoPago == 2) {
 
                     let fechaEmision = document.getElementById("fecha_emision").value;
                     let date = new Date(fechaEmision);
                     date.setDate(date.getDate() + diasCredito);
                     let suma = date.toISOString().split('T')[0];
-                    //console.log( diasCredito);
+                   
 
                     document.getElementById("fecha_vencimiento").value = suma;
 
                 }
             }
+
+            let idCliente = document.getElementById('seleccionarCliente').value;
+            $('#ordenCompra').select2({
+                ajax: {
+                    url: '/ventas/numero/orden',
+                    data: function(params) {
+                        var query = {
+                            idCliente: idCliente,
+                            search: params.term,
+                            type: 'public',
+                            page: params.page || 1
+                        }
+
+                        // Query parameters will be ?search=[term]&type=public
+
+                        return query;
+                    }
+                }
+            });
         </script>
     @endpush
 </div>
 <?php
-    date_default_timezone_set('America/Tegucigalpa');
-    $act_fecha=date("Y-m-d");
-    $act_hora=date("H:i:s");
-    $mes=date("m");
-    $year=date("Y");
-    $datetim=$act_fecha." ".$act_hora;
+date_default_timezone_set('America/Tegucigalpa');
+$act_fecha = date('Y-m-d');
+$act_hora = date('H:i:s');
+$mes = date('m');
+$year = date('Y');
+$datetim = $act_fecha . ' ' . $act_hora;
 ?>
 <script>
     function mostrarHora() {
@@ -1417,9 +1598,9 @@
     setInterval(mostrarHora, 1000);
 </script>
 <div class="float-right">
-    <?php echo "$act_fecha";  ?> <strong id="reloj"></strong>
+    <?php echo "$act_fecha"; ?> <strong id="reloj"></strong>
 </div>
 <div>
-    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year";  ?>
+    <strong>Copyright</strong> Distribuciones Valencia &copy; <?php echo "$year"; ?>
 </div>
 <p id="reloj"></p>

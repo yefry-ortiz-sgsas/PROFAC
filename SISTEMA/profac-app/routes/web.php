@@ -53,6 +53,7 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobierno;
+use App\Http\Livewire\Cotizaciones\FacturarCotizacionCorporativoSrp;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
 use App\Http\Livewire\Inventario\ListadoAjustes;
 use App\Http\Livewire\Inventario\HistorialTranslados;
@@ -79,6 +80,7 @@ use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
+
 use App\Http\Livewire\Vale\CrearVale;
 use App\Http\Livewire\Vale\ListarVales;
 use App\Http\Livewire\Vale\FacturarVale;
@@ -96,7 +98,6 @@ use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
 use App\Http\Livewire\CierreDiario\CierreDiario;
-
 use App\Http\Livewire\CierreDiario\HistoricoCierres;
 
 
@@ -536,6 +537,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class, 'enviarCodigo']);
     Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class, 'verificarCodigo']);
     Route::post('/ventas/autorizacion/desactivar', [SinRestriccionPrecio::class, 'desactivarCodigo']);
+    Route::get('/cotizacion/facturar/srp/corporativo/{id}',FacturarCotizacionCorporativoSrp::class);
     //---------------------------------------------------------SinRestriccionPrecio-------------------------------------------------------//
 
     //////////////////////////////////////////CUENTAS POR COBRAR///////////////////////////////////////////

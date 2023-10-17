@@ -30,10 +30,10 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Ventas</h2>
+            <h2>Facturar Cotización</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Cliente Estatal</a>
+                    <a>Cliente A</a>
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -520,7 +520,7 @@
             var arregloIdInputs = [];
             var numeroInputs = {{ $cotizacion->numeroInputs }};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
-
+            var diasCredito = {{$cotizacion->dias_credito}}
 
 
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
@@ -1436,7 +1436,7 @@
                     let date = new Date(fechaEmision);
                     date.setDate(date.getDate() + diasCredito);
                     let suma = date.toISOString().split('T')[0];
-                    //console.log( diasCredito);
+                    // console.log( diasCredito);
 
                     document.getElementById("fecha_vencimiento").value = suma;
 
