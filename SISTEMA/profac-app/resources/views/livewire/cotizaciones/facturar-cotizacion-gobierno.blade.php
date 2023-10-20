@@ -866,14 +866,14 @@
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
-                                                    autocomplete="off"  onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
                                                     name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    autocomplete="off"  onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
