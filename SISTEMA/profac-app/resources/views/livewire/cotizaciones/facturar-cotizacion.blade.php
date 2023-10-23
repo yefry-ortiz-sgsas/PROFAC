@@ -1153,7 +1153,7 @@ function validarDescuento(){
 
 
 
-                document.getElementById('porDescuentoCalculado').value = acumularDescuento
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento.toFixed(4);
 
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',

@@ -14,6 +14,7 @@ use Validator;
 use PDF;
 use Luecano\NumeroALetras\NumeroALetras;
 
+
 class FacturarCotizacionGobierno extends Component
 {
     public $idCotizacion;
@@ -63,8 +64,8 @@ class FacturarCotizacionGobierno extends Component
 
 
         $htmlProductos =  $this->generarHTML($idCotizacion);
-
         $urlGuardarVenta = $this->obtenerURL($cotizacion->tipo_venta_id);
+
         return view('livewire.cotizaciones.facturar-cotizacion-gobierno', compact('cotizacion', 'htmlProductos', 'urlGuardarVenta'));
     }
 

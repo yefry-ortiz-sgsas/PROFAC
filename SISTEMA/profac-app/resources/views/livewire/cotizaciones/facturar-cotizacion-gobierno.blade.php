@@ -1172,7 +1172,7 @@
                     acumularDescuento += new Number(document.getElementById('acumuladoDescuento' + arregloIdInputs[i]).value);
                 }
 
-                document.getElementById('porDescuentoCalculado').value = acumularDescuento;
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento.toFixed(4);;
 
                 document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {

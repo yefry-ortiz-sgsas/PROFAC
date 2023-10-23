@@ -54,6 +54,7 @@ use App\Http\Livewire\Cotizaciones\ListarCotizaciones;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobierno;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacionCorporativoSrp;
+use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobiernoSrp;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
 use App\Http\Livewire\Inventario\ListadoAjustes;
 use App\Http\Livewire\Inventario\HistorialTranslados;
@@ -538,6 +539,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class, 'verificarCodigo']);
     Route::post('/ventas/autorizacion/desactivar', [SinRestriccionPrecio::class, 'desactivarCodigo']);
     Route::get('/cotizacion/facturar/srp/corporativo/{id}',FacturarCotizacionCorporativoSrp::class);
+    Route::get('/cotizacion/facturar/srp/gobierno/{id}',FacturarCotizacionGobiernoSrp::class);
     //---------------------------------------------------------SinRestriccionPrecio-------------------------------------------------------//
 
     //////////////////////////////////////////CUENTAS POR COBRAR///////////////////////////////////////////
