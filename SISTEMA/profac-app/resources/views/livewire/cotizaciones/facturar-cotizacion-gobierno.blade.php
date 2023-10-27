@@ -998,7 +998,7 @@
                         let descuento = document.getElementById('porDescuento').value;
 
 
-                        if (descuento >= 0) {
+                        if (descuento > 0) {
                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento / 100);
                             subTotal = subTotal - descuentoCalculado;
@@ -1011,7 +1011,7 @@
                             total = subTotal + subTotal * (isvProducto / 100);
 
                         }
-                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado;
+                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4);
 
                         document.getElementById('total' + id).value = total.toFixed(3);
                         document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1038,7 +1038,7 @@
 
 
 
-                        this.totalesGenerales();
+                      
                         document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                             style: 'currency',
                             currency: 'HNL',
@@ -1089,7 +1089,7 @@
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
 
 
                     document.getElementById('total' + id).value = total.toFixed(4);

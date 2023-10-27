@@ -700,7 +700,7 @@
                                 let descuento = document.getElementById("porDescuento").value
 
 
-                                if (descuento >= 0){
+                                if (descuento > 0){
                                      subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                                      descuentoCalculado = subTotal * (descuento/100);
 

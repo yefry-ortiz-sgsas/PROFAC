@@ -161,7 +161,7 @@
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <div class="form-group">
 
-                                        <label for="fecha_emision" class="col-form-label focus-label">Descuento aplicado %
+                                        <label for="porDescuento" class="col-form-label focus-label">Descuento aplicado %
                                             :<span class="text-danger">*</span></label>
                                         <input class="form-control" oninput="validarDescuento()" onchange="calcularTotalesInicioPagina()" type="number" min="0" max="15" value="0" minlength="1" maxlength="2" id="porDescuento" name="porDescuento" data-parsley-required >
                                         <p id="mensajeError" style="color: red;"></p>
@@ -929,7 +929,8 @@
                 let subTotal = 0;
                 let isv =0;
                 let total = 0;
-                var descuentoCalculado = 0;
+                let descuento = 0;
+                let descuentoCalculado = 0
 
                 arrayInputs.forEach(id => {
                     // calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id)
@@ -938,36 +939,24 @@
                         valorSelectUnidad = document.getElementById('unidad' + id).value;
                         isvProducto = document.getElementById("isv"+id).value;
 
-                            if (valorInputPrecio && valorInputCantidad) {
+                            if (valorInputPrecio && valorInputCantidad) {    
 
-                                //subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                //isv = subTotal * (isvProducto / 100);
-                                // total = subTotal + subTotal * (isvProducto / 100);
+                                descuento = document.getElementById("porDescuento").value;
 
-                                var descuento = $('#porDescuento').val();
-
-
-                                if (descuento >= 0){
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                    descuentoCalculado = subTotal * (descuento/100);
-
-                                  
-                                    $('#acumuladoDescuento'+id).val(descuentoCalculado);
-
-
-                                     subTotal = subTotal - descuentoCalculado;
-
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + (subTotal * (isvProducto / 100));
-
-
+                                if (descuento > 0){
+                                    subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                                    descuentoCalculado = subTotal * (descuento/100);                             
+                                    subTotal = subTotal - descuentoCalculado;
+                                    isv = subTotal * (isvProducto / 100);
+                                    total = subTotal + (subTotal * (isvProducto / 100));
                                 }else{
-                                    $('#descuentoGeneral').val(0);
-                                     subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
-                                     isv = subTotal * (isvProducto / 100);
-                                     total = subTotal + subTotal * (isvProducto / 100);
-
+                                    descuentoCalculado = 0;
+                                    subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
+                                    isv = subTotal * (isvProducto / 100);
+                                    total = subTotal + subTotal * (isvProducto / 100);
                                 }
+                                
+                                document.getElementById("acumuladoDescuento"+id).value = descuentoCalculado.toFixed(4);
 
                                 document.getElementById('total' + id).value = total.toFixed(4);
                                 document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -991,11 +980,7 @@
                                         currency: 'HNL',
                                         minimumFractionDigits: 4,
                                     }).format(isv)
-
-
-
-                                this.totalesGenerales();
-
+                           
                             }
 
                         });
@@ -1024,7 +1009,7 @@
                         var descuento = $('#porDescuento').val();
 
 
-                        if (descuento >= 0){
+                        if (descuento > 0){
                              subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento/100);
 
@@ -1133,7 +1118,8 @@
 
 
 
-                $('#descuentoGeneral').val(acumularDescuento);
+                
+                document.getElementById('descuentoGeneral').value = acumularDescuento.toFixed(4);
 
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',

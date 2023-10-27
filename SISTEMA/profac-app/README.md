@@ -109,8 +109,9 @@ FACTURAR-ORDEN DE ENTREGA
 
 
 agregar descuento a modulo de:
-Facturacion Cliente A
+Facturacion Cliente A--
 Facturacion SRP cliente A
 Facturacion Cliente B
 Facturacion SRP cliente B
 FACTURAR-COMPROBANTE
+
