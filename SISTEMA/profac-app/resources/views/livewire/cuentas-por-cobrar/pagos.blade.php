@@ -8,7 +8,7 @@
                     <a href="index.html">/ Cuentas Por Cobrar</a>
                 </li>
 
-  
+
             </ol>
         </div>
 
@@ -56,7 +56,7 @@
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
-                            <table id="tbl_cuentas_por_cobrar" class="table table-striped table-bordered table-hover">
+                            <table id="tbl_cuentas_facturas_cliente" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
                                         <th>No. Factura</th>
@@ -90,47 +90,6 @@
 
 
 
-
-    {{--  <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="mb-2" id="cuentas_excel_intereses">
-            <!-- <a href="/ventas/cuentas_por_cobrar/excel_intereses" class="btn-seconary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> -->
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table id="tbl_cuentas_por_cobrar_intereses" class="table table-striped table-bordered table-hover">
-                                <thead class="">
-                                    <tr>
-                                        <th>Numero Factura</th>
-                                        <th>Correlativo</th>
-                                        <th>ID Cliente</th>
-                                        <th>Cliente</th>
-                                        <th>Documento</th>
-                                        <th>Fecha Emision</th>
-                                        <th>Fecha Vencimiento</th>
-                                        <th>Cargo</th>
-                                        <th>Abonos</th>
-                                        <th>Dias</th>
-                                        <th>Interes Inicia</th>
-                                        <th>Interes Diario</th>
-                                        <th>Acumulado</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  --}}
 
 
 
@@ -166,7 +125,7 @@
         $("#tbl_cuentas_por_cobrar_intereses").dataTable().fnDestroy();
 
         this.listarCuentasPorCobrar();
-        this.listarCuentasPorCobrarInteres();
+       //this.listarCuentasPorCobrarInteres();
 
     }
 
@@ -179,7 +138,7 @@
     function listarCuentasPorCobrar() {
 
         var idCliente = document.getElementById('cliente').value;
-        $('#tbl_cuentas_por_cobrar').DataTable({
+        $('#tbl_cuentas_facturas_clienter').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
