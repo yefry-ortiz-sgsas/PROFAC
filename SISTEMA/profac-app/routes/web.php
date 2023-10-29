@@ -567,7 +567,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     //Route::get('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
 
     Route::get('/aplicacion/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
-    //Route::get('/cuentas_por_cobrar/pagos/listar_intereses/{id}', [Pagos::class, 'listarCuentasPorCobrarInteres']);
+    Route::get('/aplicacion/pagos/listar/hitorico/{id}', [Pagos::class, 'listarHistoricoSaldoCliente']);
 
     Route::get('/cuentas_por_cobrar/pagos/excel_cuentas/{cliente}', [Pagos::class, 'exportCuentasPorCobrar']);
     Route::get('/cuentas_por_cobrar/pagos/excel_intereses/{cliente}', [Pagos::class, 'exportCuentasPorCobrarInteres']);

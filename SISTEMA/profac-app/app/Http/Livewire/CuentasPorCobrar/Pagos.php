@@ -128,7 +128,7 @@ class Pagos extends Component
         }
     }
 
-    public function listarCuentasPorCobrarInteres($id){
+    public function listarHistoricoSaldoCliente($id){
         try{
 
             $interes_cuentas = DB::SELECT("

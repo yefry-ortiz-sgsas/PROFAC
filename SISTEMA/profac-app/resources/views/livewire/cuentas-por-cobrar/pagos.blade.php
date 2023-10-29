@@ -88,6 +88,47 @@
         </div>
     </div>
 
+    <div class="wrapper wrapper-content animated fadeInRight">
+        {{--  <div class="mb-2"  id="cuentas_excel">
+            <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
+        </div>  --}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table id="tbl_historico_saldos_cliente" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>No. Factura</th>
+                                        <th>Orden de Compra</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha Emision</th>
+                                        <th>Fecha Vencimiento</th>
+                                        <th>Cargo</th>
+                                        <th>Credito</th>
+                                        <th>Notas Crédito</th>
+                                        <th>Notas Débito</th>
+                                        <th>Saldo</th>
+                                        <th>Acumulado</th>
+                                        <th>Acciones</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -122,7 +163,7 @@
     function llamarTablas(){
 
         $("#tbl_cuentas_facturas_cliente").dataTable().fnDestroy();
-        //$("#tbl_cuentas_por_cobrar_intereses").dataTable().fnDestroy();
+        $("#tbl_historico_saldos_cliente").dataTable().fnDestroy();
 
         this.listarCuentasPorCobrar();
        //this.listarCuentasPorCobrarInteres();
@@ -236,7 +277,7 @@
     function listarCuentasPorCobrarInteres() {
 
         var idCliente = document.getElementById('cliente').value;
-        $('#tbl_cuentas_por_cobrar_intereses').DataTable({
+        $('#tbl_historico_saldos_cliente').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -271,7 +312,7 @@
                             }
                         }
                     ],
-                    "ajax": "/ventas/cuentas_por_cobrar/listar_intereses/"+idCliente,
+                    "ajax": "/aplicacion/pagos/listar/hitorico/"+idCliente,
                     "columns": [
                         {
                             data: 'numero_factura'
