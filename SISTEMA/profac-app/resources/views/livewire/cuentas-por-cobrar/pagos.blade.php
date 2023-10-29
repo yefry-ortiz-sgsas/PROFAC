@@ -105,7 +105,7 @@
 
         $('#cliente').select2({
             ajax: {
-                url: '/cuentas_por_cobrar/pagos/clientes',
+                url: '/aplicacion/pagos/clientes',
                 data: function(params) {
                     var query = {
                         search: params.term,
@@ -121,8 +121,8 @@
 
     function llamarTablas(){
 
-        $("#tbl_cuentas_por_cobrar").dataTable().fnDestroy();
-        $("#tbl_cuentas_por_cobrar_intereses").dataTable().fnDestroy();
+        $("#tbl_cuentas_facturas_cliente").dataTable().fnDestroy();
+        //$("#tbl_cuentas_por_cobrar_intereses").dataTable().fnDestroy();
 
         this.listarCuentasPorCobrar();
        //this.listarCuentasPorCobrarInteres();
@@ -138,7 +138,7 @@
     function listarCuentasPorCobrar() {
 
         var idCliente = document.getElementById('cliente').value;
-        $('#tbl_cuentas_facturas_clienter').DataTable({
+        $('#tbl_cuentas_facturas_cliente').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
@@ -181,7 +181,7 @@
                             }
                         }
                     ],
-                    "ajax": "/cuentas_por_cobrar/pagos/listar/"+idCliente,
+                    "ajax": "/aplicacion/pagos/listar/"+idCliente,
                     "columns": [
 
                         {
@@ -226,8 +226,8 @@
 
 
                 });
-                $('#btnEC').css('display','block');
-                $('#btnEC').show();
+                //$('#btnEC').css('display','block');
+                //$('#btnEC').show();
     }
 
 

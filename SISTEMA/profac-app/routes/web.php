@@ -563,11 +563,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     /////////////////////////////APLICACION DE PAGOS/////////////////////////////////
     Route::get('/cuentas_por_cobrar/pagos', Pagos::class);
-    Route::get('/cuentas_por_cobrar/pagos/clientes', [Pagos::class, 'listarClientes']);
-    Route::get('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
+    Route::get('/aplicacion/pagos/clientes', [Pagos::class, 'listarClientes']);
+    //Route::get('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
 
-    Route::get('/cuentas_por_cobrar/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
-    Route::get('/cuentas_por_cobrar/pagos/listar_intereses/{id}', [Pagos::class, 'listarCuentasPorCobrarInteres']);
+    Route::get('/aplicacion/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
+    //Route::get('/cuentas_por_cobrar/pagos/listar_intereses/{id}', [Pagos::class, 'listarCuentasPorCobrarInteres']);
 
     Route::get('/cuentas_por_cobrar/pagos/excel_cuentas/{cliente}', [Pagos::class, 'exportCuentasPorCobrar']);
     Route::get('/cuentas_por_cobrar/pagos/excel_intereses/{cliente}', [Pagos::class, 'exportCuentasPorCobrarInteres']);

@@ -44,9 +44,50 @@ class Pagos extends Component
     public function listarCuentasPorCobrar($id){
         try{
 
-            $cuentas = DB::select("
+          /*   $cuentas = DB::select("
 
-            CALL cuentasx2('".$id."');");
+            CALL cuentasx2('".$id."');"); */
+
+
+
+            $cuentas = DB::select("select
+            factura.id as codigoFactura,
+            factura.numero_factura as numero_factura,
+            factura.cai as correlativo,
+            #cliente_id as id_cliente,
+            (
+              IF (
+                (
+                  SELECT
+                    COUNT(*)
+                  FROM
+                    numero_orden_compra
+                  WHERE
+                    id = factura.numero_orden_compra_id
+                ) = 0,
+                'N/A',
+                (
+                  SELECT
+                    numero_orden
+                  FROM
+                    numero_orden_compra
+                  WHERE
+                    id = factura.numero_orden_compra_id
+                )
+              )
+            ) as 'numOrden',
+            factura.nombre_cliente as 'cliente',
+            factura.numero_factura as 'documento',
+            factura.fecha_emision as 'fecha_emision',
+            factura.fecha_vencimiento as 'fecha_vencimiento',
+            factura.pendiente_cobro as 'saldo'
+          from
+            factura
+            inner join cliente on (factura.cliente_id = cliente.id)
+          where
+            factura.estado_venta_id <> 2
+            and cliente_id = idcliente
+            and factura.pendiente_cobro <> 0;  ");
                 //dd($cuentas);
         return Datatables::of($cuentas)
                 ->addColumn('opciones', function ($cuenta) {
