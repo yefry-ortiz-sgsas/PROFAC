@@ -38,7 +38,7 @@
 
 
                         </div>
-                        <button class="btn btn-primary mt-2" onclick=" llamarTablas(), mostrarExports()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
+                        <button class="btn btn-primary mt-2" onclick=" llamarTablas()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar</button>
 
                     </div>
                 </div>
@@ -59,23 +59,29 @@
                             <table id="tbl_cuentas_facturas_cliente" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
+                                        <th>Codigo</th>
                                         <th>No. Factura</th>
+                                        <th>Correlativo</th>
                                         <th>Orden de Compra</th>
-                                        <th>Cliente</th>
                                         <th>Fecha Emision</th>
                                         <th>Fecha Vencimiento</th>
-                                        <th>Cargo</th>
-                                        <th>Credito</th>
-                                        <th>Notas Crédito</th>
-                                        <th>Notas Débito</th>
                                         <th>Saldo</th>
-                                        <th>Acumulado</th>
                                         <th>Acciones</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>No. Factura</th>
+                                            <th>Correlativo</th>
+                                            <th>Orden de Compra</th>
+                                            <th>Fecha Emision</th>
+                                            <th>Fecha Vencimiento</th>
+                                            <th>Saldo</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
 
                                 </tbody>
                             </table>
@@ -140,9 +146,6 @@
 <script>
         $('#btnEC').css('display','none');
         $('#btnEC').hide();
-        {{--  $('#divcierre').hide();  --}}
-        {{--  $('#btn_cierreCaja').css('display','none');  --}}
-        {{--  $('#btn_cierreCaja').hide();  --}}
 
         $('#cliente').select2({
             ajax: {
@@ -226,13 +229,16 @@
                     "columns": [
 
                         {
+                            data: 'codigoFactura'
+                        },
+                        {
+                            data: 'numero_factura'
+                        },
+                        {
                             data: 'correlativo'
                         },
                         {
                             data: 'numOrden'
-                        },
-                        {
-                            data: 'cliente'
                         },
                         {
                             data: 'fecha_emision'
@@ -241,29 +247,43 @@
                             data: 'fecha_vencimiento'
                         },
                         {
-                            data: 'cargo'
-                        },
-                        {
-                            data: 'credito'
-                        },
-                        {
-                            data: 'notaCredito'
-                        },
-                        {
-                            data: 'notaDebito'
-                        },
-                        {
                             data: 'saldo'
-                        },
-                        {
-                            data: 'Acumulado'
                         },
                         {
                             data: 'opciones'
                         }
 
 
-                    ]
+                    ],initComplete: function () {
+                        var r = $('#tbl_cuentas_facturas_cliente tfoot tr');
+                        r.find('th').each(function(){
+                          $(this).css('padding', 8);
+                        });
+                        $('#tbl_cuentas_facturas_cliente thead').append(r);
+                        $('#search_0').css('text-align', 'center');
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                let column = this;
+                                let title = column.footer().textContent;
+
+                                // Create input element
+                                let input = document.createElement('input');
+                                input.placeholder = title;
+                                column.footer().replaceChildren(input);
+
+                                // Event listener for user input
+                                input.addEventListener('keyup', () => {
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value).draw();
+                                    }
+                                });
+                            });
+
+
+
+
+                    }
 
 
                 });
@@ -361,7 +381,7 @@
 
     //////////////////////////////////////////////////////////////////////////////////
 
-    function mostrarExports() {
+    {{--  function mostrarExports() {
 
         var cliente = document.getElementById('cliente').value;
 
@@ -384,7 +404,7 @@
 
                 document.getElementById('cuentas_excel_intereses').innerHTML = htmlSelect2;
 
-    }
+    }  --}}
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -44,75 +44,91 @@ class Pagos extends Component
     public function listarCuentasPorCobrar($id){
         try{
 
-          /*   $cuentas = DB::select("
+            /* VALIDANDO EXISTGENCIA DE FACTURAS DE ESTE CLIENTE PARA CLIENTES VIEJOS*/
+            $existenciaAplicacion = DB::SELECTONE("
 
-            CALL cuentasx2('".$id."');"); */
+                SELECT COUNT(*) AS existe FROM aplicacion_pagos ap
+                inner join factura fa on fa.id = ap.factura_id
+                inner join cliente cli on cli.id = fa.cliente_id
+                where cli.id = ".$id."
+
+
+            ");
+
+
+            if ($existenciaAplicacion->existe == 0) {
+
+                $cuentas2 = DB::select("
+
+                CALL sp_aplicacion_pagos('1','9999999999', '".Auth::user()->id."', '0', @estado, @msjResultado);");
+
+                dd($cuentas2);
+
+            }
+
+             $cuentas = DB::select("select
+             factura.id as codigoFactura,
+             (RIGHT(factura.cai, 5)) as numero_factura,
+             factura.cai as correlativo,
+             (
+                         IF  (
+                              (
+                                 SELECT COUNT(*) FROM numero_orden_compra WHERE id = factura.numero_orden_compra_id
+                              ) = 0
+                              , 'N/A'
+                              ,(SELECT numero_orden FROM numero_orden_compra WHERE id = factura.numero_orden_compra_id)
+
+                             )
+
+                         ) as 'numOrden',
+             factura.fecha_emision as 'fecha_emision',
+             factura.fecha_vencimiento as 'fecha_vencimiento',
+             factura.pendiente_cobro as 'saldo'
+             from factura
+             inner join cliente on (factura.cliente_id = cliente.id)
+             where factura.estado_venta_id <> 2 and cliente_id = ".$id." and factura.pendiente_cobro <> 0;");
 
 
 
-            $cuentas = DB::select("select
-            factura.id as codigoFactura,
-            factura.numero_factura as numero_factura,
-            factura.cai as correlativo,
-            #cliente_id as id_cliente,
-            (
-              IF (
-                (
-                  SELECT
-                    COUNT(*)
-                  FROM
-                    numero_orden_compra
-                  WHERE
-                    id = factura.numero_orden_compra_id
-                ) = 0,
-                'N/A',
-                (
-                  SELECT
-                    numero_orden
-                  FROM
-                    numero_orden_compra
-                  WHERE
-                    id = factura.numero_orden_compra_id
-                )
-              )
-            ) as 'numOrden',
-            factura.nombre_cliente as 'cliente',
-            factura.numero_factura as 'documento',
-            factura.fecha_emision as 'fecha_emision',
-            factura.fecha_vencimiento as 'fecha_vencimiento',
-            factura.pendiente_cobro as 'saldo'
-          from
-            factura
-            inner join cliente on (factura.cliente_id = cliente.id)
-          where
-            factura.estado_venta_id <> 2
-            and cliente_id = idcliente
-            and factura.pendiente_cobro <> 0;  ");
-                //dd($cuentas);
+
         return Datatables::of($cuentas)
                 ->addColumn('opciones', function ($cuenta) {
 
                     return
-
                         '
-                <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                    más</button>
-                <ul class="dropdown-menu" x-placement="bottom-start"
-                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
+                                <ul class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
 
-                    <li>
-                        <a class="dropdown-item" href="/detalle/venta/'.$cuenta->codigoFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
-                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/detalle/venta/'.$cuenta->codigoFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                                    </li>
 
-                    <li>
-                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Pagos </a>
-                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Gestionar retencion </a>
+                                    </li>
 
-                </ul>
-            </div>
-                ';
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        ';
                 })
 
 
