@@ -126,14 +126,14 @@
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label class="col-form-label focus-label">Nombre del cliente</label>
+                                    <label class="col-form-label focus-label">Nombre del cliente: <span class="text-danger">*</span></label>
                                     <input class="form-control" required type="text" id="nombre_cliente_ventas"
                                         name="nombre_cliente_ventas" data-parsley-required readonly>
 
                                 </div>
 
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    <label class="col-form-label focus-label">RTN</label>
+                                    <label class="col-form-label focus-label">RTN: <span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" id="rtn_ventas" name="rtn_ventas"
                                         readonly>
 
@@ -148,7 +148,7 @@
                             <div class="row mt-4">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     <label for="tipoPagoVenta" class="col-form-label focus-label">Seleccionar tipo de
-                                        pago:</label>
+                                        pago:<span class="text-danger">*</span></label>
                                     <select class="form-group form-control " name="tipoPagoVenta" id="tipoPagoVenta"
                                         data-parsley-required onchange="validarFechaPago()">
                                     </select>
@@ -158,7 +158,7 @@
                                     <div class="form-group">
 
                                         <label for="fecha_emision" class="col-form-label focus-label">Fecha de emisión
-                                            :</label>
+                                            :<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" id="fecha_emision"
                                             onchange="sumarDiasCredito()" name="fecha_emision"
                                             value="{{ date('Y-m-d') }}" data-parsley-required>
@@ -191,9 +191,6 @@
                                         <input class="form-control" type="number" min="0" max="15"
                                             value="0" id="porDescuento" name="porDescuento"
                                             onchange="calcularTotalesInicioPagina()" data-parsley-required>
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -215,7 +212,7 @@
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <label for="seleccionarProducto"
-                                            class="col-form-label focus-label">Seleccionar Producto:</label>
+                                            class="col-form-label focus-label">Seleccionar Producto:<span class="text-danger">*</span></label>
                                         <select id="seleccionarProducto" name="seleccionarProducto"
                                             class="form-group form-control" style=""
                                             onchange="obtenerImagenes()">
@@ -231,7 +228,7 @@
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <label for="bodega" class="col-form-label focus-label">Seleccionar
-                                            bodega:</label>
+                                            bodega:<span class="text-danger">*</span></label>
                                         <select id="bodega" name="bodega" class="form-group form-control"
                                             style="" onchange="prueba()" disabled>
                                             <option value="" selected disabled>--Seleccione un producto--
@@ -1019,9 +1016,9 @@
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
-                valorInputPrecio = idPrecio.value;
-                valorInputCantidad = idCantidad.value;
-                valorSelectUnidad = idUnidad.value;
+                let valorInputPrecio = idPrecio.value;
+                let valorInputCantidad = idCantidad.value;
+                let valorSelectUnidad = idUnidad.value;
 
                 if (valorInputPrecio && valorInputCantidad) {
 
@@ -1031,7 +1028,7 @@
                     let total = 0;
 
 
-                    if (descuento >= 0) {
+                    if (descuento > 0) {
                         subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                         descuentoCalculado = subTotal * (descuento / 100);
                         subTotal = subTotal - descuentoCalculado;
@@ -1071,8 +1068,6 @@
 
                     idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
                     this.totalesGenerales();
-
-
 
                 }
 
