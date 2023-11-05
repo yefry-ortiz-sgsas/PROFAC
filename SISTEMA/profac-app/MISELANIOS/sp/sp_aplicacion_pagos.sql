@@ -14,7 +14,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
 				SET estado := -1;
 				SET msjResultado := "Se ha hecho rollback";
 
-                select estado,msjResultado;
+               select estado,msjResultado;
   END;
 
   START TRANSACTION;
@@ -22,7 +22,9 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
           IF accion = 1 THEN
             INSERT INTO aplicacion_pagos
 
-            (factura_id,
+            (
+             cliente_id,
+             factura_id,
              total_factura_cargo,
              retencion_isv_factura,
              estado_retencion_isv,
@@ -37,7 +39,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
              usr_cerro,
              created_at)
             SELECT
-                fa.id, fa.total,fa.isv,1,0,0,0,'',fa.total,0,1,0,0,NOW()
+                pcliente_id,fa.id, fa.total,fa.isv,1,0,0,0,'',fa.total,0,1,0,0,NOW()
             FROM factura fa
               inner join cliente cli on cli.id = fa.cliente_id
             WHERE cli.id = pcliente_id and fa.estado_venta_id <> 2 and fa.pendiente_cobro <> 0;

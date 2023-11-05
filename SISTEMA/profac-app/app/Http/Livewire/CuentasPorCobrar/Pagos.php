@@ -60,12 +60,22 @@ class Pagos extends Component
 
                 $cuentas2 = DB::select("
 
-                CALL sp_aplicacion_pagos('1','9999999999', '".Auth::user()->id."', '0', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('1','".$id."', '".Auth::user()->id."', '0', @estado, @msjResultado);");
 
-                dd($cuentas2);
+                //dd($cuentas2[0]->estado);
+
+                if ($cuentas2[0]->estado == -1) {
+                    return response()->json([
+
+                        'error' => $e,
+                        "text" => "Ha ocurrido un error al insertar facturas en aplicacion de pagos.",
+                        "icon" => "error",
+                        "title"=>"Error!"
+                    ],402);
+                }
 
             }
-
+            /*
              $cuentas = DB::select("select
              factura.id as codigoFactura,
              (RIGHT(factura.cai, 5)) as numero_factura,
@@ -88,6 +98,19 @@ class Pagos extends Component
              inner join cliente on (factura.cliente_id = cliente.id)
              where factura.estado_venta_id <> 2 and cliente_id = ".$id." and factura.pendiente_cobro <> 0;");
 
+            */
+
+            $cuentas = DB::select("
+                select
+                id as 'codigoPago',
+                factura_id as 'codigoFactura',
+
+                from aplicacion_pagos
+                where
+                cliente_id = ".$id."
+                and
+                estado = 1;"
+            );
 
 
 
