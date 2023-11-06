@@ -64,30 +64,34 @@
                     <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-content">
-                                <form class="form-control" id="formtipoCobro" name="formtipoCobro" >
+                                <form class="form-control" id="formEstadoRetencion" name="formEstadoRetencion" >
                                 <div class="row">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Fecha de cierre:</b></label>
-                                                <input type="text" readonly class="form-control" id="fechaCierreC" name="fechaCierreC" >
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input type="text" readonly class="form-control" id="codAplicPago" name="codAplicPago" >
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>No. Factura:</b></label>
-                                                <input type="text" readonly class="form-control" id="inputFactura" name="inputFactura" >
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="codigoFactura" name="codigoFactura" >
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>No. Factura:</b></label>
-                                                <input type="text" readonly class="form-control" id="inputFacturaCodigo" name="inputFacturaCodigo" >
+                                                <label for="exampleFormControlTextarea1"> <b>Monto de retención:</b></label>
+                                                <input type="text" readonly class="form-control" id="montoRetencion" name="montoRetencion" >
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota (Obligatoria):</b></label>
+                                                <textarea class="form-control" id="comentario_retencion" name="comentario_retencion" cols="30" rows="10"></textarea>
                                             </div>
 
+
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Seleccione un tipo de cobro</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Seleccione estado de retención</b></label>
 
                                                  <select id="selectTipoCierre" name="selectTipoCierre" class="form-control form-select form-select-lg">
 
-                                                   <option class="form-control" value="EFECTIVO">EFECTIVO</option>
-                                                   <option class="form-control"  value="TRANSFERENCIA BANCARIA">TRANSFERENCIA BANCARIA</option>
-                                                   <option class="form-control" value="CHEQUE">CHEQUE</option>
+                                                   <option class="form-control" value="1">SE APLICA AL SALDO</option>
+                                                   <option class="form-control"  value="2">NO SE APLICA AL SALDO</option>
                                                  </select>
                                             </div>
                                         </div>
