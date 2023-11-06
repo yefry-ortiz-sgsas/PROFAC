@@ -31,6 +31,8 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
              total_notas_credito,
              total_nodas_debito,
              credito_abonos,
+             movimiento_suma,
+             movimiento_resta,
              comentario,
              saldo,
              ultimo_usr_actualizo,
@@ -39,7 +41,23 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
              usr_cerro,
              created_at)
             SELECT
-                pcliente_id,fa.id, fa.total,fa.isv,1,0,0,0,'',fa.total,0,1,0,0,NOW()
+                pcliente_id,     #idCliente
+                fa.id,           #factura_id
+                fa.total,        #total_factura_cargo
+                fa.isv,          #retencion_isv_factura
+                1,               #estado_retencion_isv
+                0,               #total_notas_credito
+                0,               #total_nodas_debito
+                0,               #credito_abonos,
+                0,               #movimiento_suma
+                0,               #movimiento_resta
+                '',              #comentario
+                fa.total,        #saldo
+                0,               #ultimo_usr_actualizo
+                1,               #estado
+                0,               #estado_cerrado
+                0,               #usr_cerro
+                NOW()            #created_at
             FROM factura fa
               inner join cliente cli on cli.id = fa.cliente_id
             WHERE cli.id = pcliente_id and fa.estado_venta_id <> 2 and fa.pendiente_cobro <> 0;

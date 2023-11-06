@@ -66,8 +66,6 @@ class Pagos extends Component
 
                 if ($cuentas2[0]->estado == -1) {
                     return response()->json([
-
-                        'error' => $e,
                         "text" => "Ha ocurrido un error al insertar facturas en aplicacion de pagos.",
                         "icon" => "error",
                         "title"=>"Error!"
@@ -102,9 +100,21 @@ class Pagos extends Component
 
             $cuentas = DB::select("
                 select
-                id as 'codigoPago',
-                factura_id as 'codigoFactura',
-
+                id as                      'codigoPago',
+                factura_id as              'codigoFactura',
+                total_factura_cargo as     'cargo',
+                total_notas_credito as     'notasCredito',
+                total_nodas_debito as      'notasDebito',
+                credito_abonos as          'abonosCargo',
+                movimiento_suma as         'movSuma',
+                movimiento_resta as        'movResta',
+                retencion_isv_factura as   'isv',
+                saldo as                   'saldo',
+                estado_retencion_isv as    'estadoRetencion',
+                estado as                  'estado',
+                usr_cerro as               'usrCierre',
+                created_at as              'fechaRegistro',
+                updated_at  as             'ultimoRegistro'
                 from aplicacion_pagos
                 where
                 cliente_id = ".$id."
@@ -115,7 +125,7 @@ class Pagos extends Component
 
 
         return Datatables::of($cuentas)
-                ->addColumn('opciones', function ($cuenta) {
+                ->addColumn('acciones', function ($cuenta) {
 
                     return
                         '
@@ -155,7 +165,7 @@ class Pagos extends Component
                 })
 
 
-                ->rawColumns(['opciones'])
+                ->rawColumns(['acciones'])
                 ->make(true);
         } catch (QueryException $e) {
 
