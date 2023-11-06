@@ -136,44 +136,45 @@
                                     <tr>
                                         <th>Codigo Pagos</th>
                                         <th>Código Factura</th>
-                                        <th>Cargo de Factura</th>
+                                        <th>Cargo Factura</th>
                                         <th>ISV</th>
-                                        <th>Notas de Crédito</th>
-                                        <th>Notas de Débito</th>
+                                        <th>Notas Crédito</th>
+                                        <th>Notas Débito</th>
                                         <th>Créditos/Abonos</th>
-                                        <th>Cargo extra (+)</th>
-                                        <th>Cargo Debita (-)</th>
+                                        <th>Cargo extra</th>
+                                        <th>Cargo Debita</th>
                                         <th>Saldo</th>
                                         <th>Retencion</th>
-                                        <th>Estado de Pago</th>
-                                        <th>User de cierre</th>
-                                        <th>Fecha de registro</th>
+                                        <th>Estado Pago</th>
+                                        <th>User cierre</th>
+                                        <th>Fecha registro</th>
                                         <th>Ultima actualizacion</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tfoot>
+                                        {{--                                      <tfoot>
                                         <tr>
                                             <th>Codigo Pagos</th>
                                             <th>Código Factura</th>
-                                            <th>Cargo de Factura</th>
+                                            <th>Cargo Factura</th>
                                             <th>ISV</th>
-                                            <th>Notas de Crédito</th>
-                                            <th>Notas de Débito</th>
+                                            <th>Notas Crédito</th>
+                                            <th>Notas Débito</th>
                                             <th>Créditos/Abonos</th>
-                                            <th>Cargo extra (+)</th>
-                                            <th>Cargo Debita (-)</th>
+                                            <th>Cargo extra</th>
+                                            <th>Cargo Debita</th>
                                             <th>Saldo</th>
                                             <th>Retencion</th>
-                                            <th>Estado de Pago</th>
-                                            <th>User de cierre</th>
-                                            <th>Fecha de registro</th>
+                                            <th>Estado Pago</th>
+                                            <th>User cierre</th>
+                                            <th>Fecha registro</th>
                                             <th>Ultima actualizacion</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </tfoot>
 
-                                </tbody>
+                                </tbody>  --}}
                             </table>
 
                         </div>
@@ -253,7 +254,6 @@
     function llamarTablas(){
 
         $("#tbl_cuentas_facturas_cliente").dataTable().fnDestroy();
-        $("#tbl_historico_saldos_cliente").dataTable().fnDestroy();
 
         this.listarCuentasPorCobrar();
        //this.listarCuentasPorCobrarInteres();
@@ -278,39 +278,6 @@
                     responsive: true,
                     dom: "Bfrtip",
                     buttons: [
-                        {
-                            extend: 'excel',
-                            title: '-'+idCliente,
-                            className: 'btn btn-success',
-                            excelStyles: {
-                                cells: "1",
-                                style: {
-                                    font:{
-                                        name:'Arial',
-                                        size: "16",
-                                        color: 'FFFFFF',
-                                        b: true
-                                    },
-                                    fill:{
-                                        pattern: {
-                                            color: 'ff7961'
-                                        }
-                                    }
-                                }
-                            }
-                        },
-
-                        {
-                            extend: 'print',
-                            customize: function(win) {
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
-
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                            }
-                        }
                     ],
                     "ajax": "/aplicacion/pagos/listar/"+idCliente,
                     "columns": [
@@ -387,37 +354,7 @@
                         }
 
 
-                    ],initComplete: function () {
-                        var r = $('#tbl_cuentas_facturas_cliente tfoot tr');
-                        r.find('th').each(function(){
-                          $(this).css('padding', 8);
-                        });
-                        $('#tbl_cuentas_facturas_cliente thead').append(r);
-                        $('#search_0').css('text-align', 'center');
-                        this.api()
-                            .columns()
-                            .every(function () {
-                                let column = this;
-                                let title = column.footer().textContent;
-
-                                // Create input element
-                                let input = document.createElement('input');
-                                input.placeholder = title;
-                                column.footer().replaceChildren(input);
-
-                                // Event listener for user input
-                                input.addEventListener('keyup', () => {
-                                    if (column.search() !== this.value) {
-                                        column.search(input.value).draw();
-                                    }
-                                });
-                            });
-
-
-
-
-                    }
-
+                    ]
 
                 });
                 //$('#btnEC').css('display','block');
