@@ -47,14 +47,12 @@
     </div>
 
 
-
-
     {{--  MODAL DE RETENCION DE ISV  --}}
-    <div class="modal" id="modalCobro" tabindex="-1" role="dialog">
+    <div class="modal" id="modalretencion" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Seleccione un tipo de pago:</h5>
+              <h5 class="modal-title">Seleccione accion para la retención:</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -71,10 +69,14 @@
                                                 <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
                                                 <input type="text" readonly class="form-control" id="codAplicPago" name="codAplicPago" >
                                             </div>
+
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Código de Factura:</b></label>
-                                                <input type="text" readonly class="form-control" id="codigoFactura" name="codigoFactura" >
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="facturaCai" name="facturaCai" >
+
+                                                <input type="hidden" id="idFacturaRetencion" name="idFacturaRetencion" >
                                             </div>
+
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto de retención:</b></label>
                                                 <input type="text" readonly class="form-control" id="montoRetencion" name="montoRetencion" >
@@ -88,7 +90,7 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Seleccione estado de retención</b></label>
 
-                                                 <select id="selectTipoCierre" name="selectTipoCierre" class="form-control form-select form-select-lg">
+                                                 <select id="selectTiporetencion" name="selectTiporetencion" class="form-control form-select form-select-lg">
 
                                                    <option class="form-control" value="1">SE APLICA AL SALDO</option>
                                                    <option class="form-control"  value="2">NO SE APLICA AL SALDO</option>
@@ -99,9 +101,9 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <button id="btn_cobroCierre" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                        <button id="btn_cambioRetencion" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
                                             <strong>
-                                                Registrar tipo de Cobro
+                                                Guardar gestión
                                             </strong>
                                         </button>
                                     </div>
@@ -114,18 +116,63 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
     {{--  FIN DEL MODAL DE RETENCION ISV  --}}
 
+        {{--  MODAL APLICAR NOTA DE CREDITO  --}}
+        <div class="modal" id="modalretencion" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Aplicación de Nota de Crédito:</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <form class="form-control" id="formNotaCredito" name="formNotaCredito" >
+                                    <div class="row">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                    <input type="text" readonly class="form-control" id="codAplicPagonc" name="codAplicPagonc" >
+                                                </div>
 
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                    <input type="text" readonly class="form-control" id="facturaCainc" name="facturaCainc" >
 
+                                                    <input type="hidden" id="idFacturaNC" name="idFacturaNC" >
+                                                </div>
 
-
+                                            </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <button id="btn_cambioRetencion" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                                <strong>
+                                                    Guardar gestión
+                                                </strong>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {{--  FIN DEL MODAL APLICAR NOTA DE CREDITO  --}}
 
     <div class="wrapper wrapper-content animated fadeInRight">
-        {{--  <div class="mb-2"  id="cuentas_excel">
-            <!-- <a href="/ventas/cuentas_por_cobrar/excel_cuentas" class="btn-seconary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a> -->
-        </div>  --}}
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -185,44 +232,6 @@
         </div>
     </div>
 
-{{--      <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table id="tbl_historico_saldos_cliente" class="table table-striped table-bordered table-hover">
-                                <thead class="">
-                                    <tr>
-                                        <th>No. Factura</th>
-                                        <th>Orden de Compra</th>
-                                        <th>Cliente</th>
-                                        <th>Fecha Emision</th>
-                                        <th>Fecha Vencimiento</th>
-                                        <th>Cargo</th>
-                                        <th>Credito</th>
-                                        <th>Notas Crédito</th>
-                                        <th>Notas Débito</th>
-                                        <th>Saldo</th>
-                                        <th>Acumulado</th>
-                                        <th>Acciones</th>
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>  --}}
-
 
 
 
@@ -250,6 +259,67 @@
                 }
             }
         });
+
+
+    function modalRetencion(codigoPago, retencion, estadoRetencion, caiFactura, idFactura){
+        $('#codAplicPago').val(codigoPago);
+        $('#montoRetencion').val(retencion);
+        $('#facturaCai').val(caiFactura);
+        $('#idFacturaRetencion').val(idFactura);
+
+        if(estadoRetencion == 1){
+            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="1">SE APLICA AL SALDO - ACTUAL</option>';
+        }else{
+            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA AL SALDO - ACTUAL</option>';
+        }
+
+
+        $('#modalretencion').modal('show');
+    }
+
+    function guardarRetencion(){
+        var fechaFacturas = document.getElementById('fecha').value;
+        var data = new FormData($('#cerrarCaja').get(0));
+
+        axios.post("/cierre/guardar/"+fechaFacturas, data)
+            .then(response => {
+                $('#cerrarCaja').parsley().reset();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado el cierre de caja con exito."
+                });
+                location. reload()
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
+    function modalNotaCredito(codigoPagoA, idFactura, caiFactura){
+        $('#codAplicPagonc').val(codigoPago);
+        $('#idFacturaNC').val(retencion);
+        $('#facturaCainc').val(caiFactura);
+
+        if(estadoRetencion == 1){
+            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="1">SE APLICA AL SALDO - ACTUAL</option>';
+        }else{
+            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA AL SALDO - ACTUAL</option>';
+        }
+
+
+        $('#modalretencion').modal('show');
+    }
+
+
 
     function llamarTablas(){
 

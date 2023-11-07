@@ -101,7 +101,10 @@ class Pagos extends Component
             $cuentas = DB::select("
                 select
                 id as                      'codigoPago',
-                factura_id as              'codigoFactura',
+                factura_id as              'idFactura',
+                (select cai
+                from factura
+                where id = factura_id) as  'codigoFactura',
                 total_factura_cargo as     'cargo',
                 total_notas_credito as     'notasCredito',
                 total_nodas_debito as      'notasDebito',
@@ -140,11 +143,7 @@ class Pagos extends Component
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Gestionar retencion </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                        <a class="dropdown-item" onclick="modalRetencion('.$cuenta->codigoPago.' , '.$cuenta->isv.', '.$cuenta->estadoRetencion.', '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')">  <i class="fa-solid fa-cash-register text-success"></i> Gestionar retencion </a>
                                     </li>
 
                                     <li>
@@ -154,6 +153,11 @@ class Pagos extends Component
                                     <li>
                                         <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
                                     </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                    </li>
+
 
                                     <li>
                                         <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
