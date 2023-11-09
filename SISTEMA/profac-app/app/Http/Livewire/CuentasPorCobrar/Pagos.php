@@ -293,8 +293,6 @@ class Pagos extends Component
     }
 
 
-
-
     public function listarNotasCredito($idFactura){
 
         try {

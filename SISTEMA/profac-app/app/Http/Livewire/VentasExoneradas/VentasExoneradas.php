@@ -300,7 +300,18 @@ class VentasExoneradas extends Component
 
 
 
+            $aplicacionPagos = DB::select("
 
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+
+
+            if ($aplicacionPagos[0]->estado == -1) {
+                return response()->json([
+                    "text" => "Ha ocurrido un error al insertar factura ".$factura->id."en aplicacion de pagos.",
+                    "icon" => "error",
+                    "title"=>"Error!"
+                ],400);
+            }
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
                 $keyRestaInventario = "restaInventario" . $arrayInputs[$i];

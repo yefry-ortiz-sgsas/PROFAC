@@ -319,6 +319,14 @@ class NotaDebito extends Component
         $NotaDebito->estado_id = 1;
         $NotaDebito->estado_nota_dec = $estado;
         $NotaDebito->users_registra_id = Auth::user()->id;
+
+
+
+        $NotaDebito->estado_sumado =2;
+        $NotaDebito->user_registra_sumado = 0;
+        $NotaDebito->comentario_sumado = 'N/A';
+        $NotaDebito->fecha_sumado = NULL;
+
         $NotaDebito->save();
 
         /* SE AGREGA LA FUNCION DE SUMAR EL MONTO DE NOTA DE DEBITO A LA FACTURA */
