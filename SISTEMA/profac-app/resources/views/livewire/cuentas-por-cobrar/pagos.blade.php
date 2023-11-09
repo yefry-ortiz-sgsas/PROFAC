@@ -52,7 +52,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Seleccione accion para la retención:</h5>
+              <h3 class="modal-title">Seleccione accion para la retención:</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -119,58 +119,180 @@
     </div>
     {{--  FIN DEL MODAL DE RETENCION ISV  --}}
 
-        {{--  MODAL APLICAR NOTA DE CREDITO  --}}
-        <div class="modal" id="modalretencion" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Aplicación de Nota de Crédito:</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="ibox ">
-                                <div class="ibox-content">
-                                    <form class="form-control" id="formNotaCredito" name="formNotaCredito" >
-                                    <div class="row">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
-                                                    <input type="text" readonly class="form-control" id="codAplicPagonc" name="codAplicPagonc" >
-                                                </div>
+    {{--  MODAL APLICAR NOTA DE CREDITO  --}}
+    <div class="modal" id="modalNC" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Aplicación de Nota de Crédito:</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formNotaCredito" name="formNotaCredito" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input type="text" readonly class="form-control" id="codAplicPagonc" name="codAplicPagonc" >
+                                            </div>
 
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                    <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
-                                                    <input type="text" readonly class="form-control" id="facturaCainc" name="facturaCainc" >
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="facturaCainc" name="facturaCainc" >
 
-                                                    <input type="hidden" id="idFacturaNC" name="idFacturaNC" >
-                                                </div>
+                                                <input type="hidden" id="idFacturaNC" name="idFacturaNC" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
+
+                                                 <select onchange="datosNotaCredito()" id="selectNotaCredito" name="selectNotaCredito" class="form-control form-select form-select-lg">
+
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
+                                                <input type="text" readonly class="form-control" id="totalNotaCredito" name="totalNotaCredito" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
+
+                                                <textarea readonly class="form-control"   id="motivoNotacredito" name="motivoNotacredito" cols="30" rows="5"></textarea>
 
                                             </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <button id="btn_cambioRetencion" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
-                                                <strong>
-                                                    Guardar gestión
-                                                </strong>
-                                            </button>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
+
+                                                 <select id="selectAplicado" name="selectAplicado" class="form-control form-select form-select-lg">
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
+
+                                                <textarea class="form-control"   id="comentarioRebaja" name="comentarioRebaja" cols="30" rows="5"></textarea>
+
+                                            </div>
+
                                         </div>
-                                    </div>
-                                    </form>
                                 </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_notacredito" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-              </div>
             </div>
+          </div>
         </div>
-        {{--  FIN DEL MODAL APLICAR NOTA DE CREDITO  --}}
+    </div>
+    {{--  FIN DEL MODAL APLICAR NOTA DE CREDITO  --}}
+
+
+    {{--  MODAL APLICAR NOTA DE DEBITO  --}}
+    <div class="modal" id="modalND" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Aplicación de Nota de Debito:</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formNotaDebito" name="formNotaDebito" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input type="text" readonly class="form-control" id="codAplicPagond" name="codAplicPagond" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input type="text" readonly class="form-control" id="facturaCaind" name="facturaCaind" >
+
+                                                <input type="hidden" id="idFacturaND" name="idFacturaND" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
+
+                                                 <select onchange="datosNotaDebito()" id="selectNotaDebito" name="selectNotaDebito" class="form-control form-select form-select-lg">
+
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
+                                                <input type="text" readonly class="form-control" id="totalNotaDebito" name="totalNotaDebito" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
+
+                                                <textarea readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
+
+                                                 <select id="selectAplicadond" name="selectAplicadond" class="form-control form-select form-select-lg">
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
+
+                                                <textarea class="form-control"   id="comentarioSuma" name="comentarioSuma" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_notadebito" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {{--  FIN DEL MODAL APLICAR NOTA DE DEBITO  --}}
 
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -304,19 +426,172 @@
         })
     }
 
-    function modalNotaCredito(codigoPagoA, idFactura, caiFactura){
-        $('#codAplicPagonc').val(codigoPago);
-        $('#idFacturaNC').val(retencion);
+    function modalNotaCredito(codigoPagoA, caiFactura, idFactura, tieneNC ){
+        $('#codAplicPagonc').val(codigoPagoA);
         $('#facturaCainc').val(caiFactura);
+        $('#idFacturaNC').val(idFactura);
 
-        if(estadoRetencion == 1){
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="1">SE APLICA AL SALDO - ACTUAL</option>';
+
+
+        //llamando todas las notas de credito de la factura en cuestion
+
+        if(tieneNC == 1){
+            //Tiene notas de credito esa factura
+            axios.get("/listar/nc/aplicacion/"+idFactura)
+            .then(response => {
+
+                let notas = response.data.results;
+                console.log(response);
+                let htmlnotas = '  <option value="" selected disabled >--Seleccione la nota a aplicar--</option>';
+
+                notas.forEach(element => {
+
+                    htmlnotas += `
+                    <option value="${element.idNotaCredito}" >${element.correlativo}</option>
+                    `
+                });
+
+                document.getElementById('selectNotaCredito').innerHTML = htmlnotas;
+                $('#modalNC').modal('show');
+
+            })
+            .catch(err => {
+                let data = err.response.data;
+                Swal.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: data.text
+                })
+                console.error(err);
+            });
         }else{
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA AL SALDO - ACTUAL</option>';
+            //No tiene Tiene notas de credito esa factura
+            Swal.fire({
+                icon: 'Info',
+                text: "Esta factura no cuenta con notas de crédito para aplicar."
+            });
+
         }
 
 
-        $('#modalretencion').modal('show');
+
+    }
+
+    function datosNotaCredito(){
+        let idNotaCredito = document.getElementById('selectNotaCredito').value;
+        axios.get("/listar/nc/aplicacion/datos/"+idNotaCredito)
+        .then(response => {
+
+            let nota = response.data.result;
+
+            console.log(nota[0].estado_rebajado);
+            /*LLENANDO EL SELECT DE LA APLICACION DEL PAGO*/
+            if(nota[0].estado_rebajado == 1){
+                document.getElementById("selectAplicado").innerHTML += '<option selected class="form-control" value="1">SE APLICA REBAJA DE NOTA DE CRÉDITO - <span class="badge badge-success">ACTUÁL</span></option>';
+                document.getElementById("selectAplicado").innerHTML += '<option class="form-control" value="2">NO SE APLICA REBAJA DE NOTA DE CRÉDITO</option>';
+            }else{
+                document.getElementById("selectAplicado").innerHTML += '<option  class="form-control" value="1">SE APLICA REBAJA DE NOTA DE CRÉDITO</option>';
+                document.getElementById("selectAplicado").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA REBAJA DE NOTA DE CRÉDITO - <span class="badge badge-success">ACTUÁL</span></option>';
+            }
+
+
+            $('#totalNotaCredito').val(nota[0].total);
+            $('#motivoNotacredito').val(nota[0].comentario);
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+        });
+    }
+
+    function modalNotaDebito(codigoPagoA, caiFactura, idFactura, tieneND ){
+        $('#codAplicPagond').val(codigoPagoA);
+        $('#facturaCaind').val(caiFactura);
+        $('#idFacturaND').val(idFactura);
+
+
+
+        //llamando todas las notas de credito de la factura en cuestion
+
+        if(tieneND == 1){
+            //Tiene notas de credito esa factura
+            axios.get("/listar/nd/aplicacion/"+idFactura)
+            .then(response => {
+
+                let notas = response.data.results;
+                console.log(response);
+                let htmlnotas = '  <option value="" selected disabled >--Seleccione la nota a aplicar--</option>';
+
+                notas.forEach(element => {
+
+                    htmlnotas += `
+                    <option value="${element.idNotaDebito}" >${element.correlativo}</option>
+                    `
+                });
+
+                document.getElementById('selectNotaDebito').innerHTML = htmlnotas;
+                $('#modalND').modal('show');
+
+            })
+            .catch(err => {
+                let data = err.response.data;
+                Swal.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: data.text
+                })
+                console.error(err);
+            });
+        }else{
+            //No tiene Tiene notas de credito esa factura
+            Swal.fire({
+                icon: 'Info',
+                text: "Esta factura no cuenta con notas de crédito para aplicar."
+            });
+
+        }
+
+
+
+    }
+
+    function datosNotaDebito(){
+        let idNotaDebito = document.getElementById('selectNotaDebito').value;
+
+        console.log(idNotaDebito);
+        axios.get("/listar/nd/aplicacion/datos/"+idNotaDebito)
+        .then(response => {
+
+            let nota = response.data.result;
+
+            console.log(nota[0]);
+            /*LLENANDO EL SELECT DE LA APLICACION DEL PAGO*/
+            if(nota[0].estado_sumado == 1){
+                document.getElementById("selectAplicadond").innerHTML += '<option selected class="form-control" value="1">SE APLICA SUMA DE NOTA DE CRÉDITO - <span class="badge badge-success">ACTUÁL</span></option>';
+                document.getElementById("selectAplicadond").innerHTML += '<option class="form-control" value="2">NO SE APLICA SUMA DE NOTA DE CRÉDITO</option>';
+            }else{
+                document.getElementById("selectAplicadond").innerHTML += '<option  class="form-control" value="1">SE APLICA SUMA DE NOTA DE CRÉDITO</option>';
+                document.getElementById("selectAplicadond").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA SUMA DE NOTA DE CRÉDITO - <span class="badge badge-success">ACTUÁL</span></option>';
+            }
+
+
+            $('#totalNotaDebito').val(nota[0].total);
+            $('#motivoNotaDebito').val(nota[0].comentario);
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+        });
     }
 
 

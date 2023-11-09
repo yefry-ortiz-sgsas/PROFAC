@@ -117,7 +117,24 @@ class Pagos extends Component
                 estado as                  'estado',
                 usr_cerro as               'usrCierre',
                 created_at as              'fechaRegistro',
-                updated_at  as             'ultimoRegistro'
+                updated_at  as             'ultimoRegistro',
+                IF(
+                   (
+                    select
+                       COUNT(*)
+                    from nota_credito
+                    where nota_credito.factura_id = idFactura
+                    ) > 0, 1, 0
+                ) as                       'tieneNC',
+                IF(
+                   (
+                    select
+                       COUNT(*)
+                    from notadebito
+                    where notadebito.factura_id = idFactura
+                    ) > 0, 1, 0
+                ) as                       'tieneND'
+
                 from aplicacion_pagos
                 where
                 cliente_id = ".$id."
@@ -147,11 +164,11 @@ class Pagos extends Component
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
+                                        <a class="dropdown-item" onclick="modalNotaCredito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneNC.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
+                                        <a class="dropdown-item" onclick="modalNotaDebito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
                                     </li>
 
                                     <li>
@@ -280,4 +297,99 @@ class Pagos extends Component
 
         return $pdf->stream("estado_cuenta.pdf");
     }
+
+
+
+    public function listarNotasCredito($idFactura){
+
+        try {
+                $notasCredito = DB::select("
+                    select
+                    id as 'idNotaCredito',
+                    cai as 'correlativo'
+                    from nota_credito where estado_nota_id = 1 and factura_id =
+                ".$idFactura);
+            return response()->json([
+                'results'=>$notasCredito,
+            ],200);
+
+        } catch (QueryException $e) {
+           return response()->json([
+            'message' => 'Ha ocurrido un error',
+            'error' => $e
+           ],402);
+        }
+
+    }
+
+    public function datosNotasCredito($idNotaCredito){
+
+        try {
+                $notaCredito = DB::select("
+                    select
+                    comentario,
+                    FORMAT(total,2) AS total,
+                    estado_rebajado
+                    from nota_credito where id =
+                ".$idNotaCredito);
+            return response()->json([
+                'result'=>$notaCredito,
+            ],200);
+
+        } catch (QueryException $e) {
+           return response()->json([
+            'message' => 'Ha ocurrido un error',
+            'error' => $e
+           ],402);
+        }
+
+    }
+
+    public function listarNotasDebito($idFactura){
+
+
+
+        try {
+                    $notasDebito = DB::select("
+                    select
+                    id as 'idNotaDebito',
+                    numeroCai as 'correlativo'
+                    from notadebito where estado_id = 1 and factura_id =
+                ".$idFactura);
+            return response()->json([
+                'results'=>$notasDebito,
+            ],200);
+
+        } catch (QueryException $e) {
+           return response()->json([
+            'message' => 'Ha ocurrido un error',
+            'error' => $e
+           ],402);
+        }
+
+    }
+
+    public function datosNotasDebito($idNotaDebito){
+
+        try {
+                $notaDebito = DB::select("
+                    select
+                    motivoDescripcion AS 'comentario',
+                    FORMAT(monto_asignado,2) AS 'total',
+                    estado_sumado
+                    from notadebito where id =
+                ".$idNotaDebito);
+            return response()->json([
+                'result'=>$notaDebito,
+            ],200);
+
+        } catch (QueryException $e) {
+           return response()->json([
+            'message' => 'Ha ocurrido un error',
+            'error' => $e
+           ],402);
+        }
+
+    }
+
 }
