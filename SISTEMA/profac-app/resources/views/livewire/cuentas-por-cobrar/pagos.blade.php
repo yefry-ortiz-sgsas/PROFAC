@@ -179,7 +179,7 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
 
-                                                <textarea class="form-control"   id="comentarioRebaja" name="comentarioRebaja" cols="30" rows="5"></textarea>
+                                                <textarea class="form-control" maxlength="500"   id="comentarioRebaja" name="comentarioRebaja" cols="30" rows="5"></textarea>
 
                                             </div>
 
@@ -253,7 +253,7 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
 
-                                                <textarea readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
+                                                <textarea maxlength="500" readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
 
                                             </div>
 

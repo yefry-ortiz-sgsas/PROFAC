@@ -172,13 +172,14 @@ class Pagos extends Component
                                     </li>
 
                                     <li>
+                                        <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
+                                    </li>
+
+                                    <li>
                                         <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
                                     </li>
 
 
-                                    <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
-                                    </li>
 
                                 </ul>
                             </div>
@@ -197,108 +198,6 @@ class Pagos extends Component
             ], 402);
         }
     }
-
-    public function listarHistoricoSaldoCliente($id){
-        try{
-
-            $interes_cuentas = DB::SELECT("
-            select
-            factura.numero_factura as numero_factura,
-            factura.cai as correlativo,
-            cliente_id as id_cliente,
-            factura.nombre_cliente as 'cliente',
-            factura.numero_factura as 'documento',
-            factura.fecha_emision as 'fecha_emision',
-            factura.fecha_vencimiento as 'fecha_vencimiento',
-            factura.total as 'cargo',
-            (factura.total-factura.pendiente_cobro) as 'abonos',
-            @numeroDias := TIMESTAMPDIFF(DAY, fecha_vencimiento, DATE(NOW()) ) as dias,
-            @interesDiario:=0 as interesInicia,
-            if(@numeroDias < 0, @interesDiario:=0, FORMAT(@interesDiario:= @numeroDias*0.1083333333,2)) as interesDiario,
-            FORMAT((factura.pendiente_cobro + @interesDiario),2) as acumulado
-
-        from factura
-        inner join cliente on (factura.cliente_id = cliente.id)
-        where   factura.pendiente_cobro <> 0 and cliente_id = '". $id."'");
-
-        return Datatables::of($interes_cuentas)
-                ->addColumn('opciones', function ($interes_cuenta) {
-
-                    return
-
-                        '
-                <div class="btn-group">
-                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                    más</button>
-                <ul class="dropdown-menu" x-placement="bottom-start"
-                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-
-
-                    <li>
-                    <a class="dropdown-item"   ><i class="fa-solid fa-xmark text-danger"></i> Desactivar </a>
-                    </li>
-
-                </ul>
-            </div>
-                ';
-                })
-
-
-                ->rawColumns(['opciones'])
-                ->make(true);
-        } catch (QueryException $e) {
-
-
-            return response()->json([
-                'message' => 'Ha ocurrido un error al listar las cuentas.',
-                'errorTh' => $e,
-            ], 402);
-        }
-    }
-
-    public function exportCuentasPorCobrar($cliente){
-        try {
-
-
-            return Excel::download(new CuentasPorCobrarExport($cliente), 'CuentasPorCobrarCliente.xlsx');
-
-        } catch (QueryException $e) {
-            return response()->json([
-
-                'error' => $e,
-                "text" => "Ha ocurrido un error.",
-                "icon" => "error",
-                "title"=>"Error!"
-            ],402);
-        }
-    }
-
-    public function exportCuentasPorCobrarInteres($cliente){
-        try {
-
-
-            return Excel::download(new CuentasPorCobrarInteresExport($cliente), 'CuentasPorCobrarInteresCliente.xlsx');
-
-        } catch (QueryException $e) {
-            return response()->json([
-
-                'error' => $e,
-                "text" => "Ha ocurrido un error.",
-                "icon" => "error",
-                "title"=>"Error!"
-            ],402);
-        }
-    }
-
-    public function imprimirEstadoCuenta($idClientepdf){
-        $estadoCuenta = DB::select("CALL cuentasx2('".$idClientepdf."');");
-        // dd($estadoCuenta[0]->cliente);
-        $pdf = PDF::loadView('/pdf/estadocuenta', compact('estadoCuenta'))->setPaper('letter')->setPaper("A4", "landscape");
-
-        return $pdf->stream("estado_cuenta.pdf");
-    }
-
-
 
     public function listarNotasCredito($idFactura){
 
