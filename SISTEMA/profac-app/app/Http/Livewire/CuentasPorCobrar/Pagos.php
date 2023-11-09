@@ -172,11 +172,11 @@ class Pagos extends Component
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
+                                        <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
                                     </li>
 
                                     <li>
-                                        <a class="dropdown-item" href="/venta/cobro/'.$cuenta->codigoFactura.'"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                        <a class="dropdown-item" onclick="modalAbonos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
                                     </li>
 
 

@@ -139,12 +139,12 @@
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
-                                                <input type="text" readonly class="form-control" id="codAplicPagonc" name="codAplicPagonc" >
+                                                <input required type="text" readonly class="form-control" id="codAplicPagonc" name="codAplicPagonc" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
-                                                <input type="text" readonly class="form-control" id="facturaCainc" name="facturaCainc" >
+                                                <input required type="text" readonly class="form-control" id="facturaCainc" name="facturaCainc" >
 
                                                 <input type="hidden" id="idFacturaNC" name="idFacturaNC" >
                                             </div>
@@ -152,34 +152,34 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
 
-                                                 <select onchange="datosNotaCredito()" id="selectNotaCredito" name="selectNotaCredito" class="form-control form-select form-select-lg">
+                                                 <select required onchange="datosNotaCredito()" id="selectNotaCredito" name="selectNotaCredito" class="form-control form-select form-select-lg">
 
                                                  </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
-                                                <input type="text" readonly class="form-control" id="totalNotaCredito" name="totalNotaCredito" >
+                                                <input required type="text" readonly class="form-control" id="totalNotaCredito" name="totalNotaCredito" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
 
-                                                <textarea readonly class="form-control"   id="motivoNotacredito" name="motivoNotacredito" cols="30" rows="5"></textarea>
+                                                <textarea required readonly class="form-control"   id="motivoNotacredito" name="motivoNotacredito" cols="30" rows="5"></textarea>
 
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
 
-                                                 <select id="selectAplicado" name="selectAplicado" class="form-control form-select form-select-lg">
+                                                 <select required id="selectAplicado" name="selectAplicado" class="form-control form-select form-select-lg">
                                                  </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
 
-                                                <textarea class="form-control" maxlength="500"   id="comentarioRebaja" name="comentarioRebaja" cols="30" rows="5"></textarea>
+                                                <textarea required class="form-control" maxlength="500"   id="comentarioRebaja" name="comentarioRebaja" cols="30" rows="5"></textarea>
 
                                             </div>
 
@@ -227,12 +227,12 @@
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
-                                                <input type="text" readonly class="form-control" id="codAplicPagond" name="codAplicPagond" >
+                                                <input required type="text" readonly class="form-control" id="codAplicPagond" name="codAplicPagond" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
-                                                <input type="text" readonly class="form-control" id="facturaCaind" name="facturaCaind" >
+                                                <input required type="text" readonly class="form-control" id="facturaCaind" name="facturaCaind" >
 
                                                 <input type="hidden" id="idFacturaND" name="idFacturaND" >
                                             </div>
@@ -240,34 +240,34 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
 
-                                                 <select onchange="datosNotaDebito()" id="selectNotaDebito" name="selectNotaDebito" class="form-control form-select form-select-lg">
+                                                 <select required onchange="datosNotaDebito()" id="selectNotaDebito" name="selectNotaDebito" class="form-control form-select form-select-lg">
 
                                                  </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
-                                                <input type="text" readonly class="form-control" id="totalNotaDebito" name="totalNotaDebito" >
+                                                <input required type="text" readonly class="form-control" id="totalNotaDebito" name="totalNotaDebito" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
 
-                                                <textarea maxlength="500" readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
+                                                <textarea required maxlength="500" readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
 
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
 
-                                                 <select id="selectAplicadond" name="selectAplicadond" class="form-control form-select form-select-lg">
+                                                 <select required id="selectAplicadond" name="selectAplicadond" class="form-control form-select form-select-lg">
                                                  </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
 
-                                                <textarea class="form-control"   id="comentarioSuma" name="comentarioSuma" cols="30" rows="5"></textarea>
+                                                <textarea required class="form-control"   id="comentarioSuma" name="comentarioSuma" cols="30" rows="5"></textarea>
 
                                             </div>
 
@@ -294,12 +294,155 @@
     </div>
     {{--  FIN DEL MODAL APLICAR NOTA DE DEBITO  --}}
 
+
+    {{--  MODAL APLICAR OTROS MOVIMIENTOS  --}}
+    <div class="modal" id="modalOtrosMovimientos" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h3 class="modal-title">Aplicación de otros movimientos a la factura Cobro/Rebajas:</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formOtrosMovimientos" name="formOtrosMovimientos" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input required type="text" readonly class="form-control" id="codAplicPagoom" name="codAplicPagoom" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input required type="text" readonly class="form-control" id="facturaCaiom" name="facturaCaiom" >
+
+                                                <input type="hidden" id="idFacturaom" name="idFacturaom" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección el tipo de Movimiento a realizar</b></label>
+
+                                                <select required id="selecttipoMovimiento" name="selecttipoMovimiento" class="form-control form-select form-select-lg">
+                                                    <option class="form-control" value="1">SUMAR CARGO AL SALDO</option>
+                                                    <option class="form-control"  value="2">REBAJAR CARGO AL SALDO</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
+                                                <input required type="number" min="0" class="form-control" id="montoTM" name="montoTM" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Comentario del movimiento:</b></label>
+
+                                                <textarea required maxlength="500" class="form-control"   id="motivoMovimiento" name="motivoMovimiento" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_tipomov" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Guardar Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{--  FIN DEL MODAL OTROS MOVIMIENTOS  --}}
+
+
+    {{--  MODAL APLICAR CREDITOS/ABONOS  --}}
+    <div class="modal" id="modalAbonos" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h3 class="modal-title">Aplicación Creditos o Abonos al Saldo de la factura:</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formNotaDebito" name="formNotaDebito" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input required type="text" readonly class="form-control" id="codAplicPagoAbono" name="codAplicPagoAbono" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input required type="text" readonly class="form-control" id="facturaCaiAbono" name="facturaCaiAbono" >
+
+                                                <input type="hidden" id="idFacturaAbono" name="idFacturaAbono" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
+                                                <input required type="number" min="0"  class="form-control" id="montoAbono" name="montoAbono" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
+
+                                                <textarea required class="form-control"   id="comentarioAbono" name="comentarioAbono" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_notadebito" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{--  FIN DEL MODAL APLICAR CREDITOS/ABONOS  --}}
+
+    {{--  TABLA PRINCIPAL DE REGISTRO  --}}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-content">
                         <div class="table-responsive">
+                            <h4>Registros de saldos por factura del cliente:</h4>
                             <table id="tbl_cuentas_facturas_cliente" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
@@ -322,7 +465,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        {{--                                      <tfoot>
+                                    <tfoot>
                                         <tr>
                                             <th>Codigo Pagos</th>
                                             <th>Código Factura</th>
@@ -343,7 +486,7 @@
                                         </tr>
                                     </tfoot>
 
-                                </tbody>  --}}
+                                </tbody>
                             </table>
 
                         </div>
@@ -353,6 +496,103 @@
             </div>
         </div>
     </div>
+    {{-- FIN TABLA PRINCIPAL DE REGISTRO  --}}
+
+    {{--  TABLA DE OTROS MOVIMIENTOS --}}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <h4>Movimientos por facturas del cliente:</h4>
+                            <table id="tbl_tipo_movimientos_cliente" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>Codigo Pagos</th>
+                                        <th>Código Factura</th>
+                                        <th>Monto</th>
+                                        <th>Movimiento</th>
+                                        <th>Comentario</th>
+                                        <th>Estado</th>
+                                        <th>Registrado por/th>
+                                        <th>Fecha de registro</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Codigo Pagos</th>
+                                            <th>Código Factura</th>
+                                            <th>Monto</th>
+                                            <th>Movimiento</th>
+                                            <th>Comentario</th>
+                                            <th>Estado</th>
+                                            <th>Registrado por/th>
+                                            <th>Fecha de registro</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- FIN TABLA DE OTROS MOVIMIENTOS  --}}
+
+    {{--  TABLA DE CREDITOS Y ABONOS --}}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <h4>Creditos y abonos hechos por factura:</h4>
+                            <table id="tbl_abonos_cliente" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>Codigo Abono</th>
+                                        <th>Codigo Pagos</th>
+                                        <th>Código Factura</th>
+                                        <th>Monto</th>
+                                        <th>Comentario</th>
+                                        <th>Estado</th>
+                                        <th>Registrado por/th>
+                                        <th>Fecha de registro</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Codigo Abono</th>
+                                            <th>Codigo Pagos</th>
+                                            <th>Código Factura</th>
+                                            <th>Monto</th>
+                                            <th>Comentario</th>
+                                            <th>Estado</th>
+                                            <th>Registrado por/th>
+                                            <th>Fecha de registro</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- FIN TABLA DE CREDITOS Y ABONOS --}}
 
 
 
@@ -363,8 +603,6 @@
 </div>
 @push('scripts')
 <script>
-        $('#btnEC').css('display','none');
-        $('#btnEC').hide();
 
         $('#cliente').select2({
             ajax: {
@@ -551,7 +789,7 @@
             //No tiene Tiene notas de credito esa factura
             Swal.fire({
                 icon: 'Info',
-                text: "Esta factura no cuenta con notas de crédito para aplicar."
+                text: "Esta factura no cuenta con notas de Debito para aplicar."
             });
 
         }
@@ -594,21 +832,36 @@
         });
     }
 
+    function modalOtrosMovimientos(codigoPagoA, caiFactura, idFactura ){
+        $('#codAplicPagoom').val(codigoPagoA);
+        $('#facturaCaiom').val(caiFactura);
+        $('#idFacturaom').val(idFactura);
 
+        $('#modalOtrosMovimientos').modal('show');
+
+    }
+
+    function modalAbonos(codigoPagoA, caiFactura, idFactura){
+        $('#codAplicPagoAbono').val(codigoPagoA);
+        $('#facturaCaiAbono').val(caiFactura);
+        $('#idFacturaAbono').val(idFactura);
+
+
+        $('#modalAbonos').modal('show');
+    }
 
     function llamarTablas(){
 
         $("#tbl_cuentas_facturas_cliente").dataTable().fnDestroy();
+        $("#tbl_tipo_movimientos_cliente").dataTable().fnDestroy();
+        $("#tbl_abonos_cliente").dataTable().fnDestroy();
+
 
         this.listarCuentasPorCobrar();
-       //this.listarCuentasPorCobrarInteres();
 
-    }
+        //this.listarMovimientos();
+        //this.listarAbonos()
 
-    function pdfEstadoCuenta(){
-
-        var idClientepdf = document.getElementById('cliente').value;
-        window.open('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/'+idClientepdf, '_blank');
     }
 
     function listarCuentasPorCobrar() {
@@ -706,123 +959,168 @@
                 //$('#btnEC').show();
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////////
-
-    function listarCuentasPorCobrarInteres() {
+    function listarMovimientos() {
 
         var idCliente = document.getElementById('cliente').value;
-        $('#tbl_historico_saldos_cliente').DataTable({
+        $('#tbl_tipo_movimientos_cliente').DataTable({
                     "order": [0, 'desc'],
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
                     },
                     pageLength: 10,
                     responsive: true,
-                    dom: '<"html5buttons"B>lTfgitp',
-                    buttons: [{
-                            extend: 'copy'
-                        },
-                        {
-                            extend: 'csv'
-                        },
-                        {
-                            extend: 'excel',
-                            title: 'ExampleFile'
-                        },
-                        {
-                            extend: 'pdf',
-                            title: 'ExampleFile'
-                        },
-
-                        {
-                            extend: 'print',
-                            customize: function(win) {
-                                $(win.document.body).addClass('white-bg');
-                                $(win.document.body).css('font-size', '10px');
-
-                                $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                            }
-                        }
+                    dom: "Bfrtip",
+                    buttons: [
                     ],
-                    "ajax": "/aplicacion/pagos/listar/hitorico/"+idCliente,
+                    "ajax": "/aplicacion/pagos/listar/movimientos/"+idCliente,
                     "columns": [
+
                         {
-                            data: 'numero_factura'
+                            data: 'codigoPago'
                         },
                         {
-                            data: 'correlativo'
-                        },
-                        {
-                            data: 'id_cliente'
-                        },
-                        {
-                            data: 'cliente'
-                        },
-                        {
-                            data: 'documento'
-                        },
-                        {
-                            data: 'fecha_emision'
-                        },
-                        {
-                            data: 'fecha_vencimiento'
+                            data: 'codigoFactura'
                         },
                         {
                             data: 'cargo'
                         },
                         {
-                            data: 'abonos'
+                            data: 'notasCredito'
                         },
                         {
-                            data: 'dias'
+                            data: 'notasDebito'
                         },
                         {
-                            data: 'interesInicia'
+                            data: 'abonosCargo'
                         },
                         {
-                            data: 'interesDiario'
+                            data: 'movSuma'
                         },
                         {
-                            data: 'acumulado'
-                        }
-                    ]
+                            data: 'movResta'
+                        },
+                        {
+                            data: 'isv'
+                        },
+                        {
+                            data: 'saldo'
+                        },
+                        {
+                            data: 'estado',
+                            render: function (data, type, row) {
 
+
+                                if(data === 1){
+                                    return "<span class='badge badge-success'>ACTIVO</span>";
+                                }else if(data === 2){
+                                    return "<span class='badge badge-danger'>INACTIVO</span>";
+                                }
+
+
+                            }
+                        },
+                        {
+                            data: 'usrCierre'
+                        },
+                        {
+                            data: 'fechaRegistro'
+                        },
+                        {
+                            data: 'ultimoRegistro'
+                        },
+                        {
+                            data: 'acciones'
+                        }
+
+
+                    ]
 
                 });
     }
 
-    //////////////////////////////////////////////////////////////////////////////////
 
-    {{--  function mostrarExports() {
+    function listarAbonos() {
 
-        var cliente = document.getElementById('cliente').value;
+        var idCliente = document.getElementById('cliente').value;
+        $('#tbl_abonos_cliente').DataTable({
+                    "order": [0, 'desc'],
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                    },
+                    pageLength: 10,
+                    responsive: true,
+                    dom: "Bfrtip",
+                    buttons: [
+                    ],
+                    "ajax": "/aplicacion/pagos/listar/abonos/"+idCliente,
+                    "columns": [
 
-                let htmlSelect1 = ''
+                        {
+                            data: 'codigoPago'
+                        },
+                        {
+                            data: 'codigoFactura'
+                        },
+                        {
+                            data: 'cargo'
+                        },
+                        {
+                            data: 'notasCredito'
+                        },
+                        {
+                            data: 'notasDebito'
+                        },
+                        {
+                            data: 'abonosCargo'
+                        },
+                        {
+                            data: 'movSuma'
+                        },
+                        {
+                            data: 'movResta'
+                        },
+                        {
+                            data: 'isv'
+                        },
+                        {
+                            data: 'saldo'
+                        },
+                        {
+                            data: 'estado',
+                            render: function (data, type, row) {
 
-                htmlSelect1 =   `
-                        <a href="/cuentas_por_cobrar/pagos/excel_cuentas/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i> Exportar Excel Cuentas Por Cobrar</a>
 
-                                `
-
-                document.getElementById('cuentas_excel').innerHTML = htmlSelect1;
-
-                //////////////////////////////////////////////////////////////////////////////
-                let htmlSelect2 = ''
-
-                htmlSelect2 =   `
-                        <a href="/cuentas_por_cobrar/pagos/excel_intereses/${cliente}" class="btn btn-primary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a>
-
-                                `
-
-                document.getElementById('cuentas_excel_intereses').innerHTML = htmlSelect2;
-
-    }  --}}
+                                if(data === 1){
+                                    return "<span class='badge badge-success'>ACTIVO</span>";
+                                }else if(data === 2){
+                                    return "<span class='badge badge-danger'>INACTIVO</span>";
+                                }
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            }
+                        },
+                        {
+                            data: 'usrCierre'
+                        },
+                        {
+                            data: 'fechaRegistro'
+                        },
+                        {
+                            data: 'ultimoRegistro'
+                        },
+                        {
+                            data: 'acciones'
+                        }
+
+
+                    ]
+
+                });
+    }
+
+
+
+
 </script>
 
 @endpush
