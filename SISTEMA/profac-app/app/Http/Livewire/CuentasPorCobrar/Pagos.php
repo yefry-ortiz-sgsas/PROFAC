@@ -73,30 +73,6 @@ class Pagos extends Component
                 }
 
             }
-            /*
-             $cuentas = DB::select("select
-             factura.id as codigoFactura,
-             (RIGHT(factura.cai, 5)) as numero_factura,
-             factura.cai as correlativo,
-             (
-                         IF  (
-                              (
-                                 SELECT COUNT(*) FROM numero_orden_compra WHERE id = factura.numero_orden_compra_id
-                              ) = 0
-                              , 'N/A'
-                              ,(SELECT numero_orden FROM numero_orden_compra WHERE id = factura.numero_orden_compra_id)
-
-                             )
-
-                         ) as 'numOrden',
-             factura.fecha_emision as 'fecha_emision',
-             factura.fecha_vencimiento as 'fecha_vencimiento',
-             factura.pendiente_cobro as 'saldo'
-             from factura
-             inner join cliente on (factura.cliente_id = cliente.id)
-             where factura.estado_venta_id <> 2 and cliente_id = ".$id." and factura.pendiente_cobro <> 0;");
-
-            */
 
             $cuentas = DB::select("
                 select
@@ -198,6 +174,126 @@ class Pagos extends Component
             ], 402);
         }
     }
+
+    public function listarMovimientos($id){
+        try{
+
+            $consulta = DB::select("
+
+            select
+            ot.id as 'codigoMovimiento',
+            ot.aplicacion_pagos_id as 'codigoPago',
+            (select cai from factura where id = ot.factura_id) as correlativo,
+            FORMAT(ot.monto, 2) as monto,
+            ot.tipo_movimiento,
+            ot.comentario,
+            ot.estado as estadoMov,
+            (select name from users where id = ot.usr_registro) as userRegistro,
+            ot.created_at as fechaRegistro,
+            ot.factura_id
+                from otros_movimientos ot
+                inner join aplicacion_pagos ap on ap.id = ot.aplicacion_pagos_id
+                where
+                ap.cliente_id = ".$id."
+                and ap.estado = 1
+                and ot.estado = 1
+                ;"
+            );
+
+
+
+        return Datatables::of($consulta)
+                ->addColumn('acciones', function ($consulta) {
+
+                    return
+                        '
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
+                                <ul class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                                    <li>
+                                        <a class="dropdown-item" onclick="inhabilitarMov('.$consulta->codigoMovimiento.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        ';
+                })
+
+
+                ->rawColumns(['acciones'])
+                ->make(true);
+        } catch (QueryException $e) {
+
+
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar las cuentas.',
+                'errorTh' => $e,
+            ], 402);
+        }
+    }
+
+    public function listarAbonos($id){
+        try{
+
+            $consulta = DB::select("
+
+            select
+            ac.id as 'codigoAbono',
+            ac.aplicacion_pagos_id as 'codigoPago',
+            (select cai from factura where id = ac.factura_id) as correlativo,
+            FORMAT(ac.monto_abonado, 2) as monto,
+            ac.comentario,
+            ac.estado_abono as 'estadoAbono',
+            (select name from users where id = ac.usr_registro) as userRegistro,
+            ac.created_at as fechaRegistro,
+            ac.factura_id
+                from abonos_creditos ac
+                inner join aplicacion_pagos ap on ap.id = ac.aplicacion_pagos_id
+                where
+                ap.cliente_id = ".$id."
+                and ap.estado = 1
+                and ac.estado_abono = 1
+                ;"
+            );
+
+
+
+        return Datatables::of($consulta)
+                ->addColumn('acciones', function ($consulta) {
+
+                    return
+                        '
+                            <div class="btn-group">
+                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
+                                <ul class="dropdown-menu" x-placement="bottom-start"
+                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                                    <li>
+                                        <a class="dropdown-item" onclick="inhabilitarAbono('.$consulta->codigoMovimiento.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        ';
+                })
+
+
+                ->rawColumns(['acciones'])
+                ->make(true);
+        } catch (QueryException $e) {
+
+
+            return response()->json([
+                'message' => 'Ha ocurrido un error al listar las cuentas.',
+                'errorTh' => $e,
+            ], 402);
+        }
+    }
+
+
+
 
     public function listarNotasCredito($idFactura){
 

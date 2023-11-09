@@ -564,10 +564,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     /////////////////////////////APLICACION DE PAGOS/////////////////////////////////
     Route::get('/cuentas_por_cobrar/pagos', Pagos::class);
     Route::get('/aplicacion/pagos/clientes', [Pagos::class, 'listarClientes']);
-    //Route::get('/cuentas_por_cobrar/pagos/estadoCuenta/imprimir/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
-
     Route::get('/aplicacion/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
-    Route::get('/aplicacion/pagos/listar/hitorico/{id}', [Pagos::class, 'listarHistoricoSaldoCliente']);
+    Route::get('/aplicacion/pagos/listar/movimientos/{id}', [Pagos::class, 'listarMovimientos']);
+    Route::get('/aplicacion/pagos/listar/abonos/{id}', [Pagos::class, 'listarAbonos']);
+
+
 
     Route::get('/listar/nc/aplicacion/{idFactura}', [Pagos::class, 'listarNotasCredito']);
     Route::get('/listar/nc/aplicacion/datos/{idNotaCredito}', [Pagos::class, 'datosNotasCredito']);

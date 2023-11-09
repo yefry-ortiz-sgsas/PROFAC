@@ -509,8 +509,9 @@
                             <table id="tbl_tipo_movimientos_cliente" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
+                                        <th>Codigo Movimiento</th>
                                         <th>Codigo Pagos</th>
-                                        <th>Código Factura</th>
+                                        <th>Factura</th>
                                         <th>Monto</th>
                                         <th>Movimiento</th>
                                         <th>Comentario</th>
@@ -523,6 +524,7 @@
                                 <tbody>
                                     <tfoot>
                                         <tr>
+                                            <th>Codigo Movimiento</th>
                                             <th>Codigo Pagos</th>
                                             <th>Código Factura</th>
                                             <th>Monto</th>
@@ -574,7 +576,7 @@
                                         <tr>
                                             <th>Codigo Abono</th>
                                             <th>Codigo Pagos</th>
-                                            <th>Código Factura</th>
+                                            <th>Factura</th>
                                             <th>Monto</th>
                                             <th>Comentario</th>
                                             <th>Estado</th>
@@ -859,8 +861,8 @@
 
         this.listarCuentasPorCobrar();
 
-        //this.listarMovimientos();
-        //this.listarAbonos()
+        this.listarMovimientos();
+        this.listarAbonos()
 
     }
 
@@ -868,13 +870,13 @@
 
         var idCliente = document.getElementById('cliente').value;
         $('#tbl_cuentas_facturas_cliente').DataTable({
-                    "order": [0, 'desc'],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                    },
-                    pageLength: 10,
-                    responsive: true,
-                    dom: "Bfrtip",
+            "paging": true,
+            "language": {
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
                     buttons: [
                     ],
                     "ajax": "/aplicacion/pagos/listar/"+idCliente,
@@ -952,61 +954,86 @@
                         }
 
 
-                    ]
+                    ],initComplete: function () {
+                        var r = $('#tbl_cuentas_facturas_cliente tfoot tr');
+                        r.find('th').each(function(){
+                          $(this).css('padding', 8);
+                        });
+                        $('#tbl_cuentas_facturas_cliente thead').append(r);
+                        $('#search_0').css('text-align', 'center');
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                let column = this;
+                                let title = column.footer().textContent;
+
+                                // Create input element
+                                let input = document.createElement('input');
+                                input.placeholder = title;
+                                column.footer().replaceChildren(input);
+
+                                // Event listener for user input
+                                input.addEventListener('keyup', () => {
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value).draw();
+                                    }
+                                });
+                            });
+
+
+
+
+                    }
 
                 });
-                //$('#btnEC').css('display','block');
-                //$('#btnEC').show();
     }
 
     function listarMovimientos() {
 
         var idCliente = document.getElementById('cliente').value;
         $('#tbl_tipo_movimientos_cliente').DataTable({
-                    "order": [0, 'desc'],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                    },
-                    pageLength: 10,
-                    responsive: true,
-                    dom: "Bfrtip",
+            "paging": true,
+            "language": {
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
                     buttons: [
                     ],
                     "ajax": "/aplicacion/pagos/listar/movimientos/"+idCliente,
                     "columns": [
-
+                        {
+                            data: 'codigoMovimiento'
+                        },
                         {
                             data: 'codigoPago'
                         },
                         {
-                            data: 'codigoFactura'
+                            data: 'correlativo'
                         },
                         {
-                            data: 'cargo'
+                            data: 'monto'
                         },
                         {
-                            data: 'notasCredito'
+                            data: 'tipo_movimiento',
+                            render: function (data, type, row) {
+
+
+                                if(data === 1){
+                                    return "<span class='badge badge-success'>CARGO</span>";
+                                }else if(data === 2){
+                                    return "<span class='badge badge-danger'>REBAJA</span>";
+                                }
+
+
+                            }
                         },
                         {
-                            data: 'notasDebito'
+                            data: 'comentario'
                         },
                         {
-                            data: 'abonosCargo'
-                        },
-                        {
-                            data: 'movSuma'
-                        },
-                        {
-                            data: 'movResta'
-                        },
-                        {
-                            data: 'isv'
-                        },
-                        {
-                            data: 'saldo'
-                        },
-                        {
-                            data: 'estado',
+                            data: 'estadoMov',
                             render: function (data, type, row) {
 
 
@@ -1020,20 +1047,45 @@
                             }
                         },
                         {
-                            data: 'usrCierre'
+                            data: 'userRegistro'
                         },
                         {
                             data: 'fechaRegistro'
                         },
                         {
-                            data: 'ultimoRegistro'
-                        },
-                        {
                             data: 'acciones'
                         }
 
+                    ],initComplete: function () {
+                        var r = $('#tbl_tipo_movimientos_cliente tfoot tr');
+                        r.find('th').each(function(){
+                          $(this).css('padding', 8);
+                        });
+                        $('#tbl_tipo_movimientos_cliente thead').append(r);
+                        $('#search_0').css('text-align', 'center');
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                let column = this;
+                                let title = column.footer().textContent;
 
-                    ]
+                                // Create input element
+                                let input = document.createElement('input');
+                                input.placeholder = title;
+                                column.footer().replaceChildren(input);
+
+                                // Event listener for user input
+                                input.addEventListener('keyup', () => {
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value).draw();
+                                    }
+                                });
+                            });
+
+
+
+
+                    }
 
                 });
     }
@@ -1043,50 +1095,35 @@
 
         var idCliente = document.getElementById('cliente').value;
         $('#tbl_abonos_cliente').DataTable({
-                    "order": [0, 'desc'],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
-                    },
-                    pageLength: 10,
-                    responsive: true,
-                    dom: "Bfrtip",
+            "paging": true,
+            "language": {
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
                     buttons: [
                     ],
                     "ajax": "/aplicacion/pagos/listar/abonos/"+idCliente,
                     "columns": [
 
                         {
+                            data: 'codigoAbono'
+                        },
+                        {
                             data: 'codigoPago'
                         },
                         {
-                            data: 'codigoFactura'
+                            data: 'correlativo'
                         },
                         {
-                            data: 'cargo'
+                            data: 'monto'
                         },
                         {
-                            data: 'notasCredito'
+                            data: 'comentario'
                         },
                         {
-                            data: 'notasDebito'
-                        },
-                        {
-                            data: 'abonosCargo'
-                        },
-                        {
-                            data: 'movSuma'
-                        },
-                        {
-                            data: 'movResta'
-                        },
-                        {
-                            data: 'isv'
-                        },
-                        {
-                            data: 'saldo'
-                        },
-                        {
-                            data: 'estado',
+                            data: 'estadoAbono',
                             render: function (data, type, row) {
 
 
@@ -1100,20 +1137,46 @@
                             }
                         },
                         {
-                            data: 'usrCierre'
+                            data: 'userRegistro'
                         },
                         {
                             data: 'fechaRegistro'
-                        },
-                        {
-                            data: 'ultimoRegistro'
                         },
                         {
                             data: 'acciones'
                         }
 
 
-                    ]
+                    ],initComplete: function () {
+                        var r = $('#tbl_abonos_cliente tfoot tr');
+                        r.find('th').each(function(){
+                          $(this).css('padding', 8);
+                        });
+                        $('#tbl_abonos_cliente thead').append(r);
+                        $('#search_0').css('text-align', 'center');
+                        this.api()
+                            .columns()
+                            .every(function () {
+                                let column = this;
+                                let title = column.footer().textContent;
+
+                                // Create input element
+                                let input = document.createElement('input');
+                                input.placeholder = title;
+                                column.footer().replaceChildren(input);
+
+                                // Event listener for user input
+                                input.addEventListener('keyup', () => {
+                                    if (column.search() !== this.value) {
+                                        column.search(input.value).draw();
+                                    }
+                                });
+                            });
+
+
+
+
+                    }
 
                 });
     }
