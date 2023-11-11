@@ -510,7 +510,7 @@ class FacturacionCorporativa extends Component
 
                 $aplicacionPagos = DB::select("
 
-                CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
                 if ($aplicacionPagos[0]->estado == -1) {
@@ -799,7 +799,7 @@ class FacturacionCorporativa extends Component
 
             $aplicacionPagos = DB::select("
 
-            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
             if ($aplicacionPagos[0]->estado == -1) {
@@ -941,7 +941,7 @@ class FacturacionCorporativa extends Component
 
         $aplicacionPagos = DB::select("
 
-        CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+        CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
         if ($aplicacionPagos[0]->estado == -1) {
@@ -1095,7 +1095,7 @@ class FacturacionCorporativa extends Component
 
             $aplicacionPagos = DB::select("
 
-            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
             if ($aplicacionPagos[0]->estado == -1) {
@@ -1733,7 +1733,7 @@ class FacturacionCorporativa extends Component
 
             $aplicacionPagos = DB::select("
 
-            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
             if ($aplicacionPagos[0]->estado == -1) {
@@ -1980,7 +1980,7 @@ class FacturacionCorporativa extends Component
 
             $aplicacionPagos = DB::select("
 
-            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."', @estado, @msjResultado);");
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0', @estado, @msjResultado);");
 
 
             if ($aplicacionPagos[0]->estado == -1) {

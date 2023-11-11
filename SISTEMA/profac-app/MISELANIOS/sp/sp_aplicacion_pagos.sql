@@ -5,6 +5,9 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
     IN `pcliente_id` INT ,/*Obligatorio*/
     IN `usr_actual` INT ,/*Obligatorio*/
     IN `pfactura_id` INT,
+    IN `pcomentario` VARCHAR(500),
+    IN `paplic_id` INT,
+    IN `ptipo` INT,
    	OUT `estado` INT,
     OUT `msjResultado` VARCHAR(500)
 )BEGIN
@@ -18,7 +21,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
   END;
 
   START TRANSACTION;
-      /*Accion que se ejecuta para clientes viejos*/
+
           IF accion = 1 THEN
             INSERT INTO aplicacion_pagos
 
@@ -114,7 +117,6 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
                 select estado,msjResultado;
           END IF;
 
-
           IF accion = 3 THEN
             INSERT INTO aplicacion_pagos
 
@@ -168,6 +170,9 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
 
                 select estado,msjResultado;
           END IF;
+
+
+
   COMMIT;
 END$$
 DELIMITER ;

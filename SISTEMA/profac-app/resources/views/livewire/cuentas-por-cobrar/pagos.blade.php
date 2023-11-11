@@ -1179,7 +1179,47 @@
 
                 });
     }
+    /////////////////////////////FUNCIONALIDADES DE LAS GESTIONES
 
+    $(document).on('submit', '#formEstadoRetencion', function(event) {
+
+        $('#btn_cambioRetencion').css('display','none');
+        $('#btn_cambioRetencion').hide();
+
+
+        $('#modalretencion').modal('hide');
+
+        event.preventDefault();
+        guardarRetencions();
+    });
+
+    function guardarRetencions(){
+        var data = new FormData($('#formEstadoRetencion').get(0));
+
+        axios.post("/pagos/retencion/guardar", data)
+            .then(response => {
+                //$('#cerrarCaja').parsley().reset();
+
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado gestiona la retención."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
 
 
 

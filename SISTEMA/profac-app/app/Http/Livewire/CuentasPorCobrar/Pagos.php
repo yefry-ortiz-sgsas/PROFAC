@@ -50,7 +50,7 @@ class Pagos extends Component
                 SELECT COUNT(*) AS existe FROM aplicacion_pagos ap
                 inner join factura fa on fa.id = ap.factura_id
                 inner join cliente cli on cli.id = fa.cliente_id
-                where ap.edtado = 1 and cli.id = ".$id."
+                where ap.estado = 1 and cli.id = ".$id."
 
 
             ");
@@ -86,7 +86,7 @@ class Pagos extends Component
 
                 $cuentas2 = DB::select("
 
-                CALL sp_aplicacion_pagos('1','".$id."', '".Auth::user()->id."', '0', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('1','".$id."', '".Auth::user()->id."', '0','na','0','0', @estado, @msjResultado);");
 
                 //dd($cuentas2[0]->estado);
 
@@ -105,7 +105,7 @@ class Pagos extends Component
 
                 $cuentas3 = DB::select("
 
-                CALL sp_aplicacion_pagos('3','".$id."', '".Auth::user()->id."', '0', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('3','".$id."', '".Auth::user()->id."', '0','na','0','0', @estado, @msjResultado);");
 
                 //dd($cuentas2[0]->estado);
 
@@ -336,7 +336,6 @@ class Pagos extends Component
         }
     }
 
-
     public function listarNotasCredito($idFactura){
 
         try {
@@ -365,7 +364,7 @@ class Pagos extends Component
                 $notaCredito = DB::select("
                     select
                     comentario,
-                    FORMAT(total,2) AS total,
+                    total AS total,
                     estado_rebajado
                     from nota_credito where id =
                 ".$idNotaCredito);
@@ -412,7 +411,7 @@ class Pagos extends Component
                 $notaDebito = DB::select("
                     select
                     motivoDescripcion AS 'comentario',
-                    FORMAT(monto_asignado,2) AS 'total',
+                    monto_asignado AS 'total',
                     estado_sumado
                     from notadebito where id =
                 ".$idNotaDebito);
@@ -428,5 +427,48 @@ class Pagos extends Component
         }
 
     }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////!SECTION
+///////////////////////////////GESTIONES DE RETENCION DE ISV
+
+    public function gestionRetencion( Request $request){
+
+        dd($request);
+
+        try {
+
+                DB::beginTransaction();
+
+
+                DB::commit();
+                return response()->json([
+                    "icon" => "success",
+                    "text" => "Se realizó correctamente la transacción!",
+                    "title"=>"Exito!"
+                ],200);
+            }catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al realizar la transacción.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
