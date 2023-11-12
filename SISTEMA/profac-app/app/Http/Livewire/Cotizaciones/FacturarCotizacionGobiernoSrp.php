@@ -2,20 +2,11 @@
 
 namespace App\Http\Livewire\Cotizaciones;
 
+
 use Livewire\Component;
-
-
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use DataTables;
-use Auth;
-use Validator;
-use PDF;
-use Luecano\NumeroALetras\NumeroALetras;
 
-class FacturarCotizacion extends Component
+class FacturarCotizacionGobiernoSrp extends Component
 {
     public $idCotizacion;
 
@@ -64,11 +55,7 @@ class FacturarCotizacion extends Component
         $htmlProductos =  $this->generarHTML($idCotizacion);
 
         $urlGuardarVenta = $this->obtenerURL($cotizacion->tipo_venta_id);
-
-
-
-
-        return view('livewire.cotizaciones.facturar-cotizacion', compact('cotizacion', 'htmlProductos', 'urlGuardarVenta'));
+        return view('livewire.cotizaciones.facturar-cotizacion-gobierno-srp',compact('cotizacion', 'htmlProductos', 'urlGuardarVenta'));
     }
 
     public function generarHTML($idCotizacion)
@@ -175,9 +162,9 @@ class FacturarCotizacion extends Component
 
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                         <label for="precio' . $i . '" class="sr-only">Precio</label>
-                        <input value="' . $producto->precio_unidad . '" type="number" placeholder="Precio Unidad" id="precio' . $i . '"
+                        <input value="' . $producto->precio_base . '" type="number" placeholder="Precio Unidad" id="precio' . $i . '"
                             name="precio' . $i . '" class="form-control"  data-parsley-required step="any"
-                            autocomplete="off" min="' . $producto->precio_base . '" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isvTblProducto . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
+                            autocomplete="off" min="' . $producto->ultimo_costo_compra . '" onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isvTblProducto . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
                     </div>
 
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">

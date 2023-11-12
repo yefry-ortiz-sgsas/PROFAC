@@ -104,3 +104,14 @@ FACTURACION-COORPORATIVA
 FACTURAR-COTIZACION-COORPIRATIVA
 SIN-RESTRICCION-PRECIO-COORPORATIVO
 FACTURAR-ORDEN DE ENTREGA
+
+/cotizacion/facturar/srp/corporativo/
+
+
+agregar descuento a modulo de:
+Facturacion Cliente A --
+Facturacion Cliente B --
+Facturacion SRP cliente A
+Facturacion SRP cliente B
+FACTURAR-COMPROBANTE
+

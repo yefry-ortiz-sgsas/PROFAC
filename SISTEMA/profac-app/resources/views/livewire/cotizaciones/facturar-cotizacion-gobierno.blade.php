@@ -30,10 +30,10 @@
 
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8 col-xl-10 col-md-8 col-sm-8">
-            <h2>Ventas</h2>
+            <h2>Facturar Cotización</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a>Cliente Estatal</a>
+                    <a>Cliente A</a>
                 </li>
                 {{-- <li class="breadcrumb-item">
                     <a data-toggle="modal" data-target="#modal_producto_crear">Registrar</a>
@@ -520,7 +520,7 @@
             var arregloIdInputs = [];
             var numeroInputs = {{ $cotizacion->numeroInputs }};
             var arregloIdInputsTemporal = @json($cotizacion->arregloIdInputs);
-
+            var diasCredito = {{$cotizacion->dias_credito}}
 
 
             var retencionEstado = false; // true  aplica retencion, false no aplica retencion;
@@ -998,7 +998,7 @@
                         let descuento = document.getElementById('porDescuento').value;
 
 
-                        if (descuento >= 0) {
+                        if (descuento > 0) {
                             subTotal = valorInputPrecio * (valorInputCantidad * valorSelectUnidad);
                             descuentoCalculado = subTotal * (descuento / 100);
                             subTotal = subTotal - descuentoCalculado;
@@ -1011,7 +1011,7 @@
                             total = subTotal + subTotal * (isvProducto / 100);
 
                         }
-                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado;
+                        document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4);
 
                         document.getElementById('total' + id).value = total.toFixed(3);
                         document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1038,7 +1038,7 @@
 
 
 
-                        this.totalesGenerales();
+                      
                         document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                             style: 'currency',
                             currency: 'HNL',
@@ -1089,7 +1089,7 @@
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
 
 
                     document.getElementById('total' + id).value = total.toFixed(4);
@@ -1172,7 +1172,7 @@
                     acumularDescuento += new Number(document.getElementById('acumuladoDescuento' + arregloIdInputs[i]).value);
                 }
 
-                document.getElementById('porDescuentoCalculado').value = acumularDescuento;
+                document.getElementById('porDescuentoCalculado').value = acumularDescuento.toFixed(4);;
 
                 document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
@@ -1436,7 +1436,7 @@
                     let date = new Date(fechaEmision);
                     date.setDate(date.getDate() + diasCredito);
                     let suma = date.toISOString().split('T')[0];
-                    //console.log( diasCredito);
+                    // console.log( diasCredito);
 
                     document.getElementById("fecha_vencimiento").value = suma;
 
