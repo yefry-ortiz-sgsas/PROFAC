@@ -71,6 +71,24 @@ class Producto extends Component
 
 
         try {
+            $codBarra = trim($request['cod_barra_producto']);
+
+            if($codBarra != '' or !empty($codBarra)){
+                $contadorCodBarra = DB::SELECTONE("select count(id) as contador from  producto where codigo_barra =".trim($request['cod_barra_producto']));
+                if($contadorCodBarra->contador > 0){
+                    return response()->json([
+                        'icon'=>'error',
+                        'title'=>'Error!',
+                        'text' => 'El código de barra ya está registrado para otro producto.',
+                        'errors' => $validator->errors()
+                    ], 402);
+                }
+            }
+
+           
+           
+
+
 
             DB::beginTransaction();
             $url = "";
@@ -79,7 +97,7 @@ class Producto extends Component
             $producto->nombre = trim($request['nombre_producto']);
             $producto->descripcion = trim($request['descripcion_producto']);
             $producto->isv = $request['isv_producto'];
-            $producto->codigo_barra = trim($request['cod_barra_producto']);
+            $producto->codigo_barra =  $codBarra;
             $producto->costo_promedio = trim($request['costo_promedio']);
             $producto->codigo_estatal = trim($request['cod_estatal_producto']);
             $producto->sub_categoria_id = $request['sub_categoria_producto'];
@@ -194,7 +212,6 @@ class Producto extends Component
             A.descripcion,
             A.isv as 'ISV',
             B.descripcion as 'categoria',
-            C.nombre as 'unidad_medida',
             @existenciaCompra := IFNULL ((select
             sum(cantidad_disponible)
             from recibido_bodega
@@ -207,12 +224,11 @@ class Producto extends Component
             sum(cantidad_disponible)
             from recibido_bodega  G
             where G.compra_id is null and G.cantidad_disponible <> 0 and G.producto_id = A.id),0 ) as 'existenciaAjuste',
-            FORMAT(@existenciaCompra + @existenciaAjuste,0) as existencia
+            FORMAT(@existenciaCompra + @existenciaAjuste,0) as existencia,
+            A.codigo_barra
             from producto A
             inner join sub_categoria B
-            on A.sub_categoria_id = B.id
-            inner join unidad_medida C
-            on A.unidad_medida_compra_id = C.id            
+            on A.sub_categoria_id = B.id            
             order by A.created_at DESC
                         ");
 
@@ -368,12 +384,27 @@ class Producto extends Component
     public function editarProducto(Request $request){
         try {
 
+            $codBarra = trim($request['cod_barra_producto_edit']);
+
+            if($codBarra != '' or !empty($codBarra)){
+                $contadorCodBarra = DB::SELECTONE("select count(id) as contador from  producto where codigo_barra =".trim($request['cod_barra_producto_edit'])." and id <> ".$request['id_producto_edit']);
+                if($contadorCodBarra->contador > 0){
+                    return response()->json([
+                        'icon'=>'error',
+                        'title'=>'Error!',
+                        'text' => 'El código de barra ya está registrado para otro producto.'                        
+                    ], 401);
+                }
+            }
+
+          
+
 
             $producto = ModelProducto::find($request['id_producto_edit']);
             $producto->nombre = trim($request['nombre_producto_edit']);
             $producto->descripcion = trim($request['descripcion_producto_edit']);
             $producto->isv = trim($request['isv_producto_edit']);
-            $producto->codigo_barra = trim($request['cod_barra_producto_edit']);
+            $producto->codigo_barra = $codBarra;
             $producto->codigo_estatal = trim($request['cod_estatal_producto_edit']);
             $producto->sub_categoria_id = $request['sub_categoria_producto_edit'];
             $producto->precio_base = trim($request['precioBase_edit']);

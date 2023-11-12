@@ -18,8 +18,12 @@
         </div>
         <div class="col-lg-4 col-xl-2 col-md-4 col-sm-4">
             <div style="margin-top: 2rem">
-                <a href="/factura/cooporativo/{{ $detalleVenta->id }}" target="_blank" class="btn add-btn btn-success" ><i
-                        class="fa fa-plus"></i> Imprimir Factura</a>
+                @if($detalleVenta->tipo_venta_id === 3)
+                    <a href="/exonerado/factura/{{ $detalleVenta->id }}" target="_blank" class="btn add-btn btn-success" ><i class="fa fa-plus"></i> Imprimir Factura</a>
+                @else
+                    <a href="/factura/cooporativo/{{ $detalleVenta->id }}" target="_blank" class="btn add-btn btn-success" ><i class="fa fa-plus"></i> Imprimir Factura</a>
+                @endif
+
             </div>
         </div>
     </div>

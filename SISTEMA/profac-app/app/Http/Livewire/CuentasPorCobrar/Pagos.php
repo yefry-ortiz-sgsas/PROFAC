@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Ventas;
+namespace App\Http\Livewire\CuentasPorCobrar;
 
 use Livewire\Component;
-
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,12 +15,11 @@ use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
 use App\Exports\CuentasPorCobrarInteresExport;
-
-class CuentasPorCobrar extends Component
+class Pagos extends Component
 {
     public function render()
     {
-        return view('livewire.ventas.cuentas-por-cobrar');
+        return view('livewire.cuentas-por-cobrar.pagos');
     }
 
     public function listarClientes(Request $request){
@@ -188,6 +186,4 @@ class CuentasPorCobrar extends Component
 
         return $pdf->stream("estado_cuenta.pdf");
     }
-
-
 }

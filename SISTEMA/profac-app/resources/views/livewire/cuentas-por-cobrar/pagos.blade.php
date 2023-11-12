@@ -5,7 +5,7 @@
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Listar</a>
+                    <a href="index.html">Aplicacion de Pagos / Cuentas Por Cobrar</a>
                 </li>
 
 
@@ -91,7 +91,7 @@
 
 
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    {{--  <div class="wrapper wrapper-content animated fadeInRight">
         <div class="mb-2" id="cuentas_excel_intereses">
             <!-- <a href="/ventas/cuentas_por_cobrar/excel_intereses" class="btn-seconary"><i class="fa fa-plus"></i>Excel Cuentas Por Cobrar Intereses</a> -->
         </div>
@@ -130,7 +130,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  --}}
 
 
 

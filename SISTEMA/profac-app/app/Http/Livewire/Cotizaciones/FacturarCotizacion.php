@@ -47,10 +47,12 @@ class FacturarCotizacion extends Component
         tipo_venta_id,
         users_id,
         numeroInputs,
+        porc_descuento,
+        monto_descuento,
         created_at,
         updated_at,
         REPLACE(arregloIdInputs,' . $char2 . $char . $char2 . ',' . $char2 . $char . $char2 . ')  as "arregloIdInputs"
-        from cotizacion 
+        from cotizacion
         where id =' . $idCotizacion);
 
 
@@ -79,7 +81,7 @@ class FacturarCotizacion extends Component
         A.producto_id,
         A.nombre_producto,
         A.nombre_bodega,
-        FORMAT(A.precio_unidad,2) as precio_unidad,
+        A.precio_unidad as precio_unidad,
         A.cantidad,
         A.sub_total,
         A.isv,
@@ -90,9 +92,10 @@ class FacturarCotizacion extends Component
         A.isv_producto,
         A.unidad_medida_venta_id,
         B.ultimo_costo_compra,
-        format(B.precio_base,2) as precio_base,
+        B.precio_base as precio_base,
         B.isv as isvTblProducto,
-        C.arregloIdInputs
+        C.arregloIdInputs,
+        A.monto_descProducto
         from cotizacion_has_producto A
         inner join producto B
         on A.producto_id = B.id
@@ -114,11 +117,11 @@ class FacturarCotizacion extends Component
 
             $unidadesVenta = DB::SELECT(
                 "
-                select 
+                select
                 A.unidad_venta as unidades,
                 A.id as idUnidadVenta,
                 concat(B.nombre,'-',A.unidad_venta ) as nombre
-                from unidad_medida_venta A 
+                from unidad_medida_venta A
                 inner join unidad_medida B
                 on A.unidad_medida_id = B.id
                 where A.producto_id = " . $producto->producto_id
@@ -150,12 +153,12 @@ class FacturarCotizacion extends Component
                             <div style="width:100%">
                                 <label for="nombre' . $i . '" class="sr-only">Nombre del producto</label>
                                 <input type="text" placeholder="Nombre del producto" id="nombre' . $i . '"
-                                    name="nombre' . $i . '" class="form-control" 
+                                    name="nombre' . $i . '" class="form-control"
                                     data-parsley-required "
                                     autocomplete="off"
-                                    readonly 
+                                    readonly
                                     value="' . $producto->nombre_producto . '"
-                                    
+
                                     >
                             </div>
                         </div>
@@ -163,7 +166,7 @@ class FacturarCotizacion extends Component
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                         <label for="" class="sr-only">cantidad</label>
                         <input type="text" value="' . $producto->nombre_bodega . '" placeholder="bodega-seccion" id="bodega' . $i . '"
-                            name="bodega' . $i . '" class="form-control" 
+                            name="bodega' . $i . '" class="form-control"
                             autocomplete="off"  readonly  >
                     </div>
 
@@ -184,12 +187,12 @@ class FacturarCotizacion extends Component
                     <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                         <label for="" class="sr-only">unidad</label>
                         <select class="form-control" name="unidad' . $i . '" id="unidad' . $i . '"
-                            data-parsley-required style="height:35.7px;" 
+                            data-parsley-required style="height:35.7px;"
                             onchange="calcularTotales(precio' . $i . ',cantidad' . $i . ',' . $producto->isvTblProducto . ',unidad' . $i . ',' . $i . ',restaInventario' . $i . ')">
-                                    ' . $htmlSelectUnidadVenta . ' 
-                        </select> 
-                    
-                        
+                                    ' . $htmlSelectUnidadVenta . '
+                        </select>
+
+
                     </div>
 
 
@@ -214,7 +217,8 @@ class FacturarCotizacion extends Component
                         readonly >
 
                         <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
-                </div>
+                        <input type="hidden" id="acumuladoDescuento'.$i.'" name="acumuladoDescuento'.$i.'" value="' . $producto->monto_descProducto . '" >
+                        </div>
 
 
                 <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
@@ -232,7 +236,7 @@ class FacturarCotizacion extends Component
                     <input id="idBodega' . $i . '" name="idBodega' . $i . '" type="hidden" value="' . $producto->bodega_id . '">
                     <input id="idSeccion' . $i . '" name="idSeccion' . $i . '" type="hidden" value="' . $producto->seccion_id . '">
                     <input id="restaInventario' . $i . '" name="restaInventario' . $i . '" type="hidden" value="' . $producto->resta_inventario . '">
-                    <input id="isv' . $i . '" name="isv' . $i . '" type="hidden" value="' . $producto->isvTblProducto . '">                
+                    <input id="isv' . $i . '" name="isv' . $i . '" type="hidden" value="' . $producto->isvTblProducto . '">
 
                     </div>';
             $htmlSelectUnidadVenta = '';

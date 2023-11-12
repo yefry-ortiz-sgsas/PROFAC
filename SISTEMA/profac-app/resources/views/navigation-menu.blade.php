@@ -19,7 +19,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO') }}
+                       <b>{{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO - V2.2.3') }}</b>
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -214,9 +214,9 @@
                             <span class="block m-t-xs font-bold" style="color:#FFF;"><b>
                                     {{ Auth::user()->name }}</b></span>
                             @php
-                                $rol = DB::SELECTONE("select nombre from rol where id = ". Auth::user()->rol_id);
+                                $rol = DB::SELECTONE('select nombre from rol where id = ' . Auth::user()->rol_id);
                             @endphp
-                            <span class="text-muted text-xs block">{{  $rol->nombre  }} <b class="caret"></b></span>
+                            <span class="text-muted text-xs block">{{ $rol->nombre }} <b class="caret"></b></span>
                         </div>
                         <!-- <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                         <li><a class="dropdown-item" href="profile.html">Profile</a></li>
@@ -233,35 +233,15 @@
 
                 <!---------------------------------------------------MENU DE NAVEGACION----------------------------------------------------------------------------------->
 
+                    <!-----------------------------------Administrador------------------------------->
 
+                @if (Auth::user()->rol_id == '1')
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;"
-                                aria-hidden="true"></i> <span class="nav-label"
-                                style="color:#ffffff;">Dashboard</span>
+                                aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span>
                         </a>
-                        {{-- <ul class="nav nav-second-level">
-                                    <li href="dashboard_2.html"><a >Gestiones</a></li>
-                                    <li><a href="dashboard_2.html">Reportes de Usuario</a></li>
-                                </ul> --}}
 
-                       <!-----------------------------------Administrador------------------------------->
-
-                       @if (Auth::user()->id == 2)
-                       <li>
-                           <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                                   style="color:#ffffff;">Cierre Diario</span>
-                               <span class="fa arrow"></span></a>
-                           <ul class="nav nav-second-level">
-                               <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a>
-                                <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a>
-
-                               </li>
-                               {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                           </ul>
-                       </li>
-                       @endif
-
-                       @if (Auth::user()->rol_id == '1')
+                    <li>
                     <li>
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
                                 style="color:#ffffff;">Usuarios</span>
@@ -273,23 +253,40 @@
                             {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
                         </ul>
                     </li>
-
+                @endif
+                @if (Auth::user()->rol_id == '2' or Auth::user()->rol_id == '1')
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Vendedores</span>
+                    </a>
                     <li>
-                        <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
-                                style="color:#ffffff;">Bodega</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
                             <span class="fa arrow"></span></a>
+
                         <ul class="nav nav-second-level">
-                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
-                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                            <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                            <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                            </ul>
+                    </li>
+
+
+                    <li>
+                        <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Comisiones</span>
+                            <span class="fa arrow"></span></a>
+
                         <ul class="nav nav-second-level">
-                            <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
-                            <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                            <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a></li>
                         </ul>
                     </li>
 
@@ -299,38 +296,222 @@
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-                            <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                            <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
-                            </li>
-                            <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a>
-                            </li>
-                            <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
-                            <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                            <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
-                            <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a>
-                            </li>
-                            <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
-                            <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
+                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo</a></li>
+                        </ul>
+                    </li>
+
+                @endif
+
+                @if (Auth::user()->rol_id == '3' or Auth::user()->rol_id == '1')
+
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Facturadores</span></a>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
+                            <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">FacturacionSR/Clientes A</a></li>
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
+                            <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                            <li><a href="/estatal/ordenes" style="color:#ffffff;">Orden de Compra</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
-                                style="color:#ffffff;">Clientes</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                             <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
+                                <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
+                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a></li>
+                                <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
+                            </ul>
+                    </li>
+
+
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas exoneradas</span>
+                            <span class="fa arrow"></span></a>
+
                         <ul class="nav nav-second-level">
-                            <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                            <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
+                            <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
+                            <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
                         </ul>
                     </li>
 
                     <li>
-                        <a><i class="fa-solid fa-building-columns" style="color:#ffffff;"></i>
-                            <span class="nav-label" style="color:#ffffff;">Bancos</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span
+                                class="nav-label" style="color:#ffffff;">Comprobante de entrega</span>
                             <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            {{-- <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprobante</a></li> --}}
+                            <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprobantes</a></li>
+                            <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo</a></li>
+                        </ul>
+                    </li>
+
+
+
+                @endif
+
+                @if (Auth::user()->rol_id == '4' or Auth::user()->rol_id == '1')
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Contabilidad</span></a>
+                    <li>
+                        <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Clientes</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-building-columns" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Bancos</span><span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
 
                             <li><a href="/banco/bancos" style="color:#ffffff;">Bancos</a></li>
 
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Boleta de compra</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php"
+                                    style="color:#ffffff;">Gestión de Boleta</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
+                            <span class="nav-label" style="color:#ffffff;">Nota de crédito</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+
+                            <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
+                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
+                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
+                            <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"style="color:#ffffff;">Nota de débito</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                            <li><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
+                            <li><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Cuentas por cobrar</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a></li>
+                            <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Cierre Diario</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a></li>
+                            <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Reportes</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturaDia" style="color:#ffffff;">Reporte de ventas</a>
+                        </ul>
+                    </li>
+                @endif
+
+                @if (Auth::user()->rol_id == '5' or Auth::user()->rol_id == '1')
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auxiliar Administrativo</span></a>
+                    <li>
+                        <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
+                            <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">CAI - Configuracion</span>
+                            <span class="fa arrow"></span>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
+                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo de productos</a>
+                            </li>
+                            <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a>
+                            </li>
+                            <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
+                            <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
+                            <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
+                            <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Traslado de productos</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/inventario/translado" style="color:#ffffff;">Traslado de Producto</a></li>
+                            <li><a href="/translados/historial" style="color:#ffffff;">Historial de traslados</a></li>
                         </ul>
                     </li>
                     <li>
@@ -345,83 +526,38 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Compras Locales</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Orden de compra local</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
                                 style="color:#ffffff;">Boleta de Compra</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-
-
-                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                            </li> --}}
-                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
-                            </li>
-
-
+                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                            <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-
-                            <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                            <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                            <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
-                            <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
-                            </li>
-
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                                style="color:#ffffff;">Nota de Débito</span>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                             <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                            <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                            <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
-                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                                style="color:#ffffff;">Facturación al día</span>
-                            <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li ><a href="/facturaDia" style="color:#ffffff;">Lista de
-                                    Reporte</a>
-                            </li>
-                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                                style="color:#ffffff;">Cierre Diario</span>
-                            <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a>
-                             <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a>
-
-                            </li>
-                            {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
-                                class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a>
-                            </li>
-                            <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a>
-                            </li>
-
-
-                        </ul>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            </ul>
                     </li>
                     <li>
                         <a><i class="fa-solid fa-clipboard-check" style="color:#ffffff;"></i><span class="nav-label"
@@ -432,722 +568,271 @@
 
 
                             <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                            <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de
-                                    Declaraciones</a></li>
-                            <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                                style="color:#ffffff;">Entregas Agendadas</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
-                                    Entregas</a></li>
-
-
+                            <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de Declaraciones</a></li>
+                            <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a></li>
 
 
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span class="nav-label"
-                                style="color:#ffffff;">Comprobante De Entrega</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprobante</a></li>
-                            <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de
-                                    Comprobantes</a></li>
-                            <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de
-                                    Anulados</a></li>
-
-
-
-                        </ul>
-                    </li>
-
-
-
-                    <li>
-                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Vale</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-
-
-                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                            </li> --}}
-                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
-                            </li>
-
-
-                        </ul>
-                    </li>
-
-                    {{--  VENTAS GOBIERNO  --}}
-
-                    <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
-                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
-                                    SR/Clientes A</a></li>
-                            <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
-                            <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
-                                </a></li>
-                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas
-                                </a></li>
-                            <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
-
-
-
-
-                        </ul>
-                    </li>
-
-                    {{--  VENTAS COORPORATIVO  --}}
-                    <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
-                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                            </li>
-                            {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
-                            <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                    Clientes B</a></li>
-                            <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
-                                    Anuladas</a></li>
-                            <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                    Cotizaciones</a></li>
-
-                            <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
-
-                            <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas</a>
-                            </li>
-
-
-
-                        </ul>
-                    </li>
-
-
-                    {{--   vENTAS EXONERADAS  --}}
-                    <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Ventas exoneradas</span>
-                            <span class="fa arrow"></span></a>
-
-                        <ul class="nav nav-second-level">
-                            <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                            <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas
-                                    Anuladas</a></li>
-                            <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Cardex</span>
-                            <span class="fa arrow"></span></a>
+                        <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Cardex</span><span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
                             <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
-
                         </ul>
                     </li>
+                    <li>
+                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span class="nav-label" style="color:#ffffff;">Comprobante De Entrega</span><span class="fa arrow"></span></a>
 
-                </li>
-                <li>
-<a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
-        class="nav-label" style="color:#ffffff;">Comisiones</span>
-    <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprobante</a></li>
+                            <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprobantes</a></li>
+                            <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label" style="color:#ffffff;">Entregas Agendadas</span><span class="fa arrow"></span></a>
 
-<ul class="nav nav-second-level">
-    <li><a href="/comisiones/gestion" style="color:#ffffff;">Gestion inicial</a>
-    </li>
-    <li><a href="/comisiones" style="color:#ffffff;">Gestión de comisiones</a>
-    </li>
-    <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a>
-    </li>
+                        <ul class="nav nav-second-level">
+                            <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de Entregas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Vale</span><span class="fa arrow"></span></a>
 
-    <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a>
-    </li>
-</ul>
-</li>
+                        <ul class="nav nav-second-level">
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
 
-                    {{-- Rol Vendedor --}}
-                @elseif (Auth::user()->rol_id == '2')
-                    {{--  VENTAS COORPORATIVO  --}}
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Reportes</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturaDia" style="color:#ffffff;">Reporte de ventas</a>
+                        </ul>
+                    </li>
+                @endif
+
+                @if (Auth::user()->rol_id == '7' or Auth::user()->rol_id == '1')
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auditoria y logistica</span></a>
+
+                    <li>
+                        <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
+                            <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
+                            <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
+                            <li><a href="/producto/registro" style="color:#ffffff;">Catálogo de productos</a></li>
+                            <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a>
+                            </li>
+                            <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
+                            <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
+                            <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
+                            <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
+                            </i><span class="nav-label" style="color:#ffffff;">Traslado de productos</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/inventario/translado" style="color:#ffffff;">Traslado de Producto</a></li>
+                            <li><a href="/translados/historial" style="color:#ffffff;">Historial de traslados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ajustes</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
+                            <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
+                            <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
+                            <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Compras Locales</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Orden de compra local</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                            {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
                             <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
                             <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                            </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Vale</span><span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-                            <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                            </li>
-                            <li><a href="/facturas/corporativo/vendedor" style="color:#ffffff;">Listado de Facturas
-                                </a>
-                            <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
-                                    Anuladas</a></li>
-                            <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                    Cotizaciones</a></li>
-
-                                    <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
-
-
-
-
-
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a></li>
+                        </ul>
                     </li>
-
-            </ul>
-            </li>
-
-            {{--  VENTAS GOBIERNO  --}}
-
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
-                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
-                    </li>
-                    <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                    <li><a href="/ventas/estatal/vendedor" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
-                    <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
-                    <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
-                    </li>
-                    <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
-
-
-
-
-                </ul>
-            </li>
-            {{--   vENTAS EXONERADAS  --}}
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Ventas exoneradas</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                    <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas</a>
-                    </li>
-                    <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-                </ul>
-            </li>
-            {{-- Rol Axuliar Administrativo --}}
-        @elseif (Auth::user()->rol_id == '5')
-
-        <li>
-            <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
-                    style="color:#ffffff;">Lista de Facturas</span> <span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-            </ul>
-        </li>
-
-
-            <li>
-                <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Bodega</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/bodega" style="color:#ffffff;">Crear Bodega</a></li>
-                    <li><a href="/bodega/editar/screen" style="color:#ffffff;">Editar Bodega</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-dolly " style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Proveedores</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/proveedores" style="color:#ffffff;">Registrar Proveedor</a></li>
-                    <li><a href="/inventario/retenciones" style="color:#ffffff;">Crear Retenciones</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
-                    </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/marca/producto" style="color:#ffffff;">Marcas de productos</a></li>
-                    <li><a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
-                    </li>
-                    <li><a href="/inventario/unidades/medida" style="color:#ffffff;">Unidades de Medida</a></li>
-                    <li><a href="/producto/compra" style="color:#ffffff;">Comprar Producto</a></li>
-                    <li><a href="/producto/listar/compras" style="color:#ffffff;">Listar Compras</a></li>
-                    <li><a href="/inventario/translado" style="color:#ffffff;">Translado de Producto</a></li>
-                    <li><a href="/translados/historial" style="color:#ffffff;">Historial de translados</a></li>
-                    <li><a href="/categoria/categorias" style="color:#ffffff;">Categorias</a></li>
-                    <li><a href="/sub_categoria/sub_categorias" style="color:#ffffff;">Sub-Categoria</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Clientes</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-box-open" style="color:#ffffff;"></i>
-                    <span class="nav-label" style="color:#ffffff;">Ajustes</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/inventario/ajustes" style="color:#ffffff;">Realizar Ajustes</a></li>
-                    <li><a href="/inventario/ajuste/ingreso" style="color:#ffffff;">Ingresar Producto</a></li>
-                    <li><a href="/listado/ajustes" style="color:#ffffff;">Historial de Ajustes</a></li>
-                    <li><a href="/inventario/tipoajuste" style="color:#ffffff;">Motivos de Ajuste</a></li>
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Boleta de Compra</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-
-                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li> --}}
-                    <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
-                    </li>
-
-
-                </ul>
-            </li>
-
-            {{--  <li>
-                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito</a>
-                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito ND</a>
-                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
-                    </li>
-
-                </ul>
-            </li>  --}}
-            <li>
-                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
-                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
-                    </li>
-
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Nota de Débito</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
-                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                </ul>
-            </li>
-
-
-
-            <li>
-                <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i><span class="nav-label"
-                        style="color:#ffffff;">Comprobante De Entrega </span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprovante</a></li>
-                    <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de
-                            Comprovantes</a></li>
-                    <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de
-                            Anulados</a></li>
-
-
-
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label"
-                        style="color:#ffffff;">Entregas Agendadas</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de
-                            Entregas</a></li>
-
-
-
-
-                </ul>
-            </li>
-
-                        {{--  VENTAS GOBIERNO  --}}
-
-                        <li>
-                            <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                                {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>  --}}
-                                <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
-                                <span class="fa arrow"></span></a>
-
-                            <ul class="nav nav-second-level">
-                                <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                                <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion SR/Clientes A</a>
-                                </li>
-                                <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                                <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
-                                <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones </a></li>
-                                <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas </a>
-                                </li>
-                                <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
-
-
-
-
-
-                            </ul>
-                        </li>
-
-            {{--  VENTAS COORPORATIVO  --}}
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
-                    {{--  <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>  --}}
-                    <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a></li>
-                    <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                    {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
-                    <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas Clientes B</a></li>
-                    <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a>
-                    </li>
-                    <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de Cotizaciones</a>
-                    </li>
-
-                    <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
-                    <li><a href="/ventas/cai" style="color:#ffffff;">CAI</a></li>
-
-
-
-
-            </li>
-
-            </ul>
-            </li>
-
-
-            {{--   vENTAS EXONERADAS  --}}
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Ventas exoneradas</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                    <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                    <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas Anuladas</a>
-                    </li>
-                    <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-                </ul>
-            </li>
-
-
-
-            <li>
-                <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Cardex</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
-                    <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
-
-                </ul>
-            </li>
-
-
-            <li>
-                <a><i class="fa-solid fa-clipboard-check" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Declaraciones </span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-
-                    <li><a href="/ventas/Configuracion" style="color:#ffffff;">Configuración</a></li>
-                    <li><a href="/ventas/listado/comparacion" style="color:#ffffff;">Listado de
-                            Declaraciones</a></li>
-                    <li><a href="/ventas/seleccionar" style="color:#ffffff;">Seleccionar Declaraciones</a>
-                    </li>
-
-
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Vale</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-
-                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li> --}}
-                    <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a>
-                    </li>
-
-
-                </ul>
-            </li>
-              {{-- Rol Axuliar Contable --}}
-            @elseif (Auth::user()->rol_id == '6')
-            <li>
-                <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Clientes</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
-                </ul>
-            </li>
-            {{--  <li>
-                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota de Credito</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
-                    </li>
-
-                </ul>
-            </li>  --}}
-            <li>
-                <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
-                        style="color:#ffffff;">Boleta de Compra</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-
-                    {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
-                    </li> --}}
-                    <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a>
-                    </li>
-
-
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa-solid fa-arrow-right-arrow-left text-white"></i>
-                    <span class="nav-label" style="color:#ffffff;">Nota De Crédito</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-
-                    <li><a href="/nota/credito" style="color:#ffffff;">Crear devolución</a></li>
-                    <li><a href="/nota/credito/listado" style="color:#ffffff;">Listado de notas de credito Clientes A</a>
-                    <li><a href="/nota/credito/gobierno" style="color:#ffffff;">Listado de notas de credito Clientes B</a>
-                    <li><a href="/ventas/motivo_credito" style="color:#ffffff;">Motivo Nota de Crédito</a>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li>
-                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Nota de Débito</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li ><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
-                    <li ><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
-                    <li ><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
-                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Facturación al día AUX</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li ><a href="/facturaDia" style="color:#ffffff;">Lista de
-                            Reporte</a>
-                    </li>
-                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
-                        style="color:#ffffff;">Cierre Diario</span>
-                    <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a>
-                     <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a>
-
-                    </li>
-                    {{-- <li><a href="dashboard_2.html " style="color:#ffffff;">Reportes de Usuario</a></li> --}}
-                </ul>
-            </li>
-            <li>
-                <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span
-                        class="nav-label" style="color:#ffffff;">Cuentas Por Cobrar</span>
-                    <span class="fa arrow"></span></a>
-
-                <ul class="nav nav-second-level">
-                    <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a>
-                    </li>
-                    <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a>
-                    </li>
-
-                </ul>
-            </li>
-            @elseif (Auth::user()->rol_id == '3')
-                  {{--INVENTARIO--}}
-                  <li>
-                    <a><i class="fa-solid fa-cubes" style="color:#ffffff;">
-                        </i><span class="nav-label" style="color:#ffffff;">Inventario</span>
-                        <span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-
-                        <li>
-                            <a href="/producto/registro" style="color:#ffffff;">Registro y Detalle de Producto</a>
-                        </li>
-
-                    </ul>
-                </li>
-
-                {{--  VENTAS GOBIERNO  --}}
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                                style="color:#ffffff;">Ventas Clientes A</span>
+                        <a><i class="fa-solid fa-truck-fast" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Cardex</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cardex" style="color:#ffffff;">Gestionar cardex</a></li>
+                            <li><a href="/cardex/general" style="color:#ffffff;">Cardex general</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-check-to-slot" style="color:#ffffff"></i> </i><span class="nav-label" style="color:#ffffff;">Comprobante De Entrega</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href="/comprobante/entrega" style="color:#ffffff;">Crear Comprobante</a></li>
+                            <li><a href="/comprovante/entrega/listado" style="color:#ffffff;">Listado de Comprobantes</a></li>
+                            <li><a href=" /comprovante/entrega/anulados" style="color:#ffffff;">Listado de Anulados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-truck-medical" style="color:#ffffff"></i><span class="nav-label" style="color:#ffffff;">Entregas Agendadas</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            <li><a href=" /listar/vale/entrega" style="color:#ffffff;">Listado de Entregas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Vale</span><span class="fa arrow"></span></a>
+
+                        <ul class="nav nav-second-level">
+                            {{-- <li><a href="/vale/listado/facturas" style="color:#ffffff;">Agregar vale a factura</a>
+                            </li> --}}
+                            <li><a href="/vale/restar/inventario" style="color:#ffffff;">Lista de vales</a></li>
+                        </ul>
+                    </li>
+                @endif
+
+                @if (Auth::user()->rol_id == '8' or Auth::user()->rol_id == '1')
+                    <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">RRHH</span></a>
+                    <li>
+                        <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Reportes</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturaDia" style="color:#ffffff;">Reporte de ventas</a>
+                            <li ><a href="/reporte/comision" style="color:#ffffff;">Reporte comisiones</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Boleta de Compra</span>
                             <span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
-                            <li><a href="/ventas/estatal" style="color:#ffffff;">Facturacion</a></li>
-                            <li><a href="/ventas/sin/restriccion/gobierno" style="color:#ffffff;">Facturacion
-                                    SR/Clientes A</a></li>
-                            <li><a href="/proforma/cotizacion/2" style="color:#ffffff;">Cotización </a></li>
-                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a></li>
-                            <li><a href="/cotizacion/listado/estatal" style="color:#ffffff;">Listado de Cotizaciones
-                                </a></li>
-                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas
-                                </a></li>
-                            <li><a href="/estatal/ordenes" style="color:#ffffff;">Numero de Orden Compra</a></li>
+                            <li><a href="https://cadss.hn/boleta/blta_listar_boletas.php" style="color:#ffffff;">Gestión de Boleta</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-list-check" style="color:#ffffff;"></i><span class="nav-label"
+                                style="color:#ffffff;">Compras Locales</span>
+                            <span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
 
-
-
+                            <li><a href="https://cadss.hn/orden/ordn_listar_ordenes.php" style="color:#ffffff;">Listar Boleta</a></li>
 
                         </ul>
                     </li>
-                  {{--  VENTAS COORPORATIVO  --}}
                     <li>
-                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span><span class="fa arrow"></span></a>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes A</span>
+                            <span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
+                            <li><a href="/facturas/estatal" style="color:#ffffff;">Listado de Facturas Clientes A</a> </li>
+                            <li><a href="/ventas/anulado/estatal" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i>
+                            <span class="nav-label" style="color:#ffffff;">Ventas Clientes B</span>
+                            <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="/ventas/coporativo" style="color:#ffffff;">Facturacion</a></li>
-                                <li><a href="/ventas/sin/restriccion/precio" style="color:#ffffff;">Facturacion SR/P</a>
-                                </li>
-                                {{--  <li><a href="/facturas/corporativo" style="color:#ffffff;">Listado de Facturas</a></li>  --}}
-                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de Facturas
-                                        Clientes B</a></li>
-                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas
-                                        Anuladas</a></li>
-                                <li><a href="/proforma/cotizacion/1" style="color:#ffffff;">Cotización </a></li>
-                                <li><a href="/cotizacion/listado/corporativo" style="color:#ffffff;">Listado de
-                                        Cotizaciones</a></li>
-
-
-                                        <li><a href="/ventas/coorporativo/orden/compra" style="color:#ffffff;">Orden de compra</a></li>
-
-
-
-                                </li>
-
+                                <li><a href="/facturas/corporativo/lista" style="color:#ffffff;">Listado de FacturasClientes B</a></li>
+                                <li><a href="/ventas/anulado/corporativo" style="color:#ffffff;">Listado de Facturas Anuladas</a></li>
                             </ul>
                     </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Nota de débito</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/debito" style="color:#ffffff;">Gestiones</a></li>
+                            <li><a href="/nota/debito/lista/gobierno" style="color:#ffffff;">Listado notas debito Clientes A</a></li>
+                            <li><a href="/nota/debito/lista" style="color:#ffffff;">Listado notas debito Clientes B</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label"
+                                style="color:#ffffff;">Cierre Diario</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/cierre/caja" style="color:#ffffff;">Detalle de cierre</a></li>
+                            <li><a href="/cierre/historico" style="color:#ffffff;">Historico de cierre</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-magnifying-glass-dollar" style="color:#ffffff;"></i><span class="nav-label"style="color:#ffffff;">Comisiones</span><span class="fa arrow"></span></a>
 
+                        <ul class="nav nav-second-level">
+                            <li><a href="/comisiones/gestion" style="color:#ffffff;">Gestion inicial</a></li>
+                            <li><a href="/comisiones" style="color:#ffffff;">Gestión de comisiones</a></li>
+                            <li><a href="/comisiones/vendedor" style="color:#ffffff;">Comisiones Colaborador</a></li>
+                            <li><a href="/comisiones/historico" style="color:#ffffff;">Hstórico de comisiones</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
 
-                {{--   vENTAS EXONERADAS  --}}
-                <li>
-                    <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label"
-                            style="color:#ffffff;">Ventas exoneradas</span>
-                        <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de Precios</a></li>
+                        </ul>
+                    </li>
+                @endif
 
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/exonerado/factura" style="color:#ffffff;">Facturacion</a></li>
-                        <li><a href="/exonerado/ventas/lista" style="color:#ffffff;">Listado de Facturas</a></li>
-                        <li><a href="/ventas/anulado/exonerado" style="color:#ffffff;">Listado de Facturas
-                                Anuladas</a></li>
-                        <li><a href="/estatal/exonerado" style="color:#ffffff;">Registro Exonerado</a></li>
-                    </ul>
-                </li>
-            @endif
-            @if (Auth::user()->rol_id == '3' || Auth::user()->rol_id == '1')
-            <li>
-                <a><i class="fa-solid fa-file-invoice" style="color:#ffffff;"></i><span class="nav-label" style="color:#ffffff;">Precios</span><span class="fa arrow"></span></a>
-
-                    <ul class="nav nav-second-level">
-                        <li><a href="/ventas/historico_precios_cliente" style="color:#ffffff;">Historico de
-                            Precios</a></li>
-                    </ul>
-            </li>
-            @endif
-            </ul>
 
         </div>
     </nav>

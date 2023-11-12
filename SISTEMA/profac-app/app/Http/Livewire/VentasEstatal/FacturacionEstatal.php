@@ -23,6 +23,8 @@ use App\Models\ModelLogTranslados;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\ModelNumOrdenCompra;
+use App\Http\Controllers\CAI\Notificaciones;
+use Exception;
 
 class FacturacionEstatal extends Component
 {
@@ -418,6 +420,10 @@ class FacturacionEstatal extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 2);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -447,6 +453,8 @@ class FacturacionEstatal extends Component
             $factura->estado_editar = 1;
             $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->comentario=$request->nota_comen;
+            $factura->porc_descuento =$request->porDescuento;
+            $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
             $caiUpdated =  ModelCAI::find($cai->id);
@@ -536,9 +544,10 @@ class FacturacionEstatal extends Component
                 'icon' => "error",
                 'text' => 'Ha ocurrido un error.',
                 'title' => 'Error!',
-                'idFactura' => $factura->id,
+                'idFactura' => "",
                 'mensajeError'=>$e
             ], 402);
+
         }
     }
 

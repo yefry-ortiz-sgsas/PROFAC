@@ -180,6 +180,8 @@
                                             name="fecha_vencimiento" value="" data-parsley-required
                                             min="{{ date('Y-m-d') }}" readonly>
                                     </div>
+                                    <input type="hidden" id="porDescuento" name="porDescuento" value="0">
+                                    <input type="hidden" id="porDescuentoCalculado" name="porDescuentoCalculado" value="0">
                                 </div>
 
 
@@ -771,7 +773,7 @@
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" value="${producto.precio_base}" placeholder="Precio Unidad" id="precio${numeroInputs}"
-                                                    name="precio${numeroInputs}" class="form-control" min="${producto.precio_base}" data-parsley-required step="any"
+                                                    name="precio${numeroInputs}" class="form-control"  data-parsley-required step="any"
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 

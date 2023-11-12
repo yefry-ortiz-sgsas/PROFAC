@@ -13,6 +13,8 @@ use App\Http\Livewire\Comisiones\ComisionesHistorico;
 /* ------------------------------/COMISIONES------------------------------------------- */
 
 use App\Http\Livewire\FacturaDia\FacturaDia;
+
+use App\Http\Livewire\Reportes\Prodmes;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -337,7 +339,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class, 'guardarVenta']);
     Route::get('/ventas/numero/orden', [FacturacionEstatal::class, 'obtenerOrdenCompra']);
 
-    Route::post('/ventas/estatal/guardar', [FacturacionEstatal::class, 'guardarVenta']);
 
 
     Route::get('/facturas/estatal', ListadoFacturaEstatal::class);
@@ -544,6 +545,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/cuentas/cobrar/lista', [listadoCuentasCobrar::class, 'listarFacturasCobrar']);
     Route::get('/ventas/cuentas_por_cobrar', CuentasPorCobrar::class);
     Route::get('/ventas/cuentas_por_cobrar/clientes', [CuentasPorCobrar::class, 'listarClientes']);
+    Route::get('/estadoCuenta/imprimir/{idClientepdf}', [CuentasPorCobrar::class, 'imprimirEstadoCuenta']);
 
     Route::get('/ventas/cuentas_por_cobrar/listar/{id}', [CuentasPorCobrar::class, 'listarCuentasPorCobrar']);
     Route::get('/ventas/cuentas_por_cobrar/listar_intereses/{id}', [CuentasPorCobrar::class, 'listarCuentasPorCobrarInteres']);
@@ -690,7 +692,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/debito/anular/{idNota}', [ListadoNotasDebitoND::class,'anularNota']);
 
     Route::get('/facturaDia', FacturaDia::class);
+    Route::get('/reporte/comision', Prodmes::class);
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
+
+    Route::get('/consultaComision/{fecha_inicio}/{fecha_final}', [Prodmes::class,'consultaComision']);
+
 
     Route::get('/cierre/caja', CierreDiario::class);
     Route::get('/cierre/historico', HistoricoCierres::class);

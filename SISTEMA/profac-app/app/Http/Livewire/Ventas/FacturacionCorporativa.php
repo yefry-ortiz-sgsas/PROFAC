@@ -25,6 +25,7 @@ use App\Models\ModelLista;
 use App\Models\ModelCliente;
 use App\Models\logCredito;
 use App\Models\User;
+use App\Http\Controllers\CAI\Notificaciones;
 
 class FacturacionCorporativa extends Component
 {
@@ -263,8 +264,8 @@ class FacturacionCorporativa extends Component
             id,
             concat(id,' - ',nombre) as nombre,
             isv,
-            FORMAT(ultimo_costo_compra,4) as ultimo_costo_compra,
-            FORMAT(precio_base,4) as precio_base
+            ultimo_costo_compra as ultimo_costo_compra,
+            precio_base as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
@@ -324,9 +325,8 @@ class FacturacionCorporativa extends Component
 
 
 
-            if ($request->restriccion == 1) {
+/* if ($request->restriccion == 1) {
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
-                // DD($facturaVencida);
                 if ($facturaVencida) {
                     return response()->json([
                         'icon' => 'warning',
@@ -335,11 +335,11 @@ class FacturacionCorporativa extends Component
 
                     ], 401);
                 }
-            }
+            } */
 
 
 
-            if ($request->tipoPagoVenta == 2) {
+            /* if ($request->tipoPagoVenta == 2) {
                 $comprobarCredito = $this->comprobarCreditoCliente($request->seleccionarCliente, $request->totalGeneral);
 
                 if ($comprobarCredito) {
@@ -350,7 +350,7 @@ class FacturacionCorporativa extends Component
 
                     ], 401);
                 }
-            }
+            } */
 
 
 
@@ -463,6 +463,11 @@ class FacturacionCorporativa extends Component
 
                 $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
 
+
+                $validarCAI = new Notificaciones();
+                $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
+
                 $factura = new ModelFactura;
                 $factura->numero_factura = $numeroVenta->numero;
                 $factura->cai = $numeroCAI;
@@ -494,6 +499,8 @@ class FacturacionCorporativa extends Component
                 $factura->comprovante_entrega_id = $request->idComprobante;
                 $factura->numero_orden_compra_id=$request->ordenCompra;
                 $factura->comentario=$request->nota_comen;
+                $factura->porc_descuento =$request->porDescuento;
+                $factura->monto_descuento=$request->porDescuentoCalculado;
                 $factura->save();
 
                 $caiUpdated =  ModelCAI::find($cai->id);
@@ -713,6 +720,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -857,6 +869,11 @@ class FacturacionCorporativa extends Component
         }
 
         $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+
+        $validarCAI = new Notificaciones();
+        $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
         $factura = new ModelFactura;
         $factura->numero_factura = $numeroVenta->numero;
         $factura->cai = $numeroCAI;
@@ -983,6 +1000,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -1236,7 +1258,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1247,12 +1271,14 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
 
 
         /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
-
+        // linea cambiada FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
         $productos = DB::SELECT(
             "
 
@@ -1266,7 +1292,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -1409,7 +1435,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1420,7 +1448,9 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
 
 
@@ -1439,7 +1469,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -1612,6 +1642,11 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$listado->secuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -1840,6 +1875,10 @@ class FacturacionCorporativa extends Component
             }
 
             $numeroVenta = DB::selectOne("select concat(YEAR(NOW()),'-',count(id)+1)  as 'numero' from factura");
+
+            $validarCAI = new Notificaciones();
+            $validarCAI->validarAlertaCAI(ltrim($arrayCai[3],"0"),$numeroSecuencia, 1);
+
             $factura = new ModelFactura;
             $factura->numero_factura = $numeroVenta->numero;
             $factura->cai = $numeroCAI;
@@ -1871,6 +1910,8 @@ class FacturacionCorporativa extends Component
             $factura->comprovante_entrega_id = $request->idComprobante;
             $factura->numero_orden_compra_id=$request->ordenCompra;
             $factura->comentario=$request->nota_comen;
+            $factura->porc_descuento =$request->porDescuento;
+            $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
 
@@ -1937,7 +1978,9 @@ class FacturacionCorporativa extends Component
         isv,
         sub_total,
         sub_total_grabado,
-        sub_total_excento
+        sub_total_excento,
+        porc_descuento,
+        monto_descuento
         from factura
         where id = " . $idFactura);
 
@@ -1948,8 +1991,13 @@ class FacturacionCorporativa extends Component
         FORMAT(isv,2) as isv,
         FORMAT(sub_total,2) as sub_total,
         FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento
+        FORMAT(sub_total_excento,2) as sub_total_excento,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = " . $idFactura);
+
+
+
 
 
 
@@ -1966,7 +2014,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
+                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 

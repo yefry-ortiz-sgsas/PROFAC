@@ -51,7 +51,7 @@ class ListarComprovantesAnulados extends Component
                 <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                     <li>
-                    <a class="dropdown-item" target="_blank"  href="/factura/cooporativo/' . $comprobante->id . '"> <i class="fa-solid fa-print text-info"></i> Imprimir Comprobante </a>
+                    <a class="dropdown-item" target="_blank"  href="/comprobante/imprimir/' . $comprobante->id . '"> <i class="fa-solid fa-print text-info"></i> Imprimir Comprobante </a>
                     </li>
 
                 </ul>

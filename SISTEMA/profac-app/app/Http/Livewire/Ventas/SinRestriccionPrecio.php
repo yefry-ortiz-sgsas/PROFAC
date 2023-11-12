@@ -74,10 +74,10 @@ class SinRestriccionPrecio extends Component
 
 
         $subject = "Solicitud de autorización";
-        $for = ['cristian.zelaya@distribucionesvalencia.hn'];
+        $for = ['autorizaciones@distribucionesvalencia.hn'];
 
         Mail::send('email/solicitud',['codigo' => $codigo], function($msj) use($subject,$for){
-            $msj->from("soporte_tecnico@distribucionesvalencia.hn","Soporte Técnico Distribuciones Valencia ");
+            $msj->from(env('MAIL_FROM_ADRESS'),"Soporte Técnico Distribuciones Valencia ");
             $msj->subject($subject);
             $msj->to($for);
         });
