@@ -1382,6 +1382,34 @@
     }
 
 
+    function AnularOtroMov(idOtroMov){
+
+        axios.get("/pagos/anular/movimiento/"+idOtroMov)
+            .then(response => {
+
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+                $('#tbl_tipo_movimientos_cliente').DataTable().ajax.reload();
+                $('#tbl_abonos_cliente').DataTable().ajax.reload();
+
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Anulado con exito."
+                })
+
+        })
+        .catch(err => {
+            console.error(err);
+            Swal.fire({
+                    icon: 'error',
+                    text: "Hubo un error al anular nota de débito."
+                })
+
+        })
+
+    }
+
 
 </script>
 

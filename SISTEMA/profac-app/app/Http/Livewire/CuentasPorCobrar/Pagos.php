@@ -296,19 +296,10 @@ class Pagos extends Component
         return Datatables::of($consulta)
                 ->addColumn('acciones', function ($consulta) {
 
+
                     return
                         '
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
-                                <ul class="dropdown-menu" x-placement="bottom-start"
-                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="inhabilitarMov('.$consulta->codigoMovimiento.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
-                                    </li>
-
-                                </ul>
-                            </div>
+                                <span class="badge badge-info">Sin Acciones</span>
                         ';
                 })
 
@@ -356,17 +347,7 @@ class Pagos extends Component
 
                     return
                         '
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
-                                <ul class="dropdown-menu" x-placement="bottom-start"
-                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="inhabilitarAbono('.$consulta->codigoAbono.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
-                                    </li>
-
-                                </ul>
-                            </div>
+                                <span class="badge badge-info">Sin Acciones</span>
                         ';
                 })
 
@@ -713,7 +694,7 @@ class Pagos extends Component
            ],402);
        }
 
-   }
+    }
 
 
 
