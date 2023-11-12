@@ -8,6 +8,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
     IN `pcomentario` VARCHAR(500),
     IN `paplic_id` INT,
     IN `ptipo` INT,
+    IN `pmonto` INT,
    	OUT `estado` INT,
     OUT `msjResultado` VARCHAR(500)
 )BEGIN
@@ -171,8 +172,145 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
                 select estado,msjResultado;
           END IF;
 
-
-
   COMMIT;
+
+        IF accion = 4 THEN
+
+            IF ptipo = 1 THEN
+                UPDATE aplicacion_pagos
+                    SET estado_retencion_isv = ptipo,
+                     comentario_retencion = pcomentario,
+                     ultimo_usr_actualizo = usr_actual,
+                     retencion_aplicada = 1
+                WHERE aplicacion_pagos.retencion_aplicada = 0 and aplicacion_pagos.estado = 1 and aplicacion_pagos.id =  paplic_id;
+            END IF;
+
+            IF ptipo = 2 THEN
+                UPDATE aplicacion_pagos
+                    SET estado_retencion_isv = ptipo,
+                     saldo = (saldo - pmonto),
+                     comentario_retencion = pcomentario,
+                     ultimo_usr_actualizo = usr_actual,
+                     retencion_aplicada = 1
+                WHERE aplicacion_pagos.retencion_aplicada = 0 and aplicacion_pagos.estado = 1 and aplicacion_pagos.id =  paplic_id;
+            END IF;
+
+				SET estado := 1;
+				SET msjResultado := "Se ha guardado con exito";
+
+                select estado,msjResultado;
+        END IF;
+
+        IF accion = 5 THEN
+
+            IF ptipo = 1 THEN
+
+                UPDATE nota_credito
+                SET estado_rebajado = 1,
+                    user_registra_rebaja = usr_actual,
+                    fecha_rebajado = NOW(),
+                    comentario_rebajado = pcomentario
+                WHERE nota_credito.id = pcliente_id
+                and nota_credito.factura_id = pfactura_id;
+
+                UPDATE aplicacion_pagos
+                    SET total_notas_credito = (total_notas_credito + pmonto),
+                        saldo = (saldo - pmonto)
+                WHERE aplicacion_pagos.estado = 1
+                and aplicacion_pagos.factura_id = pfactura_id
+                and aplicacion_pagos.id =  paplic_id;
+
+            END IF;
+
+            IF ptipo = 2 THEN
+
+                UPDATE nota_credito
+                SET estado_rebajado = 1,
+                    user_registra_rebaja = usr_actual,
+                    fecha_rebajado = NOW(),
+                    comentario_rebajado = pcomentario
+                WHERE nota_credito.id = pcliente_id
+                and nota_credito.factura_id = pfactura_id;
+
+            END IF;
+
+				SET estado := 1;
+				SET msjResultado := "Se ha guardado con exito";
+
+                select estado,msjResultado;
+        END IF;
+
+        IF accion = 6 THEN
+
+            IF ptipo = 1 THEN
+
+                UPDATE notadebito
+                SET estado_sumado = 1,
+                    user_registra_sumado = usr_actual,
+                    fecha_sumado = NOW(),
+                    comentario_sumado = pcomentario
+                WHERE notadebito.id = pcliente_id
+                and notadebito.factura_id = pfactura_id;
+
+                UPDATE aplicacion_pagos
+                    SET total_nodas_debito = (total_nodas_debito + pmonto),
+                        saldo = (saldo + pmonto)
+                WHERE aplicacion_pagos.estado = 1
+                and aplicacion_pagos.factura_id = pfactura_id
+                and aplicacion_pagos.id =  paplic_id;
+
+            END IF;
+
+            IF ptipo = 2 THEN
+
+                UPDATE notadebito
+                SET estado_sumado = 1,
+                    user_registra_sumado = usr_actual,
+                    fecha_sumado = NOW(),
+                    comentario_sumado = pcomentario
+                WHERE notadebito.id = pcliente_id
+                and notadebito.factura_id = pfactura_id;
+
+            END IF;
+
+				SET estado := 1;
+				SET msjResultado := "Se ha guardado con exito";
+
+                select estado,msjResultado;
+        END IF;
+
+        IF accion = 7 THEN
+
+            IF ptipo = 1 THEN
+                UPDATE aplicacion_pagos
+                    SET movimiento_suma = (movimiento_suma + pmonto),
+                    ultimo_usr_actualizo = usr_actual,
+                    saldo = (saldo + pmonto),
+                    updated_at = NOW()
+                WHERE aplicacion_pagos.estado = 1
+                and aplicacion_pagos.factura_id = pfactura_id
+                and aplicacion_pagos.id =  paplic_id;
+
+            END IF;
+
+            IF ptipo = 2 THEN
+
+
+                UPDATE aplicacion_pagos
+                    SET movimiento_resta = (movimiento_resta + pmonto),
+                    ultimo_usr_actualizo = usr_actual,
+                    saldo = (saldo - pmonto),
+                    updated_at = NOW()
+                WHERE aplicacion_pagos.estado = 1
+                and aplicacion_pagos.factura_id = pfactura_id
+                and aplicacion_pagos.id =  paplic_id;
+
+            END IF;
+
+				SET estado := 1;
+				SET msjResultado := "Se ha guardado con exito";
+
+                select estado,msjResultado;
+        END IF;
 END$$
 DELIMITER ;

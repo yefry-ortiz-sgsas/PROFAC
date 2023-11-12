@@ -15,6 +15,7 @@ use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
 use App\Exports\CuentasPorCobrarInteresExport;
+use App\Models\AplicacionPagos\Modelotros_movimientos;
 class Pagos extends Component
 {
     public function render()
@@ -86,7 +87,7 @@ class Pagos extends Component
 
                 $cuentas2 = DB::select("
 
-                CALL sp_aplicacion_pagos('1','".$id."', '".Auth::user()->id."', '0','na','0','0', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('1','".$id."', '".Auth::user()->id."', '0','na','0','0','0', @estado, @msjResultado);");
 
                 //dd($cuentas2[0]->estado);
 
@@ -105,7 +106,7 @@ class Pagos extends Component
 
                 $cuentas3 = DB::select("
 
-                CALL sp_aplicacion_pagos('3','".$id."', '".Auth::user()->id."', '0','na','0','0', @estado, @msjResultado);");
+                CALL sp_aplicacion_pagos('3','".$id."', '".Auth::user()->id."', '0','na','0','0','0', @estado, @msjResultado);");
 
                 //dd($cuentas2[0]->estado);
 
@@ -134,6 +135,7 @@ class Pagos extends Component
                 retencion_isv_factura as   'isv',
                 saldo as                   'saldo',
                 estado_retencion_isv as    'estadoRetencion',
+                retencion_aplicada as      'retencion_aplicada',
                 estado as                  'estado',
                 usr_cerro as               'usrCierre',
                 created_at as              'fechaRegistro',
@@ -167,43 +169,87 @@ class Pagos extends Component
         return Datatables::of($cuentas)
                 ->addColumn('acciones', function ($cuenta) {
 
-                    return
-                        '
-                            <div class="btn-group">
-                                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
-                                <ul class="dropdown-menu" x-placement="bottom-start"
-                                    style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
 
-                                    <li>
-                                        <a class="dropdown-item" href="/detalle/venta/'.$cuenta->codigoFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="modalRetencion('.$cuenta->codigoPago.' , '.$cuenta->isv.', '.$cuenta->estadoRetencion.', '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')">  <i class="fa-solid fa-cash-register text-success"></i> Gestionar retencion </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="modalNotaCredito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneNC.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="modalNotaDebito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-item" onclick="modalAbonos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
-                                    </li>
+                    //dd($cuenta);
+                    if ($cuenta->retencion_aplicada == 0) {
+                        return
+                            '
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
+                                    <ul class="dropdown-menu" x-placement="bottom-start"
+                                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
 
+                                        <li>
+                                            <a class="dropdown-item" href="/detalle/venta/'.$cuenta->idFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                                        </li>
 
-                                </ul>
-                            </div>
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalRetencion('.$cuenta->codigoPago.' , '.$cuenta->isv.', '.$cuenta->estadoRetencion.', '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')">  <i class="fa-solid fa-cash-register text-success"></i> Gestionar retencion </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalNotaCredito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneNC.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalNotaDebito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalAbonos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
                         ';
+                    }else{
+
+                        return
+                            '
+                                <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver más</button>
+                                    <ul class="dropdown-menu" x-placement="bottom-start"
+                                        style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+
+                                        <li>
+                                            <a class="dropdown-item" href="/detalle/venta/'.$cuenta->idFactura.'" > <i class="fa-solid fa-arrows-to-eye text-info"></i> Detalle de venta </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" >  <i class="fa-solid fa-check text-success"></i> Retencion aplicada </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalNotaCredito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneNC.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de credito </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalNotaDebito('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.', '.$cuenta->tieneND.')"> <i class="fa-solid fa-cash-register text-success"></i> Notas de debito </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalOtrosMovimientos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Otros movimientos </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" onclick="modalAbonos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                </div>
+                        ';
+                    }
                 })
 
 
@@ -343,7 +389,7 @@ class Pagos extends Component
                     select
                     id as 'idNotaCredito',
                     cai as 'correlativo'
-                    from nota_credito where estado_nota_id = 1 and factura_id =
+                    from nota_credito where estado_rebajado = 2 and estado_nota_id = 1 and factura_id =
                 ".$idFactura);
             return response()->json([
                 'results'=>$notasCredito,
@@ -390,7 +436,7 @@ class Pagos extends Component
                     select
                     id as 'idNotaDebito',
                     numeroCai as 'correlativo'
-                    from notadebito where estado_id = 1 and factura_id =
+                    from notadebito where estado_sumado = 2 and  estado_id = 1 and factura_id =
                 ".$idFactura);
             return response()->json([
                 'results'=>$notasDebito,
@@ -433,24 +479,182 @@ class Pagos extends Component
 
     public function gestionRetencion( Request $request){
 
-        dd($request);
+        try {
+
+
+                         $cuentas2 = DB::select("
+
+                        CALL sp_aplicacion_pagos(
+                            '4',
+                            '0',
+                            '".Auth::user()->id."',
+                            '".$request->idFacturaRetencion."',
+                            '".$request->comentario_retencion."',
+                            '".$request->codAplicPago."',
+                            '".$request->selectTiporetencion."',
+                            '".$request->montoRetencion."',
+                            @estado, @msjResultado);");
+
+
+                        //dd($cuentas2[0]->estado);
+
+                        if ($cuentas2[0]->estado == -1) {
+                            return response()->json([
+                                "text" => "Ha ocurrido un error al insertar facturas en aplicacion de pagos.",
+                                "icon" => "error",
+                                "title"=>"Error!"
+                            ],402);
+                        }
+
+            }catch (QueryException $e) {
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error: ".$e,
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+
+    }
+
+///////////////////////////////GESTIONES DE notas nde credito
+
+    public function gestionNC( Request $request){
+
+        //dd($request);
 
         try {
 
-                DB::beginTransaction();
+
+                        $cuentas2 = DB::select("
+
+                        CALL sp_aplicacion_pagos(
+                            '5',
+                            '".$request->selectNotaCredito."',
+                            '".Auth::user()->id."',
+                            '".$request->idFacturaNC."',
+                            '".$request->comentarioRebaja."',
+                            '".$request->codAplicPagonc."',
+                            '".$request->selectAplicado."',
+                            '".$request->totalNotaCredito."',
+                            @estado, @msjResultado);");
 
 
-                DB::commit();
-                return response()->json([
-                    "icon" => "success",
-                    "text" => "Se realizó correctamente la transacción!",
-                    "title"=>"Exito!"
-                ],200);
+                        //dd($cuentas2[0]->estado);
+
+                        if ($cuentas2[0]->estado == -1) {
+                            return response()->json([
+                                "text" => "Ha ocurrido un error.",
+                                "icon" => "error",
+                                "title"=>"Error!"
+                            ],402);
+                        }
+
             }catch (QueryException $e) {
-            DB::rollback();
             return response()->json([
                 "icon" => "error",
-                "text" => "Ha ocurrido un error al realizar la transacción.",
+                "text" => "Ha ocurrido un error: ".$e,
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+
+    }
+
+
+
+///////////////////////////////GESTIONES DE notas nde debito
+
+    public function gestionND( Request $request){
+
+       // dd($request);
+
+        try {
+
+
+                        $cuentas2 = DB::select("
+
+                        CALL sp_aplicacion_pagos(
+                            '6',
+                            '".$request->selectNotaDebito."',
+                            '".Auth::user()->id."',
+                            '".$request->idFacturaND."',
+                            '".$request->comentarioSuma."',
+                            '".$request->codAplicPagond."',
+                            '".$request->selectAplicadond."',
+                            '".$request->totalNotaDebito."',
+                            @estado, @msjResultado);");
+
+
+                        //dd($cuentas2[0]->estado);
+
+                        if ($cuentas2[0]->estado == -1) {
+                            return response()->json([
+                                "text" => "Ha ocurrido un error.",
+                                "icon" => "error",
+                                "title"=>"Error!"
+                            ],402);
+                        }
+
+            }catch (QueryException $e) {
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error: ".$e,
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+
+    }
+
+
+///////////////////////////////GESTIONES DE OTRO MOVIMIENTO
+
+    public function guardarOtroMov( Request $request){
+
+         //dd($request);
+
+        try {
+            $cm = "'";
+
+                        $otrosMovimientos = new Modelotros_movimientos;
+                            $otrosMovimientos->aplicacion_pagos_id = $request->codAplicPagoom;
+                            $otrosMovimientos->factura_id = $request->idFacturaom;
+                            $otrosMovimientos->monto = $request->montoTM;
+                            $otrosMovimientos->comentario = $cm.$request->motivoMovimiento.$cm;
+                            $otrosMovimientos->usr_registro = Auth::user()->id;
+                            $otrosMovimientos->estado = 1;
+                            $otrosMovimientos->tipo_movimiento = $request->selecttipoMovimiento;
+                        $otrosMovimientos->save();
+
+                        $cuentas2 = DB::select("
+
+                        CALL sp_aplicacion_pagos(
+                            '7',
+                            '0',
+                            '".Auth::user()->id."',
+                            '".$request->idFacturaom."',
+                            '".$request->motivoMovimiento."',
+                            '".$request->codAplicPagoom."',
+                            '".$request->selecttipoMovimiento."',
+                            '".$request->montoTM."',
+                            @estado, @msjResultado);");
+
+
+                        //dd($cuentas2[0]->estado);
+
+                        if ($cuentas2[0]->estado == -1) {
+                            return response()->json([
+                                "text" => "Ha ocurrido un error en el procedimiento almacenado.",
+                                "icon" => "error",
+                                "title"=>"Error!"
+                            ],402);
+                        }
+
+            }catch (QueryException $e) {
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error: ".$e,
                 "title"=>"Error!",
                 "error" => $e
             ],402);
@@ -471,4 +675,6 @@ class Pagos extends Component
 
 
 
-}
+
+
+    }

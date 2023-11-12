@@ -569,6 +569,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/aplicacion/pagos/listar/abonos/{id}', [Pagos::class, 'listarAbonos']);
 
     Route::post('/pagos/retencion/guardar', [Pagos::class, 'gestionRetencion']);
+    Route::post('/pagos/notacredito/guardar', [Pagos::class, 'gestionNC']);
+    Route::post('/pagos/notadebito/guardar', [Pagos::class, 'gestionND']);
+    Route::post('/pagos/otrosmov/guardar', [Pagos::class, 'guardarOtroMov']);
+
+
 
 
 

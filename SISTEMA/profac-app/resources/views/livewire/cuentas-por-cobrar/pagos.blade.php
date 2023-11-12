@@ -83,7 +83,7 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Nota (Obligatoria):</b></label>
-                                                <textarea class="form-control" id="comentario_retencion" name="comentario_retencion" cols="30" rows="10"></textarea>
+                                                <textarea required class="form-control" id="comentario_retencion" name="comentario_retencion" cols="30" rows="10"></textarea>
                                             </div>
 
 
@@ -639,32 +639,6 @@
         $('#modalretencion').modal('show');
     }
 
-    function guardarRetencion(){
-        var fechaFacturas = document.getElementById('fecha').value;
-        var data = new FormData($('#cerrarCaja').get(0));
-
-        axios.post("/cierre/guardar/"+fechaFacturas, data)
-            .then(response => {
-                $('#cerrarCaja').parsley().reset();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Exito!',
-                    text: "Ha realizado el cierre de caja con exito."
-                });
-                location. reload()
-
-        })
-        .catch(err => {
-            let data = err.response.data;
-            Swal.fire({
-                icon: data.icon,
-                title: data.title,
-                text: data.text
-            })
-            console.error(err);
-
-        })
-    }
 
     function modalNotaCredito(codigoPagoA, caiFactura, idFactura, tieneNC ){
         $('#codAplicPagonc').val(codigoPagoA);
@@ -1198,14 +1172,168 @@
 
         axios.post("/pagos/retencion/guardar", data)
             .then(response => {
-                //$('#cerrarCaja').parsley().reset();
 
+                //$('#formEstadoRetencion').parsley().reset();
                 $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formEstadoRetencion");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_cambioRetencion').css('display','block');
+                $('#btn_cambioRetencion').show();
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Exito!',
                     text: "Ha realizado gestiona la retención."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
+    $(document).on('submit', '#formNotaCredito', function(event) {
+
+        $('#btn_notacredito').css('display','none');
+        $('#btn_notacredito').hide();
+
+
+        $('#modalNC').modal('hide');
+
+        event.preventDefault();
+        guardargNC();
+    });
+
+    function guardargNC(){
+        var data = new FormData($('#formNotaCredito').get(0));
+
+        axios.post("/pagos/notacredito/guardar", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formNotaCredito");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_notacredito').css('display','block');
+                $('#btn_notacredito').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
+
+    $(document).on('submit', '#formNotaDebito', function(event) {
+
+        $('#btn_notadebito').css('display','none');
+        $('#btn_notadebito').hide();
+
+
+        $('#modalND').modal('hide');
+
+        event.preventDefault();
+        guardargND();
+    });
+
+    function guardargND(){
+        var data = new FormData($('#formNotaDebito').get(0));
+
+        axios.post("/pagos/notadebito/guardar", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formNotaDebito");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_notadebito').css('display','block');
+                $('#btn_notadebito').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
+    $(document).on('submit', '#formOtrosMovimientos', function(event) {
+
+        $('#btn_tipomov').css('display','none');
+        $('#btn_tipomov').hide();
+
+
+        $('#modalOtrosMovimientos').modal('hide');
+
+        event.preventDefault();
+        guardarOtroMov();
+    });
+
+    function guardarOtroMov(){
+        var data = new FormData($('#formOtrosMovimientos').get(0));
+
+        axios.post("/pagos/otrosmov/guardar", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+                $('#tbl_tipo_movimientos_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formOtrosMovimientos");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_tipomov').css('display','block');
+                $('#btn_tipomov').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
                 });
 
         })

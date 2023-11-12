@@ -523,7 +523,7 @@ class NotaDebito extends Component
                 update
                 notadebito
                 set estado_id = 2
-                where id ='.$idNota);
+                where estado_sumado = 2 id ='.$idNota);
 
             DB::commit();
             return response()->json([
