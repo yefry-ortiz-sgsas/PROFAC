@@ -674,12 +674,8 @@
 
                 });
 
-
-
                 this.totalesGenerales();
                 return 0;
-
-
             }
 
             function obtenerBodegas(id) {
@@ -1101,7 +1097,7 @@
                     subTotalFila = new Number(document.getElementById('subTotal' + arregloIdInputs[i]).value);
                     isvFila = new Number(document.getElementById('isvProducto' + arregloIdInputs[i]).value);
 
-                    ;
+                    
 
                     if (isvFila == 0) {
                         subTotalGeneralExcentoValor += new Number(document.getElementById('subTotal' + arregloIdInputs[i])
@@ -1163,14 +1159,8 @@
                     currency: 'HNL',
                     minimumFractionDigits: 4,
                 }).format(totalGeneralValor)
-
-
-
-
-
+                
                 return 0;
-
-
             }
 
             function validarFechaPago() {

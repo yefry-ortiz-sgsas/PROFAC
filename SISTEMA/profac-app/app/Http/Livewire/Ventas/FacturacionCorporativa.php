@@ -1912,6 +1912,9 @@ class FacturacionCorporativa extends Component
             $factura->comentario=$request->nota_comen;
             $factura->porc_descuento =$request->porDescuento;
             $factura->monto_descuento=$request->porDescuentoCalculado;
+
+
+
             $factura->save();
 
 

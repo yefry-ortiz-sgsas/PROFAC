@@ -114,4 +114,5 @@ Facturacion Cliente B --
 Facturacion SRP cliente A
 Facturacion SRP cliente B
 FACTURAR-COMPROBANTE
+Vebtas exoneradas
 
