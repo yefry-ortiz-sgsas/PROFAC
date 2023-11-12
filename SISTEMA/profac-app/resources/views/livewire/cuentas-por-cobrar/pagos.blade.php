@@ -46,7 +46,6 @@
         </div>
     </div>
 
-
     {{--  MODAL DE RETENCION DE ISV  --}}
     <div class="modal" id="modalretencion" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -385,7 +384,7 @@
                     <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-content">
-                                <form class="form-control" id="formNotaDebito" name="formNotaDebito" >
+                                <form class="form-control" id="formabonos" name="formabonos" >
                                 <div class="row">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -417,7 +416,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <button id="btn_notadebito" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                        <button id="btn_notaabono" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
                                             <strong>
                                                 Gestionar
                                             </strong>
@@ -1329,6 +1328,55 @@
 
                 $('#btn_tipomov').css('display','block');
                 $('#btn_tipomov').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
+
+    $(document).on('submit', '#formabonos', function(event) {
+
+        $('#btn_notaabono').css('display','none');
+        $('#btn_notaabono').hide();
+
+
+        $('#modalAbonos').modal('hide');
+
+        event.preventDefault();
+        guardarCreditos();
+    });
+
+    function guardarCreditos(){
+        var data = new FormData($('#formabonos').get(0));
+
+        axios.post("/pagos/creditos/guardar", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+                $('#tbl_abonos_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formabonos");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_notaabono').css('display','block');
+                $('#btn_notaabono').show();
 
                 Swal.fire({
                     icon: 'success',

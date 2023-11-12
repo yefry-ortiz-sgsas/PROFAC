@@ -312,5 +312,22 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
 
                 select estado,msjResultado;
         END IF;
+
+        IF accion = 8 THEN
+
+                UPDATE aplicacion_pagos
+                    SET credito_abonos = (credito_abonos + pmonto),
+                    ultimo_usr_actualizo = usr_actual,
+                    saldo = (saldo - pmonto),
+                    updated_at = NOW()
+                WHERE aplicacion_pagos.estado = 1
+                and aplicacion_pagos.factura_id = pfactura_id
+                and aplicacion_pagos.id =  paplic_id;
+
+				SET estado := 1;
+				SET msjResultado := "Se ha guardado con exito";
+
+                select estado,msjResultado;
+        END IF;
 END$$
 DELIMITER ;

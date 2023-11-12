@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CuentasPorCobrarExport;
 use App\Exports\CuentasPorCobrarInteresExport;
 use App\Models\AplicacionPagos\Modelotros_movimientos;
+use App\Models\AplicacionPagos\Modelabonos_creditos;
 class Pagos extends Component
 {
     public function render()
@@ -661,6 +662,58 @@ class Pagos extends Component
         }
 
     }
+
+    ///////////////////////////////GESTIONES DE creditos y abonos
+
+    public function guardarCreditos( Request $request){
+
+       // dd($request);
+
+       try {
+        $cm = "'";
+                       $abonos = new Modelabonos_creditos;
+                        $abonos->aplicacion_pagos_id = $request->codAplicPagoAbono;
+                        $abonos->factura_id = $request->idFacturaAbono;
+                        $abonos->estado_abono= 1;
+                        $abonos->monto_abonado = $request->montoAbono;
+                        $abonos->usr_registro = Auth::user()->id;
+                        $abonos->comentario = $cm.$request->comentarioAbono.$cm;;
+                       $abonos->save();
+
+                       $cuentas2 = DB::select("
+
+                       CALL sp_aplicacion_pagos(
+                           '8',
+                           '0',
+                           '".Auth::user()->id."',
+                           '".$request->idFacturaAbono."',
+                           '".$request->comentarioAbono."',
+                           '".$request->codAplicPagoAbono."',
+                           '0',
+                           '".$request->montoAbono."',
+                           @estado, @msjResultado);");
+
+
+                       //dd($cuentas2[0]->estado);
+
+                       if ($cuentas2[0]->estado == -1) {
+                           return response()->json([
+                               "text" => "Ha ocurrido un error en el procedimiento almacenado.",
+                               "icon" => "error",
+                               "title"=>"Error!"
+                           ],402);
+                       }
+
+           }catch (QueryException $e) {
+           return response()->json([
+               "icon" => "error",
+               "text" => "Ha ocurrido un error: ".$e,
+               "title"=>"Error!",
+               "error" => $e
+           ],402);
+       }
+
+   }
 
 
 
