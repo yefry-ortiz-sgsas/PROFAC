@@ -335,10 +335,10 @@ class Pagos extends Component
             ac.aplicacion_pagos_id as 'codigoPago',
             (select cai from factura where id = ac.factura_id) as correlativo,
             FORMAT(ac.monto_abonado, 2) as monto,
-            ac.comentario,
+            ac.comentario as 'comentarioabono',
             ac.estado_abono as 'estadoAbono',
-            (select name from users where id = ac.usr_registro) as userRegistro,
-            ac.created_at as fechaRegistro,
+            (select name from users where id = ac.usr_registro) as 'userRegistro',
+            ac.created_at as 'fechaRegistro',
             ac.factura_id
                 from abonos_creditos ac
                 inner join aplicacion_pagos ap on ap.id = ac.aplicacion_pagos_id
@@ -362,7 +362,7 @@ class Pagos extends Component
                                     style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
 
                                     <li>
-                                        <a class="dropdown-item" onclick="inhabilitarAbono('.$consulta->codigoMovimiento.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
+                                        <a class="dropdown-item" onclick="inhabilitarAbono('.$consulta->codigoAbono.')"> <i class="fa-solid fa-arrows-to-eye text-info"></i> Inhabilitar </a>
                                     </li>
 
                                 </ul>

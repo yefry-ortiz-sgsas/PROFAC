@@ -446,18 +446,17 @@
                                 <thead class="">
                                     <tr>
                                         <th>Codigo Pagos</th>
-                                        <th>Código Factura</th>
-                                        <th>Cargo Factura</th>
-                                        <th>ISV</th>
-                                        <th>Notas Crédito</th>
+                                        <th>Cod. Factura</th>
+                                        <th>Correlativo</th>
+                                        <th>Cargo</th>
+                                        <th>Notas Credito</th>
                                         <th>Notas Débito</th>
                                         <th>Créditos/Abonos</th>
-                                        <th>Cargo extra</th>
-                                        <th>Cargo Debita</th>
-                                        <th>Saldo</th>
+                                        <th>Cargo Extra</th>
+                                        <th>Cargo Debito</th>
+                                        <th>ISV</th>
                                         <th>Retencion</th>
-                                        <th>Estado Pago</th>
-                                        <th>User cierre</th>
+                                        <th>Saldo</th>
                                         <th>Fecha registro</th>
                                         <th>Ultima actualizacion</th>
                                         <th>Acciones</th>
@@ -467,18 +466,17 @@
                                     <tfoot>
                                         <tr>
                                             <th>Codigo Pagos</th>
-                                            <th>Código Factura</th>
-                                            <th>Cargo Factura</th>
-                                            <th>ISV</th>
-                                            <th>Notas Crédito</th>
+                                            <th>Cod. Factura</th>
+                                            <th>Correlativo</th>
+                                            <th>Cargo</th>
+                                            <th>Notas Credito</th>
                                             <th>Notas Débito</th>
                                             <th>Créditos/Abonos</th>
-                                            <th>Cargo extra</th>
-                                            <th>Cargo Debita</th>
-                                            <th>Saldo</th>
+                                            <th>Cargo Extra</th>
+                                            <th>Cargo Debito</th>
+                                            <th>ISV</th>
                                             <th>Retencion</th>
-                                            <th>Estado Pago</th>
-                                            <th>User cierre</th>
+                                            <th>Saldo</th>
                                             <th>Fecha registro</th>
                                             <th>Ultima actualizacion</th>
                                             <th>Acciones</th>
@@ -859,6 +857,9 @@
                             data: 'codigoPago'
                         },
                         {
+                            data: 'idFactura'
+                        },
+                        {
                             data: 'codigoFactura'
                         },
                         {
@@ -883,38 +884,21 @@
                             data: 'isv'
                         },
                         {
+                            data: 'retencion_aplicada',
+                            render: function (data, type, row) {
+
+
+                                if(data != 1){
+                                    return "<span class='badge badge-success'>SE APLICA (+)</span>";
+                                }else{
+                                    return "<span class='badge badge-warnig'>NO SE APLICA (-)</span>";
+                                }
+
+
+                            }
+                        },
+                        {
                             data: 'saldo'
-                        },
-                        {
-                            data: 'estadoRetencion',
-                            render: function (data, type, row) {
-
-
-                                if(data === 1){
-                                    return "<span class='badge badge-success'>SE APLICA</span>";
-                                }else if(data === 2){
-                                    return "<span class='badge badge-warnig'>NO SE APLICA</span>";
-                                }
-
-
-                            }
-                        },
-                        {
-                            data: 'estado',
-                            render: function (data, type, row) {
-
-
-                                if(data === 1){
-                                    return "<span class='badge badge-success'>ACTIVO</span>";
-                                }else if(data === 2){
-                                    return "<span class='badge badge-danger'>INACTIVO</span>";
-                                }
-
-
-                            }
-                        },
-                        {
-                            data: 'usrCierre'
                         },
                         {
                             data: 'fechaRegistro'
@@ -1092,7 +1076,7 @@
                             data: 'monto'
                         },
                         {
-                            data: 'comentario'
+                            data: 'comentarioabono'
                         },
                         {
                             data: 'estadoAbono',
