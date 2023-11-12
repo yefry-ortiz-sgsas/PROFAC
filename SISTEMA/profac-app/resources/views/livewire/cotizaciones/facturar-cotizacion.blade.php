@@ -815,6 +815,7 @@ function validarDescuento(){
 
                         });
 
+                        /*SE QUITO min="${producto.precio_base}" DE LA LINEA 856*/
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
