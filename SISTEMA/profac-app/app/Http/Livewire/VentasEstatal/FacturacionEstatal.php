@@ -463,16 +463,20 @@ class FacturacionEstatal extends Component
             $caiUpdated->save();
 
             //Tabla de listado
-
             // DB::INSERT("INSERT INTO listado(
             //          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
             //         ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
 
 
 
-            $ordeCompra = ModelNumOrdenCompra::find($request->ordenCompra);
-            $ordeCompra->estado_id =2;
-            $ordeCompra->save();
+
+            if(!empty($request->ordenCompra))
+            {
+                $ordeCompra = ModelNumOrdenCompra::find($request->ordenCompra);
+                $ordeCompra->estado_id =2;
+                $ordeCompra->save();
+            }
+
 
 
             // //dd( $guardarCompra);

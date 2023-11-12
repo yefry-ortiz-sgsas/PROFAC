@@ -245,7 +245,7 @@ class ValeListaEspera extends Component
         $vale->estado_id = 1;
         $vale->notas = $request->comentario;
         $vale->porc_descuento = $request->porDescuento;
-        $vale->monto_descuento = $request->descuentoGeneral;
+        $vale->monto_descuento = bcdiv($request->descuentoGeneral, '1', 2);
         $vale->save();
 
 
