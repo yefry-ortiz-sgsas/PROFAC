@@ -508,7 +508,7 @@ class FacturacionCorporativa extends Component
                 $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
                 $caiUpdated->save();
 
-                $aplicacionPagos = DB::select("
+                /* $aplicacionPagos = DB::select("
 
                 CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);"
                 );
@@ -520,7 +520,7 @@ class FacturacionCorporativa extends Component
                         "icon" => "error",
                         "title"=>"Error!"
                     ],400);
-                }
+                } */
             } else {
 
                 // alterna
@@ -798,7 +798,7 @@ class FacturacionCorporativa extends Component
             $parametro->turno = $turnoActualizar;
             $parametro->save();
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -809,7 +809,7 @@ class FacturacionCorporativa extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
 
             return $factura;
         } catch (QueryException $e) {
@@ -940,7 +940,7 @@ class FacturacionCorporativa extends Component
 
 
 
-        $aplicacionPagos = DB::select("
+        /* $aplicacionPagos = DB::select("
 
         CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -951,7 +951,7 @@ class FacturacionCorporativa extends Component
                 "icon" => "error",
                 "title"=>"Error!"
             ],400);
-        }
+        } */
 
         return $factura;
         // } catch (QueryException $e) {
@@ -1094,7 +1094,7 @@ class FacturacionCorporativa extends Component
             DB::update("UPDATE listado SET eliminado =  1 WHERE id = " . $cai->id);
 
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -1105,7 +1105,7 @@ class FacturacionCorporativa extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
 
             return $factura;
         } catch (QueryException $e) {
@@ -1732,7 +1732,7 @@ class FacturacionCorporativa extends Component
             //DB::delete("DELETE FROM enumeracion WHERE id = ".$listado->id);
             DB::update("UPDATE enumeracion SET eliminado =  1 WHERE id = " . $listado->id);
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -1743,7 +1743,7 @@ class FacturacionCorporativa extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
             return $factura;
         } catch (QueryException $e) {
             return response()->json([
@@ -1979,7 +1979,7 @@ class FacturacionCorporativa extends Component
             $caiUpdated->serie = $numeroSecuenciaUpdated;
             $caiUpdated->save();
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -1990,7 +1990,7 @@ class FacturacionCorporativa extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
             return $factura;
 
     }

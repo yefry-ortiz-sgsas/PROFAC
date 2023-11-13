@@ -466,7 +466,7 @@ class FacturacionEstatal extends Component
             $caiUpdated->save();
 
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -477,7 +477,7 @@ class FacturacionEstatal extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
             //Tabla de listado
             // DB::INSERT("INSERT INTO listado(
             //          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES

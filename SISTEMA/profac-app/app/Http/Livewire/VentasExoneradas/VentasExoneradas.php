@@ -300,7 +300,7 @@ class VentasExoneradas extends Component
 
 
 
-            $aplicacionPagos = DB::select("
+            /* $aplicacionPagos = DB::select("
 
             CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
 
@@ -311,7 +311,7 @@ class VentasExoneradas extends Component
                     "icon" => "error",
                     "title"=>"Error!"
                 ],400);
-            }
+            } */
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
                 $keyRestaInventario = "restaInventario" . $arrayInputs[$i];
