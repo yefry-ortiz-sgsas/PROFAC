@@ -407,6 +407,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/ajuste/ingreso/productos', [AjusteIngresoProducto::class, 'obtenerProducto']);
     Route::post('/ajuste/ingreso/datos/producto', [AjusteIngresoProducto::class, 'datosProducto']);
     Route::post('/ajuste/ingreso/guardar', [AjusteIngresoProducto::class, 'realizarAjuste']);
+    Route::get('/ajustes/ingreso/listar/bodegas', [AjusteIngresoProducto::class, 'listarBodegas']);
+    Route::get('/ajuste/ingreso/listar/secciones', [AjusteIngresoProducto::class, 'seccionesLista']);
 
     //------------------------------------------------------Facturas Nulas---------------------------------------------//
 

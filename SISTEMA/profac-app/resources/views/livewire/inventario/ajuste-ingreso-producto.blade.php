@@ -295,7 +295,7 @@
 
             $('#selectBodega').select2({
                 ajax: {
-                    url: '/ajustes/listar/bodegas',
+                    url: '/ajustes/ingreso/listar/bodegas',
                     data: function(params) {
                         var query = {
                             search: params.term,
@@ -335,7 +335,7 @@
 
                 $('#selectSeccion').select2({
                     ajax: {
-                        url: '/ajuste/listar/secciones',
+                        url: '/ajuste/ingreso/listar/secciones',
                         data: function(params) {
 
                             var query = {
