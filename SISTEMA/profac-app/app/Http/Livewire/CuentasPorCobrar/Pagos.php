@@ -456,8 +456,8 @@ class Pagos extends Component
 
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////!SECTION
-///////////////////////////////GESTIONES DE RETENCION DE ISV
+    ///////////////////////////////////////////////////////////////////////////////////////////////////!SECTION
+    ///////////////////////////////GESTIONES DE RETENCION DE ISV
 
     public function gestionRetencion( Request $request){
 
@@ -499,7 +499,7 @@ class Pagos extends Component
 
     }
 
-///////////////////////////////GESTIONES DE notas nde credito
+   ///////////////////////////////GESTIONES DE notas nde credito
 
     public function gestionNC( Request $request){
 
@@ -545,7 +545,7 @@ class Pagos extends Component
 
 
 
-///////////////////////////////GESTIONES DE notas nde debito
+   ///////////////////////////////GESTIONES DE notas nde debito
 
     public function gestionND( Request $request){
 
@@ -590,7 +590,7 @@ class Pagos extends Component
     }
 
 
-///////////////////////////////GESTIONES DE OTRO MOVIMIENTO
+    ///////////////////////////////GESTIONES DE OTRO MOVIMIENTO
 
     public function guardarOtroMov( Request $request){
 
@@ -695,13 +695,6 @@ class Pagos extends Component
        }
 
     }
-
-
-
-
-
-
-
 
 
 

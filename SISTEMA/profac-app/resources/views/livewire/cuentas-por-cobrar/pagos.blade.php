@@ -434,6 +434,11 @@
     </div>
     {{--  FIN DEL MODAL APLICAR CREDITOS/ABONOS  --}}
 
+
+
+
+
+
     {{--  TABLA PRINCIPAL DE REGISTRO  --}}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
