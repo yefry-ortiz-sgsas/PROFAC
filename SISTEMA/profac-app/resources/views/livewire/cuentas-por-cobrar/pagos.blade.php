@@ -405,7 +405,28 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Medio de Pago:</b></label>
+
+                                                 <select required onchange="metodoPago()" id="selectMetodoPago" name="selectMetodoPago" class="form-control form-select form-select-lg">
+
+                                                    <option class="form-control" selected >--------Seleccione------</option>
+                                                    <option class="form-control" value="1">EFECTIVO</option>
+                                                    <option class="form-control"  value="2">TRANSFERENCIA BANCARIA</option>
+                                                    <option class="form-control"  value="2">CHEQUE</option>
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección banco:</b></label>
+
+                                                 <select required id="selectBanco" name="selectBanco" class="form-control form-select form-select-lg">
+
+                                                 </select>
+                                            </div>
+
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de pago:</b></label>
 
                                                 <textarea required class="form-control"   id="comentarioAbono" name="comentarioAbono" cols="30" rows="5"></textarea>
 
@@ -824,7 +845,7 @@
         $('#facturaCaiAbono').val(caiFactura);
         $('#idFacturaAbono').val(idFactura);
 
-
+        datosBanco();
         $('#modalAbonos').modal('show');
     }
 
@@ -1415,6 +1436,24 @@
 
     }
 
+    function datosBanco(){
+        document.getElementById("selectBanco").innerHTML  ='';
+        axios.get("/listar/aplicacion/bancos")
+        .then(response => {
+
+            let datos = response.data.result;
+            datos.forEach((element) => document.getElementById("selectBanco").innerHTML += '<option  class="form-control" value="'+element.idBanco+'">'+element.banco+'</option>');
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+        });
+    }
 
 </script>
 

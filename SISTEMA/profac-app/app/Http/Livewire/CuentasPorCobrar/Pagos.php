@@ -696,7 +696,22 @@ class Pagos extends Component
 
     }
 
+    public function datosBanco(){
+        try {
+            $bancos = DB::select("
+                select CONCAT(nombre, ' - ', cuenta) as banco, id as idBanco from banco;
+            ");
+        return response()->json([
+            'result'=>$bancos,
+        ],200);
 
+    } catch (QueryException $e) {
+       return response()->json([
+        'message' => 'Ha ocurrido un error al buscar bancos',
+        'error' => $e
+       ],402);
+    }
+    }
 
 
 

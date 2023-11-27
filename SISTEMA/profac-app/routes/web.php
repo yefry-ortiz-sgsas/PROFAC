@@ -575,6 +575,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/pagos/creditos/guardar', [Pagos::class, 'guardarCreditos']);
 
 
+    Route::get('/listar/aplicacion/bancos', [Pagos::class, 'datosBanco']);
+
+
 
 
 
