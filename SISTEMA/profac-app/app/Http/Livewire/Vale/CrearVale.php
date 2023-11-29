@@ -118,8 +118,8 @@ class CrearVale extends Component
         B.id,
         concat(B.id,'-',B.nombre) as nombre,
         B.isv,
-        FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
-        FORMAT(A.precio_unidad,2) as precio_base
+        ultimo_costo_compra as ultimo_costo_compra,
+        A.precio_unidad as precio_base
       
         from venta_has_producto A
         inner join producto B
