@@ -16,6 +16,8 @@ class Modelabonos_creditos extends Model
         'estado_abono',
         'monto_abonado',
         'usr_registro',
-        'comentario'
+        'comentario',
+        'url_documento',
+        'fecha_pago'
     ];
 }

@@ -91,8 +91,8 @@
 
                                                  <select id="selectTiporetencion" name="selectTiporetencion" class="form-control form-select form-select-lg">
 
-                                                   <option class="form-control" value="1">SE APLICA AL SALDO</option>
-                                                   <option class="form-control"  value="2">NO SE APLICA AL SALDO</option>
+                                                   <option class="form-control" value="2">APLICA</option>
+                                                   <option class="form-control"  value="1">NO APLICA</option>
                                                  </select>
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title">Aplicación de Nota de Debito:</h3>
+              <h3 class="modal-title">Aplicación de Nota de Débito:</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -237,7 +237,7 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de dédito</b></label>
 
                                                  <select required onchange="datosNotaDebito()" id="selectNotaDebito" name="selectNotaDebito" class="form-control form-select form-select-lg">
 
@@ -245,19 +245,19 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de dédito:</b></label>
                                                 <input required type="text" readonly class="form-control" id="totalNotaDebito" name="totalNotaDebito" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de dédito:</b></label>
 
                                                 <textarea required maxlength="500" readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
 
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de dédito</b></label>
 
                                                  <select required id="selectAplicadond" name="selectAplicadond" class="form-control form-select form-select-lg">
                                                  </select>
@@ -328,14 +328,15 @@
                                                 <label for="exampleFormControlTextarea1"> <b>Selección el tipo de Movimiento a realizar</b></label>
 
                                                 <select required id="selecttipoMovimiento" name="selecttipoMovimiento" class="form-control form-select form-select-lg">
-                                                    <option class="form-control" value="1">SUMAR CARGO AL SALDO</option>
-                                                    <option class="form-control"  value="2">REBAJAR CARGO AL SALDO</option>
+                                                    <option class="form-control" selected>--------SELECCIONE MOVIMIENTO----------</option>
+                                                    <option class="form-control" value="1">CARGO EXTRA</option>
+                                                    <option class="form-control"  value="2">CARGO A DEDUCIR</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
-                                                <input required type="number" min="0" class="form-control" id="montoTM" name="montoTM" >
+                                                <input required type="number" step="any" min="0" class="form-control" id="montoTM" name="montoTM" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -401,7 +402,7 @@
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
-                                                <input required type="number" min="0"  class="form-control" id="montoAbono" name="montoAbono" >
+                                                <input required type="number" min="0" step="any" class="form-control" id="montoAbono" name="montoAbono" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -425,8 +426,8 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
-                                                <label for="img_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
-                                                <input class="form-control"  id="img_pago" name="img_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf">
+                                                <label for="doc_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
+                                                <input class="form-control"  id="doc_pago" name="doc_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf">
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
@@ -489,7 +490,7 @@
                                         <th>Notas Débito</th>
                                         <th>Créditos/Abonos</th>
                                         <th>Cargo Extra</th>
-                                        <th>Cargo Debito</th>
+                                        <th>Cargo A Deducir</th>
                                         <th>ISV</th>
                                         <th>Retencion</th>
                                         <th>Saldo</th>
@@ -661,13 +662,6 @@
         $('#montoRetencion').val(retencion);
         $('#facturaCai').val(caiFactura);
         $('#idFacturaRetencion').val(idFactura);
-
-        if(estadoRetencion == 1){
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="1">SE APLICA AL SALDO - ACTUAL</option>';
-        }else{
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA AL SALDO - ACTUAL</option>';
-        }
-
 
         $('#modalretencion').modal('show');
     }
@@ -925,9 +919,9 @@
 
 
                                 if(data != 1){
-                                    return "<span class='badge badge-success'>SE APLICA (+)</span>";
+                                    return "<span class='badge badge-warnig'>NO SE APLICA (+)</span>";
                                 }else{
-                                    return "<span class='badge badge-warnig'>NO SE APLICA (-)</span>";
+                                    return "<span class='badge badge-success'>SE APLICA (-)</span>";
                                 }
 
 
