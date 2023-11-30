@@ -8,7 +8,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
     IN `pcomentario` VARCHAR(500),
     IN `paplic_id` INT,
     IN `ptipo` INT,
-    IN `pmonto` INT,
+    IN `pmonto` DECIMAL(60,2),
    	OUT `estado` INT,
     OUT `msjResultado` VARCHAR(500)
 )BEGIN
@@ -337,7 +337,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
                     ultimo_usr_actualizo = usr_actual,
                     usr_cerro = usr_actual,
                     estado_cerrado = 2,
-                    comentario = pcomentario
+                    comentario = pcomentario,
                     updated_at = NOW()
                 WHERE aplicacion_pagos.estado = 1
                 and aplicacion_pagos.id =  paplic_id;
