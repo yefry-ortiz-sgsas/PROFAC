@@ -214,6 +214,9 @@ class Pagos extends Component
                                             </li>
 
 
+                                            <li>
+                                                <a class="dropdown-item" onclick="modalcerrarFactura('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-shield text-success"></i> Cerrar Factura </a>
+                                            </li>
 
                                         </ul>
                                     </div>
@@ -252,6 +255,9 @@ class Pagos extends Component
                                                 <a class="dropdown-item" onclick="modalAbonos('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-cash-register text-success"></i> Creditos/Pago </a>
                                             </li>
 
+                                            <li>
+                                                <a class="dropdown-item" onclick="modalcerrarFactura('.$cuenta->codigoPago.' , '."'".$cuenta->codigoFactura."'".', '.$cuenta->idFactura.')"> <i class="fa-solid fa-shield text-success"></i> Cerrar Factura </a>
+                                            </li>
 
 
                                         </ul>
@@ -763,6 +769,45 @@ class Pagos extends Component
         }
     }
 
+    public function cerrarFactura(Request $request){
+        try {
+
+            $cuentas2 = DB::select("
+
+            CALL sp_aplicacion_pagos(
+                '9',
+                '0',
+                '".Auth::user()->id."',
+                '0',
+                '".$request->comentarioCierre."',
+                '".$request->codAplicCierre."',
+                '0',
+                '0',
+                @estado,
+                @msjResultado);");
+
+
+            //dd($cuentas2[0]->estado);
+
+            if ($cuentas2[0]->estado == -1) {
+                return response()->json([
+                    "text" => "Ha ocurrido un error en el procedimiento almacenado.",
+                    "icon" => "error",
+                    "title"=>"Error!"
+                ],402);
+            }
+
+
+        } catch (QueryException $e) {
+            DB::rollback();
+            return response()->json([
+                "icon" => "error",
+                "text" => "Ha ocurrido un error al cerrar la factura.",
+                "title"=>"Error!",
+                "error" => $e
+            ],402);
+        }
+    }
 
 
 

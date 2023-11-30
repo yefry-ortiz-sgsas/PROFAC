@@ -468,6 +468,68 @@
 
 
 
+    {{--  MODAL APLICAR CREDITOS/ABONOS  --}}
+    <div class="modal" id="modalcerrarFact" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h3 class="modal-title">Cerrar factura:</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formCierrefact" name="formCierrefact" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input required type="text" readonly class="form-control" id="codAplicCierre" name="codAplicCierre" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input required type="text" readonly class="form-control" id="facturaCaiCierre" name="facturaCaiCierre" >
+
+                                                <input type="hidden" id="idFacturaCierre" name="idFacturaCierre" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de cierre:</b></label>
+
+                                                <textarea required class="form-control"   id="comentarioCierre" name="comentarioCierre" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_cierreFact" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{--  FIN DEL MODAL APLICAR CREDITOS/ABONOS  --}}
+
+
+
 
 
 
@@ -1457,6 +1519,63 @@
             })
             console.error(err);
         });
+    }
+
+    function modalcerrarFactura(codigoPagoA, caiFactura, idFactura){
+        $('#codAplicCierre').val(codigoPagoA);
+        $('#facturaCaiCierre').val(caiFactura);
+        $('#idFacturaCierre').val(idFactura);
+
+        $('#modalcerrarFact').modal('show');
+    }
+
+
+    $(document).on('submit', '#formCierrefact', function(event) {
+
+        $('#btn_cierreFact').css('display','none');
+        $('#btn_cierreFact').hide();
+
+
+        $('#modalcerrarFact').modal('hide');
+
+        event.preventDefault();
+        cerrarFactura();
+    });
+
+    function cerrarFactura(){
+        var data = new FormData($('#formCierrefact').get(0));
+
+        axios.post("/pagos/cerrar/factura", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formCierrefact");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_cierreFact').css('display','block');
+                $('#btn_cierreFact').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
     }
 
 </script>
