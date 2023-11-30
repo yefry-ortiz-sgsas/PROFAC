@@ -91,8 +91,8 @@
 
                                                  <select id="selectTiporetencion" name="selectTiporetencion" class="form-control form-select form-select-lg">
 
-                                                   <option class="form-control" value="1">SE APLICA AL SALDO</option>
-                                                   <option class="form-control"  value="2">NO SE APLICA AL SALDO</option>
+                                                   <option class="form-control" value="2">APLICA</option>
+                                                   <option class="form-control"  value="1">NO APLICA</option>
                                                  </select>
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title">Aplicación de Nota de Debito:</h3>
+              <h3 class="modal-title">Aplicación de Nota de Débito:</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -237,7 +237,7 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de crédito</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección de nota de dédito</b></label>
 
                                                  <select required onchange="datosNotaDebito()" id="selectNotaDebito" name="selectNotaDebito" class="form-control form-select form-select-lg">
 
@@ -245,19 +245,19 @@
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de crédito:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Monto de nota de dédito:</b></label>
                                                 <input required type="text" readonly class="form-control" id="totalNotaDebito" name="totalNotaDebito" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de crédito:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Motivo Nota de dédito:</b></label>
 
                                                 <textarea required maxlength="500" readonly class="form-control"   id="motivoNotaDebito" name="motivoNotaDebito" cols="30" rows="5"></textarea>
 
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de crédito</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Acción para Nota de dédito</b></label>
 
                                                  <select required id="selectAplicadond" name="selectAplicadond" class="form-control form-select form-select-lg">
                                                  </select>
@@ -328,14 +328,15 @@
                                                 <label for="exampleFormControlTextarea1"> <b>Selección el tipo de Movimiento a realizar</b></label>
 
                                                 <select required id="selecttipoMovimiento" name="selecttipoMovimiento" class="form-control form-select form-select-lg">
-                                                    <option class="form-control" value="1">SUMAR CARGO AL SALDO</option>
-                                                    <option class="form-control"  value="2">REBAJAR CARGO AL SALDO</option>
+                                                    <option class="form-control" selected>--------SELECCIONE MOVIMIENTO----------</option>
+                                                    <option class="form-control" value="1">CARGO EXTRA</option>
+                                                    <option class="form-control"  value="2">CARGO A DEDUCIR</option>
                                                 </select>
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
-                                                <input required type="number" min="0" class="form-control" id="montoTM" name="montoTM" >
+                                                <input required type="number" step="any" min="0" class="form-control" id="montoTM" name="montoTM" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -401,11 +402,42 @@
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <label for="exampleFormControlTextarea1"> <b>Monto por Aplicar:</b></label>
-                                                <input required type="number" min="0"  class="form-control" id="montoAbono" name="montoAbono" >
+                                                <input required type="number" min="0" step="any" class="form-control" id="montoAbono" name="montoAbono" >
                                             </div>
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                                <label for="exampleFormControlTextarea1"> <b>Nota de aplicación:</b></label>
+                                                <label for="exampleFormControlTextarea1"> <b>Selección Medio de Pago:</b></label>
+
+                                                 <select required onchange="metodoPago()" id="selectMetodoPago" name="selectMetodoPago" class="form-control form-select form-select-lg">
+
+                                                    <option class="form-control" selected >--------Seleccione------</option>
+                                                    <option class="form-control" value="1">EFECTIVO</option>
+                                                    <option class="form-control"  value="2">TRANSFERENCIA BANCARIA</option>
+                                                    <option class="form-control"  value="2">CHEQUE</option>
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Selección banco:</b></label>
+
+                                                 <select required id="selectBanco" name="selectBanco" class="form-control form-select form-select-lg">
+
+                                                 </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
+                                                <label for="doc_pago" class="col-form-label focus-label">Documento de Pago:<span class="text-danger">*</span></label>
+                                                <input class="form-control"  id="doc_pago" name="doc_pago" type="file" accept="image/png, image/jpeg, image/jpg, application/pdf">
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-3">
+                                                <label for="fecha_pago" class="col-form-label focus-label">Fecha que se realizo el pago:<span class="text-danger">*</span></label>
+                                                <input class="form-control" required type="date" id="fecha_pago" name="fecha_pago"
+                                                    data-parsley-required>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de pago:</b></label>
 
                                                 <textarea required class="form-control"   id="comentarioAbono" name="comentarioAbono" cols="30" rows="5"></textarea>
 
@@ -434,6 +466,73 @@
     </div>
     {{--  FIN DEL MODAL APLICAR CREDITOS/ABONOS  --}}
 
+
+
+    {{--  MODAL APLICAR CREDITOS/ABONOS  --}}
+    <div class="modal" id="modalcerrarFact" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h3 class="modal-title">Cerrar factura:</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <form class="form-control" id="formCierrefact" name="formCierrefact" >
+                                <div class="row">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Código de Registro:</b></label>
+                                                <input required type="text" readonly class="form-control" id="codAplicCierre" name="codAplicCierre" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Factura:</b></label>
+                                                <input required type="text" readonly class="form-control" id="facturaCaiCierre" name="facturaCaiCierre" >
+
+                                                <input type="hidden" id="idFacturaCierre" name="idFacturaCierre" >
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <label for="exampleFormControlTextarea1"> <b>Nota de cierre:</b></label>
+
+                                                <textarea required class="form-control"   id="comentarioCierre" name="comentarioCierre" cols="30" rows="5"></textarea>
+
+                                            </div>
+
+                                        </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button id="btn_cierreFact" class="btn  btn-dark btn-lg btn-block float-left m-t-n-xs">
+                                            <strong>
+                                                Gestionar
+                                            </strong>
+                                        </button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    {{--  FIN DEL MODAL APLICAR CREDITOS/ABONOS  --}}
+
+
+
+
+
+
     {{--  TABLA PRINCIPAL DE REGISTRO  --}}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -453,7 +552,7 @@
                                         <th>Notas Débito</th>
                                         <th>Créditos/Abonos</th>
                                         <th>Cargo Extra</th>
-                                        <th>Cargo Debito</th>
+                                        <th>Cargo A Deducir</th>
                                         <th>ISV</th>
                                         <th>Retencion</th>
                                         <th>Saldo</th>
@@ -625,13 +724,6 @@
         $('#montoRetencion').val(retencion);
         $('#facturaCai').val(caiFactura);
         $('#idFacturaRetencion').val(idFactura);
-
-        if(estadoRetencion == 1){
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="1">SE APLICA AL SALDO - ACTUAL</option>';
-        }else{
-            document.getElementById("selectTiporetencion").innerHTML += '<option selected class="form-control" value="2">NO SE APLICA AL SALDO - ACTUAL</option>';
-        }
-
 
         $('#modalretencion').modal('show');
     }
@@ -819,7 +911,7 @@
         $('#facturaCaiAbono').val(caiFactura);
         $('#idFacturaAbono').val(idFactura);
 
-
+        datosBanco();
         $('#modalAbonos').modal('show');
     }
 
@@ -889,9 +981,9 @@
 
 
                                 if(data != 1){
-                                    return "<span class='badge badge-success'>SE APLICA (+)</span>";
+                                    return "<span class='badge badge-warnig'>NO SE APLICA (+)</span>";
                                 }else{
-                                    return "<span class='badge badge-warnig'>NO SE APLICA (-)</span>";
+                                    return "<span class='badge badge-success'>SE APLICA (-)</span>";
                                 }
 
 
@@ -1410,6 +1502,81 @@
 
     }
 
+    function datosBanco(){
+        document.getElementById("selectBanco").innerHTML  ='';
+        axios.get("/listar/aplicacion/bancos")
+        .then(response => {
+
+            let datos = response.data.result;
+            datos.forEach((element) => document.getElementById("selectBanco").innerHTML += '<option  class="form-control" value="'+element.idBanco+'">'+element.banco+'</option>');
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+        });
+    }
+
+    function modalcerrarFactura(codigoPagoA, caiFactura, idFactura){
+        $('#codAplicCierre').val(codigoPagoA);
+        $('#facturaCaiCierre').val(caiFactura);
+        $('#idFacturaCierre').val(idFactura);
+
+        $('#modalcerrarFact').modal('show');
+    }
+
+
+    $(document).on('submit', '#formCierrefact', function(event) {
+
+        $('#btn_cierreFact').css('display','none');
+        $('#btn_cierreFact').hide();
+
+
+        $('#modalcerrarFact').modal('hide');
+
+        event.preventDefault();
+        cerrarFactura();
+    });
+
+    function cerrarFactura(){
+        var data = new FormData($('#formCierrefact').get(0));
+
+        axios.post("/pagos/cerrar/factura", data)
+            .then(response => {
+
+                //$('#formEstadoRetencion').parsley().reset();
+                $('#tbl_cuentas_facturas_cliente').DataTable().ajax.reload();
+
+                var formulario = document.getElementById("formCierrefact");
+
+                // Resetear el formulario, lo que también reseteará el valor del TextArea
+                formulario.reset();
+
+                $('#btn_cierreFact').css('display','block');
+                $('#btn_cierreFact').show();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito!',
+                    text: "Ha realizado la gestion."
+                });
+
+        })
+        .catch(err => {
+            let data = err.response.data;
+            Swal.fire({
+                icon: data.icon,
+                title: data.title,
+                text: data.text
+            })
+            console.error(err);
+
+        })
+    }
 
 </script>
 

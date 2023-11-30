@@ -575,6 +575,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/pagos/notadebito/guardar', [Pagos::class, 'gestionND']);
     Route::post('/pagos/otrosmov/guardar', [Pagos::class, 'guardarOtroMov']);
     Route::post('/pagos/creditos/guardar', [Pagos::class, 'guardarCreditos']);
+    Route::post('/pagos/cerrar/factura', [Pagos::class, 'cerrarFactura']);
+
+
+    Route::get('/listar/aplicacion/bancos', [Pagos::class, 'datosBanco']);
 
 
 
