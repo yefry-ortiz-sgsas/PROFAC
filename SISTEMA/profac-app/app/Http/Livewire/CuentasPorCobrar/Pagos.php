@@ -809,7 +809,13 @@ class Pagos extends Component
         }
     }
 
+    public function imprimirEstadoCuenta($idClientepdf){
+        $estadoCuenta = DB::select("CALL estadoCuenta_sp('".$idClientepdf."');");
+        // dd($estadoCuenta[0]->cliente);
+        $pdf = PDF::loadView('/pdf/estadocuentaAplicacion', compact('estadoCuenta'))->setPaper('letter')->setPaper("A4", "landscape");
 
+        return $pdf->stream("ESTADO_CUENTA.pdf");
+    }
 
 
 

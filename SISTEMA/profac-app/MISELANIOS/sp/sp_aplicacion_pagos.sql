@@ -8,7 +8,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
     IN `pcomentario` VARCHAR(500),
     IN `paplic_id` INT,
     IN `ptipo` INT,
-    IN `pmonto` DECIMAL(60,2),
+    IN `pmonto` DECIMAL(18,2),
    	OUT `estado` INT,
     OUT `msjResultado` VARCHAR(500)
 )BEGIN
@@ -314,7 +314,6 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
         END IF;
 
         IF accion = 8 THEN
-
                 UPDATE aplicacion_pagos
                     SET credito_abonos = (credito_abonos + pmonto),
                     ultimo_usr_actualizo = usr_actual,
