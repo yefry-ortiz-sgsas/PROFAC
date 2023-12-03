@@ -8,7 +8,7 @@ CREATE PROCEDURE `sp_aplicacion_pagos` (
     IN `pcomentario` VARCHAR(500),
     IN `paplic_id` INT,
     IN `ptipo` INT,
-    IN `pmonto` DECIMAL(18,2),
+    IN `pmonto` DECIMAL(18,3),
    	OUT `estado` INT,
     OUT `msjResultado` VARCHAR(500)
 )BEGIN
