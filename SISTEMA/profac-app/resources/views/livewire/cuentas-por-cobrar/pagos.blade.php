@@ -702,6 +702,8 @@
 @push('scripts')
 <script>
 
+    $('#btnEC').css('display','none');
+    $('#btnEC').hide();
         $('#cliente').select2({
             ajax: {
                 url: '/aplicacion/pagos/clientes',
@@ -1035,6 +1037,10 @@
                     }
 
                 });
+
+
+                $('#btnEC').css('display','block');
+                $('#btnEC').show();
     }
 
     function listarMovimientos() {
@@ -1576,6 +1582,12 @@
             console.error(err);
 
         })
+    }
+
+    function pdfEstadoCuenta(){
+
+        var idClientepdf = document.getElementById('cliente').value;
+        window.open('/estadoCuenta/imprimir/aplicpagos/'+idClientepdf, '_blank');
     }
 
 </script>

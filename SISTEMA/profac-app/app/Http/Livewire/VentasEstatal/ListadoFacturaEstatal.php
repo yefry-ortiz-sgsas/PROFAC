@@ -230,6 +230,12 @@ class ListadoFacturaEstatal extends Component
 
             ModelLogTranslados::insert($arrayLog);
 
+            DB::SELECT(
+                "
+                    UPDATE aplicacion_pagos
+                    SET aplicacion_pagos.estado = 2
+                    WHERE aplicacion_pagos.factura_id = ".$request->idFactura);
+
 
 
 

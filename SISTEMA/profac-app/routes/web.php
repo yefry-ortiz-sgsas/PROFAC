@@ -579,6 +579,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/listar/aplicacion/bancos', [Pagos::class, 'datosBanco']);
 
 
+    Route::get('/estadoCuenta/imprimir/aplicpagos/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
+
+
 
 
 
