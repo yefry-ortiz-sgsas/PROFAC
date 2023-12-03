@@ -99,6 +99,8 @@
                                                     <th style="text-align: center">Fecha Vencimiento</th>
                                                     <th style="text-align: center">Cargo</th>
                                                     <th style="text-align: center">Crédito</th>
+                                                    <th style="text-align: center">Extras</th>
+                                                    <th style="text-align: center">Débitos</th>
                                                     <th style="text-align: center">Notas Crédito</th>
                                                     <th style="text-align: center">Notas Débito</th>
                                                     <th style="text-align: center">Saldo</th>
@@ -115,6 +117,8 @@
                                             <td style="text-align: center">{{ $valor->fecha_vencimiento }}</td>
                                              <td style="text-align: center"> L. {{ number_format($valor->cargo, 2, ',') }}</td>
                                             <td style="text-align: center"> L. {{ number_format($valor->credito, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->extra, 2, ',') }}</td>
+                                            <td style="text-align: center"> L. {{ number_format($valor->debita, 2, ',') }}</td>
                                             <td style="text-align: center"> L. {{ number_format($valor->notaCredito, 2, ',') }}</td>
                                             <td style="text-align: center"> L. {{ number_format($valor->notaDebito, 2, ',') }}</td>
                                             <td style="text-align: center"> L. {{ number_format($valor->saldo, 2, ',') }}</td>
