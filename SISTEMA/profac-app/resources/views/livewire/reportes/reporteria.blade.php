@@ -8,11 +8,11 @@
     </style>
     <div class="row wrapper border-bottom white-bg page-heading d-flex align-items-center">
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-            <h2>Reporte de facturación</h2>
+            <h2>Reporteria </h2>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="index.html">/ Consulta</a>
+                    <a href="index.html">/ Reportes / Varios</a>
                 </li>
 
 
@@ -59,29 +59,57 @@
                             <table id="tbl_facdia" class="table table-striped table-bordered table-hover">
                                 <thead class="">
                                     <tr>
-                                        <th>FECHA</th>
-                                        <th>MES</th>
+                                        <th>FECHA DE VENTA</th>
+                                        <th>FECHA DE VENCIMIENTO</th> 
+                                        <th>VENDEDOR</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
-                                        <th>VENDENDOR</th>
-                                        <th>SUBTOTAL</th>
-                                        <th>IMPUESTO DE VENTA</th>
-                                        <th>TOTAL</th>
-                                        <th>TIPO</th>
+                                        <th>TIPO CLIENTE (AoB)</th> 
+                                        <th>TIPO CRÉDITO/CONTADO</th>
+                                        <th>CODIGO PRODUCTO</th>
+                                        <th>PRODUCTO</th>
+                                        <th>MARCA</th> 
+                                        <th>CATEGORIA</th>
+                                        <th>SUB CATEGORIA</th>
+                                        <th>UNIDAD DE MEDIDA</th> 
+                                        <th>EXCENTO</th>
+                                        <th>BODEGA</th>
+                                        <th>SECCION</th>
+                                        <th>UNIDADES VENDIDAS</th> 
+                                        <th>SUBTOTAL PRODUCTO</th> 
+                                        <th>ISV PRODUCTO</th>
+                                        <th>TOTAL PRODUCTO</th> 
+                                        <th>SUB TOTAL FACTURA</th>
+                                        <th>ISV FACTURA</th>
+                                        <th>TOTAL FACTURA</th>
                                     </tr>
                                 </thead>
                                 <tbody>                                <tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>FECHA</th>
-                                        <th>MES</th>
-                                        <th>FACTURA</th>
-                                        <th>CLIENTE</th>
-                                        <th>VENDENDOR</th>
-                                        <th>SUBTOTAL</th>
-                                        <th>IMPUESTO DE VENTA</th>
-                                        <th>TOTAL</th>
-                                        <th>TIPO</th>
+                                            <th>FECHA DE VENTA</th>
+                                            <th>FECHA DE VENCIMIENTO</th> 
+                                            <th>VENDEDOR</th>
+                                            <th>FACTURA</th>
+                                            <th>CLIENTE</th>
+                                            <th>TIPO CLIENTE (AoB)</th> 
+                                            <th>TIPO CRÉDITO/CONTADO</th>
+                                            <th>CODIGO PRODUCTO</th>
+                                            <th>PRODUCTO</th>
+                                            <th>MARCA</th> 
+                                            <th>CATEGORIA</th>
+                                            <th>SUB CATEGORIA</th>
+                                            <th>UNIDAD DE MEDIDA</th> 
+                                            <th>EXCENTO</th>
+                                            <th>BODEGA</th>
+                                            <th>SECCION</th>
+                                            <th>UNIDADES VENDIDAS</th> 
+                                            <th>SUBTOTAL PRODUCTO</th> 
+                                            <th>ISV PRODUCTO</th>
+                                            <th>TOTAL PRODUCTO</th> 
+                                            <th>SUB TOTAL FACTURA</th>
+                                            <th>ISV FACTURA</th>
+                                            <th>TOTAL FACTURA</th>
                                         </tr>
                                     </tfoot>
 
@@ -133,36 +161,31 @@
                     className:'btn btn-success'
                 }
             ],
-            "ajax": "/consulta/"+fecha_inicio+"/"+fecha_final,
+            "ajax": "/reporte/reporteria/consulta/"+fecha_inicio+"/"+fecha_final,
             "columns": [
-                {
-                    data: 'fecha'
-                },
-                {
-                    data: 'mes'
-                },
-                {
-                    data: 'factura'
-                },
-                {
-                    data: 'cliente'
-                },
-                {
-                    data: 'vendedor'
-                },
-                {
-                    data: 'subtotal'
-                },
-
-                {
-                    data: 'imp_venta'
-                },
-                {
-                    data: 'total'
-                },
-                {
-                    data: 'tipo'
-                },
+                {data: 'FECHA DE VENTA'}, 
+                {data: 'FECHA DE VENCIMIENTO'}, 
+                {data: 'VENDEDOR'}, 
+                {data: 'FACTURA'}, 
+                {data: 'CLIENTE'}, 
+                {data: 'TIPO CLIENTE (AoB)'}, 
+                {data: 'TIPO CRÉDITO/CONTADO'}, 
+                {data: 'CODIGO PRODUCTO'}, 
+                {data: 'PRODUCTO'}, 
+                {data: 'MARCA'}, 
+                {data: 'CATEGORIA'}, 
+                {data: 'SUB CATEGORIA'}, 
+                {data: 'UNIDAD DE MEDIDA'}, 
+                {data: 'EXCENTO'}, 
+                {data: 'BODEGA'}, 
+                {data: 'SECCION'}, 
+                {data: 'UNIDADES VENDIDAS'}, 
+                {data: 'SUBTOTAL PRODUCTO'}, 
+                {data: 'ISV PRODUCTO'}, 
+                {data: 'TOTAL PRODUCTO'}, 
+                {data: 'SUB TOTAL FACTURA'}, 
+                {data: 'ISV FACTURA'}, 
+                {data: 'TOTAL FACTURA' }
             ],initComplete: function () {
                 var r = $('#tbl_facdia tfoot tr');
                 r.find('th').each(function(){
