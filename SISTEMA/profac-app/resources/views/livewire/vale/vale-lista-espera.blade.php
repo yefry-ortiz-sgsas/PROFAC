@@ -723,14 +723,14 @@
                     // let isv = subTotalVP * (isvProducto / 100);
                     // let total = subTotalVP + subTotalVP * (isvProducto / 100);
 
-                    document.getElementById('totalVP' + id).value = total.toFixed(4);
+                    document.getElementById('totalVP' + id).value = total.toFixed(2);
                     document.getElementById('totalMostrarVP' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
                         minimumFractionDigits: 2,
                     }).format(total)
 
-                    document.getElementById('subTotalVP' + id).value = subTotal.toFixed(4);
+                    document.getElementById('subTotalVP' + id).value = subTotal.toFixed(2);
 
                     document.getElementById('subTotalMostrarVP' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
@@ -739,7 +739,7 @@
                     }).format(subTotal)
 
 
-                    document.getElementById('isvProductoVP' + id).value = isv.toFixed(4);
+                    document.getElementById('isvProductoVP' + id).value = isv.toFixed(2);
                     document.getElementById('isvProductoMostrarVP' + id).value = new Intl.NumberFormat('es-HN', {
                         style: 'currency',
                         currency: 'HNL',
@@ -806,11 +806,11 @@
                 }
 
                 
-                document.getElementById('descuentoGeneral').value = acumularDescuento.toFixed(4);
+                document.getElementById('descuentoGeneral').value = acumularDescuento.toFixed(2);
                 document.getElementById('descuentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
-                    minimumFractionDigits: 4,
+                    minimumFractionDigits: 2,
                 }).format(acumularDescuento)
 
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
@@ -819,35 +819,35 @@
                     minimumFractionDigits: 2,
                 }).format(subTotalGeneral)
 
-                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(4);
+                document.getElementById('subTotalGeneral').value = subTotalGeneral.toFixed(2);
                 document.getElementById('subTotalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(subTotalGeneral)
 
-                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(4);
+                document.getElementById('subTotalGeneralGrabado').value = subTotalGeneralGrabadoValor.toFixed(2);
                 document.getElementById('subTotalGeneralGrabadoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(subTotalGeneralGrabadoValor)
 
-                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(4);
+                document.getElementById('subTotalGeneralExcento').value = subTotalGeneralExcentoValor.toFixed(2);
                 document.getElementById('subTotalGeneralExcentoMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(subTotalGeneralExcentoValor)
 
-                document.getElementById('isvGeneral').value = totalISV.toFixed(4);
+                document.getElementById('isvGeneral').value = totalISV.toFixed(2);
                 document.getElementById('isvGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
                     minimumFractionDigits: 2,
                 }).format(totalISV)
 
-                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(4);
+                document.getElementById('totalGeneral').value = totalGeneralValor.toFixed(2);
                 document.getElementById('totalGeneralMostrar').value = new Intl.NumberFormat('es-HN', {
                     style: 'currency',
                     currency: 'HNL',
