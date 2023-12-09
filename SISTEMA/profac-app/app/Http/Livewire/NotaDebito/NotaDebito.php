@@ -245,15 +245,18 @@ class NotaDebito extends Component
        try {
         $estadoCuenta = DB::selectone('select estado_cerrado from aplicacion_pagos where estado = 1 and factura_id = '.$request->factura_id);
         // dd($saldoActual->saldo);
-        if($estadoCuenta->estado_cerrado == 2){
-            return response()->json([
-                "icon" => "warning",
-                "text"=>"Esta factura esta cerrada, no se puede crear nota.",
-                "title"=>"Advertencia!"
+        if($estadoCuenta != null){
+            if($estadoCuenta->estado_cerrado == 2){
+                return response()->json([
+                    "icon" => "warning",
+                    "text"=>"Esta factura esta cerrada, no se puede crear nota.",
+                    "title"=>"Advertencia!"
 
-            ],400);
+                ],400);
 
-        }
+            }
+
+         }
 
             // dd($request);
 

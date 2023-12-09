@@ -221,15 +221,18 @@ class CrearNotaCredito extends Component
 
         $estadoCuenta = DB::selectone('select estado_cerrado from aplicacion_pagos where estado = 1 and factura_id = '.$request->idFactura);
             // dd($saldoActual->saldo);
-            if($estadoCuenta->estado_cerrado == 2){
-                return response()->json([
-                    "icon" => "warning",
-                    "text"=>"Esta factura esta cerrada, no se puede crear nota.",
-                    "title"=>"Advertencia!"
+            if($estadoCuenta != null){
+                if($estadoCuenta->estado_cerrado == 2){
+                    return response()->json([
+                        "icon" => "warning",
+                        "text"=>"Esta factura esta cerrada, no se puede crear nota.",
+                        "title"=>"Advertencia!"
 
-                ],400);
+                    ],400);
 
-            }
+                }
+
+             }
 
         $flagError = false;
         $text1 ="<p>Los siguientes productos exceden la cantidad disponible para realizar la nota de credito: <p><ul>";
