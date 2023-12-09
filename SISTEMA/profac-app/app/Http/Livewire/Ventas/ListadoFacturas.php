@@ -38,7 +38,7 @@ class ListadoFacturas extends Component
             factura.cai as correlativo,
             A.cai as cai,
             fecha_emision,
-            cliente.nombre,
+            factura.nombre_cliente as nombre,
             tipo_pago_venta.descripcion,
             fecha_vencimiento,
             FORMAT(sub_total,2) as sub_total,
@@ -74,7 +74,7 @@ class ListadoFacturas extends Component
                 factura.cai as correlativo,
                 A.cai as cai,
                 fecha_emision,
-                cliente.nombre,
+                factura.nombre_cliente as nombre,
                 tipo_pago_venta.descripcion,
                 fecha_vencimiento,
                 FORMAT(sub_total,2) as sub_total,
@@ -250,6 +250,12 @@ class ListadoFacturas extends Component
 
             ModelLogTranslados::insert($arrayLog);
 
+
+            DB::SELECT(
+                "
+                    UPDATE aplicacion_pagos
+                    SET aplicacion_pagos.estado = 2
+                    WHERE aplicacion_pagos.factura_id = ".$request->idFactura);
 
 
 

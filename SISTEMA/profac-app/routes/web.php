@@ -15,6 +15,7 @@ use App\Http\Livewire\Comisiones\ComisionesHistorico;
 use App\Http\Livewire\FacturaDia\FacturaDia;
 
 use App\Http\Livewire\Reportes\Prodmes;
+use App\Http\Livewire\Reportes\Reporteria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -53,8 +54,6 @@ use App\Http\Livewire\Cotizaciones\Cotizacion;
 use App\Http\Livewire\Cotizaciones\ListarCotizaciones;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacion;
 use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobierno;
-use App\Http\Livewire\Cotizaciones\FacturarCotizacionCorporativoSrp;
-use App\Http\Livewire\Cotizaciones\FacturarCotizacionGobiernoSrp;
 use App\Http\Livewire\Ventas\ListadoFacturasAnuladas;
 use App\Http\Livewire\Inventario\ListadoAjustes;
 use App\Http\Livewire\Inventario\HistorialTranslados;
@@ -81,6 +80,8 @@ use App\Http\Livewire\ComprovanteEntrega\FacturarComprobante;
 use App\Http\Livewire\VentasEstatal\SinRestriccionGobierno;
 
 
+use App\Http\Livewire\CuentasPorCobrar\Pagos;
+
 
 use App\Http\Livewire\Vale\CrearVale;
 use App\Http\Livewire\Vale\ListarVales;
@@ -99,6 +100,7 @@ use App\Http\Livewire\Ventas\NumOrdenCompra as NumOrdenCompraCoorporativo;
 
 
 use App\Http\Livewire\CierreDiario\CierreDiario;
+
 use App\Http\Livewire\CierreDiario\HistoricoCierres;
 
 
@@ -540,8 +542,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/ventas/solicitud/codigo', [SinRestriccionPrecio::class, 'enviarCodigo']);
     Route::post('/ventas/verificar/codigo', [SinRestriccionPrecio::class, 'verificarCodigo']);
     Route::post('/ventas/autorizacion/desactivar', [SinRestriccionPrecio::class, 'desactivarCodigo']);
-    Route::get('/cotizacion/facturar/srp/corporativo/{id}',FacturarCotizacionCorporativoSrp::class);
-    Route::get('/cotizacion/facturar/srp/gobierno/{id}',FacturarCotizacionGobiernoSrp::class);
     //---------------------------------------------------------SinRestriccionPrecio-------------------------------------------------------//
 
     //////////////////////////////////////////CUENTAS POR COBRAR///////////////////////////////////////////
@@ -558,6 +558,52 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/ventas/cuentas_por_cobrar/excel_cuentas/{cliente}', [CuentasPorCobrar::class, 'exportCuentasPorCobrar']);
     Route::get('/ventas/cuentas_por_cobrar/excel_intereses/{cliente}', [CuentasPorCobrar::class, 'exportCuentasPorCobrarInteres']);
+
+
+
+
+
+
+    /////////////////////////////APLICACION DE PAGOS/////////////////////////////////
+    Route::get('/cuentas_por_cobrar/pagos', Pagos::class);
+    Route::get('/aplicacion/pagos/clientes', [Pagos::class, 'listarClientes']);
+    Route::get('/aplicacion/pagos/listar/{id}', [Pagos::class, 'listarCuentasPorCobrar']);
+    Route::get('/aplicacion/pagos/listar/movimientos/{id}', [Pagos::class, 'listarMovimientos']);
+    Route::get('/aplicacion/pagos/listar/abonos/{id}', [Pagos::class, 'listarAbonos']);
+
+    Route::post('/pagos/retencion/guardar', [Pagos::class, 'gestionRetencion']);
+    Route::post('/pagos/notacredito/guardar', [Pagos::class, 'gestionNC']);
+    Route::post('/pagos/notadebito/guardar', [Pagos::class, 'gestionND']);
+    Route::post('/pagos/otrosmov/guardar', [Pagos::class, 'guardarOtroMov']);
+    Route::post('/pagos/creditos/guardar', [Pagos::class, 'guardarCreditos']);
+    Route::post('/pagos/cerrar/factura', [Pagos::class, 'cerrarFactura']);
+
+
+    Route::get('/listar/aplicacion/bancos', [Pagos::class, 'datosBanco']);
+
+
+    Route::get('/estadoCuenta/imprimir/aplicpagos/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
+
+
+
+
+
+
+
+
+
+    Route::get('/listar/nc/aplicacion/{idFactura}', [Pagos::class, 'listarNotasCredito']);
+    Route::get('/listar/nc/aplicacion/datos/{idNotaCredito}', [Pagos::class, 'datosNotasCredito']);
+
+
+    Route::get('/listar/nd/aplicacion/{idFactura}', [Pagos::class, 'listarNotasDebito']);
+    Route::get('/listar/nd/aplicacion/datos/{idNotaDebito}', [Pagos::class, 'datosNotasDebito']);
+
+
+
+    Route::get('/cuentas_por_cobrar/pagos/excel_cuentas/{cliente}', [Pagos::class, 'exportCuentasPorCobrar']);
+    Route::get('/cuentas_por_cobrar/pagos/excel_intereses/{cliente}', [Pagos::class, 'exportCuentasPorCobrarInteres']);
+    /////////////////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////HISTORICO DE PRECIOS//////////////////////////////////////////
 
@@ -631,7 +677,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/vale/restar/lista/eliminar', [RestarVale::class, 'eliminarVale']);
     Route::get('/vale/comentarios/{id}', [RestarVale::class, 'mostrarNotas']);
     Route::get('/vale/imprimir/{id}', [RestarVale::class, 'imprimirVale']);
-    Route::get('/vale/imprimir/copia/{id}', [RestarVale::class, 'imprimirValeCopia']);
+    Route::get('/vale/imprimir/{id}', [RestarVale::class, 'imprimirValeCopia']);
 
 
 
@@ -699,6 +745,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/facturaDia', FacturaDia::class);
     Route::get('/reporte/comision', Prodmes::class);
+    Route::get('/reporte/reporteria', Reporteria::class);
+    Route::get('/reporte/reporteria/consulta/{fecha_inicio}/{fecha_final}', [Reporteria::class,'consulta']);
+
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 
     Route::get('/consultaComision/{fecha_inicio}/{fecha_final}', [Prodmes::class,'consultaComision']);

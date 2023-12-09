@@ -35,7 +35,7 @@ class ListadoFacturasND extends Component
                 factura.cai as correlativo,
                 A.cai as cai,
                 fecha_emision,
-                cliente.nombre,
+                factura.nombre_cliente as nombre,
                 tipo_pago_venta.descripcion,
                 fecha_vencimiento,
                 FORMAT(sub_total,2) as sub_total,

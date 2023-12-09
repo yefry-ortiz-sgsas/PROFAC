@@ -829,6 +829,7 @@
 
                         });
 
+                        /*SE QUITO min="${producto.precio_base}" DE LA LINEA 868*/
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
@@ -865,14 +866,14 @@
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
-                                                    autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    autocomplete="off"  onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="cantidad${numeroInputs}" class="sr-only">cantidad</label>
                                                 <input type="number" placeholder="Cantidad" id="cantidad${numeroInputs}"
                                                     name="cantidad${numeroInputs}" class="form-control" min="1" data-parsley-required
-                                                    autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    autocomplete="off"  onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -1013,14 +1014,14 @@
                         }
                         document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(2);
 
-                        document.getElementById('total' + id).value = total.toFixed(3);
+                        document.getElementById('total' + id).value = total.toFixed(2);
                         document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
                             style: 'currency',
                             currency: 'HNL',
                             minimumFractionDigits: 2,
                         }).format(total)
 
-                        document.getElementById('subTotal' + id).value = subTotal.toFixed(3);
+                        document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
                         document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
                             style: 'currency',
                             currency: 'HNL',
@@ -1028,7 +1029,7 @@
                         }).format(subTotal)
 
 
-                        document.getElementById('isvProducto' + id).value = isv.toFixed(3);
+                        document.getElementById('isvProducto' + id).value = isv.toFixed(2);
                         document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
                             'es-HN', {
                                 style: 'currency',
@@ -1060,12 +1061,9 @@
 
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
-
-
-                valorInputPrecio = idPrecio.value;
-                valorInputCantidad = idCantidad.value;
-                valorSelectUnidad = idUnidad.value;
-
+                let valorInputPrecio = Number(idPrecio.value).toFixed(2);
+                let valorInputCantidad = idCantidad.value;
+                let valorSelectUnidad = idUnidad.value;
                 let descuentoCalculado = 0;
 
                 if (valorInputPrecio && valorInputCantidad) {
@@ -1089,7 +1087,7 @@
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(2);
 
 
                     document.getElementById('total' + id).value = total.toFixed(2);
@@ -1128,7 +1126,7 @@
 
                 }
 
-
+                idPrecio.value = valorInputPrecio;
                 return 0;
 
             }

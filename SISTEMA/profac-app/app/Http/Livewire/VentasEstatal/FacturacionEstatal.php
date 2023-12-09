@@ -457,11 +457,27 @@ class FacturacionEstatal extends Component
             $factura->monto_descuento=$request->porDescuentoCalculado;
             $factura->save();
 
+
+
+
             $caiUpdated =  ModelCAI::find($cai->id);
             $caiUpdated->numero_actual = $numeroSecuencia + 1;
             $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
             $caiUpdated->save();
 
+
+            /* $aplicacionPagos = DB::select("
+
+            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
+
+
+            if ($aplicacionPagos[0]->estado == -1) {
+                return response()->json([
+                    "text" => "Ha ocurrido un error al insertar factura ".$factura->id."en aplicacion de pagos.",
+                    "icon" => "error",
+                    "title"=>"Error!"
+                ],400);
+            } */
             //Tabla de listado
             // DB::INSERT("INSERT INTO listado(
             //          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES
@@ -480,6 +496,7 @@ class FacturacionEstatal extends Component
 
 
             // //dd( $guardarCompra);
+
 
 
 

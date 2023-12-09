@@ -815,6 +815,7 @@ function validarDescuento(){
 
                         });
 
+                        /*SE QUITO min="${producto.precio_base}" DE LA LINEA 856*/
 
                         html = `
                         <div id='${numeroInputs}' class="row no-gutters">
@@ -851,7 +852,7 @@ function validarDescuento(){
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
                                                 <input type="number" placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" value="${producto.precio_base}" class="form-control"  data-parsley-required step="any"
-                                                    autocomplete="off" min="${producto.precio_base}" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
+                                                    autocomplete="off"  onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
@@ -1038,11 +1039,9 @@ function validarDescuento(){
 
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
-
-
-                valorInputPrecio = idPrecio.value;
-                valorInputCantidad = idCantidad.value;
-                valorSelectUnidad = idUnidad.value;
+                let valorInputPrecio = Number(idPrecio.value).toFixed(2);
+                let valorInputCantidad = idCantidad.value;
+                let valorSelectUnidad = idUnidad.value;
 
                 let subTotal = 0;
                 let isv = 0;
@@ -1069,7 +1068,7 @@ function validarDescuento(){
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(2);
 
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1102,7 +1101,7 @@ function validarDescuento(){
 
                 }
 
-
+                idPrecio.value = valorInputPrecio;
                 return 0;
 
 

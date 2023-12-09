@@ -219,6 +219,20 @@ class CrearNotaCredito extends Component
     public function guardarNotaCredito(Request $request){
        try {
 
+        $estadoCuenta = DB::selectone('select estado_cerrado from aplicacion_pagos where estado = 1 and factura_id = '.$request->idFactura);
+            // dd($saldoActual->saldo);
+            if($estadoCuenta != null){
+                if($estadoCuenta->estado_cerrado == 2){
+                    return response()->json([
+                        "icon" => "warning",
+                        "text"=>"Esta factura esta cerrada, no se puede crear nota.",
+                        "title"=>"Advertencia!"
+
+                    ],400);
+
+                }
+
+             }
 
         $flagError = false;
         $text1 ="<p>Los siguientes productos exceden la cantidad disponible para realizar la nota de credito: <p><ul>";
@@ -365,6 +379,14 @@ class CrearNotaCredito extends Component
         $notaCredito->estado_nota_id = 1;
         $notaCredito->estado_nota_dec = $estado;
         $notaCredito->comentario = $request->comentario;
+
+        /*Se agregan los nuevos campos en la nota de credito*/
+        $notaCredito->estado_rebajado = 2;
+        $notaCredito->user_registra_rebaja = 0;
+        $notaCredito->comentario_rebajado = 'N/A';
+        $notaCredito->fecha_rebajado = NULL;
+
+
         $notaCredito->save();
 
 
@@ -421,7 +443,7 @@ class CrearNotaCredito extends Component
             $keyCantidad = "cantidad".$arregloIdInputs[$i];
 
             $keyIdUnidadMedida = "idUnidadMedida".$arregloIdInputs[$i];
-            
+
             $keySubTotal = "subTotal".$arregloIdInputs[$i];
             $keyISV = "isv".$arregloIdInputs[$i];
             $keyTotal = "total".$arregloIdInputs[$i];

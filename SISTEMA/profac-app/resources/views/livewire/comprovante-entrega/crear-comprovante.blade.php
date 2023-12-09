@@ -991,7 +991,7 @@ return 0;
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
-                let valorInputPrecio = idPrecio.value;
+                let valorInputPrecio = Number(idPrecio.value).toFixed(2);
                 let valorInputCantidad = idCantidad.value;
                 let valorSelectUnidad = idUnidad.value;
 
@@ -1016,7 +1016,7 @@ return 0;
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(2);
 
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1046,7 +1046,7 @@ return 0;
 
                 }
 
-
+                idPrecio.value = valorInputPrecio;
                 return 0;
 
 
