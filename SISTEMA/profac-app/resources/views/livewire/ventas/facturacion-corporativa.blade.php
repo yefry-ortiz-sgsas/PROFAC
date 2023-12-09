@@ -679,35 +679,37 @@
                             total = subTotal + subTotal * (isvProducto / 100);
                         }
 
-                        document.getElementById("acumuladoDescuento" + id).value = descuentoCalculado.toFixed(2);
 
-                        document.getElementById('total' + id).value = total.toFixed(2);
-                        document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                            style: 'currency',
-                            currency: 'HNL',
-                            minimumFractionDigits: 2,
-                        }).format(total)
-
-                        document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
-                        document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
-                            style: 'currency',
-                            currency: 'HNL',
-                            minimumFractionDigits: 2,
-                        }).format(subTotal)
-
-
-                        document.getElementById('isvProducto' + id).value = isv.toFixed(2);
-                        document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
-                            'es-HN', {
-                                style: 'currency',
-                                currency: 'HNL',
-                                minimumFractionDigits: 2,
-                            }).format(isv)
 
 
                     }
 
                 });
+
+                document.getElementById("acumuladoDescuento" + id).value = descuentoCalculado.toFixed(2);
+
+                document.getElementById('total' + id).value = total.toFixed(2);
+                document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(total)
+
+                document.getElementById('subTotal' + id).value = subTotal.toFixed(2);
+                document.getElementById('subTotalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
+                    style: 'currency',
+                    currency: 'HNL',
+                    minimumFractionDigits: 2,
+                }).format(subTotal)
+
+
+                document.getElementById('isvProducto' + id).value = isv.toFixed(2);
+                document.getElementById('isvProductoMostrar' + id).value = new Intl.NumberFormat(
+                    'es-HN', {
+                        style: 'currency',
+                        currency: 'HNL',
+                        minimumFractionDigits: 2,
+                    }).format(isv)
 
 
 
@@ -1056,7 +1058,7 @@
             function calcularTotales(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
 
-                let valorInputPrecio = idPrecio.value;
+                let valorInputPrecio = Number(idPrecio.value).toFixed(2);                              
                 let valorInputCantidad = idCantidad.value;
                 let valorSelectUnidad = idUnidad.value;
 
@@ -1081,7 +1083,7 @@
                         total = subTotal + subTotal * (isvProducto / 100);
                     }
 
-                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(4)
+                    document.getElementById('acumuladoDescuento' + id).value = descuentoCalculado.toFixed(2);
 
                     document.getElementById('total' + id).value = total.toFixed(2);
                     document.getElementById('totalMostrar' + id).value = new Intl.NumberFormat('es-HN', {
@@ -1107,14 +1109,14 @@
                     }).format(isv)
 
 
-                    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;
+                    idRestaInventario.value = valorInputCantidad * valorSelectUnidad;               
                     this.totalesGenerales();
 
 
 
                 }
 
-
+                idPrecio.value = valorInputPrecio;
                 return 0;
 
 

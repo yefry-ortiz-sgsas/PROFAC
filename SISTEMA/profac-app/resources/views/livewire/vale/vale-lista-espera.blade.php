@@ -685,7 +685,7 @@
 
             function calcularTotalesVP(idPrecio, idCantidad, isvProducto, idUnidad, id, idRestaInventario) {
 
-                let valorInputPrecio = idPrecio.value;
+                let valorInputPrecio = Number(idPrecio.value).toFixed(2);
                 let valorInputCantidad = idCantidad.value;
                 let valorSelectUnidad = idUnidad.value;
 
