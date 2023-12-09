@@ -15,6 +15,7 @@ use App\Http\Livewire\Comisiones\ComisionesHistorico;
 use App\Http\Livewire\FacturaDia\FacturaDia;
 
 use App\Http\Livewire\Reportes\Prodmes;
+use App\Http\Livewire\Reportes\Reporteria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -744,6 +745,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/facturaDia', FacturaDia::class);
     Route::get('/reporte/comision', Prodmes::class);
+    Route::get('/reporte/reporteria', Reporteria::class);
+    Route::get('/reporte/reporteria/consulta/{fecha_inicio}/{fecha_final}', [Reporteria::class,'consulta']);
+
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 
     Route::get('/consultaComision/{fecha_inicio}/{fecha_final}', [Prodmes::class,'consultaComision']);

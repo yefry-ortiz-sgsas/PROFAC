@@ -456,6 +456,7 @@
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Reportes</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="/facturaDia" style="color:#ffffff;">Reporte de ventas</a>
+                            <li><a href="/reporte/reporteria" style="color:#ffffff;">Reportes Varios</a>
                         </ul>
                     </li>
                 @endif
