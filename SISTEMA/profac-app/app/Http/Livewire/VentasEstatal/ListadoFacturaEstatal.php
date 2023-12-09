@@ -41,7 +41,7 @@ class ListadoFacturaEstatal extends Component
                     numero_factura,
                     cai,
                     fecha_emision,
-                    cliente.nombre,
+                    factura.nombre_cliente as nombre,
                     tipo_pago_venta.descripcion,
                     fecha_vencimiento,
                     FORMAT(sub_total,2) as sub_total,
