@@ -49,7 +49,8 @@
             </div>
         </div>
     </div>
-
+    <h3>VENTAS TOTALES POR PRODUCTO SEGUN RANGO DE FECHAS </h3>
+    <label for="">RECUERDE QUE ENTRE MAS PROLONGADA LA FECHA, MAS TIEMPO TARDARA EN RESPONDER POR LA CARGA DE DATA</label>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-12">
@@ -60,25 +61,25 @@
                                 <thead class="">
                                     <tr>
                                         <th>FECHA DE VENTA</th>
-                                        <th>FECHA DE VENCIMIENTO</th> 
+                                        <th>FECHA DE VENCIMIENTO</th>
                                         <th>VENDEDOR</th>
                                         <th>FACTURA</th>
                                         <th>CLIENTE</th>
-                                        <th>TIPO CLIENTE (AoB)</th> 
+                                        <th>TIPO CLIENTE (AoB)</th>
                                         <th>TIPO CRÉDITO/CONTADO</th>
                                         <th>CODIGO PRODUCTO</th>
                                         <th>PRODUCTO</th>
-                                        <th>MARCA</th> 
+                                        <th>MARCA</th>
                                         <th>CATEGORIA</th>
                                         <th>SUB CATEGORIA</th>
-                                        <th>UNIDAD DE MEDIDA</th> 
+                                        <th>UNIDAD DE MEDIDA</th>
                                         <th>EXCENTO</th>
                                         <th>BODEGA</th>
                                         <th>SECCION</th>
-                                        <th>UNIDADES VENDIDAS</th> 
-                                        <th>SUBTOTAL PRODUCTO</th> 
+                                        <th>UNIDADES VENDIDAS</th>
+                                        <th>SUBTOTAL PRODUCTO</th>
                                         <th>ISV PRODUCTO</th>
-                                        <th>TOTAL PRODUCTO</th> 
+                                        <th>TOTAL PRODUCTO</th>
                                         <th>SUB TOTAL FACTURA</th>
                                         <th>ISV FACTURA</th>
                                         <th>TOTAL FACTURA</th>
@@ -88,25 +89,25 @@
                                     <tfoot>
                                         <tr>
                                             <th>FECHA DE VENTA</th>
-                                            <th>FECHA DE VENCIMIENTO</th> 
+                                            <th>FECHA DE VENCIMIENTO</th>
                                             <th>VENDEDOR</th>
                                             <th>FACTURA</th>
                                             <th>CLIENTE</th>
-                                            <th>TIPO CLIENTE (AoB)</th> 
+                                            <th>TIPO CLIENTE (AoB)</th>
                                             <th>TIPO CRÉDITO/CONTADO</th>
                                             <th>CODIGO PRODUCTO</th>
                                             <th>PRODUCTO</th>
-                                            <th>MARCA</th> 
+                                            <th>MARCA</th>
                                             <th>CATEGORIA</th>
                                             <th>SUB CATEGORIA</th>
-                                            <th>UNIDAD DE MEDIDA</th> 
+                                            <th>UNIDAD DE MEDIDA</th>
                                             <th>EXCENTO</th>
                                             <th>BODEGA</th>
                                             <th>SECCION</th>
-                                            <th>UNIDADES VENDIDAS</th> 
-                                            <th>SUBTOTAL PRODUCTO</th> 
+                                            <th>UNIDADES VENDIDAS</th>
+                                            <th>SUBTOTAL PRODUCTO</th>
                                             <th>ISV PRODUCTO</th>
-                                            <th>TOTAL PRODUCTO</th> 
+                                            <th>TOTAL PRODUCTO</th>
                                             <th>SUB TOTAL FACTURA</th>
                                             <th>ISV FACTURA</th>
                                             <th>TOTAL FACTURA</th>
@@ -157,34 +158,34 @@
 
                 {
                     extend: 'excel',
-                    title: 'Facuracion_dia',
+                    title: 'VENTA_PRODUCTO_MARCA',
                     className:'btn btn-success'
                 }
             ],
             "ajax": "/reporte/reporteria/consulta/"+fecha_inicio+"/"+fecha_final,
             "columns": [
-                {data: 'FECHA DE VENTA'}, 
-                {data: 'FECHA DE VENCIMIENTO'}, 
-                {data: 'VENDEDOR'}, 
-                {data: 'FACTURA'}, 
-                {data: 'CLIENTE'}, 
-                {data: 'TIPO CLIENTE (AoB)'}, 
-                {data: 'TIPO CRÉDITO/CONTADO'}, 
-                {data: 'CODIGO PRODUCTO'}, 
-                {data: 'PRODUCTO'}, 
-                {data: 'MARCA'}, 
-                {data: 'CATEGORIA'}, 
-                {data: 'SUB CATEGORIA'}, 
-                {data: 'UNIDAD DE MEDIDA'}, 
-                {data: 'EXCENTO'}, 
-                {data: 'BODEGA'}, 
-                {data: 'SECCION'}, 
-                {data: 'UNIDADES VENDIDAS'}, 
-                {data: 'SUBTOTAL PRODUCTO'}, 
-                {data: 'ISV PRODUCTO'}, 
-                {data: 'TOTAL PRODUCTO'}, 
-                {data: 'SUB TOTAL FACTURA'}, 
-                {data: 'ISV FACTURA'}, 
+                {data: 'FECHA DE VENTA'},
+                {data: 'FECHA DE VENCIMIENTO'},
+                {data: 'VENDEDOR'},
+                {data: 'FACTURA'},
+                {data: 'CLIENTE'},
+                {data: 'TIPO CLIENTE (AoB)'},
+                {data: 'TIPO CRÉDITO/CONTADO'},
+                {data: 'CODIGO PRODUCTO'},
+                {data: 'PRODUCTO'},
+                {data: 'MARCA'},
+                {data: 'CATEGORIA'},
+                {data: 'SUB CATEGORIA'},
+                {data: 'UNIDAD DE MEDIDA'},
+                {data: 'EXCENTO'},
+                {data: 'BODEGA'},
+                {data: 'SECCION'},
+                {data: 'UNIDADES VENDIDAS'},
+                {data: 'SUBTOTAL PRODUCTO'},
+                {data: 'ISV PRODUCTO'},
+                {data: 'TOTAL PRODUCTO'},
+                {data: 'SUB TOTAL FACTURA'},
+                {data: 'ISV FACTURA'},
                 {data: 'TOTAL FACTURA' }
             ],initComplete: function () {
                 var r = $('#tbl_facdia tfoot tr');
