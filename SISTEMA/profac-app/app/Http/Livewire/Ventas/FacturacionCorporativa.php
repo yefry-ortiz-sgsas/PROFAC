@@ -1327,7 +1327,7 @@ class FacturacionCorporativa extends Component
         /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
         // linea cambiada FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
         $productos = DB::SELECT(
-            "                       
+            "
             select
             *
             from (
@@ -1501,7 +1501,7 @@ class FacturacionCorporativa extends Component
         /* CAMBIO 20230725 FORMAT(B.sub_total/B.cantidad,2) as precio:FORMAT(sum(B.cantidad_s),2) as cantidad:FORMAT(sum(B.sub_total_s),2) as importe*/
         // linea cambiada FORMAT(TRUNCATE(B.sub_total/B.cantidad, 2),2) as precio,
         $productos = DB::SELECT(
-            "                       
+            "
             select
             *
             from (
@@ -1577,7 +1577,7 @@ class FacturacionCorporativa extends Component
         inner join numero_orden_compra B
         on A.numero_orden_compra_id = B.id
         where A.id =" . $idFactura);
-        
+
         if (empty($ordenCompra->numero_orden)) {
             $ordenCompra = ["numero_orden" => " N/A"];
         } else {
@@ -2049,13 +2049,13 @@ class FacturacionCorporativa extends Component
 
         $importesConCentavos = DB::SELECTONE("
         select
-        FORMAT(total,2) as total,
-        FORMAT(isv,2) as isv,
-        FORMAT(sub_total,2) as sub_total,
-        FORMAT(sub_total_grabado,2) as sub_total_grabado,
-        FORMAT(sub_total_excento,2) as sub_total_excento,
-        FORMAT(porc_descuento,2) as porc_descuento,
-        FORMAT(monto_descuento,2) as monto_descuento
+        total as total,
+        isv as isv,
+        sub_total as sub_total,
+        sub_total_grabado as sub_total_grabado,
+        sub_total_excento as sub_total_excento,
+        porc_descuento as porc_descuento,
+        monto_descuento as monto_descuento
         from factura where factura.id = " . $idFactura);
 
 
@@ -2076,7 +2076,7 @@ class FacturacionCorporativa extends Component
                 if(C.isv = 0, 'SI' , 'NO' ) as excento,
                 H.nombre as bodega,
                 REPLACE(REPLACE(F.descripcion,'Seccion',''),' ', '') as seccion,
-                FORMAT(TRUNCATE(B.precio_unidad, 2),2) as precio,
+                B.precio_unidad as precio,
                 sum(B.cantidad_s) as cantidad,
                 FORMAT(sum(B.sub_total_s),2) as importe
 
@@ -2112,9 +2112,9 @@ class FacturacionCorporativa extends Component
             if(C.isv = 0, 'SI' , 'NO' ) as excento,
             'N/A',
             'N/A',
-            FORMAT(TRUNCATE(C.precio,2),2)as precio,
-            TRUNCATE(C.cantidad,2) as cantidad,
-            FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
+            C.precio as precio,
+            FORMAT(C.cantidad,2) as cantidad,
+            C.sub_total as sub_total
 
             from factura A
             inner join vale B
