@@ -182,6 +182,8 @@ class FacturacionCorporativa extends Component
          where
 
          (B.nombre LIKE '%" . $request->search . "%' or B.id LIKE '%" . $request->search . "%' or B.codigo_barra Like '%" . $request->search . "%')
+
+         and B.id <> 1217
          group by A.producto_id
          limit 15
          ");
