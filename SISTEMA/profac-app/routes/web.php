@@ -746,7 +746,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/facturaDia', FacturaDia::class);
     Route::get('/reporte/comision', Prodmes::class);
     Route::get('/reporte/reporteria', Reporteria::class);
+
     Route::get('/reporte/reporteria/consulta/{fecha_inicio}/{fecha_final}', [Reporteria::class,'consulta']);
+    Route::get('/reporte/reporteria/productos', [Reporteria::class,'catalogoProductos']);
+    Route::get('/reporte/reporteria/clientes', [Reporteria::class,'consultaClientes']);
+
 
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 

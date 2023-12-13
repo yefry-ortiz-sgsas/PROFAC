@@ -24,6 +24,7 @@
 
     <p> <b>Nota: </b> Se requiere de selección de un rango de fechas para mostrar la información.</p>
 
+    <h3>VENTAS TOTALES POR PRODUCTO SEGUN RANGO DE FECHAS </h3>
     <div class="wrapper wrapper-content animated fadeInRight pb-0">
         <div class="row">
             <div class="col-lg-12">
@@ -49,7 +50,6 @@
             </div>
         </div>
     </div>
-    <h3>VENTAS TOTALES POR PRODUCTO SEGUN RANGO DE FECHAS </h3>
     <label for="">RECUERDE QUE ENTRE MAS PROLONGADA LA FECHA, MAS TIEMPO TARDARA EN RESPONDER POR LA CARGA DE DATA</label>
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -128,16 +128,161 @@
     </div>
 
 
+    <hr>
+    <hr>
+    <h3>CATÁLOGO DE PRODUCTOS EN EXISTENCIA</h3>
+    <div class="wrapper wrapper-content animated fadeInRight pb-0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="row">
+
+
+                            {{--  <div class="col-6 col-sm-6 col-md-6 ">
+                                <label for="fecha_inicio" class="col-form-label focus-label">Fecha de inicio:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_inicio" name="fecha_inicio" value="{{date('Y-m-01')}}">
+                            </div>
+
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="fecha_final" class="col-form-label focus-label">Fecha final:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_final" name="fecha_final" value="{{date('Y-m-t')}}">
+                            </div>  --}}
+
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="cargaProductos()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar catálogo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table id="tbl_productos" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>CODIGO</th>
+                                        <th>CODIGO DE BARRA</th>
+                                        <th>PRODUCTO</th>
+                                        <th>MARCA</th>
+                                        <th>ISV</th>
+                                        <th>CATEGORIA</th>
+                                        <th>SUB CATEGORIA</th>
+                                        <th>EXISTENCIA TOTAL</th>
+                                        <th>PRECIO BASE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                <tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>CODIGO</th>
+                                            <th>CODIGO DE BARRA</th>
+                                            <th>PRODUCTO</th>
+                                            <th>MARCA</th>
+                                            <th>ISV</th>
+                                            <th>CATEGORIA</th>
+                                            <th>SUB CATEGORIA</th>
+                                            <th>EXISTENCIA TOTAL</th>
+                                            <th>PRECIO BASE</th>
+                                        </tr>
+                                    </tfoot>
+
+                                </tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <hr>
+    <h3>CLIENTES ACTIVOS</h3>
+    <div class="wrapper wrapper-content animated fadeInRight pb-0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="row">
+
+
+                            {{--  <div class="col-6 col-sm-6 col-md-6 ">
+                                <label for="fecha_inicio" class="col-form-label focus-label">Fecha de inicio:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_inicio" name="fecha_inicio" value="{{date('Y-m-01')}}">
+                            </div>
+
+                            <div class="col-6 col-sm-6 col-md-6">
+                                <label for="fecha_final" class="col-form-label focus-label">Fecha final:<span class="text-danger">*</span></label>
+                                <input class="form-group form-control" type="date" id="fecha_final" name="fecha_final" value="{{date('Y-m-t')}}">
+                            </div>  --}}
+
+                        </div>
+                        <button class="btn btn-primary btn-block" onclick="cargaClientes()"><i class="fa-solid fa-paper-plane text-white"></i> Solicitar catálogo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table id="tbl_clientes" class="table table-striped table-bordered table-hover">
+                                <thead class="">
+                                    <tr>
+                                        <th>CODIGO</th>
+                                        <th>TIPO CLIENTE (AoB)</th>
+                                        <th>CLIENTE</th>
+                                        <th>DIRECCION</th>
+                                        <th>TELEFONO</th>
+                                        <th>CORREO</th>
+                                        <th>RTN</th>
+                                        <th>VENDEDOR</th>
+                                        <th>REGISTRO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                <tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>CODIGO</th>
+                                            <th>TIPO CLIENTE (AoB)</th>
+                                            <th>CLIENTE</th>
+                                            <th>DIRECCION</th>
+                                            <th>TELEFONO</th>
+                                            <th>CORREO</th>
+                                            <th>RTN</th>
+                                            <th>VENDEDOR</th>
+                                            <th>REGISTRO</th>
+                                        </tr>
+                                    </tfoot>
+
+                                </tbody>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>
 @push('scripts')
 
 <script>
-
-
-
-
     function cargaConsulta(){
 
         $("#tbl_facdia").dataTable().fnDestroy();
@@ -221,6 +366,144 @@
 
         });
     }
+
+    function cargaProductos(){
+
+        $("#tbl_productos").dataTable().fnDestroy();
+
+
+        $('#tbl_productos').DataTable({
+            "order": ['0', 'desc'],
+            "paging": true,
+            "language": {
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+
+                {
+                    extend: 'excel',
+                    title: 'CATALOGO_PRODUCTOS',
+                    className:'btn btn-success'
+                }
+            ],
+            "ajax": "/reporte/reporteria/productos",
+            "columns": [
+                {data: 'CODIGO'},
+                {data: 'CODIGO DE BARRA'},
+                {data: 'PRODUCTO'},
+                {data: 'MARCA'},
+                {data: 'ISV'},
+                {data: 'CATEGORIA'},
+                {data: 'SUB CATEGORIA'},
+                {data: 'EXISTENCIA TOTAL'},
+                {data: 'PRECIO BASE'}
+            ],initComplete: function () {
+                var r = $('#tbl_productos tfoot tr');
+                r.find('th').each(function(){
+                  $(this).css('padding', 8);
+                });
+                $('#tbl_productos thead').append(r);
+                $('#search_0').css('text-align', 'center');
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+
+
+
+
+            }
+
+
+        });
+    }
+
+    function cargaClientes(){
+
+        $("#tbl_clientes").dataTable().fnDestroy();
+
+
+        $('#tbl_clientes').DataTable({
+            "order": ['0', 'desc'],
+            "paging": true,
+            "language": {
+                "url": "//cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"
+            },
+            pageLength: 10,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+
+                {
+                    extend: 'excel',
+                    title: 'CLIENTES_ACTIVOS',
+                    className:'btn btn-success'
+                }
+            ],
+            "ajax": "/reporte/reporteria/clientes",
+            "columns": [
+
+                {data: 'CODIGO'},
+                {data: 'TIPO CLIENTE (AoB)'},
+                {data: 'CLIENTE'},
+                {data: 'DIRECCION'},
+                {data: 'TELEFONO'},
+                {data: 'CORREO'},
+                {data: 'RTN'},
+                {data: 'VENDEDOR'},
+                {data: 'REGISTRO'}
+            ],initComplete: function () {
+                var r = $('#tbl_clientes tfoot tr');
+                r.find('th').each(function(){
+                  $(this).css('padding', 8);
+                });
+                $('#tbl_clientes thead').append(r);
+                $('#search_0').css('text-align', 'center');
+                this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        let title = column.footer().textContent;
+
+                        // Create input element
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+                        column.footer().replaceChildren(input);
+
+                        // Event listener for user input
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+
+
+
+
+            }
+
+
+        });
+    }
+
 </script>
 
 @endpush
