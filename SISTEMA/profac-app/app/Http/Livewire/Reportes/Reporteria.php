@@ -219,7 +219,6 @@ class Reporteria extends Component
 
     }
 
-
     public function consultaClientes(){
         try {
             $consulta = DB::SELECT("
