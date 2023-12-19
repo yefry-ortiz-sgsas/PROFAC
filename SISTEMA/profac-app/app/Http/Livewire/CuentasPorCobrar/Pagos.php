@@ -165,7 +165,7 @@ class Pagos extends Component
                 where
                 cliente_id = ".$id."
                 and
-                estado = 1;"
+                estado = 1 and estado_cerrado <> 2;"
             );
 
 
