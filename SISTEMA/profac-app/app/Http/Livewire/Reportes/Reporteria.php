@@ -222,21 +222,27 @@ class Reporteria extends Component
     public function consultaClientes(){
         try {
             $consulta = DB::SELECT("
-                select
-                c.id as 'CODIGO',
-                (
-                CASE c.tipo_cliente_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END
-                ) AS 'TIPO CLIENTE (AoB)',
-                        UPPER(c.nombre) AS 'CLIENTE',
-                            UPPER(c.direccion) AS 'DIRECCION',
-                            c.telefono_empresa AS 'TELEFONO',
-                            c.correo AS 'CORREO',
-                            c.rtn as 'RTN',
-                            UPPER(users.name) as 'VENDEDOR',
-                            c.created_at as 'REGISTRO'
-                        from cliente c
-                        inner join users on users.id = c.vendedor
-                        where c.estado_cliente_id = 1
+            select
+            c.id as 'CODIGO',
+            (
+            CASE c.tipo_cliente_id WHEN '1' THEN 'CLIENTE B' WHEN '2' THEN 'CLIENTE A' END
+            ) AS 'TIPO CLIENTE (AoB)',
+                    UPPER(c.nombre) AS 'CLIENTE',
+                    UPPER(pais.nombre) AS 'PAIS',
+                    UPPER(departamento.nombre) AS 'DEPARTAMENTO',
+                    UPPER(municipio.nombre) as 'MUNICIPIO',
+                        UPPER(c.direccion) AS 'DIRECCION',
+                        c.telefono_empresa AS 'TELEFONO',
+                        c.correo AS 'CORREO',
+                        c.rtn as 'RTN',
+                        UPPER(users.name) as 'VENDEDOR',
+                        c.created_at as 'REGISTRO'
+                    from cliente c
+                    inner join users on users.id = c.vendedor
+                    inner join municipio on municipio.id = c.municipio_id
+                    inner join departamento on departamento.id = municipio.departamento_id
+                    inner join pais on pais.id = departamento.pais_id
+                    where c.estado_cliente_id = 1
 
             ");
 
