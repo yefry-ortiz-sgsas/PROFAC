@@ -76,7 +76,7 @@ class ListadoNotaCredito extends Component
             inner join cliente cli on cli.id = fa.cliente_id
             where
 
-            cli.tipo_cliente_id = 2
+            fa.tipo_venta_id = 2
             and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
             //dd($listado);

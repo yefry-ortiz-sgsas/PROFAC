@@ -56,7 +56,7 @@ class ListadoNotasND extends Component
             inner join cliente cli on cli.id = fa.cliente_id
             where
 
-            cli.tipo_cliente_id = 1
+            fa.tipo_venta_id = 1
             and fa.estado_venta_id <> 2
             and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
