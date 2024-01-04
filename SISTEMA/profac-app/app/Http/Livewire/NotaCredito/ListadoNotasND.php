@@ -44,9 +44,9 @@ class ListadoNotasND extends Component
             fa.cai as factura,
             B.descripcion as motivo,
             A.comentario,
-            format(A.sub_total,2) as sub_total,
-            format(A.isv,2) as isv,
-            format(A.total,2) as total,
+            A.sub_total as sub_total,
+            A.isv as isv,
+            A.total as total,
             A.created_at as fecha_registro,
             name as registrado_por
             from nota_credito A
