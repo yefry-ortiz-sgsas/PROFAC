@@ -614,71 +614,37 @@ class CrearNotaCredito extends Component
 
     }
 
-    // public function anularNotaCredio(Request $request){
-    //     $arrayLog = [];
-    //     try {
-    //     DB::beginTransaction();
+
+     public function anularNotaCredio(Request $request){
+        $arrayLog = [];
+        try {     DB::beginTransaction();
 
 
 
 
 
-    //      $estadoVenta = DB::SELECTONE("select estado_nota_id from nota_credito where id =".$request->idNotaCredito );
+         $estadoVenta = DB::SELECTONE("select estado_nota_id from nota_credito where id =".$request->idNotaCredito );
 
-    //      if($estadoVenta->estado_venta_id == 2 ){
-    //         return response()->json([
-    //             "text" =>"<p  class='text-left'>Esta nota de credito no puede ser anulada, dado que ha sido anulada anteriormente.</p>",
-    //             "icon" => "warning",
-    //             "title" => "Advertencia!",
-    //         ],402);
-    //      }
-
-    //      $compra = ModelNotaCredito::find($request->idNotaCredito);
-    //      $compra->estado_nota_id = 2;
-    //      $compra->save();
+         if($estadoVenta->estado_venta_id == 2 ){
+            return response()->json([
+                "text" =>"<p  class='text-left'>Esta nota de credito no puede ser anulada, dado que ha sido anulada anteriormente.</p>",
+                "icon" => "warning",
+                "title" => "Advertencia!",
+            ],402);
+         }
+          $compra = ModelNotaCredito::find($request->idNotaCredito);      $compra->estado_nota_id = 2;      $compra->save();
 
 
-
-    //      $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario,unidad_medida_venta_id from venta_has_producto where factura_id = ".$request->idFactura);
-
-    //      foreach ($lotes as $lote) {
-    //             $recibidoBodega = ModelRecibirBodega::find($lote->lote);
-    //             $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->numero_unidades_resta_inventario;
-    //             $recibidoBodega->save();
-
-    //             array_push($arrayLog,[
-    //                 'origen'=>$lote->lote,
-    //                 'destino'=>$lote->lote,
-    //                 'factura_id'=>$request->idFactura,
-    //                 'cantidad'=>$lote->numero_unidades_resta_inventario,
-    //                 "unidad_medida_venta_id"=>$lote->unidad_medida_venta_id,
-    //                 "users_id"=> Auth::user()->id,
-    //                 "descripcion"=>"Factura Anulada",
-    //                 "created_at"=>now(),
-    //                 "updated_at"=>now(),
-    //             ]);
-
-    //         };
-
-    //         ModelLogTranslados::insert($arrayLog);
+          $lotes = DB::SELECT("select lote,cantidad_s,numero_unidades_resta_inventario,unidad_medida_venta_id from venta_has_producto where factura_id = ".$request->idFactura);
+          foreach ($lotes as $lote) {             $recibidoBodega = ModelRecibirBodega::find($lote->lote);             $recibidoBodega->cantidad_disponible = $recibidoBodega->cantidad_disponible + $lote->numero_unidades_resta_inventario;             $recibidoBodega->save();
+                 array_push($arrayLog,[                 'origen'=>$lote->lote,
+                    'destino'=>$lote->lote,                 'factura_id'=>$request->idFactura,                 'cantidad'=>$lote->numero_unidades_resta_inventario,                 "unidad_medida_venta_id"=>$lote->unidad_medida_venta_id,                 "users_id"=> Auth::user()->id,                 "descripcion"=>"Factura Anulada",                 "created_at"=>now(),                 "updated_at"=>now(),             ]);
+             };
+             ModelLogTranslados::insert($arrayLog);
 
 
 
-
-    //      DB::commit();
-    //     return response()->json([
-    //         "text" =>"Factura anulada con exito",
-    //         "icon" => "success",
-    //         "title" => "Exito",
-    //     ],200);
-    //     } catch (QueryException $e) {
-
-    //     DB::rollback();
-    //     return response()->json([
-    //         'message' => 'Ha ocurrido un error',
-    //         'error' => $e
-    //     ], 402);
-    //     }
-
-    //  }
+          DB::commit();     return response()->json([         "text" =>"Factura anulada con exito",         "icon" => "success",         "title" => "Exito",     ],200);     } catch (QueryException $e) {
+         DB::rollback();     return response()->json([         'message' => 'Ha ocurrido un error',         'error' => $e     ], 402);     }
+     }
 }
