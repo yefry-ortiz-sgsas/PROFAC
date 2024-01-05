@@ -536,7 +536,7 @@ class VentasExoneradas extends Component
 
     public function comprobarFacturaVencida($idCliente)
     {
-        $facturasVencidas = DB::SELECT(
+        /* $facturasVencidas = DB::SELECT(
             "
             select
             id
@@ -546,6 +546,21 @@ class VentasExoneradas extends Component
             and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
+        ); */
+
+        $facturasVencidas = DB::SELECT(
+            "
+            select
+            id
+            from factura fa
+            inner join aplicacion_pagos ap on ap.factura_id = fa.id
+            where
+            ap.estado_cerrado <> 2
+            and ap.saldo <> 0
+            and ap.estado = 1
+            and fa.fecha_vencimiento < curdate()
+            and fa.estado_venta_id = 1
+            and fa.tipo_pago_id = 2 and fa.cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {

@@ -333,7 +333,7 @@ class FacturacionCorporativa extends Component
                     return response()->json([
                         'icon' => 'warning',
                         'title' => 'Advertencia!',
-                        'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con facturas vencidas. Por el momento no se puede emitir factura a este cliente.',
+                        'text' => 'El cliente ' . $request->nombre_cliente_ventas . ', cuenta con facturas vencidas y sin cerrar en estado de cuenta. Por el momento no se puede emitir factura a este cliente.',
 
                     ], 401);
                 }
@@ -1800,7 +1800,7 @@ class FacturacionCorporativa extends Component
 
     public function comprobarFacturaVencida($idCliente)
     {
-        $facturasVencidas = DB::SELECT(
+        /* $facturasVencidas = DB::SELECT(
             "
             select
             id
@@ -1810,6 +1810,21 @@ class FacturacionCorporativa extends Component
             and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
+        ); */
+
+        $facturasVencidas = DB::SELECT(
+            "
+            select
+            id
+            from factura fa
+            inner join aplicacion_pagos ap on ap.factura_id = fa.id
+            where
+            ap.estado_cerrado <> 2
+            and ap.saldo <> 0
+            and ap.estado = 1
+            and fa.fecha_vencimiento < curdate()
+            and fa.estado_venta_id = 1
+            and fa.tipo_pago_id = 2 and fa.cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {
