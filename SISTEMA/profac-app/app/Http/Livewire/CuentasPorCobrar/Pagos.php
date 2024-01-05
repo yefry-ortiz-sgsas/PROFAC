@@ -778,13 +778,14 @@ class Pagos extends Component
             where aplicacion_pagos.estado <> 1
             and aplicacion_pagos.id =
             ".$request->codAplicCierre);
-
-            if ($revision->saldo != 0) {
+            if ( !is_null($revision)) {
+                if ($revision->saldo > 0 ) {
                     return response()->json([
                         "text" => "No es posible cerrar la factura, Saldo del estado de cuenta, no es 0.",
                         "icon" => "error",
                         "title"=>"Error!"
                     ],402);
+                }
             }
 
 
