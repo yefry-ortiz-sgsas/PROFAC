@@ -122,14 +122,15 @@ class ListadoFacturasND extends Component
                 } */
 
                 $revision = DB::SELECTONE("
-                    select aplicacion_pagos.estado_cerrado as estadoCierre
+                    select count(*) as valida
                     from aplicacion_pagos
-                    where aplicacion_pagos.estado <> 1
+                    where aplicacion_pagos.estado = 1
+                    and aplicacion_pagos.estado_cerrado = 2
                     and aplicacion_pagos.factura_id =
                     ".$listaFacturas->id);
 
 
-                    if( $revision->estadoCierre == 2){
+                    if(  $revision->valida == 1){
 
                         return
                         '
