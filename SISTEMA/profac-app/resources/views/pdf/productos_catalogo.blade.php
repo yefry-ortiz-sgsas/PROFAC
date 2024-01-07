@@ -78,26 +78,6 @@
     <div class="pruebaFondo">
         <img src="img/membrete/Logo3.png" width="800rem" style="margin-left:3%; margin-top:-25px; position:absolute;"alt="">
 
-        <div class="card border border-dark" style="margin-left:44px;  margin-top:105px; width:45rem; height:5.5rem;">
-            <div class="card-header">
-                <b>Factura No. {{ $cai->numero_factura }} </b>
-                <b style="position:absolute;right: 270px"> *Original* </b>
-                <b style="position:absolute;right: 10px">Factura de: {{ $cai->descripcion }}</b>
-            </div>
-
-            <div class="card-body">
-                <p class="card-text" style="position:absolute;left:20px;  top:50px;"><b>Registro tributario:
-                        08011986138652</b></p>
-                <p class="card-text" style="position:absolute;left:420px;  top:50px;"><b>CAI:
-                        {{ $cai->cai }}</b></p>
-                <p class="card-text" style="position:absolute;left:20px;  top:65px;"><b>Fecha límite de emisión:
-                        {{ $cai->fecha_limite_emision }}</b></p>
-                <p class="card-text" style="position:absolute;left:340px;  top:65px;"><b>Rango autorizado:
-                        {{ $cai->numero_inicial }} - {{ $cai->numero_final }}</b></p>
-            </div>
-        </div>
-
-
     </div>
 
 
