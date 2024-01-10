@@ -313,7 +313,6 @@ class FacturacionCorporativa extends Component
 
 
 
-
             if ($validator->fails()) {
                 return response()->json([
                     'icon' => 'error',
@@ -326,9 +325,11 @@ class FacturacionCorporativa extends Component
             //
 
 
-
             if ($request->restriccion == 1) {
+                //dd($request);
                 $facturaVencida = $this->comprobarFacturaVencida($request->seleccionarCliente);
+                
+                //dd('llego dentro de funcion facturas vencidas despues de llamarlo');
                 if ($facturaVencida) {
                     return response()->json([
                         'icon' => 'warning',
@@ -339,6 +340,7 @@ class FacturacionCorporativa extends Component
                 }
             }
 
+            
 
 
             if ($request->tipoPagoVenta == 2) {
@@ -366,6 +368,7 @@ class FacturacionCorporativa extends Component
             $flag = false;
             // $turno = null;
             $factura = null;
+
 
             //comprobar existencia de producto en bodega
             for ($j = 0; $j < count($arrayInputs); $j++) {
@@ -1812,10 +1815,12 @@ class FacturacionCorporativa extends Component
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
         ); */
 
+        
+        //dd('llego dentro de funcion facturas vencidas Inicio');
         $facturasVencidas = DB::SELECT(
             "
             select
-            id
+            fa.id
             from factura fa
             inner join aplicacion_pagos ap on ap.factura_id = fa.id
             where
@@ -1826,15 +1831,17 @@ class FacturacionCorporativa extends Component
             and fa.estado_venta_id = 1
             and fa.tipo_pago_id = 2 and fa.cliente_id=" . $idCliente
         );
+       // dd($facturasVencidas);
 
+       // dd('llego dentro de funcion facturas vencidas');
         if (!empty($facturasVencidas)) {
             return true;
         }
 
         return false;
+
+        
     }
-
-
 
     public function restarCreditoCliente($idCliente, $totalFactura, $idFactura)
     {
