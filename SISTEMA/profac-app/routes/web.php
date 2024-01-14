@@ -502,7 +502,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/nota/credito/listar', [ListadoNotaCredito::class, 'listadoNotaCredito']);
     Route::get('/nota/credito/imprimir/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoOriginal']);
     Route::get('/nota/credito/imprimir/copia/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoCopia']);
-    Route::get('/nota/credito/anular/{idNotaCredito}', [CrearNotaCredito::class, 'anularNotaCredio']);
+    Route::post('/nota/credito/anular', [CrearNotaCredito::class, 'anularNotaCredito']);
 
 
 

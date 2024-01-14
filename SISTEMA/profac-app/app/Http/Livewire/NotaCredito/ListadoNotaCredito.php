@@ -56,6 +56,7 @@ class ListadoNotaCredito extends Component
         try{
             $listado = DB::SELECT("
             select
+            fa.id as idFactura,
             A.id as codigo,
             A.cai,
             cli.nombre as cliente,
@@ -92,7 +93,7 @@ class ListadoNotaCredito extends Component
                         <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
     
                         
-                             <li><a class="dropdown-item" href="/nota/credito/anular/'.$nota->codigo.'" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-trash"></i> Anular</a></li>
+                             <li><a class="dropdown-item" onclick="anularNota('.$nota->codigo.','.$nota->idFactura.' )" class="btn btn-sm btn-warning "><i class="fa-solid fa-trash"></i> Anular</a></li>
     
     
                             <li><a class="dropdown-item" href="/nota/credito/imprimir/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Orginal</a></li>
