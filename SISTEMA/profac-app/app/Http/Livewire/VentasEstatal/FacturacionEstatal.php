@@ -248,8 +248,8 @@ class FacturacionEstatal extends Component
             id,
             concat(id,' - ',nombre) as nombre,
             isv,
-            FORMAT(ultimo_costo_compra,2) as ultimo_costo_compra,
-            FORMAT(precio_base,2) as precio_base
+            ultimo_costo_compra as ultimo_costo_compra,
+            precio_base as precio_base
             from producto where id = " . $request['idProducto'] . "
             ");
 
