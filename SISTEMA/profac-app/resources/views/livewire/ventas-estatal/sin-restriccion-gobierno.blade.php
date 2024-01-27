@@ -577,7 +577,7 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-                //$('#modal_solicitar_codigo').modal('show')
+                $('#modal_solicitar_codigo').modal('show')
             });
 
             var numeroInputs = 0;
