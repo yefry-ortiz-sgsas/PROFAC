@@ -45,10 +45,10 @@ class ValeListaEspera extends Component
     {
        $idFactura = $this->idFactura;
 
-       $datosFactura = DB::SELECTONE("select numero_factura, porc_descuento  from factura where id =".$idFactura);
+       $numeroFactura = DB::SELECTONE("select numero_factura from factura where id =".$idFactura);
 
 
-        return view('livewire.vale.vale-lista-espera',compact("idFactura","datosFactura"));
+        return view('livewire.vale.vale-lista-espera',compact("idFactura","numeroFactura"));
     }
 
     public function obtenerProductosVale(Request $request){
@@ -244,8 +244,6 @@ class ValeListaEspera extends Component
         $vale->notas = $request->comentario;
         $vale->estado_id = 1;
         $vale->notas = $request->comentario;
-        $vale->porc_descuento = $request->porDescuento;
-        $vale->monto_descuento = bcdiv($request->descuentoGeneral, '1', 2);
         $vale->save();
 
 

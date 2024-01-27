@@ -705,9 +705,7 @@
             }
 
             function realizarAjuste() {
-
-                document.getElementById('btn_realizar_ajuste').disabled = false;
-                //document.getElementById('btn_realizar_ajuste').disabled = true;
+                document.getElementById('btn_realizar_ajuste').disabled = true;
 
                 let dataForm = new FormData($('#ajustar_producto_form').get(0));
 
@@ -742,6 +740,7 @@
 
                         })
 
+                        document.getElementById('btn_realizar_ajuste').disabled = false;
                         document.getElementById("ajustar_producto_form").reset();
                         $('#ajustar_producto_form').parsley().reset();
 

@@ -59,11 +59,10 @@ class FacturarComprobante extends FacturacionCorporativa
         A.tipo_venta_id,
         A.vendedor,
         A.users_id,
-        A.porc_descuento,
-        A.monto_descuento,        
+     
+        
         B.dias_credito,
-        B.tipo_cliente_id,
-        A.comentario 
+        B.tipo_cliente_id 
         from comprovante_entrega A 
         inner join cliente B on
         A.cliente_id = B.id
@@ -76,10 +75,8 @@ class FacturarComprobante extends FacturacionCorporativa
         
         if($comprobante->tipo_cliente_id == 1){
             $urlFactura ="/orden/entrega/guardar/factura";
-            //$urlFactura ="/ventas/corporativo/guardar";
         }else{
             $urlFactura ="/orden/entrega/estatal/factura";
-            //$urlFactura ="/ventas/estatal/guardar";
         }
 
         $arrayInputs = $this->arrayInputs;
@@ -109,7 +106,7 @@ class FacturarComprobante extends FacturacionCorporativa
         B.unidad_medida_venta_id,
         C.isv as isvTblProducto,
         B.resta_inventario_total, 
-        B.monto_descProducto,
+
         B.precio_unidad * sum(B.cantidad_para_entregar)  as sub_total,
         B.precio_unidad * sum(B.cantidad_para_entregar) * ( C.isv/100) as isv,
         (B.precio_unidad * sum(B.cantidad_para_entregar))  + (B.precio_unidad * sum(B.cantidad_para_entregar) * ( C.isv/100)) as total       
@@ -131,7 +128,7 @@ class FacturarComprobante extends FacturacionCorporativa
         on E.id = D.unidad_medida_id
         where A.id = ".$idComprobant."
         and B.cantidad_para_entregar <> 0
-        group by producto_id, comprovante_id, nombre_producto, nombre_bodega, bodega_id, seccion_id, precio_unidad, unidad, cantidad, unidad_medida_venta_id, isvTblProducto,  B.resta_inventario_total, B.monto_descProducto
+        group by producto_id, comprovante_id, nombre_producto, nombre_bodega, bodega_id, seccion_id, precio_unidad, unidad, cantidad, unidad_medida_venta_id, isvTblProducto,  B.resta_inventario_total 
         ");
 
      
@@ -237,9 +234,8 @@ class FacturarComprobante extends FacturacionCorporativa
                         name="isvProductoMostrar' . $i . '" class="form-control"
                         autocomplete="off"
                         readonly >
-                        
+
                         <input id="isvProducto' . $i . '" name="isvProducto' . $i . '" type="hidden" value="' . $producto->isv . '" required>
-                        <input type="hidden" id="acumuladoDescuento'. $i .'" name="acumuladoDescuento'. $i .'" value="' . $producto->monto_descProducto . '">
                 </div>
 
 
@@ -338,9 +334,10 @@ class FacturarComprobante extends FacturacionCorporativa
             }
         }
 
-        $arrayTemporal = $request->arregloIdInputs;
-        $arrayInputs = explode(',', $arrayTemporal);
-
+        //dd($request->all());
+        $arrayInputs = [];
+        $arrayInputs = $request->arregloIdInputs;
+        //$arrayProductosVentas = [];
         $numeroSecuencia = null;
         $mensaje = "";
         $flag = false;
@@ -476,22 +473,19 @@ class FacturarComprobante extends FacturacionCorporativa
 
         {
             // alterna
-            // $lista = DB::SELECT("select id, numero from listado where eliminado = 0");
-            // $espera = DB::SELECT("select id from enumeracion where eliminado = 0");
+            $lista = DB::SELECT("select id, numero from listado where eliminado = 0");
+            $espera = DB::SELECT("select id from enumeracion where eliminado = 0");
 
-            // if (!empty($lista)) {
+            if (!empty($lista)) {
 
-            //     $factura = $this->metodoLista($request);
-            // } else if (!empty($espera)) {
+                $factura = $this->metodoLista($request);
+            } else if (!empty($espera)) {
 
-            //     $factura = $this->enumerar($request);
-            // } else {
+                $factura = $this->enumerar($request);
+            } else {
 
-            //     //$factura = $this->alternar($request);
-            //     $factura = $this->guardarVentaND($request);
-            // }
-
-            $factura = $this->guardarVentaND($request);
+                $factura = $this->alternar($request);
+            }
         }
 
         for ($i = 0; $i < count($arrayInputs); $i++) {
@@ -766,8 +760,10 @@ class FacturarComprobante extends FacturacionCorporativa
              }
          }
  
-         $arrayTemporal = $request->arregloIdInputs;
-         $arrayInputs = explode(',', $arrayTemporal);
+         //dd($request->all());
+         $arrayInputs = [];
+         $arrayInputs = $request->arregloIdInputs;
+         $arrayProductosVentas = [];
  
          $mensaje = "";
          $flag = false;
@@ -878,10 +874,6 @@ class FacturarComprobante extends FacturacionCorporativa
                  $factura->pendiente_cobro = $request->totalGeneral;
                  $factura->estado_editar = 1;
                  $factura->numero_orden_compra_id=$request->ordenCompra;
-                 $factura->comentario = $request->nota_comen;
-                 $factura->porc_descuento=$request->porDescuento;
-                 $factura->monto_descuento = $request->porDescuentoCalculado;
-                 
                  $factura->save();
      
                  $caiUpdated =  ModelCAI::find($cai->id);
@@ -889,10 +881,9 @@ class FacturarComprobante extends FacturacionCorporativa
                  $caiUpdated->cantidad_no_utilizada = $cai->cantidad_otorgada - $numeroSecuencia;
                  $caiUpdated->save();
      
-                 //Tabla de listado
-                //  DB::INSERT("INSERT INTO listado(
-                //           numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
-                //          ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
+                 DB::INSERT("INSERT INTO listado(
+                          numero, secuencia, numero_inicial, numero_final, cantidad_otorgada, cai_id, created_at, updated_at, eliminado) VALUES 
+                         ('" . $numeroCAI . "','" . $numeroSecuencia . "','" . $cai->numero_inicial . "','" . $cai->numero_final . "','" . $cai->cantidad_otorgada . "','" . $cai->id . "','" . NOW() . "','" . NOW() . "',0)");
                 
                 for ($i = 0; $i < count($arrayInputs); $i++) {
 

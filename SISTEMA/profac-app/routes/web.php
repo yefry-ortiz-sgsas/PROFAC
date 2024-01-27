@@ -15,7 +15,6 @@ use App\Http\Livewire\Comisiones\ComisionesHistorico;
 use App\Http\Livewire\FacturaDia\FacturaDia;
 
 use App\Http\Livewire\Reportes\Prodmes;
-use App\Http\Livewire\Reportes\Reporteria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Bodega;
 use App\Http\Livewire\BodegaComponent\BodegaEditar;
@@ -502,7 +501,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/nota/credito/listar', [ListadoNotaCredito::class, 'listadoNotaCredito']);
     Route::get('/nota/credito/imprimir/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoOriginal']);
     Route::get('/nota/credito/imprimir/copia/{idNota}', [ListadoNotaCredito::class, 'imprimirnotaCreditoCopia']);
-    Route::post('/nota/credito/anular', [CrearNotaCredito::class, 'anularNotaCredito']);
 
 
 
@@ -577,13 +575,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/pagos/notadebito/guardar', [Pagos::class, 'gestionND']);
     Route::post('/pagos/otrosmov/guardar', [Pagos::class, 'guardarOtroMov']);
     Route::post('/pagos/creditos/guardar', [Pagos::class, 'guardarCreditos']);
-    Route::post('/pagos/cerrar/factura', [Pagos::class, 'cerrarFactura']);
-
-
-    Route::get('/listar/aplicacion/bancos', [Pagos::class, 'datosBanco']);
-
-
-    Route::get('/estadoCuenta/imprimir/aplicpagos/{idClientepdf}', [Pagos::class, 'imprimirEstadoCuenta']);
 
 
 
@@ -746,13 +737,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/facturaDia', FacturaDia::class);
     Route::get('/reporte/comision', Prodmes::class);
-    Route::get('/reporte/reporteria', Reporteria::class);
-
-    Route::get('/reporte/reporteria/consulta/{fecha_inicio}/{fecha_final}', [Reporteria::class,'consulta']);
-    Route::get('/reporte/reporteria/productos', [Reporteria::class,'catalogoProductos']);
-    Route::get('/reporte/reporteria/clientes', [Reporteria::class,'consultaClientes']);
-
-
     Route::get('/consulta/{fecha_inicio}/{fecha_final}', [facturaDia::class,'consulta']);
 
     Route::get('/consultaComision/{fecha_inicio}/{fecha_final}', [Prodmes::class,'consultaComision']);

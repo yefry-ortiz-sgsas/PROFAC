@@ -42,7 +42,7 @@ class ListarVales extends Component
        on vale.users_id = users.id
 
        cross join (select @i := 0) r
-       where  YEAR(vale.created_at) = YEAR(NOW())
+       where  YEAR(vale.created_at) = 2023
         ");
 
         return Datatables::of($listaVales)

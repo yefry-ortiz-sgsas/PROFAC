@@ -94,7 +94,7 @@ class ListarCotizaciones extends Component
         return Datatables::of($cotizaciones)
             ->addColumn('opciones', function ($cotizacion) {
 
-                if($cotizacion->tipo_venta_id == 1){ //corporativo
+                if($cotizacion->tipo_venta_id == 1){
                     return
                     '<div class="btn-group">
                         <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
@@ -103,10 +103,6 @@ class ListarCotizaciones extends Component
 
                             <li>
                                 <a class="dropdown-item" target="_blank"  href="/cotizacion/facturar/'.$cotizacion->id.'" > <i class="fa-solid fa-file-invoice text-info"></i> Facturar </a>
-                            </li>
-
-                            <li>
-                            <a class="dropdown-item" target="_blank"  href="/cotizacion/facturar/srp/corporativo/'.$cotizacion->id.'" > <i class="fa-solid fa-file-invoice text-info"></i> Facturar SR/P </a>
                             </li>
 
 
@@ -124,7 +120,7 @@ class ListarCotizaciones extends Component
 
                         </ul>
                     </div>';
-                }else{//estatal
+                }else{
                     return
                     '<div class="btn-group">
                     <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver

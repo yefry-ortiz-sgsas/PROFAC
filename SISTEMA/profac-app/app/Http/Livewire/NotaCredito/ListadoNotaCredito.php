@@ -56,16 +56,15 @@ class ListadoNotaCredito extends Component
         try{
             $listado = DB::SELECT("
             select
-            fa.id as idFactura,
             A.id as codigo,
             A.cai,
             cli.nombre as cliente,
             fa.cai as factura,
             B.descripcion as motivo,
             A.comentario,
-            A.sub_total as sub_total,
-            A.isv as isv,
-            A.total as total,
+            format(A.sub_total,2) as sub_total,
+            format(A.isv,2) as isv,
+            format(A.total,2) as total,
             A.created_at as fecha_registro,
             name as registrado_por
             from nota_credito A
@@ -78,32 +77,28 @@ class ListadoNotaCredito extends Component
             where
 
             fa.tipo_venta_id = 2
-            and estado_nota_id <>2
             and fecha BETWEEN '".$request->fechaInicio."' and '".$request->fechaFinal."'"
             );
             //dd($listado);
             /* A.estado_nota_dec = 1 */
             return Datatables::of($listado)
             ->addColumn('opciones', function ($nota) {
-                    return
 
-                    '<div class="btn-group">
-                    <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
-                        más</button>
-                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
-    
-                        
-                             <li><a class="dropdown-item" onclick="anularNota('.$nota->codigo.','.$nota->idFactura.' )" class="btn btn-sm btn-warning "><i class="fa-solid fa-trash"></i> Anular</a></li>
-    
-    
-                            <li><a class="dropdown-item" href="/nota/credito/imprimir/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Orginal</a></li>
-    
-                            <li><a class="dropdown-item" href="/nota/credito/imprimir/copia/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Copia</a></li>
-    
-                        </ul>
-    
-    
-                    </div>';
+                return
+
+                '<div class="btn-group">
+                <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle" aria-expanded="false">Ver
+                    más</button>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; top: 33px; left: 0px; will-change: top, left;">
+
+                        <li><a class="dropdown-item" href="/nota/credito/imprimir/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Orginal</a></li>
+
+                        <li><a class="dropdown-item" href="/nota/credito/imprimir/copia/'.$nota->codigo.'" target="_blank" class="btn btn-sm btn-warning "><i class="fa-solid fa-file-invoice"></i> Imprimir Copia</a></li>
+
+                    </ul>
+
+
+                </div>';
             })
 
             ->rawColumns(['opciones',])

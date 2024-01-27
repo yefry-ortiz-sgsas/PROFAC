@@ -354,7 +354,7 @@ class RecibirProducto extends Component
         ]);
 
 
-        $this->comprobarVales();
+        //$this->comprobarVales();
 
         DB::commit();
 

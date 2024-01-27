@@ -300,18 +300,7 @@ class VentasExoneradas extends Component
 
 
 
-            /* $aplicacionPagos = DB::select("
 
-            CALL sp_aplicacion_pagos('2','".$factura->cliente_id."', '".Auth::user()->id."', '".$factura->id."','na','0','0','0', @estado, @msjResultado);");
-
-
-            if ($aplicacionPagos[0]->estado == -1) {
-                return response()->json([
-                    "text" => "Ha ocurrido un error al insertar factura ".$factura->id."en aplicacion de pagos.",
-                    "icon" => "error",
-                    "title"=>"Error!"
-                ],400);
-            } */
             for ($i = 0; $i < count($arrayInputs); $i++) {
 
                 $keyRestaInventario = "restaInventario" . $arrayInputs[$i];
@@ -536,7 +525,7 @@ class VentasExoneradas extends Component
 
     public function comprobarFacturaVencida($idCliente)
     {
-        /* $facturasVencidas = DB::SELECT(
+        $facturasVencidas = DB::SELECT(
             "
             select
             id
@@ -546,21 +535,6 @@ class VentasExoneradas extends Component
             and fecha_vencimiento < curdate()
             and estado_venta_id = 1
             and tipo_pago_id = 2 and cliente_id=" . $idCliente
-        ); */
-
-        $facturasVencidas = DB::SELECT(
-            "
-            select
-            id
-            from factura fa
-            inner join aplicacion_pagos ap on ap.factura_id = fa.id
-            where
-            ap.estado_cerrado <> 2
-            and ap.saldo <> 0
-            and ap.estado = 1
-            and fa.fecha_vencimiento < curdate()
-            and fa.estado_venta_id = 1
-            and fa.tipo_pago_id = 2 and fa.cliente_id=" . $idCliente
         );
 
         if (!empty($facturasVencidas)) {
@@ -653,11 +627,11 @@ class VentasExoneradas extends Component
 
          $importesConCentavos= DB::SELECTONE("
          select
-         total as total,
-         isv as isv,
-         sub_total as sub_total,
-         porc_descuento as porc_descuento,
-         monto_descuento as monto_descuento
+         FORMAT(total,2) as total,
+         FORMAT(isv,2) as isv,
+         FORMAT(sub_total,2) as sub_total,
+         FORMAT(porc_descuento,2) as porc_descuento,
+         FORMAT(monto_descuento,2) as monto_descuento
          from factura where factura.id = ".$idFactura);
 
        $productos = DB::SELECT("
@@ -667,9 +641,9 @@ class VentasExoneradas extends Component
                     UPPER(J.nombre) as medida,
                     H.nombre as bodega,
                     F.descripcion as seccion,
-                    (B.sub_total/B.cantidad) as precio,
-                    sum(B.cantidad_s) as cantidad,
-                    sum(B.sub_total_s) as importe
+                    FORMAT(TRUNCATE((B.sub_total/B.cantidad),2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
 
                 from factura A
                 inner join venta_has_producto B
@@ -699,9 +673,9 @@ class VentasExoneradas extends Component
                     F.nombre as medida,
                     'Pendiente',
                     'Pendiente',
-                    C.precio as precio,
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
                     C.cantidad as cantidad,
-                    C.sub_total as sub_total
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
                 from factura A
                 inner join vale B
                 on A.id = B.factura_id
@@ -829,11 +803,11 @@ class VentasExoneradas extends Component
 
         $importesConCentavos= DB::SELECTONE("
         select
-        total as total,
-        isv as isv,
-        sub_total as sub_total,
-        porc_descuento as porc_descuento,
-        monto_descuento as monto_descuento
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(porc_descuento,2) as porc_descuento,
+        FORMAT(monto_descuento,2) as monto_descuento
         from factura where factura.id = ".$idFactura);
 
         $productos = DB::SELECT("
@@ -843,9 +817,9 @@ class VentasExoneradas extends Component
                     UPPER(J.nombre) as medida,
                     H.nombre as bodega,
                     F.descripcion as seccion,
-                    B.precio_unidad as precio,
-                    sum(B.cantidad_s) as cantidad,
-                    sum(B.sub_total_s) as importe
+                    FORMAT(TRUNCATE(B.precio_unidad,2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
 
                 from factura A
                 inner join venta_has_producto B
@@ -875,9 +849,9 @@ class VentasExoneradas extends Component
                     F.nombre as medida,
                     'Pendiente',
                     'Pendiente',
-                    C.precio as precio,
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
                     C.cantidad as cantidad,
-                    C.sub_total as sub_total
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
                 from factura A
                 inner join vale B
                 on A.id = B.factura_id
@@ -1009,11 +983,11 @@ class VentasExoneradas extends Component
 
          $importesConCentavos= DB::SELECTONE("
          select
-         total as total,
-         isv as isv,
-         sub_total as sub_total,
-         porc_descuento as porc_descuento,
-         monto_descuento as monto_descuento
+         FORMAT(total,2) as total,
+         FORMAT(isv,2) as isv,
+         FORMAT(sub_total,2) as sub_total,
+         FORMAT(porc_descuento,2) as porc_descuento,
+         FORMAT(monto_descuento,2) as monto_descuento
          from factura where factura.id = ".$idFactura);
 
         $productos = DB::SELECT("
@@ -1023,9 +997,9 @@ class VentasExoneradas extends Component
                     UPPER(J.nombre) as medida,
                     H.nombre as bodega,
                     F.descripcion as seccion,
-                    B.precio_unidad as precio,
-                    sum(B.cantidad_s) as cantidad,
-                    sum(B.sub_total_s) as importe
+                    FORMAT(TRUNCATE(B.precio_unidad,2),2) as precio,
+                    FORMAT(sum(B.cantidad_s),2) as cantidad,
+                    FORMAT(sum(B.sub_total_s),2) as importe
 
                 from factura A
                 inner join venta_has_producto B
@@ -1055,9 +1029,9 @@ class VentasExoneradas extends Component
                     F.nombre as medida,
                     'Pendiente',
                     'Pendiente',
-                    C.precio as precio,
+                    FORMAT(TRUNCATE(C.precio,2),2) as precio,
                     C.cantidad as cantidad,
-                    C.sub_total as sub_total
+                    FORMAT(TRUNCATE(C.sub_total,2),2) as sub_total
                 from factura A
                 inner join vale B
                 on A.id = B.factura_id

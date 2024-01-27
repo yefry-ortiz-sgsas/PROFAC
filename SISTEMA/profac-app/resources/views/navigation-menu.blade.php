@@ -19,7 +19,8 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                       <b>{{ __('DISTRIBUCIONES VALENCIA  - DESARROLLO - V2.2.3') }}</b>
+                       <b>{{ __('DISTRIBUCIONES VALENCIA  - PRODUCCION - V2.2.5') }}</b>
+                       {{--<h2><b>{{ __('RECORDAMOS GESTIONAR PAGO DE SERVICIO - CAD S&S') }}</b></h2>--}}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -442,7 +443,6 @@
                         <ul class="nav nav-second-level">
                             <li><a href="/cuentas/por/cobrar/listado" style="color:#ffffff;">Listado de Facturas</a></li>
                             <li><a href="/ventas/cuentas_por_cobrar" style="color:#ffffff;">Cuentas Por Cobrar</a></li>
-                            <li><a href="/cuentas_por_cobrar/pagos" style="color:#ffffff;">Aplicacion de Pagos</a></li>
                         </ul>
                     </li>
                     <li>
@@ -456,7 +456,6 @@
                         <a><i class="fa-solid fa-user" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Reportes</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="/facturaDia" style="color:#ffffff;">Reporte de ventas</a>
-                            <li><a href="/reporte/reporteria" style="color:#ffffff;">Reportes Varios</a>
                         </ul>
                     </li>
                 @endif
@@ -465,6 +464,13 @@
                     <a><i  style="color:#ffffff;"></i><span style="color:#ffffff;">Auxiliar Administrativo</span></a>
                     <li>
                         <a href="{{ route('dashboard') }}"><i class="fa fa-area-chart" style="color:#ffffff;" aria-hidden="true"></i> <span class="nav-label" style="color:#ffffff;">Dashboard</span></a>
+                    </li>
+                    
+                    <li>
+                        <a><i class="fa-solid fa-users" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Clientes</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="/clientes" style="color:#ffffff;">Registrar cliente</a></li>
+                        </ul>
                     </li>
                     <li>
                         <a><i class="fa-solid fa-warehouse" style="color:#ffffff;"></i> <span class="nav-label" style="color:#ffffff;">Bodega</span><span class="fa arrow"></span></a>

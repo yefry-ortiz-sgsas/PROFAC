@@ -184,8 +184,6 @@ class CrearComprovante extends Component
             $comprovante->users_id =  Auth::user()->id;
             $comprovante->numeroInputs =  $request->numeroInputs;
             $comprovante->estado_id =  1;
-            $comprovante->porc_descuento = $request->porDescuento;
-            $comprovante->monto_descuento = $request->porDescuentoCalculado;
             $comprovante->save();
 
             for ($i = 0; $i < count($arrayInputs); $i++) {
@@ -202,7 +200,6 @@ class CrearComprovante extends Component
                 $keyTotal = "total" . $arrayInputs[$i];
                 $keyISV = "isv" . $arrayInputs[$i];
                 $keyunidad = 'unidad' . $arrayInputs[$i];
-                $keyacumuladoDescuento = 'acumuladoDescuento' . $arrayInputs[$i];
 
                 $restaInventario = $request->$keyRestaInventario;
                 $idSeccion = $request->$keyIdSeccion;
@@ -216,9 +213,8 @@ class CrearComprovante extends Component
                 $subTotal = $request->$keySubTotal;
                 $isv = $request->$keyIsv;
                 $total = $request->$keyTotal;
-                $acumuladoDescuento = $request->$keyacumuladoDescuento;
 
-                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $comprovante->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$acumuladoDescuento);
+                $this->restarUnidadesInventario($restaInventario, $idProducto, $idSeccion, $comprovante->id, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad);
             };
 
             ModelComprovanteHasProducto::insert($this->arrayProductos);
@@ -253,7 +249,7 @@ class CrearComprovante extends Component
         }
     }
 
-    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idOrdenEntrega, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad,$acumuladoDescuento)
+    public function restarUnidadesInventario($unidadesRestarInv, $idProducto, $idSeccion, $idOrdenEntrega, $idUnidadVenta, $precio, $cantidad, $subTotal, $isv, $total, $ivsProducto, $unidad)
     {
 
 
@@ -335,7 +331,6 @@ class CrearComprovante extends Component
                     "sub_total" => $subTotal,
                     "isv" => $isv,
                     "total" => $total,
-                    "monto_descProducto"=>$acumuladoDescuento,
                     "resta_inventario_total" => $unidadesRestarInv,
                     "unidad_medida_venta_id" => $idUnidadVenta,
                     "precio_unidad" => $precio,
@@ -407,8 +402,9 @@ class CrearComprovante extends Component
         B.nombre,
         D.nombre as unidad,
         A.cantidad,
-        (A.precio_unidad) as precio,
+        (A.sub_total/A.cantidad) as precio,
         A.sub_total
+
 
         from comprovante_has_producto A
         inner join producto B
@@ -418,7 +414,7 @@ class CrearComprovante extends Component
         inner join unidad_medida D
         on C.unidad_medida_id = D.id
         where A.comprovante_id = ".$idComprobante."
-        group by A.producto_id, B.nombre, D.nombre, A.cantidad, A.sub_total, A.precio_unidad
+        group by A.producto_id, B.nombre, D.nombre, A.cantidad, A.sub_total
         ");
 
         $importes = DB::SELECTONE("
@@ -427,9 +423,7 @@ class CrearComprovante extends Component
             format(sub_total_excento,2) as sub_total_excento,
             format(sub_total,2) as sub_total,
             format(isv,2) as isv,
-            format(total,2) as total,
-            format(monto_descuento ,2) as monto_descuento,
-            porc_descuento as porc_descuento
+            format(total,2) as total
         from comprovante_entrega A
             where id =".$idComprobante
         );
@@ -438,9 +432,7 @@ class CrearComprovante extends Component
         select
             A.sub_total,
             A.isv,
-            A.total,
-            A.monto_descuento,
-            A.porc_descuento
+            A.total
         from comprovante_entrega A
             where id = ".$idComprobante
 
@@ -501,8 +493,9 @@ class CrearComprovante extends Component
         B.nombre,
         D.nombre as unidad,
         A.cantidad,
-        (A.precio_unidad) as precio,
+        (A.sub_total/A.cantidad) as precio,
         A.sub_total
+
 
         from comprovante_has_producto A
         inner join producto B
@@ -512,7 +505,7 @@ class CrearComprovante extends Component
         inner join unidad_medida D
         on C.unidad_medida_id = D.id
         where A.comprovante_id = ".$idComprobante."
-        group by A.producto_id, B.nombre, D.nombre, A.cantidad, A.sub_total, A.precio_unidad
+        group by A.producto_id, B.nombre, D.nombre, A.cantidad, A.sub_total
         ");
 
         $importes = DB::SELECTONE("
@@ -521,9 +514,7 @@ class CrearComprovante extends Component
             format(sub_total_excento,2) as sub_total_excento,
             format(sub_total,2) as sub_total,
             format(isv,2) as isv,
-            format(total,2) as total,
-            format(monto_descuento ,2) as monto_descuento,
-            porc_descuento as porc_descuento
+            format(total,2) as total
         from comprovante_entrega A
             where id =".$idComprobante
         );
@@ -532,14 +523,11 @@ class CrearComprovante extends Component
         select
             A.sub_total,
             A.isv,
-            A.total,
-            A.monto_descuento,
-            A.porc_descuento
+            A.total
         from comprovante_entrega A
             where id = ".$idComprobante
 
         );
-
 
 
 

@@ -531,7 +531,7 @@ class RestarVale extends Component
        $cliente = DB::SELECTONE("
        select
         factura.nombre_cliente as nombre,
-        SUBSTRING(cliente.direccion,1,142) as direccion,
+        cliente.direccion,
         cliente.correo,
         factura.fecha_emision,
         factura.fecha_vencimiento,
@@ -541,7 +541,7 @@ class RestarVale extends Component
         from factura
         inner join cliente
         on factura.cliente_id = cliente.id
-        where cliente.id = ".$vale->cliente_id);
+        where factura.id = ".$vale->cliente_id);
 
        $importes = DB::SELECTONE("
        select
@@ -556,14 +556,12 @@ class RestarVale extends Component
 
         $importesConCentavos= DB::SELECTONE("
         select
-        total as total,
-        isv as isv,
-        sub_total as sub_total,
-        sub_total_grabado as sub_total_grabado,
-        sub_total_excento as sub_total_excento,
-        monto_descuento as monto_descuento,
-        porc_descuento
-        from vale where id = ".$idVale);
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+            from vale where id = ".$idVale);
 
 
             $productos = DB::SELECT("
@@ -571,7 +569,7 @@ class RestarVale extends Component
             B.id as codigo,
             B.nombre as descripcion,
             D.nombre as medida,
-            A.precio as precio,
+            A.precio,
             A.cantidad,
             A.sub_total as importe
             from espera_has_producto A
@@ -647,20 +645,20 @@ class RestarVale extends Component
         where A.id =".$idVale
         );
 
-        $cliente = DB::SELECTONE("
-        select
-         factura.nombre_cliente as nombre,
-         SUBSTRING(cliente.direccion,1,142) as direccion,
-         cliente.correo,
-         factura.fecha_emision,
-         factura.fecha_vencimiento,
-         TIME(factura.created_at) as hora,
-         cliente.telefono_empresa,
-         cliente.rtn
-         from factura
-         inner join cliente
-         on factura.cliente_id = cliente.id
-         where cliente.id = ".$vale->cliente_id);
+       $cliente = DB::SELECTONE("
+       select
+        factura.nombre_cliente as nombre,
+        cliente.direccion,
+        cliente.correo,
+        factura.fecha_emision,
+        factura.fecha_vencimiento,
+        TIME(factura.created_at) as hora,
+        cliente.telefono_empresa,
+        cliente.rtn
+        from factura
+        inner join cliente
+        on factura.cliente_id = cliente.id
+        where factura.id = ".$vale->cliente_id);
 
        $importes = DB::SELECTONE("
        select
@@ -675,14 +673,12 @@ class RestarVale extends Component
 
         $importesConCentavos= DB::SELECTONE("
         select
-        total as total,
-        isv as isv,
-        sub_total as sub_total,
-        sub_total_grabado as sub_total_grabado,
-        sub_total_excento as sub_total_excento,
-        monto_descuento as monto_descuento,
-        porc_descuento
-        from vale where id = ".$idVale);
+        FORMAT(total,2) as total,
+        FORMAT(isv,2) as isv,
+        FORMAT(sub_total,2) as sub_total,
+        FORMAT(sub_total_grabado,2) as sub_total_grabado,
+        FORMAT(sub_total_excento,2) as sub_total_excento
+            from vale where id = ".$idVale);
 
 
             $productos = DB::SELECT("
@@ -690,7 +686,7 @@ class RestarVale extends Component
             B.id as codigo,
             B.nombre as descripcion,
             D.nombre as medida,
-            A.precio as precio,
+            A.precio,
             A.cantidad,
             A.sub_total as importe
             from espera_has_producto A
