@@ -577,7 +577,7 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-                $('#modal_solicitar_codigo').modal('show')
+                //$('#modal_solicitar_codigo').modal('show')
             });
 
             var numeroInputs = 0;
@@ -928,7 +928,7 @@
 
                                             <div class="form-group col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1">
                                                 <label for="precio${numeroInputs}" class="sr-only">Precio</label>
-                                                <input type="number" value="${producto.precio_base}" min="${producto.ultimo_costo_compra}"  placeholder="Precio Unidad" id="precio${numeroInputs}"
+                                                <input type="number" value="${producto.precio_base}" step="any" min="${producto.ultimo_costo_compra}"  placeholder="Precio Unidad" id="precio${numeroInputs}"
                                                     name="precio${numeroInputs}" class="form-control" data-parsley-required step="any"
                                                     autocomplete="off" onchange="calcularTotales(precio${numeroInputs},cantidad${numeroInputs},${producto.isv},unidad${numeroInputs},${numeroInputs},restaInventario${numeroInputs})">
                                             </div>
