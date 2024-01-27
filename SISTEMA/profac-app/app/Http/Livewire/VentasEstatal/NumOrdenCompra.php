@@ -130,9 +130,9 @@ class NumOrdenCompra extends Component
             }
 
 
-            $numOrdenValidador = DB::SELECTONE("select count(*) as existe from numero_orden_compra
-             where numero_orden = ".$request->numero_orden);
-
+            $m = "'".$request->numero_orden."'";
+        $numOrdenValidador = DB::SELECTONE("select count(*) as existe from numero_orden_compra
+             where numero_orden = ".$m);
             if($numOrdenValidador->existe > 0){
 
                 return response()->json([
